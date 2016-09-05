@@ -1,0 +1,6 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} !\.(css|jpg|jpeg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|map)$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]

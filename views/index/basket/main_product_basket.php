@@ -1,0 +1,1 @@
+<a class="button productsAddBasket" href="<?php echo $base_url;?>/cart"><i class="simple-icon-handbag fa-2x"></i> Basket</a>
