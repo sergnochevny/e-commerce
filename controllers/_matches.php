@@ -42,7 +42,7 @@ class Controller_Matches extends Controller_Base
     function add_matches()
     {
         $added = 0;
-        $model = new Model_Users();
+        $model = new Model_Product();
 
         if (isset($_GET['p_id']) && !empty($_GET['p_id'])) {
             $produkt_id = $_GET['p_id'];
@@ -122,7 +122,7 @@ class Controller_Matches extends Controller_Base
     {
         $added = 0;
         if (isset($_POST['data']) && !empty($_POST['data'])) {
-            $model = new Model_Users();
+            $model = new Model_Cart();
             try{
 
                 $products = json_decode($_POST['data']);

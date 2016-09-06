@@ -57,7 +57,7 @@ class Controller_Categories extends Controller_Base
     function del_categories()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Tools();
         $userInfo = $model->validData($_GET['category_id']);
         $del_category_id = $userInfo['data'];
         if (!empty($del_category_id)) {
@@ -73,7 +73,7 @@ class Controller_Categories extends Controller_Base
     function edit_categories()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         $userInfo = $model->validData($_GET['category_id']);
         $category_id = $userInfo['data'];
         $this->display_order_categories();
@@ -91,7 +91,7 @@ class Controller_Categories extends Controller_Base
     function edit_category_form()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         $userInfo = $model->validData($_GET['category_id']);
         $category_id = $userInfo['data'];
         $this->display_order_categories();
@@ -109,7 +109,7 @@ class Controller_Categories extends Controller_Base
     function display_order_categories()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         $userInfo = $model->validData($_GET['category_id']);
         $category_id = $userInfo['data'];
         $results = mysql_query("select * from fabrix_categories ORDER BY  `fabrix_categories`.`displayorder` ASC ");
@@ -127,7 +127,7 @@ class Controller_Categories extends Controller_Base
     function display_order_categories_wo_select()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         $results = mysql_query("select * from fabrix_categories ORDER BY  `displayorder` ASC ");
         ob_start();
         while ($row = mysql_fetch_array($results)) {
@@ -143,7 +143,7 @@ class Controller_Categories extends Controller_Base
     function save_data_categories()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         include('include/save_data_categories.php');
         if (!empty($post_category_name{0})) {
             $resulthatistim = mysql_query("select * from fabrix_categories WHERE cid='$category_id'");
@@ -198,7 +198,7 @@ class Controller_Categories extends Controller_Base
     function new_categories()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         $this->display_order_categories_wo_select();
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
@@ -212,7 +212,7 @@ class Controller_Categories extends Controller_Base
     function new_category_form()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         $this->display_order_categories_wo_select();
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
@@ -226,7 +226,7 @@ class Controller_Categories extends Controller_Base
     function save_new_categories()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         $userInfo = $model->validData($_POST['category']);
         $post_category_name = mysql_real_escape_string($userInfo['data']);
         $userInfo = $model->validData($_POST['display_order']);

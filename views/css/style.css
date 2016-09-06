@@ -1370,3 +1370,7 @@ td.product-subtotal{
 .comment-form textarea{
     height: 140pt;
 }
+.woocommerce div.product p.price, .woocommerce div.product p.price .amount {
+    font-size: large!important;
+    font-weight: bold;
+}

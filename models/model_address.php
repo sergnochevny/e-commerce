@@ -1,5 +1,5 @@
 <?php
-Class Model_Address
+Class Model_Address extends Model_Model
 {
     function get_total_count_province_state()
     {

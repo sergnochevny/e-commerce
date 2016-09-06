@@ -12,7 +12,7 @@ define('DISCOUNT_CATEGORY_SHIPPING', 3);
 define('DISCOUNT_CATEGORY_PRODUCT', 4);
 
 
-Class Model_Price
+Class Model_Price extends Model_Model
 {
 
     function sysHideAllRegularPrices()

@@ -24,7 +24,7 @@ define("HEAVY_FABRIC",3);
 define("YRDS_FOR_MULTIPLIER",2.0);							#total yardage allowed before a mulitplier is added
 
 
-Class Model_Shipping
+Class Model_Shipping extends Model_Model
 {
 
 #define the rates that are used outside the calculate shipping funciton

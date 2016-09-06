@@ -49,7 +49,7 @@ class Controller_Discount extends Controller_Base
     function del_discounts()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Discount();
         $userInfo = $model->validData($_GET['discounts_id']);
         $discounts_id = $userInfo['data'];
         if (!empty($discounts_id)) {
@@ -63,7 +63,7 @@ class Controller_Discount extends Controller_Base
     function add_discounts()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Discount();
 
         $userInfo = $model->get_new_discounts_data();
         $this->template->vars('userInfo', $userInfo);
@@ -74,7 +74,7 @@ class Controller_Discount extends Controller_Base
     function edit_discounts()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Discount();
         $userInfo = $model->validData($_GET['discounts_id']);
         $discount_id = $userInfo['data'];
         $userInfo = $model->get_edit_discounts_data($discount_id);
@@ -85,7 +85,7 @@ class Controller_Discount extends Controller_Base
     function edit_discounts_form()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Discount();
         $userInfo = $model->validData($_GET['discounts_id']);
         $discount_id = $userInfo['data'];
         $userInfo = $model->get_edit_discounts_data($discount_id);
@@ -106,7 +106,7 @@ class Controller_Discount extends Controller_Base
     function data_usage_discounts()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Discount();
         $userInfo = $model->validData($_GET['discounts_id']);
         $discounts_id = $userInfo['data'];
         if (!empty($discounts_id)) {
@@ -144,7 +144,7 @@ class Controller_Discount extends Controller_Base
     function data_usage_order_discounts()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Discount();
         $userInfo = $model->validData($_GET['discounts_id']);
         $discounts_id = $userInfo['data'];
         if (!empty($discounts_id)) {
@@ -175,7 +175,7 @@ class Controller_Discount extends Controller_Base
     function edit_discounts_data()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Discount();
         include('include/post_edit_discounts_data.php');
 
         setlocale(LC_TIME, 'UTC');
@@ -326,7 +326,7 @@ class Controller_Discount extends Controller_Base
     function save_discounts_data()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Discount();
         include('include/post_edit_discounts_data.php');
 
         setlocale(LC_TIME, 'UTC');

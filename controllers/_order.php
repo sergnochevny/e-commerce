@@ -37,22 +37,20 @@ class Controller_Order extends Controller_Base
     function get_orders()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Order();
         $userInfo = $model->validData($_GET['user_id']);
         $user_id = $userInfo['data'];
-        $result = mysql_query("SELECT COUNT(*) FROM fabrix_orders WHERE aid='$user_id'");
-        $myrow = mysql_fetch_array($result);
-
+        $orders_count = $model->get_count_orders_by_user($user_id);
         if (!empty($_GET['page'])) {
             $page = $_GET['page'];
         } else
             $page = '1';
 
-        if (!empty($myrow['0']) && ((int)$myrow['0'] > 0)) {
+        if (!empty($orders_count) && ((int)$orders_count > 0)) {
 
-            $results = mysql_query("select * from fabrix_orders WHERE aid='$user_id'");
+            $rows = $model->get_orders_by_user($user_id);
             ob_start();
-            while ($row = mysql_fetch_array($results)) {
+            foreach ($rows as $row) {
                 $row[22] = gmdate("F j, Y, g:i a", $row[22]);
                 include('./views/index/order/orders_list.php');
             }
@@ -74,7 +72,7 @@ class Controller_Order extends Controller_Base
     function order()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Order();
         $userInfo = $model->validData($_GET['order_id']);
         $order_id = $userInfo['data'];
 
@@ -111,7 +109,7 @@ class Controller_Order extends Controller_Base
     function discount_order()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Order();
         $userInfo = $model->validData($_GET['order_id']);
         $order_id = $userInfo['data'];
 
@@ -135,14 +133,14 @@ class Controller_Order extends Controller_Base
     function get_order_details()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Order();
         $userInfo = $model->validData($_GET['order_id']);
         $order_id = $userInfo['data'];
         $order_details = '';
         if (!empty($order_id)) {
             ob_start();
-            $results = mysql_query("select * from fabrix_order_details WHERE order_id='$order_id'");
-            while ($row = mysql_fetch_array($results)) {
+            $rows = $model->get_order_details($order_id);
+            foreach ($rows as $row) {
                 include('./views/index/order/order_details.php');
             }
             $order_details = ob_get_contents();
@@ -469,17 +467,11 @@ class Controller_Order extends Controller_Base
 
     public function edit_orders_info()
     {
-
+        $model = new Model_Order();
         $track_code = (string)trim(htmlspecialchars($_POST['track_code']));
         $status = (string)trim(htmlspecialchars($_POST['status']));
         $order_id = (integer)trim(htmlspecialchars($_POST['order_id']));
-
         $end_date = trim(htmlspecialchars(($_POST['end_date'] != null) ? $_POST['end_date'] : NULL));
-
-        $request = 'UPDATE fabrix_orders SET 
-                    status = \'' . $status . '\', 
-                    track_code = \'' . $track_code . '\', 
-                    end_date = STR_TO_DATE(\'' . $end_date . '\', \'%m/%d/%Y\') WHERE oid = \'' . $order_id . '\'';
 
         $result = [
             'track_code' => $track_code,
@@ -488,12 +480,12 @@ class Controller_Order extends Controller_Base
             'result' => null,
         ];
 
-        
-        if (mysql_query($request)) {
+
+        if ($model->update_order_detail_info($status,$status,$track_code,$end_date,$order_id)) {
             
             if($result['status'] === 1){
 
-                $user_id = mysql_query('SELECT aid FROM fabrix_orders WHERE oid ='.$order_id);
+                $user_id = $model->get_user_by_order($order_id);
                 $user = new Model_User();
                 $user_data = $user->get_user_by_id($user_id);
                 $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";

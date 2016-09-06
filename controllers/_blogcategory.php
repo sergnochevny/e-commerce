@@ -11,17 +11,14 @@ class Controller_BlogCategory extends Controller_Base{
 
     }
 
-
     function blog_categories_list()
     {
-        $q = "select a.group_id, a.name, count(b.group_id) as amount from blog_groups a " .
-            " left join blog_group_posts b on a.group_id=b.group_id" .
-            " group by a.group_id, a.name";
-        $results = mysql_query($q);
+        $model = new Model_Blog();
+        $rows = $model->get_blog_categories_list();
         $categories = '';
         ob_start();
         $base_url = BASE_URL;
-        while ($row = mysql_fetch_assoc($results)) {
+        foreach ($rows as $row) {
             include('views/index/blogcategory/blog_categories_list_row.php');
         }
         $categories .= ob_get_contents();
@@ -38,7 +35,7 @@ class Controller_BlogCategory extends Controller_Base{
 
     function del_blog_category()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
         $group_id = isset($_GET['cat']) ? $_GET['cat'] : null;
         if (isset($group_id)) {
             if ($model->blog_category_is_empty($group_id)) {
@@ -56,7 +53,7 @@ class Controller_BlogCategory extends Controller_Base{
 
     function edit_blog_category()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
         $base_url = BASE_URL;
         $userInfo = $model->validData($_GET['cat']);
         $group_id = $userInfo['data'];
@@ -74,7 +71,7 @@ class Controller_BlogCategory extends Controller_Base{
 
     function blog_edit_category_form()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
         $base_url = BASE_URL;
         $userInfo = $model->validData($_GET['cat']);
         $group_id = $userInfo['data'];
@@ -90,7 +87,7 @@ class Controller_BlogCategory extends Controller_Base{
 
     function save_blog_category()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
         $base_url = BASE_URL;
         $userInfo = $model->validData($_GET['cat']);
         $group_id = $userInfo['data'];
@@ -98,7 +95,7 @@ class Controller_BlogCategory extends Controller_Base{
         $post_category_name = mysql_real_escape_string($userInfo['data']);
         if (!empty($post_category_name{0})) {
             if (!empty($group_id)) {
-                $result = mysql_query("update blog_groups set name='$post_category_name' WHERE group_id ='$group_id'");
+                $result = $model->update_blog_category($post_category_name, $group_id);
             }
             $warning = ['Category Data saved successfully!'];
             $this->template->vars('warning', $warning);
@@ -128,7 +125,6 @@ class Controller_BlogCategory extends Controller_Base{
 
     function new_blog_category()
     {
-        $model = new Model_Users();
         $userInfo = [];
         $base_url = BASE_URL;
 
@@ -149,7 +145,7 @@ class Controller_BlogCategory extends Controller_Base{
 
     function save_new_blog_category()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
         $base_url = BASE_URL;
         $userInfo = $model->validData($_POST['category']);
         $post_category_name = mysql_real_escape_string($userInfo['data']);
@@ -157,7 +153,7 @@ class Controller_BlogCategory extends Controller_Base{
             $slug = explode(' ', strtolower($post_category_name));
             $slug = array_filter($slug);
             $slug = implode('-', $slug);
-            $result = mysql_query("insert into blog_groups set name='$post_category_name', slug='$slug'");
+            $result = $model->insert_blog_category($post_category_name, $slug);
             if ($result) {
                 $warning = ['Category Data saved successfully!'];
                 $this->template->vars('warning', $warning);
@@ -209,6 +205,5 @@ class Controller_BlogCategory extends Controller_Base{
             $this->main->view_layout('blogcategory/blog_category_form');
         }
     }
-
 
 }

@@ -218,4 +218,42 @@ Class Model_User
         $result = mysql_query($q);
         return $result;
     }
+
+    public function get_user_data($user_id)
+    {
+        $rowsni = $this->get_user_by_id($user_id);
+        if(isset($rowsni)){
+            return array(
+                'email' => $rowsni['email'],
+                'bill_firstname' => $rowsni['bill_firstname'],
+                'bill_lastname' => $rowsni['bill_lastname'],
+                'bill_organization' => $rowsni['bill_organization'],
+                'bill_address1' => $rowsni['bill_address1'],
+                'bill_address2' => $rowsni['bill_address2'],
+                'bill_province' => $rowsni['bill_province'],
+                'bill_province_other' => $rowsni['bill_province_other'],
+                'bill_city' => $rowsni['bill_city'],
+                'bill_country' => $rowsni['bill_country'],
+                'bill_postal' => $rowsni['bill_postal'],
+                'bill_phone' => $rowsni['bill_phone'],
+                'bill_fax' => $rowsni['bill_fax'],
+                'bill_email' => $rowsni['bill_email'],
+                'ship_firstname' => $rowsni['ship_firstname'],
+                'ship_lastname' => $rowsni['ship_lastname'],
+                'ship_organization' => $rowsni['ship_organization'],
+                'ship_address1' => $rowsni['ship_address1'],
+                'ship_address2' => $rowsni['ship_address2'],
+                'ship_city' => $rowsni['ship_city'],
+                'ship_province' => $rowsni['ship_province'],
+                'ship_province_other' => $rowsni['ship_province_other'],
+                'ship_country' => $rowsni['ship_country'],
+                'ship_postal' => $rowsni['ship_postal'],
+                'ship_phone' => $rowsni['ship_phone'],
+                'ship_fax' => $rowsni['ship_fax'],
+                'ship_email' => $rowsni['ship_email']
+            );
+        }
+        return false;
+    }
+
 }

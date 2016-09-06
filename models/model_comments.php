@@ -1,24 +1,7 @@
 <?php
 
-class Model_Comments
+class Model_Comments extends Model_Model
 {
-    static private $_instance = null;
-
-    private function __clone()
-    {
-    }
-
-    private function __construct()
-    {
-    }
-
-    public static function getInstance()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
 
     public function get($ID)
     {

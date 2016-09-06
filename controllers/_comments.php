@@ -15,6 +15,7 @@ class Controller_Comments extends Controller_Base
         $this->registry = $main->registry;
         $this->template = $main->template;
     }
+
     public function show()
     {
         $redirect_to_url = true;
@@ -22,63 +23,12 @@ class Controller_Comments extends Controller_Base
         $this->comments_list();
         $this->template->view("comments/comments_list");
     }
-    public function comment_add()
-    {
 
-        $redirect_to_url = true;
-        $this->main->is_user_authorized($redirect_to_url);
-
-        $this->main->view('comments/comments_add_form');
-    }
-    public static function validateCommentData($Data, $Title){
-        $error_msg = array();
-
-        if (strlen($Title) < TITLE_MIN_CHARS || strlen($Title) > TITLE_MAX_CHARS) {
-            $error_msg[] = "Title length < " . TITLE_MIN_CHARS . " chars!!!! Maximum " . TITLE_MAX_CHARS . " chars!";
-        }
-        if (strlen($Data) < DATA_MIN_CHARS || strlen($Data) > DATA_MAX_CHARS) {
-            $error_msg[] = "Comment text < " . DATA_MIN_CHARS . " chars!!! Maximum " . DATA_MAX_CHARS . " chars!";
-        }
-        return $error_msg;
-    }
-    public function comment_save(){
-        $redirect_to_url = true;
-        $this->main->is_user_authorized($redirect_to_url);
-
-        $comments_page = BASE_URL . '/comments';
-        $main_page = BASE_URL . '/shop';
-
-        $Data = htmlspecialchars($_POST['comment_data']);
-        $Title = htmlspecialchars($_POST['comment_title']);
-        $UserID = $_SESSION['_'];
-
-
-
-        $errors = $this->validateCommentData($Data, $Title);
-        if (count($errors) > 0) {
-            $this->template->vars("errs", $this->validateCommentData($Data, $Title));
-            $this->template->view_layout("comments/save_error");
-            return 0;
-        }
-        $comm = new Model_Comment(0, $Title, $Data, NULL, $UserID, false);//Bug
-        if (Model_Comments::getInstance()->add($comm)) {
-            $this->template->vars('comments_page', $comments_page);
-            $this->template->vars('main_page', $main_page);
-            $this->template->view_layout("comments/save_complate");
-            return 0;
-        } else {
-            $errors[] = "Unknown error!!!";
-            $this->template->vars("errs", $errors);
-            $this->template->view_layout("comments/save_error");
-            return 0;
-        }
-    }
     private function comments_list()
     {
-        $m = Model_Comments::getInstance();
-        $model = new Model_Users();
+        $m = new Model_Comments();
         if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
+            $userInfo = $m->validData($_GET['page']);
             $page = $userInfo['data'];
         } else {
             $page = 1;
@@ -135,23 +85,80 @@ class Controller_Comments extends Controller_Base
         $this->template->vars("content", $content);
 
     }
-    public function show_comments(){
+
+    public function comment_add()
+    {
+
+        $redirect_to_url = true;
+        $this->main->is_user_authorized($redirect_to_url);
+
+        $this->main->view('comments/comments_add_form');
+    }
+
+    public function comment_save()
+    {
+        $redirect_to_url = true;
+        $this->main->is_user_authorized($redirect_to_url);
+
+        $comments_page = BASE_URL . '/comments';
+        $main_page = BASE_URL . '/shop';
+
+        $Data = htmlspecialchars($_POST['comment_data']);
+        $Title = htmlspecialchars($_POST['comment_title']);
+        $UserID = $_SESSION['_'];
+
+
+        $errors = $this->validateCommentData($Data, $Title);
+        if (count($errors) > 0) {
+            $this->template->vars("errs", $this->validateCommentData($Data, $Title));
+            $this->template->view_layout("comments/save_error");
+            return 0;
+        }
+        $comm = new Model_Comment(0, $Title, $Data, NULL, $UserID, false);//Bug
+        if (Model_Comments::getInstance()->add($comm)) {
+            $this->template->vars('comments_page', $comments_page);
+            $this->template->vars('main_page', $main_page);
+            $this->template->view_layout("comments/save_complate");
+            return 0;
+        } else {
+            $errors[] = "Unknown error!!!";
+            $this->template->vars("errs", $errors);
+            $this->template->view_layout("comments/save_error");
+            return 0;
+        }
+    }
+
+    public static function validateCommentData($Data, $Title)
+    {
+        $error_msg = array();
+
+        if (strlen($Title) < TITLE_MIN_CHARS || strlen($Title) > TITLE_MAX_CHARS) {
+            $error_msg[] = "Title length < " . TITLE_MIN_CHARS . " chars!!!! Maximum " . TITLE_MAX_CHARS . " chars!";
+        }
+        if (strlen($Data) < DATA_MIN_CHARS || strlen($Data) > DATA_MAX_CHARS) {
+            $error_msg[] = "Comment text < " . DATA_MIN_CHARS . " chars!!! Maximum " . DATA_MAX_CHARS . " chars!";
+        }
+        return $error_msg;
+    }
+
+    public function show_comments()
+    {
         $this->main->test_access_rights();
         $this->get_comments_list();
         $this->main->view_admin('comments/admin_comments');
     }
-    public function get_comments_list(){
+
+    public function get_comments_list()
+    {
         $this->main->test_access_rights();
 
         $base_url = BASE_URL;
 
-        $m = Model_Comments::getInstance();
-
-        $model = new Model_Users();
+        $m = new Model_Comments();
         if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
+            $userInfo = $m->validData($_GET['page']);
             $page = $userInfo['data'];
-        } else{
+        } else {
             $page = 1;
         }
         $per_page = 12;
@@ -162,7 +169,7 @@ class Controller_Comments extends Controller_Base
         $total = $m->getTotalCountComments();
 
         ob_start();
-        foreach ($rows as $row){
+        foreach ($rows as $row) {
             $row['email'] = $m->getUserEmail($row['userid']);
             include('views/html/comments_list.php');
         }
@@ -176,28 +183,32 @@ class Controller_Comments extends Controller_Base
 
         $this->template->vars('comments_list', $comments_list);
     }
-    public function delete(){
+
+    public function delete()
+    {
         $this->main->test_access_rights();
 
         $ID = $_GET['ID'];
-        if(empty($ID)) exit(0);
-        $model = Model_Comments::getInstance();
+        if (empty($ID)) exit(0);
+        $model = new Model_Comments();
         $model->delete($ID);
 
         $this->get_comments_list();
         $this->main->view_layout('comments/admin_comments_list');
     }
-    public function public_comment(){
+
+    public function public_comment()
+    {
         $this->main->test_access_rights();
-        if (isset($_GET['ID'])){
+        if (isset($_GET['ID'])) {
             $ID = $_GET['ID'];
 
-            $model = Model_Comments::getInstance();
+            $model = new Model_Comments();
             $comment = new Model_Comment($model->get($ID));
 
-            if($comment->getModerated() == '1'){
+            if ($comment->getModerated() == '1') {
                 $comment->setModerated(false);
-            }else{
+            } else {
                 $comment->setModerated(true);
             }
 
@@ -206,10 +217,12 @@ class Controller_Comments extends Controller_Base
         $this->get_comments_list();
         $this->main->view_layout('comments/admin_comments_list');
     }
-    public function show_comment(){
+
+    public function show_comment()
+    {
         $this->main->test_access_rights();
-        $m = Model_Comments::getInstance();
-        if(isset($_GET['ID'])) {
+        $m = new Model_Comments();
+        if (isset($_GET['ID'])) {
             $comment = $m->get($_GET['ID']);
             if (empty($comment)) exit(0);
 
@@ -225,11 +238,13 @@ class Controller_Comments extends Controller_Base
         $this->template->vars("content", $content);
         $this->template->view_layout('comments/admin_view_comment');
     }
-    public function edit(){
+
+    public function edit()
+    {
         $this->main->test_access_rights();
-        $m = Model_Comments::getInstance();
+        $m = new Model_Comments();
         $ID = $_GET['ID'];
-        if(empty($ID)) exit(0);
+        if (empty($ID)) exit(0);
         $comment = new Model_Comment($m->get($ID));
 
 
@@ -238,10 +253,12 @@ class Controller_Comments extends Controller_Base
         $this->template->vars('data', $comment->getData());
         $this->template->view_layout("comments/admin_edit_comment");
     }
-    public function update_comment(){
+
+    public function update_comment()
+    {
 
         $this->main->test_access_rights();
-        $m = Model_Comments::getInstance();
+        $m = new Model_Comments();
         $data = htmlspecialchars($_POST['comment_data']);
         $title = htmlspecialchars($_POST['comment_title']);
         $moderated = sprintf("%d", $_POST['publish']);
@@ -249,7 +266,7 @@ class Controller_Comments extends Controller_Base
         //echo "Publish = $moderated";
 
         $ID = $_POST['ID'];
-        if(empty($ID)) exit(0);
+        if (empty($ID)) exit(0);
 
         $comment = new Model_Comment($m->get($ID));
         $comment->setTitle($title);
@@ -257,17 +274,19 @@ class Controller_Comments extends Controller_Base
         $comment->setModerated($moderated);
 
         $errors = $this->validateCommentData($data, $title);
-        if(count($errors) > 0){
+        if (count($errors) > 0) {
             $this->template->vars("errs", $this->validateCommentData($data, $title));
             $this->template->view_layout("comments/save_error");
             return 0;
         }
-        if(Model_Comments::getInstance()->update($comment) == true){
+        if ($m->update($comment)) {
             $this->template->view_layout("comments/admin_save_complate");
             return 0;
         }
     }
-    public function update_comment_list(){
+
+    public function update_comment_list()
+    {
         $this->main->test_access_rights();
         $this->get_comments_list();
         $this->main->view_layout('comments/admin_comments_list');

@@ -17,7 +17,7 @@ class Controller_Shop extends Controller_Base
     function produkt_list()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         $image_suffix = 'b_';
         $add_product_href = BASE_URL . '/add_product';
 
@@ -63,9 +63,14 @@ class Controller_Shop extends Controller_Base
             $cat_id = $userInfo['data'];
             $q = "SELECT a.* FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-                " WHERE  a.pnumber is not null and b.cid='$cat_id' ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
+//                " WHERE  a.pnumber is not null and b.cid='$cat_id' ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
+                " WHERE  a.pnumber is not null and b.cid='" . $cat_id . "'" .
+                " ORDER BY b.display_order ASC, a.dt DESC, a.pid DESC" .
+                " LIMIT $start,$per_page";
         } else {
-            $q = "SELECT * FROM `fabrix_products` WHERE pnumber is not null ORDER BY pid DESC LIMIT $start,$per_page";
+            $q = "SELECT * FROM `fabrix_products` WHERE pnumber is not null" .
+                " ORDER BY pid DESC" .
+                " LIMIT $start,$per_page";
         }
         $res = mysql_query($q);
         $res_count_rows = mysql_num_rows($res);
@@ -120,14 +125,22 @@ class Controller_Shop extends Controller_Base
 
     function produkt_filtr_list()
     {
-        $model = new Model_Users();
+        $model = new Model_Product();
         $userInfo = $model->produkt_filtr_list();
         $this->template->vars('ProductFiltrList', $userInfo);
     }
 
+    function shop()
+    {
+        $this->template->vars('cart_enable', '_');
+        $this->show_category_list();
+        $this->main_produkt_list();
+        $this->main->view('shop');
+    }
+
     private function show_category_list()
     {
-        $model = new Model_Users();
+        $model = new Model_Tools();
         $base_url = BASE_URL;
 
         $items = $model->get_items_for_menu('all');
@@ -146,61 +159,9 @@ class Controller_Shop extends Controller_Base
         $this->template->vars('list_categories', $list_categories);
     }
 
-    function shop()
-    {
-        $this->template->vars('cart_enable', '_');
-        $this->show_category_list();
-        $this->main_produkt_list();
-        $this->main->view('shop');
-    }
-
-    function shop_last()
-    {
-        $this->template->vars('cart_enable', '_');
-        $this->show_category_list();
-        $this->main_produkt_list_new();
-        $page_title = "What's New";
-        $this->template->vars('page_title', $page_title);
-
-        $this->main->view('shop');
-    }
-
-    function shop_specials()
-    {
-        $this->template->vars('cart_enable', '_');
-        $this->show_category_list();
-        $this->main_produkt_list_specials();
-        $page_title = "Limited time Specials.";
-        $this->template->vars('page_title', $page_title);
-
-        $this->main->view('shop');
-    }
-
-    function shop_popular()
-    {
-        $this->template->vars('cart_enable', '_');
-        $this->show_category_list();
-        $this->main_produkt_list_popular();
-        $page_title = "Popular Textile";
-        $this->template->vars('page_title', $page_title);
-
-        $this->main->view('shop');
-    }
-
-    function shop_best()
-    {
-        $this->template->vars('cart_enable', '_');
-        $this->show_category_list();
-        $this->main_produkt_list_best();
-        $page_title = "Best Textile";
-        $this->template->vars('page_title', $page_title);
-
-        $this->main->view('shop');
-    }
-
     function main_produkt_list()
     {
-        $model = new Model_Users();
+        $model = new Model_Product();
         $image_suffix = 'b_';
         if (isset($_SESSION['cart']['items'])) {
             $cart_items = $_SESSION['cart']['items'];
@@ -287,7 +248,8 @@ class Controller_Shop extends Controller_Base
                     " or LOWER(a.pname) like '%" . $search . "%')";
             }
 
-            $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
+//            $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
+            $q .= " ORDER BY b.display_order LIMIT $start,$per_page";
         } else {
             if (!empty($_GET['ptrn'])) {
                 $userInfo = $model->validData($_GET['ptrn']);
@@ -406,10 +368,21 @@ class Controller_Shop extends Controller_Base
         }
     }
 
+    function shop_last()
+    {
+        $this->template->vars('cart_enable', '_');
+        $this->show_category_list();
+        $this->main_produkt_list_new();
+        $page_title = "What's New";
+        $this->template->vars('page_title', $page_title);
+
+        $this->main->view('shop');
+    }
+
     function main_produkt_list_new()
     {
         $max_count_new_items = 50;
-        $model = new Model_Users();
+        $model = new Model_Product();
         $image_suffix = 'b_';
         if (isset($_SESSION['cart']['items'])) {
             $cart_items = $_SESSION['cart']['items'];
@@ -526,10 +499,21 @@ class Controller_Shop extends Controller_Base
         }
     }
 
+    function shop_specials()
+    {
+        $this->template->vars('cart_enable', '_');
+        $this->show_category_list();
+        $this->main_produkt_list_specials();
+        $page_title = "Limited time Specials.";
+        $this->template->vars('page_title', $page_title);
+
+        $this->main->view('shop');
+    }
+
     function main_produkt_list_specials()
     {
         $max_count_new_items = 50;
-        $model = new Model_Users();
+        $model = new Model_Product();
         $image_suffix = 'b_';
         if (isset($_SESSION['cart']['items'])) {
             $cart_items = $_SESSION['cart']['items'];
@@ -652,10 +636,21 @@ class Controller_Shop extends Controller_Base
         }
     }
 
+    function shop_popular()
+    {
+        $this->template->vars('cart_enable', '_');
+        $this->show_category_list();
+        $this->main_produkt_list_popular();
+        $page_title = "Popular Textile";
+        $this->template->vars('page_title', $page_title);
+
+        $this->main->view('shop');
+    }
+
     function main_produkt_list_popular()
     {
         $max_count_new_items = 360;
-        $model = new Model_Users();
+        $model = new Model_Product();
         $image_suffix = 'b_';
         if (isset($_SESSION['cart']['items'])) {
             $cart_items = $_SESSION['cart']['items'];
@@ -772,9 +767,20 @@ class Controller_Shop extends Controller_Base
         }
     }
 
+    function shop_best()
+    {
+        $this->template->vars('cart_enable', '_');
+        $this->show_category_list();
+        $this->main_produkt_list_best();
+        $page_title = "Best Textile";
+        $this->template->vars('page_title', $page_title);
+
+        $this->main->view('shop');
+    }
+
     function main_produkt_list_best()
     {
-        $model = new Model_Users();
+        $model = new Model_Product();
         $image_suffix = 'b_';
         if (isset($_SESSION['cart']['items'])) {
             $cart_items = $_SESSION['cart']['items'];
@@ -891,39 +897,9 @@ class Controller_Shop extends Controller_Base
 
     function widget_products($type, $start, $limit, $layout = 'widget_products')
     {
-        $model = new Model_Users();
-
-        $q = "";
-        $image_suffix = '';
-        switch ($type) {
-            case 'new':
-                $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' ORDER BY  dt DESC, pid DESC LIMIT " . $start . "," . $limit;
-                break;
-            case 'carousel':
-                $image_suffix = 'b_';
-                $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' ORDER BY  dt DESC, pid DESC LIMIT " . $start . "," . $limit;
-                break;
-            case 'best':
-                $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and best = '1' ORDER BY pid DESC LIMIT " . $start . "," . $limit;
-                break;
-            case 'bsells':
-                $q = "select n.*" .
-                    " from (SELECT a.pid, SUM(b.quantity) as s" .
-                    " FROM fabrix_products a" .
-                    " LEFT JOIN fabrix_order_details b ON a . pid = b . product_id" .
-                    " WHERE a . pnumber is not null and a . pvisible = '1'" .
-                    " GROUP BY a . pid" .
-                    " ORDER BY s DESC" .
-                    " LIMIT " . $start . "," . $limit . ") m" .
-                    " LEFT JOIN fabrix_products n ON m.pid = n.pid";
-                break;
-            case 'popular':
-                $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' ORDER BY popular DESC LIMIT " . $start . "," . $limit;
-                break;
-        }
-        $res = mysql_query($q);
-        $row_count = mysql_num_rows($res);
-        if ($res) {
+        $model = new Model_Product();
+        $rows = $model->get_prod_list_by_type($type,$start,$limit,$row_count,$image_suffix);
+        if ($rows) {
 
             $mp = new Model_Price();
 
@@ -934,7 +910,7 @@ class Controller_Shop extends Controller_Base
             $first = true;
             $last = false;
             $i = 1;
-            while ($row = mysql_fetch_array($res)) {
+            foreach ($rows as $row) {
                 $userInfo = $model->getCatName($row[20]);
                 $cat_name = $userInfo['cname'];
                 $row[8] = substr($row[8], 0, 100);
@@ -979,4 +955,30 @@ class Controller_Shop extends Controller_Base
         return $list;
     }
 
+    public function modify_products_images()
+    {
+
+        $model = new Model_Product();
+        $c_image = new Controller_Image();
+        $per_page = 12;
+        $page = 1;
+
+        $total = $model->get_total_count();
+        $count = 0;
+        while ($page <= ceil($total / $per_page)) {
+            $start = (($page++ - 1) * $per_page);
+            $rows = $model->get_products_list($start, $per_page);
+            foreach ($rows as $row) {
+                for ($i = 1; $i < 5; $i++) {
+                    $fimage = $row['image' . $i];
+                    if (isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
+                        $c_image->modify_images_products($fimage);
+                    }
+                }
+            }
+            $count += count($rows);
+            echo $count;
+        }
+
+    }
 }

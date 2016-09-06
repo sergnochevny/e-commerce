@@ -27,7 +27,7 @@ class Controller_Main extends Controller_Base
         $route = trim($route, '/\\');
         $route = explode('&', $route);
         $route_control = $route[0];
-        $model = new Model_Users();
+        $model = new Model_Tools();
         $meta = $model->meta_page($route_control);
         $this->template->vars('meta', $meta);
     }

@@ -1,6 +1,6 @@
 <?php
 
-Class Model_Auth
+Class Model_Auth extends Model_Model
 {
     private $user = null;
     private $admin = null;
@@ -154,23 +154,6 @@ Class Model_Auth
         return $this->admin;
     }
 
-    public function update_passwd()
-    {
-        set_time_limit(3600);
-        $q = "select * from fabrix_accounts where password not like '$2a%'";
-        $res = mysql_query($q);
-        while ($row = mysql_fetch_assoc($res)) {
-            $aid = $row['aid'];
-            $password = $row['password'];
-            $salt = $this->generatestr();
-            $hash = $this->hash_($password, $salt, $this->cost);
-            $check = $this->check($password, $hash);
-            if ($hash == $check) {
-                $q = "update fabrix_accounts set password = '$hash' where aid = '$aid'";
-                mysql_query($q);
-            }
-        }
-    }
 
     public function generate_hash($data)
     {
@@ -179,21 +162,10 @@ Class Model_Auth
         return $hash;
     }
 
-    public function update_admin_passwd()
+    public function getAccessRights($login)
     {
-        set_time_limit(3600);
-        $q = "select * from fabrix_admins where password not like '$2a%'";
-        $res = mysql_query($q);
-        while ($row = mysql_fetch_assoc($res)) {
-            $id = $row['id'];
-            $password = $row['password'];
-            $salt = $this->generatestr();
-            $hash = $this->hash_($password, $salt, $this->cost);
-            $check = $this->check($password, $hash);
-            if ($hash == $check) {
-                $q = "update fabrix_admins set password = '$hash' where id = '$id'";
-                mysql_query($q);
-            }
-        }
+        $resulthatistim = mysql_query("select * from users WHERE login='$login'");
+        $rowsni = mysql_fetch_array($resulthatistim);
+        return array('enter_soll' => $rowsni['soll'], 'password' => $rowsni['password'], 'character' => $rowsni['character']);
     }
 }

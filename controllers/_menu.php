@@ -25,7 +25,7 @@ class Controller_Menu extends Controller_Base
 
     function show_shop_menu()
     {
-        $model = new Model_Users();
+        $model = new Model_Tools();
         $base_url = BASE_URL;
 
         $items = $model->get_items_for_menu('all');
@@ -79,7 +79,7 @@ class Controller_Menu extends Controller_Base
 
     function show_blog_menu()
     {
-        $model = new Model_Users();
+        $model = new Model_Tools();
         $base_url = BASE_URL;
 
         $items = $model->get_items_for_menu('blog_category');

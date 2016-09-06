@@ -180,7 +180,7 @@ class Controller_Cart extends Controller_Base
             $coupon_code = isset($_SESSION['cart']['coupon']) ? $_SESSION['cart']['coupon'] : '';
 
             $discount = 0;
-            $model = new Model_Users();
+            $model = new Model_Cart();
             if (count($cart_items) > 0) {
                 foreach ($cart_items as $key => $item) {
                     $product = $model->get_product_params($key);
@@ -452,7 +452,7 @@ class Controller_Cart extends Controller_Base
                     $this->redirect($url);
                 }
                 $pdiscount = 0;
-                $model = new Model_Users();
+                $model = new Model_Cart();
                 if (count($cart_items) > 0) {
                     foreach ($cart_items as $key => $item) {
                         $pdiscount += $item['discount'];
@@ -508,14 +508,15 @@ class Controller_Cart extends Controller_Base
                     $handlingcost += RATE_HANDLING;
                     $handling = 1;
                 }
-                $mc = new Model_Cart();
+                $mc = new Model_Order();
                 $oid = $mc->register_order($aid, $trid, $shipping, $shipcost, $on_roll,
                     $express_samples, $handling, $shipDiscount,
                     $couponDiscount, $discount, $taxes, $total);
                 if(isset($oid)){
                     if (count($cart_items)>0){
+                        $mp = new Model_Product();
                         foreach($cart_items as $pid=>$item){
-                            $product = $mc->get_product_params($pid);
+                            $product = $model->get_product_params($pid);
                             $pnumber = $product['pnumber'];
                             $pname = $product['pname'];
                             $qty = $item['quantity'];
@@ -528,13 +529,14 @@ class Controller_Cart extends Controller_Base
                                 $inventory = $product['inventory'];
                                 $remainder = $inventory - $qty;
                                 $remainder = ($remainder <= 0) ? 0 : $remainder;
-                                $model->set_product_inventory($pid,$remainder);
+
+                                $mp->set_product_inventory($pid,$remainder);
                             }
                         }
                     }
                     if (count($cart_samples_items)>0){
                         foreach($cart_samples_items as $pid=>$item){
-                            $product = $mc->get_product_params($pid);
+                            $product = $model->get_product_params($pid);
                             $pnumber = $product['pnumber'];
                             $pname = $product['pname'];
                             $qty = 1;
@@ -1330,7 +1332,7 @@ class Controller_Cart extends Controller_Base
 
         $base_url = BASE_URL;
         if (!empty($_GET['p_id'])) {
-            $model = new Model_Users();
+            $model = new Model_Cart();
             $userInfo = $model->validData($_GET['p_id']);
             $produkt_id = $userInfo['data'];
 
@@ -1442,7 +1444,7 @@ class Controller_Cart extends Controller_Base
     {
         $base_url = BASE_URL;
         if (!empty($_GET['p_id'])) {
-            $model = new Model_Users();
+            $model = new Model_Cart();
 
             $userInfo = $model->validData($_GET['p_id']);
             $produkt_id = $userInfo['data'];

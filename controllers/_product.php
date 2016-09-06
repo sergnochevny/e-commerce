@@ -16,7 +16,7 @@ class Controller_Product extends Controller_Base
 
     function product_page($url = 'shop')
     {
-        $model = new Model_Users();
+        $model = new Model_Product();
         $samples_model = new Model_Samples();
         $userInfo = $model->validData($_GET['p_id']);
         $produkt_id = $userInfo['data'];
@@ -190,7 +190,7 @@ class Controller_Product extends Controller_Base
     function edit()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
 
         $action_url = 'edit_db?produkt_id=' . $_GET['produkt_id'];
         $this->template->vars('action_url', $action_url);
@@ -226,7 +226,7 @@ class Controller_Product extends Controller_Base
     function edit_db()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
 
         $action_url = 'edit_db?produkt_id=' . $_GET['produkt_id'];
         $this->template->vars('action_url', $action_url);
@@ -415,7 +415,7 @@ class Controller_Product extends Controller_Base
     function save_db()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
 
         $action_url = 'save_db?produkt_id=' . isset($_GET['produkt_id']) ?: $_GET['produkt_id'] . '';
         $this->template->vars('action_url', $action_url);
@@ -608,7 +608,7 @@ class Controller_Product extends Controller_Base
     function edit_form()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
 
         $userInfo = $model->getProduktInfo();
         $this->template->vars('userInfo', $userInfo);
@@ -628,7 +628,7 @@ class Controller_Product extends Controller_Base
     function add_product()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
 
         $model->getNewProdukt();
 
@@ -665,7 +665,7 @@ class Controller_Product extends Controller_Base
 
     private function del_product_imgs($pid)
     {
-        $model = new Model_Users();
+        $model = new Model_Product();
         $images = $model->getImage($pid);
         $fields_idx = [1, 2, 3, 4, 5];
         foreach ($fields_idx as $idx) {
@@ -687,7 +687,7 @@ class Controller_Product extends Controller_Base
     function del_produkt()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Product();
         $userInfo = $model->validData($_GET['produkt_id']);
         $del_produkt_id = $userInfo['data'];
         $page = isset($_GET['page']) ? $_GET['page'] : null;

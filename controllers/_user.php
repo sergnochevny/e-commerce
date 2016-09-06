@@ -33,7 +33,7 @@ class Controller_User extends Controller_Base
     function get_main_users_list()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_User();
         if (!empty($_GET['page'])) {
             $userInfo = $model->validData($_GET['page']);
             $page = $userInfo['data'];
@@ -44,15 +44,14 @@ class Controller_User extends Controller_Base
 
         $per_page = 12;
 
-        $muser = new Model_User();
-        $total = $muser->get_total_count_users();
+        $total = $model->get_total_count_users();
 
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
 
         $start = (($page - 1) * $per_page);
 
-        $rows = $muser->get_users_list($start, $per_page);
+        $rows = $model->get_users_list($start, $per_page);
 
         ob_start();
         $base_url = BASE_URL;
@@ -73,13 +72,12 @@ class Controller_User extends Controller_Base
     function del_user()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_User();
         $userInfo = $model->validData($_GET['page']);
         $page_id = $userInfo['data'];
         $userInfo = $model->validData($_GET['id']);
         $user_id = $userInfo['data'];
-        $muser = new Model_User();
-        $muser->del_user($user_id);
+        $model->del_user($user_id);
 
         $this->users_list();
     }
@@ -87,7 +85,7 @@ class Controller_User extends Controller_Base
     private function _save_edit_user()
     {
         $result = false;
-        $model = new Model_Users();
+        $model = new Model_User();
         include('include/save_edit_user_post.php');
         $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
         if (!empty($user_id)) {
@@ -95,8 +93,7 @@ class Controller_User extends Controller_Base
                 $error = ['Identify email field!!!'];
                 $this->template->vars('error', $error);
             }else{
-                $muser = new Model_User();
-                if ($muser->user_exist($user_email, $user_id)) {
+                if ($model->user_exist($user_email, $user_id)) {
                     $error[] = 'User with this email already exists!!!';
                     $this->template->vars('error', $error);
                 } else {
@@ -141,7 +138,7 @@ class Controller_User extends Controller_Base
 
                     } else {
 
-                        $result = $muser->update_user_data($user_Same_as_billing, $user_email, $user_first_name, $user_last_name, $user_organization,
+                        $result = $model->update_user_data($user_Same_as_billing, $user_email, $user_first_name, $user_last_name, $user_organization,
                             $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip, $user_telephone,
                             $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name, $s_organization, $user_s_address,
                             $user_s_address2, $user_s_city, $user_s_state, $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax,
@@ -149,7 +146,7 @@ class Controller_User extends Controller_Base
 
                         if ($result) {
                             if (isset($_SESSION['_']) && ($user_id == $_SESSION['_'])) {
-                                $user = $muser->get_user_by_id($user_id);
+                                $user = $model->get_user_by_id($user_id);
                                 if (isset($user)) {
                                     unset($_SESSION['user']);
                                     $_SESSION['user'] = $user;
@@ -163,7 +160,7 @@ class Controller_User extends Controller_Base
                                     $password = $model_auth->hash_($user_create_password, $salt, 12);
                                     $check = $model_auth->check($user_create_password, $password);
                                     if ($password == $check) {
-                                        $result = $muser->update_password($password, $user_id);
+                                        $result = $model->update_password($password, $user_id);
                                         if ($result) {
                                             $warning = ['All data saved successfully!!!'];
                                             $this->template->vars('warning', $warning);
@@ -190,7 +187,7 @@ class Controller_User extends Controller_Base
         }
 
         if ($result) {
-            $userInfo = $model->get_user_edit_data($user_id);
+            $userInfo = $model->get_user_data($user_id);
         } else {
             $userInfo = array(
                 'email' => $user_email,
@@ -285,7 +282,7 @@ class Controller_User extends Controller_Base
     private function _edit_user()
     {
         $base_url = BASE_URL;
-        $model = new Model_Users();
+        $model = new Model_User();
         $userInfo = $model->validData($_GET['user_id']);
         $user_id = $userInfo['data'];
 
@@ -299,7 +296,7 @@ class Controller_User extends Controller_Base
             $back_url .= '1';
 //        }
 
-        $userInfo = $model->get_user_edit_data($user_id);
+        $userInfo = $model->get_user_data($user_id);
 
         $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
         $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
@@ -317,7 +314,7 @@ class Controller_User extends Controller_Base
 
     private function _new_user()
     {
-        $model = new Model_Users();
+        $model = new Model_User();
 
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
@@ -371,7 +368,7 @@ class Controller_User extends Controller_Base
 
     private function _new_user_form()
     {
-        $model = new Model_Users();
+        $model = new Model_User();
 
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
@@ -391,15 +388,14 @@ class Controller_User extends Controller_Base
     private function _save_new_user()
     {
         $result = false;
-        $model = new Model_Users();
+        $model = new Model_User();
         include('include/save_edit_user_post.php');
         $timestamp = time();
         if(empty($user_email)){
             $error[] = 'Identify email field!!!';
             $this->template->vars('error', $error);
         } else {
-            $muser = new Model_User();
-            if ($muser->user_exist($user_email)) {
+            if ($model->user_exist($user_email)) {
                 $error[] = 'User with this email already exists!!!';
                 $this->template->vars('error', $error);
             } else {
@@ -453,7 +449,7 @@ class Controller_User extends Controller_Base
                     $password = $model_auth->hash_($user_create_password, $salt, 12);
                     $check = $model_auth->check($user_create_password, $password);
                     if ($password == $check) {
-                        $result = $muser->insert_user($user_Same_as_billing, $user_email, $password, $user_first_name, $user_last_name, $user_organization,
+                        $result = $model->insert_user($user_Same_as_billing, $user_email, $password, $user_first_name, $user_last_name, $user_organization,
                             $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip,
                             $user_telephone, $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name,
                             $s_organization, $user_s_address, $user_s_address2, $user_s_city, $user_s_state,
@@ -590,7 +586,7 @@ class Controller_User extends Controller_Base
             $this->template->vars('action', $action);
             $this->_new_user_form();
         } else {
-            $model = new Model_Users();
+            $model = new Model_User();
             $user_id = $_GET['user_id'];
 
             $title = 'CHANGE REGISTRATION DATA';
@@ -603,7 +599,7 @@ class Controller_User extends Controller_Base
             $action = $base_url . '/save_edit_registration_data';
             $this->template->vars('action', $action, true);
 
-            $userInfo = $model->get_user_edit_data($user_id);
+            $userInfo = $model->get_user_data($user_id);
 
             $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
             $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
@@ -687,4 +683,28 @@ class Controller_User extends Controller_Base
         mail($email, $subject,$body,$headers);
     }
 
+    public function modify_accounts_password(){
+        $per_page = 200; $page = 1;
+
+        $muser = new Model_User();
+        $model_auth = new Model_Auth();
+        $total = $muser->get_total_count_users();
+        $count = 0;
+        while($page <= ceil($total / $per_page)){
+            $start = (($page++ - 1) * $per_page);
+            $rows = $muser->get_users_list($start, $per_page);
+            foreach( $rows as $row){
+                $id = $row['aid'];
+                $current_password = $row['password'];
+                if(!strpos('$2a$12$',$current_password)){
+                    $salt = $model_auth->generatestr();
+                    $password = $model_auth->hash_($current_password, $salt, 12);
+                    $check = $model_auth->check($current_password, $password);
+                    if ($password == $check) $muser->update_password($password, $id);
+                }
+            }
+            $count += count($rows);
+            echo $count;
+        }
+    }
 }

@@ -293,7 +293,7 @@ class Controller_Blog extends Controller_Base
 
     function post()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
 
 //        $this->widget_new_products();
 //        $this->widget_best_products();
@@ -347,7 +347,7 @@ class Controller_Blog extends Controller_Base
 
     function main_blog_posts()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
 
         if (!empty($_GET['page'])) {
             $userInfo = $model->validData($_GET['page']);
@@ -357,45 +357,27 @@ class Controller_Blog extends Controller_Base
         }
         $per_page = 6;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
-
-            $q_total = "SELECT COUNT(*) FROM `blog_posts` a" .
-                " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
-                " WHERE a.post_status = 'publish' and b.group_id='$cat_id'";
-        } else {
-            $q_total = "SELECT COUNT(*) FROM `blog_posts` WHERE  post_status = 'publish'";
-        }
-
-
-        $res = mysql_query($q_total);
-        $total = mysql_fetch_row($res)[0];
-
-        if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
-        if ($page <= 0) $page = 1;
-
-        $start = (($page - 1) * $per_page);
+        $cat_id = null;
         if (!empty($_GET['cat'])) {
             $userInfo = $model->validData($_GET['cat']);
             $cat_id = $userInfo['data'];
             $catigori_name = $model->getPostCatName($cat_id);
-            $q = "SELECT a.* FROM `blog_posts` a" .
-                " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
-                " WHERE a.post_status = 'publish' and b.group_id='$cat_id' ORDER BY a.post_date DESC, a.ID DESC LIMIT $start,$per_page";
-        } else {
-            $q = "SELECT * FROM `blog_posts` WHERE post_status = 'publish' ORDER BY post_date DESC, ID DESC LIMIT $start,$per_page";
         }
-        $res = mysql_query($q);
-        if ($res) {
-            $res_count_rows = mysql_num_rows($res);
+
+        $total = $model->get_count_publish_posts($cat_id);
+        if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
+        if ($page <= 0) $page = 1;
+        $start = (($page - 1) * $per_page);
+
+        $rows = $model->get_publish_post_list($cat_id, $start, $per_page, $res_count_rows);
+        if ($rows) {
             $this->template->vars('count_rows', $res_count_rows);
 
             ob_start();
 
             date_default_timezone_set('UTC');
 
-            while ($row = mysql_fetch_assoc($res)) {
+            foreach ($rows as $row) {
                 $post_id = $row['ID'];
                 $post_name = $row['post_name'];
                 $base_url = BASE_URL;
@@ -456,7 +438,7 @@ class Controller_Blog extends Controller_Base
 
     function admin_main_blog_cat()
     {
-        $model = new Model_Users();
+        $model = new Model_Tools();
         $base_url = BASE_URL;
 
         $items = $model->get_items_for_menu('blog_category');
@@ -474,7 +456,7 @@ class Controller_Blog extends Controller_Base
 
     function admin_main_blog_posts()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
 
         if (!empty($_GET['page'])) {
             $userInfo = $model->validData($_GET['page']);
@@ -484,45 +466,28 @@ class Controller_Blog extends Controller_Base
         }
         $per_page = 6;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
-
-            $q_total = "SELECT COUNT(*) FROM `blog_posts` a" .
-                " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
-                " WHERE post_type = 'post' and b.group_id='$cat_id'";
-        } else {
-            $q_total = "SELECT COUNT(*) FROM `blog_posts` WHERE post_type = 'post'";
-        }
-
-
-        $res = mysql_query($q_total);
-        $total = mysql_fetch_row($res)[0];
-
-        if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
-        if ($page <= 0) $page = 1;
-
-        $start = (($page - 1) * $per_page);
+        $cat_id = null;
         if (!empty($_GET['cat'])) {
             $userInfo = $model->validData($_GET['cat']);
             $cat_id = $userInfo['data'];
             $catigori_name = $model->getPostCatName($cat_id);
-            $q = "SELECT a.* FROM `blog_posts` a" .
-                " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
-                " WHERE post_type = 'post' and b.group_id='$cat_id' ORDER BY a.post_date DESC, a.ID DESC LIMIT $start,$per_page";
-        } else {
-            $q = "SELECT * FROM `blog_posts` WHERE post_type = 'post' ORDER BY post_date DESC, ID DESC LIMIT $start,$per_page";
         }
-        $res = mysql_query($q);
-        if ($res) {
-            $res_count_rows = mysql_num_rows($res);
+
+        $total = $model->get_count_posts($cat_id);
+        if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
+        if ($page <= 0) $page = 1;
+
+        $start = (($page - 1) * $per_page);
+
+        $rows = $model->get_post_list($cat_id, $start, $per_page, $res_count_rows);
+        if ($rows) {
             $this->template->vars('count_rows', $res_count_rows);
 
             ob_start();
 
             date_default_timezone_set('UTC');
 
-            while ($row = mysql_fetch_assoc($res)) {
+            foreach ($rows as $row) {
                 $post_id = $row['ID'];
                 $post_name = $row['post_name'];
                 $base_url = BASE_URL;
@@ -579,7 +544,7 @@ class Controller_Blog extends Controller_Base
 
     function admin_blog_prepapre()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
 
         $new_post_href = BASE_URL . '/new_post';
 
@@ -613,7 +578,7 @@ class Controller_Blog extends Controller_Base
 
     function del_post()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
         $userInfo = $model->validData($_GET['post_id']);
         $post_id = $userInfo['data'];
         if (!empty($post_id)) {
@@ -630,7 +595,7 @@ class Controller_Blog extends Controller_Base
     public function get_blog_categories($selected_categories = [])
     {
         $res = '';
-        $model = new Model_Users();
+        $model = new Model_Blog();
         $categories = $model->get_blog_categories();
         ob_start();
         include('views/index/blog/blog_categories_select_options.php');
@@ -751,7 +716,7 @@ class Controller_Blog extends Controller_Base
     {
 
         $base_url = BASE_URL;
-        $model = new Model_Users();
+        $model = new Model_Blog();
         $categories = isset($_POST['categories']) ? $_POST['categories'] : [];
         $keywords = isset($_POST['keywords']) ? $_POST['keywords'] : '';
         $title = isset($_POST['title']) ? $_POST['title'] : '';
@@ -823,7 +788,7 @@ class Controller_Blog extends Controller_Base
 
     function edit_post_prepare()
     {
-        $model = new Model_Users();
+        $model = new Model_Blog();
 
         $base_url = BASE_URL;
 
@@ -888,7 +853,7 @@ class Controller_Blog extends Controller_Base
     {
 
         $base_url = BASE_URL;
-        $model = new Model_Users();
+        $model = new Model_Blog();
         $post_id = $_GET['post_id'];
         $categories = isset($_POST['categories']) ? $_POST['categories'] : [];
         $keywords = isset($_POST['keywords']) ? $_POST['keywords'] : '';

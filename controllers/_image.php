@@ -17,7 +17,7 @@ class Controller_Image extends Controller_Base
     function del_pic()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Tools();
         $userInfo = $model->validData($_GET['produkt_id']);
         $pid_id = $userInfo['data'];
         $userInfo = $model->validData($_GET['idx']);
@@ -48,7 +48,7 @@ class Controller_Image extends Controller_Base
         $this->main->test_access_rights();
         if (!empty($_GET['produkt_id'])) {
             $produkt_id = $_GET['produkt_id'];
-            $model = new Model_Users();
+            $model = new Model_Tools();
             $userInfo = $model->validData($produkt_id);
             $produkt_id = $userInfo['data'];
             $userInfo = $model->getImage($produkt_id);
@@ -124,10 +124,10 @@ class Controller_Image extends Controller_Base
 
     }
 
-    function  save_img_link()
+    function save_img_link()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Tools();
         if (!empty($_GET['produkt_id'])) {
             if (!empty($_GET['idx'])) {
                 $userInfo = $model->validData($_GET['produkt_id']);
@@ -146,41 +146,17 @@ class Controller_Image extends Controller_Base
         $this->modify_images();
     }
 
-    private function prepare_product_img($imagename){
-
-        $size = getimagesize("upload/upload/".$imagename);
-        $imgWidth=$size[0];
-        $imgHeight=$size[1];
-
-        $imagefrom = imagecreatefromjpeg("upload/upload/".$imagename);
-
-        $imagetovbig = imagecreatetruecolor(760, 569);
-        imagecopyresampled($imagetovbig, $imagefrom, 0, 0, 0, 0, 760, 569, $imgWidth, $imgHeight);
-        imagejpeg( $imagetovbig,"upload/upload/v_".$imagename, 85);
-        imagedestroy($imagetovbig);
-
-        $imagetobig = imagecreatetruecolor(230,170);
-        imagecopyresampled($imagetobig, $imagefrom, 0, 0, 0, 0, 230, 170, $imgWidth, $imgHeight);
-        imagejpeg( $imagetobig, "upload/upload/b_".$imagename, 85);
-        imagedestroy($imagetobig);
-
-        $imagetosmall = imagecreatetruecolor(100,70);
-        imagecopyresampled($imagetosmall, $imagefrom, 0, 0, 0, 0, 100, 70, $imgWidth, $imgHeight);
-        imagejpeg( $imagetosmall,"upload/upload/".$imagename, 85);
-        imagedestroy($imagefrom);
-    }
-
     function upload_product_img()
     {
         $this->main->test_access_rights();
-        $model = new Model_Users();
+        $model = new Model_Tools();
         if (!empty($_GET['pid'])) {
             $produkt_photo = isset($_GET['idx']) ? $_GET['idx'] : 1;
             $userInfo = $model->validData($_GET['pid']);
             $produkt_id = $userInfo['data'];
             $ts = uniqid();
             $uploaddir = 'upload/upload/';
-            $file = "p".$produkt_id . "t" . $ts . '.jpg';
+            $file = "p" . $produkt_id . "t" . $ts . '.jpg';
             $ext = substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1);
             $filetypes = array('.jpg', '.gif', '.bmp', '.png', '.JPG', '.BMP', '.GIF', '.PNG', '.jpeg', '.JPEG');
 
@@ -199,6 +175,66 @@ class Controller_Image extends Controller_Base
             }
         }
 
+    }
+
+    private function prepare_product_img($imagename)
+    {
+
+        $size = getimagesize("upload/upload/" . $imagename);
+        $imgWidth = $size[0];
+        $imgHeight = $size[1];
+
+        $imagefrom = imagecreatefromjpeg("upload/upload/" . $imagename);
+
+        $imagetovbig = imagecreatetruecolor(760, 569);
+        imagecopyresampled($imagetovbig, $imagefrom, 0, 0, 0, 0, 760, 569, $imgWidth, $imgHeight);
+        imagejpeg($imagetovbig, "upload/upload/v_" . $imagename, 85);
+        imagedestroy($imagetovbig);
+
+        $imagetobig = imagecreatetruecolor(230, 170);
+        imagecopyresampled($imagetobig, $imagefrom, 0, 0, 0, 0, 230, 170, $imgWidth, $imgHeight);
+        imagejpeg($imagetobig, "upload/upload/b_" . $imagename, 85);
+        imagedestroy($imagetobig);
+
+        $imagetosmall = imagecreatetruecolor(100, 70);
+        imagecopyresampled($imagetosmall, $imagefrom, 0, 0, 0, 0, 100, 70, $imgWidth, $imgHeight);
+        imagejpeg($imagetosmall, "upload/upload/" . $imagename, 85);
+        imagedestroy($imagefrom);
+    }
+
+    public function modify_images_products($imagename)
+    {
+
+        if (file_exists("upload/upload/" . $imagename)) {
+            try {
+
+                $size = getimagesize("upload/upload/" . $imagename);
+                $imgWidth = $size[0];
+                $imgHeight = $size[1];
+
+                $imagefrom = imagecreatefromjpeg("upload/upload/" . $imagename);
+
+                if (!file_exists("upload/upload/v_" . $imagename)) {
+                    $imagetovbig = imagecreatetruecolor(760, 569);
+                    imagecopyresampled($imagetovbig, $imagefrom, 0, 0, 0, 0, 760, 569, $imgWidth, $imgHeight);
+                    imagejpeg($imagetovbig, "upload/upload/v_" . $imagename, 85);
+                    imagedestroy($imagetovbig);
+                }
+
+                if (!file_exists("upload/upload/b_" . $imagename)) {
+                    $imagetobig = imagecreatetruecolor(230, 170);
+                    imagecopyresampled($imagetobig, $imagefrom, 0, 0, 0, 0, 230, 170, $imgWidth, $imgHeight);
+                    imagejpeg($imagetobig, "upload/upload/b_" . $imagename, 85);
+                    imagedestroy($imagetobig);
+                }
+                $imagetosmall = imagecreatetruecolor(100, 70);
+                imagecopyresampled($imagetosmall, $imagefrom, 0, 0, 0, 0, 100, 70, $imgWidth, $imgHeight);
+                imagejpeg($imagetosmall, "upload/upload/" . $imagename, 85);
+                imagedestroy($imagefrom);
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+        }
     }
 
 }

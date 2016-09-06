@@ -392,10 +392,10 @@ Class Controller_Index Extends Controller_Base
         $cart->coupon_total_calc();
     }
 
-    function get_prise_in_cart()
+    function get_price_in_cart()
     {
-        $model = new Model_Users();
-        $userInfo = $model->get_prise_in_cart();
+        $model = new Model_Cart();
+        $userInfo = $model->get_price_in_cart();
         $this->template->vars('userInfo', $userInfo);
         echo $userInfo['am_total_cart'];
     }
@@ -692,6 +692,13 @@ Class Controller_Index Extends Controller_Base
 
 //////////////////////////////////////////////////////////// IMAGE
 //////////////////////////////////////////////////////////// USER
+
+    function modify_accounts_password()
+    {
+        include_once('controllers/_user.php');
+        $user = new Controller_User($this->main);
+        $user->modify_accounts_password();
+    }
 
     function users()
     {
@@ -1037,10 +1044,10 @@ Class Controller_Index Extends Controller_Base
 
     function search()
     {
-        $model = new Model_Users();
+        $model = new Model_Tools();
         $userInfo = $model->validData($_GET['s']);
         $search_qv = $userInfo['data'];
-        $userInfo = $model->search($_GET['s']);
+        $userInfo = $search_qv;
         $this->template->vars('userInfo', $userInfo);
         $this->main->view('search/search');
     }
