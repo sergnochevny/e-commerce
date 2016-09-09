@@ -193,7 +193,7 @@ Class Model_Product extends Model_Model
         if (isset($product_id) && $product_id > 0) {
             $result = mysql_query("INSERT INTO `fabrix_temp_product` set `productId` = '$product_id', sid='" . session_id() . "'");
 
-            $_GET['produkt_id'] = $product_id;
+            _A_::$app->get('produkt_id', $product_id);
         }
     }
 
@@ -473,21 +473,21 @@ Class Model_Product extends Model_Model
     {
         $resulthatistim = mysql_query("select * from fabrix_categories WHERE cid='$cat_id'");
         $rowsni = mysql_fetch_array($resulthatistim);
-        return array('cname' => $rowsni['cname']);
+        return $rowsni['cname'];
     }
 
     public function getMnfName($mnf_id)
     {
         $resulthatistim = mysql_query("select * from fabrix_manufacturers WHERE id='$mnf_id'");
         $rowsni = mysql_fetch_array($resulthatistim);
-        return array('manufacturer' => $rowsni['manufacturer']);
+        return $rowsni['manufacturer'];
     }
 
     public function getPtrnName($ptrn_id)
     {
         $resulthatistim = mysql_query("select * from fabrix_patterns WHERE id='$ptrn_id'");
         $rowsni = mysql_fetch_array($resulthatistim);
-        return array('pattern' => $rowsni['pattern']);
+        return $rowsni['pattern'];
     }
 
     public function get_data_categories($category_id)

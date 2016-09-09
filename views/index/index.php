@@ -1,9 +1,6 @@
 <body
     class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 
-<!--<link rel='stylesheet' id='toko-style-css' href='../../iluvfabrix/css/style.css' type='text/css' media='all'
-      xmlns="http://www.w3.org/1999/html"/>-->
-
 <!--Slider-->
 <link rel='stylesheet' href='<?php echo $base_url; ?>/views/css/owl.carousel.css' type='text/css' media='all'/>
 <script type='text/javascript' src='<?php echo $base_url; ?>/views/js/owl.carousel.min.js'></script>
@@ -94,7 +91,7 @@
                                                 <div class="wpb_wrapper">
                                                     <div class="toko-banner toko-banner-left"
                                                          style="background-image:url(<?php echo $base_url; ?>/views/images/temp/textile.png)">
-                                                        <a href="<?php echo $base_url; ?>/shop_last">
+                                                        <a href="<?php echo $base_url; ?>/shop/last">
                                                             <div class="toko-banner-detail">
                                                                 <p class="paragraf1">Brand new life, Brand new
                                                                     textile</p>
@@ -114,7 +111,7 @@
                                                 <div class="wpb_wrapper">
                                                     <div class="toko-banner toko-banner-right"
                                                          style="background-image:url(<?php echo $base_url; ?>/views/images/temp/textile1.png)">
-                                                        <a href="<?php echo $base_url; ?>/shop_best">
+                                                        <a href="<?php echo $base_url; ?>/shop/best">
                                                             <div class="toko-banner-detail">
                                                                 <p class="paragraf1">New Collection</p>
 

@@ -393,36 +393,6 @@ Class Controller_Index Extends Controller_Base
 //////////////////////////////////////////////////////////// STATIC
 //////////////////////////////////////////////////////////// SHOP
 
-    function shop()
-    {
-        $shop = new Controller_Shop($this->main);
-        $shop->shop();
-    }
-
-    function shop_last()
-    {
-        $shop = new Controller_Shop($this->main);
-        $shop->shop_last();
-    }
-
-    function shop_specials()
-    {
-        $shop = new Controller_Shop($this->main);
-        $shop->shop_specials();
-    }
-
-    function shop_popular()
-    {
-        $shop = new Controller_Shop($this->main);
-        $shop->shop_popular();
-    }
-
-    function shop_best()
-    {
-        $shop = new Controller_Shop($this->main);
-        $shop->shop_best();
-    }
-
     function widget_popular_products()
     {
         $shop = new Controller_Shop($this->main);
@@ -476,7 +446,7 @@ Class Controller_Index Extends Controller_Base
 
     function product_page_last()
     {
-        $url = 'shop_last';
+        $url = 'shop/last';
         $this->product_page($url);
     }
 

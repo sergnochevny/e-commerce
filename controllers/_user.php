@@ -1,18 +1,7 @@
 <?php
 
-class Controller_User extends Controller_Base
+class Controller_User extends Controller_Controller
 {
-
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
 
     function users()
     {

@@ -1,20 +1,9 @@
 <?php
 
-class Controller_Shop extends Controller_Base
+class Controller_Shop extends Controller_Controller
 {
 
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
-
-    function produkt_list()
+    public function produkt_list()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -22,29 +11,27 @@ class Controller_Shop extends Controller_Base
         $add_product_href = BASE_URL . '/add_product';
 
         $add_product_href .= '?page=';
-        if (!empty($_GET['page'])) {
-            $add_product_href .= $_GET['page'];
+        if (!empty(_A_::$app->get('page'))) {
+            $add_product_href .= _A_::$app->get('page');
         } else
             $add_product_href .= '1';
 
-        if (!empty($_GET['cat'])) {
-            $add_product_href .= '&cat=' . $_GET['cat'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $add_product_href .= '&cat=' . _A_::$app->get('cat');
         }
         $this->template->vars('add_product_href', $add_product_href);
 
         $model->cleanTempProducts();
 
-        if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
-            $page = $userInfo['data'];
+        if (!empty(_A_::$app->get('page'))) {
+            $page = $model->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
         }
         $per_page = 12;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
                 " WHERE  a.pnumber is not null and b.cid='$cat_id'";
@@ -58,9 +45,8 @@ class Controller_Shop extends Controller_Base
         if ($page <= 0) $page = 1;
 
         $start = (($page - 1) * $per_page);
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $q = "SELECT a.* FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
 //                " WHERE  a.pnumber is not null and b.cid='$cat_id' ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
@@ -80,8 +66,7 @@ class Controller_Shop extends Controller_Base
         ob_start();
 
         while ($row = mysql_fetch_array($res)) {
-            $userInfo = $model->getCatName($row[20]);
-            $cat_name = $userInfo['cname'];
+            $cat_name = $model->getCatName($row[20]);
             $row[8] = substr($row[8], 0, 100);
             $base_url = BASE_URL;
 
@@ -92,11 +77,11 @@ class Controller_Shop extends Controller_Base
             $filename = $base_url . '/' . $filename;
 
             $href = '';
-            if (!empty($_GET['page'])) {
-                $href .= '&page=' . $_GET['page'];
+            if (!empty(_A_::$app->get('page'))) {
+                $href .= '&page=' . _A_::$app->get('page');
             }
-            if (!empty($_GET['cat'])) {
-                $href .= '&cat=' . $_GET['cat'];
+            if (!empty(_A_::$app->get('cat'))) {
+                $href .= '&cat=' . _A_::$app->get('cat');
             }
 
             $price = $row[5];
@@ -117,20 +102,14 @@ class Controller_Shop extends Controller_Base
         $list = ob_get_contents();
         ob_end_clean();
         $this->template->vars('produkt_list', $list);
-
-        include_once('controllers/_paginator.php');
         $paginator = new Controller_Paginator($this);
         $paginator->produkt_paginator($total, $page);
     }
 
-    function produkt_filtr_list()
-    {
-        $model = new Model_Product();
-        $userInfo = $model->produkt_filtr_list();
-        $this->template->vars('ProductFiltrList', $userInfo);
-    }
-
-    function shop()
+    /*
+     * @export
+     */
+    public function shop()
     {
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
@@ -148,18 +127,21 @@ class Controller_Shop extends Controller_Base
         foreach ($items as $item) {
             $href = $base_url . "/shop&cat=" . $item['cid'];
             $name = $item['cname'];
-            include('views/menu/category_item.php');
+            $this->template->vars('href', $href, true);
+            $this->template->vars('name', $name, true);
+            $this->template->view_layout('category_item', 'menu');
         }
         $list_all_category = ob_get_contents();
+        $this->template->vars('list_all_category', $list_all_category, true);
         ob_end_clean();
         ob_start();
-        include('views/menu/list_categories.php');
+        $this->template->view_layout('list_categories', 'menu');
         $list_categories = ob_get_contents();
         ob_end_clean();
         $this->template->vars('list_categories', $list_categories);
     }
 
-    function main_produkt_list()
+    private function main_produkt_list()
     {
         $model = new Model_Product();
         $image_suffix = 'b_';
@@ -174,18 +156,15 @@ class Controller_Shop extends Controller_Base
             $this->template->vars('search', $_POST['s']);
         }
 
-        if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
-            $page = $userInfo['data'];
+        if (!empty(_A_::$app->get('page'))) {
+            $page = $model->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
         }
         $per_page = 12;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
-
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
                 " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id'";
@@ -194,10 +173,8 @@ class Controller_Shop extends Controller_Base
                     " or LOWER(a.pname) like '%" . $search . "%'";
             }
         } else {
-            if (!empty($_GET['ptrn'])) {
-                $userInfo = $model->validData($_GET['ptrn']);
-                $ptrn_id = $userInfo['data'];
-
+            if (!empty(_A_::$app->get('ptrn'))) {
+                $ptrn_id = $model->validData(_A_::$app->get('ptrn'));
                 $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
                     " LEFT JOIN fabrix_product_patterns b ON a.pid = b.prodid " .
                     " WHERE  a.pnumber is not null and a.pvisible = '1' and b.patternId='$ptrn_id'";
@@ -208,10 +185,8 @@ class Controller_Shop extends Controller_Base
                 }
 
             } else {
-                if (!empty($_GET['mnf'])) {
-                    $userInfo = $model->validData($_GET['mnf']);
-                    $mnf_id = $userInfo['data'];
-
+                if (!empty(_A_::$app->get('mnf'))) {
+                    $mnf_id = $model->validData(_A_::$app->get('mnf'));
                     $q_total = "SELECT COUNT(*) FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and manufacturerId = '$mnf_id'";
                     if (isset($search)) {
                         $q_total .= " and (LOWER(pnumber) like '%" . $search . "%'" .
@@ -235,9 +210,8 @@ class Controller_Shop extends Controller_Base
         if ($page <= 0) $page = 1;
 
         $start = (($page - 1) * $per_page);
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $catigori_name = $model->getCatName($cat_id);
             $q = "SELECT a.* FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
@@ -251,9 +225,8 @@ class Controller_Shop extends Controller_Base
 //            $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
             $q .= " ORDER BY b.display_order LIMIT $start,$per_page";
         } else {
-            if (!empty($_GET['ptrn'])) {
-                $userInfo = $model->validData($_GET['ptrn']);
-                $ptrn_id = $userInfo['data'];
+            if (!empty(_A_::$app->get('ptrn'))) {
+                $ptrn_id = $model->validData(_A_::$app->get('ptrn'));
                 $ptrn_name = $model->getPtrnName($ptrn_id);
                 $q = "SELECT a.* FROM `fabrix_products` a" .
                     " LEFT JOIN fabrix_product_patterns b ON a.pid = b.prodId " .
@@ -268,9 +241,8 @@ class Controller_Shop extends Controller_Base
 
                 $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
             } else {
-                if (!empty($_GET['mnf'])) {
-                    $userInfo = $model->validData($_GET['mnf']);
-                    $mnf_id = $userInfo['data'];
+                if (!empty(_A_::$app->get('mnf'))) {
+                    $mnf_id = $model->validData(_A_::$app->get('mnf'));
                     $mnf_name = $model->getMnfName($mnf_id);
                     $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and manufacturerId = '$mnf_id'";
                     if (isset($search)) {
@@ -305,8 +277,7 @@ class Controller_Shop extends Controller_Base
 
             ob_start();
             while ($row = mysql_fetch_array($res)) {
-                $userInfo = $model->getCatName($row[20]);
-                $cat_name = $userInfo['cname'];
+                $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
                 $base_url = BASE_URL;
 
@@ -317,17 +288,17 @@ class Controller_Shop extends Controller_Base
                 $filename = $base_url . '/' . $filename;
 
                 $href = '';
-                if (!empty($_GET['page'])) {
-                    $href .= '&page=' . $_GET['page'];
+                if (!empty(_A_::$app->get('page'))) {
+                    $href .= '&page=' . _A_::$app->get('page');
                 }
-                if (!empty($_GET['cat'])) {
-                    $href .= '&cat=' . $_GET['cat'];
+                if (!empty(_A_::$app->get('cat'))) {
+                    $href .= '&cat=' . _A_::$app->get('cat');
                 }
-                if (!empty($_GET['mnf'])) {
-                    $href .= '&mnf=' . $_GET['mnf'];
+                if (!empty(_A_::$app->get('mnf'))) {
+                    $href .= '&mnf=' . _A_::$app->get('mnf');
                 }
-                if (!empty($_GET['ptrn'])) {
-                    $href .= '&ptrn=' . $_GET['ptrn'];
+                if (!empty(_A_::$app->get('ptrn'))) {
+                    $href .= '&ptrn=' . _A_::$app->get('ptrn');
                 }
 
                 $pid = $row[0];
@@ -358,7 +329,6 @@ class Controller_Shop extends Controller_Base
             $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
             $this->template->vars('main_produkt_list', $list);
 
-            include_once('controllers/_paginator.php');
             $paginator = new Controller_Paginator($this);
             $paginator->produkt_paginator_home($total, $page);
         } else {
@@ -368,7 +338,10 @@ class Controller_Shop extends Controller_Base
         }
     }
 
-    function shop_last()
+    /*
+    * @export
+    */
+    public function last()
     {
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
@@ -379,7 +352,7 @@ class Controller_Shop extends Controller_Base
         $this->main->view('shop');
     }
 
-    function main_produkt_list_new()
+    private function main_produkt_list_new()
     {
         $max_count_new_items = 50;
         $model = new Model_Product();
@@ -391,17 +364,15 @@ class Controller_Shop extends Controller_Base
         }
         $cart = array_keys($cart_items);
 
-        if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
-            $page = $userInfo['data'];
+        if (!empty(_A_::$app->get('page'))) {
+            $page = $model->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
         }
         $per_page = 12;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
 
             $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
@@ -421,9 +392,8 @@ class Controller_Shop extends Controller_Base
 
         if ($total < ($start + $per_page)) $per_page = $total - $start;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $catigori_name = $model->getCatName($cat_id);
             $q = "SELECT a.* FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
@@ -443,8 +413,7 @@ class Controller_Shop extends Controller_Base
 
             ob_start();
             while ($row = mysql_fetch_array($res)) {
-                $userInfo = $model->getCatName($row[20]);
-                $cat_name = $userInfo['cname'];
+                $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
                 $base_url = BASE_URL;
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
@@ -454,11 +423,11 @@ class Controller_Shop extends Controller_Base
                 $filename = $base_url . '/' . $filename;
 
                 $href = '';
-                if (!empty($_GET['page'])) {
-                    $href .= '&page=' . $_GET['page'];
+                if (!empty(_A_::$app->get('page'))) {
+                    $href .= '&page=' . _A_::$app->get('page');
                 }
-                if (!empty($_GET['cat'])) {
-                    $href .= '&cat=' . $_GET['cat'];
+                if (!empty(_A_::$app->get('cat'))) {
+                    $href .= '&cat=' . _A_::$app->get('cat');
                 }
 
                 $pid = $row[0];
@@ -489,9 +458,8 @@ class Controller_Shop extends Controller_Base
             $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
             $this->template->vars('main_produkt_list', $list);
 
-            include_once('controllers/_paginator.php');
             $paginator = new Controller_Paginator($this);
-            $paginator->produkt_paginator_home($total, $page, 'shop_last');
+            $paginator->produkt_paginator_home($total, $page, 'shop/last');
         } else {
             $this->template->vars('count_rows', 0);
             $list = "No Result!!!";
@@ -499,7 +467,10 @@ class Controller_Shop extends Controller_Base
         }
     }
 
-    function shop_specials()
+    /*
+    * @export
+    */
+    public function specials()
     {
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
@@ -510,7 +481,7 @@ class Controller_Shop extends Controller_Base
         $this->main->view('shop');
     }
 
-    function main_produkt_list_specials()
+    private function main_produkt_list_specials()
     {
         $max_count_new_items = 50;
         $model = new Model_Product();
@@ -522,17 +493,15 @@ class Controller_Shop extends Controller_Base
         }
         $cart = array_keys($cart_items);
 
-        if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
-            $page = $userInfo['data'];
+        if (!empty(_A_::$app->get('page'))) {
+            $page = $model->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
         }
         $per_page = 12;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
 
             $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
@@ -552,9 +521,8 @@ class Controller_Shop extends Controller_Base
 
         if ($total < ($start + $per_page)) $per_page = $total - $start;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $catigori_name = $model->getCatName($cat_id);
             $q = "SELECT a.* FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
@@ -576,8 +544,7 @@ class Controller_Shop extends Controller_Base
 
             ob_start();
             while ($row = mysql_fetch_array($res)) {
-                $userInfo = $model->getCatName($row[20]);
-                $cat_name = $userInfo['cname'];
+                $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
                 $base_url = BASE_URL;
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
@@ -587,11 +554,11 @@ class Controller_Shop extends Controller_Base
                 $filename = $base_url . '/' . $filename;
 
                 $href = '';
-                if (!empty($_GET['page'])) {
-                    $href .= '&page=' . $_GET['page'];
+                if (!empty(_A_::$app->get('page'))) {
+                    $href .= '&page=' . _A_::$app->get('page');
                 }
-                if (!empty($_GET['cat'])) {
-                    $href .= '&cat=' . $_GET['cat'];
+                if (!empty(_A_::$app->get('cat'))) {
+                    $href .= '&cat=' . _A_::$app->get('cat');
                 }
 
                 $pid = $row[0];
@@ -626,7 +593,6 @@ class Controller_Shop extends Controller_Base
 
             $this->template->vars('annotation', $annotation);
 
-            include_once('controllers/_paginator.php');
             $paginator = new Controller_Paginator($this);
             $paginator->produkt_paginator_home($total, $page, 'shop_specials');
         } else {
@@ -636,7 +602,10 @@ class Controller_Shop extends Controller_Base
         }
     }
 
-    function shop_popular()
+    /*
+    * @export
+    */
+    public function popular()
     {
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
@@ -647,7 +616,7 @@ class Controller_Shop extends Controller_Base
         $this->main->view('shop');
     }
 
-    function main_produkt_list_popular()
+    private function main_produkt_list_popular()
     {
         $max_count_new_items = 360;
         $model = new Model_Product();
@@ -659,18 +628,15 @@ class Controller_Shop extends Controller_Base
         }
         $cart = array_keys($cart_items);
 
-        if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
-            $page = $userInfo['data'];
+        if (!empty(_A_::$app->get('page'))) {
+            $page = $model->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
         }
         $per_page = 12;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
-
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
                 " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id'";
@@ -688,9 +654,8 @@ class Controller_Shop extends Controller_Base
 
         if ($total < ($start + $per_page)) $per_page = $total - $start;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $catigori_name = $model->getCatName($cat_id);
             $q = "SELECT a.* FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
@@ -710,8 +675,7 @@ class Controller_Shop extends Controller_Base
 
             ob_start();
             while ($row = mysql_fetch_array($res)) {
-                $userInfo = $model->getCatName($row[20]);
-                $cat_name = $userInfo['cname'];
+                $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
                 $base_url = BASE_URL;
 
@@ -722,11 +686,11 @@ class Controller_Shop extends Controller_Base
                 $filename = $base_url . '/' . $filename;
 
                 $href = '';
-                if (!empty($_GET['page'])) {
-                    $href .= '&page=' . $_GET['page'];
+                if (!empty(_A_::$app->get('page'))) {
+                    $href .= '&page=' . _A_::$app->get('page');
                 }
-                if (!empty($_GET['cat'])) {
-                    $href .= '&cat=' . $_GET['cat'];
+                if (!empty(_A_::$app->get('cat'))) {
+                    $href .= '&cat=' . _A_::$app->get('cat');
                 }
 
                 $pid = $row[0];
@@ -757,7 +721,6 @@ class Controller_Shop extends Controller_Base
             $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
             $this->template->vars('main_produkt_list', $list);
 
-            include_once('controllers/_paginator.php');
             $paginator = new Controller_Paginator($this);
             $paginator->produkt_paginator_home($total, $page, 'shop_popular');
         } else {
@@ -767,7 +730,10 @@ class Controller_Shop extends Controller_Base
         }
     }
 
-    function shop_best()
+    /*
+    * @export
+    */
+    public function best()
     {
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
@@ -778,7 +744,7 @@ class Controller_Shop extends Controller_Base
         $this->main->view('shop');
     }
 
-    function main_produkt_list_best()
+    private function main_produkt_list_best()
     {
         $model = new Model_Product();
         $image_suffix = 'b_';
@@ -789,18 +755,15 @@ class Controller_Shop extends Controller_Base
         }
         $cart = array_keys($cart_items);
 
-        if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
-            $page = $userInfo['data'];
+        if (!empty(_A_::$app->get('page'))) {
+            $page = $model->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
         }
         $per_page = 12;
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
-
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
                 " WHERE  a.pnumber is not null and a.best='1' and a.pvisible = '1' and b.cid='$cat_id'";
@@ -815,9 +778,8 @@ class Controller_Shop extends Controller_Base
 
         $start = (($page - 1) * $per_page);
 
-        if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $catigori_name = $model->getCatName($cat_id);
             $q = "SELECT a.* FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
@@ -837,8 +799,7 @@ class Controller_Shop extends Controller_Base
 
             ob_start();
             while ($row = mysql_fetch_array($res)) {
-                $userInfo = $model->getCatName($row[20]);
-                $cat_name = $userInfo['cname'];
+                $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
                 $base_url = BASE_URL;
 
@@ -849,11 +810,11 @@ class Controller_Shop extends Controller_Base
                 $filename = $base_url . '/' . $filename;
 
                 $href = '';
-                if (!empty($_GET['page'])) {
-                    $href .= '&page=' . $_GET['page'];
+                if (!empty(_A_::$app->get('page'))) {
+                    $href .= '&page=' . _A_::$app->get('page');
                 }
-                if (!empty($_GET['cat'])) {
-                    $href .= '&cat=' . $_GET['cat'];
+                if (!empty(_A_::$app->get('cat'))) {
+                    $href .= '&cat=' . _A_::$app->get('cat');
                 }
 
                 $pid = $row[0];
@@ -884,7 +845,6 @@ class Controller_Shop extends Controller_Base
             $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
             $this->template->vars('main_produkt_list', $list);
 
-            include_once('controllers/_paginator.php');
             $paginator = new Controller_Paginator($this);
             $paginator->produkt_paginator_home($total, $page, 'shop_best');
 
@@ -895,10 +855,10 @@ class Controller_Shop extends Controller_Base
         }
     }
 
-    function widget_products($type, $start, $limit, $layout = 'widget_products')
+    public function widget_products($type, $start, $limit, $layout = 'widget_products')
     {
         $model = new Model_Product();
-        $rows = $model->get_prod_list_by_type($type,$start,$limit,$row_count,$image_suffix);
+        $rows = $model->get_prod_list_by_type($type, $start, $limit, $row_count, $image_suffix);
         if ($rows) {
 
             $mp = new Model_Price();
@@ -911,8 +871,7 @@ class Controller_Shop extends Controller_Base
             $last = false;
             $i = 1;
             foreach ($rows as $row) {
-                $userInfo = $model->getCatName($row[20]);
-                $cat_name = $userInfo['cname'];
+                $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
                 $base_url = BASE_URL;
 
@@ -980,5 +939,12 @@ class Controller_Shop extends Controller_Base
             echo $count;
         }
 
+    }
+
+    public function produkt_filtr_list()
+    {
+        $model = new Model_Product();
+        $data = $model->produkt_filtr_list();
+        $this->template->vars('ProductFiltrList', $data);
     }
 }

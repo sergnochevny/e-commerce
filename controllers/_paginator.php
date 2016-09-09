@@ -22,6 +22,8 @@ class Controller_Paginator extends Controller_Controller
         $prev_page = $page - 1;
         $next_page = $page + 1;
 
+        $this->template->vars('page', $page);
+        $this->template->vars('total_rows', $total_rows);
         $this->template->vars('base_url', $base_url);
         $this->template->vars('per_page', $per_page);
         $this->template->vars('showbypage', $showbypage);

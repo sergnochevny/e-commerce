@@ -23,8 +23,8 @@ class Controller_Menu extends Controller_Controller
         foreach ($items as $item) {
             $href = $base_url . "/shop&cat=" . $item['cid'];
             $name = $item['cname'];
-            $this->template->vars('href',$href);
-            $this->template->vars('name',$name);
+            $this->template->vars('href',$href, true);
+            $this->template->vars('name',$name, true);
             $this->template->view_layout('menu_item');
         }
         $menu_all_category = ob_get_contents();
@@ -35,8 +35,8 @@ class Controller_Menu extends Controller_Controller
         foreach ($items as $item) {
             $href = $base_url . "/shop&cat=" . $item['cid'];
             $name = $item['cname'];
-            $this->template->vars('href',$href);
-            $this->template->vars('name',$name);
+            $this->template->vars('href',$href, true);
+            $this->template->vars('name',$name, true);
             $this->template->view_layout('menu_item');
         }
         $menu_new_category = ob_get_contents();
@@ -47,8 +47,8 @@ class Controller_Menu extends Controller_Controller
         foreach ($items as $item) {
             $href = $base_url . "/shop&mnf=" . $item['id'];
             $name = $item['manufacturer'];
-            $this->template->vars('href',$href);
-            $this->template->vars('name',$name);
+            $this->template->vars('href',$href, true);
+            $this->template->vars('name',$name, true);
             $this->template->view_layout('menu_item');
         }
         $menu_manufacturers = ob_get_contents();
@@ -59,8 +59,8 @@ class Controller_Menu extends Controller_Controller
         foreach ($items as $item) {
             $href = $base_url . "/shop&ptrn=" . $item['id'];
             $name = $item['pattern'];
-            $this->template->vars('href',$href);
-            $this->template->vars('name',$name);
+            $this->template->vars('href',$href, true);
+            $this->template->vars('name',$name, true);
             $this->template->view_layout('menu_item');
         }
         $menu_patterns = ob_get_contents();
@@ -75,7 +75,7 @@ class Controller_Menu extends Controller_Controller
         $shop_menu = ob_get_contents();
         ob_end_clean();
 
-        $this->main->template->vars('shop_menu', $shop_menu);
+        $this->template->vars('shop_menu', $shop_menu);
 
     }
 
@@ -90,21 +90,20 @@ class Controller_Menu extends Controller_Controller
         foreach ($items as $item) {
             $href = $base_url . "/blog&cat=" . $item['group_id'];
             $name = $item['name'];
-            $this->template->vars('href',$href);
-            $this->template->vars('name',$name);
+            $this->template->vars('href',$href, true);
+            $this->template->vars('name',$name, true);
             $this->template->view_layout('menu_item');
         }
         $menu_blog_category = ob_get_contents();
         ob_end_clean();
 
         ob_start();
-
-        include('views/menu/blog_menu.php');
-
-        $shop_menu = ob_get_contents();
+        $this->template->vars('menu_blog_category',$menu_blog_category);
+        $this->template->view_layout('blog_menu');
+        $blog_menu = ob_get_contents();
         ob_end_clean();
 
-        $this->main->template->vars('blog_menu', $shop_menu);
+        $this->template->vars('blog_menu', $blog_menu);
 
     }
 

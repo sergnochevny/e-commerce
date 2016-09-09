@@ -15,10 +15,6 @@ Class Router
     protected function init()
     {
         $this->route = (empty(_A_::$app->get('route'))) ? '' : _A_::$app->get('route');
-        $get = _A_::$app->get();
-        unset($get['route']);
-        _A_::$app->setGet($get);
-//        _A_::$app->get('route', );
         if (empty($this->route)) $this->route = 'index';
         $this->route = trim($this->route, '/\\');
         $this->setPath(SITE_PATH . 'controllers' . DS);
@@ -86,11 +82,13 @@ Class Router
     private function setBaseUrl()
     {
         $end_uri = explode('/', _A_::$app->server('REQUEST_URI'));
+        $end_get = explode('/', _A_::$app->get('route'));
         array_pop($end_uri);
+        $end_uri = array_filter(array_diff($end_uri,$end_get));
         if ($this->action == 'post') array_pop($end_uri);
         $this->base_url = strtolower(explode('/', _A_::$app->server('SERVER_PROTOCOL'))[0]) .
             "://" . _A_::$app->server('SERVER_NAME') .
-            (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT')) .
+            (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT')) . DS .
             implode('/', $end_uri);
         define('BASE_URL', $this->base_url);
     }
