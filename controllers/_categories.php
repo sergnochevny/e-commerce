@@ -47,7 +47,7 @@ class Controller_Categories extends Controller_Base
                 $row[5] = "No";
             }
             ob_start();
-            include('./views/index/category/get_categories_list.php');
+            include('./views/category/get_categories_list.php');
             $categories .= ob_get_contents();
             ob_end_clean();
         }
@@ -117,7 +117,7 @@ class Controller_Categories extends Controller_Base
         while ($row = mysql_fetch_array($results)) {
             $resulthatistim = mysql_query("select * from fabrix_categories WHERE cid='$category_id'");
             $rowsni = mysql_fetch_array($resulthatistim);
-            include('./views/index/category/display_order_categories.php');
+            include('./views/category/display_order_categories.php');
         }
         $order_categories = ob_get_contents();
         ob_end_clean();
@@ -131,7 +131,7 @@ class Controller_Categories extends Controller_Base
         $results = mysql_query("select * from fabrix_categories ORDER BY  `displayorder` ASC ");
         ob_start();
         while ($row = mysql_fetch_array($results)) {
-            include('./views/index/category/display_order_categories_wo_select.php');
+            include('./views/category/display_order_categories_wo_select.php');
             $curr_order = (int)$row[3] + 1;
         }
         $this->template->vars('curr_order', $curr_order);

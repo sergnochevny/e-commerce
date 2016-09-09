@@ -100,7 +100,7 @@ class Controller_Product extends Controller_Base
             $tmp = $mp->getPrintPrice($rDiscountPrice, $sDiscountPrice, $inventory, $piece);
             $field_name = "Sale price:";
             $field_value = sprintf("%s<br><strong>%s</strong>", $sPriceDiscount, $sDiscountPrice);
-            include('views/index/discount/product_page_discount_info.php');
+            include('views/discount/product_page_discount_info.php');
         }
 
         if ($bDiscount) {
@@ -115,20 +115,20 @@ class Controller_Product extends Controller_Base
             } else {
                 $field_value = sprintf("<strong>%s</strong><br>Reduced by %s.", $sDiscountPrice, $sDiscount);
             }
-            include('views/index/discount/product_page_discount_info.php');
+            include('views/discount/product_page_discount_info.php');
         }
 
         if (strlen($sSystemDiscount) > 0) {
             $field_name = 'Shipping discount:';
             $field_value = $sSystemDiscount;
-            include('views/index/discount/product_page_discount_info.php');
+            include('views/discount/product_page_discount_info.php');
         }
 
         if (count($discountIds) > 0) {
             if ($mp->getNextChangeInDiscoutDate($discountIds) > 0) {
                 $field_name = 'Sale ends in:';
                 $field_value = $mp->displayDiscountTimeRemaining($discountIds);
-                include('views/index/discount/product_page_discount_info.php');
+                include('views/discount/product_page_discount_info.php');
             }
         }
         $discount_info = ob_get_contents();

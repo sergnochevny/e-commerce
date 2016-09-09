@@ -111,7 +111,7 @@ class Controller_Shop extends Controller_Base
                 $format_price = sprintf('%s /yard', $price);
             }
 
-            include('./views/index/product/product_inner.php');
+            include('./views/product/product_inner.php');
         }
 
         $list = ob_get_contents();
@@ -148,12 +148,12 @@ class Controller_Shop extends Controller_Base
         foreach ($items as $item) {
             $href = $base_url . "/shop&cat=" . $item['cid'];
             $name = $item['cname'];
-            include('views/index/menu/category_item.php');
+            include('views/menu/category_item.php');
         }
         $list_all_category = ob_get_contents();
         ob_end_clean();
         ob_start();
-        include('views/index/menu/list_categories.php');
+        include('views/menu/list_categories.php');
         $list_categories = ob_get_contents();
         ob_end_clean();
         $this->template->vars('list_categories', $list_categories);
@@ -350,7 +350,7 @@ class Controller_Shop extends Controller_Base
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
 
-                include('./views/index/product/main_produkt_list.php');
+                include('./views/product/main_produkt_list.php');
             }
 
             $list = ob_get_contents();
@@ -481,7 +481,7 @@ class Controller_Shop extends Controller_Base
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
 
-                include('./views/index/product/main_produkt_list_new.php');
+                include('./views/product/main_produkt_list_new.php');
             }
 
             $list = ob_get_contents();
@@ -614,7 +614,7 @@ class Controller_Shop extends Controller_Base
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
 
-                include('./views/index/product/main_produkt_list_specials.php');
+                include('./views/product/main_produkt_list_specials.php');
             }
 
             $list = ob_get_contents();
@@ -749,7 +749,7 @@ class Controller_Shop extends Controller_Base
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
 
-                include('./views/index/product/main_produkt_list_popular.php');
+                include('./views/product/main_produkt_list_popular.php');
             }
 
             $list = ob_get_contents();
@@ -876,7 +876,7 @@ class Controller_Shop extends Controller_Base
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
 
-                include('./views/index/product/main_produkt_list_best.php');
+                include('./views/product/main_produkt_list_best.php');
             }
 
             $list = ob_get_contents();
@@ -942,7 +942,7 @@ class Controller_Shop extends Controller_Base
 
                 $last = $i++ == $row_count;
 
-                include('./views/index/widgets/' . $layout . '.php');
+                include('./views/widgets/' . $layout . '.php');
                 $first = false;
             }
 

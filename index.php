@@ -1,7 +1,4 @@
 <?php
-include ('config.php'); 
-include (SITE_PATH . DS . 'core' . DS . 'core.php'); 
-$router = new Router($registry);
-$registry->set ('router', $router);
-$router->setPath (SITE_PATH . 'controllers/');
-$router->start();
+include ('core/core.php');
+_A_::start();
+exit;

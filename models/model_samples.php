@@ -21,7 +21,7 @@ define('SAMPLES_PURCHASE_BEFORE_DAY', 4);
 define('SAMPLES_SHIPPING_DISCLAIMER', 'I acknowledge that in rare cases samples may not arrive overnight due to circumstances beyond the control of iLuvFabrix.com. There are no guarantees or refunds given for this service.');
 
 
-Class Model_Samples  extends Model_Model
+Class Model_Samples extends Model_Model
 {
 
     function calculateSamplesPrice($products, $samples){

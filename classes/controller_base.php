@@ -3,14 +3,14 @@ Abstract Class Controller_Base {
 
 	public $registry;
 	public $template;
-	public $layouts;
+
+	protected $layouts;
 	
 	public $vars = array();
 
-	function __construct($registry) {
-		$this->registry = $registry;
-
-		$this->template = new Template($this->layouts, 'Controller_index');
+	function __construct() {
+		$this->registry = _A_::$app->registry();
+		$this->template = new Template($this->layouts, get_called_class());
 	}
 
 	function redirect($url){

@@ -1,113 +1,102 @@
 <?php
 
 
-Class Router {
+Class Router
+{
 
-	private $registry;
-	private $path;
-	private $args = array();
+    public $base_url;
+    public $route;
+    public $controller;
+    public $action;
 
+    private $path;
+    private $args = [];
 
-	function __construct($registry) {
-		$this->registry = $registry;
-	}
+    protected function init()
+    {
+        $this->route = (empty(_A_::$app->get('route'))) ? '' : _A_::$app->get('route');
+        $get = _A_::$app->get();
+        unset($get['route']);
+        _A_::$app->setGet($get);
+//        _A_::$app->get('route', );
+        if (empty($this->route)) $this->route = 'index';
+        $this->route = trim($this->route, '/\\');
+        $this->setPath(SITE_PATH . 'controllers' . DS);
+    }
 
-
-	function setPath($path) {
+    private function setPath($path)
+    {
 
         $path = rtrim($path, '/\\');
         $path .= DS;
 
         if (is_dir($path) == false) {
-			throw new Exception ('Invalid controller path: `' . $path . '`');
-
+            throw new Exception ('Invalid controller path: `' . $path . '`');
         }
         $this->path = $path;
-	}	
-	
+    }
 
-	private function getController(&$file, &$controller, &$action, &$args) {
-        $route = (empty($_GET['route'])) ? '' : $_GET['route'];
-		unset($_GET['route']);
-        if (empty($route)) {
-			$route = 'index'; 
-		}
-		
+    public function start()
+    {
+        $this->init();
 
-        $route = trim($route, '/\\');
-        $parts = explode('/', $route);
+        $file = null;
+        $this->getController();
+        $this->setBaseUrl();
+        try {
+            $class = 'Controller_' . $this->controller;
+            _A_::$app->registry()->set('controller', $this->controller);
+            _A_::$app->registry()->set('action', $this->action);
 
+            $controller = new $class();
 
+            if (is_callable([$controller, $this->action]) == false) {
+                $main = new Controller_Main($controller);
+                $main->error404();
+            } else {
+                call_user_func([$controller, $this->action]);
+            }
+        }catch (Exception $e){
+            (new Controller_Main())->error404($e->getMessage());
+        }
+    }
+
+    function getController()
+    {
+        $parts = explode('/', $this->route);
         $cmd_path = $this->path;
         foreach ($parts as $part) {
-			$fullpath = $cmd_path . $part;
-
-
-			if (is_dir($fullpath)) {
-				$cmd_path .= $part . DS;
-				array_shift($parts);
-				continue;
-			}
-
-
-			if (is_file($fullpath . '.php')) {
-				$controller = $part;
-				array_shift($parts);
-				break;
-			}
+            if (is_dir($cmd_path . $part)) {
+                $cmd_path .= $part . DS;
+                array_shift($parts);
+                continue;
+            }
+            if (is_file($cmd_path . '_' . $part . '.php')) {
+                $this->controller = $part;
+                array_shift($parts);
+                break;
+            }
         }
+        if (empty($this->controller)) $this->controller = 'index';
+        $this->action = array_shift($parts);
+        if (empty($this->action)) $this->action = $this->controller;
+        $this->args = $parts;
+    }
 
-		
-        if (empty($controller)) {
-			$controller = 'index'; 
-		}
+    private function setBaseUrl()
+    {
+        $end_uri = explode('/', _A_::$app->server('REQUEST_URI'));
+        array_pop($end_uri);
+        if ($this->action == 'post') array_pop($end_uri);
+        $this->base_url = strtolower(explode('/', _A_::$app->server('SERVER_PROTOCOL'))[0]) .
+            "://" . _A_::$app->server('SERVER_NAME') .
+            (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT')) .
+            implode('/', $end_uri);
+        define('BASE_URL', $this->base_url);
+    }
 
-
-        $action = array_shift($parts);
-        if (empty($action)) { 
-			$action = 'index'; 
-		}
-
-        $file = $cmd_path . $controller . '.php';
-        $args = $parts;
-	}
-	
-	function start() {
-
-        $this->getController($file, $controller, $action, $args);
-
-		$end_uri = explode('/', $_SERVER['REQUEST_URI']);
-		array_pop($end_uri);
-		if ($action == 'post') array_pop($end_uri);
-		$b_u = strtolower(explode('/', $_SERVER['SERVER_PROTOCOL'])[0]) . "://" . $_SERVER['SERVER_NAME'] . ($_SERVER['SERVER_PORT'] == '80' ? '' : ':' . $_SERVER['SERVER_PORT']) . implode('/', $end_uri);
-		define('BASE_URL', $b_u);
-
-		if (is_readable($file) == false) {
-			include_once('controllers/_main.php');
-			$main = new Controller_Main($this->registry);
-			$main->error404();
-        }
-		
-
-        include ($file);
-
-        $class = 'Controller_' . $controller;
-		$this->registry->controller = $controller;
-		$this->registry->action = $action;
-
-        $controller = new $class($this->registry);
-
-        if (is_callable(array($controller, $action)) == false) {
-			include_once('controllers/_main.php');
-			$main = new Controller_Main($controller);
-			$main->error404();
-        }
-
-
-        $controller->$action();
-	}
-
-	public function redirect($url){
-		exit("<script>window.location='" . $url . "';</script>");
-	}
+    public function redirect($url)
+    {
+        exit("<script>window.location='" . $url . "';</script>");
+    }
 }

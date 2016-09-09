@@ -3,17 +3,6 @@
 class Controller_Authorization extends Controller_Base
 {
 
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
-
     function update_passwd()
     {
         $model = new Model_Auth();
@@ -26,19 +15,97 @@ class Controller_Authorization extends Controller_Base
         $model->update_admin_passwd();
     }
 
-    function user_authorize($mail, $password)
+    function authorization()
     {
-        $mail = mysql_real_escape_string(stripslashes(strip_tags(trim($mail))));
-        $password = mysql_real_escape_string(stripslashes(strip_tags(trim($password))));
+        $base_url = BASE_URL;
         $model = new Model_Auth();
-        $res = $model->user_authorize($mail, $password);
-        if ($res) {
-            $user = $model->get_user_data();
-            $_SESSION['_'] = $user['aid'];
-            $_SESSION['user'] = $user;
-            //User => Session;
+        if ($this->is_admin_logged()) {
+            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/admin_home';
+            $this->redirect($url);
         }
-        return $res;
+        if ($this->is_user_logged()) {
+            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/shop';
+            $this->redirect($url);
+        }
+        if ($this->is_set_admin_remember()) {
+            $remember = _A_::$app->cookie('_ar');
+            if ($model->is_admin_remember($remember)) {
+                $admin = $model->get_admin_data();
+                _A_::$app->setSession('_a',$admin['id']);
+                $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/admin_home';
+                $this->redirect($url);
+            }
+        }
+        if ($this->is_set_user_remember()) {
+            $remember = _A_::$app->cookie('_r');
+            if ($model->is_user_remember($remember)) {
+                $user = $model->get_user_data();
+                _A_::$app->setSession('_',$user['aid']);
+                _A_::$app->setSession('user',$user);
+                $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/shop';
+                $this->redirect($url);
+            }
+        }
+
+        if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
+            !is_null(_A_::$app->post('login')) && !isi_null(_A_::$app->post('pass'))) {
+            if (empty(_A_::$app->post('login'))) exit('Empty Email/Username field');
+            if (empty(_A_::$app->post('pass'))) exit('Empty Password field');
+
+            $login = _A_::$app->post('login');
+            $password = _A_::$app->post('pass');
+
+            if ($model->is_admin($login)) {
+                if ($this->admin_authorize($login, $password)) {
+                    $url = base64_decode(urldecode(_A_::$app->post('redirect')));
+                    $url = (strlen($url) > 0) ? $url : $base_url . '/admin_home';
+                    $this->redirect($url);
+                }
+            }
+            if ($model->is_user($login)) {
+                if ($this->user_authorize($login, $password)) {
+                    $url = base64_decode(urldecode(_A_::$app->post('redirect')));
+                    $url = (strlen($url) > 0) ? $url : $base_url . '/shop';
+                    $this->redirect($url);
+                }
+            }
+            exit('Wrong Email/Username or Password');
+        } else {
+
+            $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : '';
+            $registration_url = $base_url . '/registration_user';
+            if (!is_null(_A_::$app->get('url'))) {
+                $registration_url .= '?url=' . _A_::$app->get('url');
+            }
+            $lostpassword_url = $base_url . '/lost_password';
+            if (!is_null(_A_::$app->get('url'))) {
+                $lostpassword_url .= '?url=' . _A_::$app->get('url');
+            }
+            $this->template->vars('registration_url', $registration_url);
+            $this->template->vars('lostpassword_url', $lostpassword_url);
+            $this->template->vars('redirect', $redirect);
+            $this->main->view('authorization');
+        }
+    }
+
+    function is_admin_logged()
+    {
+        return !is_null(_A_::$app->session('_a'));
+    }
+
+    function is_user_logged()
+    {
+        return !is_null(_A_::$app->session('_'));
+    }
+
+    function is_set_admin_remember()
+    {
+        return !is_null(_A_::$app->cookie('_ar'));
+    }
+
+    function is_set_user_remember()
+    {
+        return !is_null(_A_::$app->cookie('_ar'));
     }
 
     function admin_authorize($login, $password)
@@ -49,200 +116,125 @@ class Controller_Authorization extends Controller_Base
         $res = $model->admin_authorize($login, $password);
         if ($res) {
             $admin = $model->get_admin_data();
-            $_SESSION['_a'] = $admin['id'];
+            _A_::$app->setSession('_a', $admin['id']);
         }
         return $res;
     }
 
-    function is_set_admin_remember(){
-        return isset($_COOKIE['_ar']);
-    }
-
-    function is_set_user_remember(){
-        return isset($_COOKIE['_ar']);
-    }
-
-    function is_user_authorized()
+    function user_authorize($mail, $password)
     {
-        if (isset($_SESSION['_'])) return true;
-        if (isset($_COOKIE['_r'])) {
-            $remember = $_COOKIE['_r'];
-            $model = new Model_Auth();
-            if ($model->is_user_remember($remember)) {
-                $user = $model->get_user_data();
-                $_SESSION['_'] = $user['aid'];
-                $_SESSION['user'] = $user;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function is_admin_authorized()
-    {
-        if (isset($_SESSION['_a'])) return true;
-        if (isset($_COOKIE['_ar'])) {
-            $remember = $_COOKIE['_ar'];
-            $model = new Model_Auth();
-            if ($model->is_admin_remember($remember)) {
-                $admin = $model->get_admin_data();
-                $_SESSION['_a'] = $admin['id'];
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function is_admin_logged()
-    {
-        return isset($_SESSION['_a']);
-    }
-
-    function is_user_logged()
-    {
-        return isset($_SESSION['_']);
-    }
-
-    function authorization()
-    {
-        $base_url = BASE_URL;
+        $mail = mysql_real_escape_string(stripslashes(strip_tags(trim($mail))));
+        $password = mysql_real_escape_string(stripslashes(strip_tags(trim($password))));
         $model = new Model_Auth();
-        if ($this->is_admin_logged()){
-            $url = isset($_GET['url']) ? $_GET['url'] : $base_url . '/admin_home';
-            $this->redirect($url);
+        $res = $model->user_authorize($mail, $password);
+        if ($res) {
+            $user = $model->get_user_data();
+            _A_::$app->setSession('_', $user['aid']);
+            _A_::$app->setSession('user', $user);
         }
-        if ($this->is_user_logged()){
-            $url = isset($_GET['url']) ? $_GET['url'] : $base_url . '/shop';
-            $this->redirect($url);
-        }
-        if ($this->is_set_admin_remember()){
-            $remember = $_COOKIE['_ar'];
-            if ($model->is_admin_remember($remember)) {
-                $admin = $model->get_admin_data();
-                $_SESSION['_a'] = $admin['id'];
-                $url = isset($_GET['url']) ? $_GET['url'] : $base_url . '/admin_home';
-                $this->redirect($url);
-            }
-        }
-        if ($this->is_set_user_remember()){
-            $remember = $_COOKIE['_r'];
-            if ($model->is_user_remember($remember)) {
-                $user = $model->get_user_data();
-                $_SESSION['_'] = $user['aid'];
-                $_SESSION['user'] = $user;
-                $url = isset($_GET['url']) ? $_GET['url'] : $base_url . '/shop';
-                $this->redirect($url);
-            }
-        }
-
-        if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['login']) && isset($_POST['pass'])) {
-            if (empty($_POST['login']{0})) exit('Empty Email/Username field');
-            if (empty($_POST['pass']{0})) exit('Empty Password field');
-
-            $login = $_POST['login'];
-            $password = $_POST['pass'];
-
-            if ($model->is_admin($login)){
-                if ($this->admin_authorize($login, $password)){
-                    $url = base64_decode(urldecode($_POST['redirect']));
-                    $url = (strlen($url) > 0) ? $url : $base_url . '/admin_home';
-                    $this->redirect($url);
-                }
-            }
-            if ($model->is_user($login)){
-                if ($this->user_authorize($login, $password)){
-                    $url = base64_decode(urldecode($_POST['redirect']));
-                    $url = (strlen($url) > 0) ? $url : $base_url . '/shop';
-                    $this->redirect($url);
-                }
-            }
-            exit('Wrong Email/Username or Password');
-        } else {
-
-            $redirect = isset($_GET['url']) ? $_GET['url'] : '';
-            $registration_url = $base_url . '/registration_user';
-            if (isset($_GET['url'])) {
-                $registration_url .= '?url=' . $_GET['url'];
-            }
-            $lostpassword_url = $base_url . '/lost_password';
-            if (isset($_GET['url'])) {
-                $lostpassword_url .= '?url=' . $_GET['url'];
-            }
-            $this->template->vars('registration_url', $registration_url);
-            $this->template->vars('lostpassword_url', $lostpassword_url);
-            $this->template->vars('redirect', $redirect);
-            $this->main->view('authorization/authorization');
-        }
+        return $res;
     }
 
     function user_authorization()
     {
         $base_url = BASE_URL;
         if (!$this->is_user_authorized()) {
-            if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['login']) && isset($_POST['pass'])) {
-                if (empty($_POST['login']{0}) && empty($_POST['pass']{0})) exit('Empty Email or Password field');
-                $email = $_POST['login'];
-                $password = $_POST['pass'];
+            if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
+                !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))) {
+                if (empty(_A_::$app->post('login')) && empty(_A_::$app->post('pass'))) exit('Empty Email or Password field');
+                $email = _A_::$app->post('login');
+                $password = _A_::$app->post('pass');
                 if (!$this->user_authorize($email, $password)) exit('Wrong Email or Password');
-                $url = base64_decode(urldecode($_POST['redirect']));
+                $url = base64_decode(urldecode(_A_::$app->post('redirect')));
                 $url = (strlen($url) > 0) ? $url : $base_url . '/shop';
                 $this->redirect($url);
             } else {
 
-                $redirect = isset($_GET['url']) ? $_GET['url'] : base64_encode($base_url . '/shop');
+                $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : base64_encode($base_url . '/shop');
                 $registration_url = $base_url . '/registration_user';
-                if (isset($_GET['url'])) {
-                    $registration_url .= '?url=' . $_GET['url'];
+                if (!is_null(_A_::$app->get('url'))) {
+                    $registration_url .= '?url=' . _A_::$app->get('url');
                 }
                 $lostpassword_url = $base_url . '/lost_password';
-                if (isset($_GET['url'])) {
-                    $lostpassword_url .= '?url=' . $_GET['url'];
+                if (!is_null(_A_::$app->get('url'))) {
+                    $lostpassword_url .= '?url=' . _A_::$app->get('url');
                 }
                 $this->template->vars('registration_url', $registration_url);
                 $this->template->vars('lostpassword_url', $lostpassword_url);
                 $this->template->vars('redirect', $redirect);
-                $this->main->view('authorization/user_authorization');
+                $this->main->view('user_authorization');
             }
         } else {
-            $url = isset($_GET['url']) ? $_GET['url'] : $base_url . '/shop';
+            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/shop';
             $this->redirect($url);
         }
+    }
+
+    function is_user_authorized()
+    {
+        if (!is_null(_A_::$app->session('_'))) return true;
+        if (!is_null(_A_::$app->cookie('_r'))) {
+            $remember = _A_::$app->cookie('_r');
+            $model = new Model_Auth();
+            if ($model->is_user_remember($remember)) {
+                $user = $model->get_user_data();
+                _A_::$app->setSession('_',$user['aid']);
+                _A_::$app->setSession('user',$user);
+                return true;
+            }
+        }
+        return false;
     }
 
     function admin_authorization()
     {
         $base_url = BASE_URL;
         if (!$this->is_admin_authorized()) {
-            if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['login']) && isset($_POST['pass'])) {
-                if (empty($_POST['login']{0}) && empty($_POST['pass']{0})) exit('Empty Email or Password field');
-                $login = $_POST['login'];
-                $password = $_POST['pass'];
+            if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
+                !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))) {
+                if (empty(_A_::$app->post('login')) && empty(_A_::$app->post('pass'))) exit('Empty Login or Password field');
+                $login = _A_::$app->post('login');
+                $password = _A_::$app->post('pass');
                 if (!$this->admin_authorize($login, $password)) exit('Wrong Login or Password');
-                $url = base64_decode(urldecode($_POST['redirect']));
+                $url = base64_decode(urldecode(_A_::$app->post('redirect')));
                 $url = (strlen($url) > 0) ? $url : $base_url . '/admin_home';
                 $this->redirect($url);
             } else {
 
-                $redirect = isset($_GET['url']) ? $_GET['url'] : base64_encode($base_url . '/admin_home');
+                $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : base64_encode($base_url . '/admin_home');
                 $this->template->vars('redirect', $redirect);
 
-                include_once('controllers/_menu.php');
                 $menu = new Controller_Menu($this);
                 $menu->show_menu();
 
-                $this->main->view_admin('authorization/admin');
+                $this->main->view_admin('admin');
             }
         } else {
-            $url = isset($_GET['url']) ? $_GET['url'] : $base_url . '/admin_home';
+            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/admin_home';
             $this->redirect($url);
         }
+    }
+
+    function is_admin_authorized()
+    {
+        if (!is_null(_A_::$app->session('_a'))) return true;
+        if (!is_null(_A_::$app->cookie('_ar'))) {
+            $remember = _A_::$app->cookie('_ar');
+            $model = new Model_Auth();
+            if ($model->is_admin_remember($remember)) {
+                $admin = $model->get_admin_data();
+                _A_::$app->setSession('_a',$admin['id']);
+                return true;
+            }
+        }
+        return false;
     }
 
     public function admin_log_out()
     {
         $base_url = BASE_URL;
-        unset($_SESSION['_a']);
-        setcookie('_ar', '');
+        _A_::$app->setSession('_a', null);
+        _A_::$app->setCookie('_ar', null);
         $url = $base_url;
         $this->redirect($url);
     }
@@ -250,51 +242,32 @@ class Controller_Authorization extends Controller_Base
     public function user_log_out()
     {
         $base_url = BASE_URL;
-        unset($_SESSION['_']);
-        setcookie('_r', '');
+        _A_::$app->setSession('_', null);
+        _A_::$app->setSession('user', null);
+        _A_::$app->setCookie('_r', null);
         $url = $base_url . '/shop';
         $this->redirect($url);
     }
 
     public function get_user_from_session()
     {
-        return isset($_SESSION['_']) ? $_SESSION['_'] : null;
-    }
-
-    public function send_remind($email, $remind_url)
-    {
-        $base_url = BASE_URL;
-        $subject = "ILuvFabrix. Change Password.";
-        ob_start();
-        include('views/index/remind/remind_message.php');
-        $message = ob_get_contents();
-        ob_end_clean();
-//        $message = htmlspecialchars(stripslashes(trim($message)));
-        $headers = "MIME-Version: 1.0' \r\n";
-        $headers .= "Content-Type: text/html; charset=UTF-8 \r\n";
-
-        return mail($email, $subject, $message, $headers);
-    }
-
-    private function lost_password_form()
-    {
-        $this->main->view_layout('authorization/lost_password_form');
+        return _A_::$app->session('user', null);
     }
 
     public function lost_password()
     {
         $base_url = BASE_URL;
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (!isset($_GET['user_id'])) {
+        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
+            if (!_A_::$app->get('user_id')) {
                 $muser = new Model_User();
                 $mauth = new Model_Auth();
-                if (empty($_POST['login']{0})) {
+                if (empty(_A_::$app->get('login'))) {
                     $error = ['Empty Email. Identify your Email(Login).'];
                     $this->template->vars('error', $error);
                     $this->lost_password_form();
                     exit();
                 }
-                $email = $_POST['login'];
+                $email = _A_::$app->get('login');
                 if (!$muser->user_exist($email)) {
                     $error = ['Wrong Email(Login) or this Email is not registered.'];
                     $this->template->vars('error', $error);
@@ -316,8 +289,8 @@ class Controller_Authorization extends Controller_Base
                 }
             } else {
                 //TODO process of change password
-                $user_id = $_GET['user_id'];
-                $remind = isset($_POST['remind']) ? $_POST['remind'] : null;
+                $user_id = _A_::$app->get('user_id');
+                $remind = _A_::$app->get('remind');
                 if (isset($remind)) {
                     $muser = new Model_User();
                     if ($muser->user_exist_by_id($user_id)) {
@@ -330,8 +303,8 @@ class Controller_Authorization extends Controller_Base
                                 $result = true;
                                 $mauth = new Model_Auth();
                                 if ($remind == $mauth->check($user['remind_time'], $user['remind'])) {
-                                    $password = isset($_POST['password']) ? $_POST['password'] : null;
-                                    $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : null;
+                                    $password = _A_::$app->post('password');
+                                    $confirm = _A_::$app->post('confirm');
                                     if ((isset($password) && strlen(trim($password)) > 0) &&
                                         (isset($confirm) && strlen(trim($confirm)) > 0)
                                     ) {
@@ -388,8 +361,8 @@ class Controller_Authorization extends Controller_Base
             }
         } else {
             $result = false;
-            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                $remind = isset($_GET['remind']) ? $_GET['remind'] : null;
+            if (_A_::$app->server('REQUEST_METHOD') == 'GET') {
+                $remind = _A_::$app->get('remind');
                 if (isset($remind)) {
                     $remind = base64_decode(urldecode($remind));
                     $muser = new Model_User();
@@ -427,11 +400,11 @@ class Controller_Authorization extends Controller_Base
                     $action = $base_url . '/lost_password';
                     $back_url = $base_url . '/user_authorization';
                     if (isset($_GET['url'])) {
-                        $back_url .= '?url=' . $_GET['url'];
+                        $back_url .= '?url=' . _A_::$app->get('url');
                     }
                     $this->template->vars('action', $action);
                     $this->template->vars('back_url', $back_url);
-                    $this->main->view('authorization/lost_password');
+                    $this->main->view('lost_password');
 
                 }
             }
@@ -439,6 +412,26 @@ class Controller_Authorization extends Controller_Base
                 $this->main->error404();
             }
         }
+    }
+
+    private function lost_password_form()
+    {
+        $this->main->view_layout('lost_password_form');
+    }
+
+    public function send_remind($email, $remind_url)
+    {
+        $base_url = BASE_URL;
+        $subject = "ILuvFabrix. Change Password.";
+        ob_start();
+        $this->template->view_layout('remind_message','remind');
+        $message = ob_get_contents();
+        ob_end_clean();
+//        $message = htmlspecialchars(stripslashes(trim($message)));
+        $headers = "MIME-Version: 1.0' \r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8 \r\n";
+
+        return mail($email, $subject, $message, $headers);
     }
 
 }

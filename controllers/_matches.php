@@ -27,7 +27,7 @@ class Controller_Matches extends Controller_Base
                 foreach ($matches_items as $key => $item) {
                     $product_id = $item['produkt_id'];
                     $img = $base_url . '/upload/upload/' . $item['img'];
-                    include('views/index/matches/matches_item.php');
+                    include('views/matches/matches_item.php');
                     $left += 6; $top += 4;
                 }
                 $matches = ob_get_contents();

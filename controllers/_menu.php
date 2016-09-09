@@ -1,18 +1,7 @@
 <?php
 
-class Controller_Menu extends Controller_Base
+class Controller_Menu extends Controller_Controller
 {
-
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
 
     function menu_list()
     {
@@ -28,12 +17,15 @@ class Controller_Menu extends Controller_Base
         $model = new Model_Tools();
         $base_url = BASE_URL;
 
+        $this->template->vars('base_url',$base_url);
         $items = $model->get_items_for_menu('all');
         ob_start();
         foreach ($items as $item) {
             $href = $base_url . "/shop&cat=" . $item['cid'];
             $name = $item['cname'];
-            include('views/index/menu/menu_item.php');
+            $this->template->vars('href',$href);
+            $this->template->vars('name',$name);
+            $this->template->view_layout('menu_item');
         }
         $menu_all_category = ob_get_contents();
         ob_end_clean();
@@ -43,7 +35,9 @@ class Controller_Menu extends Controller_Base
         foreach ($items as $item) {
             $href = $base_url . "/shop&cat=" . $item['cid'];
             $name = $item['cname'];
-            include('views/index/menu/menu_item.php');
+            $this->template->vars('href',$href);
+            $this->template->vars('name',$name);
+            $this->template->view_layout('menu_item');
         }
         $menu_new_category = ob_get_contents();
         ob_end_clean();
@@ -53,7 +47,9 @@ class Controller_Menu extends Controller_Base
         foreach ($items as $item) {
             $href = $base_url . "/shop&mnf=" . $item['id'];
             $name = $item['manufacturer'];
-            include('views/index/menu/menu_item.php');
+            $this->template->vars('href',$href);
+            $this->template->vars('name',$name);
+            $this->template->view_layout('menu_item');
         }
         $menu_manufacturers = ob_get_contents();
         ob_end_clean();
@@ -63,17 +59,23 @@ class Controller_Menu extends Controller_Base
         foreach ($items as $item) {
             $href = $base_url . "/shop&ptrn=" . $item['id'];
             $name = $item['pattern'];
-            include('views/index/menu/menu_item.php');
+            $this->template->vars('href',$href);
+            $this->template->vars('name',$name);
+            $this->template->view_layout('menu_item');
         }
         $menu_patterns = ob_get_contents();
         ob_end_clean();
 
         ob_start();
-        include('views/index/menu/shop_menu.php');
+        $this->template->vars('menu_all_category',$menu_all_category);
+        $this->template->vars('menu_new_category',$menu_new_category);
+        $this->template->vars('menu_manufacturers',$menu_manufacturers);
+        $this->template->vars('menu_patterns',$menu_patterns);
+        $this->template->view_layout('shop_menu');
         $shop_menu = ob_get_contents();
         ob_end_clean();
 
-        $this->template->vars('shop_menu', $shop_menu);
+        $this->main->template->vars('shop_menu', $shop_menu);
 
     }
 
@@ -82,22 +84,27 @@ class Controller_Menu extends Controller_Base
         $model = new Model_Tools();
         $base_url = BASE_URL;
 
+        $this->template->vars('base_url',$base_url);
         $items = $model->get_items_for_menu('blog_category');
         ob_start();
         foreach ($items as $item) {
             $href = $base_url . "/blog&cat=" . $item['group_id'];
             $name = $item['name'];
-            include('views/index/menu/menu_item.php');
+            $this->template->vars('href',$href);
+            $this->template->vars('name',$name);
+            $this->template->view_layout('menu_item');
         }
         $menu_blog_category = ob_get_contents();
         ob_end_clean();
 
         ob_start();
-        include('views/index/menu/blog_menu.php');
+
+        include('views/menu/blog_menu.php');
+
         $shop_menu = ob_get_contents();
         ob_end_clean();
 
-        $this->template->vars('blog_menu', $shop_menu);
+        $this->main->template->vars('blog_menu', $shop_menu);
 
     }
 
@@ -108,10 +115,10 @@ class Controller_Menu extends Controller_Base
         $this->show_blog_menu();
         $this->template->vars('base_url', $base_url);
         ob_start();
-        $this->template->view_layout('menu/menu');
+        $this->template->view_layout('menu');
         $menu = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('menu', $menu);
+        $this->main->template->vars('menu', $menu);
     }
 
 }

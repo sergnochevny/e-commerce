@@ -247,6 +247,6 @@
 </script>
 
 <?php
-include('views/index/product/block_footer_products.php');
+include('views/product/block_footer_products.php');
 ?>
 

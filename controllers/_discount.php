@@ -38,7 +38,7 @@ class Controller_Discount extends Controller_Base
             } else {
                 $row[11] = "NO";
             }
-            include('./views/index/discount/get_discounts_list.php');
+            include('./views/discount/get_discounts_list.php');
         }
         $discounts_list = ob_get_contents();
         ob_end_clean();
@@ -134,7 +134,7 @@ class Controller_Discount extends Controller_Base
             $date_end = gmdate("F j, Y, g:i a", $date_end);
 
             ob_start();
-            include('views/index/discount/data_usage_discounts.php');
+            include('views/discount/data_usage_discounts.php');
             $data_usage_discounts = ob_get_contents();
             ob_end_clean();
             $this->template->vars('data_usage_discounts', $data_usage_discounts);
@@ -163,7 +163,7 @@ class Controller_Discount extends Controller_Base
                 $u_bill_lastname = $rowsni['bill_lastname'];
                 $i++;
 
-                include('views/index/discount/data_usage_order_discounts.php');
+                include('views/discount/data_usage_order_discounts.php');
             }
             $data_usage_order_discounts = ob_get_contents();
             ob_end_clean();

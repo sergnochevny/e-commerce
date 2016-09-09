@@ -574,12 +574,12 @@ class Controller_Cart extends Controller_Base
         $this->template->vars('back_url', $back_url);
         unset($_SESSION['cart']['discountIds']);
         ob_start();
-        $this->products_in_cart('views/index/basket/product_in_proceed.php');
+        $this->products_in_cart('views/basket/product_in_proceed.php');
         $cart_items = ob_get_contents();
         ob_end_clean();
         $this->template->vars('cart_items', $cart_items);
         ob_start();
-        $this->samples_in_cart('views/index/basket/sample_in_proceed.php');
+        $this->samples_in_cart('views/basket/sample_in_proceed.php');
         $cart_samples_items = ob_get_contents();
         ob_end_clean();
         $this->template->vars('cart_samples_items', $cart_samples_items);
@@ -640,7 +640,7 @@ class Controller_Cart extends Controller_Base
             $ship_country = trim($ma->get_country_by_id($ship_country));
             $ship_province = trim($ma->get_province_by_id($ship_province));
 
-            include('views/index/basket/bill_ship_info.php');
+            include('views/basket/bill_ship_info.php');
         }
     }
 
@@ -812,7 +812,7 @@ class Controller_Cart extends Controller_Base
         $total = $total + $shipcost + (isset($rollcost) ? $rollcost : 0) + (isset($express_samples_cost) ? $express_samples_cost : 0);
 
         if ((count($cart_items) > 0) || (count($cart_samples_items) > 0)) {
-            include('views/index/basket/ship_in_proceed.php');
+            include('views/basket/ship_in_proceed.php');
         }
     }
 
@@ -913,7 +913,7 @@ class Controller_Cart extends Controller_Base
         $taxes = $_SESSION['cart']['taxes'];
         $total = $_SESSION['cart']['total'];
 
-        include('views/index/basket/total_in_proceed.php');
+        include('views/basket/total_in_proceed.php');
     }
 
     function cart_samples_legend()
@@ -922,7 +922,7 @@ class Controller_Cart extends Controller_Base
             $cart_items = '_';
         }
         $ms = new Model_Samples();
-        include('views/index/basket/cart_samples_legend.php');
+        include('views/basket/cart_samples_legend.php');
     }
 
     public function shipping_calc()
@@ -1079,10 +1079,10 @@ class Controller_Cart extends Controller_Base
 
 
         if (count($cart_items) > 0) {
-            include('views/index/basket/cart_shipping.php');
+            include('views/basket/cart_shipping.php');
         } else {
             if (count($cart_samples_items) > 0) {
-                include('views/index/basket/cart_shipping_samples.php');
+                include('views/basket/cart_shipping_samples.php');
             }
         }
     }
@@ -1116,7 +1116,7 @@ class Controller_Cart extends Controller_Base
         }
 
         if ((count($cart_items) > 0) || (count($cart_samples_items) > 0)) {
-            include('views/index/basket/cart_coupon_total.php');
+            include('views/basket/cart_coupon_total.php');
         }
 
     }
@@ -1130,7 +1130,7 @@ class Controller_Cart extends Controller_Base
         echo '$' . number_format($total, 2) . ' USD';
     }
 
-    private function products_in_cart($template = 'views/index/basket/product_in_cart.php')
+    private function products_in_cart($template = 'views/basket/product_in_cart.php')
     {
         $base_url = BASE_URL;
 
@@ -1150,7 +1150,7 @@ class Controller_Cart extends Controller_Base
 
     }
 
-    private function samples_in_cart($template = 'views/index/basket/sample_in_proceed.php')
+    private function samples_in_cart($template = 'views/basket/sample_in_proceed.php')
     {
         $base_url = BASE_URL;
 
@@ -1170,7 +1170,7 @@ class Controller_Cart extends Controller_Base
 
     }
 
-    private function sample_in_cart($p_id, &$item, $template = 'views/index/basket/sample_in_proceed.php')
+    private function sample_in_cart($p_id, &$item, $template = 'views/basket/sample_in_proceed.php')
     {
         $model = new Model_Cart();
         $base_url = BASE_URL;
@@ -1187,7 +1187,7 @@ class Controller_Cart extends Controller_Base
     }
 
 
-    private function product_in_cart($p_id, &$item, $template = 'views/index/basket/product_in_cart.php')
+    private function product_in_cart($p_id, &$item, $template = 'views/basket/product_in_cart.php')
     {
         $model = new Model_Cart();
         $base_url = BASE_URL;
@@ -1270,6 +1270,7 @@ class Controller_Cart extends Controller_Base
 
         return $SUM;
     }
+
 
     function cart_items_amount()
     {

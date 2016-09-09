@@ -52,17 +52,17 @@ class Controller_Order extends Controller_Base
             ob_start();
             foreach ($rows as $row) {
                 $row[22] = gmdate("F j, Y, g:i a", $row[22]);
-                include('./views/index/order/orders_list.php');
+                include('./views/order/orders_list.php');
             }
             $orders_list = ob_get_contents();
             ob_end_clean();
             ob_start();
-            include('./views/index/order/orders_detail.php');
+            include('./views/order/orders_detail.php');
             $orders = ob_get_contents();
             ob_end_clean();
         } else {
             ob_start();
-            include('./views/index/order/no_orders_found.php');
+            include('./views/order/no_orders_found.php');
             $orders = ob_get_contents();
             ob_end_clean();
         }
@@ -141,7 +141,7 @@ class Controller_Order extends Controller_Base
             ob_start();
             $rows = $model->get_order_details($order_id);
             foreach ($rows as $row) {
-                include('./views/index/order/order_details.php');
+                include('./views/order/order_details.php');
             }
             $order_details = ob_get_contents();
             ob_end_clean();
@@ -184,7 +184,7 @@ class Controller_Order extends Controller_Base
                 $order_date = date('F j, Y, g:i a', $order_date);
                 $action = BASE_URL . '/customer_order_info?oid=' . urlencode(base64_encode($oid)) . '&=page' . $page;
                 $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
-                include('views/index/order/customer_orders_list.php');
+                include('views/order/customer_orders_list.php');
 
             }
             $customer_orders_list = ob_get_contents();
@@ -242,7 +242,7 @@ class Controller_Order extends Controller_Base
                     $handling = strlen(trim($handling)) > 0 ? '$' . number_format($handling, 2) : '';
                     $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
                     $action = BASE_URL . '/order_info?oid=' . urlencode(base64_encode($oid)) . '&page=' . $page . '&orders_search_query=' . $_GET['orders_search_query'];
-                    include('views/index/order/admin_orders_list.php');
+                    include('views/order/admin_orders_list.php');
 
                 }
                 $admin_orders_list = ob_get_contents();
@@ -282,7 +282,7 @@ class Controller_Order extends Controller_Base
                     $date = date('F j, Y, g:i a', $date);
                     $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
                     $action = BASE_URL . '/order_info?oid=' . urlencode(base64_encode($oid));
-                    include('views/index/order/admin_orders_list.php');
+                    include('views/order/admin_orders_list.php');
 
                 }
                 $admin_orders_list = ob_get_contents();
@@ -356,7 +356,7 @@ class Controller_Order extends Controller_Base
                     $sub_price_count = $sub_price_count + $sample_cost;
                     $sample_cost = strlen(trim($sample_cost)) > 0 ? '$' . number_format((double)$sample_cost, 2) : '';
                 }
-                include('views/index/order/detail_info.php');
+                include('views/order/detail_info.php');
 
             }
             $end_date = $end_date ? date('d/m/Y', strtotime($end_date)) : '';
@@ -430,7 +430,7 @@ class Controller_Order extends Controller_Base
                     $sub_price_count = $sub_price_count + $sample_cost;
                     $sample_cost = strlen(trim($sample_cost)) > 0 ? '$' . number_format((double)$sample_cost, 2) : '';
                 }
-                include('views/index/order/detail_info_customer.php');
+                include('views/order/detail_info_customer.php');
 
             }
             $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';

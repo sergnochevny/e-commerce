@@ -9,7 +9,6 @@ abstract class Model_Model
         $data = htmlspecialchars($data);
         $data = trim($data);
         $data = substr($data, 0, 155);
-
-        return array('data' => $data);
+        return $data;
     }
 }

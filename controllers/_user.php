@@ -241,7 +241,7 @@ class Controller_User extends Controller_Base
             $value = $country['id'];
             $title = $country['name'];
             $selected = isset($select) && ($select == $country['id']);
-            include('views/index/address/select_countries_options.php');
+            include('views/address/select_countries_options.php');
         }
         $list = ob_get_contents();
         ob_end_clean();
@@ -259,7 +259,7 @@ class Controller_User extends Controller_Base
                 $value = $province['id'];
                 $title = $province['name'];
                 $selected = isset($select) && ($select == $province['id']);
-                include('views/index/address/select_countries_options.php');
+                include('views/address/select_countries_options.php');
             }
             $list = ob_get_contents();
             ob_end_clean();

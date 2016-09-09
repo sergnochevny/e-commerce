@@ -1,1 +1,0 @@
-<a class="button productsAddBasket" href="<?php echo $base_url;?>/add_cart?p_id=<?php echo $row[0];?>" id="to_basket">Add to Basket</a>

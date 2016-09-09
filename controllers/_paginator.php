@@ -1,220 +1,102 @@
 <?php
 
-class Controller_Paginator extends Controller_Base
+class Controller_Paginator extends Controller_Controller
 {
-
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
-
     function produkt_paginator($total_rows, $page)
     {
+        if (!is_null(_A_::$app->get('cat'))) {
+            $cat_id = _A_::$app->get('cat');
+            $this->template->vars('cat_id', $cat_id);
+        }
+        $this->paginator($total_rows, $page, 'product_paginator');
+    }
 
-        $per_page = 12;
-
-        $showbypage = 10;
+    protected function paginator($total_rows, $page, $template, $var = null, $per_page = 12, $showbypage = 10)
+    {
+        $base_url = BASE_URL;
         $num_pages = ceil($total_rows / $per_page);
         $last_page = $num_pages;
         $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;
         $nav_end = floor(($page - 1) / $showbypage) * $showbypage + $showbypage;
         $nav_end = $nav_end > $last_page ? $last_page : $nav_end;
-
         $prev_page = $page - 1;
         $next_page = $page + 1;
 
-        if (isset($_GET['cat'])) $cat_id = $_GET['cat'];
-
-        $base_url = BASE_URL;
+        $this->template->vars('base_url', $base_url);
+        $this->template->vars('per_page', $per_page);
+        $this->template->vars('showbypage', $showbypage);
+        $this->template->vars('num_pages', $num_pages);
+        $this->template->vars('last_page', $last_page);
+        $this->template->vars('nav_start', $nav_start);
+        $this->template->vars('nav_end', $nav_end);
+        $this->template->vars('prev_page', $prev_page);
+        $this->template->vars('next_page', $next_page);
 
         ob_start();
-
-        include('./views/index/paginator/product_paginator.php');
+        $this->template->view_layout($template);
         $paginator = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('produkt_paginator', $paginator);
+        if (is_null($var)) $var = $template;
+        $this->main->template->vars($var, $paginator);
     }
 
     function paginator_home($total_rows, $page, $url = 'blog', $per_page = 6)
     {
 
-        $showbypage = 10;
-        $num_pages = ceil($total_rows / $per_page);
-        $last_page = $num_pages;
-        $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;
-        $nav_end = floor(($page - 1) / $showbypage) * $showbypage + $showbypage;
-        $nav_end = $nav_end > $last_page ? $last_page : $nav_end;
-
-        $prev_page = $page - 1;
-        $next_page = $page + 1;
-
-        if (isset($_GET['cat'])) $cat_id = $_GET['cat'];
-
-        $base_url = BASE_URL;
-
-        ob_start();
-
-        include('./views/index/paginator/paginator_home.php');
-        $paginator = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('paginator', $paginator);
+        $this->template->vars('url', $url);
+        if (!is_null(_A_::$app->get('cat'))) {
+            $cat_id = _A_::$app->get('cat');
+            $this->template->vars('cat_id', $cat_id);
+        }
+        $this->paginator($total_rows, $page, 'paginator_home', 'paginator', $per_page);
     }
-
 
     function produkt_paginator_home($total_rows, $page, $url = 'shop', $layout = 'product_paginator_home')
     {
 
-        $per_page = 12;
-
-        $showbypage = 10;
-        $num_pages = ceil($total_rows / $per_page);
-        $last_page = $num_pages;
-        $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;
-        $nav_end = floor(($page - 1) / $showbypage) * $showbypage + $showbypage;
-        $nav_end = $nav_end > $last_page ? $last_page : $nav_end;
-
-        $prev_page = $page - 1;
-        $next_page = $page + 1;
-
-        if (isset($_GET['cat'])) $cat_id = $_GET['cat'];
-        if (isset($_GET['mnf'])) $mnf_id = $_GET['mnf'];
-        if (isset($_GET['ptrn'])) $ptrn_id = $_GET['ptrn'];
-
-        $base_url = BASE_URL;
-
-        ob_start();
-
-        if (isset($_POST['s']) && (!empty($_POST['s']{0}))) {
+        if (!is_null(_A_::$app->post('s')) && (empty(_A_::$app->post('s')))) {
             $layout = 'product_paginator_search';
         }
-        include('./views/index/paginator/' . $layout . '.php');
-        $paginator = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('produkt_paginator', $paginator);
+
+        $this->template->vars('url', $url);
+        if (!is_null(_A_::$app->get('cat'))) {
+            $cat_id = _A_::$app->get('cat');
+            $this->template->vars('cat_id', $cat_id);
+        }
+        if (!is_null(_A_::$app->get('mnf'))) {
+            $mnf_id = _A_::$app->get('mnf');
+            $this->template->vars('mnf_id', $mnf_id);
+        }
+        if (!is_null(_A_::$app->get('ptrn'))) {
+            $ptrn_id = _A_::$app->get('ptrn');
+            $this->template->vars('ptrn_id', $ptrn_id);
+        }
+        $this->paginator($total_rows, $page, $layout, 'produkt_paginator');
     }
 
     function user_paginator($total_rows, $page)
     {
-
-        $per_page = 12;
-
-        $showbypage = 10;
-        $num_pages = ceil($total_rows / $per_page);
-        $last_page = $num_pages;
-        $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;
-        $nav_end = floor(($page - 1) / $showbypage) * $showbypage + $showbypage;
-        $nav_end = $nav_end > $last_page ? $last_page : $nav_end;
-
-        $prev_page = $page - 1;
-        $next_page = $page + 1;
-
-        $base_url = BASE_URL;
-
-        ob_start();
-        include('./views/index/paginator/user_paginator.php');
-        $paginator = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('user_paginator', $paginator);
+        $this->paginator($total_rows, $page, 'user_paginator');
     }
 
     public function orders_paginator($total_rows, $page)
     {
-
-        $per_page = 12;
-
-        $showbypage = 10;
-        $num_pages = ceil($total_rows / $per_page);
-        $last_page = $num_pages;
-        $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;
-        $nav_end = floor(($page - 1) / $showbypage) * $showbypage + $showbypage;
-        $nav_end = $nav_end > $last_page ? $last_page : $nav_end;
-
-        $prev_page = $page - 1;
-        $next_page = $page + 1;
-
-        $base_url = BASE_URL;
-
-        ob_start();
-        include('./views/index/paginator/orders_paginator.php');
-        $paginator = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('orders_paginator', $paginator);
+        $this->paginator($total_rows, $page, 'orders_paginator');
     }
 
     public function orders_history_paginator($total_rows, $page)
     {
-
-        $per_page = 12;
-
-        $showbypage = 10;
-        $num_pages = ceil($total_rows / $per_page);
-        $last_page = $num_pages;
-        $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;
-        $nav_end = floor(($page - 1) / $showbypage) * $showbypage + $showbypage;
-        $nav_end = $nav_end > $last_page ? $last_page : $nav_end;
-
-        $prev_page = $page - 1;
-        $next_page = $page + 1;
-
-        $base_url = BASE_URL;
-
-        ob_start();
-        include('./views/index/paginator/orders_history_paginator.php');
-        $paginator = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('orders_history_paginator', $paginator);
+        $this->paginator($total_rows, $page, 'orders_history_paginator');
     }
 
     public function comments_paginator($total_rows, $page)
     {
-        $base_url = BASE_URL;
-
-        $per_page = 12;
-        $showbypage = 10;
-
-        $num_pages = ceil($total_rows / $per_page);
-        $last_page = $num_pages;
-        $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;
-        $nav_end = floor(($page - 1) / $showbypage) * $showbypage + $showbypage;
-        $nav_end = $nav_end > $last_page ? $last_page : $nav_end;
-        $prev_page = $page - 1;
-        $next_page = $page + 1;
-
-        ob_start();
-        include('./views/index/paginator/comments_paginator.php');
-        $paginator = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('comments_paginator', $paginator);
-
+        $this->paginator($total_rows, $page, 'comments_paginator');
     }
 
     public function user_comments_paginator($total_rows, $page)
     {
-        $base_url = BASE_URL;
-
-        $per_page = 12;
-        $showbypage = 10;
-
-        $num_pages = ceil($total_rows / $per_page);
-        $last_page = $num_pages;
-        $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;
-        $nav_end = floor(($page - 1) / $showbypage) * $showbypage + $showbypage;
-        $nav_end = $nav_end > $last_page ? $last_page : $nav_end;
-        $prev_page = $page - 1;
-        $next_page = $page + 1;
-
-        ob_start();
-        include('./views/index/paginator/user_comments_paginator.php');
-        $paginator = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('comments_paginator', $paginator);
-
+        $this->paginator($total_rows, $page, 'user_comments_paginator', 'comments_paginator');
     }
 
 

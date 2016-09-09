@@ -19,7 +19,7 @@ class Controller_BlogCategory extends Controller_Base{
         ob_start();
         $base_url = BASE_URL;
         foreach ($rows as $row) {
-            include('views/index/blogcategory/blog_categories_list_row.php');
+            include('views/blogcategory/blog_categories_list_row.php');
         }
         $categories .= ob_get_contents();
         ob_end_clean();

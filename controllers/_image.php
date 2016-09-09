@@ -87,7 +87,7 @@ class Controller_Image extends Controller_Base
                 $image5 = $base_url . '/upload/upload/' . $image5;
             }
 
-            include('views/index/product/product_m_images.php');
+            include('views/product/product_m_images.php');
 
         }
 
@@ -120,7 +120,7 @@ class Controller_Image extends Controller_Base
         if (!file_exists($filename5)) {
             $image5 = "not_image.jpg";
         }
-        include('views/index/product/product_m_images.php');
+        include('views/product/product_m_images.php');
 
     }
 

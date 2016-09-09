@@ -1,18 +1,7 @@
 <?php
 
-class Controller_Blog extends Controller_Base
+class Controller_Blog extends Controller_Controller
 {
-
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
 
     function html_split_regex()
     {
@@ -72,13 +61,8 @@ class Controller_Blog extends Controller_Base
         // Find all elements.
         $textarr = $this->html_split($haystack);
         $changed = false;
-
-        // Optimize when searching for one item.
         if (1 === count($replace_pairs)) {
-            // Extract $needle and $replace.
             foreach ($replace_pairs as $needle => $replace) ;
-
-            // Loop through delimiters (elements) only.
             for ($i = 1, $c = count($textarr); $i < $c; $i += 2) {
                 if (false !== strpos($textarr[$i], $needle)) {
                     $textarr[$i] = str_replace($needle, $replace, $textarr[$i]);
@@ -86,16 +70,12 @@ class Controller_Blog extends Controller_Base
                 }
             }
         } else {
-            // Extract all $needles.
             $needles = array_keys($replace_pairs);
-
-            // Loop through delimiters (elements) only.
             for ($i = 1, $c = count($textarr); $i < $c; $i += 2) {
                 foreach ($needles as $needle) {
                     if (false !== strpos($textarr[$i], $needle)) {
                         $textarr[$i] = strtr($textarr[$i], $replace_pairs);
                         $changed = true;
-                        // After one strtr() break out of the foreach loop and look at next element.
                         break;
                     }
                 }
@@ -121,13 +101,7 @@ class Controller_Blog extends Controller_Base
         if (trim($pee) === '')
             return '';
 
-        // Just to make things a little easier, pad the end.
         $pee = $pee . "\n";
-
-        /*
-         * Pre tags shouldn't be touched by autop.
-         * Replace pre tags with placeholders and bring them back after autop.
-         */
         if (strpos($pee, '<pre') !== false) {
             $pee_parts = explode('</pre>', $pee);
             $last_pee = array_pop($pee_parts);
@@ -136,8 +110,6 @@ class Controller_Blog extends Controller_Base
 
             foreach ($pee_parts as $pee_part) {
                 $start = strpos($pee_part, '<pre');
-
-                // Malformed html?
                 if ($start === false) {
                     $pee .= $pee_part;
                     continue;
@@ -152,112 +124,52 @@ class Controller_Blog extends Controller_Base
 
             $pee .= $last_pee;
         }
-        // Change multiple <br>s into two line breaks, which will turn into paragraphs.
         $pee = preg_replace('|<br\s*/?>\s*<br\s*/?>|', "\n\n", $pee);
 
         $allblocks = '(?:table|thead|tfoot|caption|col|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|form|map|area|blockquote|address|math|style|p|h[1-6]|hr|fieldset|legend|section|article|aside|hgroup|header|footer|nav|figure|figcaption|details|menu|summary)';
-
-        // Add a single line break above block-level opening tags.
         $pee = preg_replace('!(<' . $allblocks . '[\s/>])!', "\n$1", $pee);
-
-        // Add a double line break below block-level closing tags.
         $pee = preg_replace('!(</' . $allblocks . '>)!', "$1\n\n", $pee);
-
-        // Standardize newline characters to "\n".
         $pee = str_replace(array("\r\n", "\r"), "\n", $pee);
-
-        // Find newlines in all elements and add placeholders.
         $pee = $this->replace_in_html_tags($pee, array("\n" => " <!-- wpnl --> "));
-
-        // Collapse line breaks before and after <option> elements so they don't get autop'd.
         if (strpos($pee, '<option') !== false) {
             $pee = preg_replace('|\s*<option|', '<option', $pee);
             $pee = preg_replace('|</option>\s*|', '</option>', $pee);
         }
-
-        /*
-         * Collapse line breaks inside <object> elements, before <param> and <embed> elements
-         * so they don't get autop'd.
-         */
         if (strpos($pee, '</object>') !== false) {
             $pee = preg_replace('|(<object[^>]*>)\s*|', '$1', $pee);
             $pee = preg_replace('|\s*</object>|', '</object>', $pee);
             $pee = preg_replace('%\s*(</?(?:param|embed)[^>]*>)\s*%', '$1', $pee);
         }
-
-        /*
-         * Collapse line breaks inside <audio> and <video> elements,
-         * before and after <source> and <track> elements.
-         */
         if (strpos($pee, '<source') !== false || strpos($pee, '<track') !== false) {
             $pee = preg_replace('%([<\[](?:audio|video)[^>\]]*[>\]])\s*%', '$1', $pee);
             $pee = preg_replace('%\s*([<\[]/(?:audio|video)[>\]])%', '$1', $pee);
             $pee = preg_replace('%\s*(<(?:source|track)[^>]*>)\s*%', '$1', $pee);
         }
-
-        // Remove more than two contiguous line breaks.
         $pee = preg_replace("/\n\n+/", "\n\n", $pee);
-
-        // Split up the contents into an array of strings, separated by double line breaks.
         $pees = preg_split('/\n\s*\n/', $pee, -1, PREG_SPLIT_NO_EMPTY);
-
-        // Reset $pee prior to rebuilding.
         $pee = '';
-
-        // Rebuild the content as a string, wrapping every bit with a <p>.
         foreach ($pees as $tinkle) {
             $pee .= '<p>' . trim($tinkle, "\n") . "</p>\n";
         }
-
-        // Under certain strange conditions it could create a P of entirely whitespace.
         $pee = preg_replace('|<p>\s*</p>|', '', $pee);
-
-        // Add a closing <p> inside <div>, <address>, or <form> tag if missing.
         $pee = preg_replace('!<p>([^<]+)</(div|address|form)>!', "<p>$1</p></$2>", $pee);
-
-        // If an opening or closing block element tag is wrapped in a <p>, unwrap it.
         $pee = preg_replace('!<p>\s*(</?' . $allblocks . '[^>]*>)\s*</p>!', "$1", $pee);
-
-        // In some cases <li> may get wrapped in <p>, fix them.
         $pee = preg_replace("|<p>(<li.+?)</p>|", "$1", $pee);
-
-        // If a <blockquote> is wrapped with a <p>, move it inside the <blockquote>.
         $pee = preg_replace('|<p><blockquote([^>]*)>|i', "<blockquote$1><p>", $pee);
         $pee = str_replace('</blockquote></p>', '</p></blockquote>', $pee);
-
-        // If an opening or closing block element tag is preceded by an opening <p> tag, remove it.
         $pee = preg_replace('!<p>\s*(</?' . $allblocks . '[^>]*>)!', "$1", $pee);
-
-        // If an opening or closing block element tag is followed by a closing <p> tag, remove it.
         $pee = preg_replace('!(</?' . $allblocks . '[^>]*>)\s*</p>!', "$1", $pee);
-
-        // Optionally insert line breaks.
         if ($br) {
-            // Replace newlines that shouldn't be touched with a placeholder.
             $pee = preg_replace_callback('/<(script|style).*?<\/\\1>/s', [$this, '_autop_newline_preservation_helper'], $pee);
-
-            // Normalize <br>
             $pee = str_replace(array('<br>', '<br/>'), '<br />', $pee);
-
-            // Replace any new line characters that aren't preceded by a <br /> with a <br />.
             $pee = preg_replace('|(?<!<br />)\s*\n|', "<br />\n", $pee);
-
-            // Replace newline placeholders with newlines.
             $pee = str_replace('<WPPreserveNewline />', "\n", $pee);
         }
-
-        // If a <br /> tag is after an opening or closing block tag, remove it.
         $pee = preg_replace('!(</?' . $allblocks . '[^>]*>)\s*<br />!', "$1", $pee);
-
-        // If a <br /> tag is before a subset of opening or closing block tags, remove it.
         $pee = preg_replace('!<br />(\s*</?(?:p|li|div|dl|dd|dt|th|pre|td|ul|ol)[^>]*>)!', '$1', $pee);
         $pee = preg_replace("|\n</p>$|", '</p>', $pee);
-
-        // Replace placeholder <pre> tags with their original content.
         if (!empty($pre_tags))
             $pee = str_replace(array_keys($pre_tags), array_values($pre_tags), $pee);
-
-        // Restore newlines in all elements.
         if (false !== strpos($pee, '<!-- wpnl -->')) {
             $pee = str_replace(array(' <!-- wpnl --> ', '<!-- wpnl -->'), "\n", $pee);
         }
@@ -265,7 +177,7 @@ class Controller_Blog extends Controller_Base
         return $pee;
     }
 
-    function convertation($txt)
+    public function convertation($txt)
     {
 
         $base_url = BASE_URL;
@@ -277,14 +189,14 @@ class Controller_Blog extends Controller_Base
 //        $txt = str_replace('http://iluvfabrix.com/blog/wp-content/uploads', '{base_url}/img', $txt);
 //        $txt = str_replace('http://www.iluvfabrix.com/blog/wp-content/uploads', '{base_url}/img', $txt);
 //        $txt = str_replace('http://iluvfabrix.com', '{base_url}', $txt);
+
         $txt = str_replace($base_url, '{base_url}', $txt);
-//        $txt = str_replace('http://www.iluvfabrix.com', '{base_url}', $txt);
-//        $txt = str_replace(['‘', '’'], "'", $txt);
-//        $txt = str_replace(" ", " ", $txt);
-//        $txt = str_replace('–', "-", $txt);
-//        $txt = str_replace('Â ', "", $txt);
-//        $txt = str_replace(' Â', "", $txt);
-//        $txt = str_replace('Â', "", $txt);
+        $txt = str_replace('http://www.iluvfabrix.com', '{base_url}', $txt);
+        $txt = preg_replace('#[^ \.]*\.iluvfabrix\.com#i', '{base_url}', $txt);
+        $txt = str_replace(['‘', '’'], "'", $txt);
+        $txt = str_replace(" ", " ", $txt);
+        $txt = str_replace('–', "-", $txt);
+        $txt = preg_replace('#[^\x{00}-\x{7f}]#i', '', $txt);
 
         $txt = $this->autop($txt);
 
@@ -317,7 +229,7 @@ class Controller_Blog extends Controller_Base
         $row = $model->get_blog_post_by_post_name($post_name);
         if (isset($row)) {
             ob_start();
-            date_default_timezone_set('UTC');
+
             $post_id = $row['ID'];
             $_GET['post_id'] = $post_id;
             $post_content = stripslashes($row['post_content']);
@@ -332,7 +244,16 @@ class Controller_Blog extends Controller_Base
             } else
                 $post_img = null;
 
-            include('./views/index/blog/blog_post.php');
+            $this->template->vars('post_name', $post_name);
+            $this->template->vars('post_img', $post_img);
+            $this->template->vars('file_img', $file_img);
+            $this->template->vars('post_content', $post_content);
+            $this->template->vars('post_date', $post_date);
+            $this->template->vars('post_title', $post_title);
+            $this->template->vars('post_id', $post_id);
+            $this->template->vars('post_img', $post_img);
+
+            $this->template->view_layout('blog_post');
 
             $list = ob_get_contents();
             ob_end_clean();
@@ -342,15 +263,15 @@ class Controller_Blog extends Controller_Base
 
         $this->template->vars('blog_post', $list);
 
-        $this->main->view('blog/post');
+        $this->main->view('post');
     }
 
     function main_blog_posts()
     {
         $model = new Model_Blog();
 
-        if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
+        if (!empty(_A_::$app->get('page'))) {
+            $userInfo = $model->validData(_A_::$app->get('page'));
             $page = $userInfo['data'];
         } else {
             $page = 1;
@@ -359,8 +280,7 @@ class Controller_Blog extends Controller_Base
 
         $cat_id = null;
         if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+            $cat_id = $model->validData(_A_::$app->get('cat'));
             $catigori_name = $model->getPostCatName($cat_id);
         }
 
@@ -412,7 +332,19 @@ class Controller_Blog extends Controller_Base
                 }
 
                 $post_img = str_replace('{base_url}', $base_url, $post_img);
-                include('./views/index/blog/blog_posts.php');
+
+                $this->template->vars('post_name', $post_name);
+                $this->template->vars('post_img', $post_img);
+                $this->template->vars('filename', $filename);
+                $this->template->vars('post_content', $post_content);
+                $this->template->vars('post_date', $post_date);
+                $this->template->vars('post_title', $post_title);
+                $this->template->vars('post_id', $post_id);
+                $this->template->vars('post_href', $post_href);
+                $this->template->vars('url', $url);
+                $this->template->vars('base_url', $base_url);
+
+                $this->template->view_layout('blog_posts');
             }
 
             $list = ob_get_contents();
@@ -420,7 +352,6 @@ class Controller_Blog extends Controller_Base
             $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
             $this->template->vars('blog_posts', $list);
 
-            include_once('controllers/_paginator.php');
             $paginator = new Controller_Paginator($this);
             $paginator->paginator_home($total, $page, 'blog', $per_page);
         } else {
@@ -433,7 +364,7 @@ class Controller_Blog extends Controller_Base
     function blog()
     {
         $this->main_blog_posts();
-        $this->main->view('blog/blog');
+        $this->main->view('blog');
     }
 
     function admin_main_blog_cat()
@@ -447,7 +378,12 @@ class Controller_Blog extends Controller_Base
             $group_id = $item['group_id'];
             $href = $base_url . '/admin_blog?cat=' . $group_id;
             $name = $item['name'];
-            include('views/index/blog/blog_admin_cat_select.php');
+
+            $this->template->vars('base_url',$base_url);
+            $this->template->vars('group_id',$group_id);
+            $this->template->vars('href', $href);
+            $this->template->vars('name', $name);
+            $this->template->view_layout('blog_admin_cat_select');
         }
         $select_cat_option = ob_get_contents();
         ob_end_clean();
@@ -459,8 +395,7 @@ class Controller_Blog extends Controller_Base
         $model = new Model_Blog();
 
         if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
-            $page = $userInfo['data'];
+            $page = $model->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
         }
@@ -468,15 +403,13 @@ class Controller_Blog extends Controller_Base
 
         $cat_id = null;
         if (!empty($_GET['cat'])) {
-            $userInfo = $model->validData($_GET['cat']);
-            $cat_id = $userInfo['data'];
+            $cat_id= $model->validData(_A_::$app->get('cat'));
             $catigori_name = $model->getPostCatName($cat_id);
         }
 
         $total = $model->get_count_posts($cat_id);
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
-
         $start = (($page - 1) * $per_page);
 
         $rows = $model->get_post_list($cat_id, $start, $per_page, $res_count_rows);
@@ -484,9 +417,6 @@ class Controller_Blog extends Controller_Base
             $this->template->vars('count_rows', $res_count_rows);
 
             ob_start();
-
-            date_default_timezone_set('UTC');
-
             foreach ($rows as $row) {
                 $post_id = $row['ID'];
                 $post_name = $row['post_name'];
@@ -524,7 +454,7 @@ class Controller_Blog extends Controller_Base
                 }
 
                 $post_img = str_replace('{base_url}', $base_url, $post_img);
-                include('./views/index/blog/blog_admin_posts.php');
+                include('./views/blog/blog_admin_posts.php');
             }
 
             $list = ob_get_contents();
@@ -532,7 +462,6 @@ class Controller_Blog extends Controller_Base
             $this->template->vars('cat_name', isset($catigori_name) ? $catigori_name : null);
             $this->template->vars('blog_posts', $list);
 
-            include_once('controllers/_paginator.php');
             $paginator = new Controller_Paginator($this);
             $paginator->paginator_home($total, $page, 'admin_blog', $per_page);
         } else {
@@ -567,13 +496,13 @@ class Controller_Blog extends Controller_Base
     function admin_blog()
     {
         $this->admin_blog_prepapre();
-        $this->main->view_admin('blog/blog_admin');
+        $this->main->view_admin('blog_admin');
     }
 
     function admin_blog_content()
     {
         $this->admin_blog_prepapre();
-        $this->main->view_layout('blog/blog_admin_content');
+        $this->main->view_layout('blog_admin_content');
     }
 
     function del_post()
@@ -598,7 +527,7 @@ class Controller_Blog extends Controller_Base
         $model = new Model_Blog();
         $categories = $model->get_blog_categories();
         ob_start();
-        include('views/index/blog/blog_categories_select_options.php');
+        include('views/blog/blog_categories_select_options.php');
         $res = ob_get_contents();
         ob_end_clean();
         return $res;
@@ -650,7 +579,7 @@ class Controller_Blog extends Controller_Base
         $this->template->vars('f_img', $f_img);
 
         ob_start();
-        $this->main->view_layout('blog/blog_new_post_img');
+        $this->main->view_layout('blog_new_post_img');
         $res = ob_get_contents();
         ob_end_clean();
 
@@ -709,7 +638,7 @@ class Controller_Blog extends Controller_Base
     function new_post()
     {
         $this->new_post_prepare();
-        $this->main->view_admin('blog/blog_new_post');
+        $this->main->view_admin('blog_new_post');
     }
 
     function save_new_post()
@@ -783,7 +712,7 @@ class Controller_Blog extends Controller_Base
             $warning = ['Article saved successfully!!!'];
             $this->template->vars('warning', $warning);
         }
-        $this->main->view_layout('blog/blog_new_post_form');
+        $this->main->view_layout('blog_new_post_form');
     }
 
     function edit_post_prepare()
@@ -846,7 +775,7 @@ class Controller_Blog extends Controller_Base
     function edit_post()
     {
         $this->edit_post_prepare();
-        $this->main->view_admin('blog/blog_edit_post');
+        $this->main->view_admin('blog_edit_post');
     }
 
     function save_edit_post()
@@ -939,7 +868,7 @@ class Controller_Blog extends Controller_Base
             $warning = ['Article saved successfully!!!'];
             $this->template->vars('warning', $warning);
         }
-//        $this->main->view_layout('blog/blog_edit_post_form');
-        $this->main->view_layout('blog/edit_blog_alert');
+//        $this->main->view_layout('blog_edit_post_form');
+        $this->main->view_layout('edit_blog_alert');
     }
 }
