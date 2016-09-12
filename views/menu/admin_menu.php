@@ -63,10 +63,10 @@
                     <a title="Blog"  aria-haspopup="true" class="has-submenu" href="#">Blog<span class="caret"></span></a>
                     <ul role="group" class="dropdown-menu" aria-hidden="true" aria-expanded="false" style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Blog Posts" href="<?php echo $base_url;?>/admin_blog">Overview</a>
+                            <a title="Blog Posts" href="<?php echo _A_::$app->router()->UrlTo('mnf');?>/admin_blog">Overview</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Blog Categories" href="<?php echo $base_url;?>/admin_blog_categories">Categories</a>
+                            <a title="Blog Categories" href="<?php echo _A_::$app->router()->UrlTo('mnf');?>/admin_blog_categories">Categories</a>
                         </li>
                     </ul>
                     <?php

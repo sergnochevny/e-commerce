@@ -1,20 +1,9 @@
 <?php
 
-class Controller_Product extends Controller_Base
+class Controller_Product extends Controller_Controller
 {
 
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
-
-    function product_page($url = 'shop')
+    function product($url = 'shop')
     {
         $model = new Model_Product();
         $samples_model = new Model_Samples();
@@ -184,7 +173,7 @@ class Controller_Product extends Controller_Base
 
         $this->template->vars('back_url', $back_url);
 
-        $this->main->view('product/product_page');
+        $this->main->view('product_page');
     }
 
     function edit()
@@ -625,7 +614,7 @@ class Controller_Product extends Controller_Base
         $this->main->view_layout('product/edit_form');
     }
 
-    function add_product()
+    function add()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -663,7 +652,7 @@ class Controller_Product extends Controller_Base
         $this->main->view_admin('product/add_product');
     }
 
-    private function del_product_imgs($pid)
+    private function del_imgs($pid)
     {
         $model = new Model_Product();
         $images = $model->getImage($pid);
@@ -684,7 +673,7 @@ class Controller_Product extends Controller_Base
         }
     }
 
-    function del_produkt()
+    function del()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -694,7 +683,7 @@ class Controller_Product extends Controller_Base
         $cat = isset($_GET['cat']) ? $_GET['cat'] : null;
         if (!empty($del_produkt_id)) {
 
-            $this->del_product_imgs($del_produkt_id);
+            $this->del_imgs($del_produkt_id);
             $model->del_product($del_produkt_id);
 
             $base_url = BASE_URL;

@@ -5,6 +5,7 @@ include("classes/application.php");
 class Core
 {
 
+    protected $router;
     protected $registry;
     protected $session;
     protected $post;

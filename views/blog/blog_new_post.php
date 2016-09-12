@@ -1,10 +1,10 @@
 <body
     class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 
-<script src="<?php echo $base_url?>/tinymce/tinymce.min.js"></script>
-<script type="text/javascript" src="<?php echo $base_url?>/upload/js/ajaxupload.3.5.js"></script>
-<link rel='stylesheet' id='toko-style-css' href='<?php echo $base_url?>/views/css/style.css' type='text/css' media='all'/>
-<link rel="stylesheet" type="text/css" href="<?php echo $base_url?>/upload/styles.css">
+<script src="<?php _A_::$app->router()->UrlTo('tinymce/tinymce.min.js')?>"></script>
+<script type="text/javascript" src="<?php _A_::$app->router()->UrlTo('upload/js/ajaxupload.3.5.js')?>"></script>
+<link rel='stylesheet' id='toko-style-css' href='<?php _A_::$app->router()->UrlTo('views/css/style.css')?>' type='text/css' media='all'/>
+<link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('upload/styles.css')?>">
 
 <div class="site-container">
     <?php include "views/header.php"; ?>
@@ -46,7 +46,7 @@
                             toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
                             toolbar2: "| responsivefilemanager  image | link unlink anchor | forecolor backcolor  | print preview code ",
                             image_advtab: true,
-                            external_filemanager_path:"<?php echo $base_url?>/filemanager/",
+                            external_filemanager_path:"<?php _A_::$app->router()->UrlTo('filemanager/')?>",
                             relative_urls: false,
                             remove_script_host: false
                         }
@@ -55,7 +55,7 @@
                     var btnUpload = $('#upload');
                     new AjaxUpload(btnUpload, {
                         action: function(){
-                            return '<?php echo $base_url?>/new_blog_upload_img'
+                            return '<?php _A_::$app->router()->UrlTo('blog/new_upload_img')?>'
                         },
                         name: 'uploadfile',
                         onComplete: function (file, response) {

@@ -194,7 +194,6 @@ class Controller_Order extends Controller_Base
                 $this->template->vars('customer_orders_list', $customer_orders_list);
             }
 
-            include_once('controllers/_paginator.php');
             $paginator = new Controller_Paginator($this->main);
             $paginator->orders_paginator($total_pages, $page);
         } else {
@@ -292,7 +291,6 @@ class Controller_Order extends Controller_Base
             $this->template->vars('admin_orders_list', $admin_orders_list);
         }
 
-        include_once('controllers/_paginator.php');
         $paginator = new Controller_Paginator($this->main);
         $paginator->orders_history_paginator($total_pages, $page);
 

@@ -42,7 +42,7 @@
                             <ul class="dropdown-menu topnav-search-dropdown">
                                 <li>
                                     <form id="f_search" role="search" method="post" class="woocommerce-product-search"
-                                          action="<?php echo $base_url; ?>/shop">
+                                          action="<?php echo _A_::$app->router()->UrlTo('shop'); ?>">
                                         <label class="screen-reader-text" for="s">Search for:</label>
                                         <input id="search" type="search" class="search-field"
                                                placeholder="Search Products&hellip;" value="<?php echo isset($search)?$search:''?>" name="s"
@@ -53,9 +53,9 @@
                             </ul>
                         </li>
 
-                        <!---<li class="dropdown" onclick="window.location.href = '<?php echo $base_url; ?>/admin';">
+                        <!---<li class="dropdown" onclick="window.location.href = '<?php _A_::$app->router()->UrlTo('admin'); ?>';">
 
-                            <a href="<?php echo $base_url; ?>/admin" class="dropdown-toggle" data-toggle="dropdown" rel="nofollow">
+                            <a href="<?php _A_::$app->router()->UrlTo('admin'); ?>" class="dropdown-toggle" data-toggle="dropdown" rel="nofollow">
                                 <i class="drip-icon-user"></i>
                                 <span class="topnav-label hidden-xs">My Account</span>
                             </a>
@@ -95,9 +95,9 @@
                                 <span class="sr-only">Toggle navigation</span>
                                 <i class="fa fa-navicon"></i>
                             </button>
-                            <a class="navbar-brand" href="<?php echo $base_url; ?>">
+                            <a class="navbar-brand" href="<?php _A_::$app->router()->UrlTo('/'); ?>">
                                 <div class="site-with-image"><img class="site-logo"
-                                                                  src="<?php echo $base_url; ?>/views/images/logo.gif"
+                                                                  src="<?php echo _A_::$app->router()->UrlTo('views/images/logo.gif'); ?>"
                                                                   alt=""/>
                                 </div>
                             </a>

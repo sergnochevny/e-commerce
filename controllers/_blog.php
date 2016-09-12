@@ -214,7 +214,7 @@ class Controller_Blog extends Controller_Controller
         $base_url = BASE_URL;
 
         $url = 'blog';
-        $back_url = $base_url . '/' . $url;
+        $back_url = $base_url . $url;
         if (!empty($_GET['page'])) {
             $back_url .= '?page=' . $_GET['page'];
         }
@@ -224,7 +224,7 @@ class Controller_Blog extends Controller_Controller
         }
         $this->template->vars('back_url', $back_url);
 
-        $post_name = explode('/', $_REQUEST['route'])[1];
+        $post_name = _A_::$app->router()->args[0];
 
         $row = $model->get_blog_post_by_post_name($post_name);
         if (isset($row)) {
@@ -298,7 +298,7 @@ class Controller_Blog extends Controller_Controller
                 $post_id = $row['ID'];
                 $post_name = $row['post_name'];
                 $base_url = BASE_URL;
-                $url = 'blog/' . $post_name;
+                $url = 'blog/post/' . $post_name;
                 $post_href = BASE_URL . '/' . $url;
                 if (!empty(_A_::$app->get('page'))) {
                     $post_href .= '?page=' . _A_::$app->get('page');

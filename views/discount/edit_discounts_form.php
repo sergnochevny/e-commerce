@@ -2,7 +2,7 @@
     <i class="fa fa-spinner fa-pulse fa-4x"></i>
 </div>
     <!--<form action="edit_discounts_data?discounts_id=id"  method="post">-->
-<form method="POST" id="discount" action="<?php echo $base_url;?>/edit_discounts_data?discounts_id=<?php echo $_GET['discounts_id']; ?>"
+<form method="POST" id="discount" action="<?php echo _A_::$app->router()->UrlTo('mnf');?>/edit_discounts_data?discounts_id=<?php echo $_GET['discounts_id']; ?>"
       class="enquiry-form ">
     <br/>
     <div class="form-row">

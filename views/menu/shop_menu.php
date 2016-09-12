@@ -3,10 +3,10 @@
     style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
 
     <li class="menu-item menu-item-type-post_type menu-item-object-product">
-        <a title="" class="shop_menu" href="<?php echo $base_url?>/shop_specials">Specials</a>
+        <a title="" class="shop_menu" href="<?php echo _A_::$app->router()->UrlTo('shop/specials')?>">Specials</a>
     </li>
     <li class="menu-item menu-item-type-post_type menu-item-object-product">
-        <a title="" href="<?php echo $base_url;?>/shop/last" class="has-submenu" id="sm-14573591911186943-3" aria-haspopup="true"
+        <a title="" href="<?php echo _A_::$app->router()->UrlTo('shop/last');?>" class="has-submenu" id="sm-14573591911186943-3" aria-haspopup="true"
            aria-controls="sm-14573591911186943-4" aria-expanded="false">What's New</a>
         <ul role="group" class="dropdown-menu sm-nowrap" id="sm-14573591911186943-4" aria-hidden="true"
             aria-labelledby="sm-14573591911186943-3" aria-expanded="false"

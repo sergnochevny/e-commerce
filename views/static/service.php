@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <p>Due to another technical error, the contact us form is offline. We will have it back up
-                                as soon as possible. In the meantime, please <a href="<?php echo $base_url;?>/contact">click here</a> to use
+                                as soon as possible. In the meantime, please <a href="<?php _A_::$app->router()->UrlTo('contact');?>">click here</a> to use
                                 this method to contact us.</p>
 
                             <p><b>Thank you for yor patience!</b></p>
@@ -53,7 +53,7 @@
 
                             <p>All special orders are final sale. No refunds. No cancellations. No returns.</p>
 
-                            <p>Please <a href="<?php echo $base_url;?>/contact">contact us</a> for information on fabric sample purchases.
+                            <p>Please <a href="<?php _A_::$app->router()->UrlTo('contact');?>">contact us</a> for information on fabric sample purchases.
                             </p>
 
                             <p>We are confident you'll find our products to be of the highest quality. If however you
@@ -87,7 +87,7 @@
 
                             <p>Your personal information is never under any circumstances shared with any other
                                 individuals or organizations.<br>
-                                <a href="<?php echo $base_url;?>/privacy">privacy policy</a>.
+                                <a href="<?php _A_::$app->router()->UrlTo('privacy');?>">privacy policy</a>.
                             </p>
 
                             <h3>Security Information</h3>

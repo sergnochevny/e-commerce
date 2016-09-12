@@ -8,8 +8,8 @@
     ?>
 
     <!--Slider-->
-    <link rel='stylesheet' href='<?php echo $base_url; ?>/views/css/owl.carousel.css' type='text/css' media='all'/>
-    <script type='text/javascript' src='<?php echo $base_url; ?>/views/js/owl.carousel.min.js'></script>
+    <link rel='stylesheet' href='<?php _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>' type='text/css' media='all'/>
+    <script type='text/javascript' src='<?php _A_::$app->router()->UrlTo('views/js/owl.carousel.min.js'); ?>'></script>
 
     <div class="main-content" id="newsletter-page">
         <div class="container">

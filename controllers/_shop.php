@@ -8,26 +8,17 @@ class Controller_Shop extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Product();
         $image_suffix = 'b_';
-        $add_product_href = BASE_URL . '/add_product';
-
-        $add_product_href .= '?page=';
-        if (!empty(_A_::$app->get('page'))) {
-            $add_product_href .= _A_::$app->get('page');
-        } else
-            $add_product_href .= '1';
-
-        if (!empty(_A_::$app->get('cat'))) {
-            $add_product_href .= '&cat=' . _A_::$app->get('cat');
-        }
-        $this->template->vars('add_product_href', $add_product_href);
-
-        $model->cleanTempProducts();
-
+        $page = 1;
         if (!empty(_A_::$app->get('page'))) {
             $page = $model->validData(_A_::$app->get('page'));
-        } else {
-            $page = 1;
         }
+        $add_product_prms['page'] = $page;
+        if (!empty(_A_::$app->get('cat'))) {
+            $add_product_prms['cat'] = _A_::$app->get('cat');
+        }
+        $this->template->vars('add_product_href', _A_::$app-router()->UrlTo('add_product',$add_product_prms));
+
+        $model->cleanTempProducts();
         $per_page = 12;
 
         if (!empty(_A_::$app->get('cat'))) {
@@ -125,7 +116,7 @@ class Controller_Shop extends Controller_Controller
         $items = $model->get_items_for_menu('all');
         ob_start();
         foreach ($items as $item) {
-            $href = $base_url . "/shop&cat=" . $item['cid'];
+            $href = _A_::$app->router()->UrlTo('shop',['cat'=>$item['cid']]);
             $name = $item['cname'];
             $this->template->vars('href', $href, true);
             $this->template->vars('name', $name, true);
@@ -947,4 +938,36 @@ class Controller_Shop extends Controller_Controller
         $data = $model->produkt_filtr_list();
         $this->template->vars('ProductFiltrList', $data);
     }
+
+
+    function widget_popular()
+    {
+        echo $this->widget_products('popular', 0, 5);
+    }
+
+    function widget_new()
+    {
+        echo $this->widget_products('new', 0, 5);
+    }
+
+    function widget_new_carousel()
+    {
+        echo $this->widget_products('carousel', 0, 30, 'widget_new_products_carousel');
+    }
+
+    function widget_best()
+    {
+        echo $this->widget_products('best', 0, 5);
+    }
+
+    function widget_bsells()
+    {
+        echo $this->widget_products('bsells', 3, 5);
+    }
+
+    function widget_bsells_horiz()
+    {
+        echo $this->widget_products('bsells', 0, 3, 'widget_bsells_products_horiz');
+    }
+
 }

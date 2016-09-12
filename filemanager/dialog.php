@@ -378,7 +378,7 @@ $get_params = http_build_query($get_params);
 	<input type="hidden" id="rename" value="<?php echo trans('Rename');?>" />
 	<input type="hidden" id="lang_duplicate" value="<?php echo trans('Duplicate');?>" />
 	<input type="hidden" id="duplicate" value="<?php if($duplicate_files) echo 1; else echo 0;?>" />
-	<input type="hidden" id="base_url" value="<?php echo $base_url?>"/>
+	<input type="hidden" id="base_url" value="<?php _A_::$app->router()->UrlTo('/')?>"/>
 	<input type="hidden" id="base_url_true" value="<?php echo base_url();?>"/>
 	<input type="hidden" id="fldr_value" value="<?php echo $subdir;?>"/>
 	<input type="hidden" id="sub_folder" value="<?php echo $rfm_subfolder;?>"/>

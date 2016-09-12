@@ -175,7 +175,7 @@ class Controller_Main extends Controller_Base
         }
 
         $cart = new Controller_Cart(isset($this->main) ? $this->main : $this);
-        $cart->get_cart();
+        $cart->get();
         $authorization = new Controller_Authorization(isset($this->main) ? $this->main : $this);
 
         ob_start();

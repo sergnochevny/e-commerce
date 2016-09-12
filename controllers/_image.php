@@ -17,7 +17,7 @@ class Controller_Image extends Controller_Base
     function del_pic()
     {
         $this->main->test_access_rights();
-        $model = new Model_Tools();
+        $model = new Model_Product();
         $userInfo = $model->validData($_GET['produkt_id']);
         $pid_id = $userInfo['data'];
         $userInfo = $model->validData($_GET['idx']);
@@ -48,7 +48,7 @@ class Controller_Image extends Controller_Base
         $this->main->test_access_rights();
         if (!empty($_GET['produkt_id'])) {
             $produkt_id = $_GET['produkt_id'];
-            $model = new Model_Tools();
+            $model = new Model_Product();
             $userInfo = $model->validData($produkt_id);
             $produkt_id = $userInfo['data'];
             $userInfo = $model->getImage($produkt_id);
@@ -87,7 +87,7 @@ class Controller_Image extends Controller_Base
                 $image5 = $base_url . '/upload/upload/' . $image5;
             }
 
-            include('views/product/product_m_images.php');
+            include('views/index/product/product_m_images.php');
 
         }
 
@@ -120,14 +120,14 @@ class Controller_Image extends Controller_Base
         if (!file_exists($filename5)) {
             $image5 = "not_image.jpg";
         }
-        include('views/product/product_m_images.php');
+        include('views/index/product/product_m_images.php');
 
     }
 
     function save_img_link()
     {
         $this->main->test_access_rights();
-        $model = new Model_Tools();
+        $model = new Model_Product();
         if (!empty($_GET['produkt_id'])) {
             if (!empty($_GET['idx'])) {
                 $userInfo = $model->validData($_GET['produkt_id']);
@@ -149,7 +149,7 @@ class Controller_Image extends Controller_Base
     function upload_product_img()
     {
         $this->main->test_access_rights();
-        $model = new Model_Tools();
+        $model = new Model_Product();
         if (!empty($_GET['pid'])) {
             $produkt_photo = isset($_GET['idx']) ? $_GET['idx'] : 1;
             $userInfo = $model->validData($_GET['pid']);
