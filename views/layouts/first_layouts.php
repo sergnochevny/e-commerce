@@ -21,7 +21,7 @@
     <link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/bootstrap.min.css'); ?>' type='text/css' media='all'/>
     <link rel='stylesheet' id='toko-smartmenu-css'
           href='<?php echo _A_::$app->router()->UrlTo('views/css/jquery.smartmenus.bootstrap.css'); ?>' type='text/css' media='all'/>
-    <link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/font-awesome.min.cssmnf'); ?>' type='text/css' media='all'/>
+    <link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/font-awesome.min.css'); ?>' type='text/css' media='all'/>
     <link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/js_composer.min.css'); ?>' type='text/css' media='all'/>
     <link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
     <link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/webfont.css'); ?>' type='text/css' media='all'/>

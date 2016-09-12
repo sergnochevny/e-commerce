@@ -23,7 +23,7 @@
                                             <div
                                                 class="toko-slides toko-slider-active owl-carousel owl-theme owl-loaded">
                                                 <div class="toko-slide"
-                                                     style="background-image:url(<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/views/images/slider/slide1.jpg);background-size:cover;background-position:center right;background-repeat:no-repeat;">
+                                                     style="background-image:url(<?php echo _A_::$app->router()->UrlTo('views/images/slider/slide1.jpg'); ?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
                                                     <div class="toko-slide-inner">
                                                         <div class="toko-slide-detail"
                                                              onclick="return location.href = '<?php echo _A_::$app->router()->UrlTo('shop'); ?>'">
@@ -38,7 +38,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="toko-slide"
-                                                     style="background-image:url(<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/views/images/slider/slide2.jpg);background-size:cover;background-position:center right;background-repeat:no-repeat;">
+                                                     style="background-image:url(<?php echo _A_::$app->router()->UrlTo('views/images/slider/slide2.jpg'); ?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
                                                     <div class="toko-slide-inner">
                                                         <div class="toko-slide-detail"
                                                              onclick="return location.href = '<?php echo _A_::$app->router()->UrlTo('shop'); ?>'">
@@ -95,7 +95,7 @@
                                                 class="wpb_column vc_column_container vc_col-sm-12 vc_custom_1439734514225">
                                                 <div class="wpb_wrapper">
                                                     <div class="toko-banner toko-banner-left"
-                                                         style="background-image:url(<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/views/images/temp/textile.png)">
+                                                         style="background-image:url(<?php echo _A_::$app->router()->UrlTo('views/images/temp/textile.png'); ?>)">
                                                         <a href="<?php echo _A_::$app->router()->UrlTo('shop/last'); ?>">
                                                             <div class="toko-banner-detail">
                                                                 <p class="paragraf1">Brand new life, Brand new
@@ -112,7 +112,7 @@
                                             <div
                                                 class="wpb_column vc_column_container vc_col-sm-6 vc_custom_1439734524172">
                                                 <div class="wpb_wrapper">
-                                                    <div class="toko-banner toko-banner-right" style="background-image:url(<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/views/images/temp/textile1.png)">
+                                                    <div class="toko-banner toko-banner-right" style="background-image:url(<?php echo _A_::$app->router()->UrlTo('views/images/temp/textile1.png'); ?>)">
                                                         <a href="<?php echo _A_::$app->router()->UrlTo('shop/best'); ?>">
                                                             <div class="toko-banner-detail">
                                                                 <p class="paragraf1">New Collection</p>
@@ -127,7 +127,7 @@
                                                 class="wpb_column vc_column_container vc_col-sm-6 vc_custom_1439734531955">
                                                 <div class="wpb_wrapper">
                                                     <div class="toko-banner toko-banner-left"
-                                                         style="background-image:url(<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/views/images/temp/textile2.png)">
+                                                         style="background-image:url(<?php echo _A_::$app->router()->UrlTo('views/images/temp/textile2.png'); ?>)">
                                                         <a href="<?php echo _A_::$app->router()->UrlTo('shop/popular'); ?>">
                                                             <div class="toko-banner-detail">
                                                                 <p class="paragraf1">New collection</p>
