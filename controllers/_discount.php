@@ -3,17 +3,6 @@
 class Controller_Discount extends Controller_Base
 {
 
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
-
     function discounts()
     {
         $this->main->test_access_rights();
@@ -50,7 +39,7 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $userInfo = $model->validData($_GET['discounts_id']);
+        $userInfo = $model->validData(_A_::$app->get('discounts_id'));
         $discounts_id = $userInfo['data'];
         if (!empty($discounts_id)) {
             $model->del_discount($discounts_id);
@@ -75,7 +64,7 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $userInfo = $model->validData($_GET['discounts_id']);
+        $userInfo = $model->validData(_A_::$app->get('discounts_id'));
         $discount_id = $userInfo['data'];
         $userInfo = $model->get_edit_discounts_data($discount_id);
         $this->template->vars('userInfo', $userInfo);
@@ -86,7 +75,7 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $userInfo = $model->validData($_GET['discounts_id']);
+        $userInfo = $model->validData(_A_::$app->get('discounts_id'));
         $discount_id = $userInfo['data'];
         $userInfo = $model->get_edit_discounts_data($discount_id);
         $this->template->vars('userInfo', $userInfo);
@@ -107,7 +96,7 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $userInfo = $model->validData($_GET['discounts_id']);
+        $userInfo = $model->validData(_A_::$app->get('discounts_id'));
         $discounts_id = $userInfo['data'];
         if (!empty($discounts_id)) {
             $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='" . $discounts_id . "'");
@@ -145,8 +134,7 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $userInfo = $model->validData($_GET['discounts_id']);
-        $discounts_id = $userInfo['data'];
+        $discounts_id = $model->validData(_A_::$app->get('discounts_id'));
         if (!empty($discounts_id)) {
             $i = 0;
             ob_start();
@@ -244,25 +232,25 @@ class Controller_Discount extends Controller_Base
                 $users = $model->get_edit_form_checked_users_by_array($users_list, $users_check);
 
                 $userInfo = array(
-                    'discount_comment1' => isset($_POST['discount_comment1']) ? $_POST['discount_comment1'] : '',
-                    'discount_comment2' => isset($_POST['discount_comment2']) ? $_POST['discount_comment2'] : '',
-                    'discount_comment3' => isset($_POST['discount_comment3']) ? $_POST['discount_comment3'] : '',
-                    'discount_amount' => isset($_POST['discount_amount']) ? $_POST['discount_amount'] : '',
+                    'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
+                    'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '',
+                    'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '',
+                    'discount_amount' => !is_null(_A_::$app->post('discount_amount')) ? _A_::$app->post('discount_amount') : '',
                     'coupon_code' => $coupon_code,
                     'allow_multiple' => $allow_multiple,
-                    'date_start' => isset($_POST['start_date']) ? $_POST['start_date'] : '',
-                    'date_end' => isset($_POST['date_end']) ? $_POST['date_end'] : '',
-                    'enabled' => isset($_POST['enabled']) ? $_POST['enabled'] : '',
+                    'date_start' => !is_null(_A_::$app->post('start_date')) ? _A_::$app->post('start_date') : '',
+                    'date_end' => !is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '',
+                    'enabled' => !is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : '',
                     'fabric_list' => $fabrics,
                     'users_list' => $users,
-                    'countdown' => isset($_POST['countdown']) ? $_POST['countdown'] : '',
+                    'countdown' => !is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : '',
                     'sel_fabrics' => $sel_fabrics,
                     'users_check' => $users_check,
-                    'required_amount' => isset($_POST['restrictions']) ? $_POST['restrictions'] : '0.00',
-                    'promotion_type' => isset($_POST['iType']) ? $_POST['iType'] : '0',
+                    'required_amount' => !is_null(_A_::$app->post('restrictions')) ? _A_::$app->post('restrictions') : '0.00',
+                    'promotion_type' => !is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '0',
                     'discount_type' => $iDscntType,
-                    'required_type' => isset($_POST['iReqType']) ? $_POST['iReqType'] : '0',
-                    'discount_amount_type' => isset($_POST['iAmntType']) ? $_POST['iAmntType'] : '0',
+                    'required_type' => !is_null(_A_::$app->post('iReqType')) ? _A_::$app->post('iReqType') : '0',
+                    'discount_amount_type' => !is_null(_A_::$app->post('iAmntType')) ? _A_::$app->post('iAmntType') : '0',
                     'shipping_type' => $shipping_type,
                     'generate_code' => $generate_code
                 );
@@ -394,25 +382,25 @@ class Controller_Discount extends Controller_Base
             $users = $model->get_edit_form_checked_users_by_array($users_list, $users_check);
 
             $userInfo = array(
-                'discount_comment1' => isset($_POST['discount_comment1']) ? $_POST['discount_comment1'] : '',
-                'discount_comment2' => isset($_POST['discount_comment2']) ? $_POST['discount_comment2'] : '',
-                'discount_comment3' => isset($_POST['discount_comment3']) ? $_POST['discount_comment3'] : '',
-                'discount_amount' => isset($_POST['discount_amount']) ? $_POST['discount_amount'] : '',
+                'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
+                'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '',
+                'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '',
+                'discount_amount' => !is_null(_A_::$app->post('discount_amount')) ? _A_::$app->post('discount_amount') : '',
                 'coupon_code' => $coupon_code,
                 'allow_multiple' => $allow_multiple,
-                'date_start' => isset($_POST['start_date']) ? $_POST['start_date'] : '',
-                'date_end' => isset($_POST['date_end']) ? $_POST['date_end'] : '',
-                'enabled' => isset($_POST['enabled']) ? $_POST['enabled'] : '',
+                'date_start' => !is_null(_A_::$app->post('start_date')) ? _A_::$app->post('start_date') : '',
+                'date_end' => !is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '',
+                'enabled' => !is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : '',
                 'fabric_list' => $fabrics,
                 'users_list' => $users,
-                'countdown' => isset($_POST['countdown']) ? $_POST['countdown'] : '',
+                'countdown' => !is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : '',
                 'sel_fabrics' => $sel_fabrics,
                 'users_check' => $users_check,
-                'required_amount' => isset($_POST['restrictions']) ? $_POST['restrictions'] : '0.00',
-                'promotion_type' => isset($_POST['iType']) ? $_POST['iType'] : '0',
+                'required_amount' => !is_null(_A_::$app->post('restrictions')) ? _A_::$app->post('restrictions') : '0.00',
+                'promotion_type' => !is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '0',
                 'discount_type' => $iDscntType,
-                'required_type' => isset($_POST['iReqType']) ? $_POST['iReqType'] : '0',
-                'discount_amount_type' => isset($_POST['iAmntType']) ? $_POST['iAmntType'] : '0',
+                'required_type' => !is_null(_A_::$app->post('iReqType')) ? _A_::$app->post('iReqType') : '0',
+                'discount_amount_type' => !is_null(_A_::$app->post('iAmntType')) ? _A_::$app->post('iAmntType') : '0',
                 'shipping_type' => $shipping_type,
                 'generate_code' => $generate_code
             );
