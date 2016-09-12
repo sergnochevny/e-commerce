@@ -1,4 +1,4 @@
-<form id="new_category_form" action="<?php echo $base_url ?>/save_new_categories" method="post">
+<form id="new_category_form" action="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/save_new_categories" method="post">
     <small style="color: black; font-size: 10px;">
         Use this form to update the title and details of the offer.<br/>
         NOTE: the title cannot be more than 28 characters.

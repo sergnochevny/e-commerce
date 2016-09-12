@@ -2,14 +2,14 @@
     class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 
 <script type="text/javascript" src="upload/js/ajaxupload.3.5.js"></script>
-<!---<script src="<?php echo $base_url ?>/views/js/jquery-ui.min.js"></script>--->
-<script src="<?php echo $base_url ?>/tinymce/tinymce.min.js"></script>
+<!---<script src="<?php _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js') ?>"></script>--->
+<script src="<?php _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>"></script>
 
-<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/views/css/jquery-ui.css" media="all"/>
-<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/views/css/jquery-ui.theme.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('views/css/jquery-ui.css') ?>" media="all"/>
+<link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('views/css/jquery-ui.theme.css') ?>" media="all"/>
 
-<link rel='stylesheet' href='<?php echo $base_url ?>/views/css/style.css' type='text/css' media='all'/>
-<link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/upload/styles.css">
+<link rel='stylesheet' href='<?php _A_::$app->router()->UrlTo('views/css/style.css') ?>' type='text/css' media='all'/>
+<link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('upload/styles.css') ?>">
 
 <style>
     .toko-posts-grid .toko-post {
@@ -64,7 +64,7 @@
     }
 
     .toko-posts-grid .toko-post-detail > p > span.opa {
-        background-image: url("<?php echo $base_url;?>/views/images/bg-opa.png");
+        background-image: url("<?php _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
         bottom: 0;
         display: block;
         height: 80px;
@@ -115,7 +115,7 @@
                             toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
                             toolbar2: "| responsivefilemanager  image | link unlink anchor | forecolor backcolor  | print preview code ",
                             image_advtab: true,
-                            external_filemanager_path: "<?php echo $base_url ?>/filemanager/",
+                            external_filemanager_path: "<?php _A_::$app->router()->UrlTo('filemanager/') ?>",
                             relative_urls: false,
                             remove_script_host: false,
                             inline: true

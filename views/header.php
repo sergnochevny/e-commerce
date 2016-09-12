@@ -43,7 +43,7 @@
                             <ul class="dropdown-menu topnav-search-dropdown">
                                 <li>
                                     <form id="f_search" role="search" method="post" class="woocommerce-product-search"
-                                          action="<?php echo $base_url; ?>/shop">
+                                          action="<?php echo _A_::$app->router()->UrlTo('shop'); ?>">
                                         <label class="screen-reader-text" for="s">Search for:</label>
                                         <input id="search" type="search" class="search-field"
                                                placeholder="Search Products&hellip;" value="<?php echo isset($search)?$search:''?>" name="s"
@@ -90,8 +90,8 @@
                                 <span class="sr-only">Toggle navigation</span>
                                 <i class="fa fa-navicon"></i>
                             </button>
-                            <a class="navbar-brand" href="<?php echo $base_url;?>">
-                                <div class="site-with-image"><img class="site-logo" src="<?php echo $base_url;?>/views/images/logo.gif" alt=""/>
+                            <a class="navbar-brand" href="<?php _A_::$app->router()->UrlTo('/');?>">
+                                <div class="site-with-image"><img class="site-logo" src="<?php _A_::$app->router()->UrlTo('views/images/logo.gif');?>" alt=""/>
                                 </div>
                             </a>
                         </div>

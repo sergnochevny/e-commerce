@@ -10,7 +10,7 @@ echo $last ? 'last' : ''; ?> product type-product status-publish has-post-thumbn
 
             </figcaption>
         </figure>
-        <a href="<?php echo $base_url; ?>/product_page?p_id=<?php echo $row[0] ?>">
+        <a href="<?php _A_::$app->router()->UrlTo('product',['p_id'=>$row[0]], $row['pname']); ?>">
             <span class="onsale">New!</span>
             <span class="product-category"><?php echo $row['pname']; ?></span>
 

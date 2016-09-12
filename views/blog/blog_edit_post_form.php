@@ -114,7 +114,7 @@
 
         new AjaxUpload($('#post_img'), {
             action: function(){
-                return '<?php echo $base_url?>/edit_blog_upload_img'
+                return '<?php _A_::$app->router()->UrlTo('blog/edit_upload_img')?>'
             },
             name: 'uploadfile',
             onComplete: function (file, response) {

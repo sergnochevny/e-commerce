@@ -2,8 +2,8 @@
     class="single single-product woocommerce woocommerce-page header-large ltr sticky-header-yes wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3 small-sticky">
 <div class="site-container">
 
-    <link rel='stylesheet' href='<?php echo $base_url; ?>/views/css/jquery-ui.min.css' type='text/css' media='all'/>
-    <script type='text/javascript' src='<?php echo $base_url; ?>/views/js/jquery-ui.min.js'></script>
+    <link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/views/css/jquery-ui.min.css' type='text/css' media='all'/>
+    <script type='text/javascript' src='<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/views/js/jquery-ui.min.js'></script>
 
     <?php include "views/header.php"; ?>
 
@@ -201,12 +201,12 @@
                             if ($userInfo['inventory'] > 0) {
                                 ?>
                                 <a id="add_cart"
-                                   href="<?php echo $base_url ?>/add_cart?p_id=<?php echo $pid ?>" <?php echo !isset($in_cart) ? '' : 'style="display: none;"'; ?>>
+                                   href="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/add_cart?p_id=<?php echo $pid ?>" <?php echo !isset($in_cart) ? '' : 'style="display: none;"'; ?>>
                                     <button type="button" class="single_add_to_cart_button button alt">Add to cart
                                     </button>
                                 </a>
                                 <a id="view_cart"
-                                   href="<?php echo $base_url ?>/cart" <?php echo isset($in_cart) ? '' : 'style="display: none;"'; ?>>
+                                   href="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/cart" <?php echo isset($in_cart) ? '' : 'style="display: none;"'; ?>>
                                     <button type="button" class="single_add_to_cart_button button alt">Basket
                                     </button>
                                 </a>
@@ -218,7 +218,7 @@
                             if ($userInfo['inventory'] > 0 && $allowed_samples) {
                                 ?>
                                 <a id="add_samples_cart"
-                                   href="<?php echo $base_url ?>/add_samples_cart?p_id=<?php echo $pid ?>" <?php echo !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
+                                   href="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/add_samples_cart?p_id=<?php echo $pid ?>" <?php echo !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
                                     <button type="button" class="single_add_to_cart_button button alt">Add Samples
                                     </button>
                                 </a>
@@ -240,7 +240,7 @@
                                 </button>
                             </a>
                             <a id="view_matches"
-                               href="<?php echo $base_url; ?>/matches" <?php echo isset($in_matches) ? '' : 'style="display: none;"'; ?>>
+                               href="<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/matches" <?php echo isset($in_matches) ? '' : 'style="display: none;"'; ?>>
                                 <button type="button" class="single_add_to_cart_button button alt">View Matches
                                 </button>
                             </a>
@@ -285,7 +285,7 @@
     <script type="text/javascript">
 
         (function ($) {
-            var base_url = '<?php echo $base_url;?>';
+            var base_url = '<?php echo _A_::$app->router()->UrlTo('mnf');?>';
             var back_url = '<?php echo $back_url;?>';
 
             $('a#add_cart').on('click',

@@ -228,7 +228,8 @@ Class Model_Blog extends Model_Model
             $q_total = "SELECT COUNT(*) FROM `blog_posts` WHERE  post_status = 'publish'";
         }
         $res = mysql_query($q_total);
-        return mysql_fetch_row($res)[0];
+        $total = mysql_fetch_row($res);
+        return $total[0];
     }
 
     public function get_publish_post_list($cat_id, $start, $per_page, &$res_count_rows)

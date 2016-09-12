@@ -1,60 +1,62 @@
-<body class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
+<body
+    class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 
-<link type='text/css' href='modal_windows/modal_windows/css/confirm.css' rel='stylesheet' media='screen' />
+<link type='text/css' href='modal_windows/modal_windows/css/confirm.css' rel='stylesheet' media='screen'/>
 
 <div class="site-container">
-<?php include "views/header.php"; ?>
-  
-	<div class="main-content main-content-shop">
-		<div class="container">              
-			<div id="content" class="main-content-inner" role="main">
+    <?php include "views/header.php"; ?>
+
+    <div class="main-content main-content-shop">
+        <div class="container">
+            <div id="content" class="main-content-inner" role="main">
                 <center>
-                    <a href="<?php echo $add_product_href;?>">
+                    <a href="<?php echo $add_product_href; ?>">
                         <input type="submit" value="ADD NEW PRODUCT" class="button"/>
                     </a><br>
                 </center>
-				<h1 class="page-title">
+                <h1 class="page-title">
                     <?php
-//                            echo $object->catigori_name();
+                    //                            echo $object->catigori_name();
                     ?>
                 </h1>
-				<p class="woocommerce-result-count">Showing <?php echo $count_rows;?> results</p>
-				<form class="woocommerce-ordering" method="get">
+                <p class="woocommerce-result-count">Showing <?php echo $count_rows; ?> results</p>
+                <form class="woocommerce-ordering" method="get">
                     <?php
                     $rows = $ProductFiltrList['catigori_in_select'];
                     ?>
-                    <select onChange="if(this.options[this.selectedIndex].value!=''){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}" class="orderby">
+                    <select
+                        onChange="if(this.options[this.selectedIndex].value!=''){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}"
+                        class="orderby">
                         <option value="admin_home">--FILTER BY CATEGORY--</option>
 
                         <?php
-                        foreach($rows as $row)
-                        {?>
+                        foreach ($rows as $row) {
+                            ?>
 
-                            <option value="admin_home?cat=<?php echo $row[0];?>" <?php echo (isset($_GET['cat']) && ($row[0] == $_GET['cat']))?'selected':'';?>><?php echo $row[1];?></option>
+                            <option
+                                value="admin_home?cat=<?php echo $row[0]; ?>" <?php echo (isset($_GET['cat']) && ($row[0] == $_GET['cat'])) ? 'selected' : ''; ?>><?php echo $row[1]; ?></option>
 
-                        <?php }?>
+                        <?php } ?>
 
                     </select>
-				</form>
+                </form>
                 <ul class="products">
-                <div class="product-inner">
-                <?php
+                    <div class="product-inner">
+                        <?php
                         echo $produkt_list;
-                ?>
+                        ?>
                 </ul>
-				<nav role="navigation" class="paging-navigation">
-					<h4 class="sr-only">Products navigation</h4>
-					<ul class='pagination'>
-    					 <?php
-                                echo isset($produkt_paginator)?$produkt_paginator:'';
-                         ?>
+                <nav role="navigation" class="paging-navigation">
+                    <h4 class="sr-only">Products navigation</h4>
+                    <ul class='pagination'>
+                        <?php
+                        echo isset($paginator) ? $paginator : '';
+                        ?>
                     </ul>
-				</nav>
+                </nav>
             </div>
-		</div>
-	</div>
-    
-
+        </div>
+    </div>
 </div>
 
 <div id="confirm_dialog" class="overlay"></div>
@@ -75,7 +77,7 @@
 </div>
 
 <script type="text/javascript">
-    (function($){
+    (function ($) {
         $(document).on('click.confirm_action', ".popup a.close",
             function (event) {
                 $("#confirm_action").off('click.confirm_action');
@@ -90,7 +92,7 @@
         );
 
         $(document).on('click', "#del_product",
-            function(event){
+            function (event) {
                 event.preventDefault();
 
                 var href = $(this).attr('href');

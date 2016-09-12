@@ -20,11 +20,11 @@ class Controller_Authorization extends Controller_Base
         $base_url = BASE_URL;
         $model = new Model_Auth();
         if ($this->is_admin_logged()) {
-            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/admin_home';
+            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin_home');
             $this->redirect($url);
         }
         if ($this->is_user_logged()) {
-            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/shop';
+            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('shop');
             $this->redirect($url);
         }
         if ($this->is_set_admin_remember()) {
@@ -32,7 +32,7 @@ class Controller_Authorization extends Controller_Base
             if ($model->is_admin_remember($remember)) {
                 $admin = $model->get_admin_data();
                 _A_::$app->setSession('_a',$admin['id']);
-                $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/admin_home';
+                $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin_home');
                 $this->redirect($url);
             }
         }
@@ -42,7 +42,7 @@ class Controller_Authorization extends Controller_Base
                 $user = $model->get_user_data();
                 _A_::$app->setSession('_',$user['aid']);
                 _A_::$app->setSession('user',$user);
-                $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/shop';
+                $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('shop');
                 $this->redirect($url);
             }
         }
@@ -65,7 +65,7 @@ class Controller_Authorization extends Controller_Base
             if ($model->is_user($login)) {
                 if ($this->user_authorize($login, $password)) {
                     $url = base64_decode(urldecode(_A_::$app->post('redirect')));
-                    $url = (strlen($url) > 0) ? $url : $base_url . '/shop';
+                    $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('shop');
                     $this->redirect($url);
                 }
             }
@@ -146,11 +146,11 @@ class Controller_Authorization extends Controller_Base
                 $password = _A_::$app->post('pass');
                 if (!$this->user_authorize($email, $password)) exit('Wrong Email or Password');
                 $url = base64_decode(urldecode(_A_::$app->post('redirect')));
-                $url = (strlen($url) > 0) ? $url : $base_url . '/shop';
+                $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('shop');
                 $this->redirect($url);
             } else {
 
-                $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : base64_encode($base_url . '/shop');
+                $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : base64_encode(_A_::$app->router()->UrlTo('shop'));
                 $registration_url = $base_url . '/registration_user';
                 if (!is_null(_A_::$app->get('url'))) {
                     $registration_url .= '?url=' . _A_::$app->get('url');
@@ -165,7 +165,7 @@ class Controller_Authorization extends Controller_Base
                 $this->main->view('user_authorization');
             }
         } else {
-            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : $base_url . '/shop';
+            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('shop');
             $this->redirect($url);
         }
     }
@@ -245,7 +245,7 @@ class Controller_Authorization extends Controller_Base
         _A_::$app->setSession('_', null);
         _A_::$app->setSession('user', null);
         _A_::$app->setCookie('_r', null);
-        $url = $base_url . '/shop';
+        $url = _A_::$app->router()->UrlTo('shop');
         $this->redirect($url);
     }
 

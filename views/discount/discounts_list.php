@@ -1,5 +1,5 @@
 <center>
-    <a href="<?php echo $base_url;?>/add_discounts"><input type="submit" value="ADD DISCOUNT" class="button"/></a><br><br><br>
+    <a href="<?php echo _A_::$app->router()->UrlTo('mnf');?>/add_discounts"><input type="submit" value="ADD DISCOUNT" class="button"/></a><br><br><br>
 </center>
 
 <div class="">

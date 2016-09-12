@@ -121,7 +121,7 @@
                             </div>
                             <div class="wc-proceed-to-checkout">
                                 <a class="checkout-button button alt wc-forward"
-                                   href="<?php echo $base_url ?>/shop">CONTINUE
+                                   href="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/shop">CONTINUE
                                     SHOPPING</a>
 
                                 <?php if (
@@ -130,7 +130,7 @@
                                 ) { ?>
 
                                     <a id="proceed_button" class="checkout-button button alt wc-forward"
-                                       href="<?php echo $base_url?>/proceed_checkout">
+                                       href="<?php echo _A_::$app->router()->UrlTo('mnf')?>/proceed_checkout">
                                         Proceed to Checkout</a>
                                 <?php } ?>
                             </div>

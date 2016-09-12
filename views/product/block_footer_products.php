@@ -39,10 +39,10 @@
 <script type="text/javascript">
     (function ($) {
         $(document).ready(function (event) {
-                $('#bsells_products').load('<?php echo $base_url?>/widget_bsells_products');
-                $('#popular_products').load('<?php echo $base_url?>/widget_popular_products');
-                $('#new_products').load('<?php echo $base_url?>/widget_new_products');
-                $('#best_products').load('<?php echo $base_url?>/widget_best_products');
+                $('#bsells_products').load('<?php echo _A_::$app->router()->UrlTo('shop/widget_bsells')?>');
+                $('#popular_products').load('<?php echo _A_::$app->router()->UrlTo('shop/widget_popular')?>');
+                $('#new_products').load('<?php echo _A_::$app->router()->UrlTo('shop/widget_new')?>/');
+                $('#best_products').load('<?php echo _A_::$app->router()->UrlTo('shop/widget_best')?>');
             }
         );
     })(jQuery);

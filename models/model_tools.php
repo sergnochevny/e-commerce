@@ -74,7 +74,7 @@ Class Model_Tools extends Model_Model
                     $page_KeyWords = stripslashes($row['keywords']);
                 }
             }
-        } elseif ($route_control == "product_page") {
+        } elseif ($route_control == "product") {
             $p_id = $_GET['p_id'];
             $result = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
             $row = mysql_fetch_array($result);

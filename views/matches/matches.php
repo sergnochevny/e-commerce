@@ -1,11 +1,11 @@
 <body
     class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 
-<link rel='stylesheet' href='<?php echo $base_url; ?>/views/css/simple-line-icons.css' type='text/css' media='all'/>
-<link rel='stylesheet' href='<?php echo $base_url; ?>/views/css/matches.css' type='text/css' media='all'/>
+<link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
+<link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/matches.css'); ?>' type='text/css' media='all'/>
 
-<link rel='stylesheet' href='<?php echo $base_url; ?>/views/css/jquery-ui.min.css' type='text/css' media='all'/>
-<script type='text/javascript' src='<?php echo $base_url; ?>/views/js/jquery-ui.min.js'></script>
+<link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
+<script type='text/javascript' src='<?php echo _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
 <div class="site-container">
     <?php
@@ -67,7 +67,7 @@
         }
 
         .toko-posts-grid .toko-post-detail > p > span.opa {
-            background-image: url("<?php echo $base_url;?>/views/images/bg-opa.png");
+            background-image: url("<?php echo _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
             bottom: 0;
             display: block;
             height: 80px;
@@ -131,13 +131,13 @@
                                                         </div>
                                                         <b id="b_in_product">
                                                             <a id="all_to_basket"
-                                                               href="<?php echo $base_url; ?>/add_all_to_cart">
+                                                               href="<?php echo _A_::$app->router()->UrlTo('cart/add_all_to'); ?>">
                                                                 Add
                                                                     All to Basket
                                                                 
                                                             </a>
                                                             <a id="clear_matches"
-                                                               href="<?php echo $base_url; ?>/clear_matches">
+                                                               href="<?php echo _A_::$app->router()->UrlTo('matches/clear'); ?>">
                                                                 
                                                                     Clear Matches
                                                                 
@@ -172,7 +172,7 @@
             );
 
             var a = 1;
-            var base_url = '<?php echo $base_url;?>';
+            var base_url = '<?php echo _A_::$app->router()->UrlTo('/');?>';
 
             $('#dragZoneArea > img').mousedown(function (eventObject) {
                 $(this).css("z-index", a++);

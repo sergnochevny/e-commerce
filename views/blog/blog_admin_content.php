@@ -48,7 +48,7 @@ if (isset($error) || isset($warning)) {
     <select
         onChange="if(this.options[this.selectedIndex].value!=''){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}"
         class="orderby">
-        <option value="<?php echo $base_url;?>/admin_blog">--FILTER BY CATEGORY--</option>
+        <option value="<?php _A_::$app->router()->UrlTo('admin_blog');?>">--FILTER BY CATEGORY--</option>
         <?php echo $select_cat_option; ?>
 
     </select>
@@ -107,7 +107,7 @@ if (isset($error) || isset($warning)) {
         }
 
         .toko-posts-grid .toko-post-detail > p > span.opa {
-            background-image: url("<?php echo $base_url;?>/views/images/bg-opa.png");
+            background-image: url("<?php echo _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
             bottom: 0;
             display: block;
             height: 80px;

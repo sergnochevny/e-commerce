@@ -1,5 +1,5 @@
 
-<form id="category_edit_form" action="<?php echo $base_url ?>/save_data_categories?category_id=<?php echo $_GET['category_id'];?>"  method="post">
+<form id="category_edit_form" action="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/save_data_categories?category_id=<?php echo $_GET['category_id'];?>"  method="post">
     <small style="color: black; font-size: 10px;">
         Use this form to update the title and details of the offer.<br />
         NOTE: the title cannot be more than 28 characters.

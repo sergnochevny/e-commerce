@@ -52,7 +52,6 @@ class Controller_User extends Controller_Controller
         ob_end_clean();
         $this->template->vars('main_users_list', $user_list);
 
-        include_once('controllers/_paginator.php');
         $paginator = new Controller_Paginator($this->main);
         $paginator->user_paginator($total, $page);
 
@@ -645,7 +644,7 @@ class Controller_User extends Controller_Controller
             if(!is_null(_A_::$app->get('url'))){
                 $back_url = base64_decode(urldecode(_A_::$app->get('url')));
             }
-            $back_url = $base_url . ((strlen($back_url) > 0) ? $back_url : '/shop');
+            $back_url = _A_::$app->router()->UrlTo(((strlen($back_url) > 0) ? $back_url : '/shop'));
             $this->template->vars('back_url', $back_url, true);
 
             $this->main->view('user/edit_user');
