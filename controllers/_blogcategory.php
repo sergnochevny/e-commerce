@@ -47,8 +47,7 @@ class Controller_BlogCategory extends Controller_Base
     {
         $model = new Model_Blog();
         $base_url = BASE_URL;
-        $userInfo = $model->validData(_A_::$app->get('cat'));
-        $group_id = $userInfo['data'];
+        $group_id = $model->validData(_A_::$app->get('cat'));
         $userInfo = $model->get_blog_category($group_id);
         $this->template->vars('userInfo', $userInfo);
 
@@ -65,8 +64,7 @@ class Controller_BlogCategory extends Controller_Base
     {
         $model = new Model_Blog();
         $base_url = BASE_URL;
-        $userInfo = $model->validData(_A_::$app->get('cat'));
-        $group_id = $userInfo['data'];
+        $group_id = $model->validData(_A_::$app->get('cat'));
         $userInfo = $model->get_blog_category($group_id);
         $this->template->vars('userInfo', $userInfo);
         $back_url = BASE_URL . '/admin_blog_categories';
@@ -81,9 +79,8 @@ class Controller_BlogCategory extends Controller_Base
     {
         $model = new Model_Blog();
         $base_url = BASE_URL;
-        $userInfo = $model->validData(_A_::$app->get('cat'));
-        $group_id = $userInfo['data'];
-        $userInfo = $model->validData( _A_::$app->post('category'));
+        $group_id = $model->validData(_A_::$app->get('cat'));
+        $userInfo = $model->validData(_A_::$app->post('category'));
         $post_category_name = mysql_real_escape_string($userInfo['data']);
         if (!empty($post_category_name{0})) {
             if (!empty($group_id)) {
@@ -139,7 +136,7 @@ class Controller_BlogCategory extends Controller_Base
     {
         $model = new Model_Blog();
         $base_url = BASE_URL;
-        $userInfo = $model->validData( _A_::$app->get('category'));
+        $userInfo = $model->validData(_A_::$app->get('category'));
         $post_category_name = mysql_real_escape_string($userInfo['data']);
         if (!empty($post_category_name{0})) {
             $slug = explode(' ', strtolower($post_category_name));

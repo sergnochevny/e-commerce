@@ -1,20 +1,8 @@
 <?php
 
-define('TITLE_MAX_CHARS', 50);
-define('TITLE_MIN_CHARS', 5);
-define('DATA_MAX_CHARS', 1000);
-define('DATA_MIN_CHARS', 15);
 
 class Controller_Comments extends Controller_Base
 {
-    protected $main;
-
-    public function __construct($main)
-    {
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-    }
 
     public function show()
     {
@@ -27,8 +15,8 @@ class Controller_Comments extends Controller_Base
     private function comments_list()
     {
         $m = new Model_Comments();
-        if (!empty($_GET['page'])) {
-            $userInfo = $m->validData($_GET['page']);
+        if (!empty(_A_::$app->get('page'))) {
+            $userInfo = $m->validData(_A_::$app->get('page'));
             $page = $userInfo['data'];
         } else {
             $page = 1;
@@ -52,12 +40,12 @@ class Controller_Comments extends Controller_Base
         $menu = new Controller_Menu($this);
         $menu->show_menu();
 
-        $this->template->vars('userInfo', $_SESSION['user']);
+        $this->template->vars('userInfo', _A_::$app->session('user'));
 
         ob_start();
         $toggle = true;
         if ($toggle) {
-            $user = $_SESSION['user'];
+            $user = _A_::$app->session('user');
             $email = $user['email'];
             $firstname = ucfirst($user['bill_firstname']);
             $lastname = ucfirst($user['bill_lastname']);
@@ -103,9 +91,9 @@ class Controller_Comments extends Controller_Base
         $comments_page = BASE_URL . '/comments';
         $main_page = BASE_URL . '/shop';
 
-        $Data = htmlspecialchars($_POST['comment_data']);
-        $Title = htmlspecialchars($_POST['comment_title']);
-        $UserID = $_SESSION['_'];
+        $Data = htmlspecialchars(_A_::$app->post('comment_data'));
+        $Title = htmlspecialchars(_A_::$app->post('comment_title'));
+        $UserID = _A_::$app->session('_');
 
 
         $errors = $this->validateCommentData($Data, $Title);
@@ -155,9 +143,8 @@ class Controller_Comments extends Controller_Base
         $base_url = BASE_URL;
 
         $m = new Model_Comments();
-        if (!empty($_GET['page'])) {
-            $userInfo = $m->validData($_GET['page']);
-            $page = $userInfo['data'];
+        if (!empty(_A_::$app->get('page'))) {
+            $page = $m->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
         }
@@ -188,11 +175,9 @@ class Controller_Comments extends Controller_Base
     {
         $this->main->test_access_rights();
 
-        $ID = $_GET['ID'];
+        $ID = _A_::$app->get('ID');
         if (empty($ID)) exit(0);
-        $model = new Model_Comments();
-        $model->delete($ID);
-
+        (new Model_Comments())->delete($ID);
         $this->get_comments_list();
         $this->main->view_layout('comments/admin_comments_list');
     }
@@ -200,8 +185,8 @@ class Controller_Comments extends Controller_Base
     public function public_comment()
     {
         $this->main->test_access_rights();
-        if (isset($_GET['ID'])) {
-            $ID = $_GET['ID'];
+        if (!is_null(_A_::$app->get('ID'))) {
+            $ID = _A_::$app->get('ID');
 
             $model = new Model_Comments();
             $comment = new Model_Comment($model->get($ID));
@@ -222,8 +207,8 @@ class Controller_Comments extends Controller_Base
     {
         $this->main->test_access_rights();
         $m = new Model_Comments();
-        if (isset($_GET['ID'])) {
-            $comment = $m->get($_GET['ID']);
+        if (!is_null(_A_::$app->get('ID'))) {
+            $comment = $m->get(_A_::$app->get('ID'));
             if (empty($comment)) exit(0);
 
             $update_url = BASE_URL . '/comment_update_save';
@@ -243,7 +228,7 @@ class Controller_Comments extends Controller_Base
     {
         $this->main->test_access_rights();
         $m = new Model_Comments();
-        $ID = $_GET['ID'];
+        $ID = _A_::$app->get('ID');
         if (empty($ID)) exit(0);
         $comment = new Model_Comment($m->get($ID));
 
@@ -259,13 +244,13 @@ class Controller_Comments extends Controller_Base
 
         $this->main->test_access_rights();
         $m = new Model_Comments();
-        $data = htmlspecialchars($_POST['comment_data']);
-        $title = htmlspecialchars($_POST['comment_title']);
-        $moderated = sprintf("%d", $_POST['publish']);
+        $data = htmlspecialchars(_A_::$app->post('comment_data'));
+        $title = htmlspecialchars(_A_::$app->post('comment_title'));
+        $moderated = sprintf("%d", _A_::$app->post('publish'));
 
         //echo "Publish = $moderated";
 
-        $ID = $_POST['ID'];
+        $ID = _A_::$app->get('ID');
         if (empty($ID)) exit(0);
 
         $comment = new Model_Comment($m->get($ID));
