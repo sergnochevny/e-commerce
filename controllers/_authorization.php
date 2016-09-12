@@ -48,7 +48,7 @@ class Controller_Authorization extends Controller_Base
         }
 
         if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
-            !is_null(_A_::$app->post('login')) && !isi_null(_A_::$app->post('pass'))) {
+            !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))) {
             if (empty(_A_::$app->post('login'))) exit('Empty Email/Username field');
             if (empty(_A_::$app->post('pass'))) exit('Empty Password field');
 

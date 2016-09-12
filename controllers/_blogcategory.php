@@ -1,15 +1,7 @@
 <?php
-class Controller_BlogCategory extends Controller_Base{
 
-    protected $main;
-
-    function __construct($main) {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
+class Controller_BlogCategory extends Controller_Base
+{
 
     function blog_categories_list()
     {
@@ -36,7 +28,7 @@ class Controller_BlogCategory extends Controller_Base{
     function del_blog_category()
     {
         $model = new Model_Blog();
-        $group_id = isset($_GET['cat']) ? $_GET['cat'] : null;
+        $group_id = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : null;
         if (isset($group_id)) {
             if ($model->blog_category_is_empty($group_id)) {
                 $model->del_blog_category($group_id);
@@ -55,7 +47,7 @@ class Controller_BlogCategory extends Controller_Base{
     {
         $model = new Model_Blog();
         $base_url = BASE_URL;
-        $userInfo = $model->validData($_GET['cat']);
+        $userInfo = $model->validData(_A_::$app->get('cat'));
         $group_id = $userInfo['data'];
         $userInfo = $model->get_blog_category($group_id);
         $this->template->vars('userInfo', $userInfo);
@@ -73,7 +65,7 @@ class Controller_BlogCategory extends Controller_Base{
     {
         $model = new Model_Blog();
         $base_url = BASE_URL;
-        $userInfo = $model->validData($_GET['cat']);
+        $userInfo = $model->validData(_A_::$app->get('cat'));
         $group_id = $userInfo['data'];
         $userInfo = $model->get_blog_category($group_id);
         $this->template->vars('userInfo', $userInfo);
@@ -89,9 +81,9 @@ class Controller_BlogCategory extends Controller_Base{
     {
         $model = new Model_Blog();
         $base_url = BASE_URL;
-        $userInfo = $model->validData($_GET['cat']);
+        $userInfo = $model->validData(_A_::$app->get('cat'));
         $group_id = $userInfo['data'];
-        $userInfo = $model->validData($_POST['category']);
+        $userInfo = $model->validData( _A_::$app->post('category'));
         $post_category_name = mysql_real_escape_string($userInfo['data']);
         if (!empty($post_category_name{0})) {
             if (!empty($group_id)) {
@@ -107,8 +99,8 @@ class Controller_BlogCategory extends Controller_Base{
             $this->template->vars('action_url', $action_url);
 
             $userInfo['name'] = '';
-            $userInfo['slug'] = isset($_POST['slug']) ? $_POST['slug'] : null;
-            $userInfo['id'] = isset($_GET['cat']) ? $_GET['cat'] : '';
+            $userInfo['slug'] = !is_null(_A_::$app->get('slug')) ? _A_::$app->post('slug') : null;
+            $userInfo['id'] = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : '';
 
             $error = ['Identity Category Name Field!'];
             $this->template->vars('error', $error);
@@ -147,7 +139,7 @@ class Controller_BlogCategory extends Controller_Base{
     {
         $model = new Model_Blog();
         $base_url = BASE_URL;
-        $userInfo = $model->validData($_POST['category']);
+        $userInfo = $model->validData( _A_::$app->get('category'));
         $post_category_name = mysql_real_escape_string($userInfo['data']);
         if (!empty($post_category_name{0})) {
             $slug = explode(' ', strtolower($post_category_name));
@@ -170,7 +162,7 @@ class Controller_BlogCategory extends Controller_Base{
 
                 $userInfo = [];
                 $userInfo['name'] = $post_category_name;
-                $userInfo['slug'] = isset($_POST['slug']) ? $_POST['slug'] : '';
+                $userInfo['slug'] = !is_null( _A_::$app->post('slug')) ?  _A_::$app->post('slug') : '';
                 $userInfo['id'] = '';
             }
 
@@ -190,8 +182,8 @@ class Controller_BlogCategory extends Controller_Base{
             $this->template->vars('action_url', $action_url);
 
             $userInfo['name'] = '';
-            $userInfo['slug'] = isset($_POST['slug']) ? $_POST['slug'] : null;
-            $userInfo['id'] = isset($_GET['cat']) ? $_GET['cat'] : '';
+            $userInfo['slug'] = !is_null(_A_::$app->post('slug')) ? _A_::$app->post('slug') : null;
+            $userInfo['id'] = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : '';
 
             $error = ['Identity Category Name Field!'];
             $this->template->vars('error', $error);
