@@ -22,7 +22,7 @@ class Controller_Order extends Controller_Base
 //            $back_url = $_SESSION['last_url'];
 //        } else {
         $back_url = BASE_URL . '/users?page=';
-        if (!is_null(_A_::$app->get('page'))) {
+        if (!empty(_A_::$app->get('page'))) {
             $back_url .= _A_::$app->get('page');
         } else
             $back_url .= '1';
@@ -41,8 +41,8 @@ class Controller_Order extends Controller_Base
         $userInfo = $model->validData(_A_::$app->get('user_id'));
         $user_id = $userInfo['data'];
         $orders_count = $model->get_count_orders_by_user($user_id);
-        if (!is_null(_A_::$app->session('page'))) {
-            $page = _A_::$app->session('page');
+        if (!empty(_A_::$app->get('page'))) {
+            $page = _A_::$app->get('page');
         } else
             $page = '1';
 
@@ -92,7 +92,7 @@ class Controller_Order extends Controller_Base
         }
 
         if (!is_null(_A_::$app->get('page'))) {
-            if (is_null(_A_::$app->get('order_id')) && is_null(_A_::$app->get('user_id'))) {
+            if (empty(_A_::$app->get('order_id')) && empty(_A_::$app->get('user_id'))) {
                 $back_url .= '?';
             } else $back_url .= '&';
             $back_url .= 'page=' . _A_::$app->get('page');
@@ -303,10 +303,10 @@ class Controller_Order extends Controller_Base
     {
         $base_url = BASE_URL;
         $this->main->test_access_rights();
-        $page = is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-        $oid = (integer)urldecode(base64_decode(is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));
+        $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
+        $oid = (integer)urldecode(base64_decode(!is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));
         $back_url = BASE_URL . '/orders_history' . '?page=' . $page;
-        if (is_null(_A_::$app->get('orders_search_query'))) {
+        if (!is_null(_A_::$app->get('orders_search_query'))) {
             $back_url = $back_url . '&orders_search_query=' . _A_::$app->get('orders_search_query');
         }
         $this->template->vars('base_url', $base_url);
@@ -396,12 +396,12 @@ class Controller_Order extends Controller_Base
 
     public function customer_order_info()
     {
-        $page = (integer)(is_null(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
+        $page = (integer)(!is_null(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
         $base_url = BASE_URL;
         $back_url = $base_url . '/' . 'customer_orders_history?page=' . $page;
         $this->template->vars('back_url', $back_url);
 
-        $oid = (integer)urldecode(base64_decode(is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));
+        $oid = (integer)urldecode(base64_decode(!is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));
 
         $config = [
             'oid' => $oid

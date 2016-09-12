@@ -18,7 +18,7 @@ class Controller_Product extends Controller_Base
     {
         $model = new Model_Product();
         $samples_model = new Model_Samples();
-        $userInfo = $model->validData( _A_::$app->session('p_id'));
+        $userInfo = $model->validData( _A_::$app->get('p_id'));
         $produkt_id = $userInfo['data'];
         $userInfo = $model->getPrName($produkt_id);
 
@@ -38,7 +38,9 @@ class Controller_Product extends Controller_Base
             $shipping = (int) _A_::$app->session('cart')['ship'];
         } else {
             $shipping = DEFAULT_SHIPPING;
-            _A_::$app->session('cart')['ship'] = $shipping;
+            $_cart = _A_::$app->session('cart');
+            $_cart['ship'] = $shipping;
+            _A_::$app->session('cart');
         }
 
         if (!is_null(_A_::$app->get('cart')['ship_roll'])) {
@@ -137,7 +139,7 @@ class Controller_Product extends Controller_Base
         ob_end_clean();
         $this->template->vars('discount_info', $discount_info);
 
-        if (is_null(_A_::$app->session('cart')['items'])) {
+        if (!is_null(_A_::$app->session('cart')['items'])) {
             $cart_items = _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
@@ -146,21 +148,21 @@ class Controller_Product extends Controller_Base
         $in_cart = in_array($produkt_id, $cart);
         if ($in_cart) $this->template->vars('in_cart', '1');
 
-        if (!is_null(_A_::$app->get('matches'))) {
-            if (!is_null(_A_::$app->get('cart'))) {
+        if (is_null(_A_::$app->get('matches'))) {
+            if (is_null(_A_::$app->get('cart'))) {
 
                 $back_url = BASE_URL . '/' . $url . '?page=';
-                if (!is_null(_A_::$app->get('page'))) {
+                if (!empty(_A_::$app->get('page'))) {
                     $back_url .= _A_::$app->get('page');
                 } else
                     $back_url .= '1';
-                if ((!is_null(_A_::$app->get('cat')))) {
+                if ((!empty(_A_::$app->get('cat')))) {
                     $back_url .= '&cat=' . _A_::$app->get('cat');
                 }
-                if ((!is_null(_A_::$app->get('mnf')))) {
+                if ((!empty(_A_::$app->get('mnf')))) {
                     $back_url .= '&mnf=' . _A_::$app->get('mnf');
                 }
-                if ((!is_null(_A_::$app->get('ptrn')))) {
+                if ((!empty(_A_::$app->get('ptrn')))) {
                     $back_url .= '&ptrn=' . _A_::$app->get('ptrn');
                 }
             } else {
@@ -174,7 +176,7 @@ class Controller_Product extends Controller_Base
 
         }
 
-        if (is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s'){0}))) {
+        if (!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s'){0}))) {
             $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->post('s')))));
             $this->template->vars('search', _A_::$app->post('s'));
         }

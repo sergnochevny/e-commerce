@@ -73,8 +73,10 @@ class Controller_Matches extends Controller_Base
                     }
                 }
             }
+            $_matches = _A_::$app->get('matches');
+            $_matches['items'] = $matches_items;
+            _A_::$app->get('matches', $_matches);
 
-            _A_::$app->get('matches')['items'] = $matches_items;
             $message = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
             $added = 1;
         } else
@@ -94,7 +96,7 @@ class Controller_Matches extends Controller_Base
         if (!is_null(_A_::$app->post('p_id')) && !empty(_A_::$app->post('p_id'))) {
             $produkt_id = _A_::$app->post('p_id');
             if (!is_null(_A_::$app->session('matches')['items'])) {
-                $matches_items = _A_::$app->get('matches')['items'];
+                $matches_items = _A_::$app->session('matches')['items'];
             } else {
                 $matches_items = [];
             }
@@ -107,7 +109,10 @@ class Controller_Matches extends Controller_Base
                 }
             }
 
+            $_matches = _A_::$app->session('matches');
             _A_::$app->session('matches')['items'] = $matches_items;
+            _A_::$app->session('matches', $_matches);
+
         }
     }
 

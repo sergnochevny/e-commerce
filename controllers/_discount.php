@@ -176,29 +176,29 @@ class Controller_Discount extends Controller_Base
             $start_date = strtotime($start_date);
         } else $start_date = 0;
 
-        if(($generate_code=='1') || (strlen($coupon_code)>0)){
+        if (($generate_code == '1') || (strlen($coupon_code) > 0)) {
             $allow_multiple = 1;
-            $sel_fabrics  = 1;
+            $sel_fabrics = 1;
             $fabric_list = [];
         }
 
-        if($sel_fabrics == "2"){
+        if ($sel_fabrics == "2") {
             $iDscntType = '1';
         }
-        if($iDscntType=='2'){
+        if ($iDscntType == '2') {
             $allow_multiple = 1;
         }
-        if($iDscntType != '2')
+        if ($iDscntType != '2')
             $shipping_type = '0';
 
-        if($users_check!='4'){
+        if ($users_check != '4') {
             $users_list = [];
         }
 
         if (!empty($discounts_id)) {
             if (
-                ($iDscntType=='2' && $shipping_type=='0') ||
-                ((strlen($coupon_code)>0) && ($generate_code == "0") && $model->checkCouponCode($discounts_id, $coupon_code)) ||
+                ($iDscntType == '2' && $shipping_type == '0') ||
+                ((strlen($coupon_code) > 0) && ($generate_code == "0") && $model->checkCouponCode($discounts_id, $coupon_code)) ||
                 (!isset($users_list) && ($users_check == '4')) ||
                 (!isset($fabric_list) && ($sel_fabrics == "2")) ||
                 ($start_date == 0) || ($date_end == 0) ||
@@ -208,8 +208,8 @@ class Controller_Discount extends Controller_Base
             ) {
                 $error = [];
 
-                if ($iDscntType=='2' && $shipping_type=='0') $error[] = "The shipping type is required.";
-                if (($generate_code == "0") && (strlen($coupon_code)>0) && $model->checkCouponCode($discounts_id, $coupon_code))
+                if ($iDscntType == '2' && $shipping_type == '0') $error[] = "The shipping type is required.";
+                if (($generate_code == "0") && (strlen($coupon_code) > 0) && $model->checkCouponCode($discounts_id, $coupon_code))
                     $error[] = "The coupon code is in use.";
                 if (($restrictions == '')) $error[] = "Identify 'retrictions' field";
                 if ($iType == '0') $error[] = "Identify 'promotion' field";
@@ -261,10 +261,10 @@ class Controller_Discount extends Controller_Base
 
             } else {
 
-                if($generate_code=='1'){
+                if ($generate_code == '1') {
                     $coupon_code = $model->generateCouponCode($discounts_id);
                     $allow_multiple = 1;
-                    $sel_fabrics  = 1;
+                    $sel_fabrics = 1;
                     $fabric_list = [];
                 }
 
@@ -327,28 +327,28 @@ class Controller_Discount extends Controller_Base
             $start_date = strtotime($start_date);
         } else $start_date = 0;
 
-        if(($generate_code=='1') || (strlen($coupon_code)>0)){
+        if (($generate_code == '1') || (strlen($coupon_code) > 0)) {
             $allow_multiple = 1;
-            $sel_fabrics  = 1;
+            $sel_fabrics = 1;
             $fabric_list = [];
         }
 
-        if($sel_fabrics == "2"){
+        if ($sel_fabrics == "2") {
             $iDscntType = '1';
         }
-        if($iDscntType=='2'){
+        if ($iDscntType == '2') {
             $allow_multiple = 1;
         }
-        if($iDscntType != '2')
+        if ($iDscntType != '2')
             $shipping_type = '0';
 
-        if($users_check!='4'){
+        if ($users_check != '4') {
             $users_list = [];
         }
 
         if (
-            ($iDscntType=='2' && $shipping_type=='0') ||
-            (($generate_code == "0") && (strlen($coupon_code)>0) && $model->checkCouponCode(0, $coupon_code)) ||
+            ($iDscntType == '2' && $shipping_type == '0') ||
+            (($generate_code == "0") && (strlen($coupon_code) > 0) && $model->checkCouponCode(0, $coupon_code)) ||
             (!isset($users_list) && ($users_check == '4')) ||
             (!isset($fabric_list) && ($sel_fabrics == "2")) ||
             ($start_date == 0) || ($date_end == 0) ||
@@ -358,8 +358,8 @@ class Controller_Discount extends Controller_Base
         ) {
             $error = [];
 
-            if ($iDscntType=='2' && $shipping_type=='0') $error[] = "The shipping type is required.";
-            if (($generate_code == "0") && (strlen($coupon_code)>0) && $model->checkCouponCode(0, $coupon_code))
+            if ($iDscntType == '2' && $shipping_type == '0') $error[] = "The shipping type is required.";
+            if (($generate_code == "0") && (strlen($coupon_code) > 0) && $model->checkCouponCode(0, $coupon_code))
                 $error[] = "The coupon code is in use.";
             if (($restrictions == '')) $error[] = "Identify 'restrictions' field";
             if ($iType == '0') $error[] = "Identify 'promotion' field";
@@ -411,10 +411,10 @@ class Controller_Discount extends Controller_Base
 
         } else {
 
-            if($generate_code=='1'){
+            if ($generate_code == '1') {
                 $coupon_code = $model->generateCouponCode(0);
                 $allow_multiple = 1;
-                $sel_fabrics  = 1;
+                $sel_fabrics = 1;
                 $fabric_list = [];
             }
 

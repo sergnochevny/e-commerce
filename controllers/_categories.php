@@ -227,7 +227,7 @@ class Controller_Categories extends Controller_Base
             $strSQL = "INSERT INTO fabrix_categories(cname,seo,displayorder,isStyle,isNew) VALUES ('$post_category_name','$post_category_seo','$post_display_order','$post_category_ListStyle','$post_category_ListNewItem')";
             mysql_query($strSQL) or die(mysql_error());
             $category_id = mysql_insert_id();
-            _A_::$app->get('category_id',$category_id);
+            _A_::$app->get('category_id', $category_id);
 
             $warning = ['Category Data saved successfully!'];
             $this->template->vars('warning', $warning);
