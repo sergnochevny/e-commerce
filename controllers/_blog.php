@@ -271,15 +271,14 @@ class Controller_Blog extends Controller_Controller
         $model = new Model_Blog();
 
         if (!empty(_A_::$app->get('page'))) {
-            $userInfo = $model->validData(_A_::$app->get('page'));
-            $page = $userInfo['data'];
+            $page = $model->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
         }
         $per_page = 6;
 
         $cat_id = null;
-        if (!empty($_GET['cat'])) {
+        if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $model->validData(_A_::$app->get('cat'));
             $catigori_name = $model->getPostCatName($cat_id);
         }
@@ -295,22 +294,18 @@ class Controller_Blog extends Controller_Controller
 
             ob_start();
 
-            date_default_timezone_set('UTC');
-
             foreach ($rows as $row) {
                 $post_id = $row['ID'];
                 $post_name = $row['post_name'];
                 $base_url = BASE_URL;
-
-//                $url = 'post?post_id=' . $post_id;
-                $url = 'post/' . $post_name;
+                $url = 'blog/' . $post_name;
                 $post_href = BASE_URL . '/' . $url;
-                if (!empty($_GET['page'])) {
-                    $post_href .= '?page=' . $_GET['page'];
+                if (!empty(_A_::$app->get('page'))) {
+                    $post_href .= '?page=' . _A_::$app->get('page');
                 }
-                if ((!empty($_GET['cat']))) {
-                    $post_href .= (!empty($_GET['page'])) ? '&' : '?';
-                    $post_href .= 'cat=' . $_GET['cat'];
+                if ((!empty(_A_::$app->get('cat')))) {
+                    $post_href .= (!empty(_A_::$app->get('page'))) ? '&' : '?';
+                    $post_href .= 'cat=' . _A_::$app->get('cat');
                 }
 
                 $post_title = stripslashes($row['post_title']);
@@ -349,15 +344,15 @@ class Controller_Blog extends Controller_Controller
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
-            $this->template->vars('blog_posts', $list);
+            $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
+            $this->main->template->vars('blog_posts', $list);
 
             $paginator = new Controller_Paginator($this);
             $paginator->paginator_home($total, $page, 'blog', $per_page);
         } else {
-            $this->template->vars('count_rows', 0);
+            $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
-            $this->template->vars('blog_posts', $list);
+            $this->main->template->vars('blog_posts', $list);
         }
     }
 
@@ -508,8 +503,7 @@ class Controller_Blog extends Controller_Controller
     function del_post()
     {
         $model = new Model_Blog();
-        $userInfo = $model->validData($_GET['post_id']);
-        $post_id = $userInfo['data'];
+        $post_id = $model->validData(_A_::$app->get('post_id'));
         if (!empty($post_id)) {
             $model->del_post($post_id);
             $warning = ['Article removed successfully!!!'];
@@ -527,7 +521,8 @@ class Controller_Blog extends Controller_Controller
         $model = new Model_Blog();
         $categories = $model->get_blog_categories();
         ob_start();
-        include('views/blog/blog_categories_select_options.php');
+        $this->template->vars('categories',$categories);
+        $this->template->view_layout('blog_categories_select_options');
         $res = ob_get_contents();
         ob_end_clean();
         return $res;
