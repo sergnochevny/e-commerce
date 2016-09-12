@@ -215,12 +215,12 @@ class Controller_Blog extends Controller_Controller
 
         $url = 'blog';
         $back_url = $base_url . '/' . $url;
-        if (!empty($_GET['page'])) {
-            $back_url .= '?page=' . $_GET['page'];
+        if (!empty(_A_::$app->get('page'))) {
+            $back_url .= '?page=' . _A_::$app->get('page');
         }
-        if ((!empty($_GET['cat']))) {
-            $back_url .= (!empty($_GET['page'])) ? '&' : '?';
-            $back_url .= 'cat=' . $_GET['cat'];
+        if ((!empty(_A_::$app->get('cat')))) {
+            $back_url .= (!empty(_A_::$app->get('page'))) ? '&' : '?';
+            $back_url .= 'cat=' . _A_::$app->get('cat');
         }
         $this->template->vars('back_url', $back_url);
 
@@ -231,7 +231,7 @@ class Controller_Blog extends Controller_Controller
             ob_start();
 
             $post_id = $row['ID'];
-            $_GET['post_id'] = $post_id;
+            _A_::$app->get('post_id', $post_id);
             $post_content = stripslashes($row['post_content']);
             $post_title = stripslashes($row['post_title']);
             $post_date = date('F jS, Y', strtotime($row['post_date']));
@@ -389,7 +389,7 @@ class Controller_Blog extends Controller_Controller
     {
         $model = new Model_Blog();
 
-        if (!empty($_GET['page'])) {
+        if (!empty(_A_::$app->get('page'))) {
             $page = $model->validData(_A_::$app->get('page'));
         } else {
             $page = 1;
@@ -397,7 +397,7 @@ class Controller_Blog extends Controller_Controller
         $per_page = 6;
 
         $cat_id = null;
-        if (!empty($_GET['cat'])) {
+        if (!empty(_A_::$app->get('cat'))) {
             $cat_id= $model->validData(_A_::$app->get('cat'));
             $catigori_name = $model->getPostCatName($cat_id);
         }
@@ -421,13 +421,13 @@ class Controller_Blog extends Controller_Controller
                 $post_edit_href = $base_url . '/' . $url;
                 $url = 'del_post?post_id=' . $post_id;
                 $post_del_href = $base_url . '/' . $url;
-                if (!empty($_GET['page'])) {
-                    $post_edit_href .= '&page=' . $_GET['page'];
-                    $post_del_href .= '&page=' . $_GET['page'];
+                if (!empty(_A_::$app->get('page'))) {
+                    $post_edit_href .= '&page=' . _A_::$app->get('page');
+                    $post_del_href .= '&page=' . _A_::$app->get('page');
                 }
-                if ((!empty($_GET['cat']))) {
-                    $post_edit_href .= '&cat=' . $_GET['cat'];
-                    $post_del_href .= '&cat=' . $_GET['cat'];
+                if ((!empty(_A_::$app->get('cat')))) {
+                    $post_edit_href .= '&cat=' . _A_::$app->get('cat');
+                    $post_del_href .= '&cat=' . _A_::$app->get('cat');
                 }
 
                 $post_title = stripslashes($row['post_title']);
@@ -473,13 +473,13 @@ class Controller_Blog extends Controller_Controller
         $new_post_href = BASE_URL . '/new_post';
 
         $new_post_href .= '?page=';
-        if (!empty($_GET['page'])) {
-            $new_post_href .= $_GET['page'];
+        if (!empty(_A_::$app->get('page'))) {
+            $new_post_href .= _A_::$app->get('page');
         } else
             $new_post_href .= '1';
 
-        if (!empty($_GET['cat'])) {
-            $new_post_href .= '&cat=' . $_GET['cat'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $new_post_href .= '&cat=' . _A_::$app->get('cat');
         }
         $this->template->vars('new_post_href', $new_post_href);
 
@@ -533,13 +533,13 @@ class Controller_Blog extends Controller_Controller
         $base_url = BASE_URL;
         $back_url = $base_url . '/admin_blog';
         $back_url .= '?page=';
-        if (!empty($_GET['page'])) {
-            $back_url .= $_GET['page'];
+        if (!empty(_A_::$app->get('page'))) {
+            $back_url .= _A_::$app->get('page');
         } else
             $back_url .= '1';
 
-        if (!empty($_GET['cat'])) {
-            $back_url .= '&cat=' . $_GET['cat'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $back_url .= '&cat=' . _A_::$app->get('cat');
         }
         $this->template->vars('back_url', $back_url);
 
@@ -641,13 +641,13 @@ class Controller_Blog extends Controller_Controller
 
         $base_url = BASE_URL;
         $model = new Model_Blog();
-        $categories = isset($_POST['categories']) ? $_POST['categories'] : [];
-        $keywords = isset($_POST['keywords']) ? $_POST['keywords'] : '';
-        $title = isset($_POST['title']) ? $_POST['title'] : '';
-        $description = isset($_POST['description']) ? $_POST['description'] : '';
-        $img = isset($_POST['img']) ? $_POST['img'] : null;
-        $content = isset($_POST['content']) ? $_POST['content'] : '';
-        $status = isset($_POST['status']) ? $_POST['status'] : 'unpublish';
+        $categories = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
+        $keywords = !is_null(_A_::$app->post('keywords')) ? _A_::$app->post('keywords') : '';
+        $title = !is_null(_A_::$app->post('title')) ? _A_::$app->post('title') : '';
+        $description = !is_null(_A_::$app->post('description')) ? _A_::$app->post('description') : '';
+        $img = !is_null(_A_::$app->post('img')) ? _A_::$app->post('img') : null;
+        $content = !is_null(_A_::$app->post('content')) ? _A_::$app->post('content') : '';
+        $status = !is_null(_A_::$app->post('status')) ? _A_::$app->post('status') : 'unpublish';
 
         if (isset($img) && empty($img{0})) $img = null;
         if (empty($title{0}) || empty($description{0}) ||
@@ -718,16 +718,16 @@ class Controller_Blog extends Controller_Controller
 
         $url = 'admin_blog';
         $back_url = $base_url . '/' . $url;
-        if (!empty($_GET['page'])) {
-            $back_url .= '?page=' . $_GET['page'];
+        if (!empty(_A_::$app->get('page'))) {
+            $back_url .= '?page=' . _A_::$app->get('page');
         }
-        if ((!empty($_GET['cat']))) {
-            $back_url .= (!empty($_GET['page'])) ? '&' : '?';
-            $back_url .= 'cat=' . $_GET['cat'];
+        if ((!empty(_A_::$app->get('cat')))) {
+            $back_url .= (!empty(_A_::$app->get('page'))) ? '&' : '?';
+            $back_url .= 'cat=' . _A_::$app->get('cat');
         }
         $this->template->vars('back_url', $back_url);
 
-        $post_id = $_GET['post_id'];
+        $post_id = _A_::$app->get('post_id');
 
         $row = $model->get_blog_post_by_post_id($post_id);
         if (isset($row)) {
@@ -778,15 +778,15 @@ class Controller_Blog extends Controller_Controller
 
         $base_url = BASE_URL;
         $model = new Model_Blog();
-        $post_id = $_GET['post_id'];
-        $categories = isset($_POST['categories']) ? $_POST['categories'] : [];
-        $keywords = isset($_POST['keywords']) ? $_POST['keywords'] : '';
-        $title = isset($_POST['title']) ? $_POST['title'] : '';
-        $description = isset($_POST['description']) ? $_POST['description'] : '';
-        $img = isset($_POST['img']) ? $_POST['img'] : null;
-        $content = isset($_POST['content']) ? $_POST['content'] : '';
-        $status = isset($_POST['status']) ? $_POST['status'] : 'unpublish';
-        $date = isset($_POST['date']) ? $_POST['date'] : date('F jS, Y');
+        $post_id = _A_::$app->get('post_id');
+        $categories = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
+        $keywords = !is_null(_A_::$app->post('keywords')) ? _A_::$app->post('keywords') : '';
+        $title = !is_null(_A_::$app->post('title')) ? _A_::$app->post('title') : '';
+        $description = !is_null(_A_::$app->post('description')) ? _A_::$app->post('description') : '';
+        $img = !is_null(_A_::$app->post('img')) ? _A_::$app->post('img') : null;
+        $content =!is_null(_A_::$app->post('content')) ? _A_::$app->post('content') : '';
+        $status = !is_null(_A_::$app->post('status')) ? _A_::$app->post('status') : 'unpublish';
+        $date = !is_null(_A_::$app->post('date')) ? _A_::$app->post('date') : date('F jS, Y');
 
         if (isset($img) && empty($img{0})) $img = null;
         if ( empty($title{0}) || empty($description{0}) ||
