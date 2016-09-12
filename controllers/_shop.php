@@ -145,15 +145,15 @@ class Controller_Shop extends Controller_Controller
     {
         $model = new Model_Product();
         $image_suffix = 'b_';
-        if (isset($_SESSION['cart']['items'])) {
-            $cart_items = $_SESSION['cart']['items'];
+        if (!is_null(_A_::$app->session('cart')['items'])) {
+            $cart_items =  _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
         }
         $cart = array_keys($cart_items);
-        if (isset($_POST['s']) && (!empty($_POST['s']{0}))) {
-            $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim($_POST['s']))));
-            $this->template->vars('search', $_POST['s']);
+        if (!is_null( _A_::$app->session('s')) && (!empty( _A_::$app->post['s']{0}))) {
+            $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->session('s')))));
+            $this->template->vars('search', _A_::$app->post('s'));
         }
 
         if (!empty(_A_::$app->get('page'))) {
@@ -357,8 +357,8 @@ class Controller_Shop extends Controller_Controller
         $max_count_new_items = 50;
         $model = new Model_Product();
         $image_suffix = 'b_';
-        if (isset($_SESSION['cart']['items'])) {
-            $cart_items = $_SESSION['cart']['items'];
+        if (!is_null(_A_::$app->session('cart')['items'])) {
+            $cart_items = _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
         }
@@ -486,8 +486,8 @@ class Controller_Shop extends Controller_Controller
         $max_count_new_items = 50;
         $model = new Model_Product();
         $image_suffix = 'b_';
-        if (isset($_SESSION['cart']['items'])) {
-            $cart_items = $_SESSION['cart']['items'];
+        if (isset(_A_::$app->session('cart')['items'])) {
+            $cart_items =  _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
         }
@@ -621,8 +621,8 @@ class Controller_Shop extends Controller_Controller
         $max_count_new_items = 360;
         $model = new Model_Product();
         $image_suffix = 'b_';
-        if (isset($_SESSION['cart']['items'])) {
-            $cart_items = $_SESSION['cart']['items'];
+        if (!is_null(_A_::$app->session('cart')['items'])) {
+            $cart_items = _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
         }
@@ -748,8 +748,8 @@ class Controller_Shop extends Controller_Controller
     {
         $model = new Model_Product();
         $image_suffix = 'b_';
-        if (isset($_SESSION['cart']['items'])) {
-            $cart_items = $_SESSION['cart']['items'];
+        if (!is_null(_A_::$app->session('cart')['items'])) {
+            $cart_items = _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
         }

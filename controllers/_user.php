@@ -23,8 +23,8 @@ class Controller_User extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_User();
-        if (!empty($_GET['page'])) {
-            $userInfo = $model->validData($_GET['page']);
+        if (!empty(_A_::$app->get('page'))) {
+            $userInfo = $model->validData(_A_::$app->get('page'));
             $page = $userInfo['data'];
         } else {
             $page = 1;
@@ -62,9 +62,9 @@ class Controller_User extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_User();
-        $userInfo = $model->validData($_GET['page']);
+        $userInfo = $model->validData(_A_::$app->get('page'));
         $page_id = $userInfo['data'];
-        $userInfo = $model->validData($_GET['id']);
+        $userInfo = $model->validData(_A_::$app->get('id'));
         $user_id = $userInfo['data'];
         $model->del_user($user_id);
 
@@ -76,7 +76,7 @@ class Controller_User extends Controller_Controller
         $result = false;
         $model = new Model_User();
         include('include/save_edit_user_post.php');
-        $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
+        $user_id = !is_null(_A_::$app->get('user_id')) ? _A_::$app->get('user_id') : null;
         if (!empty($user_id)) {
             if (empty($user_email)) {
                 $error = ['Identify email field!!!'];
@@ -134,11 +134,11 @@ class Controller_User extends Controller_Controller
                             $user_s_email, $user_id);
 
                         if ($result) {
-                            if (isset($_SESSION['_']) && ($user_id == $_SESSION['_'])) {
+                            if (!is_null(_A_::$app->session['_']) && ($user_id == _A_::$app->session('_'))) {
                                 $user = $model->get_user_by_id($user_id);
                                 if (isset($user)) {
-                                    unset($_SESSION['user']);
-                                    $_SESSION['user'] = $user;
+                                    $_u = _A_::$app->session('user', null);
+                                    _A_::$app->session('user', $user);
                                 }
                             }
 
@@ -260,8 +260,8 @@ class Controller_User extends Controller_Controller
     public function get_province_list()
     {
         $list = '';
-        if (isset($_GET['country'])) {
-            $country = $_GET['country'];
+        if (!is_null(_A_::$app->get('country'))) {
+            $country = _A_::$app->get('country');
             $list = $this->list_province($country);
         }
         echo '<option selected disabled>Select Province</option>';
@@ -272,15 +272,15 @@ class Controller_User extends Controller_Controller
     {
         $base_url = BASE_URL;
         $model = new Model_User();
-        $userInfo = $model->validData($_GET['user_id']);
+        $userInfo = $model->validData(_A_::$app->get('user_id'));
         $user_id = $userInfo['data'];
 
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
 //        } else {
         $back_url = BASE_URL . '/users?page=';
-        if (!empty($_GET['page'])) {
-            $back_url .= $_GET['page'];
+        if (!empty(_A_::$app->get('page'))) {
+            $back_url .= _A_::$app->get('page');
         } else
             $back_url .= '1';
 //        }
@@ -309,8 +309,8 @@ class Controller_User extends Controller_Controller
 //            $back_url = $_SESSION['last_url'];
 //        } else {
         $back_url = BASE_URL . '/users?page=';
-        if (!empty($_GET['page'])) {
-            $back_url .= $_GET['page'];
+        if (!empty(_A_::$app->get('page'))) {
+            $back_url .= _A_::$app->get('page');
         } else
             $back_url .= '1';
 //        }
@@ -363,8 +363,8 @@ class Controller_User extends Controller_Controller
 //            $back_url = $_SESSION['last_url'];
 //        } else {
         $back_url = BASE_URL . '/users?page=';
-        if (!empty($_GET['page'])) {
-            $back_url .= $_GET['page'];
+        if (!empty(_A_::$app->get('page'))) {
+            $back_url .= _A_::$app->get('page');
         } else
             $back_url .= '1';
 //        }
@@ -444,7 +444,7 @@ class Controller_User extends Controller_Controller
                             $s_organization, $user_s_address, $user_s_address2, $user_s_city, $user_s_state,
                             $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax, $user_s_email, $timestamp);
                         if ($result) {
-                            $_GET['user_id'] = mysql_insert_id();
+                            _A_::$app->get('user_id') = mysql_insert_id();
                             $warning = ['Data saved successfully!!!'];
                             $this->template->vars('warning', $warning);
                         } else {
@@ -505,7 +505,7 @@ class Controller_User extends Controller_Controller
     {
         $base_url = BASE_URL;
         $this->main->test_access_rights();
-        $action = $base_url . '/save_edit_user?user_id=' . $_GET['user_id'];
+        $action = $base_url . '/save_edit_user?user_id=' . _A_::$app->get('user_id');
         $this->template->vars('action', $action);
         $title = 'EDIT USER';
         $this->template->vars('title', $title);
@@ -529,7 +529,7 @@ class Controller_User extends Controller_Controller
     {
         $base_url = BASE_URL;
         $this->main->test_access_rights();
-        $action = $base_url . '/save_edit_user?user_id=' . $_GET['user_id'];
+        $action = $base_url . '/save_edit_user?user_id=' . _A_::$app->get('user_id');
         $this->template->vars('action', $action);
         $title = 'EDIT USER';
         $this->template->vars('title', $title);
@@ -557,8 +557,8 @@ class Controller_User extends Controller_Controller
         $action = $base_url . '/save_registration_user';
         $this->template->vars('action', $action);
         $back_url = $base_url . '/user_authorization';
-        if (isset($_GET['url'])) {
-            $back_url .= '?url=' . $_GET['url'];
+        if (!is_null(_A_::$app->get('url'))) {
+            $back_url .= '?url=' . _A_::$app->get('url');
         }
         $this->template->vars('back_url', $back_url, true);
         $this->_new_user();
@@ -576,13 +576,13 @@ class Controller_User extends Controller_Controller
             $this->_new_user_form();
         } else {
             $model = new Model_User();
-            $user_id = $_GET['user_id'];
+            $user_id = _A_::$app->get('user_id');
 
             $title = 'CHANGE REGISTRATION DATA';
             $this->template->vars('title', $title);
             $back_url = $base_url . '/user_authorization';
-            if (isset($_GET['url'])) {
-                $back_url .= '?url=' . $_GET['url'];
+            if (!is_null(_A_::$app->get('url'))) {
+                $back_url .= '?url=' . _A_::$app->get('url');
             }
             $this->template->vars('back_url', $back_url, true);
             $action = $base_url . '/save_edit_registration_data';
@@ -612,7 +612,7 @@ class Controller_User extends Controller_Controller
         $authorization = new Controller_Authorization($this->main);
         if ($authorization->is_user_logged()) {
             $user_id = $authorization->get_user_from_session();
-            $_GET['user_id'] = $user_id;
+            _A_::$app->get('user_id', $user_id);
             $action = $base_url . '/save_edit_registration_data';
             $this->template->vars('action', $action);
             $title = 'CHANGE REGISTRATION DATA';
@@ -634,7 +634,7 @@ class Controller_User extends Controller_Controller
 
         if ($authorization->is_user_logged()) {
             $user_id = $authorization->get_user_from_session();
-            $_GET['user_id'] = $user_id;
+            _A_::$app->get('user_id', $user_id);
             $action = $base_url . '/save_edit_registration_data';
             $this->template->vars('action', $action);
             $title = 'CHANGE REGISTRATION DATA';
@@ -642,8 +642,8 @@ class Controller_User extends Controller_Controller
             $this->_edit_user();
 
             $back_url = '';
-            if(isset($_GET['url'])){
-                $back_url = base64_decode(urldecode($_GET['url']));
+            if(!is_null(_A_::$app->get('url'))){
+                $back_url = base64_decode(urldecode(_A_::$app->get('url')));
             }
             $back_url = $base_url . ((strlen($back_url) > 0) ? $back_url : '/shop');
             $this->template->vars('back_url', $back_url, true);

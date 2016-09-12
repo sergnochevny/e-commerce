@@ -18,7 +18,7 @@ class Controller_Product extends Controller_Base
     {
         $model = new Model_Product();
         $samples_model = new Model_Samples();
-        $userInfo = $model->validData($_GET['p_id']);
+        $userInfo = $model->validData( _A_::$app->session('p_id'));
         $produkt_id = $userInfo['data'];
         $userInfo = $model->getPrName($produkt_id);
 
@@ -34,25 +34,27 @@ class Controller_Product extends Controller_Base
         $aPrds[] = 1;        #add qty
 
         #get the shipping
-        if (isset($_SESSION['cart']['ship'])) {
-            $shipping = (int)$_SESSION['cart']['ship'];
+        if (!is_null(_A_::$app->session('cart')['ship'])) {
+            $shipping = (int) _A_::$app->session('cart')['ship'];
         } else {
             $shipping = DEFAULT_SHIPPING;
-            $_SESSION['cart']['ship'] = $shipping;
+            _A_::$app->session('cart')['ship'] = $shipping;
         }
 
-        if (isset($_SESSION['cart']['ship_roll'])) {
-            $bShipRoll = (boolean)$_SESSION['cart']['ship_roll'];
+        if (!is_null(_A_::$app->get('cart')['ship_roll'])) {
+            $bShipRoll = (boolean) _A_::$app->session('cart')['ship_roll'];
         } else {
             $bShipRoll = false;
-            $_SESSION['cart']['ship_roll'] = 0;
+            $cart = _A_::$app->session('cart');
+            $cart['ship_roll'] = 0;
+            _A_::$app->session('cart', $cart);
         }
 
         $shipcost = 0;
 
         #grab the user id
-        if (isset($_SESSION['user'])) {
-            $uid = (int)$_SESSION['user']['aid'];
+        if (!is_null(_A_::$app->session('user'))) {
+            $uid = (int) _A_::$app->session('user')['aid'];
         } else {
             $uid = 0;
         }
@@ -135,8 +137,8 @@ class Controller_Product extends Controller_Base
         ob_end_clean();
         $this->template->vars('discount_info', $discount_info);
 
-        if (isset($_SESSION['cart']['items'])) {
-            $cart_items = $_SESSION['cart']['items'];
+        if (is_null(_A_::$app->session('cart')['items'])) {
+            $cart_items = _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
         }
@@ -144,22 +146,22 @@ class Controller_Product extends Controller_Base
         $in_cart = in_array($produkt_id, $cart);
         if ($in_cart) $this->template->vars('in_cart', '1');
 
-        if (!isset($_GET['matches'])) {
-            if (!isset($_GET['cart'])) {
+        if (!is_null(_A_::$app->get('matches'))) {
+            if (!is_null(_A_::$app->get('cart'))) {
 
                 $back_url = BASE_URL . '/' . $url . '?page=';
-                if (!empty($_GET['page'])) {
-                    $back_url .= $_GET['page'];
+                if (!is_null(_A_::$app->get('page'))) {
+                    $back_url .= _A_::$app->get('page');
                 } else
                     $back_url .= '1';
-                if ((!empty($_GET['cat']))) {
-                    $back_url .= '&cat=' . $_GET['cat'];
+                if ((!is_null(_A_::$app->get('cat')))) {
+                    $back_url .= '&cat=' . _A_::$app->get('cat');
                 }
-                if ((!empty($_GET['mnf']))) {
-                    $back_url .= '&mnf=' . $_GET['mnf'];
+                if ((!is_null(_A_::$app->get('mnf')))) {
+                    $back_url .= '&mnf=' . _A_::$app->get('mnf');
                 }
-                if ((!empty($_GET['ptrn']))) {
-                    $back_url .= '&ptrn=' . $_GET['ptrn'];
+                if ((!is_null(_A_::$app->get('ptrn')))) {
+                    $back_url .= '&ptrn=' . _A_::$app->get('ptrn');
                 }
             } else {
 
@@ -172,9 +174,9 @@ class Controller_Product extends Controller_Base
 
         }
 
-        if (isset($_POST['s']) && (!empty($_POST['s']{0}))) {
-            $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim($_POST['s']))));
-            $this->template->vars('search', $_POST['s']);
+        if (is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s'){0}))) {
+            $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->post('s')))));
+            $this->template->vars('search', _A_::$app->post('s'));
         }
 
         $allowed_samples = $samples_model->allowedSamples($pid);
@@ -192,19 +194,19 @@ class Controller_Product extends Controller_Base
         $this->main->test_access_rights();
         $model = new Model_Product();
 
-        $action_url = 'edit_db?produkt_id=' . $_GET['produkt_id'];
+        $action_url = 'edit_db?produkt_id=' . _A_::$app->get('produkt_id');
         $this->template->vars('action_url', $action_url);
 
         $back_url = BASE_URL . '/admin_home';
 
         $back_url .= '?page=';
-        if (!empty($_GET['page'])) {
-            $back_url .= $_GET['page'];
+        if (!empty(_A_::$app->get('page'))) {
+            $back_url .= _A_::$app->get('page');
         } else
             $back_url .= '1';
 
-        if (!empty($_GET['cat'])) {
-            $back_url .= '&cat=' . $_GET['cat'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $back_url .= '&cat=' . _A_::$app->get('cat');
         }
         $this->template->vars('back_url', $back_url);
 
@@ -228,10 +230,10 @@ class Controller_Product extends Controller_Base
         $this->main->test_access_rights();
         $model = new Model_Product();
 
-        $action_url = 'edit_db?produkt_id=' . $_GET['produkt_id'];
+        $action_url = 'edit_db?produkt_id=' . _A_::$app->get('produkt_id');
         $this->template->vars('action_url', $action_url);
 
-        if (!empty($_GET['produkt_id'])) {
+        if (!empty(_A_::$app->get('produkt_id'))) {
             include('include/post_edit_db.php');
 
             if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
@@ -417,10 +419,10 @@ class Controller_Product extends Controller_Base
         $this->main->test_access_rights();
         $model = new Model_Product();
 
-        $action_url = 'save_db?produkt_id=' . isset($_GET['produkt_id']) ?: $_GET['produkt_id'] . '';
+        $action_url = 'save_db?produkt_id=' . !is_null(_A_::$app->get('produkt_id')) ?: _A_::$app->get('produkt_id') . '';
         $this->template->vars('action_url', $action_url);
 
-        if (!empty($_GET['produkt_id'])) {
+        if (!empty(_A_::$app->get('produkt_id'))) {
             include('include/post_edit_db.php');
 
             if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
@@ -592,7 +594,7 @@ class Controller_Product extends Controller_Base
 
                 $model->getNewProdukt();
 
-                $action_url = 'save_db?produkt_id=' . $_GET['produkt_id'];
+                $action_url = 'save_db?produkt_id=' . _A_::$app->get('produkt_id');
                 $this->template->vars('action_url', $action_url, true);
 
                 $this->edit_form();
@@ -632,19 +634,19 @@ class Controller_Product extends Controller_Base
 
         $model->getNewProdukt();
 
-        $action_url = 'save_db?produkt_id=' . $_GET['produkt_id'];
+        $action_url = 'save_db?produkt_id=' .  _A_::$app->get('produkt_id');
         $this->template->vars('action_url', $action_url);
 
         $back_url = BASE_URL . '/admin_home';
 
         $back_url .= '?page=';
-        if (!empty($_GET['page'])) {
-            $back_url .= $_GET['page'];
+        if (!empty( _A_::$app->get('page'))) {
+            $back_url .=  _A_::$app->get('page');
         } else
             $back_url .= '1';
 
-        if (!empty($_GET['cat'])) {
-            $back_url .= '&cat=' . $_GET['cat'];
+        if (!empty(_A_::$app->get('cat'))) {
+            $back_url .= '&cat=' .  _A_::$app->get('cat');
         }
         $this->template->vars('back_url', $back_url);
 
@@ -688,10 +690,10 @@ class Controller_Product extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $userInfo = $model->validData($_GET['produkt_id']);
+        $userInfo = $model->validData(_A_::$app->get('produkt_id'));
         $del_produkt_id = $userInfo['data'];
-        $page = isset($_GET['page']) ? $_GET['page'] : null;
-        $cat = isset($_GET['cat']) ? $_GET['cat'] : null;
+        $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : null;
+        $cat = !is_null(_A_::$app->get('cat')) ?  _A_::$app->get('cat') : null;
         if (!empty($del_produkt_id)) {
 
             $this->del_product_imgs($del_produkt_id);
