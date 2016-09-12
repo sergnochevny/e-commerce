@@ -10,6 +10,7 @@ return [
         'TITLE_MIN_CHARS' => 5,
         'DATA_MAX_CHARS' => 1000,
         'DATA_MIN_CHARS' => 15,
+        'DEMO' => 1,
     ],
     'ini_set' => [
         'display_errors' => 'On',
