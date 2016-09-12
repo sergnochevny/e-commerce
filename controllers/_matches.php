@@ -19,8 +19,8 @@ class Controller_Matches extends Controller_Base
     {
         $base_url = BASE_URL;
         $matches = null;
-        if (isset($_SESSION['matches']['items'])) {
-            $matches_items = $_SESSION['matches']['items'];
+        if (!is_null(_A_::$app->session('matches')['items'])) {
+            $matches_items = _A_::$app->session('matches')['items'];
             if (count($matches_items) > 0) {
                 ob_start();
                 $left = 2; $top = 2;
@@ -44,10 +44,10 @@ class Controller_Matches extends Controller_Base
         $added = 0;
         $model = new Model_Product();
 
-        if (isset($_GET['p_id']) && !empty($_GET['p_id'])) {
-            $produkt_id = $_GET['p_id'];
-            if (isset($_SESSION['matches']['items'])) {
-                $matches_items = $_SESSION['matches']['items'];
+        if (!is_null(_A_::$app->get('p_id')) && !empty(_A_::$app->get('p_id'))) {
+            $produkt_id = _A_::$app->get('p_id');
+            if (!is_null(_A_::$app->session('matches')['items'])) {
+                $matches_items = _A_::$app->session('matches')['items'];
             } else {
                 $matches_items = [];
             }
@@ -74,7 +74,7 @@ class Controller_Matches extends Controller_Base
                 }
             }
 
-            $_SESSION['matches']['items'] = $matches_items;
+            _A_::$app->get('matches')['items'] = $matches_items;
             $message = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
             $added = 1;
         } else
@@ -91,10 +91,10 @@ class Controller_Matches extends Controller_Base
     function del_matches()
     {
 
-        if (isset($_POST['p_id']) && !empty($_POST['p_id'])) {
-            $produkt_id = $_POST['p_id'];
-            if (isset($_SESSION['matches']['items'])) {
-                $matches_items = $_SESSION['matches']['items'];
+        if (!is_null(_A_::$app->post('p_id')) && !empty(_A_::$app->post('p_id'))) {
+            $produkt_id = _A_::$app->post('p_id');
+            if (!is_null(_A_::$app->session('matches')['items'])) {
+                $matches_items = _A_::$app->get('matches')['items'];
             } else {
                 $matches_items = [];
             }
@@ -107,27 +107,27 @@ class Controller_Matches extends Controller_Base
                 }
             }
 
-            $_SESSION['matches']['items'] = $matches_items;
+            _A_::$app->session('matches')['items'] = $matches_items;
         }
     }
 
     function clear_matches()
     {
-        if (isset($_SESSION['matches']['items'])) {
-            unset($_SESSION['matches']);
+        if (!is_null(_A_::$app->session('matches')['items'])) {
+            _A_::$app->session('matches', null);
         }
     }
 
     function add_all_to_cart()
     {
         $added = 0;
-        if (isset($_POST['data']) && !empty($_POST['data'])) {
+        if (!is_null(_A_::$app->post('data')) && !empty(_A_::$app->post('data'))) {
             $model = new Model_Cart();
             try{
 
-                $products = json_decode($_POST['data']);
-                if (isset($_SESSION['cart']['items'])) {
-                    $cart_items = $_SESSION['cart']['items'];
+                $products = json_decode(_A_::$app->post('data'));
+                if (isset(_A_::$app->session('cart')['items'])) {
+                    $cart_items = _A_::$app->session('cart')['items'];
                 } else {
                     $cart_items = [];
                 }
@@ -185,8 +185,9 @@ class Controller_Matches extends Controller_Base
                             }
                         }
                     }
-
-                    $_SESSION['cart']['items'] = $cart_items;
+                    $cart = _A_::$app->session('cart');
+                    $cart ['items'] = $cart_items;
+                    _A_::$app->session('cart', $cart);
 
                     $SUM = 0;
                     foreach ($cart_items as $key => $item) {
@@ -216,8 +217,8 @@ class Controller_Matches extends Controller_Base
 
     function product_in_matches($p_id)
     {
-        if (isset($_SESSION['matches']['items'])) {
-            $matches_items = $_SESSION['matches']['items'];
+        if (!is_null(_A_::$app->session('matches')['items'])) {
+            $matches_items = _A_::$app->session('matches')['items'];
         } else {
             return false;
 
