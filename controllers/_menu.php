@@ -103,7 +103,7 @@ class Controller_Menu extends Controller_Controller
         $blog_menu = ob_get_contents();
         ob_end_clean();
 
-        $this->template->vars('blog_menu', $blog_menu);
+        $this->main->template->vars('blog_menu', $blog_menu);
 
     }
 
