@@ -20,6 +20,7 @@ class Controller_Authorization extends Controller_Controller
         $prms = null;
         $base_url = BASE_URL;
         $model = new Model_Auth();
+
         if ($this->is_admin_logged()) {
             $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin_home');
             $this->redirect($url);
@@ -32,7 +33,7 @@ class Controller_Authorization extends Controller_Controller
             $remember = _A_::$app->cookie('_ar');
             if ($model->is_admin_remember($remember)) {
                 $admin = $model->get_admin_data();
-                _A_::$app->setSession('_a',$admin['id']);
+                _A_::$app->setSession('_a', $admin['id']);
                 $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin_home');
                 $this->redirect($url);
             }
@@ -41,15 +42,16 @@ class Controller_Authorization extends Controller_Controller
             $remember = _A_::$app->cookie('_r');
             if ($model->is_user_remember($remember)) {
                 $user = $model->get_user_data();
-                _A_::$app->setSession('_',$user['aid']);
-                _A_::$app->setSession('user',$user);
+                _A_::$app->setSession('_', $user['aid']);
+                _A_::$app->setSession('user', $user);
                 $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('shop');
                 $this->redirect($url);
             }
         }
 
         if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
-            !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))) {
+            !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))
+        ) {
             if (empty(_A_::$app->post('login'))) exit('Empty Email/Username field');
             if (empty(_A_::$app->post('pass'))) exit('Empty Password field');
 
@@ -139,7 +141,8 @@ class Controller_Authorization extends Controller_Controller
         $base_url = BASE_URL;
         if (!$this->is_user_authorized()) {
             if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
-                !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))) {
+                !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))
+            ) {
                 if (empty(_A_::$app->post('login')) && empty(_A_::$app->post('pass'))) exit('Empty Email or Password field');
                 $email = _A_::$app->post('login');
                 $password = _A_::$app->post('pass');
@@ -175,8 +178,8 @@ class Controller_Authorization extends Controller_Controller
             $model = new Model_Auth();
             if ($model->is_user_remember($remember)) {
                 $user = $model->get_user_data();
-                _A_::$app->setSession('_',$user['aid']);
-                _A_::$app->setSession('user',$user);
+                _A_::$app->setSession('_', $user['aid']);
+                _A_::$app->setSession('user', $user);
                 return true;
             }
         }
@@ -188,7 +191,8 @@ class Controller_Authorization extends Controller_Controller
         $base_url = BASE_URL;
         if (!$this->is_admin_authorized()) {
             if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
-                !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))) {
+                !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))
+            ) {
                 if (empty(_A_::$app->post('login')) && empty(_A_::$app->post('pass'))) exit('Empty Login or Password field');
                 $login = _A_::$app->post('login');
                 $password = _A_::$app->post('pass');
@@ -220,7 +224,7 @@ class Controller_Authorization extends Controller_Controller
             $model = new Model_Auth();
             if ($model->is_admin_remember($remember)) {
                 $admin = $model->get_admin_data();
-                _A_::$app->setSession('_a',$admin['id']);
+                _A_::$app->setSession('_a', $admin['id']);
                 return true;
             }
         }
@@ -276,7 +280,7 @@ class Controller_Authorization extends Controller_Controller
                 $date = date('Y-m-d H:i:s', time());
                 $remind = $mauth->generate_hash($date);
                 if ($muser->set_remind_for_change_pass($remind, $date, $user_id)) {
-                    $remind_url = _A_::$app->router()->UrlTo('authorization/lost_password',['remind' => urlencode(base64_encode($remind))]);
+                    $remind_url = _A_::$app->router()->UrlTo('authorization/lost_password', ['remind' => urlencode(base64_encode($remind))]);
                     if ($this->send_remind($email, $remind_url)) {
 
                         $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!!!';
@@ -310,7 +314,7 @@ class Controller_Authorization extends Controller_Controller
                                             $muser->update_password($hash, $user_id);
                                             $muser->clean_remind($user_id);
                                             $message = 'Congratulattions. Your Password has been changed succesfully!!!<br>';
-                                            $message .= 'Now you can go to the <a href="' . _A_::$app->router()->UrlTo('authorization/user').'">login form</a> and use it.';
+                                            $message .= 'Now you can go to the <a href="' . _A_::$app->router()->UrlTo('authorization/user') . '">login form</a> and use it.';
                                             $this->template->vars('message', $message);
                                             $this->main->view_layout('msgs/msg_span');
                                             exit();
@@ -323,7 +327,7 @@ class Controller_Authorization extends Controller_Controller
                                         $error = ['Identity Password and Confirm Password!!!'];
                                         $this->template->vars('error', $error);
                                     }
-                                    $action = _A_::$app->router()->UrlTo('authorization/lost_password',['user_id' => $user_id]);
+                                    $action = _A_::$app->router()->UrlTo('authorization/lost_password', ['user_id' => $user_id]);
                                     $this->template->vars('action', $action);
                                     $this->template->vars('remind', $remind);
                                     $this->template->vars('user_id', $user_id);
@@ -374,7 +378,7 @@ class Controller_Authorization extends Controller_Controller
                                 ($remind == $mauth->check($user['remind_time'], $user['remind']))
                             ) {
                                 $result = true;
-                                $action = _A_::$app->router()->UrlTo('authorization/lost_password',['user_id'=>$user_id]);
+                                $action = _A_::$app->router()->UrlTo('authorization/lost_password', ['user_id' => $user_id]);
                                 $back_url = _A_::$app->router()->UrlTo('/');
                                 $this->template->vars('back_url', $back_url, true);
                                 $this->template->vars('action', $action);
@@ -399,7 +403,7 @@ class Controller_Authorization extends Controller_Controller
                     if (!is_null(_A_::$app->get('url'))) {
                         $prms['url'] = _A_::$app->get('url');
                     }
-                    $back_url = _A_::$app->router()->UrlTo('authorization/user',$prms);
+                    $back_url = _A_::$app->router()->UrlTo('authorization/user', $prms);
                     $this->template->vars('action', $action);
                     $this->template->vars('back_url', $back_url);
                     $this->main->view('lost_password');
@@ -422,7 +426,7 @@ class Controller_Authorization extends Controller_Controller
         $base_url = BASE_URL;
         $subject = "ILuvFabrix. Change Password.";
         ob_start();
-        $this->template->view_layout('remind_message','remind');
+        $this->template->view_layout('remind_message', 'remind');
         $message = ob_get_contents();
         ob_end_clean();
 //        $message = htmlspecialchars(stripslashes(trim($message)));

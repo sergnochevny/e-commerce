@@ -45,7 +45,7 @@ class Controller_Image extends Controller_Base
             $image4 = $userInfo['image4'];
             $image5 = $userInfo['image5'];
 
-            $base_url = BASE_URL;
+            $base_url = _A_::$app->router()->UrlTo('/');
 
             $not_image = _A_::$app->router()->UrlTo('/upload/upload/not_image.jpg');
             if (empty($image1{0}) || !is_file('upload/upload/' . $image1)) {

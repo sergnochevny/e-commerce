@@ -15,7 +15,7 @@ class Controller_Menu extends Controller_Controller
     function show_shop_menu()
     {
         $model = new Model_Tools();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $this->template->vars('base_url',$base_url);
         $items = $model->get_items_for_menu('all');
@@ -82,7 +82,7 @@ class Controller_Menu extends Controller_Controller
     function show_blog_menu()
     {
         $model = new Model_Tools();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $this->template->vars('base_url',$base_url);
         $items = $model->get_items_for_menu('blog_category');
@@ -109,7 +109,7 @@ class Controller_Menu extends Controller_Controller
 
     function show_menu()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $this->show_shop_menu();
         $this->show_blog_menu();
         $this->template->vars('base_url', $base_url);

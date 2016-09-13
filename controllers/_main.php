@@ -22,7 +22,7 @@ class Controller_Main extends Controller_Base
             $this->template->vars('data', $data);
         }
 
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         ob_start();
         $menu = new Controller_Menu($this);
         $menu->menu_list();
@@ -47,7 +47,7 @@ class Controller_Main extends Controller_Base
         }
 
         $this->meta_page();
-        $this->template->vars('base_url', BASE_URL);
+        $this->template->vars('base_url', _A_::$app->router()->UrlTo('/'));
 
         $this->template->view($page);
     }
@@ -72,7 +72,7 @@ class Controller_Main extends Controller_Base
 
         $this->meta_page();
         $this->template->vars('controller', $this);
-        $this->template->vars('base_url', BASE_URL);
+        $this->template->vars('base_url', _A_::$app->router()->UrlTo('/'));
 
         $this->template->view_layout($page);
     }
@@ -99,7 +99,7 @@ class Controller_Main extends Controller_Base
 
     function test_access_rights($redirect_to_url = true)
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $authorization = new Controller_Authorization($this);
         if (!$authorization->is_admin_authorized()) {
             if ($redirect_to_url) {
@@ -121,7 +121,7 @@ class Controller_Main extends Controller_Base
     {
         if (isset(_A_::$app->get()['msg'])) {
             $msg = _A_::$app->get()['msg'];
-            $base_url = BASE_URL;
+            $base_url = _A_::$app->router()->UrlTo('/');
             if ($msg == 'remind_sent') {
 
                 $back_url = $base_url . '/user_authorization';
@@ -172,7 +172,7 @@ class Controller_Main extends Controller_Base
             $this->template->vars('user_name', $user_name);
         }
         $this->template->vars('toggle', $toggle);
-        $this->template->vars('base_url', BASE_URL);
+        $this->template->vars('base_url', _A_::$app->router()->UrlTo('/'));
         $this->template->view_layout('my_account_user_menu', 'menu');
         $my_account_user_menu = ob_get_contents();
         ob_end_clean();
@@ -182,7 +182,7 @@ class Controller_Main extends Controller_Base
         $menu->show_menu();
 
         $this->meta_page();
-        $this->template->vars('base_url', BASE_URL);
+        $this->template->vars('base_url', _A_::$app->router()->UrlTo('/'));
 
         $this->template->view($page);
     }
@@ -192,7 +192,7 @@ class Controller_Main extends Controller_Base
         header("HTTP/1.0 404 Not Found");
         header("HTTP/1.1 404 Not Found");
         header("Status: 404 Not Found");
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $this->template->controller = 'main';
         $this->template->vars('base_url', $base_url);
 

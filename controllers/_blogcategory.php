@@ -16,7 +16,7 @@ class Controller_BlogCategory extends Controller_Controller
         $rows = $model->get_blog_categories_list();
         $categories = '';
         ob_start();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         foreach ($rows as $row) {
             $this->template->vars('base_url', $base_url);
             $this->template->vars('row', $row);
@@ -48,7 +48,7 @@ class Controller_BlogCategory extends Controller_Controller
     function edit()
     {
         $model = new Model_Blog();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $group_id = $model->validData(_A_::$app->get('cat'));
         $userInfo = $model->get_blog_category($group_id);
         $this->main->template->vars('userInfo', $userInfo);
@@ -65,7 +65,7 @@ class Controller_BlogCategory extends Controller_Controller
     function save()
     {
         $model = new Model_Blog();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $group_id = $model->validData(_A_::$app->get('cat'));
         $category = $model->validData(_A_::$app->post('category'));
         $post_category_name = mysql_real_escape_string($category);
@@ -102,7 +102,7 @@ class Controller_BlogCategory extends Controller_Controller
     function edit_form()
     {
         $model = new Model_Blog();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $group_id = $model->validData(_A_::$app->get('cat'));
         $userInfo = $model->get_blog_category($group_id);
         $this->main->template->vars('userInfo', $userInfo);
@@ -117,7 +117,7 @@ class Controller_BlogCategory extends Controller_Controller
     function new()
     {
         $userInfo = [];
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $action_url = _A_::$app->router()->UrlTo('blogcategory/save_new');
         $this->main->template->vars('action_url', $action_url);
@@ -137,7 +137,7 @@ class Controller_BlogCategory extends Controller_Controller
     function save_new()
     {
         $model = new Model_Blog();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $category = $model->validData(_A_::$app->post('category'));
         $post_category_name = mysql_real_escape_string($category);
         if (!empty($post_category_name{0})) {

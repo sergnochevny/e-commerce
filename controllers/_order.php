@@ -152,7 +152,7 @@ class Controller_Order extends Controller_Base
                 $handling = strlen(trim($handling)) > 0 ? '$' . number_format($handling, 2) : '';
                 $status = ($status == 0 ? '<i title="In process" class="fa fa-clock-o"></i>' : '<i title="Done" class="fa fa-check"></i>');
                 $order_date = date('F j, Y, g:i a', $order_date);
-                $action = BASE_URL . '/customer_order_info?oid=' . urlencode(base64_encode($oid)) . '&=page' . $page;
+                $action = _A_::$app->router()->UrlTo('/') . '/customer_order_info?oid=' . urlencode(base64_encode($oid)) . '&=page' . $page;
                 $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
                 include('views/order/customer_orders_list.php');
 
@@ -276,7 +276,7 @@ class Controller_Order extends Controller_Base
 
     public function order_info()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
         $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
         $oid = (integer)urldecode(base64_decode(!is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));
@@ -374,7 +374,7 @@ class Controller_Order extends Controller_Base
     public function customer_order_info()
     {
         $page = (integer)(!is_null(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $back_url = _A_::$app->router()->UrlTo('customer_orders_history', ['page' => $page]);
         $this->template->vars('back_url', $back_url);
 

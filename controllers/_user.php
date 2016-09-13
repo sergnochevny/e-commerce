@@ -41,7 +41,7 @@ class Controller_User extends Controller_Controller
         $rows = $model->get_users_list($start, $per_page);
 
         ob_start();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         foreach ($rows as $row) {
             $row[30] = gmdate("F j, Y, g:i a", $row[30]);
             include('./views/html/users_list.php');
@@ -265,10 +265,10 @@ class Controller_User extends Controller_Controller
 
     private function _edit_user()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $model = new Model_User();
         $user_id = $model->validData(_A_::$app->get('user_id'));
-        $back_url = BASE_URL . '/users?page=';
+        $back_url = _A_::$app->router()->UrlTo('/') . '/users?page=';
         if (!empty(_A_::$app->get('page'))) {
             $back_url .= _A_::$app->get('page');
         } else
@@ -294,7 +294,7 @@ class Controller_User extends Controller_Controller
     private function _new_user()
     {
         $model = new Model_User();
-        $back_url = BASE_URL . '/users?page=';
+        $back_url = _A_::$app->router()->UrlTo('/') . '/users?page=';
         if (!empty(_A_::$app->get('page'))) {
             $back_url .= _A_::$app->get('page');
         } else
@@ -347,7 +347,7 @@ class Controller_User extends Controller_Controller
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
 //        } else {
-        $back_url = BASE_URL . '/users?page=';
+        $back_url = _A_::$app->router()->UrlTo('/') . '/users?page=';
         if (!empty(_A_::$app->get('page'))) {
             $back_url .= _A_::$app->get('page');
         } else
@@ -488,7 +488,7 @@ class Controller_User extends Controller_Controller
 
     function edit_user()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
         $action = $base_url . '/save_edit_user?user_id=' . _A_::$app->get('user_id');
         $this->template->vars('action', $action);
@@ -500,7 +500,7 @@ class Controller_User extends Controller_Controller
 
     function new_user()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
         $action = $base_url . '/save_new_user';
         $this->template->vars('action', $action);
@@ -512,7 +512,7 @@ class Controller_User extends Controller_Controller
 
     function save_edit_user()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
         $action = _A_::$app->router()->UrlTo('user/save_edit',['user_id'=>_A_::$app->get('user_id')]);
         $this->template->vars('action', $action);
@@ -524,7 +524,7 @@ class Controller_User extends Controller_Controller
 
     function save_new()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
         $action = _A_::$app->router()->UrlTo('user/save_new');
         $this->template->vars('action', $action);
@@ -536,7 +536,7 @@ class Controller_User extends Controller_Controller
 
     public function registration()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $title = 'REGISTRATION USER';
         $this->template->vars('title', $title);
         $action = _A_::$app->router()->UrlTo('user/save_registration');
@@ -553,7 +553,7 @@ class Controller_User extends Controller_Controller
 
     function save_registration()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         if (!$this->_save_new_user()) {
             $title = 'REGISTRATION USER';
             $this->template->vars('title', $title);
@@ -593,7 +593,7 @@ class Controller_User extends Controller_Controller
 
     function save_edit_registration_data()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $authorization = new Controller_Authorization($this->main);
         if ($authorization->is_user_logged()) {
             $user_id = $authorization->get_user_from_session();
@@ -612,7 +612,7 @@ class Controller_User extends Controller_Controller
 
     public function change_registration_data()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $authorization = new Controller_Authorization($this->main);
         if ($authorization->is_user_logged()) {

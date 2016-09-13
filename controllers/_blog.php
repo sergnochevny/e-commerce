@@ -180,7 +180,7 @@ class Controller_Blog extends Controller_Controller
     public function convertation($txt)
     {
 
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 //        $txt = preg_replace('#(\s*\[caption[^\]]+\]<a[^>]+><img[^>]+\/><\/a>)(.*?)(\[\/caption\]\s*)#i', '$1<p>$2</p>$3', $txt);
 //        $txt = preg_replace('#\[caption([^\]]+)\]#i', '<div$1 class="div_img">', $txt);
 //        $txt = preg_replace('#\[\/caption\]#i', '</div>', $txt);
@@ -211,7 +211,7 @@ class Controller_Blog extends Controller_Controller
 //        $this->widget_best_products();
 //        $this->widget_bsells_products();
 
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $prms = null;
         if (!empty(_A_::$app->get('page'))) {
@@ -291,7 +291,7 @@ class Controller_Blog extends Controller_Controller
             foreach ($rows as $row) {
                 $post_id = $row['ID'];
                 $post_name = $row['post_name'];
-                $base_url = BASE_URL;
+                $base_url = _A_::$app->router()->UrlTo('/');
                 $prms = null;
                 if (!empty(_A_::$app->get('page'))) {
                     $prms['page'] = _A_::$app->get('page');
@@ -357,7 +357,7 @@ class Controller_Blog extends Controller_Controller
     function admin_main_cat()
     {
         $model = new Model_Tools();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $items = $model->get_items_for_menu('blog_category');
         ob_start();
@@ -406,7 +406,7 @@ class Controller_Blog extends Controller_Controller
             foreach ($rows as $row) {
                 $post_id = $row['ID'];
                 $post_name = $row['post_name'];
-                $base_url = BASE_URL;
+                $base_url = _A_::$app->router()->UrlTo('/');
 
                 $prms = ['post_id' => $post_id];
                 if (!empty(_A_::$app->get('page'))) {
@@ -541,7 +541,7 @@ class Controller_Blog extends Controller_Controller
 
     function new_post_img_section($img = null)
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         if (isset($img) && file_exists($img) && is_file($img)) {
             $f_img = $img;
             $img = _A_::$app->router()->UrlTo($img);
@@ -590,7 +590,7 @@ class Controller_Blog extends Controller_Controller
 
     function edit_post_imgs($img = null)
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         if (isset($img) && file_exists($img) && is_file($img)) {
             $f_img = $img;
             $img = _A_::$app->router()->UrlTo($img);
@@ -617,7 +617,7 @@ class Controller_Blog extends Controller_Controller
     function save_new_post()
     {
 
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $model = new Model_Blog();
         $categories = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
         $keywords = !is_null(_A_::$app->post('keywords')) ? _A_::$app->post('keywords') : '';
@@ -691,7 +691,7 @@ class Controller_Blog extends Controller_Controller
     {
         $model = new Model_Blog();
 
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $prms = null;
         if (!empty(_A_::$app->get('page'))) {
@@ -751,7 +751,7 @@ class Controller_Blog extends Controller_Controller
     function save_edit_post()
     {
 
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $model = new Model_Blog();
         $post_id = _A_::$app->get('post_id');
         $categories = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];

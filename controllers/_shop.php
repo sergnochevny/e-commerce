@@ -59,7 +59,7 @@ class Controller_Shop extends Controller_Controller
         while ($row = mysql_fetch_array($res)) {
             $cat_name = $model->getCatName($row[20]);
             $row[8] = substr($row[8], 0, 100);
-            $base_url = BASE_URL;
+            $base_url = _A_::$app->router()->UrlTo('/');
 
             $filename = 'upload/upload/' . $image_suffix . $row[14];
             if (!(file_exists($filename) && is_file($filename))) {
@@ -111,7 +111,7 @@ class Controller_Shop extends Controller_Controller
     private function show_category_list()
     {
         $model = new Model_Tools();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $items = $model->get_items_for_menu('all');
         ob_start();
@@ -270,7 +270,7 @@ class Controller_Shop extends Controller_Controller
             while ($row = mysql_fetch_array($res)) {
                 $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
-                $base_url = BASE_URL;
+                $base_url = _A_::$app->router()->UrlTo('/');
 
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
                 if (!(file_exists($filename) && is_file($filename))) {
@@ -394,7 +394,7 @@ class Controller_Shop extends Controller_Controller
             while ($row = mysql_fetch_array($res)) {
                 $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
-                $base_url = BASE_URL;
+                $base_url = _A_::$app->router()->UrlTo('/');
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
                 if (!(file_exists($filename) && is_file($filename))) {
                     $filename = 'upload/upload/not_image.jpg';
@@ -508,7 +508,7 @@ class Controller_Shop extends Controller_Controller
             foreach ($rows as $row) {
                 $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
-                $base_url = BASE_URL;
+                $base_url = _A_::$app->router()->UrlTo('/');
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
                 if (!(file_exists($filename) && is_file($filename))) {
                     $filename = 'upload/upload/not_image.jpg';
@@ -621,7 +621,7 @@ class Controller_Shop extends Controller_Controller
             while ($row = mysql_fetch_array($res)) {
                 $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
-                $base_url = BASE_URL;
+                $base_url = _A_::$app->router()->UrlTo('/');
 
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
                 if (!(file_exists($filename) && is_file($filename))) {
@@ -745,7 +745,7 @@ class Controller_Shop extends Controller_Controller
             while ($row = mysql_fetch_array($res)) {
                 $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
-                $base_url = BASE_URL;
+                $base_url = _A_::$app->router()->UrlTo('/');
 
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
                 if (!(file_exists($filename) && is_file($filename))) {
@@ -856,7 +856,7 @@ class Controller_Shop extends Controller_Controller
             foreach ($rows as $row) {
                 $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
-                $base_url = BASE_URL;
+                $base_url = _A_::$app->router()->UrlTo('/');
 
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
                 if (!(file_exists($filename) && is_file($filename))) {

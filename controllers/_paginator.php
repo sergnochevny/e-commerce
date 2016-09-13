@@ -14,7 +14,7 @@ class Controller_Paginator extends Controller_Controller
 
     protected function paginator($total_rows, $page, $per_page = 12, $showbypage = 10)
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $num_pages = ceil($total_rows / $per_page);
         $last_page = $num_pages;
         $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;

@@ -17,7 +17,7 @@ class Controller_Matches extends Controller_Base
 
     function matches()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         $matches = null;
         if (!is_null(_A_::$app->session('matches')['items'])) {
             $matches_items = _A_::$app->session('matches')['items'];

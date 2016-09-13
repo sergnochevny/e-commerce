@@ -409,7 +409,7 @@ class Controller_Cart extends Controller_Controller
 
     private function pay_ok()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $shipcost = 0;
         $rollcost = 0;
@@ -1151,7 +1151,7 @@ class Controller_Cart extends Controller_Controller
 
     private function products_in($template = 'views/basket/product_in_cart.php')
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         if (!is_null(_A_::$app->session('cart')['items'])) {
             $cart_items = _A_::$app->session('cart')['items'];
@@ -1173,7 +1173,7 @@ class Controller_Cart extends Controller_Controller
 
     private function samples_in($template = 'views/basket/sample_in_proceed.php')
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         if (!is_null(_A_::$app->session('cart')['samples_items'])) {
             $cart_samples_items = _A_::$app->session('cart')['samples_items'];
@@ -1195,7 +1195,7 @@ class Controller_Cart extends Controller_Controller
     private function sample_in($p_id, &$item, $template = 'views/basket/sample_in_proceed.php')
     {
         $model = new Model_Cart();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $rowsni = $model->get_product_params($p_id);
 
@@ -1213,7 +1213,7 @@ class Controller_Cart extends Controller_Controller
     private function product_in($p_id, &$item, $template = 'views/basket/product_in_cart.php')
     {
         $model = new Model_Cart();
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
 
         $rowsni = $model->get_product_params($p_id);
 
@@ -1359,7 +1359,7 @@ class Controller_Cart extends Controller_Controller
     function add()
     {
 
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         if (!empty(_A_::$app->get('p_id'))) {
             $model = new Model_Cart();
             $produkt_id = $model->validData($_GET['p_id']);
@@ -1472,7 +1472,7 @@ class Controller_Cart extends Controller_Controller
 
     function add_samples()
     {
-        $base_url = BASE_URL;
+        $base_url = _A_::$app->router()->UrlTo('/');
         if (!empty(_A_::$app->get('p_id'))) {
             $model = new Model_Cart();
             $produkt_id = $model->validData($_GET['p_id']);
