@@ -86,8 +86,8 @@ class Controller_Comments extends Controller_Base
         $redirect_to_url = true;
         $this->main->is_user_authorized($redirect_to_url);
 
-        $comments_page = BASE_URL . '/comments';
-        $main_page = BASE_URL . '/shop';
+        $comments_page = _A_::$app->router()->UrlTo('comments');
+        $main_page = _A_::$app->router()->UrlTo('shop');
 
         $Data = htmlspecialchars(_A_::$app->post('comment_data'));
         $Title = htmlspecialchars(_A_::$app->post('comment_title'));
@@ -209,7 +209,7 @@ class Controller_Comments extends Controller_Base
             $comment = $m->get(_A_::$app->get('ID'));
             if (empty($comment)) exit(0);
 
-            $update_url = BASE_URL . '/comment_update_save';
+            $update_url = _A_::$app->router()->UrlTo('/comment_update_save');
 
             $comment['username'] = $m->getUserName($comment['userid']);
 

@@ -47,31 +47,31 @@ class Controller_Image extends Controller_Base
 
             $base_url = BASE_URL;
 
-            $not_image = $base_url . '/upload/upload/not_image.jpg';
+            $not_image = _A_::$app->router()->UrlTo('/upload/upload/not_image.jpg');
             if (empty($image1{0}) || !is_file('upload/upload/' . $image1)) {
                 $image1 = '';
             } else {
-                $image1 = $base_url . '/upload/upload/v_' . $image1;
+                $image1 = _A_::$app->router()->UrlTo('/upload/upload/v_'.$image1);
             }
             if (empty($image2{0}) || !is_file('upload/upload/' . $image2)) {
                 $image2 = '';
             } else {
-                $image2 = $base_url . '/upload/upload/' . $image2;
+                $image2 = _A_::$app->router()->UrlTo('/upload/upload/' . $image2);
             }
             if (empty($image3{0}) || !is_file('upload/upload/' . $image3)) {
                 $image3 = '';
             } else {
-                $image3 = $base_url . '/upload/upload/' . $image3;
+                $image3 = _A_::$app->router()->UrlTo('/upload/upload/' . $image3);
             }
             if (empty($image4{0}) || !is_file('upload/upload/' . $image4)) {
                 $image4 = '';
             } else {
-                $image4 = $base_url . 'upload/upload/' . $image4;
+                $image4 = _A_::$app->router()->UrlTo('/upload/upload/' . $image4);
             }
             if (empty($image5{0}) || !is_file('upload/upload/' . $image5)) {
                 $image5 = '';
             } else {
-                $image5 = $base_url . '/upload/upload/' . $image5;
+                $image5 = _A_::$app->router()->UrlTo('/upload/upload/' . $image5);
             }
 
             include('views/product/product_m_images.php');

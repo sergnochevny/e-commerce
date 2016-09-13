@@ -69,7 +69,7 @@ class Controller_Categories extends Controller_Base
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
 //        } else {
-        $back_url = BASE_URL . '/categories';
+        $back_url = _A_::$app->router()->UrlTo('categories');
 //        }
         $this->template->vars('back_url', $back_url);
         $this->main->view_admin('category/edit_categories');
@@ -86,7 +86,7 @@ class Controller_Categories extends Controller_Base
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
 //        } else {
-        $back_url = BASE_URL . '/categories';
+        $back_url = _A_::$app->router()->UrlTo('categories');
 //        }
         $this->template->vars('back_url', $back_url);
         $this->main->view_layout('category/edit_category_form');
@@ -170,7 +170,7 @@ class Controller_Categories extends Controller_Base
 //            if(isset($_SESSION['last_url'])) {
 //                $back_url = $_SESSION['last_url'];
 //            } else {
-            $back_url = BASE_URL . '/categories';
+            $back_url = _A_::$app->router()->UrlTo('categories');
 //            }
 
             $this->template->vars('back_url', $back_url);
@@ -188,7 +188,7 @@ class Controller_Categories extends Controller_Base
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
 //        } else {
-        $back_url = BASE_URL . '/categories';
+        $back_url = _A_::$app->router()->UrlTo('categories');
 //        }
         $this->template->vars('back_url', $back_url);
         $this->main->view_admin('category/new_categories');
@@ -202,7 +202,7 @@ class Controller_Categories extends Controller_Base
 //        if(isset($_SESSION['last_url'])) {
 //            $back_url = $_SESSION['last_url'];
 //        } else {
-        $back_url = BASE_URL . '/categories';
+        $back_url = _A_::$app->router()->UrlTo('categories');
 //        }
         $this->template->vars('back_url', $back_url);
         $this->main->view_layout('category/new_category_form');

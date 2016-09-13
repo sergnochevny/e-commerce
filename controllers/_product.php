@@ -7,7 +7,7 @@ class Controller_Product extends Controller_Controller
     {
         $model = new Model_Product();
         $samples_model = new Model_Samples();
-        $produkt_id = $model->validData( _A_::$app->get('p_id'));
+        $produkt_id = $model->validData(_A_::$app->get('p_id'));
         $userInfo = $model->getPrName($produkt_id);
 
         include_once('controllers/_matches.php');
@@ -23,7 +23,7 @@ class Controller_Product extends Controller_Controller
 
         #get the shipping
         if (!is_null(_A_::$app->session('cart')['ship'])) {
-            $shipping = (int) _A_::$app->session('cart')['ship'];
+            $shipping = (int)_A_::$app->session('cart')['ship'];
         } else {
             $shipping = DEFAULT_SHIPPING;
             $_cart = _A_::$app->session('cart');
@@ -32,7 +32,7 @@ class Controller_Product extends Controller_Controller
         }
 
         if (!is_null(_A_::$app->get('cart')['ship_roll'])) {
-            $bShipRoll = (boolean) _A_::$app->session('cart')['ship_roll'];
+            $bShipRoll = (boolean)_A_::$app->session('cart')['ship_roll'];
         } else {
             $bShipRoll = false;
             $cart = _A_::$app->session('cart');
@@ -44,7 +44,7 @@ class Controller_Product extends Controller_Controller
 
         #grab the user id
         if (!is_null(_A_::$app->session('user'))) {
-            $uid = (int) _A_::$app->session('user')['aid'];
+            $uid = (int)_A_::$app->session('user')['aid'];
         } else {
             $uid = 0;
         }
@@ -136,45 +136,44 @@ class Controller_Product extends Controller_Controller
         $in_cart = in_array($produkt_id, $cart);
         if ($in_cart) $this->template->vars('in_cart', '1');
 
+        $prms = null;
+
         if (is_null(_A_::$app->get('matches'))) {
             if (is_null(_A_::$app->get('cart'))) {
 
-                $back_url = BASE_URL . '/' . $url . '?page=';
-                if (!empty(_A_::$app->get('page'))) {
-                    $back_url .= _A_::$app->get('page');
-                } else
-                    $back_url .= '1';
-                if ((!empty(_A_::$app->get('cat')))) {
-                    $back_url .= '&cat=' . _A_::$app->get('cat');
+                $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
+
+                if (!empty(_A_::$app->get('cat'))) {
+                    $prms['cat'] = _A_::$app->get('cat');
                 }
-                if ((!empty(_A_::$app->get('mnf')))) {
-                    $back_url .= '&mnf=' . _A_::$app->get('mnf');
+                if (!empty(_A_::$app->get('mnf'))) {
+                    $prms['mnf'] = _A_::$app->get('mnf');
                 }
-                if ((!empty(_A_::$app->get('ptrn')))) {
-                    $back_url .= '&ptrn=' . _A_::$app->get('ptrn');
+                if (!empty(_A_::$app->get('ptrn'))) {
+                    $prms['ptrn'] = _A_::$app->get('ptrn');
                 }
             } else {
 
-                $back_url = BASE_URL . '/cart';
+                $url = '/cart';
             }
 
         } else {
 
-            $back_url = BASE_URL . '/matches';
+            $url = '/matches';
 
         }
 
-        if (!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s'){0}))) {
+        if (!is_null(_A_::$app->post('s')) && !empty(_A_::$app->post('s'){0})) {
             $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->post('s')))));
-            $this->template->vars('search', _A_::$app->post('s'));
+            $this->main->template->vars('search', _A_::$app->post('s'));
         }
 
         $allowed_samples = $samples_model->allowedSamples($pid);
-        $this->template->vars('allowed_samples', $allowed_samples);
+        $this->main->template->vars('allowed_samples', $allowed_samples);
 
-        $this->template->vars('cart_enable', '_');
-
-        $this->template->vars('back_url', $back_url);
+        $this->main->template->vars('cart_enable', '_');
+        $back_url = _A_::$app->router()->UrlTo($url, $prms);
+        $this->main->template->vars('back_url', $back_url);
 
         $this->main->view('product_page');
     }
@@ -184,21 +183,18 @@ class Controller_Product extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Product();
 
-        $action_url = 'edit_db?produkt_id=' . _A_::$app->get('produkt_id');
-        $this->template->vars('action_url', $action_url);
+        $action_url = _A_::$app->router()->UrlTo('edit_db', ['produkt_id' => _A_::$app->get('produkt_id')]);
+        $this->main->template->vars('action_url', $action_url);
 
-        $back_url = BASE_URL . '/admin_home';
+        $prms = null;
 
-        $back_url .= '?page=';
-        if (!empty(_A_::$app->get('page'))) {
-            $back_url .= _A_::$app->get('page');
-        } else
-            $back_url .= '1';
+        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
 
         if (!empty(_A_::$app->get('cat'))) {
-            $back_url .= '&cat=' . _A_::$app->get('cat');
+            $prms['cat'] = !empty(_A_::$app->get('cat'));
         }
-        $this->template->vars('back_url', $back_url);
+
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('admin_home', $prms));
 
         $userInfo = $model->getProduktInfo();
 
@@ -220,7 +216,7 @@ class Controller_Product extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Product();
 
-        $action_url = 'edit_db?produkt_id=' . _A_::$app->get('produkt_id');
+        $action_url = _A_::$app->router()->UrlTo('edit_db', ['produkt_id' => _A_::$app->get('produkt_id')]);
         $this->template->vars('action_url', $action_url);
 
         if (!empty(_A_::$app->get('produkt_id'))) {
@@ -289,44 +285,44 @@ class Controller_Product extends Controller_Controller
                 }
 
                 $userInfo = array(
-                    'weight_id' => $post_weight_cat,
-                    'sd_cat' => $sl_cat,
-                    'pvisible' => $post_vis,
-                    'metadescription' => $post_desc,
-                    'produkt_id' => $produkt_id,
-                    'Meta_Description' => $post_desc,
-                    'Meta_Keywords' => $post_mkey,
-                    'Product_name' => $post_tp_name,
-                    'Product_number' => $post_product_num,
-                    'Width' => $post_width,
-                    'Price_Yard' => $post_p_yard,
-                    'Stock_number' => $post_st_nom,
-                    'Dimensions' => $post_dimens,
-                    'Current_inventory' => $post_curret_in,
-                    'Specials' => $post_special,
-                    'Weight' => $post_weight_cat,
-                    'Manufacturer' => $sl_cat2,
-                    'New_Manufacturer' => $New_Manufacturer,
-                    'Colours' => $sl_cat3,
-                    'New_Colour' => $post_new_color,
-                    'Pattern_Type' => $sl_cat4,
-                    'New_Pattern' => $pattern_type,
-                    'Short_description' => $post_short_desk,
-                    'Long_description' => $post_Long_description,
-                    'Related_fabric_1' => $post_fabric_1,
-                    'Related_fabric_2' => $post_fabric_2,
-                    'Related_fabric_3' => $post_fabric_3,
-                    'Related_fabric_4' => $post_fabric_4,
-                    'Related_fabric_5' => $post_fabric_5,
-                    'Position_in_Brunschwig' => 'test',
-                    'Position_in_Modern' => 'test',
-                    'Position_in_Designer' => 'test',
-                    'Position_in_Stripe' => 'test',
-                    'Position_in_Just_Arrived' => 'test',
-                    'visible' => $post_hide_prise,
-                    'best' => $best,
-                    'piece' => $piece,
-                    'whole' => $whole
+                    'weight_id'                 => $post_weight_cat,
+                    'sd_cat'                    => $sl_cat,
+                    'pvisible'                  => $post_vis,
+                    'metadescription'           => $post_desc,
+                    'produkt_id'                => $produkt_id,
+                    'Meta_Description'          => $post_desc,
+                    'Meta_Keywords'             => $post_mkey,
+                    'Product_name'              => $post_tp_name,
+                    'Product_number'            => $post_product_num,
+                    'Width'                     => $post_width,
+                    'Price_Yard'                => $post_p_yard,
+                    'Stock_number'              => $post_st_nom,
+                    'Dimensions'                => $post_dimens,
+                    'Current_inventory'         => $post_curret_in,
+                    'Specials'                  => $post_special,
+                    'Weight'                    => $post_weight_cat,
+                    'Manufacturer'              => $sl_cat2,
+                    'New_Manufacturer'          => $New_Manufacturer,
+                    'Colours'                   => $sl_cat3,
+                    'New_Colour'                => $post_new_color,
+                    'Pattern_Type'              => $sl_cat4,
+                    'New_Pattern'               => $pattern_type,
+                    'Short_description'         => $post_short_desk,
+                    'Long_description'          => $post_Long_description,
+                    'Related_fabric_1'          => $post_fabric_1,
+                    'Related_fabric_2'          => $post_fabric_2,
+                    'Related_fabric_3'          => $post_fabric_3,
+                    'Related_fabric_4'          => $post_fabric_4,
+                    'Related_fabric_5'          => $post_fabric_5,
+                    'Position_in_Brunschwig'    => 'test',
+                    'Position_in_Modern'        => 'test',
+                    'Position_in_Designer'      => 'test',
+                    'Position_in_Stripe'        => 'test',
+                    'Position_in_Just_Arrived'  => 'test',
+                    'visible'                   => $post_hide_prise,
+                    'best'                      => $best,
+                    'piece'                     => $piece,
+                    'whole'                     => $whole
 
                 );
 
@@ -409,7 +405,7 @@ class Controller_Product extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Product();
 
-        $action_url = 'save_db?produkt_id=' . !is_null(_A_::$app->get('produkt_id')) ?: _A_::$app->get('produkt_id') . '';
+        $action_url = _A_::$app->router()->UrlTo('save_db', ['produkt_id' => !is_null(_A_::$app->get('produkt_id')) ?: _A_::$app->get('produkt_id')]);
         $this->template->vars('action_url', $action_url);
 
         if (!empty(_A_::$app->get('produkt_id'))) {
@@ -584,7 +580,7 @@ class Controller_Product extends Controller_Controller
 
                 $model->getNewProdukt();
 
-                $action_url = 'save_db?produkt_id=' . _A_::$app->get('produkt_id');
+                $action_url = _A_::$app->router()->UrlTo('save_db', ['produkt_id'=> _A_::$app->get('produkt_id')]);
                 $this->template->vars('action_url', $action_url, true);
 
                 $this->edit_form();
@@ -621,24 +617,18 @@ class Controller_Product extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-
+        $prms = null;
         $model->getNewProdukt();
 
-        $action_url = 'save_db?produkt_id=' .  _A_::$app->get('produkt_id');
+        $action_url = _A_::$app->router()->UrlTo('save_db', ['produkt_id' => _A_::$app->get('produkt_id')]);
         $this->template->vars('action_url', $action_url);
 
-        $back_url = BASE_URL . '/admin_home';
-
-        $back_url .= '?page=';
-        if (!empty( _A_::$app->get('page'))) {
-            $back_url .=  _A_::$app->get('page');
-        } else
-            $back_url .= '1';
+        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
 
         if (!empty(_A_::$app->get('cat'))) {
-            $back_url .= '&cat=' .  _A_::$app->get('cat');
+            $prms['cat'] = _A_::$app->get('cat');
         }
-        $this->template->vars('back_url', $back_url);
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('admin_home', $prms);
 
         $userInfo = $model->getProduktInfo();
 
@@ -680,23 +670,21 @@ class Controller_Product extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
+        $prms = null;
         $del_produkt_id = $model->validData(_A_::$app->get('produkt_id'));
         $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : null;
-        $cat = !is_null(_A_::$app->get('cat')) ?  _A_::$app->get('cat') : null;
+        $cat = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : null;
         if (!empty($del_produkt_id)) {
 
             $this->del_imgs($del_produkt_id);
             $model->del_product($del_produkt_id);
 
-            $base_url = BASE_URL;
-            $href = $base_url . '/admin_home';
             if (isset($page) && isset($cat)) {
-                $href .= '?page=' . $page . '&cat=' . $cat;
-            } else {
-                $href .= isset($page) ? '?page=' . $page : '';
-                $href .= isset($cat) ? '?cat=' . $cat : '';
+                $prms['page'] = $page;
+                $prms['cat'] = $cat;
             }
-            exit ("<script>window.location.href='" . $href . "';</script>");
+
+            exit ("<script>window.location.href='" . _A_::$app->router()->UrlTo('admin_home', $prms) . "';</script>");
 //            $this->admin_home();
         }
     }

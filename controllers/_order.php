@@ -18,15 +18,7 @@ class Controller_Order extends Controller_Base
     {
         $this->main->test_access_rights();
 
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
-        $back_url = BASE_URL . '/users?page=';
-        if (!empty(_A_::$app->get('page'))) {
-            $back_url .= _A_::$app->get('page');
-        } else
-            $back_url .= '1';
-//        }
+        $back_url = _A_::$app->router()->UrlTo('/users', ['page' => !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1']);
 
         $this->get_orders();
         $this->template->vars('back_url', $back_url);
@@ -40,10 +32,7 @@ class Controller_Order extends Controller_Base
         $model = new Model_Order();
         $user_id = $model->validData(_A_::$app->get('user_id'));
         $orders_count = $model->get_count_orders_by_user($user_id);
-        if (!empty(_A_::$app->get('page'))) {
-            $page = _A_::$app->get('page');
-        } else
-            $page = '1';
+        $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
 
         if (!empty($orders_count) && ((int)$orders_count > 0)) {
 
@@ -71,50 +60,43 @@ class Controller_Order extends Controller_Base
     function order()
     {
         $this->main->test_access_rights();
+        $prms = null;
         $model = new Model_Order();
         $order_id = $model->validData(_A_::$app->get('order_id'));
-        $back_url = BASE_URL . '/orders';
+
         if (!is_null(_A_::$app->get('order_id'))) {
-            $back_url .= '?order_id=' . _A_::$app->get('order_id');
+            $prms['order_id'] = _A_::$app->get('order_id');
         }
-
         if (!is_null(_A_::$app->get('user_id'))) {
-            if (is_null(_A_::$app->get('order_id'))) {
-                $back_url .= '?';
-            } else $back_url .= '&';
-            $back_url .= 'user_id=' . _A_::$app->get('user_id');
+            $prms['user_id'] = _A_::$app->get('user_id');
+        }
+        if (!is_null(_A_::$app->get('page'))) {
+            $prms['page'] = _A_::$app->get('page');
         }
 
-        if (!is_null(_A_::$app->get('page'))) {
-            if (empty(_A_::$app->get('order_id')) && empty(_A_::$app->get('user_id'))) {
-                $back_url .= '?';
-            } else $back_url .= '&';
-            $back_url .= 'page=' . _A_::$app->get('page');
-        }
-//        }
         $this->get_order_details();
         $userInfo = $model->get_order($order_id);
 
-        $this->template->vars('back_url', $back_url);
-        $this->template->vars('userInfo', $userInfo);
+        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user/registration', $prms));
+        $this->main->template->vars('userInfo', $userInfo);
         $this->main->view_admin('order/order');
     }
 
-    function discount_order()
+    function discount()
     {
         $this->main->test_access_rights();
         $model = new Model_Order();
+        $prms = null;
         $order_id = $model->validData(_A_::$app->get('order_id'));
-        $back_url = BASE_URL . (empty(_A_::$app->get('discounts_id')) ? '/discounts' : '/usage_discounts');
 
         if (!empty(_A_::$app->get('discounts_id'){0})) {
-            $back_url .= '?discounts_id=' . _A_::$app->get('discounts_id');
+            $prms['discounts_id'] = _A_::$app->get('discounts_id');
         }
-//        }
+
         $this->get_order_details();
         $userInfo = $model->get_order($order_id);
 
-        $this->template->vars('back_url', $back_url);
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo(empty(_A_::$app->get('discounts_id')) ? '/discounts' : '/usage_discounts', $prms));
         $this->template->vars('userInfo', $userInfo);
         $this->main->view_admin('order/order');
     }
@@ -228,7 +210,12 @@ class Controller_Order extends Controller_Base
                     $total_price = strlen(trim($total_price)) > 0 ? '$' . number_format($total_price, 2) : '';
                     $handling = strlen(trim($handling)) > 0 ? '$' . number_format($handling, 2) : '';
                     $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
-                    $action = BASE_URL . '/order_info?oid=' . urlencode(base64_encode($oid)) . '&page=' . $page . '&orders_search_query=' . _A_::$app->get('orders_search_query');
+                    $action = _A_::$app->router()->UrlTo('order_info', [
+                        'oid' => urlencode(base64_encode($oid)),
+                        'page' => $page,
+                        'orders_search_query' => _A_::$app->get('orders_search_query')
+                    ]);
+
                     include('views/order/admin_orders_list.php');
 
                 }
@@ -268,7 +255,9 @@ class Controller_Order extends Controller_Base
                     $handling = strlen(trim($handling)) > 0 ? '$' . number_format($handling, 2) : '';
                     $date = date('F j, Y, g:i a', $date);
                     $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
-                    $action = BASE_URL . '/order_info?oid=' . urlencode(base64_encode($oid));
+                    $action = _A_::$app->router()->UrlTo('order_info', [
+                        'oid' => urlencode(base64_encode($oid))
+                    ]);
                     include('views/order/admin_orders_list.php');
 
                 }
@@ -291,10 +280,12 @@ class Controller_Order extends Controller_Base
         $this->main->test_access_rights();
         $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
         $oid = (integer)urldecode(base64_decode(!is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));
-        $back_url = BASE_URL . '/orders_history' . '?page=' . $page;
+        $prms['page'] = $page;
+
         if (!is_null(_A_::$app->get('orders_search_query'))) {
-            $back_url = $back_url . '&orders_search_query=' . _A_::$app->get('orders_search_query');
+            $prms['orders_search_query'] = _A_::$app->get('orders_search_query');
         }
+        $back_url = _A_::$app->router()->UrlTo('orders_history', $prms);
         $this->template->vars('base_url', $base_url);
 
         $config = [
@@ -384,7 +375,7 @@ class Controller_Order extends Controller_Base
     {
         $page = (integer)(!is_null(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
         $base_url = BASE_URL;
-        $back_url = $base_url . '/' . 'customer_orders_history?page=' . $page;
+        $back_url = _A_::$app->router()->UrlTo('customer_orders_history', ['page' => $page]);
         $this->template->vars('back_url', $back_url);
 
         $oid = (integer)urldecode(base64_decode(!is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));

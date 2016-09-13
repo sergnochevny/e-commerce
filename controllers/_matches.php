@@ -26,7 +26,7 @@ class Controller_Matches extends Controller_Base
                 $left = 2; $top = 2;
                 foreach ($matches_items as $key => $item) {
                     $product_id = $item['produkt_id'];
-                    $img = $base_url . '/upload/upload/' . $item['img'];
+                    $img = _A_::$app->router()->UrlTo('/upload/upload/' . $item['img']);
                     include('views/matches/matches_item.php');
                     $left += 6; $top += 4;
                 }

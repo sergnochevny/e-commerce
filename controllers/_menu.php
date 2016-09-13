@@ -88,7 +88,7 @@ class Controller_Menu extends Controller_Controller
         $items = $model->get_items_for_menu('blog_category');
         ob_start();
         foreach ($items as $item) {
-            $href = $base_url . "/blog&cat=" . $item['group_id'];
+            $href = _A_::$app->router()->UrlTo('/blog', ['cat' => $item['group_id']]);
             $name = $item['name'];
             $this->template->vars('href',$href, true);
             $this->template->vars('name',$name, true);

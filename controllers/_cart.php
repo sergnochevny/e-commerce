@@ -1221,7 +1221,6 @@ class Controller_Cart extends Controller_Controller
         if (!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
             $filename = "upload/upload/not_image.jpg";
         }
-        $img_url = $base_url . '/' . $filename;
         $img_url = _A_::$app->router()->UrlTo($filename);
 
 
