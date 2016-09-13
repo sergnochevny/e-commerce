@@ -111,7 +111,7 @@ class Controller_Matches extends Controller_Base
 
             $_matches = _A_::$app->session('matches');
             _A_::$app->session('matches')['items'] = $matches_items;
-            _A_::$app->session('matches', $_matches);
+            _A_::$app->setSession('matches', $_matches);
 
         }
     }
@@ -119,7 +119,7 @@ class Controller_Matches extends Controller_Base
     function clear_matches()
     {
         if (!is_null(_A_::$app->session('matches')['items'])) {
-            _A_::$app->session('matches', null);
+            _A_::$app->setSession('matches', null);
         }
     }
 
@@ -192,7 +192,7 @@ class Controller_Matches extends Controller_Base
                     }
                     $cart = _A_::$app->session('cart');
                     $cart ['items'] = $cart_items;
-                    _A_::$app->session('cart', $cart);
+                    _A_::$app->setSession('cart', $cart);
 
                     $SUM = 0;
                     foreach ($cart_items as $key => $item) {

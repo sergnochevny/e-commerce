@@ -227,7 +227,7 @@ Class Controller_Index Extends Controller_Controller
     {
         $captcha = new Controller_Captcha($this->main);
         $captcha->gen_captcha();
-        $_SESSION['captcha'] = $captcha->key;
+        _A_::$app->setSession('captcha', $captcha->key);
     }
 
 //////////////////////////////////////////////////////////// CAPTCHA

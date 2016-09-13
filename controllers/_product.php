@@ -28,7 +28,7 @@ class Controller_Product extends Controller_Controller
             $shipping = DEFAULT_SHIPPING;
             $_cart = _A_::$app->session('cart');
             $_cart['ship'] = $shipping;
-            _A_::$app->session('cart');
+            _A_::$app->setSession('cart', $_cart);
         }
 
         if (!is_null(_A_::$app->get('cart')['ship_roll'])) {
@@ -37,7 +37,7 @@ class Controller_Product extends Controller_Controller
             $bShipRoll = false;
             $cart = _A_::$app->session('cart');
             $cart['ship_roll'] = 0;
-            _A_::$app->session('cart', $cart);
+            _A_::$app->setSession('cart', $cart);
         }
 
         $shipcost = 0;

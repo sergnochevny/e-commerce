@@ -1691,7 +1691,7 @@ class Controller_Cart extends Controller_Controller
                 unset($cart_samples_items[$pid]);
                 $_cart = _A_::$app->session('cart');
                 $_cart['samples_items'] = $cart_samples_items;
-                _A_::$app->session('cart', $_cart);
+                _A_::$app->setSession('cart', $_cart);
             }
 
             $this->calc_items_amount();
