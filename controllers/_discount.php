@@ -162,8 +162,6 @@ class Controller_Discount extends Controller_Base
         $model = new Model_Discount();
         include('include/post_edit_discounts_data.php');
 
-        setlocale(LC_TIME, 'UTC');
-        date_default_timezone_set('UTC');
         if (strlen($date_end) > 0) {
             $date_end = strtotime($date_end);
         } else $date_end = 0;
@@ -270,12 +268,6 @@ class Controller_Discount extends Controller_Base
                         $result = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . $discounts_id . "',  '" . $user_id . "');");
                     }
                 }
-//                else {
-//                    $results = mysql_query("select * from fabrix_accounts");
-//                    while ($row = mysql_fetch_array($results)) {
-//                        $result = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . $discounts_id . "',  '" . $row[0] . "');");
-//                    }
-//                }
 
                 $result = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . $discounts_id . "'");
                 if ($sel_fabrics == "2") {
@@ -283,17 +275,11 @@ class Controller_Discount extends Controller_Base
                         $result = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . $discounts_id . "',  '" . $fabric_id . "');");
                     }
                 }
-//                if ($sel_fabrics == "1") {
-//                    $results = mysql_query("select * from fabrix_products");
-//                    while ($row = mysql_fetch_array($results)) {
-//                        $result = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . $discounts_id . "',  '" . $row[0] . "')");
-//                    }
-//                }
+
+
                 $result = mysql_query("update fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check',shipping_type='$shipping_type',product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end' WHERE sid ='$discounts_id'");
                 $error = [];
                 if ($result) {
-
-
                     $warning = ["The data updated successfully!"];
                 } else {
                     $error = [mysql_error()];
@@ -313,15 +299,8 @@ class Controller_Discount extends Controller_Base
         $model = new Model_Discount();
         include('include/post_edit_discounts_data.php');
 
-        setlocale(LC_TIME, 'UTC');
-        date_default_timezone_set('UTC');
-        if (strlen($date_end) > 0) {
-            $date_end = strtotime($date_end);
-        } else $date_end = 0;
-
-        if (strlen($start_date) > 0) {
-            $start_date = strtotime($start_date);
-        } else $start_date = 0;
+        $date_end = strlen($date_end) > 0 ? strtotime($date_end) : 0;
+        $start_date = strlen($start_date) > 0 ? strtotime($start_date) : 0;
 
         if (($generate_code == '1') || (strlen($coupon_code) > 0)) {
             $allow_multiple = 1;
@@ -426,12 +405,6 @@ class Controller_Discount extends Controller_Base
                         $result = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . $discounts_id . "',  '" . $user_id . "');");
                     }
                 }
-//                else {
-//                    $results = mysql_query("select * from fabrix_accounts");
-//                    while ($row = mysql_fetch_array($results)) {
-//                        $result = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . $discounts_id . "',  '" . $row[0] . "');");
-//                    }
-//                }
 
                 $result = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . $discounts_id . "'");
                 if ($sel_fabrics == "2") {
@@ -439,12 +412,6 @@ class Controller_Discount extends Controller_Base
                         $result = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . $discounts_id . "',  '" . $fabric_id . "');");
                     }
                 }
-//                if ($sel_fabrics == "1") {
-//                    $results = mysql_query("select * from fabrix_products");
-//                    while ($row = mysql_fetch_array($results)) {
-//                        $result = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . $discounts_id . "',  '" . $row[0] . "')");
-//                    }
-//                }
 
                 $warning = ["The data saved successfully!"];
 

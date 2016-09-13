@@ -17,6 +17,7 @@ return [
         'mysql.connect_timeout' => 60
     ],
     'setlocale' => [LC_ALL, 'en_US'],
+    'setlocale' => [LC_TIME, 'UTC'],
     'date_default_timezone_set' => ['UTC'],
     'DBS' => [
         'connections' => [

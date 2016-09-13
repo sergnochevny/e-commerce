@@ -47,32 +47,12 @@ class Controller_Image extends Controller_Base
 
             $base_url = _A_::$app->router()->UrlTo('/');
 
-            $not_image = _A_::$app->router()->UrlTo('/upload/upload/not_image.jpg');
-            if (empty($image1{0}) || !is_file('upload/upload/' . $image1)) {
-                $image1 = '';
-            } else {
-                $image1 = _A_::$app->router()->UrlTo('/upload/upload/v_'.$image1);
-            }
-            if (empty($image2{0}) || !is_file('upload/upload/' . $image2)) {
-                $image2 = '';
-            } else {
-                $image2 = _A_::$app->router()->UrlTo('/upload/upload/' . $image2);
-            }
-            if (empty($image3{0}) || !is_file('upload/upload/' . $image3)) {
-                $image3 = '';
-            } else {
-                $image3 = _A_::$app->router()->UrlTo('/upload/upload/' . $image3);
-            }
-            if (empty($image4{0}) || !is_file('upload/upload/' . $image4)) {
-                $image4 = '';
-            } else {
-                $image4 = _A_::$app->router()->UrlTo('/upload/upload/' . $image4);
-            }
-            if (empty($image5{0}) || !is_file('upload/upload/' . $image5)) {
-                $image5 = '';
-            } else {
-                $image5 = _A_::$app->router()->UrlTo('/upload/upload/' . $image5);
-            }
+            $not_image = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
+            $image1 = empty($image1{0}) || !is_file('upload/upload/' . $image1) ? '' : _A_::$app->router()->UrlTo('upload/upload/v_'.$image1);
+            $image2 = empty($image2{0}) || !is_file('upload/upload/' . $image2) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image2);
+            $image3 = empty($image3{0}) || !is_file('upload/upload/' . $image3) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image3);
+            $image4 = empty($image4{0}) || !is_file('upload/upload/' . $image4) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image4);
+            $image5 = empty($image5{0}) || !is_file('upload/upload/' . $image5) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image5);
 
             include('views/product/product_m_images.php');
 
