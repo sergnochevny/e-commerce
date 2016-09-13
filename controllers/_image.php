@@ -7,11 +7,9 @@ class Controller_Image extends Controller_Base
     function del_pic()
     {
         $this->main->test_access_rights();
-        $model = new Model_Tools();
-        $userInfo = $model->validData(_A_::$app->get('produkt_id') );
-        $pid_id = $userInfo['data'];
-        $userInfo = $model->validData(_A_::$app->get('idx'));
-        $im_id = $userInfo['data'];
+        $model = new Model_Product();
+        $pid_id = $model->validData(_A_::$app->get('produkt_id') );
+        $im_id = $model->validData(_A_::$app->get('idx'));
         if (!empty($pid_id)) {
             if (!empty($im_id)) {
                 $db_g = "image$im_id";
@@ -38,9 +36,8 @@ class Controller_Image extends Controller_Base
         $this->main->test_access_rights();
         if (!is_null(_A_::$app->get('produkt_id'))) {
             $produkt_id = _A_::$app->get('produkt_id');
-            $model = new Model_Tools();
-            $userInfo = $model->validData($produkt_id);
-            $produkt_id = $userInfo['data'];
+            $model = new Model_Product();
+            $produkt_id = $model->validData($produkt_id);
             $userInfo = $model->getImage($produkt_id);
             $image1 = $userInfo['image1'];
             $image2 = $userInfo['image2'];
@@ -117,13 +114,11 @@ class Controller_Image extends Controller_Base
     function save_img_link()
     {
         $this->main->test_access_rights();
-        $model = new Model_Tools();
+        $model = new Model_Product();
         if (!is_null(_A_::$app->get('produkt_id'))) {
             if (!is_null(_A_::$app->get('idx'))) {
-                $userInfo = $model->validData(_A_::$app->get('produkt_id'));
-                $produkt_id = $userInfo['data'];
-                $userInfo = $model->validData(_A_::$app->get('idx'));
-                $produkt_photo = $userInfo['data'];
+                $produkt_id = $model->validData(_A_::$app->get('produkt_id'));
+                $produkt_photo = $model->validData(_A_::$app->get('idx'));
                 $db_g = "image$produkt_photo";
                 $userInfo = $model->getImage($produkt_id);
                 $image1 = $userInfo['image1'];
@@ -139,11 +134,10 @@ class Controller_Image extends Controller_Base
     function upload_product_img()
     {
         $this->main->test_access_rights();
-        $model = new Model_Tools();
+        $model = new Model_Product();
         if (!is_null(_A_::$app->get('pid'))) {
             $produkt_photo = !is_null(_A_::$app->get('idx')) ? _A_::$app->get('idx') : 1;
-            $userInfo = $model->validData(_A_::$app->get('pid'));
-            $produkt_id = $userInfo['data'];
+            $produkt_id = $model->validData(_A_::$app->get('pid'));
             $ts = uniqid();
             $uploaddir = 'upload/upload/';
             $file = "p" . $produkt_id . "t" . $ts . '.jpg';

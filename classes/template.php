@@ -16,7 +16,7 @@ Class Template
     }
 
 
-    function vars($varname, $value, $token = false)
+    function vars($varname, $value, $token = true)
     {
         if ((isset($this->vars[$varname]) == true) && (!$token)) {
             return false;

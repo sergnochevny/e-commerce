@@ -1,7 +1,7 @@
 <div class="ui-widget-overlay" id="wait_loader">
     <i class="fa fa-spinner fa-pulse fa-4x"></i>
 </div>
-<form method="POST" id="discount" action="<?php echo $base_url;?>/save_discounts_data" class="enquiry-form">
+<form method="POST" id="discount" action="<?php echo _A_::$app->router()->UrlTo('mnf');?>/save_discounts_data" class="enquiry-form">
     <br/>
     <div class="form-row">
         <?php

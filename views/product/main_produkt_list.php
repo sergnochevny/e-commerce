@@ -5,7 +5,7 @@
         <?php }
         ?>
         <figure class="product-image-box" style="background-image:url(<?php echo $filename; ?>)">
-            <a <?php echo isset($search)?'class="a_search"':''?> href="<?php echo $base_url; ?>/product_page?p_id=<?php echo $row[0] . $href; ?>">
+            <a <?php echo isset($search)?'class="a_search"':''?> href="<?php echo _A_::$app->router()->UrlTo('product',['p_id'=>$row[0]]) . $href; ?>">
             </a>
             <figcaption>
                 <?php
@@ -14,7 +14,7 @@
                     } else {
 //                        include('views/basket/main_product_addtobasket.php');
                         ?>
-                        <a class="button productsAddBasket <?php echo isset($search)?'a_search':''?>" href="<?php echo $base_url; ?>/product_page?p_id=<?php echo $row[0] . $href; ?>">
+                        <a class="button productsAddBasket <?php echo isset($search)?'a_search':''?>" href="<?php echo _A_::$app->router()->UrlTo('product',['p_id'=>$row[0]]) . $href; ?>">
                             View Details
                         </a>                
                         <?php
@@ -22,7 +22,7 @@
                 ?>
             </figcaption>
         </figure>
-        <a <?php echo isset($search)?'class="a_search"':''?> href="<?php echo $base_url; ?>/product_page?p_id=<?php echo $row[0] . $href; ?>">
+        <a <?php echo isset($search)?'class="a_search"':''?> href="<?php echo _A_::$app->router()->UrlTo('product',['p_id'=>$row[0]]) . $href; ?>">
             <span class="product-category"><?php echo $row['pname']; ?></span>
 
             <h3 class="descProduct"><?php echo (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>

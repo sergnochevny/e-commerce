@@ -10,7 +10,7 @@
 								</div>
 								<h4 class="widget-title">Privacy Policy</h4>
 								<div class="textwidget">
-									<p class="copyProducts">Your personal information is never under any circumstances shared with any other individuals or organizations. <a class="copyProducts" href="<?php echo $base_url;?>/privacy">privacy policy</a>.</p>
+									<p class="copyProducts">Your personal information is never under any circumstances shared with any other individuals or organizations. <a class="copyProducts" href="<?php _A_::$app->router()->UrlTo('privacy');?>">privacy policy</a>.</p>
 								</div>
 								<!--<h4 class="widget-title">Security Information</h4>
 								<div class="textwidget">
@@ -36,11 +36,11 @@
 								<h4 class="widget-title">Customer Services</h4>
 								<div class="menu-customer-services-container">
 									<ul id="menu-customer-services" class="menu">
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo $base_url?>">Home</a></li>
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo $base_url?>/about">About Us</a></li>
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo $base_url?>/newsletter">Newsletter</a></li>
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo $base_url?>/service">Service</a></li>
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo $base_url?>/contact">Contact</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('/')?>">Home</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('about')?>">About Us</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('newsletter')?>">Newsletter</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('service')?>">Service</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('contact')?>">Contact</a></li>
 									</ul>
 								</div>
 							</aside>
@@ -50,10 +50,9 @@
 								<h4 class="widget-title">My Account</h4>
 								<div class="menu-my-account-container">
 									<ul id="menu-my-account" class="menu">
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo $base_url?>/authorization">My Account</a></li>
-										
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo $base_url?>/shop">Shop</a></li>
-                                        <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo $base_url?>/blog">Blog</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo _A_::$app->router()->UrlTo('authorization')?>">My Account</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo _A_::$app->router()->UrlTo('shop')?>">Shop</a></li>
+                                        <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo _A_::$app->router()->UrlTo('blog')?>">Blog</a></li>
 									</ul>
 								</div>
 							</aside>

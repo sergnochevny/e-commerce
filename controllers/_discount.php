@@ -39,8 +39,7 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $userInfo = $model->validData(_A_::$app->get('discounts_id'));
-        $discounts_id = $userInfo['data'];
+        $discounts_id = $model->validData(_A_::$app->get('discounts_id'));
         if (!empty($discounts_id)) {
             $model->del_discount($discounts_id);
         }
@@ -64,8 +63,7 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $userInfo = $model->validData(_A_::$app->get('discounts_id'));
-        $discount_id = $userInfo['data'];
+        $discount_id = $model->validData(_A_::$app->get('discounts_id'));
         $userInfo = $model->get_edit_discounts_data($discount_id);
         $this->template->vars('userInfo', $userInfo);
         $this->main->view_admin('discount/edit_discounts');
@@ -75,8 +73,7 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $userInfo = $model->validData(_A_::$app->get('discounts_id'));
-        $discount_id = $userInfo['data'];
+        $discount_id = $model->validData(_A_::$app->get('discounts_id'));
         $userInfo = $model->get_edit_discounts_data($discount_id);
         $this->template->vars('userInfo', $userInfo);
         $this->main->view_layout('discount/edit_discounts_form');
@@ -96,8 +93,7 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $userInfo = $model->validData(_A_::$app->get('discounts_id'));
-        $discounts_id = $userInfo['data'];
+        $discounts_id = $model->validData(_A_::$app->get('discounts_id'));
         if (!empty($discounts_id)) {
             $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='" . $discounts_id . "'");
             $rowsni = mysql_fetch_array($resulthatistim);

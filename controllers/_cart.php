@@ -1,9 +1,9 @@
 <?php
 
-class Controller_Cart extends Controller_Base
+class Controller_Cart extends Controller_Controller
 {
 
-    private function cart_prepare()
+    private function prepare()
     {
         ob_start();
         $cart = _A_::$app->session('cart');
@@ -14,22 +14,22 @@ class Controller_Cart extends Controller_Base
         ob_end_clean();
         $this->template->vars('cart_items', $cart_items);
         ob_start();
-        $this->cart_items_amount();
+        $this->items_amount();
         $sum_items = ob_get_contents();
         ob_end_clean();
         $this->template->vars('sum_items', $sum_items);
         ob_start();
-        $this->cart_samples_amount();
+        $this->samples_amount();
         $sum_samples = ob_get_contents();
         ob_end_clean();
         $this->template->vars('sum_samples', $sum_samples);
         ob_start();
-        $this->cart_samples_legend();
+        $this->samples_legend();
         $cart_samples_legend = ob_get_contents();
         ob_end_clean();
         $this->template->vars('cart_samples_legend', $cart_samples_legend);
         ob_start();
-        $this->samples_in_cart();
+        $this->samples_in();
         $cart_samples_items = ob_get_contents();
         ob_end_clean();
         $this->template->vars('cart_samples_items', $cart_samples_items);
@@ -73,7 +73,7 @@ class Controller_Cart extends Controller_Base
             $this->template->vars('cart_content', $cart_content);
 
         } else {
-            $this->cart_prepare();
+            $this->prepare();
             ob_start();
             $this->main->view_layout('basket/cart');
             $cart_content = ob_get_contents();
@@ -338,20 +338,20 @@ class Controller_Cart extends Controller_Base
                 $body = $mail['body'];
 
                 if (DEMO == 1) {
-                    mail("dev@9thsphere.com", $subject, $body, $headers);
-                    mail("info@iluvfabrix.com", $subject, $body, $headers);
-                    mail("max@maxportland.com", $subject, $body, $headers);
-                    mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
-                    mail("lanny1952@gmail.com", $subject, $body, $headers);
-                    mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
+                    mail("dev@9thsphere.com", $subject,$body,$headers);
+                    mail("info@iluvfabrix.com", $subject,$body,$headers);
+                    mail("max@maxportland.com", $subject,$body,$headers);
+                    mail("mmitchell_houston@yahoo.com", $subject,$body,$headers);
+                    mail("lanny1952@gmail.com", $subject,$body,$headers);
+                    mail("iluvfabrixsales@gmail.com", $subject,$body,$headers);
                     mail("sergnochevny@studionovi.co", $subject, $body, $headers);
                 } else {
-                    mail("dev@9thsphere.com", $subject, $body, $headers);
-                    mail("info@iluvfabrix.com", $subject, $body, $headers);
-                    mail("max@maxportland.com", $subject, $body, $headers);
-                    mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
-                    mail("lanny1952@gmail.com", $subject, $body, $headers);
-                    mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
+                    mail("dev@9thsphere.com", $subject,$body,$headers);
+                    mail("info@iluvfabrix.com", $subject,$body,$headers);
+                    mail("max@maxportland.com", $subject,$body,$headers);
+                    mail("mmitchell_houston@yahoo.com", $subject,$body,$headers);
+                    mail("lanny1952@gmail.com", $subject,$body,$headers);
+                    mail("iluvfabrixsales@gmail.com", $subject,$body,$headers);
                 }
             }
         }
@@ -392,16 +392,16 @@ class Controller_Cart extends Controller_Base
                 $headers = "From: Web Customer <$email>\n";
 
                 if (DEMO == 1) {
-                    mail("info@iluvfabrix.com", $subject, $body, $headers);
-                    mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
-                    mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
-                    mail("max@maxportland.com", $subject, $body, $headers);
+                    mail("info@iluvfabrix.com", $subject,$body,$headers);
+                    mail("mmitchell_houston@yahoo.com", $subject,$body,$headers);
+                    mail("iluvfabrixsales@gmail.com", $subject,$body,$headers);
+                    mail("max@maxportland.com", $subject,$body,$headers);
                     mail("sergnochevny@studionovi.co", $subject, $body, $headers);
                 } else {
-                    mail("info@iluvfabrix.com", $subject, $body, $headers);
-                    mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
-                    mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
-                    mail("max@maxportland.com", $subject, $body, $headers);
+                    mail("info@iluvfabrix.com", $subject,$body,$headers);
+                    mail("mmitchell_houston@yahoo.com", $subject,$body,$headers);
+                    mail("iluvfabrixsales@gmail.com", $subject,$body,$headers);
+                    mail("max@maxportland.com", $subject,$body,$headers);
                 }
             }
         }
@@ -439,7 +439,7 @@ class Controller_Cart extends Controller_Base
                 }
 
                 if ((count($cart_samples_items) == 0) && (count($cart_items) == 0)) {
-                    $url = $base_url . '/shop';
+                    $url = _A_::$app->router()->UrlTo('shop');
                     $this->redirect($url);
                 }
                 $pdiscount = 0;
@@ -522,12 +522,12 @@ class Controller_Cart extends Controller_Base
                                 $remainder = $inventory - $qty;
                                 $remainder = ($remainder <= 0) ? 0 : $remainder;
 
-                                $mp->set_product_inventory($pid, $remainder);
+                                $mp->set_product_inventory($pid,$remainder);
                             }
                         }
                     }
-                    if (count($cart_samples_items) > 0) {
-                        foreach ($cart_samples_items as $pid => $item) {
+                    if (count($cart_samples_items)>0){
+                        foreach($cart_samples_items as $pid=>$item){
                             $product = $model->get_product_params($pid);
                             $pnumber = $product['pnumber'];
                             $pname = $product['pname'];
@@ -568,17 +568,17 @@ class Controller_Cart extends Controller_Base
         unset($cart['discountIds']);
         _A_::$app->session('cart', $cart);
         ob_start();
-        $this->products_in_cart('views/basket/product_in_proceed.php');
+        $this->products_in('views/basket/product_in_proceed.php');
         $cart_items = ob_get_contents();
         ob_end_clean();
         $this->template->vars('cart_items', $cart_items);
         ob_start();
-        $this->samples_in_cart('views/basket/sample_in_proceed.php');
+        $this->samples_in('views/basket/sample_in_proceed.php');
         $cart_samples_items = ob_get_contents();
         ob_end_clean();
         $this->template->vars('cart_samples_items', $cart_samples_items);
         ob_start();
-        $this->cart_samples_amount();
+        $this->samples_amount();
         $sum_samples = ob_get_contents();
         ob_end_clean();
         $this->template->vars('sum_samples', $sum_samples);
@@ -688,7 +688,7 @@ class Controller_Cart extends Controller_Base
         $cart['trdate'] = date('Y-m-d H:i');
         _A_::$app->session('cart', $cart);
 
-        if (DEMO == 1) {
+        if (DEMO == 1){
             $paypal['business'] = "sergnochevny-facilitator@gmail.com";
             $paypal['url'] = "https://www.sandbox.paypal.com/cgi-bin/webscr";
 
@@ -702,7 +702,7 @@ class Controller_Cart extends Controller_Base
         $paypal['image_url'] = $base_url;
         $paypal['return'] = $base_url . "/cart?pay_ok&trid=" . $trid;
         $paypal['cancel_return'] = $base_url . "/cart?pay_error";
-        $paypal['notify_url'] = $base_url . '/ipn/ipn.php?pay_notify=' . session_id();
+        $paypal['notify_url'] = $base_url .'/ipn/ipn.php?pay_notify='.session_id();
         $paypal['rm'] = "1";
         $paypal['currency_code'] = "USD";
         $paypal['lc'] = "US";
@@ -914,7 +914,7 @@ class Controller_Cart extends Controller_Base
         include('views/basket/total_in_proceed.php');
     }
 
-    function cart_samples_legend()
+    function samples_legend()
     {
         if (!is_null(_A_::$app->session('cart')['items']) && (count(_A_::$app->session('cart')['items']) > 0)) {
             $cart_items = '_';
@@ -1002,14 +1002,18 @@ class Controller_Cart extends Controller_Base
             $shipping = (int)_A_::$app->session('cart')['ship'];
         } else {
             $shipping = DEFAULT_SHIPPING;
-            _A_::$app->session('cart')['ship'] = $shipping;
+            $cart = _A_::$app->session('cart');
+            $cart['ship'] = $shipping;
+            _A_::$app->session('cart', $cart);
         }
 
         if (!is_null(_A_::$app->session('cart')['ship_roll'])) {
             $bShipRoll = (boolean)_A_::$app->session('cart')['ship_roll'];
         } else {
             $bShipRoll = false;
-            _A_::$app->session('cart')['ship_roll'] = 0;
+            $cart = _A_::$app->session('cart');
+            $cart['ship_roll'] = 0;
+            _A_::$app->session('cart', $cart);
         }
 
         $total_items = $this->calc_items_amount();
@@ -1135,7 +1139,7 @@ class Controller_Cart extends Controller_Base
 
     }
 
-    public function get_cart_subtotal_ship()
+    public function get_subtotal_ship()
     {
         $total = 0;
         if (!is_null(_A_::$app->session('cart')['subtotal_ship'])) {
@@ -1144,7 +1148,7 @@ class Controller_Cart extends Controller_Base
         echo '$' . number_format($total, 2) . ' USD';
     }
 
-    private function products_in_cart($template = 'views/basket/product_in_cart.php')
+    private function products_in($template = 'views/basket/product_in_cart.php')
     {
         $base_url = BASE_URL;
 
@@ -1156,7 +1160,7 @@ class Controller_Cart extends Controller_Base
 
         if (count($cart_items) > 0) {
             foreach ($cart_items as $key => $item) {
-                $this->product_in_cart($key, $item, $template);
+                $this->product_in($key, $item, $template);
                 $cart_items[$key] = $item;
             }
             $_cart = _A_::$app->session('cart');
@@ -1166,7 +1170,7 @@ class Controller_Cart extends Controller_Base
 
     }
 
-    private function samples_in_cart($template = 'views/basket/sample_in_proceed.php')
+    private function samples_in($template = 'views/basket/sample_in_proceed.php')
     {
         $base_url = BASE_URL;
 
@@ -1178,17 +1182,16 @@ class Controller_Cart extends Controller_Base
 
         if (count($cart_samples_items) > 0) {
             foreach ($cart_samples_items as $key => $item) {
-                $this->sample_in_cart($key, $item, $template);
+                $this->sample_in($key, $item, $template);
                 $cart_samples_items[$key] = $item;
             }
             $_cart = _A_::$app->session('cart');
             $_cart['samples_items'] = $cart_samples_items;
             _A_::$app->session('cart', $_cart);
         }
-
     }
 
-    private function sample_in_cart($p_id, &$item, $template = 'views/basket/sample_in_proceed.php')
+    private function sample_in($p_id, &$item, $template = 'views/basket/sample_in_proceed.php')
     {
         $model = new Model_Cart();
         $base_url = BASE_URL;
@@ -1205,7 +1208,7 @@ class Controller_Cart extends Controller_Base
     }
 
 
-    private function product_in_cart($p_id, &$item, $template = 'views/basket/product_in_cart.php')
+    private function product_in($p_id, &$item, $template = 'views/basket/product_in_cart.php')
     {
         $model = new Model_Cart();
         $base_url = BASE_URL;
@@ -1293,7 +1296,7 @@ class Controller_Cart extends Controller_Base
     }
 
 
-    function cart_items_amount()
+    function items_amount()
     {
         $SUM = $this->calc_items_amount();
         $cart_items_sum = "$" . number_format($SUM, 2);
@@ -1329,7 +1332,7 @@ class Controller_Cart extends Controller_Base
         return $cart_samples_sum;
     }
 
-    function cart_samples_amount()
+    function samples_amount()
     {
 
         $this->calc_samples_amount();
@@ -1338,7 +1341,7 @@ class Controller_Cart extends Controller_Base
         echo $format_samples_sum;
     }
 
-    function cart_amount()
+    function amount()
     {
 
         $SUM = 0;
@@ -1351,14 +1354,13 @@ class Controller_Cart extends Controller_Base
         echo $cart_sum;
     }
 
-    function add_cart()
+    function add()
     {
 
         $base_url = BASE_URL;
         if (!empty(_A_::$app->get('p_id'))) {
             $model = new Model_Cart();
-            $produkt_id = $model->validData(_A_::$app->get('p_id'));
-
+            $produkt_id = $model->validData($_GET['p_id']);
             $product = $model->get_product_params($produkt_id);
 
             if (!is_null(_A_::$app->session('cart')['items'])) {
@@ -1466,13 +1468,12 @@ class Controller_Cart extends Controller_Base
 
     }
 
-    function add_samples_cart()
+    function add_samples()
     {
         $base_url = BASE_URL;
         if (!empty(_A_::$app->get('p_id'))) {
             $model = new Model_Cart();
-            $produkt_id = $model->validData(_A_::$app->get('p_id'));
-
+            $produkt_id = $model->validData($_GET['p_id']);
             $product = $model->get_product_params($produkt_id);
 
             if (!is_null(_A_::$app->session('cart')['items'])) {
@@ -1558,7 +1559,7 @@ class Controller_Cart extends Controller_Base
         }
     }
 
-    function get_cart()
+    function get()
     {
         if (!is_null(_A_::$app->get('cart')['items'])) {
             $cart_items = _A_::$app->get('cart')['items'];
@@ -1576,7 +1577,7 @@ class Controller_Cart extends Controller_Base
 
     }
 
-    function change_product_cart()
+    function change_product()
     {
         $pid = _A_::$app->get('p_id');
         $quantity = _A_::$app->get('qnt');
@@ -1648,7 +1649,7 @@ class Controller_Cart extends Controller_Base
 
     }
 
-    function del_product_cart()
+    function del_product()
     {
         if (!is_null(_A_::$app->get('p_id'))) {
 
@@ -1674,7 +1675,7 @@ class Controller_Cart extends Controller_Base
         }
     }
 
-    function del_sample_cart()
+    function del_sample()
     {
         if (!is_null(_A_::$app->get('p_id'))) {
 

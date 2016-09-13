@@ -8,10 +8,10 @@ class Controller_Paginator extends Controller_Controller
             $cat_id = _A_::$app->get('cat');
             $this->template->vars('cat_id', $cat_id);
         }
-        $this->paginator($total_rows, $page, 'product_paginator');
+        $this->paginator($total_rows, $page);
     }
 
-    protected function paginator($total_rows, $page, $template, $var = null, $per_page = 12, $showbypage = 10)
+    protected function paginator($total_rows, $page, $per_page = 12, $showbypage = 10)
     {
         $base_url = BASE_URL;
         $num_pages = ceil($total_rows / $per_page);
@@ -35,25 +35,24 @@ class Controller_Paginator extends Controller_Controller
         $this->template->vars('next_page', $next_page);
 
         ob_start();
-        $this->template->view_layout($template);
+        $this->template->view_layout('paginator');
         $paginator = ob_get_contents();
         ob_end_clean();
-        if (is_null($var)) $var = $template;
-        $this->main->template->vars($var, $paginator);
+        $this->main->template->vars('paginator', $paginator);
     }
 
     function paginator_home($total_rows, $page, $url = 'blog', $per_page = 6)
     {
 
-        $this->template->vars('url', $url);
+        $this->main->template->vars('url', $url);
         if (!is_null(_A_::$app->get('cat'))) {
             $cat_id = _A_::$app->get('cat');
             $this->template->vars('cat_id', $cat_id);
         }
-        $this->paginator($total_rows, $page, 'paginator_home', 'paginator', $per_page);
+        $this->paginator($total_rows, $page, $per_page);
     }
 
-    function produkt_paginator_home($total_rows, $page, $url = 'shop', $layout = 'product_paginator_home')
+    function produkt_paginator_home($total_rows, $page, $url = 'shop')
     {
 
         if (!is_null(_A_::$app->post('s')) && (empty(_A_::$app->post('s')))) {
@@ -73,32 +72,35 @@ class Controller_Paginator extends Controller_Controller
             $ptrn_id = _A_::$app->get('ptrn');
             $this->template->vars('ptrn_id', $ptrn_id);
         }
-        $this->paginator($total_rows, $page, $layout, 'produkt_paginator');
+        $this->paginator($total_rows, $page);
     }
 
     function user_paginator($total_rows, $page)
     {
-        $this->paginator($total_rows, $page, 'user_paginator');
+        $this->template->vars('url', 'users');
+        $this->paginator($total_rows, $page);
     }
 
     public function orders_paginator($total_rows, $page)
     {
-        $this->paginator($total_rows, $page, 'orders_paginator');
+        $this->template->vars('url', 'orders/customer_history');
+        $this->paginator($total_rows, $page);
     }
 
     public function orders_history_paginator($total_rows, $page)
     {
-        $this->paginator($total_rows, $page, 'orders_history_paginator');
+        $this->template->vars('url', 'orders/history');
+        $this->paginator($total_rows, $page);
     }
 
     public function comments_paginator($total_rows, $page)
     {
-        $this->paginator($total_rows, $page, 'comments_paginator');
+        $this->paginator($total_rows, $page);
     }
 
     public function user_comments_paginator($total_rows, $page)
     {
-        $this->paginator($total_rows, $page, 'user_comments_paginator', 'comments_paginator');
+        $this->paginator($total_rows, $page);
     }
 
 

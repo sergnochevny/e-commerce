@@ -61,7 +61,7 @@
         }
 
         .toko-posts-grid .toko-post-detail > p > span.opa {
-            background-image: url("<?php echo $base_url;?>/views/images/bg-opa.png");
+            background-image: url("<?php _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
             bottom: 0;
             display: block;
             height: 80px;

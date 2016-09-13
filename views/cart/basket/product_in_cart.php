@@ -1,12 +1,12 @@
 <tr class="cart_item" data-pid="<?php echo $p_id; ?>" data-row="items">
     <td class="product-thumbnail">
-        <a href="<?php echo $base_url; ?>/product_page?p_id=<?php echo $p_id; ?>&cart">
+        <a href="<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/product_page?p_id=<?php echo $p_id; ?>&cart">
             <img width="110" height="110" alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
                  src="<?php echo $img_url; ?>">
         </a>
     </td>
     <td data-title="Product" class="product-name">
-        <a href="<?php echo $base_url; ?>/product_page?p_id=<?php echo $p_id; ?>&cart"><?php echo $item['Product_name']; ?></a>
+        <a href="<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/product_page?p_id=<?php echo $p_id; ?>&cart"><?php echo $item['Product_name']; ?></a>
     </td>
     <!--<td data-title="Product" class="product-number">
         <span class="number"><?php echo $item['Product_number']; ?></span>
@@ -33,7 +33,7 @@
         <span class="amount"><?php echo $t_pr; ?></span>
     </td>
     <td class="product-remove">
-        <a id="del_product_cart" href="<?php echo $base_url;?>/del_product_cart">
+        <a id="del_product_cart" href="<?php echo _A_::$app->router()->UrlTo('mnf');?>/del_product_cart">
             <i class=" fa fa-trash-o"></i>
         </a>
     </td>

@@ -38,8 +38,7 @@ class Controller_Order extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Order();
-        $userInfo = $model->validData(_A_::$app->get('user_id'));
-        $user_id = $userInfo['data'];
+        $user_id = $model->validData(_A_::$app->get('user_id'));
         $orders_count = $model->get_count_orders_by_user($user_id);
         if (!empty(_A_::$app->get('page'))) {
             $page = _A_::$app->get('page');
@@ -73,12 +72,7 @@ class Controller_Order extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Order();
-        $userInfo = $model->validData(_A_::$app->get('order_id'));
-        $order_id = $userInfo['data'];
-
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
+        $order_id = $model->validData(_A_::$app->get('order_id'));
         $back_url = BASE_URL . '/orders';
         if (!is_null(_A_::$app->get('order_id'))) {
             $back_url .= '?order_id=' . _A_::$app->get('order_id');
@@ -110,13 +104,8 @@ class Controller_Order extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Order();
-        $userInfo = $model->validData(_A_::$app->get('order_id'));
-        $order_id = $userInfo['data'];
-
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
-        $back_url = BASE_URL . (empty(_A_::$app->get('discounts_id'){0}) ? '/discounts' : '/usage_discounts');
+        $order_id = $model->validData(_A_::$app->get('order_id'));
+        $back_url = BASE_URL . (empty(_A_::$app->get('discounts_id')) ? '/discounts' : '/usage_discounts');
 
         if (!empty(_A_::$app->get('discounts_id'){0})) {
             $back_url .= '?discounts_id=' . _A_::$app->get('discounts_id');
@@ -134,8 +123,7 @@ class Controller_Order extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Order();
-        $userInfo = $model->validData(_A_::$app->get('order_id'));
-        $order_id = $userInfo['data'];
+        $order_id = $model->validData(_A_::$app->get('order_id'));
         $order_details = '';
         if (!empty($order_id)) {
             ob_start();
@@ -194,7 +182,6 @@ class Controller_Order extends Controller_Base
                 $this->template->vars('customer_orders_list', $customer_orders_list);
             }
 
-            include_once('controllers/_paginator.php');
             $paginator = new Controller_Paginator($this->main);
             $paginator->orders_paginator($total_pages, $page);
         } else {
@@ -292,7 +279,6 @@ class Controller_Order extends Controller_Base
             $this->template->vars('admin_orders_list', $admin_orders_list);
         }
 
-        include_once('controllers/_paginator.php');
         $paginator = new Controller_Paginator($this->main);
         $paginator->orders_history_paginator($total_pages, $page);
 

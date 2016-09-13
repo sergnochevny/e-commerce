@@ -21,7 +21,7 @@ class Controller_Menu extends Controller_Controller
         $items = $model->get_items_for_menu('all');
         ob_start();
         foreach ($items as $item) {
-            $href = $base_url . "/shop&cat=" . $item['cid'];
+            $href = _A_::$app->router()->UrlTo('shop',['cat'=>$item['cid']]);
             $name = $item['cname'];
             $this->template->vars('href',$href, true);
             $this->template->vars('name',$name, true);
@@ -33,7 +33,7 @@ class Controller_Menu extends Controller_Controller
         $items = $model->get_items_for_menu('new');
         ob_start();
         foreach ($items as $item) {
-            $href = $base_url . "/shop&cat=" . $item['cid'];
+            $href = _A_::$app->router()->UrlTo('shop',['cat',$item['cid']]);
             $name = $item['cname'];
             $this->template->vars('href',$href, true);
             $this->template->vars('name',$name, true);
@@ -45,7 +45,7 @@ class Controller_Menu extends Controller_Controller
         $items = $model->get_items_for_menu('manufacturer');
         ob_start();
         foreach ($items as $item) {
-            $href = $base_url . "/shop&mnf=" . $item['id'];
+            $href = _A_::$app->router()->UrlTo('shop',['mnf'=>$item['id']]);
             $name = $item['manufacturer'];
             $this->template->vars('href',$href, true);
             $this->template->vars('name',$name, true);
@@ -57,7 +57,7 @@ class Controller_Menu extends Controller_Controller
         $items = $model->get_items_for_menu('patterns');
         ob_start();
         foreach ($items as $item) {
-            $href = $base_url . "/shop&ptrn=" . $item['id'];
+            $href = _A_::$app->router()->UrlTo('shop',['ptrn'=>$item['id']]);
             $name = $item['pattern'];
             $this->template->vars('href',$href, true);
             $this->template->vars('name',$name, true);

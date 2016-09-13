@@ -18,13 +18,6 @@ class Controller_Main extends Controller_Base
 
     function view_admin($page, $data = null)
     {
-        $path = null;
-        if (count($parts = explode('/', $page)) > 1) {
-            $parts = array_filter($parts);
-            $path = array_pop($parts);
-            if (count($parts) > 0) $path = implode('/', $parts);
-        }
-
         if (isset($data)) {
             $this->template->vars('data', $data);
         }
@@ -54,11 +47,9 @@ class Controller_Main extends Controller_Base
         }
 
         $this->meta_page();
-        $this->template->vars('controller', $this);
         $this->template->vars('base_url', BASE_URL);
 
-        if (is_null($path)) $this->template->view($page);
-        else $this->template->view($page, $path);
+        $this->template->view($page);
     }
 
     function meta_page()
@@ -75,13 +66,6 @@ class Controller_Main extends Controller_Base
 
     function view_layout($page, $data = null)
     {
-        $path = null;
-        if (count($parts = explode('/', $page)) > 1) {
-            $parts = array_filter($parts);
-            $path = array_pop($parts);
-            if (count($parts) > 0) $path = implode('/', $parts);
-        }
-
         if (isset($data)) {
             $this->template->vars('data', $data);
         }
@@ -90,8 +74,7 @@ class Controller_Main extends Controller_Base
         $this->template->vars('controller', $this);
         $this->template->vars('base_url', BASE_URL);
 
-        if (is_null($path)) $this->template->view_layout($page);
-        else $this->template->view_layout($page, $path);
+        $this->template->view_layout($page);
     }
 
     function is_user_authorized($redirect_to_url = false)
@@ -164,18 +147,12 @@ class Controller_Main extends Controller_Base
 
     function view($page, $data = null)
     {
-        $path = null;
-        if (count($parts = explode('/', $page)) > 1) {
-            $parts = array_filter($parts);
-            $path = array_pop($parts);
-            if (count($parts) > 0) $path = implode('/', $parts);
-        }
         if (isset($data)) {
             $this->template->vars('data', $data);
         }
 
         $cart = new Controller_Cart(isset($this->main) ? $this->main : $this);
-        $cart->get_cart();
+        $cart->get();
         $authorization = new Controller_Authorization(isset($this->main) ? $this->main : $this);
 
         ob_start();
@@ -205,11 +182,9 @@ class Controller_Main extends Controller_Base
         $menu->show_menu();
 
         $this->meta_page();
-        $this->template->vars('controller', $this);
         $this->template->vars('base_url', BASE_URL);
 
-        if (is_null($path)) $this->template->view($page);
-        else $this->template->view($page, $path);
+        $this->template->view($page);
     }
 
     public function error404()

@@ -3,7 +3,7 @@
         <?php if ($bProductDiscount) { ?>
             <span class="extra_discount_small">Extra Discount!</span>
         <?php } ?>
-        <a href="<?php echo $base_url; ?>/product_page?p_id=<?php echo $row[0]; ?>"
+        <a href="<?php _A_::$app->router()->UrlTo('product',['p_id'=>$row[0]], $row['pname']); ?>"
            title="<?php echo $row['pname']; ?>">
             <div class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image coverDiv" style=
             "background-image:url(<?php echo $filename; ?>)"></div>

@@ -1,5 +1,5 @@
 <center>
-    <a href="<?php echo $base_url?>/new_user?page=<?php echo $page?>"><input type="submit" value="ADD NEW USER" class="button"/></a><br><br><br>
+    <a href="<?php _A_::$app->router()->UrlTo('user/new',['page'=>$page])?>"><input type="submit" value="ADD NEW USER" class="button"/></a><br><br><br>
 </center>
 <div class="">
     <table class="table table-striped table-bordered">
@@ -31,6 +31,6 @@
 <nav role="navigation" class="paging-navigation">
     <h4 class="sr-only">Products navigation</h4>
     <ul class='pagination'>
-        <?php echo $user_paginator; ?>
+        <?php echo isset($paginator) ? $paginator : ''; ?>
     </ul>
 </nav>

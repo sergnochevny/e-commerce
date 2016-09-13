@@ -47,8 +47,7 @@ class Controller_Categories extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Tools();
-        $userInfo = $model->validData(_A_::$app->get('category_id'));
-        $del_category_id = $userInfo['data'];
+        $del_category_id = $model->validData(_A_::$app->get('category_id'));
         if (!empty($del_category_id)) {
             $strSQL = "update fabrix_products set cid = NULL WHERE cid = $del_category_id";
             mysql_query($strSQL);
@@ -63,8 +62,7 @@ class Controller_Categories extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $userInfo = $model->validData(_A_::$app->get('category_id'));
-        $category_id = $userInfo['data'];
+        $category_id = $model->validData(_A_::$app->get('category_id'));
         $this->display_order_categories();
         $userInfo = $model->get_data_categories($category_id);
         $this->template->vars('userInfo', $userInfo);
@@ -81,8 +79,7 @@ class Controller_Categories extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $userInfo = $model->validData(_A_::$app->get('category_id'));
-        $category_id = $userInfo['data'];
+        $category_id = $model->validData(_A_::$app->get('category_id'));
         $this->display_order_categories();
         $userInfo = $model->get_data_categories($category_id);
         $this->template->vars('userInfo', $userInfo);
@@ -99,8 +96,7 @@ class Controller_Categories extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $userInfo = $model->validData(_A_::$app->get('category_id'));
-        $category_id = $userInfo['data'];
+        $category_id = $model->validData(_A_::$app->get('category_id'));
         $results = mysql_query("select * from fabrix_categories ORDER BY  `fabrix_categories`.`displayorder` ASC ");
         ob_start();
         while ($row = mysql_fetch_array($results)) {
@@ -216,10 +212,9 @@ class Controller_Categories extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $userInfo = $model->validData(_A_::$app->post('category'));
-        $post_category_name = mysql_real_escape_string($userInfo['data']);
-        $userInfo = $model->validData(_A_::$app->post('display_order'));
-        $post_display_order = $userInfo['data'];
+        $category = $model->validData(_A_::$app->post('category'));
+        $post_category_name = mysql_real_escape_string($category);
+        $post_display_order = $model->validData(_A_::$app->post('display_order'));
         include('include/save_new_categories.php');
 
         if (!empty($post_category_name{0})) {

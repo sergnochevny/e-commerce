@@ -3,31 +3,29 @@
 class Controller_User extends Controller_Controller
 {
 
-    function users()
+    public function user()
     {
         $this->main->test_access_rights();
 
         $this->get_main_users_list();
-        $this->main->view_admin('user/users');
+        $this->main->view_admin('users');
     }
 
-    function users_list()
+    public function users_list()
     {
         $this->main->test_access_rights();
 
         $this->get_main_users_list();
-        $this->main->view_layout('user/users_list');
+        $this->main->view_layout('users_list');
     }
 
-    function get_main_users_list()
+    private function get_main_users_list()
     {
         $this->main->test_access_rights();
         $model = new Model_User();
+        $page = 1;
         if (!empty(_A_::$app->get('page'))) {
-            $userInfo = $model->validData(_A_::$app->get('page'));
-            $page = $userInfo['data'];
-        } else {
-            $page = 1;
+            $page = $model->validData(_A_::$app->get('page'));
         }
         $this->template->vars('page', $page);
 
@@ -52,7 +50,6 @@ class Controller_User extends Controller_Controller
         ob_end_clean();
         $this->template->vars('main_users_list', $user_list);
 
-        include_once('controllers/_paginator.php');
         $paginator = new Controller_Paginator($this->main);
         $paginator->user_paginator($total, $page);
 
@@ -62,10 +59,8 @@ class Controller_User extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_User();
-        $userInfo = $model->validData(_A_::$app->get('page'));
-        $page_id = $userInfo['data'];
-        $userInfo = $model->validData(_A_::$app->get('id'));
-        $user_id = $userInfo['data'];
+        $page_id = $model->validData(_A_::$app->get('page'));
+        $user_id = $model->validData(_A_::$app->get('id'));
         $model->del_user($user_id);
 
         $this->users_list();
@@ -272,12 +267,7 @@ class Controller_User extends Controller_Controller
     {
         $base_url = BASE_URL;
         $model = new Model_User();
-        $userInfo = $model->validData(_A_::$app->get('user_id'));
-        $user_id = $userInfo['data'];
-
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
+        $user_id = $model->validData(_A_::$app->get('user_id'));
         $back_url = BASE_URL . '/users?page=';
         if (!empty(_A_::$app->get('page'))) {
             $back_url .= _A_::$app->get('page');
@@ -304,16 +294,11 @@ class Controller_User extends Controller_Controller
     private function _new_user()
     {
         $model = new Model_User();
-
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
         $back_url = BASE_URL . '/users?page=';
         if (!empty(_A_::$app->get('page'))) {
             $back_url .= _A_::$app->get('page');
         } else
             $back_url .= '1';
-//        }
 
         $this->template->vars('back_url', $back_url);
 
@@ -371,7 +356,7 @@ class Controller_User extends Controller_Controller
 
         $this->template->vars('back_url', $back_url);
 
-        $this->main->view_layout('user/new_user_form');
+        $this->main->view_layout('new_user_form');
     }
 
     private function _save_new_user()
@@ -529,7 +514,7 @@ class Controller_User extends Controller_Controller
     {
         $base_url = BASE_URL;
         $this->main->test_access_rights();
-        $action = $base_url . '/save_edit_user?user_id=' . _A_::$app->get('user_id');
+        $action = _A_::$app->router()->UrlTo('user/save_edit',['user_id'=>_A_::$app->get('user_id')]);
         $this->template->vars('action', $action);
         $title = 'EDIT USER';
         $this->template->vars('title', $title);
@@ -537,11 +522,11 @@ class Controller_User extends Controller_Controller
         $this->_edit_user_form();
     }
 
-    function save_new_user()
+    function save_new()
     {
         $base_url = BASE_URL;
         $this->main->test_access_rights();
-        $action = $base_url . '/save_new_user';
+        $action = _A_::$app->router()->UrlTo('user/save_new');
         $this->template->vars('action', $action);
         $title = 'NEW USER';
         $this->template->vars('title', $title);
@@ -549,29 +534,30 @@ class Controller_User extends Controller_Controller
         $this->_new_user_form();
     }
 
-    public function registration_user()
+    public function registration()
     {
         $base_url = BASE_URL;
         $title = 'REGISTRATION USER';
         $this->template->vars('title', $title);
-        $action = $base_url . '/save_registration_user';
+        $action = _A_::$app->router()->UrlTo('user/save_registration');
         $this->template->vars('action', $action);
-        $back_url = $base_url . '/user_authorization';
+        $prms = null;
         if (!is_null(_A_::$app->get('url'))) {
-            $back_url .= '?url=' . _A_::$app->get('url');
+            $prms['url']= _A_::$app->get('url');
         }
+        $back_url = _A_::$app->router()->UrlTo('authorization/user',$prms);
         $this->template->vars('back_url', $back_url, true);
         $this->_new_user();
         $this->main->view('user/new_user');
     }
 
-    function save_registration_user()
+    function save_registration()
     {
         $base_url = BASE_URL;
         if (!$this->_save_new_user()) {
             $title = 'REGISTRATION USER';
             $this->template->vars('title', $title);
-            $action = $base_url . '/save_registration_user';
+            $action = $base_url . 'user/save_registration';
             $this->template->vars('action', $action);
             $this->_new_user_form();
         } else {
@@ -580,12 +566,12 @@ class Controller_User extends Controller_Controller
 
             $title = 'CHANGE REGISTRATION DATA';
             $this->template->vars('title', $title);
-            $back_url = $base_url . '/user_authorization';
+            $back_url = $base_url . 'authorization/user';
             if (!is_null(_A_::$app->get('url'))) {
                 $back_url .= '?url=' . _A_::$app->get('url');
             }
             $this->template->vars('back_url', $back_url, true);
-            $action = $base_url . '/save_edit_registration_data';
+            $action = $base_url . 'user/save_edit_registration_data';
             $this->template->vars('action', $action, true);
 
             $userInfo = $model->get_user_data($user_id);
@@ -608,12 +594,11 @@ class Controller_User extends Controller_Controller
     function save_edit_registration_data()
     {
         $base_url = BASE_URL;
-        include_once('controllers/_authorization.php');
         $authorization = new Controller_Authorization($this->main);
         if ($authorization->is_user_logged()) {
             $user_id = $authorization->get_user_from_session();
             _A_::$app->get('user_id', $user_id);
-            $action = $base_url . '/save_edit_registration_data';
+            $action = $base_url . 'user/save_edit_registration_data';
             $this->template->vars('action', $action);
             $title = 'CHANGE REGISTRATION DATA';
             $this->template->vars('title', $title);
@@ -629,13 +614,11 @@ class Controller_User extends Controller_Controller
     {
         $base_url = BASE_URL;
 
-        include_once('controllers/_authorization.php');
         $authorization = new Controller_Authorization($this->main);
-
         if ($authorization->is_user_logged()) {
             $user_id = $authorization->get_user_from_session();
             _A_::$app->get('user_id', $user_id);
-            $action = $base_url . '/save_edit_registration_data';
+            $action = $base_url . 'user/save_edit_registration_data';
             $this->template->vars('action', $action);
             $title = 'CHANGE REGISTRATION DATA';
             $this->template->vars('title', $title);
@@ -645,7 +628,7 @@ class Controller_User extends Controller_Controller
             if(!is_null(_A_::$app->get('url'))){
                 $back_url = base64_decode(urldecode(_A_::$app->get('url')));
             }
-            $back_url = $base_url . ((strlen($back_url) > 0) ? $back_url : '/shop');
+            $back_url = _A_::$app->router()->UrlTo(((strlen($back_url) > 0) ? $back_url : 'shop'));
             $this->template->vars('back_url', $back_url, true);
 
             $this->main->view('user/edit_user');

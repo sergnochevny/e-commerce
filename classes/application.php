@@ -3,8 +3,6 @@
 class Application extends Core
 {
 
-    private $router;
-
     public function run()
     {
         $this->router->start();

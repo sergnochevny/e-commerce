@@ -15,11 +15,9 @@ class Controller_Comments extends Controller_Base
     private function comments_list()
     {
         $m = new Model_Comments();
+        $page = 1;
         if (!empty(_A_::$app->get('page'))) {
-            $userInfo = $m->validData(_A_::$app->get('page'));
-            $page = $userInfo['data'];
-        } else {
-            $page = 1;
+            $page = $m->validData(_A_::$app->get('page'));
         }
         $per_page = 12;
         $start = (($page - 1) * $per_page);
