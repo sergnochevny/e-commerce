@@ -1400,7 +1400,7 @@ class Controller_Cart extends Controller_Base
                     $format_sale_price = '';
                     $saleprice = round($mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece), 2);
                     $discount = round(($price - $saleprice), 2);
-                    $format_discount = "$" . number_format($discount, 2);;
+                    $format_discount = "$" . number_format($discount, 2);
 
                     $product['Price'] = $price;
                     $product['saleprice'] = $saleprice;
@@ -1640,7 +1640,7 @@ class Controller_Cart extends Controller_Base
         $cart_items[$pid] = $item;
         $_cart = _A_::$app->session('cart');
         $_cart['items'] = $cart_items;
-        _A_::$app->session('cart', $_cart);
+        _A_::$app->setSession('cart', $_cart);
         $response['product'] = ob_get_contents();
         ob_end_clean();
 

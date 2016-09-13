@@ -17,6 +17,7 @@ class Controller_Authorization extends Controller_Base
 
     function authorization()
     {
+        $prms = null;
         $base_url = BASE_URL;
         $model = new Model_Auth();
         if ($this->is_admin_logged()) {
@@ -73,14 +74,14 @@ class Controller_Authorization extends Controller_Base
         } else {
 
             $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : '';
-            $registration_url = $base_url . '/registration_user';
+
             if (!is_null(_A_::$app->get('url'))) {
-                $registration_url .= '?url=' . _A_::$app->get('url');
+                $prms['url']= _A_::$app->get('url');
             }
-            $lostpassword_url = $base_url . '/lost_password';
-            if (!is_null(_A_::$app->get('url'))) {
-                $lostpassword_url .= '?url=' . _A_::$app->get('url');
-            }
+
+            $registration_url = _A_::$app->router()->UrlTo('user/registration', $prms);
+            $lostpassword_url = _A_::$app->router()->UrlTo('authorization/lost_password', $prms);
+
             $this->template->vars('registration_url', $registration_url);
             $this->template->vars('lostpassword_url', $lostpassword_url);
             $this->template->vars('redirect', $redirect);
