@@ -16,8 +16,8 @@ Class Controller_Index Extends Controller_Controller
 //        unset($_SESSION);
         $this->main->test_access_rights();
         $shop = new Controller_Shop($this->main);
-        $shop->produkt_list();
-        $shop->produkt_filtr_list();
+        $shop->all_products();
+        $shop->product_filtr_list();
 
         $this->main->view_admin('admin_home');
     }
