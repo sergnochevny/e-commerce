@@ -14,7 +14,7 @@
                             <div class="woocommerce">
                                 <h2>Login</h2>
 
-                                <form method="POST" id="formx" action="<?php _A_::$app->router()->UrlTo('admin'); ?>"
+                                <form method="POST" id="formx" action="<?php echo _A_::$app->router()->UrlTo('admin'); ?>"
                                       class="login">
                                     <input type="hidden" name="redirect" value="<?php echo isset($redirect)?$redirect:_A_::$app->router()->UrlTo('/'); ?>"/>
                                     <p class="form-row form-row-wide">

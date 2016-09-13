@@ -4,9 +4,9 @@ Class Template
 {
 
     private $template;
-    private $controller;
     private $layouts;
     private $vars = array();
+    public $controller;
 
     function __construct($layouts, $controllerName)
     {

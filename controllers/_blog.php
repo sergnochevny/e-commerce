@@ -213,19 +213,15 @@ class Controller_Blog extends Controller_Controller
 
         $base_url = BASE_URL;
 
-        $url = 'blog';
-        $back_url = $base_url . '/' . $url;
+        $prms = null;
         if (!empty(_A_::$app->get('page'))) {
-            $back_url .= '?page=' . _A_::$app->get('page');
+            $prms['page'] = _A_::$app->get('page');
         }
         if ((!empty(_A_::$app->get('cat')))) {
-            $back_url .= (!empty(_A_::$app->get('page'))) ? '&' : '?';
-            $back_url .= 'cat=' . _A_::$app->get('cat');
+            $prms['cat'] =  _A_::$app->get('cat');
         }
-        $this->template->vars('back_url', $back_url);
-
+        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('blog',$prms));
         $post_name = _A_::$app->router()->args[0];
-
         $row = $model->get_blog_post_by_post_name($post_name);
         if (isset($row)) {
             ob_start();
@@ -240,7 +236,7 @@ class Controller_Blog extends Controller_Controller
             $post_img = $model->getPostImg($post_id);
             $file_img = str_replace('{base_url}/', '', $post_img);
             if (file_exists($file_img) && is_file($file_img) && is_readable($file_img)) {
-                $post_img = str_replace('{base_url}', $base_url, $post_img);
+                $post_img = _A_::$app->router()->UrlTo($post_img);
             } else
                 $post_img = null;
 
@@ -257,23 +253,21 @@ class Controller_Blog extends Controller_Controller
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
+            $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
         } else
             $list = 'No Post!!';
-
-        $this->template->vars('blog_post', $list);
-
+        $this->main->template->vars('blog_post', $list);
+        $this->main->template->vars('base_url', $base_url);
         $this->main->view('post');
     }
 
-    function main_blog_posts()
+    function main_posts()
     {
         $model = new Model_Blog();
 
+        $page = 1;
         if (!empty(_A_::$app->get('page'))) {
             $page = $model->validData(_A_::$app->get('page'));
-        } else {
-            $page = 1;
         }
         $per_page = 6;
 
@@ -298,16 +292,15 @@ class Controller_Blog extends Controller_Controller
                 $post_id = $row['ID'];
                 $post_name = $row['post_name'];
                 $base_url = BASE_URL;
-                $url = 'blog/post/' . $post_name;
-                $post_href = BASE_URL . '/' . $url;
+                $prms = null;
                 if (!empty(_A_::$app->get('page'))) {
-                    $post_href .= '?page=' . _A_::$app->get('page');
+                    $prms['page'] = _A_::$app->get('page');
                 }
                 if ((!empty(_A_::$app->get('cat')))) {
-                    $post_href .= (!empty(_A_::$app->get('page'))) ? '&' : '?';
-                    $post_href .= 'cat=' . _A_::$app->get('cat');
+                    $prms['cat'] = _A_::$app->get('cat');
                 }
-
+                $url = _A_::$app->router()->UrlTo('blog/post/' . $post_name);
+                $post_href = _A_::$app->router()->UrlTo('blog/post/' . $post_name, $prms);
                 $post_title = stripslashes($row['post_title']);
                 $post_date = date('F jS, Y', strtotime($row['post_date']));
 
@@ -325,8 +318,7 @@ class Controller_Blog extends Controller_Controller
                 if (!(file_exists($filename) && is_file($filename))) {
                     $post_img = '{base_url}/upload/upload/not_image.jpg';
                 }
-
-                $post_img = str_replace('{base_url}', $base_url, $post_img);
+                $post_img = _A_::$app->router()->UrlTo($post_img);
 
                 $this->template->vars('post_name', $post_name);
                 $this->template->vars('post_img', $post_img);
@@ -358,11 +350,11 @@ class Controller_Blog extends Controller_Controller
 
     function blog()
     {
-        $this->main_blog_posts();
+        $this->main_posts();
         $this->main->view('blog');
     }
 
-    function admin_main_blog_cat()
+    function admin_main_cat()
     {
         $model = new Model_Tools();
         $base_url = BASE_URL;
@@ -371,7 +363,7 @@ class Controller_Blog extends Controller_Controller
         ob_start();
         foreach ($items as $item) {
             $group_id = $item['group_id'];
-            $href = $base_url . '/admin_blog?cat=' . $group_id;
+            $href = _A_::$app->router()->UrlTo('blog/admin',['cat' => $group_id]);
             $name = $item['name'];
 
             $this->template->vars('base_url',$base_url);
@@ -385,14 +377,13 @@ class Controller_Blog extends Controller_Controller
         $this->template->vars('select_cat_option', $select_cat_option);
     }
 
-    function admin_main_blog_posts()
+    function admin_main_posts()
     {
         $model = new Model_Blog();
 
+        $page = 1;
         if (!empty(_A_::$app->get('page'))) {
             $page = $model->validData(_A_::$app->get('page'));
-        } else {
-            $page = 1;
         }
         $per_page = 6;
 
@@ -417,19 +408,16 @@ class Controller_Blog extends Controller_Controller
                 $post_name = $row['post_name'];
                 $base_url = BASE_URL;
 
-                $url = 'edit_post?post_id=' . $post_id;
-                $post_edit_href = $base_url . '/' . $url;
-                $url = 'del_post?post_id=' . $post_id;
-                $post_del_href = $base_url . '/' . $url;
+                $prms = ['post_id' => $post_id];
                 if (!empty(_A_::$app->get('page'))) {
-                    $post_edit_href .= '&page=' . _A_::$app->get('page');
-                    $post_del_href .= '&page=' . _A_::$app->get('page');
+                    $prms['page'] = _A_::$app->get('page');
                 }
                 if ((!empty(_A_::$app->get('cat')))) {
-                    $post_edit_href .= '&cat=' . _A_::$app->get('cat');
-                    $post_del_href .= '&cat=' . _A_::$app->get('cat');
+                    $prms['cat'] = _A_::$app->get('cat');
                 }
 
+                $post_edit_href = _A_::$app->router()->UrlTo('blog/edit_post',$prms);
+                $post_del_href = _A_::$app->router()->UrlTo('blog/del_post',$prms);
                 $post_title = stripslashes($row['post_title']);
                 $post_date = date('F jS, Y', strtotime($row['post_date']));
 
@@ -447,9 +435,18 @@ class Controller_Blog extends Controller_Controller
                 if (!(file_exists($filename) && is_file($filename))) {
                     $post_img = '{base_url}/upload/upload/not_image.jpg';
                 }
+                $post_img = _A_::$app->router()->UrlTo($post_img);
 
-                $post_img = str_replace('{base_url}', $base_url, $post_img);
-                include('./views/blog/blog_admin_posts.php');
+                $this->template->vars('post_img',$post_img);
+                $this->template->vars('post_content',$post_content);
+                $this->template->vars('post_date',$post_date);
+                $this->template->vars('post_edit_href',$post_edit_href);
+                $this->template->vars('post_del_href',$post_del_href);
+                $this->template->vars('post_title',$post_date);
+                $this->template->vars('post_id',$post_id);
+                $this->template->vars('post_name',$post_name);
+
+                $this->template->view_layout('blog_admin_posts');
             }
 
             $list = ob_get_contents();
@@ -466,37 +463,29 @@ class Controller_Blog extends Controller_Controller
         }
     }
 
-    function admin_blog_prepapre()
+    function admin_prepapre()
     {
-        $model = new Model_Blog();
-
-        $new_post_href = BASE_URL . '/new_post';
-
-        $new_post_href .= '?page=';
+        $prms['page'] = '1';
         if (!empty(_A_::$app->get('page'))) {
-            $new_post_href .= _A_::$app->get('page');
-        } else
-            $new_post_href .= '1';
-
-        if (!empty(_A_::$app->get('cat'))) {
-            $new_post_href .= '&cat=' . _A_::$app->get('cat');
+            $prms['page'] = _A_::$app->get('page');
         }
-        $this->template->vars('new_post_href', $new_post_href);
-
-
-        $this->admin_main_blog_cat();
-        $this->admin_main_blog_posts();
+        if (!empty(_A_::$app->get('cat'))) {
+            $prms['cat'] = _A_::$app->get('cat');
+        }
+        $this->template->vars('new_post_href', _A_::$app->router()->UrlTo('blog/new_post', $prms));
+        $this->admin_main_cat();
+        $this->admin_main_posts();
     }
 
-    function admin_blog()
+    function admin()
     {
-        $this->admin_blog_prepapre();
+        $this->admin_prepapre();
         $this->main->view_admin('blog_admin');
     }
 
-    function admin_blog_content()
+    function admin_content()
     {
-        $this->admin_blog_prepapre();
+        $this->admin_prepapre();
         $this->main->view_layout('blog_admin_content');
     }
 
@@ -512,14 +501,14 @@ class Controller_Blog extends Controller_Controller
             $error = ['The article failed to remove!!!'];
             $this->template->vars('error', $error);
         }
-        $this->admin_blog_content();
+        $this->admin_content();
     }
 
-    public function get_blog_categories($selected_categories = [])
+    public function get_categories($selected_categories = [])
     {
         $res = '';
         $model = new Model_Blog();
-        $categories = $model->get_blog_categories();
+        $categories = $model->get_categories();
         ob_start();
         $this->template->vars('categories',$categories);
         $this->template->view_layout('blog_categories_select_options');
@@ -530,26 +519,17 @@ class Controller_Blog extends Controller_Controller
 
     function new_post_prepare()
     {
-        $base_url = BASE_URL;
-        $back_url = $base_url . '/admin_blog';
-        $back_url .= '?page=';
+        $prms['page'] = '1';
         if (!empty(_A_::$app->get('page'))) {
-            $back_url .= _A_::$app->get('page');
-        } else
-            $back_url .= '1';
-
-        if (!empty(_A_::$app->get('cat'))) {
-            $back_url .= '&cat=' . _A_::$app->get('cat');
+            $prms['page'] = _A_::$app->get('page');
         }
-        $this->template->vars('back_url', $back_url);
-
-        $action_url = $base_url . '/save_new_post';
-        $this->template->vars('action_url', $action_url);
-
+        if (!empty(_A_::$app->get('cat'))) {
+            $prms['cat'] = _A_::$app->get('cat');
+        }
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('blog/admin', $prms));
+        $this->template->vars('action_url', _A_::$app->router()->UrlTo('blog/save_new_post'));
         $data['img'] = $this->new_post_img_section();
-
-        $data['categories'] = $this->get_blog_categories();
-
+        $data['categories'] = $this->get_categories();
         $data['title'] = '';
         $data['description'] = '';
         $data['keywords'] = '';
@@ -557,7 +537,6 @@ class Controller_Blog extends Controller_Controller
         $data['status'] = 'publish';
 
         $this->template->vars('data', $data);
-
     }
 
     function new_post_img_section($img = null)
@@ -565,13 +544,13 @@ class Controller_Blog extends Controller_Controller
         $base_url = BASE_URL;
         if (isset($img) && file_exists($img) && is_file($img)) {
             $f_img = $img;
-            $img = $base_url . '/' . $img;
+            $img = _A_::$app->router()->UrlTo($img);
         } else {
-            $img = $base_url . '/upload/upload/not_image.jpg';
+            $img = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
             $f_img = '';
         }
-        $this->template->vars('img', $img);
-        $this->template->vars('f_img', $f_img);
+        $this->main->template->vars('img', $img);
+        $this->main->template->vars('f_img', $f_img);
 
         ob_start();
         $this->main->view_layout('blog_new_post_img');
@@ -581,7 +560,7 @@ class Controller_Blog extends Controller_Controller
         return $res;
     }
 
-    function blog_upload_img(){
+    function upload_img(){
         $img = null;
         $timestamp = time();
         $uploaddir = 'img/blog/';
@@ -603,9 +582,9 @@ class Controller_Blog extends Controller_Controller
         return $img;
     }
 
-    function new_blog_upload_img()
+    function new_upload_img()
     {
-        $img = $this->blog_upload_img();
+        $img = $this->upload_img();
         echo $this->new_post_img_section($img);
     }
 
@@ -614,19 +593,18 @@ class Controller_Blog extends Controller_Controller
         $base_url = BASE_URL;
         if (isset($img) && file_exists($img) && is_file($img)) {
             $f_img = $img;
-            $img = $base_url . '/' . $img;
+            $img = _A_::$app->router()->UrlTo($img);
         } else {
-            $img = $base_url . '/upload/upload/error_format.png';
+            $img = _A_::$app->router()->UrlTo('upload/upload/error_format.png');
             $f_img = '';
         }
-
         echo json_encode(['img'=>$img, 'f_img'=>$f_img]);
 
     }
 
-    function edit_blog_upload_img()
+    function edit_upload_img()
     {
-        $img = $this->blog_upload_img();
+        $img = $this->upload_img();
         echo $this->edit_post_imgs($img);
     }
 
@@ -655,11 +633,10 @@ class Controller_Blog extends Controller_Controller
             (count($categories) == 0)
         ) {
 
-            $action_url = $base_url . '/save_new_post';
-            $this->template->vars('action_url', $action_url);
+            $this->template->vars('action_url', _A_::$app->router()->UrlTo('blog/save_new_post'));
 
             $data['img'] = $this->new_post_img_section($img);
-            $data['categories'] = $this->get_blog_categories($categories);
+            $data['categories'] = $this->get_categories($categories);
 
             $error = [];
             if (empty($title{0})) {
@@ -716,27 +693,25 @@ class Controller_Blog extends Controller_Controller
 
         $base_url = BASE_URL;
 
-        $url = 'admin_blog';
-        $back_url = $base_url . '/' . $url;
+        $prms = null;
         if (!empty(_A_::$app->get('page'))) {
-            $back_url .= '?page=' . _A_::$app->get('page');
+            $prms['page'] = _A_::$app->get('page');
         }
         if ((!empty(_A_::$app->get('cat')))) {
-            $back_url .= (!empty(_A_::$app->get('page'))) ? '&' : '?';
-            $back_url .= 'cat=' . _A_::$app->get('cat');
+            $prms['cat'] = _A_::$app->get('cat');
         }
-        $this->template->vars('back_url', $back_url);
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('blog/admin',$prms));
 
         $post_id = _A_::$app->get('post_id');
 
         $row = $model->get_blog_post_by_post_id($post_id);
         if (isset($row)) {
             $categories = $model->get_post_categories_by_post_id($post_id);
-            $post_categories = $this->get_blog_categories($categories);
+            $post_categories = $this->get_categories($categories);
             $post_k_d = $model->getPostDescKeys($post_id);
             $post_description = stripslashes($post_k_d['description']);
             $post_keywords = stripslashes($post_k_d['keywords']);
-            $action_url = $base_url . '/save_edit_post?post_id=' . $post_id;
+            $action_url = _A_::$app->router()->UrlTo('blog/save_edit_post',['post_id' => $post_id]);
             $post_content = stripslashes($row['post_content']);
             $post_content = str_replace('{base_url}', $base_url, $post_content);
             $post_content = preg_replace('#(style="[^>]*")#U','',$post_content);
@@ -747,9 +722,9 @@ class Controller_Blog extends Controller_Controller
             $post_img = $model->getPostImg($post_id);
             $file_img = str_replace('{base_url}/', '', $post_img);
             if (file_exists($file_img) && is_file($file_img) && is_readable($file_img)) {
-                $post_img = str_replace('{base_url}', $base_url, $post_img);
+                $post_img = _A_::$app->router()->UrlTo($post_img);
             } else {
-                $post_img = $base_url . '/upload/upload/not_image.jpg';
+                $post_img = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
                 $file_img = '';
             }
 
@@ -794,8 +769,8 @@ class Controller_Blog extends Controller_Controller
             (count($categories) == 0)
         ) {
 
-            $action_url = $base_url . '/save_edit_post?post_id=' . $post_id;
-            $post_categories = $this->get_blog_categories($categories);
+            $action_url = _A_::$app->router()->UrlTo('save_edit_post',['post_id' => $post_id]);
+            $post_categories = $this->get_categories($categories);
             $post_description = stripslashes($description);
             $post_keywords = stripslashes($keywords);
             $post_content = stripslashes($content);
@@ -807,9 +782,9 @@ class Controller_Blog extends Controller_Controller
             $file_img = $img;
             if (file_exists($file_img) && is_file($file_img) && is_readable($file_img)) {
                 $post_img = '{base_url}/'.$file_img;
-                $post_img = str_replace('{base_url}', $base_url, $post_img);
+                $post_img = _A_::$app->router()->UrlTo($post_img);
             } else {
-                $post_img = $base_url . '/upload/upload/not_image.jpg';
+                $post_img = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
                 $file_img = '';
             }
 

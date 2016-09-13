@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Captcha extends Controller_Base
+class Controller_Captcha extends Controller_Controller
 {
     protected $use_symbols = "abcdefghijklmnopqrstuvwxyz012345679";
     protected $use_symbols_len;
@@ -16,15 +16,10 @@ class Controller_Captcha extends Controller_Base
     protected $length = 6;
     public $key = '';
 
-    protected $main;
-
     function __construct($main)
     {
         $this->use_symbols_len = strlen($this->use_symbols);
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
+        parent::__construct($main);
     }
 
     function gen_captcha()

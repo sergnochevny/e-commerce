@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Authorization extends Controller_Base
+class Controller_Authorization extends Controller_Controller
 {
 
     function update_passwd()

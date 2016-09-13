@@ -86,12 +86,14 @@ Class Router
 
     public function UrlTo($path, $params = null)
     {
+        $path = rtrim(trim($path), DS);
         if (strpos($path, '{base_url}') !== false) {
-            $path = str_replace('{base_url}', $this->base_url);
+            $path = str_replace('{base_url}', $this->base_url, $path);
         } else {
             if (strpos($path, $this->base_url) == false)
                 $path = $this->base_url . DS . $path;
         }
+
         if (!is_null($params)) $url = $this->http_build_url($path, ['query'=>http_build_query($params)]);
         else $url = $this->http_build_url($path);
         return $url;

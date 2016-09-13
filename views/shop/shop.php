@@ -37,13 +37,13 @@
                 <?php echo isset($search) ? '<p class="">Search: ' . $search . '</p>' : '' ?>
                 <p class="woocommerce-result-count">
                     <?php
-                    if (!empty($_GET['cat'])) {
+                    if (!empty(_A_::$app->get('cat'))) {
                         echo 'CATEGORY: ' . $catigori_name['cname'] . '<br/>';
                     }
-                    if (!empty($_GET['mnf'])) {
+                    if (!empty(_A_::$app->get('mnf'))) {
                         echo 'MANUFACTURER: ' . $mnf_name['manufacturer'] . '<br/>';
                     }
-                    if (!empty($_GET['ptrn'])) {
+                    if (!empty(_A_::$app->get('ptrn'))) {
                         echo 'PATTERN: ' . $ptrn_name['pattern'] . '<br/>';
                     }
                     echo isset($count_rows) ? "Showing " . $count_rows . " results" : "Showing ... results";

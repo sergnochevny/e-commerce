@@ -193,6 +193,7 @@ class Controller_Main extends Controller_Base
         header("HTTP/1.1 404 Not Found");
         header("Status: 404 Not Found");
         $base_url = BASE_URL;
+        $this->template->controller = 'main';
         $this->template->vars('base_url', $base_url);
 
         $this->view('404/error');

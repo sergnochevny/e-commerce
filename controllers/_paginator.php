@@ -4,6 +4,7 @@ class Controller_Paginator extends Controller_Controller
 {
     function produkt_paginator($total_rows, $page)
     {
+        $this->template->vars('url', 'admin_home');
         if (!is_null(_A_::$app->get('cat'))) {
             $cat_id = _A_::$app->get('cat');
             $this->template->vars('cat_id', $cat_id);
@@ -44,7 +45,7 @@ class Controller_Paginator extends Controller_Controller
     function paginator_home($total_rows, $page, $url = 'blog', $per_page = 6)
     {
 
-        $this->main->template->vars('url', $url);
+        $this->template->vars('url', $url);
         if (!is_null(_A_::$app->get('cat'))) {
             $cat_id = _A_::$app->get('cat');
             $this->template->vars('cat_id', $cat_id);
@@ -95,11 +96,13 @@ class Controller_Paginator extends Controller_Controller
 
     public function comments_paginator($total_rows, $page)
     {
+        $this->template->vars('url', 'comments/admin');
         $this->paginator($total_rows, $page);
     }
 
     public function user_comments_paginator($total_rows, $page)
     {
+        $this->template->vars('url', 'comments');
         $this->paginator($total_rows, $page);
     }
 

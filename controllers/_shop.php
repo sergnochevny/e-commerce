@@ -16,7 +16,7 @@ class Controller_Shop extends Controller_Controller
         if (!empty(_A_::$app->get('cat'))) {
             $add_product_prms['cat'] = _A_::$app->get('cat');
         }
-        $this->template->vars('add_product_href', _A_::$app-router()->UrlTo('add_product',$add_product_prms));
+        $this->template->vars('add_product_href', _A_::$app->router()->UrlTo('add_product', $add_product_prms));
 
         $model->cleanTempProducts();
         $per_page = 12;
@@ -92,7 +92,7 @@ class Controller_Shop extends Controller_Controller
 
         $list = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('produkt_list', $list);
+        $this->main->template->vars('produkt_list', $list);
         $paginator = new Controller_Paginator($this);
         $paginator->produkt_paginator($total, $page);
     }
@@ -116,7 +116,7 @@ class Controller_Shop extends Controller_Controller
         $items = $model->get_items_for_menu('all');
         ob_start();
         foreach ($items as $item) {
-            $href = _A_::$app->router()->UrlTo('shop',['cat'=>$item['cid']]);
+            $href = _A_::$app->router()->UrlTo('shop', ['cat' => $item['cid']]);
             $name = $item['cname'];
             $this->template->vars('href', $href, true);
             $this->template->vars('name', $name, true);
@@ -137,12 +137,12 @@ class Controller_Shop extends Controller_Controller
         $model = new Model_Product();
         $image_suffix = 'b_';
         if (!is_null(_A_::$app->session('cart')['items'])) {
-            $cart_items =  _A_::$app->session('cart')['items'];
+            $cart_items = _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
         }
         $cart = array_keys($cart_items);
-        if (!is_null( _A_::$app->session('s')) && (!empty( _A_::$app->post['s']{0}))) {
+        if (!is_null(_A_::$app->session('s')) && (!empty(_A_::$app->post['s']{0}))) {
             $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->session('s')))));
             $this->template->vars('search', _A_::$app->post('s'));
         }
@@ -336,9 +336,9 @@ class Controller_Shop extends Controller_Controller
     {
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
-        $this->main_produkt_list_new();
+        $this->product_list_by_type('new');
         $page_title = "What's New";
-        $this->template->vars('page_title', $page_title);
+        $this->main->template->vars('page_title', $page_title);
 
         $this->main->view('shop');
     }
@@ -361,19 +361,7 @@ class Controller_Shop extends Controller_Controller
             $page = 1;
         }
         $per_page = 12;
-
-        if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
-
-            $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
-                " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-                " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id'";
-
-        } else {
-            $q_total = "SELECT COUNT(*) FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' ORDER BY dt DESC";
-        }
-        $res = mysql_query($q_total);
-        $total = mysql_fetch_row($res)[0];
+        $total = $model->get_count_products_by_type($type);
         if ($total > $max_count_new_items) $total = $max_count_new_items;
 
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
@@ -411,14 +399,14 @@ class Controller_Shop extends Controller_Controller
                 if (!(file_exists($filename) && is_file($filename))) {
                     $filename = 'upload/upload/not_image.jpg';
                 }
-                $filename = $base_url . '/' . $filename;
+                $filename = _A_::$app->router()->UrlTo($filename);
 
-                $href = '';
+                $url_prms = ['p_id'=>$row[0]];
                 if (!empty(_A_::$app->get('page'))) {
-                    $href .= '&page=' . _A_::$app->get('page');
+                    $url_prms['page'] = _A_::$app->get('page');
                 }
                 if (!empty(_A_::$app->get('cat'))) {
-                    $href .= '&cat=' . _A_::$app->get('cat');
+                    $url_prms['cat'] = _A_::$app->get('cat');
                 }
 
                 $pid = $row[0];
@@ -441,20 +429,21 @@ class Controller_Shop extends Controller_Controller
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
 
+
                 include('./views/product/main_produkt_list_new.php');
             }
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
-            $this->template->vars('main_produkt_list', $list);
+            $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
+            $this->main->template->vars('main_produkt_list', $list);
 
             $paginator = new Controller_Paginator($this);
             $paginator->produkt_paginator_home($total, $page, 'shop/last');
         } else {
-            $this->template->vars('count_rows', 0);
+            $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
-            $this->template->vars('main_produkt_list', $list);
+            $this->main->template->vars('main_produkt_list', $list);
         }
     }
 
@@ -465,44 +454,36 @@ class Controller_Shop extends Controller_Controller
     {
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
-        $this->main_produkt_list_specials();
+        $this->product_list_by_type('special');
         $page_title = "Limited time Specials.";
         $this->template->vars('page_title', $page_title);
 
         $this->main->view('shop');
     }
 
-    private function main_produkt_list_specials()
+    private function product_list_by_type($type = 'new')
     {
         $max_count_new_items = 50;
         $model = new Model_Product();
         $image_suffix = 'b_';
         if (isset(_A_::$app->session('cart')['items'])) {
-            $cart_items =  _A_::$app->session('cart')['items'];
+            $cart_items = _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
         }
         $cart = array_keys($cart_items);
 
+        $page = 1;
         if (!empty(_A_::$app->get('page'))) {
             $page = $model->validData(_A_::$app->get('page'));
-        } else {
-            $page = 1;
         }
         $per_page = 12;
 
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $model->validData(_A_::$app->get('cat'));
-
-            $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
-                " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-                " WHERE  a.pnumber is not null and a.pvisible = '1' and a.specials='1' and b.cid='$cat_id'";
-
-        } else {
-            $q_total = "SELECT COUNT(*) FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and specials='1' ORDER BY dt DESC";
         }
-        $res = mysql_query($q_total);
-        $total = mysql_fetch_row($res)[0];
+
+        $total = $this->get_count_products_by_type($type);
         if ($total > $max_count_new_items) $total = $max_count_new_items;
 
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
@@ -512,21 +493,11 @@ class Controller_Shop extends Controller_Controller
 
         if ($total < ($start + $per_page)) $per_page = $total - $start;
 
-        if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
-            $catigori_name = $model->getCatName($cat_id);
-            $q = "SELECT a.* FROM `fabrix_products` a" .
-                " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-                " WHERE  a.pnumber is not null and a.pvisible = '1' and a.specials='1' and b.cid='$cat_id'" .
-                " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
-        } else {
-            $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and specials='1'" .
-                " ORDER BY  dt DESC, pid DESC LIMIT $start,$per_page";
-        }
-        $res = mysql_query($q);
-        if ($res) {
-            $res_count_rows = mysql_num_rows($res);
-            $this->template->vars('count_rows', $res_count_rows);
+        $res_count_rows = 0;
+        $rows = $this->get_products_by_type($type, $res_count_rows);
+        $this->template->vars('count_rows', $res_count_rows);
+
+        if ($rows) {
 
             $mp = new Model_Price();
 
@@ -534,7 +505,7 @@ class Controller_Shop extends Controller_Controller
             $this->template->vars('sys_hide_price', $sys_hide_price);
 
             ob_start();
-            while ($row = mysql_fetch_array($res)) {
+            foreach ($rows as $row) {
                 $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
                 $base_url = BASE_URL;
@@ -542,14 +513,14 @@ class Controller_Shop extends Controller_Controller
                 if (!(file_exists($filename) && is_file($filename))) {
                     $filename = 'upload/upload/not_image.jpg';
                 }
-                $filename = $base_url . '/' . $filename;
+                $filename = _A_::$app->router()->UrlTo($filename);
 
-                $href = '';
+                $url_prms = ['p_id' => $row[0]];
                 if (!empty(_A_::$app->get('page'))) {
-                    $href .= '&page=' . _A_::$app->get('page');
+                    $url_prms['page'] = _A_::$app->get('page');
                 }
                 if (!empty(_A_::$app->get('cat'))) {
-                    $href .= '&cat=' . _A_::$app->get('cat');
+                    $url_prms['cat'] = _A_::$app->get('cat');
                 }
 
                 $pid = $row[0];
@@ -572,24 +543,24 @@ class Controller_Shop extends Controller_Controller
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
 
-                include('./views/product/main_produkt_list_specials.php');
+                $this->template->view_layout('main_produkt_list_'.$type);
             }
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
-            $this->template->vars('main_produkt_list', $list);
+            $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
+            $this->main->template->vars('main_produkt_list', $list);
 
             $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates.<br>All items available on a FIRST COME, FIRST SERVED basis only.';
 
-            $this->template->vars('annotation', $annotation);
+            $this->main->template->vars('annotation', $annotation);
 
             $paginator = new Controller_Paginator($this);
             $paginator->produkt_paginator_home($total, $page, 'shop_specials');
         } else {
-            $this->template->vars('count_rows', 0);
+            $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
-            $this->template->vars('main_produkt_list', $list);
+            $this->main->template->vars('main_produkt_list', $list);
         }
     }
 
@@ -600,9 +571,9 @@ class Controller_Shop extends Controller_Controller
     {
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
-        $this->main_produkt_list_popular();
+        $this->product_list_by_type('popular');
         $page_title = "Popular Textile";
-        $this->template->vars('page_title', $page_title);
+        $this->main->template->vars('page_title', $page_title);
 
         $this->main->view('shop');
     }
@@ -626,14 +597,6 @@ class Controller_Shop extends Controller_Controller
         }
         $per_page = 12;
 
-        if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
-            $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
-                " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-                " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id'";
-        } else {
-            $q_total = "SELECT COUNT(*) FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1'";
-        }
         $res = mysql_query($q_total);
         $total = mysql_fetch_row($res)[0];
         if ($total > $max_count_new_items) $total = $max_count_new_items;
@@ -645,16 +608,6 @@ class Controller_Shop extends Controller_Controller
 
         if ($total < ($start + $per_page)) $per_page = $total - $start;
 
-        if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
-            $catigori_name = $model->getCatName($cat_id);
-            $q = "SELECT a.* FROM `fabrix_products` a" .
-                " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-                " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id' ORDER BY popular DESC LIMIT $start,$per_page";
-        } else {
-            $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' ORDER BY popular DESC LIMIT $start,$per_page";
-        }
-        $res = mysql_query($q);
         if ($res) {
             $res_count_rows = mysql_num_rows($res);
             $this->template->vars('count_rows', $res_count_rows);
@@ -728,7 +681,7 @@ class Controller_Shop extends Controller_Controller
     {
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
-        $this->main_produkt_list_best();
+        $this->product_list_by_type('best');
         $page_title = "Best Textile";
         $this->template->vars('page_title', $page_title);
 
@@ -846,65 +799,6 @@ class Controller_Shop extends Controller_Controller
         }
     }
 
-    public function widget_products($type, $start, $limit, $layout = 'widget_products')
-    {
-        $model = new Model_Product();
-        $rows = $model->get_prod_list_by_type($type, $start, $limit, $row_count, $image_suffix);
-        if ($rows) {
-
-            $mp = new Model_Price();
-
-            $sys_hide_price = $mp->sysHideAllRegularPrices();
-            $this->template->vars('sys_hide_price', $sys_hide_price);
-
-            ob_start();
-            $first = true;
-            $last = false;
-            $i = 1;
-            foreach ($rows as $row) {
-                $cat_name = $model->getCatName($row[20]);
-                $row[8] = substr($row[8], 0, 100);
-                $base_url = BASE_URL;
-
-                $filename = 'upload/upload/' . $image_suffix . $row[14];
-                if (!(file_exists($filename) && is_file($filename))) {
-                    $filename = 'upload/upload/not_image.jpg';
-                }
-                $filename = $base_url . '/' . $filename;
-
-                $pid = $row[0];
-                $price = $row[5];
-                $inventory = $row[6];
-                $piece = $row[34];
-                $format_price = '';
-                $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
-
-                $discountIds = array();
-                $saleprice = $row[5];
-                $sDiscount = 0;
-                $saleprice = $mp->calculateProductSalePrice($pid, $saleprice, $discountIds);
-                $bProductDiscount = $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
-                $format_sale_price = '';
-                $saleprice = $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
-
-                $hide_price = $row['makePriceVis'];
-                $this->template->vars('hide_price', $hide_price);
-
-                $last = $i++ == $row_count;
-
-                include('./views/widgets/' . $layout . '.php');
-                $first = false;
-            }
-
-            $list = ob_get_contents();
-            ob_end_clean();
-
-        } else {
-            $list = "No Result!!!";
-        }
-        return $list;
-    }
-
     public function modify_products_images()
     {
 
@@ -939,10 +833,84 @@ class Controller_Shop extends Controller_Controller
         $this->template->vars('ProductFiltrList', $data);
     }
 
-
     function widget_popular()
     {
         echo $this->widget_products('popular', 0, 5);
+    }
+
+    public function widget_products($type, $start, $limit, $layout = 'widget_products')
+    {
+        $model = new Model_Product();
+        $rows = $model->get_prod_list_by_type($type, $start, $limit, $row_count, $image_suffix);
+        if ($rows) {
+
+            $mp = new Model_Price();
+
+            $sys_hide_price = $mp->sysHideAllRegularPrices();
+            $this->template->vars('sys_hide_price', $sys_hide_price);
+
+            ob_start();
+            $first = true;
+            $last = false;
+            $i = 1;
+            foreach ($rows as $row) {
+                $cat_name = $model->getCatName($row[20]);
+                $row[8] = substr($row[8], 0, 100);
+                $base_url = BASE_URL;
+
+                $filename = 'upload/upload/' . $image_suffix . $row[14];
+                if (!(file_exists($filename) && is_file($filename))) {
+                    $filename = 'upload/upload/not_image.jpg';
+                }
+                $filename = _A_::$app->router()->UrlTo($filename);
+
+                $pid = $row[0];
+                $price = $row[5];
+                $inventory = $row[6];
+                $piece = $row[34];
+                $format_price = '';
+                $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
+
+                $discountIds = array();
+                $saleprice = $row[5];
+                $sDiscount = 0;
+                $saleprice = $mp->calculateProductSalePrice($pid, $saleprice, $discountIds);
+                $bProductDiscount = $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
+                $format_sale_price = '';
+                $saleprice = $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
+
+                $hide_price = $row['makePriceVis'];
+                $this->template->vars('hide_price', $hide_price);
+
+                $last = $i++ == $row_count;
+
+                $this->template->vars('last', $last);
+                $this->template->vars('first', $first);
+                $this->template->vars('saleprice', $saleprice);
+                $this->template->vars('format_sale_price', $format_sale_price);
+                $this->template->vars('bProductDiscount', $bProductDiscount);
+                $this->template->vars('sDiscount', $sDiscount);
+                $this->template->vars('piece', $piece);
+                $this->template->vars('inventory', $inventory);
+                $this->template->vars('discountIds', $discountIds);
+                $this->template->vars('pid', $pid);
+                $this->template->vars('cat_name', $cat_name);
+                $this->template->vars('filename', $filename);
+                $this->template->vars('row', $row);
+                $this->template->vars('hide_price', $hide_price);
+                $this->template->vars('sys_hide_price', $sys_hide_price);
+
+                $this->template->view_layout('widgets/' . $layout);
+                $first = false;
+            }
+
+            $list = ob_get_contents();
+            ob_end_clean();
+
+        } else {
+            $list = "No Result!!!";
+        }
+        return $list;
     }
 
     function widget_new()

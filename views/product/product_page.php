@@ -2,8 +2,10 @@
     class="single single-product woocommerce woocommerce-page header-large ltr sticky-header-yes wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3 small-sticky">
 <div class="site-container">
 
-    <link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/views/css/jquery-ui.min.css' type='text/css' media='all'/>
-    <script type='text/javascript' src='<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/views/js/jquery-ui.min.js'></script>
+    <link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>'
+          type='text/css' media='all'/>
+    <script type='text/javascript'
+            src='<?php echo _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
     <?php include "views/header.php"; ?>
 
@@ -49,7 +51,8 @@
                         <div class="thumbnails columns-4">
                             <?php
                             if (!empty($userInfo['image2']) || !empty($userInfo['image3']) ||
-                            !empty($userInfo['image4']) || !empty($userInfo['image5'])) {
+                                !empty($userInfo['image4']) || !empty($userInfo['image5'])
+                            ) {
                                 ?>
                                 <p><b>MORE IMAGES OF THIS FABRIC</b></p>
                                 <?php
@@ -146,7 +149,7 @@
                         <div class="product_title_desc">
                             <p><?= $userInfo['ldesc']; ?></p>
                         </div>
-                        <div  class="product_title_price">
+                        <div class="product_title_price">
                             <?php if ($sys_hide_price == 0 && $hide_price == 0) { ?>
                                 <p class="price">Price:
                                     <ins>
@@ -171,12 +174,12 @@
                             if ($userInfo['inventory'] > 0) {
                                 ?>
                                 <a id="add_cart"
-                                   href="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/add_cart?p_id=<?php echo $pid ?>" <?php echo !isset($in_cart) ? '' : 'style="display: none;"'; ?>>
+                                   href="<?php echo _A_::$app->router()->UrlTo('cart/add', ['p_id' => $pid]) ?>" <?php echo !isset($in_cart) ? '' : 'style="display: none;"'; ?>>
                                     <button type="button" class="single_add_to_cart_button button alt">Add to cart
                                     </button>
                                 </a>
                                 <a id="view_cart"
-                                   href="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/cart" <?php echo isset($in_cart) ? '' : 'style="display: none;"'; ?>>
+                                   href="<?php echo _A_::$app->router()->UrlTo('cart') ?>" <?php echo isset($in_cart) ? '' : 'style="display: none;"'; ?>>
                                     <button type="button" class="single_add_to_cart_button button alt">Basket
                                     </button>
                                 </a>
@@ -188,7 +191,7 @@
                             if ($userInfo['inventory'] > 0 && $allowed_samples) {
                                 ?>
                                 <a id="add_samples_cart"
-                                   href="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/add_samples_cart?p_id=<?php echo $pid ?>" <?php echo !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
+                                   href="<?php echo _A_::$app->router()->UrlTo('cart/add_samples', ['p_id' => $pid]) ?>" <?php echo !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
                                     <button type="button" class="single_add_to_cart_button button alt">Add Samples
                                     </button>
                                 </a>
@@ -204,18 +207,18 @@
                                 <button type="button" class="single_add_to_cart_button button alt">Ask a Question
                                 </button>
                             </a>
-                            <?php if($img1_exists){?>
-                            <a id="add_matches"
-                               href="<?php echo $mhref; ?>" <?php echo !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
-                                <button type="button" class="single_add_to_cart_button button alt">Add to Matches
-                                </button>
-                            </a>
-                            <a id="view_matches"
-                               href="<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/matches" <?php echo isset($in_matches) ? '' : 'style="display: none;"'; ?>>
-                                <button type="button" class="single_add_to_cart_button button alt">View Matches
-                                </button>
-                            </a>
-                            <?php }?>
+                            <?php if ($img1_exists) { ?>
+                                <a id="add_matches"
+                                   href="<?php echo $mhref; ?>" <?php echo !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
+                                    <button type="button" class="single_add_to_cart_button button alt">Add to Matches
+                                    </button>
+                                </a>
+                                <a id="view_matches"
+                                   href="<?php echo _A_::$app->router()->UrlTo('matches'); ?>" <?php echo isset($in_matches) ? '' : 'style="display: none;"'; ?>>
+                                    <button type="button" class="single_add_to_cart_button button alt">View Matches
+                                    </button>
+                                </a>
+                            <?php } ?>
                         </b>
 
                         <div class="product_meta">
@@ -257,7 +260,7 @@
     <script type="text/javascript">
 
         (function ($) {
-            var base_url = '<?php echo _A_::$app->router()->UrlTo('mnf');?>';
+            var base_url = '<?php echo _A_::$app->router()->UrlTo('/');?>';
             var back_url = '<?php echo $back_url;?>';
 
             $('a#add_cart').on('click',
