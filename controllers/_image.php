@@ -8,10 +8,8 @@ class Controller_Image extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $userInfo = $model->validData(_A_::$app->get('produkt_id') );
-        $pid_id = $userInfo['data'];
-        $userInfo = $model->validData(_A_::$app->get('idx'));
-        $im_id = $userInfo['data'];
+        $pid_id = $model->validData(_A_::$app->get('produkt_id') );
+        $im_id = $model->validData(_A_::$app->get('idx'));
         if (!empty($pid_id)) {
             if (!empty($im_id)) {
                 $db_g = "image$im_id";
@@ -139,8 +137,7 @@ class Controller_Image extends Controller_Base
         $model = new Model_Product();
         if (!is_null(_A_::$app->get('pid'))) {
             $produkt_photo = !is_null(_A_::$app->get('idx')) ? _A_::$app->get('idx') : 1;
-            $userInfo = $model->validData(_A_::$app->get('pid'));
-            $produkt_id = $userInfo['data'];
+            $produkt_id = $model->validData(_A_::$app->get('pid'));
             $ts = uniqid();
             $uploaddir = 'upload/upload/';
             $file = "p" . $produkt_id . "t" . $ts . '.jpg';

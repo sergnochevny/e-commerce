@@ -22,65 +22,6 @@ Class Controller_Index Extends Controller_Controller
         $this->main->view_admin('admin_home');
     }
 
-//////////////////////////////////////////////////////////// AUTHORIZATION
-
-    function admin()
-    {
-        $authorization = new Controller_Authorization($this->main);
-        $authorization->admin_authorization();
-    }
-
-    function user_authorization()
-    {
-        $authorization = new Controller_Authorization($this->main);
-        $authorization->user_authorization();
-    }
-
-    function admin_log_out()
-    {
-        $authorization = new Controller_Authorization($this->main);
-        $authorization->admin_log_out();
-    }
-
-    function user_log_out()
-    {
-        $authorization = new Controller_Authorization($this->main);
-        $authorization->user_log_out();
-    }
-
-    function lost_password()
-    {
-        $authorization = new Controller_Authorization($this->main);
-        $authorization->lost_password();
-    }
-
-    function remind_sent()
-    {
-        $authorization = new Controller_Authorization($this->main);
-        $authorization->remind_sent();
-    }
-
-//    function update_admin_passwd(){
-//        $authorization = new Controller_Authorization($this->main);
-//        $authorization->update_admin_passwd();
-//    }
-//////////////////////////////////////////////////////////// AUTHORIZATION
-
-    function add_all_to_cart()
-    {
-        $matches = new Controller_Matches($this->main);
-        $matches->add_all_to_cart();
-    }
-
-    function product_in_matches($p_id)
-    {
-        $matches = new Controller_Matches($this->main);
-        return $matches->product_in_matches($p_id);
-    }
-
-
-//////////////////////////////////////////////////////////// MATCHES
-
 //////////////////////////////////////////////////////////// BLOG
 //    function convert()
 //    {
@@ -159,50 +100,6 @@ Class Controller_Index Extends Controller_Controller
     }
 
 //////////////////////////////////////////////////////////// BLOG
-//////////////////////////////////////////////////////////// BLOGCATEGORY
-
-    function admin_blog_categories()
-    {
-
-        $this->main->test_access_rights();
-        $blogcategory = new Controller_BlogCategory($this->main);
-        $blogcategory->admin_blog_categories();
-    }
-
-    function del_blog_category()
-    {
-        $this->main->test_access_rights();
-        $blogcategory = new Controller_BlogCategory($this->main);
-        $blogcategory->del_blog_category();
-    }
-
-    function edit_blog_category()
-    {
-        $this->main->test_access_rights();
-        $blogcategory = new Controller_BlogCategory($this->main);
-        $blogcategory->edit_blog_category();
-    }
-
-    function save_blog_category()
-    {
-        $this->main->test_access_rights();
-        $blogcategory = new Controller_BlogCategory($this->main);
-        $blogcategory->save_blog_category();
-    }
-
-    function new_blog_category()
-    {
-        $this->main->test_access_rights();
-        $blogcategory = new Controller_BlogCategory($this->main);
-        $blogcategory->new_blog_category();
-    }
-
-    function save_new_blog_category()
-    {
-        $this->main->test_access_rights();
-        $blogcategory = new Controller_BlogCategory($this->main);
-        $blogcategory->save_new_blog_category();
-    }
 
 
     function service()
@@ -236,12 +133,6 @@ Class Controller_Index Extends Controller_Controller
     {
         $image = new Controller_Image($this->main);
         $image->del_pic();
-    }
-
-    function upload_product_img()
-    {
-        $image = new Controller_Image($this->main);
-        $image->upload_product_img();
     }
 
     function save_img_link()
@@ -344,10 +235,8 @@ Class Controller_Index Extends Controller_Controller
     function search()
     {
         $model = new Model_Tools();
-        $userInfo = $model->validData($_GET['s']);
-        $search_qv = $userInfo['data'];
-        $userInfo = $search_qv;
-        $this->template->vars('userInfo', $userInfo);
+        $search_qv = $model->validData($_GET['s']);
+        $this->template->vars('userInfo', $search_qv);
         $this->main->view('search/search');
     }
 

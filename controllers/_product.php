@@ -7,8 +7,7 @@ class Controller_Product extends Controller_Controller
     {
         $model = new Model_Product();
         $samples_model = new Model_Samples();
-        $userInfo = $model->validData( _A_::$app->get('p_id'));
-        $produkt_id = $userInfo['data'];
+        $produkt_id = $model->validData( _A_::$app->get('p_id'));
         $userInfo = $model->getPrName($produkt_id);
 
         include_once('controllers/_matches.php');
@@ -681,8 +680,7 @@ class Controller_Product extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $userInfo = $model->validData(_A_::$app->get('produkt_id'));
-        $del_produkt_id = $userInfo['data'];
+        $del_produkt_id = $model->validData(_A_::$app->get('produkt_id'));
         $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : null;
         $cat = !is_null(_A_::$app->get('cat')) ?  _A_::$app->get('cat') : null;
         if (!empty($del_produkt_id)) {
