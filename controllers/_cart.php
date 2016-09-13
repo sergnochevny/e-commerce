@@ -546,23 +546,23 @@ class Controller_Cart extends Controller_Controller
                     $this->thanx_mail();
                     _A_::$app->session('cart', null);
                 } else {
-                    $url = $base_url . '/shop';
+                    $url = _A_::$app->router()->UrlTo('/shop');
                     $this->redirect($url);
                 }
             } else {
-                $url = $base_url . '/shop';
+                $url = _A_::$app->router()->UrlTo('/shop');
                 $this->redirect($url);
             }
         } else {
-            $url = $base_url . '/shop';
+            $url = _A_::$app->router()->UrlTo('/shop');
             $this->redirect($url);
         }
     }
 
     protected function proceed_checkout_prepare()
     {
-        $base_url = BASE_URL;
-        $back_url = $base_url . '/cart';
+        $prms = null;
+        $back_url = _A_::$app->router()->UrlTo('/cart');
         $this->template->vars('back_url', $back_url);
         $cart = _A_::$app->session('cart');
         unset($cart['discountIds']);
@@ -598,7 +598,10 @@ class Controller_Cart extends Controller_Controller
         ob_end_clean();
         $this->template->vars('bill_ship_info', $bill_ship_info);
         $back_url = '/cart?proceed';
-        $change_user_url = $base_url . '/change_registration_data?url=' . urlencode(base64_encode($back_url));
+
+        $prms['url'] = urlencode(base64_encode($back_url));
+        $change_user_url = _A_::$app->router()->UrlTo('/change_registration_data',$prms);
+
         $this->template->vars('change_user_url', $change_user_url);
 
     }
@@ -640,16 +643,14 @@ class Controller_Cart extends Controller_Controller
 
     function proceed_checkout()
     {
-        $base_url = BASE_URL;
         $this->proceed_checkout_prepare();
-
         $this->main->view_layout('basket/proceed_checkout');
     }
 
     function proceed_agreem()
     {
-        $base_url = BASE_URL;
-        $back_url = $base_url . '/cart?proceed';
+        $prms = null;
+        $back_url = _A_::$app->router()->UrlTo('/cart', ['proceed' => true]);
         $this->template->vars('back_url', $back_url);
         $total = _A_::$app->session('cart')['total'];
         $this->template->vars('total', $total);
@@ -699,10 +700,10 @@ class Controller_Cart extends Controller_Controller
         }
 
         $paypal['cmd'] = "_xclick";
-        $paypal['image_url'] = $base_url;
-        $paypal['return'] = $base_url . "/cart?pay_ok&trid=" . $trid;
-        $paypal['cancel_return'] = $base_url . "/cart?pay_error";
-        $paypal['notify_url'] = $base_url .'/ipn/ipn.php?pay_notify='.session_id();
+        $paypal['image_url'] = _A_::$app->router()->UrlTo('/');
+        $paypal['return'] = _A_::$app->router()->UrlTo('/cart',['pay_ok'=> true, 'trid' => $trid]);
+        $paypal['cancel_return'] = _A_::$app->router()->UrlTo("/cart",['pay_error' => true]);
+        $paypal['notify_url'] = _A_::$app->router()->UrlTo("/ipn/ipn.php",['pay_notify' => session_id()]);
         $paypal['rm'] = "1";
         $paypal['currency_code'] = "USD";
         $paypal['lc'] = "US";
@@ -1202,7 +1203,8 @@ class Controller_Cart extends Controller_Controller
         if (!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
             $filename = "upload/upload/not_image.jpg";
         }
-        $img_url = $base_url . '/' . $filename;
+        $img_url = _A_::$app->router()->UrlTo($filename);
+
 
         include($template);
     }
@@ -1220,6 +1222,7 @@ class Controller_Cart extends Controller_Controller
             $filename = "upload/upload/not_image.jpg";
         }
         $img_url = $base_url . '/' . $filename;
+        $img_url = _A_::$app->router()->UrlTo($filename);
 
 
         $mp = new Model_Price();

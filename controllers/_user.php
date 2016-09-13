@@ -128,7 +128,7 @@ class Controller_User extends Controller_Controller
                             $user_s_address2, $user_s_city, $user_s_state, $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax,
                             $user_s_email, $user_id);
 
-                        if ($result) {
+                        if ($result) { 
                             if (!is_null(_A_::$app->session['_']) && ($user_id == _A_::$app->session('_'))) {
                                 $user = $model->get_user_by_id($user_id);
                                 if (isset($user)) {
