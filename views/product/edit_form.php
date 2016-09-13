@@ -301,7 +301,7 @@
             action: function(){
                 var idx = $('input[name=images]:checked').val();
                 if (!idx) idx = 1;
-                return 'upload_product_img?pid=<?php echo $_GET['produkt_id'];?>&idx='+idx
+                return 'upload_product_img?pid=<?php echo $_GET['p_id'];?>&idx='+idx
             },
             name: 'uploadfile',
             onSubmit: function (file, ext) {
@@ -312,7 +312,7 @@
             },
             onComplete: function (file, response) {
                 if (response === "success") {
-                    $('#modify_images2').load('modify_images<?php echo '?produkt_id='.$_GET['produkt_id'];?>');
+                    $('#modify_images2').load('modify_images<?php echo '?p_id='.$_GET['p_id'];?>');
                 }
             }
         });

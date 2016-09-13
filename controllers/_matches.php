@@ -3,18 +3,6 @@
 class Controller_Matches extends Controller_Base
 {
 
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
-
-
     function matches()
     {
         $base_url = BASE_URL;
@@ -25,7 +13,7 @@ class Controller_Matches extends Controller_Base
                 ob_start();
                 $left = 2; $top = 2;
                 foreach ($matches_items as $key => $item) {
-                    $product_id = $item['produkt_id'];
+                    $product_id = $item['p_id'];
                     $img = $base_url . '/upload/upload/' . $item['img'];
                     include('views/matches/matches_item.php');
                     $left += 6; $top += 4;
@@ -39,13 +27,13 @@ class Controller_Matches extends Controller_Base
         $this->main->view('matches/matches');
     }
 
-    function add_matches()
+    function add()
     {
         $added = 0;
         $model = new Model_Product();
 
         if (!is_null(_A_::$app->get('p_id')) && !empty(_A_::$app->get('p_id'))) {
-            $produkt_id = _A_::$app->get('p_id');
+            $p_id = _A_::$app->get('p_id');
             if (!is_null(_A_::$app->session('matches')['items'])) {
                 $matches_items = _A_::$app->session('matches')['items'];
             } else {
@@ -55,7 +43,7 @@ class Controller_Matches extends Controller_Base
             $item_added = false;
             if (count($matches_items) > 0) {
                 foreach ($matches_items as $key => $item) {
-                    if ($item['produkt_id'] == $produkt_id) {
+                    if ($item['p_id'] == $p_id) {
                         $item_added = true;
                     }
                 }
@@ -63,13 +51,13 @@ class Controller_Matches extends Controller_Base
 
             if (!$item_added) {
                 $suffix_img = 'b_';
-                $images = $model->getImage($produkt_id);
+                $images = $model->getImage($p_id);
 
                 if (isset($images['image1'])){
                     $file_img = 'upload/upload/'.$images['image1'];
                     if (file_exists($file_img) && is_file($file_img)) {
                         $images['image1'] = $suffix_img . $images['image1'];
-                        $matches_items[] = ['produkt_id' => $produkt_id, 'img' => $images['image1']];
+                        $matches_items[] = ['p_id' => $p_id, 'img' => $images['image1']];
                     }
                 }
             }
@@ -90,11 +78,11 @@ class Controller_Matches extends Controller_Base
         echo json_encode(['data' => $data, 'added' => $added]);
     }
 
-    function del_matches()
+    function del()
     {
 
         if (!is_null(_A_::$app->post('p_id')) && !empty(_A_::$app->post('p_id'))) {
-            $produkt_id = _A_::$app->post('p_id');
+            $p_id = _A_::$app->post('p_id');
             if (!is_null(_A_::$app->session('matches')['items'])) {
                 $matches_items = _A_::$app->session('matches')['items'];
             } else {
@@ -103,7 +91,7 @@ class Controller_Matches extends Controller_Base
 
             if (count($matches_items) > 0) {
                 foreach ($matches_items as $key => $item) {
-                    if ($item['produkt_id'] == $produkt_id) {
+                    if ($item['p_id'] == $p_id) {
                         unset($matches_items[$key]);
                     }
                 }
@@ -116,14 +104,14 @@ class Controller_Matches extends Controller_Base
         }
     }
 
-    function clear_matches()
+    function clear()
     {
         if (!is_null(_A_::$app->session('matches')['items'])) {
             _A_::$app->setSession('matches', null);
         }
     }
 
-    function add_all_to_cart()
+    function all_to_cart()
     {
         $added = 0;
         if (!is_null(_A_::$app->post('data')) && !empty(_A_::$app->post('data'))) {
@@ -143,7 +131,7 @@ class Controller_Matches extends Controller_Base
                         $item_added = false;
 
                         foreach ($cart_items as $key => $item) {
-                            if ($item['produkt_id'] == $product_id) {
+                            if ($item['p_id'] == $product_id) {
                                // $cart_items[$key]['quantity'] += 1;
                                 $item_added = true;
                             }
@@ -180,7 +168,7 @@ class Controller_Matches extends Controller_Base
                                 $product['format_price'] = $format_price;
                                 $product['format_sale_price'] = $format_sale_price;
 
-                                $cart_items[$product['produkt_id']] = $product;
+                                $cart_items[$product['p_id']] = $product;
 
                                 $message .= 'The product '.$product['Product_name'].' have been added to your Basket.<br>';
 
@@ -220,7 +208,7 @@ class Controller_Matches extends Controller_Base
         $this->main->view_layout('msgs/msg_add_matches');
     }
 
-    function product_in_matches($p_id)
+    function product_in($p_id)
     {
         if (!is_null(_A_::$app->session('matches')['items'])) {
             $matches_items = _A_::$app->session('matches')['items'];
@@ -231,7 +219,7 @@ class Controller_Matches extends Controller_Base
 
         $item_added = false;
         foreach ($matches_items as $key => $item) {
-            if ($item['produkt_id'] == $p_id) {
+            if ($item['p_id'] == $p_id) {
                 $item_added = true;
                 break;
             }

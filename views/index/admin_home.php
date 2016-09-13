@@ -1,8 +1,6 @@
 <body
     class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 
-<link type='text/css' href='modal_windows/modal_windows/css/confirm.css' rel='stylesheet' media='screen'/>
-
 <div class="site-container">
     <?php include "views/header.php"; ?>
 
@@ -28,30 +26,24 @@
                         onChange="if(this.options[this.selectedIndex].value!=''){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}"
                         class="orderby">
                         <option value="admin_home">--FILTER BY CATEGORY--</option>
-
                         <?php
                         foreach ($rows as $row) {
                             ?>
-
                             <option
-                                value="admin_home?cat=<?php echo $row[0]; ?>" <?php echo (isset($_GET['cat']) && ($row[0] == $_GET['cat'])) ? 'selected' : ''; ?>><?php echo $row[1]; ?></option>
-
+                                value="<?php echo _A_::$app->router()->UrlTo('admin_home', ['cat' => $row[0]]) ?>" <?php echo (!is_null(_A_::$app->get('cat')) && ($row[0] == _A_::$app->get('cat'))) ? 'selected' : ''; ?>><?php echo $row[1]; ?>
+                            </option>
                         <?php } ?>
-
                     </select>
                 </form>
                 <ul class="products">
                     <div class="product-inner">
-                        <?php
-                        echo $produkt_list;
-                        ?>
+                        <?php echo $list; ?>
+                    </div>
                 </ul>
                 <nav role="navigation" class="paging-navigation">
                     <h4 class="sr-only">Products navigation</h4>
                     <ul class='pagination'>
-                        <?php
-                        echo isset($paginator) ? $paginator : '';
-                        ?>
+                        <?php echo isset($paginator) ? $paginator : '';?>
                     </ul>
                 </nav>
             </div>

@@ -2,7 +2,7 @@
 
 class Controller_Paginator extends Controller_Controller
 {
-    function produkt_paginator($total_rows, $page)
+    function product_paginator($total_rows, $page)
     {
         $this->template->vars('url', 'admin_home');
         if (!is_null(_A_::$app->get('cat'))) {
@@ -53,7 +53,7 @@ class Controller_Paginator extends Controller_Controller
         $this->paginator($total_rows, $page, $per_page);
     }
 
-    function produkt_paginator_home($total_rows, $page, $url = 'shop')
+    function product_paginator_home($total_rows, $page, $url = 'shop')
     {
 
         if (!is_null(_A_::$app->post('s')) && (empty(_A_::$app->post('s')))) {

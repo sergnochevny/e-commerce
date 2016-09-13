@@ -1363,8 +1363,8 @@ class Controller_Cart extends Controller_Controller
         $base_url = BASE_URL;
         if (!empty(_A_::$app->get('p_id'))) {
             $model = new Model_Cart();
-            $produkt_id = $model->validData($_GET['p_id']);
-            $product = $model->get_product_params($produkt_id);
+            $p_id = $model->validData($_GET['p_id']);
+            $product = $model->get_product_params($p_id);
 
             if (!is_null(_A_::$app->session('cart')['items'])) {
                 $cart_items = _A_::$app->session('cart')['items'];
@@ -1377,7 +1377,7 @@ class Controller_Cart extends Controller_Controller
                 $item_added = false;
                 if (count($cart_items) > 0) {
                     foreach ($cart_items as $key => $item) {
-                        if ($item['produkt_id'] == $produkt_id) {
+                        if ($item['p_id'] == $p_id) {
                             $cart_items[$key]['quantity'] += 1;
                             $item_added = true;
                         }
@@ -1387,7 +1387,7 @@ class Controller_Cart extends Controller_Controller
                 if (!$item_added) {
 
                     $mp = new Model_Price();
-                    $pid = $produkt_id;
+                    $pid = $p_id;
                     $price = $product['Price'];
                     $inventory = $product['inventory'];
                     $piece = $product['piece'];
@@ -1418,7 +1418,7 @@ class Controller_Cart extends Controller_Controller
                     $t_pr = "$" . number_format($t_pr, 2);
                     $product['format_subtotal'] = $t_pr;
 
-                    $cart_items[$product['produkt_id']] = $product;
+                    $cart_items[$product['p_id']] = $product;
 
                 }
 
@@ -1476,8 +1476,8 @@ class Controller_Cart extends Controller_Controller
         $base_url = BASE_URL;
         if (!empty(_A_::$app->get('p_id'))) {
             $model = new Model_Cart();
-            $produkt_id = $model->validData($_GET['p_id']);
-            $product = $model->get_product_params($produkt_id);
+            $p_id = $model->validData($_GET['p_id']);
+            $product = $model->get_product_params($p_id);
 
             if (!is_null(_A_::$app->session('cart')['items'])) {
                 $cart_items = _A_::$app->session('cart')['items'];
@@ -1494,13 +1494,13 @@ class Controller_Cart extends Controller_Controller
             if ($product['inventory'] > 0) {
 
                 $item_added = false;
-                if (count($cart_samples_items) > 0 && isset($cart_samples_items[$produkt_id])) {
+                if (count($cart_samples_items) > 0 && isset($cart_samples_items[$p_id])) {
                     $item_added = true;
                 }
 
                 if (!$item_added) {
 
-                    $cart_samples_items[$product['produkt_id']] = $product;
+                    $cart_samples_items[$product['p_id']] = $product;
                     $mp = new Model_Price();
                     $ms = new Model_Samples();
                     $cart_samples_sum = round($ms->calculateSamplesPrice($cart_items, $cart_samples_items), 2);

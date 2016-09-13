@@ -38,13 +38,13 @@
                 <p class="woocommerce-result-count">
                     <?php
                     if (!empty(_A_::$app->get('cat'))) {
-                        echo 'CATEGORY: ' . $catigori_name['cname'] . '<br/>';
+                        echo 'CATEGORY: ' . $catigori_name . '<br/>';
                     }
                     if (!empty(_A_::$app->get('mnf'))) {
-                        echo 'MANUFACTURER: ' . $mnf_name['manufacturer'] . '<br/>';
+                        echo 'MANUFACTURER: ' . $mnf_name . '<br/>';
                     }
                     if (!empty(_A_::$app->get('ptrn'))) {
-                        echo 'PATTERN: ' . $ptrn_name['pattern'] . '<br/>';
+                        echo 'PATTERN: ' . $ptrn_name . '<br/>';
                     }
                     echo isset($count_rows) ? "Showing " . $count_rows . " results" : "Showing ... results";
                     ?>
@@ -55,7 +55,7 @@
                 ?>
                 <ul class="products">
                     <?php
-                    echo $main_produkt_list;
+                    echo $list;
                     ?>
                 </ul>
                 <nav role="navigation" class="paging-navigation">

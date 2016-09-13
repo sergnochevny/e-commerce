@@ -1,7 +1,7 @@
 <?php
 
-$userInfo = $model->validData($_GET['produkt_id']);
-$produkt_id = $userInfo['data'];
+$userInfo = $model->validData($_GET['p_id']);
+$p_id = $userInfo['data'];
 $userInfo = $model->validData($_POST['desc']);
 $post_desc = mysql_real_escape_string($userInfo['data']);
 $userInfo = $model->validData($_POST['mkey']);
