@@ -247,7 +247,7 @@ class Controller_Authorization extends Controller_Base
 
     public function get_user_from_session()
     {
-        return _A_::$app->session('user', null);
+        return _A_::$app->setSession('user', null);
     }
 
     public function lost_password()
