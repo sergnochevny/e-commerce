@@ -11,7 +11,7 @@
                     <div id="message">
                         <p>
                             <span>
-                                <?php echo isset($message)?$message:'';?>
+                                <?= isset($message) ? $message : ''; ?>
                             </span>
                         <p>
                     </div>

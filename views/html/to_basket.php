@@ -8,7 +8,6 @@ echo "
           url: 'add_cart?p_id=$row[0]',
           data: msg,
           success: function(data) {
-
              $('#get_prise_in_cart').load('get_prise_in_cart');
              $('#in_product').load(" . _A_::$app->UrlTo('shop/product_list') . ");
              return false;

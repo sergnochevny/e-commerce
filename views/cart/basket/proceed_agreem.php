@@ -124,17 +124,17 @@
                 <input type="hidden" name="os1" value="">
 
                 <!-- Customer Information -->
-                <input type=hidden name="first_name" value="<?php echo $bill_firstname; ?>">
-                <input type=hidden name="last_name" value="<?php echo $bill_lastname; ?>">
-                <input type=hidden name="address1" value="<?php echo $bill_address1; ?>">
-                <input type=hidden name="address2" value="<?php echo $bill_address2; ?>">
-                <input type=hidden name="city" value="<?php echo $bill_city; ?>">
-                <input type=hidden name="state" value="<?php echo $bill_province; ?>">
-                <input type=hidden name="zip" value="<?php echo $bill_postal; ?>">
-                <input type=hidden name="email" value="<?php echo $email; ?>">
-                <input type=hidden name="night_phone_a" value="<?php echo substr($bill_phone, 0, 3); ?>">
-                <input type=hidden name="night_phone_b" value="<?php echo substr($bill_phone, 3, 6); ?>">
-                <input type=hidden name="night_phone_c" value="<?php echo substr($bill_phone, 6, 10); ?>">
+                <input type=hidden name="first_name" value="<?=    $bill_firstname; ?>">
+                <input type=hidden name="last_name" value="<?=     $bill_lastname; ?>">
+                <input type=hidden name="address1" value="<?=      $bill_address1; ?>">
+                <input type=hidden name="address2" value="<?=      $bill_address2; ?>">
+                <input type=hidden name="city" value="<?=          $bill_city; ?>">
+                <input type=hidden name="state" value="<?=         $bill_province; ?>">
+                <input type=hidden name="zip" value="<?=           $bill_postal; ?>">
+                <input type=hidden name="email" value="<?=         $email; ?>">
+                <input type=hidden name="night_phone_a" value="<?= substr($bill_phone, 0, 3); ?>">
+                <input type=hidden name="night_phone_b" value="<?= substr($bill_phone, 3, 6); ?>">
+                <input type=hidden name="night_phone_c" value="<?= substr($bill_phone, 6, 10); ?>">
 
                 <input type="submit" name="Submit" value="Pay with PayPal">
 

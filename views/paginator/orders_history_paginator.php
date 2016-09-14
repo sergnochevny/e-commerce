@@ -1,9 +1,5 @@
 <?php
-$sq = '';
-if (isset($_GET['orders_search_query'])) {
-    $sq = '&orders_search_query=' . $_GET['orders_search_query'] . '';
-}
-
+    $sq = isset($_GET['orders_search_query']) ? '&orders_search_query=' . $_GET['orders_search_query'] : '';
 ?>
 <li>
     <?php

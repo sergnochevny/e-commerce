@@ -6,19 +6,22 @@
         var commentPublic = jQuery("#comment_public");
         var pub = commentPublic.attr("checked");
 
-        if(pub != 'checked') pub = 0;
-        else pub = 1;
+        pub = (pub != 'checked') ? 0 : 1;
 
-        jQuery.post(address, {comment_data : data, comment_title : title, ID : id, publish : pub}, function(data){
-            if(data.length > 0){
-                messageBlock.html(data);
-                    if(messageBlock.attr('display') != 'none') {
-                        messageBlock.slideDown(400);
-                    }
-                messageBlock.delay(5000);
-                messageBlock.slideUp(400);
+        jQuery.post(
+            address,
+            {comment_data : data, comment_title : title, ID : id, publish : pub},
+            function(data){
+                if(data.length > 0){
+                    messageBlock.html(data);
+                        if(messageBlock.attr('display') != 'none') {
+                            messageBlock.stop().slideDown(400);
+                        }
+                    messageBlock.delay(5000);
+                    messageBlock.stop().slideUp(400);
+                }
             }
-        });
+        );
     }
 </script>
 <form class="form-horizontal comment-form container-fluid" method="post">

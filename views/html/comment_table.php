@@ -3,7 +3,6 @@
         var title = jQuery("#comment_title").text();
         var data = jQuery("#comment_data").text();
         jQuery.post(address, {comment_data : data, comment_title : title, publish : "1"}, function(data){
-            
             console.log(data);
         });
         jQuery.get(view_update, "", function(data){

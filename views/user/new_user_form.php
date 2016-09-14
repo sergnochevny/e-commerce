@@ -239,10 +239,11 @@
                     url,
                     $(this).serialize(),
                     function (data) {
+                        var danger = $('.danger');
                         $("#user_form").html(data);
-                        if ($('.danger').length>0){
-                            $('.danger').css('display', 'block');
-                            $('html, body').animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
+                        if (danger.length>0){
+                            danger.css('display', 'block');
+                            $('html, body').stop().animate({scrollTop: parseInt(danger.offset().top) - 250 }, 1000);
                             setTimeout(function () {
                                 $('.danger').css('display', 'none');
                             }, 8000);

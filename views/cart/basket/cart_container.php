@@ -344,7 +344,7 @@
                         $.when($('#cart_main_container').html(data))
                             .done(
                                 function(){
-                                    $('html, body').animate({scrollTop: 0}, 1000);
+                                    $('html, body').stop().animate({scrollTop: 0}, 1000);
                                 }
                             );
                     }

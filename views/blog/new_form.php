@@ -86,7 +86,7 @@
         <p class="form-row">
             <label><strong>Publish:</strong></label>
             <?php
-            if ( isset($data['status']) && ($data['status'] == "publish")) {
+            if ( isset($data['status']) && $data['status'] === "publish") {
                 echo '<input id="chkML" type="checkbox" checked="checked" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>';
             } else {
                 echo '<input id="chkML" type="checkbox" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>';

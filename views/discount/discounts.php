@@ -50,10 +50,11 @@
 
                         $("#confirm_action").on('click.confirm_action',
                             function (event) {
+                                var body = $('body');
                                 event.preventDefault();
-                                $('body').waitloader('show');
+                                body.waitloader('show');
                                 $('#content').load(href);
-                                $('body').waitloader('remove');
+                                body.waitloader('remove');
                                 $("#confirm_dialog").removeClass('overlay_display');
                                 $("#confirm_action").off('click.confirm_action');
                             }

@@ -131,7 +131,7 @@
                 function (event) {
 
                     setTimeout(function () {
-                        $('html,body').animate({
+                        $('html, body').stop().animate({
                             scrollTop: $('#blog-page').offset().top
                         }, 2000);
                     }, 300);

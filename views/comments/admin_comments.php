@@ -122,8 +122,8 @@
                 $(document).on('click', 'a#edit-comment',
                     function (event) {
                         event.preventDefault();
-                        var href = $(this).attr('href');
-                        var href_update = "<?= BASE_URL ?>" + "/update_comment_list";
+                        var href = $(this).attr('href'),
+                            href_update = "<?= _A_::$app->router()->UrlTo('update_comment_list') ?>";
 
                         $.get(href, function(data){
                             $("#comment-view-dialog-data").html(data);

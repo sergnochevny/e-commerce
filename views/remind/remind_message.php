@@ -5,43 +5,43 @@
     <title>Upholstery Fabric</title>
     <meta name="KeyWords" content="Upholstery Fabric">
     <meta name="Description" content="Upholstery Fabric">
-    <link rel="icon" href="<?= $base_url?>/views/images/lf-logo.png">
-    <link rel="shortcut icon" href="<?= $base_url?>/views/images/lf-logo.png">
-    <link rel="apple-touch-icon" href="<?= $base_url?>/views/images/lf-logo.png">
-    <link rel="apple-touch-icon-precomposed" href="<?= $base_url?>/views/images/lf-logo.png">
+    <link charset="UTF-8" rel="icon" href="<?= $base_url?>/views/images/lf-logo.png">
+    <link charset="UTF-8" rel="shortcut icon" href="<?= $base_url?>/views/images/lf-logo.png">
+    <link charset="UTF-8" rel="apple-touch-icon" href="<?= $base_url?>/views/images/lf-logo.png">
+    <link charset="UTF-8" rel="apple-touch-icon-precomposed" href="<?= $base_url?>/views/images/lf-logo.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <link rel="apple-touch-startup-image" href="<?= $base_url?>/views/images/lf-logo.png">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/woocommerce-layout.css"
+    <link charset="UTF-8" rel="apple-touch-startup-image" href="<?= $base_url?>/views/images/lf-logo.png">
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/woocommerce-layout.css"
           type="text/css" media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/woocommerce-smallscreen.css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/woocommerce-smallscreen.css"
           type="text/css" media="only screen and (max-width: 768px)">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/woocommerce.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/woocommerce.css" type="text/css"
           media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/bootstrap.min.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/bootstrap.min.css" type="text/css"
           media="all">
-    <link rel="stylesheet" id="toko-smartmenu-css"
+    <link charset="UTF-8" rel="stylesheet" id="toko-smartmenu-css"
           href="<?= $base_url?>/views/css/jquery.smartmenus.bootstrap.css" type="text/css"
           media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/font-awesome.min.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/font-awesome.min.css" type="text/css"
           media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/js_composer.min.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/js_composer.min.css" type="text/css"
           media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/simple-line-icons.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/simple-line-icons.css" type="text/css"
           media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/webfont.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/webfont.css" type="text/css"
           media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/style-theme.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/style-theme.css" type="text/css"
           media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/style-woocommerce.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/style-woocommerce.css" type="text/css"
           media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/style-shortcodes.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/style-shortcodes.css" type="text/css"
           media="all">
-    <link rel="stylesheet" href="<?= $base_url?>/views/css/prettyPhoto.min.css" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= $base_url?>/views/css/prettyPhoto.min.css" type="text/css"
           media="all">
 
-    <link rel="stylesheet" id="toko-style-css" href="<?= $base_url?>/views/css/style.css"
+    <link charset="UTF-8" rel="stylesheet" id="toko-style-css" href="<?= $base_url?>/views/css/style.css"
           type="text/css" media="all">
 </head>
 
@@ -87,7 +87,7 @@
                         <div class="toko-post col-xs-12">
                             <div class="toko-post-detail">
                                 <p>
-                                    To change the password , click the link below. The link is valid for 24 hours.
+                                    To change the password , click the link charset="UTF-8" below. The link charset="UTF-8" is valid for 24 hours.
                                     If you did not request to change the password , just ignore this message.
                                 </p>
                                 <p>

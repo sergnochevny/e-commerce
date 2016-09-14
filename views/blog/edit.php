@@ -131,34 +131,17 @@
                         }
                     );
                 }
-            );
-
-            $(document).ready(
+            ).ready(
                 function(){
-                    $(document).trigger('tiny_init');
-
-                    $(document).on('mouseenter','input[name=uploadfile]',
-                        function(event){
-                            $('#post_img').css('border','dotted');
-                        }
-                    );
-
-//                    $(document).on('mouseover','#post_img',
-//                        function(event){
-//                            debugger;
-//                            $(this).css('border','dotted');
-//                        }
-//                    );
-
-                    $(document).on('mouseleave','input[name=uploadfile]',
-                        function(event){
-                            $('#post_img').css('border','');
-                        }
-                    );
+                    $(document)
+                    .trigger('tiny_init')
+                    .on('mouseenter','input[name=uploadfile]',function(event){
+                        $('#post_img').css('border','dotted');
+                    }).on('mouseleave','input[name=uploadfile]',function(event){
+                        $('#post_img').css('border','');
+                    });
                 }
-            );
-
-            $(document).on('click', '#pre_save',
+            ).on('click', '#pre_save',
                 function (event) {
                     event.preventDefault();
                     $('[data-id=blog_post_form_dialog]').each(
@@ -174,9 +157,7 @@
 //                        resizable: false
 //                    });
                 }
-            );
-
-            $(document).on('submit', '#blog_post',
+            ).on('submit', '#blog_post',
                 function (event) {
                     event.preventDefault();
 //                    $('#blog_post_form_dialog').dialog('close');
@@ -196,7 +177,7 @@
                                 $('#alert').html(data)
                             ).done(
                                 function(){
-
+                                    var danger = $('.danger');
                                     $(document).trigger('tiny_init');
 //                                    $('#blog_post_form_dialog').dialog({
 //                                        title: 'Saving Article.',
@@ -204,9 +185,11 @@
 //                                        modal: true,
 //                                        resizable: false
 //                                    });
-                                    if ($('.danger').length > 0) {
-                                        $('.danger').css('display', 'block');
-                                        $('html, body').animate({scrollTop: parseInt($('.danger').offset().top) - 250}, 1000);
+                                    if (danger.length > 0) {
+                                        danger.css('display', 'block');
+                                        $('html, body').stop().animate({
+                                            scrollTop: parseInt(danger.offset().top) - 250
+                                        }, 1000);
                                         setTimeout(function () {
                                             $('.danger').remove();
                                         }, 8000);

@@ -66,11 +66,12 @@
                         url: url,
                         data: msg,
                         success: function (data) {
-                            $('.results').html(data);
-                            if (data.trim().length>0){
+                            var results = $('.results');
+                            results.html(data);
+                            if (data.trim().length > 0){
                                 setTimeout(
                                     function(){
-                                        $('.results').html('');
+                                        results.html('');
                                     }
                                     ,3000
                                 );
@@ -87,8 +88,7 @@
                 function (event) {
                     event.preventDefault();
                     var action = $(this).attr('data-action');
-                    $('#authorization').attr('action', action);
-                    $('#authorization').trigger('submit');
+                    $('#authorization').attr('action', action).trigger('submit');
                 }
             );
 

@@ -28,7 +28,7 @@ jQuery(document).ready(function($){
 	/* Style WordPress Default Widgets */
 	$('.widget select').addClass('form-control');
 	$('.widget table#wp-calendar').addClass( 'table table-bordered').unwrap().find('th, td').addClass('text-center');
-	$('.widget-title .rsswidget img').hide();
+	$('.widget-title .rsswidget img').stop().hide();
 	$('.widget-title .rsswidget:first-child').append('<i class="fa fa-rss pull-right">');
 
 	/* Move cross-sell below cart totals on cart page */

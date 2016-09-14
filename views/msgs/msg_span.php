@@ -9,9 +9,7 @@
     </div>
 </div>
 <script>
-    (
-        function ($) {
-            $('html, body').animate({scrollTop: 0 }, 1000);
-        }
-    )(jQuery);
+    (function ($) {
+        $('html, body').stop().animate({scrollTop: 0 }, 1000);
+    })(jQuery);
 </script>

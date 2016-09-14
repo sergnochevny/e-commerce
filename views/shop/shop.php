@@ -37,16 +37,16 @@
                 <?php echo isset($search) ? '<p class="">Search: ' . $search . '</p>' : '' ?>
                 <p class="woocommerce-result-count">
                     <?php
-                    if (!empty(_A_::$app->get('cat'))) {
-                        echo 'CATEGORY: ' . $catigori_name . '<br/>';
-                    }
-                    if (!empty(_A_::$app->get('mnf'))) {
-                        echo 'MANUFACTURER: ' . $mnf_name . '<br/>';
-                    }
-                    if (!empty(_A_::$app->get('ptrn'))) {
-                        echo 'PATTERN: ' . $ptrn_name . '<br/>';
-                    }
-                    echo isset($count_rows) ? "Showing " . $count_rows . " results" : "Showing ... results";
+                        if (!empty(_A_::$app->get('cat'))) {
+                            echo 'CATEGORY: ' . $catigori_name . '<br/>';
+                        }
+                        if (!empty(_A_::$app->get('mnf'))) {
+                            echo 'MANUFACTURER: ' . $mnf_name . '<br/>';
+                        }
+                        if (!empty(_A_::$app->get('ptrn'))) {
+                            echo 'PATTERN: ' . $ptrn_name . '<br/>';
+                        }
+                        echo isset($count_rows) ? "Showing " . $count_rows . " results" : "Showing ... results";
                     ?>
 
                 </p>
@@ -74,60 +74,61 @@
     var base_url = "<?php _A_::$app->router()->UrlTo('/');?>";
 
     (function ($) {
-        $(document).off('.basket');
-        $(document).on('click.basket', 'a#to_basket',
-            function (event) {
-                event.preventDefault();
-                var url = $(this).attr('href');
-                var container = $(this).parent('figcaption');
-                $('#content').waitloader('show');
-                $.get(
-                    url,
-                    {},
-                    function (answer) {
-                        data = JSON.parse(answer);
-                        $.when(
-                            $('span#cart_amount').html(data.sum),
-                            $(data.msg).appendTo('#content')
-                        ).done(
-                            function () {
-                                if (data.button) {
-                                    $(container).html(data.button)
+        $(document)
+            .off('.basket')
+            .on('click.basket', 'a#to_basket',
+                function (event) {
+                    event.preventDefault();
+                    var url = $(this).attr('href');
+                    var container = $(this).parent('figcaption');
+                    $('#content').waitloader('show');
+                    $.get(
+                        url,
+                        {},
+                        function (answer) {
+                            data = JSON.parse(answer);
+                            $.when(
+                                $('span#cart_amount').html(data.sum),
+                                $(data.msg).appendTo('#content')
+                            ).done(
+                                function () {
+                                    if (data.button) {
+                                        $(container).html(data.button)
+                                    }
+
+                                    $('#content').waitloader('remove');
+
+                                    buttons = {
+                                        "Basket": function () {
+                                            $(this).remove();
+                                            $('#content').waitloader('show');
+                                            window.location = base_url + '/cart';
+                                        }
+                                    };
+
+                                    $('#msg').dialog({
+                                        draggable: false,
+                                        dialogClass: 'msg',
+                                        title: 'Add to Basket',
+                                        modal: true,
+                                        zIndex: 10000,
+                                        autoOpen: true,
+                                        width: '500',
+                                        resizable: false,
+                                        buttons: buttons,
+                                        close: function (event, ui) {
+                                            $(this).remove();
+                                        }
+                                    });
+                                    $('.msg').css('z-index', '10001');
+                                    $('.ui-widget-overlay').css('z-index', '10000');
+
                                 }
-
-                                $('#content').waitloader('remove');
-
-                                buttons = {
-                                    "Basket": function () {
-                                        $(this).remove();
-                                        $('#content').waitloader('show');
-                                        window.location = base_url + '/cart';
-                                    }
-                                };
-
-                                $('#msg').dialog({
-                                    draggable: false,
-                                    dialogClass: 'msg',
-                                    title: 'Add to Basket',
-                                    modal: true,
-                                    zIndex: 10000,
-                                    autoOpen: true,
-                                    width: '500',
-                                    resizable: false,
-                                    buttons: buttons,
-                                    close: function (event, ui) {
-                                        $(this).remove();
-                                    }
-                                });
-                                $('.msg').css('z-index', '10001');
-                                $('.ui-widget-overlay').css('z-index', '10000');
-
-                            }
-                        );
-                    }
-                );
-            }
-        );
+                            );
+                        }
+                    );
+                }
+            );
         $(document).on('click', '.page-number-s',
             function (event) {
                 debugger;

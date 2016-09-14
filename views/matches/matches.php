@@ -1,11 +1,11 @@
 <body
     class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 
-<link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
-<link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/matches.css'); ?>' type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/matches.css'); ?>' type='text/css' media='all'/>
 
-<link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
-<script type='text/javascript' src='<?php echo _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
+<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
+<script type='text/javascript' charset="UTF-8" src='<?php echo _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
 <div class="site-container">
     <?php
@@ -164,7 +164,7 @@
                 function (event) {
 
                     setTimeout(function () {
-                        $('html,body').animate({
+                        $('html,body').stop().animate({
                             scrollTop: $('#matches-page').offset().top
                         }, 2000);
                     }, 300);
@@ -217,9 +217,7 @@
                 drop: function (event, ui) {
                     $('#matches-page').waitloader('show');
                     var p_id = $(ui.draggable).attr('data-id');
-                    var url = base_url + '/product_page?matches&p_id=' + p_id;
-
-                    window.location = url;
+                    window.location = base_url + '/product_page?matches&p_id=' + p_id;
                 }
             });
 
@@ -245,8 +243,8 @@
             $('#all_to_basket').on('click',
                 function (ev) {
                     ev.preventDefault();
-                    var products = new Array();
-                    $('#dragZoneArea > img').each(
+                    var products = [];
+                    $('#dragZoneArea').children('img').each(
                         function (idx, element) {
                             products.push($(this).attr('data-id'));
                         }

@@ -36,18 +36,14 @@
 
 <script type="text/javascript">
     (function ($) {
-        $(document).on('click.confirm_action', ".popup a.close",
-            function (event) {
-                $("#confirm_action").off('click.confirm_action');
-                $("#confirm_dialog").removeClass('overlay_display');
-            }
-        );
+        $(document).on('click.confirm_action', ".popup a.close",function (e) {
+            $("#confirm_action").off('click.confirm_action');
+            $("#confirm_dialog").removeClass('overlay_display');
+        });
 
-        $(document).on('click.confirm_action', "#confirm_no",
-            function (event) {
-                $(".popup a.close").trigger('click');
-            }
-        );
+        $(document).on('click.confirm_action', "#confirm_no", function (e) {
+            $(".popup a.close").trigger('click');
+        });
 
         $(document).on('click', "#del_post",
             function (event) {

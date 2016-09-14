@@ -1,9 +1,9 @@
 <body
     class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 
-<link type='text/css' href='modal_windows/modal_windows/css/confirm.css' rel='stylesheet' media='screen'/>
-<script type='text/javascript' src='modal_windows/modal_windows/js/jquery.simplemodal.js'></script>
-<script type='text/javascript' src='modal_windows/modal_windows/js/modal_windows.js'></script>
+<link charset="UTF-8" type='text/css' href='modal_windows/modal_windows/css/confirm.css' rel='stylesheet' media='screen'/>
+<script charset="UTF-8" type='text/javascript' src='modal_windows/modal_windows/js/jquery.simplemodal.js'></script>
+<script charset="UTF-8" type='text/javascript' src='modal_windows/modal_windows/js/modal_windows.js'></script>
 
 <div class="site-container">
     <?php include "views/header.php"; ?>
