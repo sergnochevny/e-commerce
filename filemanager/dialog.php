@@ -379,7 +379,7 @@ $get_params = http_build_query($get_params);
 	<input type="hidden" id="lang_duplicate" value="<?php echo trans('Duplicate');?>" />
 	<input type="hidden" id="duplicate" value="<?php if($duplicate_files) echo 1; else echo 0;?>" />
 	<input type="hidden" id="base_url" value="<?php _A_::$app->router()->UrlTo('/')?>"/>
-	<input type="hidden" id="base_url_true" value="<?php echo base_url();?>"/>
+	<input type="hidden" id="base_url_true" value="<?php echo _A_::$app->router()->UrlTo('/');?>"/>
 	<input type="hidden" id="fldr_value" value="<?php echo $subdir;?>"/>
 	<input type="hidden" id="sub_folder" value="<?php echo $rfm_subfolder;?>"/>
 	<input type="hidden" id="return_relative_url" value="<?php echo $return_relative_url == true ? 1 : 0;?>"/>
@@ -387,7 +387,7 @@ $get_params = http_build_query($get_params);
 	<input type="hidden" id="file_number_limit_js" value="<?php echo $file_number_limit_js;?>" />
 	<input type="hidden" id="sort_by" value="<?php echo $sort_by;?>" />
 	<input type="hidden" id="descending" value="<?php echo $descending?1:0;?>" />
-	<input type="hidden" id="current_url" value="<?php echo str_replace(array('&filter='.$filter,'&sort_by='.$sort_by,'&descending='.intval($descending)),array(''),$base_url.$_SERVER['REQUEST_URI']);?>" />
+	<input type="hidden" id="current_url" value="<?php echo str_replace(array('&filter='.$filter,'&sort_by='.$sort_by,'&descending='.intval($descending)),array(''),_A_::$app->router()->UrlTo('/').$_SERVER['REQUEST_URI']);?>" />
 	<input type="hidden" id="lang_show_url" value="<?php echo trans('Show_url');?>" />
 	<input type="hidden" id="copy_cut_files_allowed" value="<?php if($copy_cut_files) echo 1; else echo 0;?>" />
 	<input type="hidden" id="copy_cut_dirs_allowed" value="<?php if($copy_cut_dirs) echo 1; else echo 0;?>" />
@@ -831,7 +831,7 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
 				$src_thumb="";
 				$extension_lower=fix_strtolower($file_array['extension']);
 				if(in_array($extension_lower, $ext_img)){
-				$src = $base_url . $cur_dir . rawurlencode($file);
+				$src = _A_::$app->router()->UrlTo('/'. $cur_dir . rawurlencode($file));
 				$mini_src = $src_thumb = $thumbs_path.$subdir. $file;
 				//add in thumbs folder if not exist
 				if(!file_exists($src_thumb)){

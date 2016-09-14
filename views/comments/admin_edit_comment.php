@@ -48,7 +48,7 @@
         <div class="form-group row" id="comment-form-save">
             <label class="col-md-3 control-label" for="add-form-send"></label>
             <div class="col-md-8">
-                <a id="add-form-send" name="comment-send-button" class="comment-button btn" onclick='sendComment("<?php echo (BASE_URL . '/comment_update_save'); ?>", "<?= $_GET['ID'] ?>")'>Save</a>
+                <a id="add-form-send" name="comment-send-button" class="comment-button btn" onclick='sendComment("<?= _A_::$app->router()->UrlTo('comment_update_save', ['ID' => $_GET['ID']]);?>")'>Save</a>
             </div>
         </div>
 
