@@ -3,7 +3,7 @@
 class Controller_Categories extends Controller_Base
 {
 
-    function categories()
+    public function categories()
     {
 
         $this->main->test_access_rights();
@@ -11,14 +11,14 @@ class Controller_Categories extends Controller_Base
         $this->main->view_admin('categories');
     }
 
-    function list()
+    public function list()
     {
         $this->main->test_access_rights();
         $this->get_list();
         $this->main->view_layout('list');
     }
 
-    function get_list()
+    public function get_list()
     {
         $this->main->test_access_rights();
         $model = new Model_Category();
@@ -34,7 +34,7 @@ class Controller_Categories extends Controller_Base
         $this->template->vars('get_categories_list', $categories);
     }
 
-    function del()
+    public function del()
     {
         $this->main->test_access_rights();
         $model = new Model_Category();
@@ -43,7 +43,7 @@ class Controller_Categories extends Controller_Base
         $this->category_list();
     }
 
-    function edit()
+    public function edit()
     {
         $this->main->test_access_rights();
         $model = new Model_Category();
@@ -56,7 +56,7 @@ class Controller_Categories extends Controller_Base
         $this->main->view_admin('edit');
     }
 
-    function edit_form()
+    public function edit_form()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -69,34 +69,33 @@ class Controller_Categories extends Controller_Base
         $this->main->view_layout('edit_form');
     }
 
-    function display_order()
+    private function display_order()
     {
         $this->main->test_access_rights();
         $model = new Model_Category();
         $category_id = $model->validData(_A_::$app->get('category_id'));
         $category = $model->get_category($category_id);
-        $this->template->vars('dislpayorder', $category['displayorder']);
-
-        $results = mysql_query("select * from fabrix_categories ORDER BY displayorder ASC ");
+        $this->template->vars('displayorder', $category['displayorder']);
+        $rows = $model->get_all(['order' => ' ORDER BY displayorder ASC ']);
         ob_start();
-        while ($row = mysql_fetch_array($results)) {
-            $resulthatistim = mysql_query("select * from fabrix_categories WHERE cid='$category_id'");
-            $rowsni = mysql_fetch_array($resulthatistim);
-            include('./views/category/display_order.php');
+        foreach ($rows as $row) {
+            $this->template->vars('row', $row);
+            $this->template->view_layout('display_order');
         }
         $order_categories = ob_get_contents();
         ob_end_clean();
         $this->template->vars('display_order_categories', $order_categories);
     }
 
-    function display_order_wo_select()
+    private function display_order_wo_select()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
-        $results = mysql_query("select * from fabrix_categories ORDER BY  `displayorder` ASC ");
+        $model = new Model_Category();
+        $rows = $model->get_all(['order' => ' ORDER BY displayorder ASC ']);
         ob_start();
-        while ($row = mysql_fetch_array($results)) {
-            include('./views/category/display_order_categories_wo_select.php');
+        foreach ($rows as $row) {
+            $this->template->vars('row', $row);
+            $this->template->view_layout('display_wo_select');
             $curr_order = (int)$row[3] + 1;
         }
         $this->template->vars('curr_order', $curr_order);
@@ -105,19 +104,12 @@ class Controller_Categories extends Controller_Base
         $this->template->vars('display_order_categories', $order_categories);
     }
 
-    function save_data()
+    public function save_data()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
         include('include/save_data_categories.php');
         if (!empty($post_category_name{0})) {
-            $resulthatistim = mysql_query("select * from fabrix_categories WHERE cid='$category_id'");
-            $rowsni = mysql_fetch_array($resulthatistim);
-            $temp = $rowsni['displayorder'];
-            $resulthatistim = mysql_query("select * from fabrix_categories WHERE displayorder='$post_display_order'");
-            $rows = mysql_fetch_array($resulthatistim);
-            $temp_id = $rows['cid'];
-            $result = mysql_query("update fabrix_categories set displayorder='$temp' WHERE cid ='$temp_id'");
             if ($post_category_ListStyle == "1") {
                 $post_category_ListStyle = "1";
             } else {
@@ -128,12 +120,29 @@ class Controller_Categories extends Controller_Base
             } else {
                 $post_category_ListNewItem = "0";
             }
-            if (!empty($category_id)) {
-                $result = mysql_query("update fabrix_categories set cname='$post_category_name', seo='$post_category_seo', displayorder='$post_display_order', isStyle='$post_category_ListStyle',  isNew='$post_category_ListNewItem' WHERE cid ='$category_id'");
+            If($model->update($post_category_name,$post_category_seo,$post_display_order,$post_category_ListStyle,$post_category_ListNewItem,$category_id)){
+                $warning = ['Category Data saved successfully!'];
+                $this->template->vars('warning', $warning);
+                $this->edit_category_form();
+            } else {
+                $userInfo = [];
+
+                $userInfo['cname'] = '';
+                $userInfo['seo'] = !is_null(_A_::$app->post('seo')) ? _A_::$app->get('seo') : null;
+                $userInfo['isStyle'] = !is_null(_A_::$app->post('ListStyle')) ? _A_::$app->post('ListStyle') : null;
+                $userInfo['isNew'] = !is_null(_A_::$app->post('ListNewItem')) ? _A_::$app->post('ListNewItem') : null;
+
+                $error = [mysql_error()];
+                $this->template->vars('error', $error);
+
+                $this->display_order();
+                $back_url = _A_::$app->router()->UrlTo('categories');
+                $this->template->vars('back_url', $back_url);
+                $this->template->vars('userInfo', $userInfo);
+
+                $this->main->view_layout('edit_form');
+
             }
-            $warning = ['Category Data saved successfully!'];
-            $this->template->vars('warning', $warning);
-            $this->edit_category_form();
         } else {
             $userInfo = [];
 
@@ -145,7 +154,7 @@ class Controller_Categories extends Controller_Base
             $error = ['Identity Category Name Field!'];
             $this->template->vars('error', $error);
 
-            $this->display_order_categories();
+            $this->display_order();
             $back_url = _A_::$app->router()->UrlTo('categories');
             $this->template->vars('back_url', $back_url);
             $this->template->vars('userInfo', $userInfo);
@@ -154,61 +163,56 @@ class Controller_Categories extends Controller_Base
         }
     }
 
-    function new()
+    public function new()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $this->display_order_categories_wo_select();
+        $this->display_order_wo_select();
         $back_url = _A_::$app->router()->UrlTo('categories');
         $this->template->vars('back_url', $back_url);
         $this->main->view_admin('new');
     }
 
-    function new_category_form()
+    function new_form()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $this->display_order_categories_wo_select();
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
+        $this->display_order_wo_select();
         $back_url = _A_::$app->router()->UrlTo('categories');
-//        }
         $this->template->vars('back_url', $back_url);
         $this->main->view_layout('category/new_category_form');
     }
 
-    function save_new_categories()
+    function save_new()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
+        $model = new Model_Category();
         $category = $model->validData(_A_::$app->post('category'));
         $post_category_name = mysql_real_escape_string($category);
         $post_display_order = $model->validData(_A_::$app->post('display_order'));
         include('include/save_new_categories.php');
 
         if (!empty($post_category_name{0})) {
-
-            $strSQL = "INSERT INTO fabrix_categories(cname,seo,displayorder,isStyle,isNew) VALUES ('$post_category_name','$post_category_seo','$post_display_order','$post_category_ListStyle','$post_category_ListNewItem')";
-            mysql_query($strSQL) or die(mysql_error());
-            $category_id = mysql_insert_id();
-            _A_::$app->get('category_id', $category_id);
-
-            $warning = ['Category Data saved successfully!'];
-            $this->template->vars('warning', $warning);
+            $category_id = $model->insert($post_category_name,$post_category_seo,$post_display_order,$post_category_ListStyle,$post_category_ListNewItem);
+            if (isset($category_id)){
+                _A_::$app->get('category_id', $category_id);
+                $warning = ['Category Data saved successfully!'];
+                $this->template->vars('warning', $warning);
+            } else {
+                $this->template->vars('seo', !is_null(_A_::$app->post('seo')) ? _A_::$app->post('seo') : null);
+                $this->template->vars('ListStyle', !is_null(_A_::$app->post('ListStyle')) ? _A_::$app->post('ListStyle') : null);
+                $this->template->vars('ListNewItem', !is_null(_A_::$app->post('ListNewItem')) ? _A_::$app->post('ListNewItem') : null);
+                $this->template->vars('error', [mysql_error()]);
+            }
         } else {
-
             $this->template->vars('seo', !is_null(_A_::$app->post('seo')) ? _A_::$app->post('seo') : null);
             $this->template->vars('ListStyle', !is_null(_A_::$app->post('ListStyle')) ? _A_::$app->post('ListStyle') : null);
             $this->template->vars('ListNewItem', !is_null(_A_::$app->post('ListNewItem')) ? _A_::$app->post('ListNewItem') : null);
-
             $error = ['Identity Category Name Field!'];
             $this->template->vars('error', $error);
         }
 
-        $this->new_category_form();
+        $this->new_form();
 
     }
-
-
 }
