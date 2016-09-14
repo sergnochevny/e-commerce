@@ -490,17 +490,6 @@ Class Model_Product extends Model_Model
         return $rowsni['pattern'];
     }
 
-    public function get_data_categories($category_id)
-    {
-        $resulthatistim = mysql_query("select * from fabrix_categories WHERE cid='$category_id'");
-        $rowsni = mysql_fetch_array($resulthatistim);
-        return array('cname' => $rowsni['cname'],
-            'seo' => $rowsni['seo'],
-            'displayorder' => $rowsni['displayorder'],
-            'isStyle' => $rowsni['isStyle'],
-            'isNew' => $rowsni['isNew']);
-    }
-
     public function get_prod_list_by_type($type, $start, $limit, &$res_row_count, &$image_suffix)
     {
         $q = "";

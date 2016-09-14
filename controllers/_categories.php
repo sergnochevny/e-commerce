@@ -13,7 +13,6 @@ class Controller_Categories extends Controller_Base
 
     function list()
     {
-
         $this->main->test_access_rights();
         $this->get_list();
         $this->main->view_layout('list');
@@ -22,21 +21,13 @@ class Controller_Categories extends Controller_Base
     function get_list()
     {
         $this->main->test_access_rights();
-        $results = mysql_query("select * from fabrix_categories");
+        $model = new Model_Category();
         $categories = '';
-        while ($row = mysql_fetch_array($results)) {
-            if ($row[4] == 1) {
-                $row[4] = "Yes";
-            } else {
-                $row[4] = "No";
-            }
-            if ($row[5] == 1) {
-                $row[5] = "Yes";
-            } else {
-                $row[5] = "No";
-            }
+        $rows = $model->get_all();
+        foreach($rows as $row) {
             ob_start();
-            include('./views/category/get_list.php');
+            $this->template->vars('row', $row);
+            $this->template->view_layout('get_list');
             $categories .= ob_get_contents();
             ob_end_clean();
         }
@@ -46,26 +37,20 @@ class Controller_Categories extends Controller_Base
     function del()
     {
         $this->main->test_access_rights();
-        $model = new Model_Tools();
+        $model = new Model_Category();
         $del_category_id = $model->validData(_A_::$app->get('category_id'));
-        if (!empty($del_category_id)) {
-            $strSQL = "update fabrix_products set cid = NULL WHERE cid = $del_category_id";
-            mysql_query($strSQL);
-
-            $strSQL = "DELETE FROM fabrix_categories WHERE cid = $del_category_id";
-            mysql_query($strSQL);
-        }
+        $model->del($del_category_id);
         $this->category_list();
     }
 
     function edit()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
+        $model = new Model_Category();
         $category_id = $model->validData(_A_::$app->get('category_id'));
-        $this->display_order_categories();
-        $userInfo = $model->get_data_categories($category_id);
-        $this->template->vars('userInfo', $userInfo);
+        $this->display_order();
+        $category = $model->get_category($category_id);
+        $this->template->vars('userInfo', $category);
         $back_url = _A_::$app->router()->UrlTo('categories');
         $this->template->vars('back_url', $back_url);
         $this->main->view_admin('edit');
@@ -87,9 +72,12 @@ class Controller_Categories extends Controller_Base
     function display_order()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
+        $model = new Model_Category();
         $category_id = $model->validData(_A_::$app->get('category_id'));
-        $results = mysql_query("select * from fabrix_categories ORDER BY  `fabrix_categories`.`displayorder` ASC ");
+        $category = $model->get_category($category_id);
+        $this->template->vars('dislpayorder', $category['displayorder']);
+
+        $results = mysql_query("select * from fabrix_categories ORDER BY displayorder ASC ");
         ob_start();
         while ($row = mysql_fetch_array($results)) {
             $resulthatistim = mysql_query("select * from fabrix_categories WHERE cid='$category_id'");
