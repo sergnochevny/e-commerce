@@ -1,22 +1,22 @@
+<?php
+    $opt = null;
+    if (isset($cat_id)) {
+        $opt['cat'] = $cat_id;
+    }
+?>
 <li>
     <?php
     if ($prev_page > 0) {
-        echo '<a class="prev page-numbers" href="' . $base_url . '/'.$url.'?page=' . $prev_page;
-        if (isset($cat_id)) {
-            echo '&cat=' . $cat_id;
-        }
-        echo '" >Prev</a>';
+        $opt['page'] = $prev_page;
+        echo '<a class="prev page-numbers" href="' . _A_::$app->router()->UrlTo($url, $opt) . '" >Prev</a>';
     } else echo '<span class="page-numbers noclicable"> Prev </span>';
     ?>
 </li>
 <li>
     <?php
     if ($page > 1) {
-        echo '<a class="prev page-numbers" href="' . $base_url . '/'.$url.'?page=1';
-        if (isset($cat_id)) {
-            echo '&cat=' . $cat_id;
-        }
-        echo '" >First</a>';
+        $opt['page'] = 1;
+        echo '<a class="prev page-numbers" href="' . _A_::$app->router()->UrlTo($url, $opt) . '" >First</a>';
     } else echo '<span class="page-numbers noclicable"> First </span>';
     ?>
 </li>
@@ -27,17 +27,12 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
     if ($i == $page) {
         echo "<li class='active'><span class='page-numbers current'>$i</span></li>";
     } else {
+        $opt['page'] = $i;
         ?>
         <li>
-            <a class="prev page-numbers"
-                <?php
-                echo 'href="' . $base_url . '/'.$url.'?page=' . $i;
-                if (isset($cat_id)) {
-                    echo '&cat=' . $cat_id;
-                }
-                echo ' " ';
-                ?>
-                ><?php echo $i ?></a>
+            <a class="prev page-numbers" <?= 'href="' . _A_::$app->router()->UrlTo($url, $opt).'"';?>>
+                <?php echo $i ?>
+            </a>
         </li>
         <?php
     }
@@ -48,22 +43,16 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
 <li>
     <?php
     if ($page < $last_page) {
-        echo '<a class="prev page-numbers" href="' . $base_url . '/'.$url.'?page=' . $last_page;
-        if (isset($cat_id)) {
-            echo '&cat=' . $cat_id;
-        }
-        echo '" >Last</a>';
+        $opt['page'] = $last_page;
+        echo '<a class="prev page-numbers" href="' . _A_::$app->router()->UrlTo($url, $opt) . '" >Last</a>';
     } else echo '<span class="page-numbers noclicable"> Last </span>';
     ?>
 </li>
 <li>
     <?php
     if ($next_page <= $last_page) {
-        echo '<a class="prev page-numbers" href="' . $base_url . '/'.$url.'?page=' . $next_page;
-        if (isset($cat_id)) {
-            echo '&cat=' . $cat_id;
-        }
-        echo '" >Next</a>';
+        $opt['page'] = $next_page;
+        echo '<a class="prev page-numbers" href="' . _A_::$app->router()->UrlTo($url, $opt) . '" >Next</a>';
     } else echo '<span class="page-numbers noclicable"> Next </span>';
     ?>
 </li>

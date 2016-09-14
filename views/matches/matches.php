@@ -172,7 +172,7 @@
             );
 
             var a = 1;
-            var base_url = '<?php echo _A_::$app->router()->UrlTo('/');?>';
+            var base_url = '<?= _A_::$app->router()->UrlTo('/'); ?>';
 
             $('#dragZoneArea > img').mousedown(function (eventObject) {
                 $(this).css("z-index", a++);

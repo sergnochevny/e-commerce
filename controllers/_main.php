@@ -22,8 +22,6 @@ class Controller_Main extends Controller_Base
             $this->template->vars('data', $data);
         }
 
-        $base_url = _A_::$app->router()->UrlTo('/');
-        $this->template->vars('base_url', $base_url);
         ob_start();
         $this->template->view_layout('admin_menu', 'menu');
         $menu = ob_get_contents();
@@ -40,8 +38,6 @@ class Controller_Main extends Controller_Base
         }
 
         $this->meta_page();
-        $this->template->vars('base_url', _A_::$app->router()->UrlTo('/'));
-
         $this->template->view($page);
     }
 
@@ -65,14 +61,12 @@ class Controller_Main extends Controller_Base
 
         $this->meta_page();
         $this->template->vars('controller', $this);
-        $this->template->vars('base_url', _A_::$app->router()->UrlTo('/'));
 
         $this->template->view_layout($page);
     }
 
     function is_user_authorized($redirect_to_url = false)
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $authorization = new Controller_Authorization($this);
         if (!$authorization->is_user_authorized()) {
             if ($redirect_to_url) {
@@ -92,7 +86,6 @@ class Controller_Main extends Controller_Base
 
     function test_access_rights($redirect_to_url = true)
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $authorization = new Controller_Authorization($this);
         if (!$authorization->is_admin_authorized()) {
             if ($redirect_to_url) {
@@ -114,7 +107,6 @@ class Controller_Main extends Controller_Base
     {
         if (isset(_A_::$app->get()['msg'])) {
             $msg = _A_::$app->get()['msg'];
-            $base_url = _A_::$app->router()->UrlTo('/');
             if ($msg == 'remind_sent') {
                 $prms = null;
                 if (isset(_A_::$app->get()['url'])) {
@@ -125,7 +117,7 @@ class Controller_Main extends Controller_Base
 
             } elseif ($msg == 'remind_expired') {
 
-                $back_url = $base_url;
+                $back_url = _A_::$app->router()->UrlTo('/');
                 $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
 
             }
@@ -165,7 +157,6 @@ class Controller_Main extends Controller_Base
             $this->template->vars('user_name', $user_name);
         }
         $this->template->vars('toggle', $toggle);
-        $this->template->vars('base_url', _A_::$app->router()->UrlTo('/'));
         $this->template->view_layout('my_account_user_menu', 'menu');
         $my_account_user_menu = ob_get_contents();
         ob_end_clean();
@@ -173,10 +164,7 @@ class Controller_Main extends Controller_Base
 
         $menu = new Controller_Menu(isset($this->main) ? $this->main : $this);
         $menu->show_menu();
-
         $this->meta_page();
-        $this->template->vars('base_url', _A_::$app->router()->UrlTo('/'));
-
         $this->template->view($page);
     }
 
@@ -185,9 +173,7 @@ class Controller_Main extends Controller_Base
         header("HTTP/1.0 404 Not Found");
         header("HTTP/1.1 404 Not Found");
         header("Status: 404 Not Found");
-        $base_url = _A_::$app->router()->UrlTo('/');
         $this->template->controller = 'main';
-        $this->template->vars('base_url', $base_url);
 
         $this->view('404/error');
         exit();

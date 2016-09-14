@@ -1,13 +1,13 @@
 <?php
-if (isset($cat_id)) {
-    $prms['cat'] = $cat_id;
-}
-if (isset($mnf_id)) {
-    $prms['mnf'] = $mnf_id;
-}
-if (isset($ptrn_id)) {
-    $prms['ptrn'] = $ptrn_id;
-}
+    if (isset($cat_id)) {
+        $prms['cat'] = $cat_id;
+    }
+    if (isset($mnf_id)) {
+        $prms['mnf'] = $mnf_id;
+    }
+    if (isset($ptrn_id)) {
+        $prms['ptrn'] = $ptrn_id;
+    }
 ?>
     <li>
         <?php
@@ -34,9 +34,8 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
     } else {
         ?>
         <li>
-            <?php
-            $prms['page'] = $i;
-            echo '<a class="prev page-numbers" href="' . _A_::$app->router()->UrlTo($url, $prms) . '">' . $i . '</a>';
+            <?php $prms['page'] = $i;
+                echo '<a class="prev page-numbers" href="' . _A_::$app->router()->UrlTo($url, $prms) . '">' . $i . '</a>';
             ?>
         </li>
         <?php

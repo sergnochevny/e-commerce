@@ -34,8 +34,8 @@
                             $filename1 = null;
                             $img1_exists = false;
                         }
-                        $filename = $base_url . '/' . $filename;
-                        $filename1 = isset($filename1) ? $base_url . '/' . $filename1 : null;
+                        $filename = _A_::$app->router()->UrlTo($filename);
+                        $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                         ?>
                         <a <?php echo isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                             itemprop="image"
@@ -64,8 +64,8 @@
                                     $filename = "upload/upload/not_image.jpg";
                                     $filename1 = null;
                                 }
-                                $filename = $base_url . '/' . $filename;
-                                $filename1 = isset($filename1) ? $base_url . '/' . $filename1 : null;
+                                $filename = _A_::$app->router()->UrlTo($filename);
+                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                                 ?>
                                 <a <?php echo isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
@@ -85,8 +85,8 @@
                                     $filename = "upload/upload/not_image.jpg";
                                     $filename1 = null;
                                 }
-                                $filename = $base_url . '/' . $filename;
-                                $filename1 = isset($filename1) ? $base_url . '/' . $filename1 : null;
+                                $filename = _A_::$app->router()->UrlTo($filename);
+                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                                 ?>
                                 <a <?php echo isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
@@ -105,8 +105,8 @@
                                     $filename = "upload/upload/not_image.jpg";
                                     $filename1 = null;
                                 }
-                                $filename = $base_url . '/' . $filename;
-                                $filename1 = isset($filename1) ? $base_url . '/' . $filename1 : null;
+                                $filename = _A_::$app->router()->UrlTo($filename);
+                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                                 ?>
                                 <a <?php echo isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
@@ -125,8 +125,8 @@
                                     $filename = "upload/upload/not_image.jpg";
                                     $filename1 = null;
                                 }
-                                $filename = $base_url . '/' . $filename;
-                                $filename1 = isset($filename1) ? $base_url . '/' . $filename1 : null;
+                                $filename = _A_::$app->router()->UrlTo($filename);
+                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                                 ?>
                                 <a <?php echo isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"

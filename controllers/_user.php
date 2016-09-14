@@ -37,7 +37,6 @@ class Controller_User extends Controller_Controller
         $rows = $model->get_users_list($start, $per_page);
 
         ob_start();
-            $base_url = _A_::$app->router()->UrlTo('/');
             foreach ($rows as $row) {
                 $row[30] = gmdate("F j, Y, g:i a", $row[30]);
                 include('./views/html/users_list.php');

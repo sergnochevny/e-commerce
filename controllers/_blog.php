@@ -180,7 +180,6 @@ class Controller_Blog extends Controller_Controller
     public function convertation($txt)
     {
 
-        $base_url = _A_::$app->router()->UrlTo('/');
 //        $txt = preg_replace('#(\s*\[caption[^\]]+\]<a[^>]+><img[^>]+\/><\/a>)(.*?)(\[\/caption\]\s*)#i', '$1<p>$2</p>$3', $txt);
 //        $txt = preg_replace('#\[caption([^\]]+)\]#i', '<div$1 class="div_img">', $txt);
 //        $txt = preg_replace('#\[\/caption\]#i', '</div>', $txt);
@@ -190,7 +189,7 @@ class Controller_Blog extends Controller_Controller
 //        $txt = str_replace('http://www.iluvfabrix.com/blog/wp-content/uploads', '{base_url}/img', $txt);
 //        $txt = str_replace('http://iluvfabrix.com', '{base_url}', $txt);
 
-        $txt = str_replace($base_url, '{base_url}', $txt);
+        $txt = str_replace(_A_::$app->router()->UrlTo('/'), '{base_url}', $txt);
         $txt = str_replace('http://www.iluvfabrix.com', '{base_url}', $txt);
         $txt = preg_replace('#[^ \.]*\.iluvfabrix\.com#i', '{base_url}', $txt);
         $txt = str_replace(['‘', '’'], "'", $txt);
@@ -211,8 +210,6 @@ class Controller_Blog extends Controller_Controller
 //        $this->widget_best_products();
 //        $this->widget_bsells_products();
 
-        $base_url = _A_::$app->router()->UrlTo('/');
-
         $prms = null;
         if (!empty(_A_::$app->get('page'))) {
             $prms['page'] = _A_::$app->get('page');
@@ -231,7 +228,7 @@ class Controller_Blog extends Controller_Controller
             $post_content = stripslashes($row['post_content']);
             $post_title = stripslashes($row['post_title']);
             $post_date = date('F jS, Y', strtotime($row['post_date']));
-            $post_content = str_replace('{base_url}', $base_url, $post_content);
+            $post_content = str_replace('{base_url}', _A_::$app->router()->UrlTo('/'), $post_content);
             $post_content = preg_replace('#(style="[^>]*")#U','',$post_content);
             $post_img = $model->getPostImg($post_id);
             $file_img = str_replace('{base_url}/', '', $post_img);
@@ -257,7 +254,6 @@ class Controller_Blog extends Controller_Controller
         } else
             $list = 'No Post!!';
         $this->main->template->vars('blog_post', $list);
-        $this->main->template->vars('base_url', $base_url);
         $this->main->view('post');
     }
 

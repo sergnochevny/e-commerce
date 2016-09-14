@@ -555,7 +555,7 @@ if(isset($_GET['action']))
 					$ret = '<iframe id="viewer" src="js/ViewerJS/#../../'.$selected_file.'" allowfullscreen="" webkitallowfullscreen="" class="viewer-iframe"></iframe>';
 
 				} elseif ($preview_mode == 'google') {
-					$url_file = $base_url . $upload_dir . str_replace($current_path, '', $_GET["file"]);
+					$url_file = _A_::$app->router()->UrlTo($upload_dir . str_replace($current_path, '', $_GET["file"]));
 					$googledoc_url = urlencode($url_file);
 					$googledoc_html = "<iframe src=\"http://docs.google.com/viewer?url=" . $googledoc_url . "&embedded=true\" class=\"google-iframe\"></iframe>";
 					$ret = $googledoc_html;

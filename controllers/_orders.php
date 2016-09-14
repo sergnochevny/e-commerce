@@ -265,7 +265,6 @@ class Controller_Orders extends Controller_Controller
 
     public function info()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
         $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
         $oid = (integer)urldecode(base64_decode(!is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));
@@ -275,7 +274,6 @@ class Controller_Orders extends Controller_Controller
             $prms['orders_search_query'] = _A_::$app->get('orders_search_query');
         }
         $back_url = _A_::$app->router()->UrlTo('orders_history', $prms);
-        $this->template->vars('base_url', $base_url);
 
         $config = [
             'oid' => $oid
@@ -363,7 +361,6 @@ class Controller_Orders extends Controller_Controller
     public function customer_info()
     {
         $page = (integer)(!is_null(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
-        $base_url = _A_::$app->router()->UrlTo('/');
         $back_url = _A_::$app->router()->UrlTo('customer_orders_history', ['page' => $page]);
         $this->template->vars('back_url', $back_url);
 
