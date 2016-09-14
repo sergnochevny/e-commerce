@@ -18,7 +18,6 @@ class Controller_Authorization extends Controller_Controller
     function authorization()
     {
         $prms = null;
-        $base_url = BASE_URL;
         $model = new Model_Auth();
 
         if ($this->is_admin_logged()) {
@@ -76,7 +75,7 @@ class Controller_Authorization extends Controller_Controller
         } else {
 
             $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : '';
-            $registration_url = $base_url . '/registration_user';
+            $prms = null;
             if (!is_null(_A_::$app->get('url'))) {
                 $prms['url'] = _A_::$app->get('url');
             }
@@ -138,7 +137,6 @@ class Controller_Authorization extends Controller_Controller
 
     function user()
     {
-        $base_url = BASE_URL;
         if (!$this->is_user_authorized()) {
             if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
                 !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))
@@ -188,7 +186,6 @@ class Controller_Authorization extends Controller_Controller
 
     function admin()
     {
-        $base_url = BASE_URL;
         if (!$this->is_admin_authorized()) {
             if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
                 !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))
@@ -233,16 +230,13 @@ class Controller_Authorization extends Controller_Controller
 
     public function admin_log_out()
     {
-        $base_url = BASE_URL;
         _A_::$app->setSession('_a', null);
         _A_::$app->setCookie('_ar', null);
-        $url = $base_url;
-        $this->redirect($url);
+        $this->redirect(_A_::$app->router()->UrlTo('/'));
     }
 
     public function user_log_out()
     {
-        $base_url = BASE_URL;
         _A_::$app->setSession('_', null);
         _A_::$app->setSession('user', null);
         _A_::$app->setCookie('_r', null);
@@ -257,7 +251,6 @@ class Controller_Authorization extends Controller_Controller
 
     public function lost_password()
     {
-        $base_url = BASE_URL;
         if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
             if (!_A_::$app->get('user_id')) {
                 $muser = new Model_User();
@@ -423,7 +416,6 @@ class Controller_Authorization extends Controller_Controller
 
     public function send_remind($email, $remind_url)
     {
-        $base_url = BASE_URL;
         $subject = "ILuvFabrix. Change Password.";
         ob_start();
         $this->template->view_layout('remind_message', 'remind');

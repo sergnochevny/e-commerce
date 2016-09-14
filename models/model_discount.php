@@ -44,21 +44,21 @@ Class Model_Discount extends Model_Model
         }
 
     }
-    public function del_discount($discounts_id)
+    public function del_discount($id)
     {
 
-        $sSQL = sprintf("DELETE FROM fabrix_specials_products WHERE sid=%u", $discounts_id);
+        $sSQL = sprintf("DELETE FROM fabrix_specials_products WHERE sid=%u", $id);
         mysql_query($sSQL);
-        $sSQL = sprintf("DELETE FROM fabrix_specials_users WHERE sid=%u", $discounts_id);
+        $sSQL = sprintf("DELETE FROM fabrix_specials_users WHERE sid=%u", $id);
         mysql_query($sSQL);
-        $strSQL = "DELETE FROM fabrix_specials WHERE sid = $discounts_id";
+        $strSQL = "DELETE FROM fabrix_specials WHERE sid = $id";
         mysql_query($strSQL);
 
     }
 
-    public function get_edit_discounts_data($discounts_id)
+    public function get_edit_discounts_data($id)
     {
-        $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='$discounts_id'");
+        $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='$id'");
         $rowsni = mysql_fetch_array($resulthatistim);
 
         date_default_timezone_set('UTC');
@@ -72,7 +72,7 @@ Class Model_Discount extends Model_Model
         while ($row = mysql_fetch_array($results)) {
             $content = $row[2] . '-' . $row[1];
             $content = substr($content, 0, 50);
-            $result = mysql_query("SELECT pid FROM fabrix_specials_products WHERE pid='$row[0]' && sid='$discounts_id'");
+            $result = mysql_query("SELECT pid FROM fabrix_specials_products WHERE pid='$row[0]' && sid='$id'");
             $myrow = mysql_fetch_array($result);
             if (!empty($myrow['pid']) && $sel_fabrics == "2") {
                 $fabric_list .= '<option value="' . $row[0] . '" selected>' . $content . '</option>';
@@ -88,7 +88,7 @@ Class Model_Discount extends Model_Model
 
             $content = $row[1] . '-' . $row[3] . ' ' . $row[4];
             $content = substr($content, 0, 60);
-            $result = mysql_query("SELECT aid FROM fabrix_specials_users WHERE aid='$row[0]' && sid='$discounts_id'");
+            $result = mysql_query("SELECT aid FROM fabrix_specials_users WHERE aid='$row[0]' && sid='$id'");
             $myrow = mysql_fetch_array($result);
             if (!empty($myrow['aid']) && $users_check == '4') {
                 $users .= '<option value="' . $row[0] . '" selected >' . $content . '</option>';

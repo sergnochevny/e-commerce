@@ -3,14 +3,14 @@
 class Controller_BlogCategory extends Controller_Controller
 {
 
-    function admin()
+    public function admin()
     {
 
-        $this->blog_categories_list();
+        $this->list();
         $this->main->view_admin('blog_categories');
     }
 
-    function blog_categories_list()
+    public function list()
     {
         $model = new Model_Blog();
         $rows = $model->get_blog_categories_list();
@@ -20,14 +20,14 @@ class Controller_BlogCategory extends Controller_Controller
         foreach ($rows as $row) {
             $this->template->vars('base_url', $base_url);
             $this->template->vars('row', $row);
-            $this->template->view_layout('blog_categories_list_row');
+            $this->template->view_layout('list_row');
         }
         $categories .= ob_get_contents();
         ob_end_clean();
         $this->main->template->vars('blog_categories_list', $categories);
     }
 
-    function del()
+    public function del()
     {
         $model = new Model_Blog();
         $group_id = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : null;
@@ -42,10 +42,10 @@ class Controller_BlogCategory extends Controller_Controller
             }
         }
         $this->blog_categories_list();
-        $this->main->view_layout('blog_categories_list');
+        $this->main->view_layout('list');
     }
 
-    function edit()
+    public function edit()
     {
         $model = new Model_Blog();
         $base_url = _A_::$app->router()->UrlTo('/');
@@ -53,16 +53,16 @@ class Controller_BlogCategory extends Controller_Controller
         $userInfo = $model->get_blog_category($group_id);
         $this->main->template->vars('userInfo', $userInfo);
 
-        $action_url = _A_::$app->router()->UrlTo('blogcategory/save',['cat' => $group_id]);
+        $action_url = _A_::$app->router()->UrlTo('blogcategory/save', ['cat' => $group_id]);
         $this->main->template->vars('action_url', $action_url);
 
         $back_url = _A_::$app->router()->UrlTo('blogcategory/admin');
         $this->main->template->vars('button_title', 'Update');
         $this->main->template->vars('back_url', $back_url);
-        $this->main->view_admin('blogcategory/blog_edit_categories');
+        $this->main->view_admin('edit');
     }
 
-    function save()
+    public function save()
     {
         $model = new Model_Blog();
         $base_url = _A_::$app->router()->UrlTo('/');
@@ -95,11 +95,11 @@ class Controller_BlogCategory extends Controller_Controller
             $this->main->template->vars('back_url', $back_url);
             $this->main->template->vars('userInfo', $userInfo);
 
-            $this->main->view_layout('blog_category_form');
+            $this->main->view_layout('form');
         }
     }
 
-    function edit_form()
+    public function edit_form()
     {
         $model = new Model_Blog();
         $base_url = _A_::$app->router()->UrlTo('/');
@@ -111,10 +111,10 @@ class Controller_BlogCategory extends Controller_Controller
         $this->main->template->vars('button_title', 'Update');
         $this->main->template->vars('action_url', $action_url);
         $this->main->template->vars('back_url', $back_url);
-        $this->main->view_layout('blogcategory/blog_category_form');
+        $this->main->view_layout('form');
     }
 
-    function new()
+    public function new()
     {
         $userInfo = [];
         $base_url = _A_::$app->router()->UrlTo('/');
@@ -131,10 +131,10 @@ class Controller_BlogCategory extends Controller_Controller
         $this->main->template->vars('back_url', $back_url);
         $this->main->template->vars('userInfo', $userInfo);
 
-        $this->main->view_admin('blog_edit_categories');
+        $this->main->view_admin('edit');
     }
 
-    function save_new()
+    public function save_new()
     {
         $model = new Model_Blog();
         $base_url = _A_::$app->router()->UrlTo('/');
@@ -171,7 +171,7 @@ class Controller_BlogCategory extends Controller_Controller
             $this->main->template->vars('back_url', $back_url);
             $this->main->template->vars('userInfo', $userInfo);
 
-            $this->main->view_layout('blog_category_form');
+            $this->main->view_layout('form');
         } else {
             $userInfo = [];
 
@@ -191,8 +191,7 @@ class Controller_BlogCategory extends Controller_Controller
             $this->main->template->vars('back_url', $back_url);
             $this->main->template->vars('userInfo', $userInfo);
 
-            $this->main->view_layout('blog_category_form');
+            $this->main->view_layout('form');
         }
     }
-
 }

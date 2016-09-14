@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Matches extends Controller_Base
+class Controller_Matches extends Controller_Controller
 {
 
     function matches()

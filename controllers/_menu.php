@@ -3,15 +3,6 @@
 class Controller_Menu extends Controller_Controller
 {
 
-    function menu_list()
-    {
-        $results = mysql_query("select * from fabrix_categories");
-        while ($row = mysql_fetch_array($results)) {
-            echo '<li class="menu-item menu-item-type-post_type menu-item-object-product">
-            <a title="' . $row[1] . '" href="shop?cat=' . $row[0] . '">' . $row[1] . '</a></li>';
-        }
-    }
-
     function show_shop_menu()
     {
         $model = new Model_Tools();

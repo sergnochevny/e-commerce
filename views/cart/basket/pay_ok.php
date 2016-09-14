@@ -17,7 +17,7 @@
 
             <div class="entry-content">
                 <div class="wc-proceed-to-checkout">
-                    <a class="checkout-button button alt wc-forward" href="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/shop">
+                    <a class="checkout-button button alt wc-forward" href="<?php echo _A_::$app->router()->UrlTo('shop') ?>">
                         WOULD YOU LIKE TO CONTINUE SHOPPING?  CLICK HERE
                     </a>
                 </div>

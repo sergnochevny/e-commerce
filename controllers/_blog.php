@@ -3,7 +3,7 @@
 class Controller_Blog extends Controller_Controller
 {
 
-    function html_split_regex()
+    private function html_split_regex()
     {
         static $regex;
 
@@ -51,12 +51,12 @@ class Controller_Blog extends Controller_Controller
         return $regex;
     }
 
-    function html_split($input)
+    private function html_split($input)
     {
         return preg_split($this->html_split_regex(), $input, -1, PREG_SPLIT_DELIM_CAPTURE);
     }
 
-    function replace_in_html_tags($haystack, $replace_pairs)
+    private function replace_in_html_tags($haystack, $replace_pairs)
     {
         // Find all elements.
         $textarr = $this->html_split($haystack);
@@ -89,12 +89,12 @@ class Controller_Blog extends Controller_Controller
         return $haystack;
     }
 
-    function _autop_newline_preservation_helper($matches)
+    private function _autop_newline_preservation_helper($matches)
     {
         return str_replace("\n", "<WPPreserveNewline />", $matches[0]);
     }
 
-    function autop($pee, $br = true)
+    private function autop($pee, $br = true)
     {
         $pre_tags = array();
 
@@ -203,7 +203,7 @@ class Controller_Blog extends Controller_Controller
         return $txt;
     }
 
-    function post()
+    public function post()
     {
         $model = new Model_Blog();
 
@@ -249,7 +249,7 @@ class Controller_Blog extends Controller_Controller
             $this->template->vars('post_id', $post_id);
             $this->template->vars('post_img', $post_img);
 
-            $this->template->view_layout('blog_post');
+            $this->template->view_layout('post_content');
 
             $list = ob_get_contents();
             ob_end_clean();
@@ -261,7 +261,7 @@ class Controller_Blog extends Controller_Controller
         $this->main->view('post');
     }
 
-    function main_posts()
+    private function main_posts()
     {
         $model = new Model_Blog();
 
@@ -331,7 +331,7 @@ class Controller_Blog extends Controller_Controller
                 $this->template->vars('url', $url);
                 $this->template->vars('base_url', $base_url);
 
-                $this->template->view_layout('blog_posts');
+                $this->template->view_layout('posts');
             }
 
             $list = ob_get_contents();
@@ -348,7 +348,7 @@ class Controller_Blog extends Controller_Controller
         }
     }
 
-    function blog()
+    public function blog()
     {
         $this->main_posts();
         $this->main->view('blog');
@@ -370,7 +370,7 @@ class Controller_Blog extends Controller_Controller
             $this->template->vars('group_id',$group_id);
             $this->template->vars('href', $href);
             $this->template->vars('name', $name);
-            $this->template->view_layout('blog_admin_cat_select');
+            $this->template->view_layout('admin_cat_select');
         }
         $select_cat_option = ob_get_contents();
         ob_end_clean();
@@ -446,7 +446,7 @@ class Controller_Blog extends Controller_Controller
                 $this->template->vars('post_id',$post_id);
                 $this->template->vars('post_name',$post_name);
 
-                $this->template->view_layout('blog_admin_posts');
+                $this->template->view_layout('admin_posts');
             }
 
             $list = ob_get_contents();
@@ -463,7 +463,7 @@ class Controller_Blog extends Controller_Controller
         }
     }
 
-    function admin_prepapre()
+    private function admin_prepapre()
     {
         $prms['page'] = '1';
         if (!empty(_A_::$app->get('page'))) {
@@ -477,19 +477,19 @@ class Controller_Blog extends Controller_Controller
         $this->admin_main_posts();
     }
 
-    function admin()
+    public function admin()
     {
         $this->admin_prepapre();
         $this->main->view_admin('blog_admin');
     }
 
-    function admin_content()
+    private function admin_content()
     {
         $this->admin_prepapre();
-        $this->main->view_layout('blog_admin_content');
+        $this->main->view_layout('admin_content');
     }
 
-    function del_post()
+    function del()
     {
         $model = new Model_Blog();
         $post_id = $model->validData(_A_::$app->get('post_id'));
@@ -511,13 +511,13 @@ class Controller_Blog extends Controller_Controller
         $categories = $model->get_categories();
         ob_start();
         $this->template->vars('categories',$categories);
-        $this->template->view_layout('blog_categories_select_options');
+        $this->template->view_layout('categories_select_options');
         $res = ob_get_contents();
         ob_end_clean();
         return $res;
     }
 
-    function new_post_prepare()
+    private function new_prepare()
     {
         $prms['page'] = '1';
         if (!empty(_A_::$app->get('page'))) {
@@ -539,7 +539,7 @@ class Controller_Blog extends Controller_Controller
         $this->template->vars('data', $data);
     }
 
-    function new_post_img_section($img = null)
+    private function new_post_img_section($img = null)
     {
         $base_url = _A_::$app->router()->UrlTo('/');
         if (isset($img) && file_exists($img) && is_file($img)) {
@@ -553,14 +553,14 @@ class Controller_Blog extends Controller_Controller
         $this->main->template->vars('f_img', $f_img);
 
         ob_start();
-        $this->main->view_layout('blog_new_post_img');
+        $this->main->view_layout('new_img');
         $res = ob_get_contents();
         ob_end_clean();
 
         return $res;
     }
 
-    function upload_img(){
+    private function upload_img(){
         $img = null;
         $timestamp = time();
         $uploaddir = 'img/blog/';
@@ -582,13 +582,13 @@ class Controller_Blog extends Controller_Controller
         return $img;
     }
 
-    function new_upload_img()
+    public function new_upload_img()
     {
         $img = $this->upload_img();
         echo $this->new_post_img_section($img);
     }
 
-    function edit_post_imgs($img = null)
+    public function edit_post_imgs($img = null)
     {
         $base_url = _A_::$app->router()->UrlTo('/');
         if (isset($img) && file_exists($img) && is_file($img)) {
@@ -602,19 +602,19 @@ class Controller_Blog extends Controller_Controller
 
     }
 
-    function edit_upload_img()
+    public function edit_upload_img()
     {
         $img = $this->upload_img();
         echo $this->edit_post_imgs($img);
     }
 
-    function new_post()
+    public function new()
     {
         $this->new_post_prepare();
         $this->main->view_admin('blog_new_post');
     }
 
-    function save_new_post()
+    public function save_new()
     {
 
         $base_url = _A_::$app->router()->UrlTo('/');
@@ -684,10 +684,10 @@ class Controller_Blog extends Controller_Controller
             $warning = ['Article saved successfully!!!'];
             $this->template->vars('warning', $warning);
         }
-        $this->main->view_layout('blog_new_post_form');
+        $this->main->view_layout('new_form');
     }
 
-    function edit_post_prepare()
+    private function edit_prepare()
     {
         $model = new Model_Blog();
 
@@ -742,13 +742,13 @@ class Controller_Blog extends Controller_Controller
         }
     }
 
-    function edit_post()
+    public function edit()
     {
-        $this->edit_post_prepare();
-        $this->main->view_admin('blog_edit_post');
+        $this->edit_prepare();
+        $this->main->view_admin('edit');
     }
 
-    function save_edit_post()
+    public function save_edit()
     {
 
         $base_url = _A_::$app->router()->UrlTo('/');
@@ -838,7 +838,6 @@ class Controller_Blog extends Controller_Controller
             $warning = ['Article saved successfully!!!'];
             $this->template->vars('warning', $warning);
         }
-//        $this->main->view_layout('blog_edit_post_form');
-        $this->main->view_layout('edit_blog_alert');
+        $this->main->view_layout('edit_alert');
     }
 }
