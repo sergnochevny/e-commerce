@@ -57,7 +57,6 @@ class Controller_Comments extends Controller_Base
             $this->template->vars('user_name', $user_name);
         }
         $this->template->vars('toggle', $toggle);
-        $this->template->vars('base_url', _A_::$app->router()->UrlTo('/'));
 
         $this->template->view_layout('menu/my_account_user_menu');
         $my_account_user_menu = ob_get_contents();
@@ -137,8 +136,6 @@ class Controller_Comments extends Controller_Base
     public function get_comments_list()
     {
         $this->main->test_access_rights();
-
-        $base_url = _A_::$app->router()->UrlTo('/');
 
         $m = new Model_Comments();
         if (!empty(_A_::$app->get('page'))) {

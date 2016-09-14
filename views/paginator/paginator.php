@@ -32,12 +32,10 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
     if ($i == $page) {
         echo "<li class='active'><span class='page-numbers current'>$i</span></li>";
     } else {
+        $prms['page'] = $i;
         ?>
         <li>
-            <?php
-            $prms['page'] = $i;
-            echo '<a class="prev page-numbers" href="' . _A_::$app->router()->UrlTo($url, $prms) . '">' . $i . '</a>';
-            ?>
+            <?= '<a class="prev page-numbers" href="' . _A_::$app->router()->UrlTo($url, $prms) . '">' . $i . '</a>'; ?>
         </li>
         <?php
     }

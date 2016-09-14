@@ -28,11 +28,9 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
         $opt['page'] = $i;
         ?>
         <li>
-            <a class="prev page-numbers"
-                <?php
-                    echo 'href="' . _A_::$app->router()->UrlTo('users', $opt).'"';
-                ?>
-            ><?php echo $i ?></a>
+            <a class="prev page-numbers" <?= 'href="' . _A_::$app->router()->UrlTo('users', $opt).'"';?>>
+                <?php echo $i ?>
+            </a>
         </li>
         <?php
     }
