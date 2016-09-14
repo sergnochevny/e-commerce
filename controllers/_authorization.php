@@ -3,18 +3,6 @@
 class Controller_Authorization extends Controller_Controller
 {
 
-    function update_passwd()
-    {
-        $model = new Model_Auth();
-        $model->update_passwd();
-    }
-
-    function update_admin_passwd()
-    {
-        $model = new Model_Auth();
-        $model->update_admin_passwd();
-    }
-
     function authorization()
     {
         $prms = null;
@@ -81,9 +69,9 @@ class Controller_Authorization extends Controller_Controller
             }
             $registration_url = _A_::$app->router()->UrlTo('user/registration', $prms);
             $lostpassword_url = _A_::$app->router()->UrlTo('authorization/lost_password', $prms);
-            $this->template->vars('registration_url', $registration_url);
-            $this->template->vars('lostpassword_url', $lostpassword_url);
-            $this->template->vars('redirect', $redirect);
+            $this->main->template->vars('registration_url', $registration_url);
+            $this->main->template->vars('lostpassword_url', $lostpassword_url);
+            $this->main->template->vars('redirect', $redirect);
             $this->main->view('authorization');
         }
     }
@@ -231,6 +219,7 @@ class Controller_Authorization extends Controller_Controller
     public function admin_log_out()
     {
         _A_::$app->setSession('_a', null);
+        _A_::$app->setSession('user', null);
         _A_::$app->setCookie('_ar', null);
         $this->redirect(_A_::$app->router()->UrlTo('/'));
     }
@@ -246,7 +235,7 @@ class Controller_Authorization extends Controller_Controller
 
     public function get_user_from_session()
     {
-        return _A_::$app->setSession('user', null);
+        return _A_::$app->session('user');
     }
 
     public function lost_password()
@@ -257,14 +246,14 @@ class Controller_Authorization extends Controller_Controller
                 $mauth = new Model_Auth();
                 if (empty(_A_::$app->get('login'))) {
                     $error = ['Empty Email. Identify your Email(Login).'];
-                    $this->template->vars('error', $error);
+                    $this->main->template->vars('error', $error);
                     $this->lost_password_form();
                     exit();
                 }
                 $email = _A_::$app->get('login');
                 if (!$muser->user_exist($email)) {
                     $error = ['Wrong Email(Login) or this Email is not registered.'];
-                    $this->template->vars('error', $error);
+                    $this->main->template->vars('error', $error);
                     $this->lost_password_form();
                     exit();
                 }
@@ -277,8 +266,8 @@ class Controller_Authorization extends Controller_Controller
                     if ($this->send_remind($email, $remind_url)) {
 
                         $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!!!';
-                        $this->template->vars('message', $message);
-                        $this->main->view_layout('msgs/msg_span');
+                        $this->main->template->vars('message', $message);
+                        $this->main->view_layout('msg_span');
                     }
                 }
             } else {
@@ -308,36 +297,36 @@ class Controller_Authorization extends Controller_Controller
                                             $muser->clean_remind($user_id);
                                             $message = 'Congratulattions. Your Password has been changed succesfully!!!<br>';
                                             $message .= 'Now you can go to the <a href="' . _A_::$app->router()->UrlTo('authorization/user') . '">login form</a> and use it.';
-                                            $this->template->vars('message', $message);
-                                            $this->main->view_layout('msgs/msg_span');
+                                            $this->main->template->vars('message', $message);
+                                            $this->main->view_layout('msg_span');
                                             exit();
 
                                         } else {
                                             $error = ['Password and Confirm Password must be identical!!!'];
-                                            $this->template->vars('error', $error);
+                                            $this->main->template->vars('error', $error);
                                         }
                                     } else {
                                         $error = ['Identity Password and Confirm Password!!!'];
-                                        $this->template->vars('error', $error);
+                                        $this->main->template->vars('error', $error);
                                     }
                                     $action = _A_::$app->router()->UrlTo('authorization/lost_password', ['user_id' => $user_id]);
-                                    $this->template->vars('action', $action);
-                                    $this->template->vars('remind', $remind);
-                                    $this->template->vars('user_id', $user_id);
+                                    $this->main->template->vars('action', $action);
+                                    $this->main->template->vars('remind', $remind);
+                                    $this->main->template->vars('user_id', $user_id);
                                     $this->main->view_layout('remind/change_password_form');
                                 } else {
                                     $back_url = _A_::$app->router()->UrlTo('/');
                                     $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
-                                    $this->template->vars('message', $message);
-                                    $this->template->vars('back_url', $back_url);
-                                    $this->main->view_layout('msgs/msg_span');
+                                    $this->main->template->vars('message', $message);
+                                    $this->main->template->vars('back_url', $back_url);
+                                    $this->main->view_layout('msg_span');
                                 }
                             } else {
                                 $back_url = _A_::$app->router()->UrlTo('/');
                                 $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
                                 $this->template->vars('message', $message);
                                 $this->template->vars('back_url', $back_url);
-                                $this->main->view_layout('msgs/msg_span');
+                                $this->main->view_layout('msg_span');
                             }
 
                         } else {
@@ -380,12 +369,9 @@ class Controller_Authorization extends Controller_Controller
                                 $this->main->view('remind/change_password');
                             } else {
                                 $result = true;
-                                $back_url = _A_::$app->router()->UrlTo('/');
                                 $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
-                                $this->template->vars('message', $message);
-                                $this->template->vars('back_url', $back_url);
-
-                                $this->main->view('msgs/main_message');
+                                $this->main->template->vars('message', $message);
+                                $this->main->view('message');
                             }
                         }
                     }
@@ -397,10 +383,9 @@ class Controller_Authorization extends Controller_Controller
                         $prms['url'] = _A_::$app->get('url');
                     }
                     $back_url = _A_::$app->router()->UrlTo('authorization/user', $prms);
-                    $this->template->vars('action', $action);
-                    $this->template->vars('back_url', $back_url);
+                    $this->main->template->vars('action', $action);
+                    $this->main->template->vars('back_url', $back_url);
                     $this->main->view('lost_password');
-
                 }
             }
             if (!$result) {
@@ -414,11 +399,12 @@ class Controller_Authorization extends Controller_Controller
         $this->main->view_layout('lost_password_form');
     }
 
-    public function send_remind($email, $remind_url)
+    private function send_remind($email, $remind_url)
     {
         $subject = "ILuvFabrix. Change Password.";
         ob_start();
-        $this->template->view_layout('remind_message', 'remind');
+        $this->template->vars('remind_url', $remind_url);
+        $this->template->view_layout('remind/message');
         $message = ob_get_contents();
         ob_end_clean();
 //        $message = htmlspecialchars(stripslashes(trim($message)));

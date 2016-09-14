@@ -3,7 +3,7 @@
 class Controller_Image extends Controller_Controller
 {
 
-    function del_pic()
+    public function del_pic()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -27,10 +27,10 @@ class Controller_Image extends Controller_Controller
 
             }
         }
-        $this->modify_images();
+        $this->modify();
     }
 
-    function modify_images()
+    public function modify()
     {
         $this->main->test_access_rights();
         if (!is_null(_A_::$app->get('p_id'))) {
@@ -63,7 +63,7 @@ class Controller_Image extends Controller_Controller
         }
     }
 
-    function modify_images_from_form($userInfo)
+    public function modify_from_form($userInfo)
     {
         $image1 = $userInfo['image1'];
         $image2 = $userInfo['image2'];
@@ -98,7 +98,7 @@ class Controller_Image extends Controller_Controller
         $this->template->view_layout('m_images');
     }
 
-    function save_img_link()
+    public function save_link()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -115,10 +115,10 @@ class Controller_Image extends Controller_Controller
             }
         }
 
-        $this->modify_images();
+        $this->modify();
     }
 
-    function upload_product_img()
+    public function upload_product()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -136,7 +136,7 @@ class Controller_Image extends Controller_Controller
             } else {
                 if (move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
                     $db_g = "image$product_photo";
-                    $this->prepare_product_img($file);
+                    $this->prepare_product($file);
                     // delete img;
                     $model->dbUpdateMainPhoto($db_g, $file, $p_id);
                     echo "success";
@@ -148,7 +148,7 @@ class Controller_Image extends Controller_Controller
 
     }
 
-    private function prepare_product_img($imagename)
+    private function prepare_product($imagename)
     {
 
         $size = getimagesize("upload/upload/" . $imagename);
@@ -173,7 +173,7 @@ class Controller_Image extends Controller_Controller
         imagedestroy($imagefrom);
     }
 
-    public function modify_images_products($imagename)
+    public function modify_products($imagename)
     {
 
         if (file_exists("upload/upload/" . $imagename)) {

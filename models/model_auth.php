@@ -17,7 +17,7 @@ Class Model_Auth extends Model_Model
         return crypt($input, $salt);
     }
 
-    function check($password, $hash)
+    public function check($password, $hash)
     {
         preg_match('/^\$2a\$(\d{2})\$(.{22})/D', $hash, $matches);
 
@@ -27,7 +27,7 @@ Class Model_Auth extends Model_Model
         return $this->hash_($password, $salt, $cost);
     }
 
-    function generatestr($length = 22)
+    public function generatestr($length = 22)
     {
         $salt = $this->salt;
         $numChars = strlen($salt);

@@ -5,7 +5,7 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <a href="<?php echo $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
+                <a href="<?php echo _A_::$app->router()->UrlTo('/');; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
 
                 <div id="customer_details" style="padding-top: 20px; margin: auto; width: 600px;">
                     <div id="message">

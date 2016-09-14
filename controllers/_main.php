@@ -123,9 +123,7 @@ class Controller_Main extends Controller_Base
             }
 
             $this->template->vars('message', $message);
-            $this->template->vars('back_url', $back_url);
-
-            $this->view('msgs/main_message');
+            $this->view('message');
         }
 
     }
@@ -176,6 +174,5 @@ class Controller_Main extends Controller_Base
         $this->template->controller = 'main';
 
         $this->view('404/error');
-        exit();
     }
 }
