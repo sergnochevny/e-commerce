@@ -21,10 +21,8 @@ class Controller_User extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_User();
-        $page = 1;
-        if (!empty(_A_::$app->get('page'))) {
-            $page = $model->validData(_A_::$app->get('page'));
-        }
+
+        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
         $this->template->vars('page', $page);
 
         $per_page = 12;
@@ -39,12 +37,12 @@ class Controller_User extends Controller_Controller
         $rows = $model->get_users_list($start, $per_page);
 
         ob_start();
-        $base_url = _A_::$app->router()->UrlTo('/');
-        foreach ($rows as $row) {
-            $row[30] = gmdate("F j, Y, g:i a", $row[30]);
-            include('./views/html/users_list.php');
-        }
-        $user_list = ob_get_contents();
+            $base_url = _A_::$app->router()->UrlTo('/');
+            foreach ($rows as $row) {
+                $row[30] = gmdate("F j, Y, g:i a", $row[30]);
+                include('./views/html/users_list.php');
+            }
+            $user_list = ob_get_contents();
         ob_end_clean();
         $this->template->vars('main_users_list', $user_list);
 
@@ -74,7 +72,7 @@ class Controller_User extends Controller_Controller
             if (empty($user_email)) {
                 $error = ['Identify email field!!!'];
                 $this->template->vars('error', $error);
-            }else{
+            } else {
                 if ($model->user_exist($user_email, $user_id)) {
                     $error[] = 'User with this email already exists!!!';
                     $this->template->vars('error', $error);
@@ -126,7 +124,7 @@ class Controller_User extends Controller_Controller
                             $user_s_address2, $user_s_city, $user_s_state, $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax,
                             $user_s_email, $user_id);
 
-                        if ($result) { 
+                        if ($result) {
                             if (!is_null(_A_::$app->session['_']) && ($user_id == _A_::$app->session('_'))) {
                                 $user = $model->get_user_by_id($user_id);
                                 if (isset($user)) {
@@ -263,16 +261,8 @@ class Controller_User extends Controller_Controller
 
     private function _edit_user()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $model = new Model_User();
         $user_id = $model->validData(_A_::$app->get('user_id'));
-        $back_url = _A_::$app->router()->UrlTo('/') . '/users?page=';
-        if (!empty(_A_::$app->get('page'))) {
-            $back_url .= _A_::$app->get('page');
-        } else
-            $back_url .= '1';
-//        }
-
         $userInfo = $model->get_user_data($user_id);
 
         $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
@@ -280,7 +270,8 @@ class Controller_User extends Controller_Controller
         $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
         $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
 
-        $this->template->vars('back_url', $back_url);
+        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
         $this->template->vars('userInfo', $userInfo);
     }
 
@@ -291,14 +282,8 @@ class Controller_User extends Controller_Controller
 
     private function _new_user()
     {
-        $model = new Model_User();
-        $back_url = _A_::$app->router()->UrlTo('/') . '/users?page=';
-        if (!empty(_A_::$app->get('page'))) {
-            $back_url .= _A_::$app->get('page');
-        } else
-            $back_url .= '1';
-
-        $this->template->vars('back_url', $back_url);
+        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
 
         $userInfo = array(
             'email' => '',
@@ -340,20 +325,8 @@ class Controller_User extends Controller_Controller
 
     private function _new_user_form()
     {
-        $model = new Model_User();
-
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
-        $back_url = _A_::$app->router()->UrlTo('/') . '/users?page=';
-        if (!empty(_A_::$app->get('page'))) {
-            $back_url .= _A_::$app->get('page');
-        } else
-            $back_url .= '1';
-//        }
-
-        $this->template->vars('back_url', $back_url);
-
+        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
         $this->main->view_layout('new_user_form');
     }
 
@@ -363,7 +336,7 @@ class Controller_User extends Controller_Controller
         $model = new Model_User();
         include('include/save_edit_user_post.php');
         $timestamp = time();
-        if(empty($user_email)){
+        if (empty($user_email)) {
             $error[] = 'Identify email field!!!';
             $this->template->vars('error', $error);
         } else {
@@ -486,101 +459,77 @@ class Controller_User extends Controller_Controller
 
     function edit_user()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
-        $action = $base_url . '/save_edit_user?user_id=' . _A_::$app->get('user_id');
-        $this->template->vars('action', $action);
-        $title = 'EDIT USER';
-        $this->template->vars('title', $title);
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('save_edit_user', ['user_id' => _A_::$app->get('user_id')]));
+        $this->main->template->vars('title', 'EDIT USER');
         $this->_edit_user();
         $this->main->view_admin('user/edit_user');
     }
 
     function new_user()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
-        $action = $base_url . '/save_new_user';
-        $this->template->vars('action', $action);
-        $title = 'NEW USER';
-        $this->template->vars('title', $title);
+        $this->template->vars('action', _A_::$app->router()->UrlTo('save_new_user'));
+        $this->template->vars('title', 'NEW USER');
         $this->_new_user();
         $this->main->view_admin('user/new_user');
     }
 
     function save_edit_user()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
-        $action = _A_::$app->router()->UrlTo('user/save_edit',['user_id'=>_A_::$app->get('user_id')]);
-        $this->template->vars('action', $action);
-        $title = 'EDIT USER';
-        $this->template->vars('title', $title);
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit', ['user_id' => _A_::$app->get('user_id')]));
+        $this->main->template->vars('title', 'EDIT USER');
         $this->_save_edit_user();
         $this->_edit_user_form();
     }
 
     function save_new()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
-        $action = _A_::$app->router()->UrlTo('user/save_new');
-        $this->template->vars('action', $action);
-        $title = 'NEW USER';
-        $this->template->vars('title', $title);
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_new'));
+        $this->main->template->vars('title', 'NEW USER');
         $this->_save_new_user();
         $this->_new_user_form();
     }
 
     public function registration()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
-        $title = 'REGISTRATION USER';
-        $this->template->vars('title', $title);
-        $action = _A_::$app->router()->UrlTo('user/save_registration');
-        $this->template->vars('action', $action);
+        $this->main->template->vars('title', 'REGISTRATION USER');
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_registration'));
         $prms = null;
         if (!is_null(_A_::$app->get('url'))) {
-            $prms['url']= _A_::$app->get('url');
+            $prms['url'] = _A_::$app->get('url');
         }
-        $back_url = _A_::$app->router()->UrlTo('authorization/user',$prms);
-        $this->template->vars('back_url', $back_url, true);
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('authorization/user', $prms), true);
         $this->_new_user();
         $this->main->view('user/new_user');
     }
 
     function save_registration()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
+        $prms = null;
         if (!$this->_save_new_user()) {
-            $title = 'REGISTRATION USER';
-            $this->template->vars('title', $title);
-            $action = $base_url . 'user/save_registration';
-            $this->template->vars('action', $action);
+            $this->template->vars('title', 'REGISTRATION USER');
+            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_registration'));
             $this->_new_user_form();
         } else {
-            $model = new Model_User();
             $user_id = _A_::$app->get('user_id');
-
-            $title = 'CHANGE REGISTRATION DATA';
-            $this->template->vars('title', $title);
-            $back_url = $base_url . 'authorization/user';
+            $this->template->vars('title', 'CHANGE REGISTRATION DATA');
             if (!is_null(_A_::$app->get('url'))) {
-                $back_url .= '?url=' . _A_::$app->get('url');
+                $prms['url'] = _A_::$app->get('url');
             }
-            $this->template->vars('back_url', $back_url, true);
-            $action = $base_url . 'user/save_edit_registration_data';
-            $this->template->vars('action', $action, true);
+            $this->template->vars('back_url', _A_::$app->router()->UrlTo('authorization/user', $prms), true);
+            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit_registration_data'), true);
 
-            $userInfo = $model->get_user_data($user_id);
+            $userInfo = (new Model_User())->get_user_data($user_id);
 
             $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
             $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
             $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
             $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
 
-            $email = $userInfo['email'];
-            $this->sendWelcomeEmail($email);
+            $this->sendWelcomeEmail($userInfo['email']);
 
             $this->template->vars('userInfo', $userInfo);
             $this->_edit_user_form();
@@ -591,53 +540,47 @@ class Controller_User extends Controller_Controller
 
     function save_edit_registration_data()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $authorization = new Controller_Authorization($this->main);
-        if ($authorization->is_user_logged()) {
-            $user_id = $authorization->get_user_from_session();
-            _A_::$app->get('user_id', $user_id);
-            $action = $base_url . 'user/save_edit_registration_data';
-            $this->template->vars('action', $action);
-            $title = 'CHANGE REGISTRATION DATA';
-            $this->template->vars('title', $title);
-            $this->_save_edit_user();
-            $this->_edit_user_form();
-        } else {
-            $url = $base_url;
-            $this->redirect($base_url);
+
+        if (!$authorization->is_user_logged()) {
+            $this->redirect(_A_::$app->router()->UrlTo('/'));
         }
+
+        $user_id = $authorization->get_user_from_session();
+        _A_::$app->get('user_id', $user_id);
+        $this->template->vars('action', _A_::$app->router()->UrlTo('/user/save_edit_registration_data'));
+        $this->template->vars('title', 'CHANGE REGISTRATION DATA');
+        $this->_save_edit_user();
+        $this->_edit_user_form();
     }
 
     public function change_registration_data()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
-
         $authorization = new Controller_Authorization($this->main);
         if ($authorization->is_user_logged()) {
             $user_id = $authorization->get_user_from_session();
             _A_::$app->get('user_id', $user_id);
-            $action = $base_url . 'user/save_edit_registration_data';
+            $action = _A_::$app->router()->UrlTo('user/save_edit_registration_data');
             $this->template->vars('action', $action);
             $title = 'CHANGE REGISTRATION DATA';
             $this->template->vars('title', $title);
             $this->_edit_user();
 
-            $back_url = '';
-            if(!is_null(_A_::$app->get('url'))){
-                $back_url = base64_decode(urldecode(_A_::$app->get('url')));
+            $url = '';
+            if (!is_null(_A_::$app->get('url'))) {
+                $url = _A_::$app->router()->UrlTo(base64_decode(urldecode(_A_::$app->get('url'))));
             }
-            $back_url = _A_::$app->router()->UrlTo(((strlen($back_url) > 0) ? $back_url : 'shop'));
-            $this->template->vars('back_url', $back_url, true);
+
+            $this->template->vars('back_url', _A_::$app->router()->UrlTo(((strlen($url) > 0) ? $url : 'shop')), true);
 
             $this->main->view('user/edit_user');
-        } else {
-            $url = $base_url;
-            $this->redirect($base_url);
         }
 
+        $this->redirect(_A_::$app->router()->UrlTo('/'));
     }
 
-    function sendWelcomeEmail($email){
+    function sendWelcomeEmail($email)
+    {
 
         $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
         $subject = "Thank you for registering with iluvfabrix.com";
@@ -650,23 +593,25 @@ class Controller_User extends Controller_Controller
         $body .= "\n";
         $body .= "Once again, thank you.........and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
 
-        mail($email, $subject,$body,$headers);
+        mail($email, $subject, $body, $headers);
     }
 
-    public function modify_accounts_password(){
-        $per_page = 200; $page = 1;
+    public function modify_accounts_password()
+    {
+        $per_page = 200;
+        $page = 1;
 
         $muser = new Model_User();
         $model_auth = new Model_Auth();
         $total = $muser->get_total_count_users();
         $count = 0;
-        while($page <= ceil($total / $per_page)){
+        while ($page <= ceil($total / $per_page)) {
             $start = (($page++ - 1) * $per_page);
             $rows = $muser->get_users_list($start, $per_page);
-            foreach( $rows as $row){
+            foreach ($rows as $row) {
                 $id = $row['aid'];
                 $current_password = $row['password'];
-                if(!strpos('$2a$12$',$current_password)){
+                if (!strpos('$2a$12$', $current_password)) {
                     $salt = $model_auth->generatestr();
                     $password = $model_auth->hash_($current_password, $salt, 12);
                     $check = $model_auth->check($current_password, $password);
