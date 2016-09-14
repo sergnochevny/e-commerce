@@ -8,14 +8,14 @@ class Controller_Shop extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Product();
         $image_suffix = 'b_';
-        $page = 1;
-        if (!empty(_A_::$app->get('page'))) {
-            $page = $model->validData(_A_::$app->get('page'));
-        }
+
+        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
+
         $add_product_prms['page'] = $page;
         if (!empty(_A_::$app->get('cat'))) {
             $add_product_prms['cat'] = _A_::$app->get('cat');
         }
+
         $this->main->template->vars('add_product_href', _A_::$app->router()->UrlTo('product/add', $add_product_prms));
 
         $model->cleanTempProducts();
@@ -123,22 +123,15 @@ class Controller_Shop extends Controller_Controller
     {
         $model = new Model_Product();
         $image_suffix = 'b_';
-        if (!is_null(_A_::$app->session('cart')['items'])) {
-            $cart_items = _A_::$app->session('cart')['items'];
-        } else {
-            $cart_items = [];
-        }
+        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
+
         if (!is_null(_A_::$app->session('s')) && (!empty(_A_::$app->post['s']{0}))) {
             $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->session('s')))));
             $this->template->vars('search', _A_::$app->post('s'));
         }
 
-        if (!empty(_A_::$app->get('page'))) {
-            $page = $model->validData(_A_::$app->get('page'));
-        } else {
-            $page = 1;
-        }
+        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
 
         if (!empty(_A_::$app->get('cat'))) {
@@ -310,9 +303,9 @@ class Controller_Shop extends Controller_Controller
             $paginator = new Controller_Paginator($this);
             $paginator->product_paginator_home($total, $page);
         } else {
-            $this->template->vars('count_rows', 0);
+            $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
-            $this->template->vars('list', $list);
+            $this->main->template->vars('list', $list);
         }
     }
 
@@ -324,8 +317,7 @@ class Controller_Shop extends Controller_Controller
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
         $this->product_list_by_type('last', 50);
-        $page_title = "What's New";
-        $this->main->template->vars('page_title', $page_title);
+        $this->main->template->vars('page_title', 'What\'s New');
 
         $this->main->view('shop');
     }
@@ -334,17 +326,9 @@ class Controller_Shop extends Controller_Controller
     {
         $model = new Model_Product();
         $image_suffix = 'b_';
-        if (isset(_A_::$app->session('cart')['items'])) {
-            $cart_items = _A_::$app->session('cart')['items'];
-        } else {
-            $cart_items = [];
-        }
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
-
-        $page = 1;
-        if (!empty(_A_::$app->get('page'))) {
-            $page = $model->validData(_A_::$app->get('page'));
-        }
+        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
 
         if (!empty(_A_::$app->get('cat'))) {
@@ -425,8 +409,7 @@ class Controller_Shop extends Controller_Controller
             $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
             $this->main->template->vars('list', $list);
 
-            $paginator = new Controller_Paginator($this);
-            $paginator->product_paginator_home($total, $page, 'shop/' . $type);
+            (new Controller_Paginator($this))->product_paginator_home($total, $page, 'shop/' . $type);
         } else {
             $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
@@ -444,8 +427,8 @@ class Controller_Shop extends Controller_Controller
         $this->product_list_by_type('specials', 360);
         $page_title = "Limited time Specials.";
         $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates.<br>All items available on a FIRST COME, FIRST SERVED basis only.';
-        $this->main->template->vars('annotation', $annotation);
         $this->main->template->vars('page_title', $page_title);
+        $this->main->template->vars('annotation', $annotation);
         $this->main->view('shop');
     }
 
@@ -457,8 +440,7 @@ class Controller_Shop extends Controller_Controller
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
         $this->product_list_by_type('popular', 360);
-        $page_title = "Popular Textile";
-        $this->main->template->vars('page_title', $page_title);
+        $this->main->template->vars('page_title', 'Popular Textile');
         $this->main->view('shop');
     }
 
@@ -470,8 +452,7 @@ class Controller_Shop extends Controller_Controller
         $this->template->vars('cart_enable', '_');
         $this->show_category_list();
         $this->product_list_by_type('best', 360);
-        $page_title = "Best Textile";
-        $this->main->template->vars('page_title', $page_title);
+        $this->main->template->vars('page_title', 'Best Textile');
         $this->main->view('shop');
     }
 
@@ -507,9 +488,7 @@ class Controller_Shop extends Controller_Controller
     */
     public function product_filtr_list()
     {
-        $model = new Model_Product();
-        $data = $model->product_filtr_list();
-        $this->main->template->vars('ProductFiltrList', $data);
+        $this->main->template->vars('ProductFiltrList', (new Model_Product())->product_filtr_list());
     }
 
     function widget_popular()
