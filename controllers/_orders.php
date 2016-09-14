@@ -7,12 +7,12 @@ class Controller_Orders extends Controller_Controller
     {
         $this->main->test_access_rights();
 
-        $back_url = _A_::$app->router()->UrlTo('/users', ['page' => !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1']);
+        $back_url = _A_::$app->router()->UrlTo('users', ['page' => !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1']);
 
         $this->get();
         $this->template->vars('back_url', $back_url);
 
-        $this->main->view_admin('order/orders');
+        $this->main->view_admin('orders');
     }
 
     function get()

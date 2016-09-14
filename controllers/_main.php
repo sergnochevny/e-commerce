@@ -23,13 +23,6 @@ class Controller_Main extends Controller_Base
         }
 
         $base_url = _A_::$app->router()->UrlTo('/');
-        ob_start();
-        $menu = new Controller_Menu($this);
-        $menu->menu_list();
-        $menu_list = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('menu_list', $menu_list);
-
         $this->template->vars('base_url', $base_url);
         ob_start();
         $this->template->view_layout('admin_menu', 'menu');

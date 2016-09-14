@@ -32,7 +32,7 @@ class Controller_Discount extends Controller_Base
         $list = ob_get_contents();
         ob_end_clean();
 
-        $this->template->vars('list', $list);
+        $this->main->template->vars('list', $list);
     }
 
     function del()

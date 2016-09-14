@@ -72,7 +72,7 @@
                     <p class="copyProducts">Your personal information is never
                         under any circumstances shared with any other individuals
                         or organizations.<br>
-                        <A href="<?php echo _A_::$app->router()->UrlTo('mnf'); ?>/privacy" class="copyProducts">privacy policy</A>.<br>
+                        <A href="<?php echo _A_::$app->router()->UrlTo('privacy'); ?>" class="copyProducts">privacy policy</A>.<br>
                     </p>
                     <p class="copyCopy">Security Information</p>
                     <p class="copyProducts">All purchase transactions made on

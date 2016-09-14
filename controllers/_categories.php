@@ -7,19 +7,19 @@ class Controller_Categories extends Controller_Base
     {
 
         $this->main->test_access_rights();
-        $this->get_categories_list();
-        $this->main->view_admin('category/categories');
+        $this->get_list();
+        $this->main->view_admin('categories');
     }
 
-    function category_list()
+    function list()
     {
 
         $this->main->test_access_rights();
-        $this->get_categories_list();
-        $this->main->view_layout('category/category_list');
+        $this->get_list();
+        $this->main->view_layout('list');
     }
 
-    function get_categories_list()
+    function get_list()
     {
         $this->main->test_access_rights();
         $results = mysql_query("select * from fabrix_categories");
@@ -36,14 +36,14 @@ class Controller_Categories extends Controller_Base
                 $row[5] = "No";
             }
             ob_start();
-            include('./views/category/get_categories_list.php');
+            include('./views/category/get_list.php');
             $categories .= ob_get_contents();
             ob_end_clean();
         }
         $this->template->vars('get_categories_list', $categories);
     }
 
-    function del_categories()
+    function del()
     {
         $this->main->test_access_rights();
         $model = new Model_Tools();
@@ -58,7 +58,7 @@ class Controller_Categories extends Controller_Base
         $this->category_list();
     }
 
-    function edit_categories()
+    function edit()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -66,16 +66,12 @@ class Controller_Categories extends Controller_Base
         $this->display_order_categories();
         $userInfo = $model->get_data_categories($category_id);
         $this->template->vars('userInfo', $userInfo);
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
         $back_url = _A_::$app->router()->UrlTo('categories');
-//        }
         $this->template->vars('back_url', $back_url);
-        $this->main->view_admin('category/edit_categories');
+        $this->main->view_admin('edit');
     }
 
-    function edit_category_form()
+    function edit_form()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -83,16 +79,12 @@ class Controller_Categories extends Controller_Base
         $this->display_order_categories();
         $userInfo = $model->get_data_categories($category_id);
         $this->template->vars('userInfo', $userInfo);
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
         $back_url = _A_::$app->router()->UrlTo('categories');
-//        }
         $this->template->vars('back_url', $back_url);
-        $this->main->view_layout('category/edit_category_form');
+        $this->main->view_layout('edit_form');
     }
 
-    function display_order_categories()
+    function display_order()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -102,14 +94,14 @@ class Controller_Categories extends Controller_Base
         while ($row = mysql_fetch_array($results)) {
             $resulthatistim = mysql_query("select * from fabrix_categories WHERE cid='$category_id'");
             $rowsni = mysql_fetch_array($resulthatistim);
-            include('./views/category/display_order_categories.php');
+            include('./views/category/display_order.php');
         }
         $order_categories = ob_get_contents();
         ob_end_clean();
         $this->template->vars('display_order_categories', $order_categories);
     }
 
-    function display_order_categories_wo_select()
+    function display_order_wo_select()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -125,7 +117,7 @@ class Controller_Categories extends Controller_Base
         $this->template->vars('display_order_categories', $order_categories);
     }
 
-    function save_data_categories()
+    function save_data()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
@@ -166,32 +158,22 @@ class Controller_Categories extends Controller_Base
             $this->template->vars('error', $error);
 
             $this->display_order_categories();
-
-//            if(isset($_SESSION['last_url'])) {
-//                $back_url = $_SESSION['last_url'];
-//            } else {
             $back_url = _A_::$app->router()->UrlTo('categories');
-//            }
-
             $this->template->vars('back_url', $back_url);
             $this->template->vars('userInfo', $userInfo);
 
-            $this->main->view_layout('category/edit_category_form');
+            $this->main->view_layout('edit_form');
         }
     }
 
-    function new_categories()
+    function new()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
         $this->display_order_categories_wo_select();
-//        if(isset($_SESSION['last_url'])) {
-//            $back_url = $_SESSION['last_url'];
-//        } else {
         $back_url = _A_::$app->router()->UrlTo('categories');
-//        }
         $this->template->vars('back_url', $back_url);
-        $this->main->view_admin('category/new_categories');
+        $this->main->view_admin('new');
     }
 
     function new_category_form()

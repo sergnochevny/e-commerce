@@ -98,7 +98,7 @@
             ) { ?>
 
                 <a id="proceed_agreem_button" class="checkout-button button alt wc-forward"
-                   href="<?php echo _A_::$app->router()->UrlTo('mnf') ?>/proceed_agreem">
+                   href="<?php echo _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
                     Proceed to Agreement</a>
             <?php } ?>
         </div>

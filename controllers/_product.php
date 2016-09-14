@@ -7,8 +7,8 @@ class Controller_Product extends Controller_Controller
     {
         $model = new Model_Product();
         $samples_model = new Model_Samples();
-        $produkt_id = $model->validData( _A_::$app->get('p_id'));
-        $userInfo = $model->getPrName($produkt_id);
+        $p_id = $model->validData(_A_::$app->get('p_id'));
+        $userInfo = $model->getPrName($p_id);
 
         $matches = new Controller_Matches($this->main);
         if ($matches->product_in($p_id)) $this->template->vars('in_matches', '1');
@@ -150,10 +150,10 @@ class Controller_Product extends Controller_Controller
                     $url_prms['cat'] = _A_::$app->get('cat');
                 }
                 if ((!empty(_A_::$app->get('mnf')))) {
-                    $back_url .= '&mnf=' . _A_::$app->get('mnf');
+                    $url_prms['mnf'] = _A_::$app->get('mnf');
                 }
                 if ((!empty(_A_::$app->get('ptrn')))) {
-                    $back_url .= '&ptrn=' . _A_::$app->get('ptrn');
+                    $url_prms['ptrn'] = _A_::$app->get('ptrn');
                 }
                 $back_url = _A_::$app->router()->UrlTo($url, $url_prms);
             } else {
@@ -289,7 +289,7 @@ class Controller_Product extends Controller_Controller
                     'sd_cat'                    => $sl_cat,
                     'pvisible'                  => $post_vis,
                     'metadescription'           => $post_desc,
-                    'produkt_id'                => $produkt_id,
+                    'p_id'                      => $p_id,
                     'Meta_Description'          => $post_desc,
                     'Meta_Keywords'             => $post_mkey,
                     'Product_name'              => $post_tp_name,
