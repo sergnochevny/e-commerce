@@ -22,7 +22,13 @@ class Controller_Captcha extends Controller_Controller
         parent::__construct($main);
     }
 
-    function gen_captcha()
+    function captcha()
+    {
+        $this->gen_captcha();
+        _A_::$app->setSession('captcha', $this->key);
+    }
+
+    private function gen_captcha()
     {
         for($i=0;$i<$this->length;$i++)
             $this->key.=$this->use_symbols{mt_rand(0,$this->use_symbols_len-1)};

@@ -22,86 +22,6 @@ Class Controller_Index Extends Controller_Controller
         $this->main->view_admin('admin_home');
     }
 
-//////////////////////////////////////////////////////////// BLOG
-//    function convert()
-//    {
-//        $blog = new Controller_Blog($this->main);
-//        $res = mysql_query("select * from blog_post_keys_descriptions");
-//        if ($res){
-//            while($post=mysql_fetch_assoc($res)){
-//                $content = $post['description'];
-//                $id = $post['post_id'];
-//                $content = mysql_real_escape_string($blog->convertation(html_entity_decode(stripslashes($content))));
-//                mysql_query("update blog_post_keys_descriptions set description = '".$content."' where post_id = ".$id);
-//            }
-//        }
-//    }
-
-    function post()
-    {
-        $blog = new Controller_Blog($this->main);
-        $blog->post();
-    }
-
-    function admin_blog()
-    {
-        $this->main->test_access_rights();
-        $blog = new Controller_Blog($this->main);
-        $blog->admin_blog();
-    }
-
-    function del_post()
-    {
-        $this->main->test_access_rights();
-        $blog = new Controller_Blog($this->main);
-        $blog->del_post();
-    }
-
-    function new_post()
-    {
-        $this->main->test_access_rights();
-        $blog = new Controller_Blog($this->main);
-        $blog->new_post();
-    }
-
-    function edit_post()
-    {
-        $this->main->test_access_rights();
-        $blog = new Controller_Blog($this->main);
-        $blog->edit_post();
-    }
-
-    function new_blog_upload_img()
-    {
-        $this->main->test_access_rights();
-        $blog = new Controller_Blog($this->main);
-        $blog->new_blog_upload_img();
-    }
-
-    function edit_blog_upload_img()
-    {
-        $this->main->test_access_rights();
-        $blog = new Controller_Blog($this->main);
-        $blog->edit_blog_upload_img();
-    }
-
-    function save_new_post()
-    {
-        $this->main->test_access_rights();
-        $blog = new Controller_Blog($this->main);
-        $blog->save_new_post();
-    }
-
-    function save_edit_post()
-    {
-        $this->main->test_access_rights();
-        $blog = new Controller_Blog($this->main);
-        $blog->save_edit_post();
-    }
-
-//////////////////////////////////////////////////////////// BLOG
-
-
     function service()
     {
         $this->main->view('static/service');
@@ -127,25 +47,6 @@ Class Controller_Index Extends Controller_Controller
         $this->main->view('static/about');
     }
 //////////////////////////////////////////////////////////// STATIC
-//////////////////////////////////////////////////////////// IMAGE
-
-    function del_pic()
-    {
-        $image = new Controller_Image($this->main);
-        $image->del_pic();
-    }
-
-    function save_img_link()
-    {
-        $image = new Controller_Image($this->main);
-        $image->save_img_link();
-    }
-
-    function modify_images()
-    {
-        $image = new Controller_Image($this->main);
-        $image->modify_images();
-    }
 
 //    function show_break_img_count()
 //    {
@@ -222,22 +123,12 @@ Class Controller_Index Extends Controller_Controller
 //    }
 
 //////////////////////////////////////////////////////////// IMAGE
-//////////////////////////////////////////////////////////// CAPTCHA
-    function captcha()
-    {
-        $captcha = new Controller_Captcha($this->main);
-        $captcha->gen_captcha();
-        _A_::$app->setSession('captcha', $captcha->key);
-    }
-
-//////////////////////////////////////////////////////////// CAPTCHA
-
     function search()
     {
         $model = new Model_Tools();
         $search_qv = $model->validData(_A_::$app->get('s'));
         $this->template->vars('userInfo', $search_qv);
-        $this->main->view('search/search');
+        $this->main->view('search');
     }
 
     function message()

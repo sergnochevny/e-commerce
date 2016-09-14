@@ -5,7 +5,6 @@ class Controller_Matches extends Controller_Controller
 
     function matches()
     {
-        $base_url = _A_::$app->router()->UrlTo('/');
         $matches = null;
         if (!is_null(_A_::$app->session('matches')['items'])) {
             $matches_items = _A_::$app->session('matches')['items'];
@@ -13,18 +12,19 @@ class Controller_Matches extends Controller_Controller
                 ob_start();
                 $left = 2; $top = 2;
                 foreach ($matches_items as $key => $item) {
-                    $product_id = $item['p_id'];
-                    $img = _A_::$app->router()->UrlTo('upload/upload/' . $item['img']);
-                    include('views/matches/matches_item.php');
+                    $this->template->vars('product_id',$item['p_id']);
+                    $this->template->vars('img',_A_::$app->router()->UrlTo('upload/upload/' . $item['img']));
+                    $this->template->vars('top',$top);
+                    $this->template->vars('left',$left);
+                    $this->template->view_layout('matches_item');
                     $left += 6; $top += 4;
                 }
                 $matches = ob_get_contents();
                 ob_end_clean();
             }
         }
-
         $this->template->vars('matches_items', $matches);
-        $this->main->view('matches/matches');
+        $this->main->view('matches');
     }
 
     function add()
@@ -34,12 +34,7 @@ class Controller_Matches extends Controller_Controller
 
         if (!is_null(_A_::$app->get('p_id')) && !empty(_A_::$app->get('p_id'))) {
             $p_id = _A_::$app->get('p_id');
-            if (!is_null(_A_::$app->session('matches')['items'])) {
-                $matches_items = _A_::$app->session('matches')['items'];
-            } else {
-                $matches_items = [];
-            }
-
+            $matches_items = !is_null(_A_::$app->session('matches')['items'])?_A_::$app->session('matches')['items']:[];
             $item_added = false;
             if (count($matches_items) > 0) {
                 foreach ($matches_items as $key => $item) {
@@ -72,7 +67,7 @@ class Controller_Matches extends Controller_Controller
         $this->template->vars('message',$message);
 
         ob_start();
-        $this->main->view_layout('msgs/msg_add_matches');
+        $this->template->view_layout('msg_add');
         $data = ob_get_contents();
         ob_end_clean();
         echo json_encode(['data' => $data, 'added' => $added]);
@@ -80,15 +75,9 @@ class Controller_Matches extends Controller_Controller
 
     function del()
     {
-
         if (!is_null(_A_::$app->post('p_id')) && !empty(_A_::$app->post('p_id'))) {
             $p_id = _A_::$app->post('p_id');
-            if (!is_null(_A_::$app->session('matches')['items'])) {
-                $matches_items = _A_::$app->session('matches')['items'];
-            } else {
-                $matches_items = [];
-            }
-
+            $matches_items = !is_null(_A_::$app->session('matches')['items'])? _A_::$app->session('matches')['items'] : [];
             if (count($matches_items) > 0) {
                 foreach ($matches_items as $key => $item) {
                     if ($item['p_id'] == $p_id) {
@@ -96,11 +85,9 @@ class Controller_Matches extends Controller_Controller
                     }
                 }
             }
-
             $_matches = _A_::$app->session('matches');
             _A_::$app->session('matches')['items'] = $matches_items;
             _A_::$app->setSession('matches', $_matches);
-
         }
     }
 
@@ -117,14 +104,8 @@ class Controller_Matches extends Controller_Controller
         if (!is_null(_A_::$app->post('data')) && !empty(_A_::$app->post('data'))) {
             $model = new Model_Cart();
             try{
-
                 $products = json_decode(_A_::$app->post('data'));
-                if (isset(_A_::$app->session('cart')['items'])) {
-                    $cart_items = _A_::$app->session('cart')['items'];
-                } else {
-                    $cart_items = [];
-                }
-
+                $cart_items = !is_null(_A_::$app->session('cart')['items'])? _A_::$app->session('cart')['items']:[];
                 $message = '';
                 if(is_array($products) && (count($products)>0)){
                     foreach($products as $product_id){
@@ -167,14 +148,10 @@ class Controller_Matches extends Controller_Controller
                                 $product['format_discount'] = $format_discount;
                                 $product['format_price'] = $format_price;
                                 $product['format_sale_price'] = $format_sale_price;
-
                                 $cart_items[$product['p_id']] = $product;
-
                                 $message .= 'The product '.$product['Product_name'].' have been added to your Basket.<br>';
-
                             } else {
                                 $message .= 'The product '.$product['Product_name'].' is unavailable. The product was not added.<br>';
-
                             }
                         }
                     }
@@ -195,9 +172,7 @@ class Controller_Matches extends Controller_Controller
                 }
                 else
                     $message = 'Empty Matches Area. Nothing added to the Basket.';
-
             } catch (Exception $e ){
-
                 $message = 'Empty Matches Area. Nothing added to the Basket.';
             }
         }
@@ -205,7 +180,7 @@ class Controller_Matches extends Controller_Controller
             $message = 'Empty Matches Area. Nothing added to the Basket.';
 
         $this->template->vars('message',$message);
-        $this->main->view_layout('msgs/msg_add_matches');
+        $this->main->view_layout('msg_add');
     }
 
     function product_in($p_id)
@@ -214,7 +189,6 @@ class Controller_Matches extends Controller_Controller
             $matches_items = _A_::$app->session('matches')['items'];
         } else {
             return false;
-
         }
 
         $item_added = false;

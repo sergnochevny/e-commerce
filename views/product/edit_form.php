@@ -312,7 +312,7 @@
             },
             onComplete: function (file, response) {
                 if (response === "success") {
-                    $('#modify_images2').load("<?php echo _A_::$app->router()->UrlTo('image/modify_images',['p_id' => _A_::$app-get('p_id')]);?>");
+                    $('#modify_images2').load("<?php echo _A_::$app->router()->UrlTo('image/modify',['p_id' => _A_::$app-get('p_id')]);?>");
                 }
             }
         });

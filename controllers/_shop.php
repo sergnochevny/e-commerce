@@ -458,7 +458,6 @@ class Controller_Shop extends Controller_Controller
 
     public function modify_products_images()
     {
-
         $model = new Model_Product();
         $c_image = new Controller_Image();
         $per_page = 12;
@@ -473,7 +472,7 @@ class Controller_Shop extends Controller_Controller
                 for ($i = 1; $i < 5; $i++) {
                     $fimage = $row['image' . $i];
                     if (isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
-                        $c_image->modify_images_products($fimage);
+                        $c_image->modify_products($fimage);
                     }
                 }
             }

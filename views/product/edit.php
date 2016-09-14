@@ -78,7 +78,7 @@
                     var p_id = $(this).attr('data-p_id');
                     var i_idx = $(this).attr('data-img_idx');
                     $.get(
-                        'save_img_link?p_id=' + p_id + '&idx=' + i_idx,
+                        "<?php echo _A_::$app->router()->UrlTo('image/save_link')?>?p_id=" + p_id + "&idx=" + i_idx,
                         {},
                         function(data){
                             $('#modify_images2').html(data);

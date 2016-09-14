@@ -6,52 +6,40 @@ class Controller_User extends Controller_Controller
     public function user()
     {
         $this->main->test_access_rights();
-        $this->get_main_users_list();
+        $this->get_main_list();
         $this->main->view_admin('users');
     }
 
-    public function users_list()
-    {
-        $this->main->test_access_rights();
-        $this->get_main_users_list();
-        $this->main->view_layout('users_list');
-    }
-
-    private function get_main_users_list()
+    private function get_main_list()
     {
         $this->main->test_access_rights();
         $model = new Model_User();
 
         $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
-        $this->template->vars('page', $page);
-
         $per_page = 12;
-
         $total = $model->get_total_count_users();
-
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
-
         $start = (($page - 1) * $per_page);
-
         $rows = $model->get_users_list($start, $per_page);
 
+        $this->template->vars('page', $page);
         ob_start();
-            $base_url = _A_::$app->router()->UrlTo('/');
-            foreach ($rows as $row) {
-                $row[30] = gmdate("F j, Y, g:i a", $row[30]);
-                include('./views/html/users_list.php');
-            }
-            $user_list = ob_get_contents();
+        foreach ($rows as $row) {
+            $row[30] = gmdate("F j, Y, g:i a", $row[30]);
+            $this->template->vars('row', $row);
+            $this->template->view_layout('list_detail');
+        }
+        $user_list = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('main_users_list', $user_list);
-
+        $this->main->template->vars('main_users_list', $user_list);
+        $this->main->template->vars('page', $page);
         $paginator = new Controller_Paginator($this->main);
         $paginator->user_paginator($total, $page);
 
     }
 
-    function del_user()
+    public function del()
     {
         $this->main->test_access_rights();
         $model = new Model_User();
@@ -59,10 +47,151 @@ class Controller_User extends Controller_Controller
         $user_id = $model->validData(_A_::$app->get('id'));
         $model->del_user($user_id);
 
-        $this->users_list();
+        $this->list();
     }
 
-    private function _save_edit_user()
+    public function list()
+    {
+        $this->main->test_access_rights();
+        $this->get_main_list();
+        $this->main->view_layout('list');
+    }
+
+    public function get_province_list()
+    {
+        $list = '';
+        if (!is_null(_A_::$app->get('country'))) {
+            $country = _A_::$app->get('country');
+            $list = $this->list_province($country);
+        }
+        echo '<option selected disabled>Select Province</option>';
+        echo $list;
+    }
+
+    private function list_province($country, $select = null)
+    {
+        $list = '';
+        if (isset($country) && !empty($country{0})) {
+            $maddress = new Model_Address();
+            $provincies = $maddress->get_country_province($country);
+            ob_start();
+            foreach ($provincies as $province) {
+                $this->template->vars('value', $province['id']);
+                $this->template->vars('title', $province['name']);
+                $this->template->vars('selected', isset($select) && ($select == $province['id']));
+                $this->template->view_layout('address/select_countries_options');
+            }
+            $list = ob_get_contents();
+            ob_end_clean();
+        }
+        return $list;
+
+    }
+
+    public function edit()
+    {
+        $this->main->test_access_rights();
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('save_edit_user', ['user_id' => _A_::$app->get('user_id')]));
+        $this->main->template->vars('title', 'EDIT USER');
+        $this->_edit();
+        $this->main->view_admin('edit');
+    }
+
+    private function _edit()
+    {
+        $model = new Model_User();
+        $user_id = $model->validData(_A_::$app->get('user_id'));
+        $userInfo = $model->get_user_data($user_id);
+
+        $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
+        $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
+        $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
+        $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
+
+        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
+        $this->template->vars('userInfo', $userInfo);
+    }
+
+    private function list_countries($select = null)
+    {
+        $list = '';
+        $maddress = new Model_Address();
+        $countries = $maddress->get_countries_all();
+        ob_start();
+        foreach ($countries as $country) {
+            $this->template->vars('value', $country['id']);
+            $this->template->vars('title', $country['name']);
+            $this->template->vars('selected', isset($select) && ($select == $country['id']));
+            $this->template->view_layout('address/select_countries_options');
+        }
+        $list = ob_get_contents();
+        ob_end_clean();
+        return $list;
+    }
+
+    public function new()
+    {
+        $this->main->test_access_rights();
+        $this->template->vars('action', _A_::$app->router()->UrlTo('save_new_user'));
+        $this->template->vars('title', 'NEW USER');
+        $this->_new_user();
+        $this->main->view_admin('new');
+    }
+
+    private function _new_user()
+    {
+        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
+
+        $userInfo = array(
+            'email' => '',
+            'bill_firstname' => '',
+            'bill_lastname' => '',
+            'bill_organization' => '',
+            'bill_address1' => '',
+            'bill_address2' => '',
+            'bill_province' => '',
+//                    'bill_province_other' => $rowsni['bill_province_other'],
+            'bill_city' => '',
+            'bill_country' => '',
+            'bill_postal' => '',
+            'bill_phone' => '',
+            'bill_fax' => '',
+            'bill_email' => '',
+            'ship_firstname' => '',
+            'ship_lastname' => '',
+            'ship_organization' => '',
+            'ship_address1' => '',
+            'ship_address2' => '',
+            'ship_city' => '',
+            'ship_province' => '',
+//                    'ship_province_other' => $rowsni['ship_province_other'],
+            'ship_country' => '',
+            'ship_postal' => '',
+            'ship_phone' => '',
+            'ship_fax' => '',
+            'ship_email' => ''
+        );
+
+        $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
+        $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
+        $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
+        $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
+
+        $this->template->vars('userInfo', $userInfo);
+    }
+
+    public function save_edit()
+    {
+        $this->main->test_access_rights();
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit', ['user_id' => _A_::$app->get('user_id')]));
+        $this->main->template->vars('title', 'EDIT USER');
+        $this->_save_edit();
+        $this->_edit_form();
+    }
+
+    private function _save_edit()
     {
         $result = false;
         $model = new Model_User();
@@ -128,8 +257,7 @@ class Controller_User extends Controller_Controller
                             if (!is_null(_A_::$app->session['_']) && ($user_id == _A_::$app->session('_'))) {
                                 $user = $model->get_user_by_id($user_id);
                                 if (isset($user)) {
-                                    $_u = _A_::$app->session('user', null);
-                                    _A_::$app->session('user', $user);
+                                    _A_::$app->setSession('user', $user);
                                 }
                             }
 
@@ -205,132 +333,25 @@ class Controller_User extends Controller_Controller
         $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
         $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
         $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
-
         $this->template->vars('userInfo', $userInfo);
-
         return $result;
     }
 
-    private function list_countries($select = null)
+    private function _edit_form()
     {
-        $list = '';
-        $maddress = new Model_Address();
-        $countries = $maddress->get_countries_all();
-        ob_start();
-        foreach ($countries as $country) {
-            $value = $country['id'];
-            $title = $country['name'];
-            $selected = isset($select) && ($select == $country['id']);
-            include('views/address/select_countries_options.php');
-        }
-        $list = ob_get_contents();
-        ob_end_clean();
-        return $list;
+        $this->main->view_layout('edit_form');
     }
 
-    private function list_province($country, $select = null)
+    function save_new()
     {
-        $list = '';
-        if (isset($country) && !empty($country{0})) {
-            $maddress = new Model_Address();
-            $provincies = $maddress->get_country_province($country);
-            ob_start();
-            foreach ($provincies as $province) {
-                $value = $province['id'];
-                $title = $province['name'];
-                $selected = isset($select) && ($select == $province['id']);
-                include('views/address/select_countries_options.php');
-            }
-            $list = ob_get_contents();
-            ob_end_clean();
-        }
-        return $list;
-
+        $this->main->test_access_rights();
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_new'));
+        $this->main->template->vars('title', 'NEW USER');
+        $this->_save_new();
+        $this->_new_form();
     }
 
-    public function get_province_list()
-    {
-        $list = '';
-        if (!is_null(_A_::$app->get('country'))) {
-            $country = _A_::$app->get('country');
-            $list = $this->list_province($country);
-        }
-        echo '<option selected disabled>Select Province</option>';
-        echo $list;
-    }
-
-    private function _edit_user()
-    {
-        $model = new Model_User();
-        $user_id = $model->validData(_A_::$app->get('user_id'));
-        $userInfo = $model->get_user_data($user_id);
-
-        $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
-        $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
-        $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
-        $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
-
-        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
-        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
-        $this->template->vars('userInfo', $userInfo);
-    }
-
-    private function _edit_user_form()
-    {
-        $this->main->view_layout('user/edit_user_form');
-    }
-
-    private function _new_user()
-    {
-        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
-        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
-
-        $userInfo = array(
-            'email' => '',
-            'bill_firstname' => '',
-            'bill_lastname' => '',
-            'bill_organization' => '',
-            'bill_address1' => '',
-            'bill_address2' => '',
-            'bill_province' => '',
-//                    'bill_province_other' => $rowsni['bill_province_other'],
-            'bill_city' => '',
-            'bill_country' => '',
-            'bill_postal' => '',
-            'bill_phone' => '',
-            'bill_fax' => '',
-            'bill_email' => '',
-            'ship_firstname' => '',
-            'ship_lastname' => '',
-            'ship_organization' => '',
-            'ship_address1' => '',
-            'ship_address2' => '',
-            'ship_city' => '',
-            'ship_province' => '',
-//                    'ship_province_other' => $rowsni['ship_province_other'],
-            'ship_country' => '',
-            'ship_postal' => '',
-            'ship_phone' => '',
-            'ship_fax' => '',
-            'ship_email' => ''
-        );
-
-        $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
-        $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
-        $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
-        $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
-
-        $this->template->vars('userInfo', $userInfo);
-    }
-
-    private function _new_user_form()
-    {
-        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
-        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
-        $this->main->view_layout('new_user_form');
-    }
-
-    private function _save_new_user()
+    private function _save_new()
     {
         $result = false;
         $model = new Model_User();
@@ -400,7 +421,7 @@ class Controller_User extends Controller_Controller
                             $s_organization, $user_s_address, $user_s_address2, $user_s_city, $user_s_state,
                             $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax, $user_s_email, $timestamp);
                         if ($result) {
-                            _A_::$app->get('user_id') = mysql_insert_id();
+                            _A_::$app->get('user_id', mysql_insert_id());
                             $warning = ['Data saved successfully!!!'];
                             $this->template->vars('warning', $warning);
                         } else {
@@ -457,40 +478,11 @@ class Controller_User extends Controller_Controller
         return ($result);
     }
 
-    function edit_user()
+    private function _new_form()
     {
-        $this->main->test_access_rights();
-        $this->main->template->vars('action', _A_::$app->router()->UrlTo('save_edit_user', ['user_id' => _A_::$app->get('user_id')]));
-        $this->main->template->vars('title', 'EDIT USER');
-        $this->_edit_user();
-        $this->main->view_admin('edit');
-    }
-
-    function new_user()
-    {
-        $this->main->test_access_rights();
-        $this->template->vars('action', _A_::$app->router()->UrlTo('save_new_user'));
-        $this->template->vars('title', 'NEW USER');
-        $this->_new_user();
-        $this->main->view_admin('new');
-    }
-
-    function save_edit_user()
-    {
-        $this->main->test_access_rights();
-        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit', ['user_id' => _A_::$app->get('user_id')]));
-        $this->main->template->vars('title', 'EDIT USER');
-        $this->_save_edit_user();
-        $this->_edit_user_form();
-    }
-
-    function save_new()
-    {
-        $this->main->test_access_rights();
-        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_new'));
-        $this->main->template->vars('title', 'NEW USER');
-        $this->_save_new_user();
-        $this->_new_user_form();
+        $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
+        $this->main->view_layout('new_form');
     }
 
     public function registration()
@@ -503,7 +495,7 @@ class Controller_User extends Controller_Controller
         }
         $this->template->vars('back_url', _A_::$app->router()->UrlTo('authorization/user', $prms), true);
         $this->_new_user();
-        $this->main->view('user/new_user');
+        $this->main->view('new');
     }
 
     function save_registration()
@@ -533,12 +525,25 @@ class Controller_User extends Controller_Controller
 
             $this->template->vars('userInfo', $userInfo);
             $this->_edit_user_form();
-//            $url = $base_url . '/authorization';
-//            $this->redirect($url);
         }
     }
 
-    function save_edit_registration_data()
+    private function sendWelcomeEmail($email)
+    {
+        $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
+        $subject = "Thank you for registering with iluvfabrix.com";
+        $body = "Thank you for registering with www.iluvfabrix.com.\n";
+        $body .= "\n";
+        $body .= "As a new user, you will get 20% off your first purchase (which you may use any time in the first year) unless we have a sale going on for a discount greater than 20%, in which case you get the greater of the two discounts.\n";
+        $body .= "\n";
+        $body .= "We will, from time to time, inform you by email of various time limited specials on the iluvfabrix site.  If you wish not to receive these emails, please respond to this email with the word Unsubscribe in the subject line.\n";
+        $body .= "\n";
+        $body .= "Once again, thank you.........and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
+
+        mail($email, $subject, $body, $headers);
+    }
+
+    public function save_edit_registration_data()
     {
         $authorization = new Controller_Authorization($this->main);
 
@@ -570,56 +575,37 @@ class Controller_User extends Controller_Controller
             if (!is_null(_A_::$app->get('url'))) {
                 $url = _A_::$app->router()->UrlTo(base64_decode(urldecode(_A_::$app->get('url'))));
             }
-
             $this->template->vars('back_url', _A_::$app->router()->UrlTo(((strlen($url) > 0) ? $url : 'shop')), true);
-
-            $this->main->view('user/edit_user');
+            $this->main->view('edit');
         }
 
         $this->redirect(_A_::$app->router()->UrlTo('/'));
     }
 
-    function sendWelcomeEmail($email)
-    {
-
-        $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
-        $subject = "Thank you for registering with iluvfabrix.com";
-
-        $body = "Thank you for registering with www.iluvfabrix.com.\n";
-        $body .= "\n";
-        $body .= "As a new user, you will get 20% off your first purchase (which you may use any time in the first year) unless we have a sale going on for a discount greater than 20%, in which case you get the greater of the two discounts.\n";
-        $body .= "\n";
-        $body .= "We will, from time to time, inform you by email of various time limited specials on the iluvfabrix site.  If you wish not to receive these emails, please respond to this email with the word Unsubscribe in the subject line.\n";
-        $body .= "\n";
-        $body .= "Once again, thank you.........and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
-
-        mail($email, $subject, $body, $headers);
-    }
-
-    public function modify_accounts_password()
-    {
-        $per_page = 200;
-        $page = 1;
-
-        $muser = new Model_User();
-        $model_auth = new Model_Auth();
-        $total = $muser->get_total_count_users();
-        $count = 0;
-        while ($page <= ceil($total / $per_page)) {
-            $start = (($page++ - 1) * $per_page);
-            $rows = $muser->get_users_list($start, $per_page);
-            foreach ($rows as $row) {
-                $id = $row['aid'];
-                $current_password = $row['password'];
-                if (!strpos('$2a$12$', $current_password)) {
-                    $salt = $model_auth->generatestr();
-                    $password = $model_auth->hash_($current_password, $salt, 12);
-                    $check = $model_auth->check($current_password, $password);
-                    if ($password == $check) $muser->update_password($password, $id);
-                }
-            }
-            $count += count($rows);
-            echo $count;
-        }
-    }
+//    public function modify_accounts_password()
+//    {
+//        $per_page = 200;
+//        $page = 1;
+//
+//        $muser = new Model_User();
+//        $model_auth = new Model_Auth();
+//        $total = $muser->get_total_count_users();
+//        $count = 0;
+//        while ($page <= ceil($total / $per_page)) {
+//            $start = (($page++ - 1) * $per_page);
+//            $rows = $muser->get_users_list($start, $per_page);
+//            foreach ($rows as $row) {
+//                $id = $row['aid'];
+//                $current_password = $row['password'];
+//                if (!strpos('$2a$12$', $current_password)) {
+//                    $salt = $model_auth->generatestr();
+//                    $password = $model_auth->hash_($current_password, $salt, 12);
+//                    $check = $model_auth->check($current_password, $password);
+//                    if ($password == $check) $muser->update_password($password, $id);
+//                }
+//            }
+//            $count += count($rows);
+//            echo $count;
+//        }
+//    }
 }
