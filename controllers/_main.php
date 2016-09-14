@@ -92,7 +92,7 @@ class Controller_Main extends Controller_Base
                 }
             } else
                 $redirect = _A_::$app->server('HTTP_REFERER');
-            $url = _A_::$app->router()->UrlTo('/user_authorization', ['url' => urlencode(base64_encode($redirect))]);
+            $url = _A_::$app->router()->UrlTo('authorization/user',['url' => urlencode(base64_encode($redirect))]);
             $this->redirect($url);
         }
     }
@@ -108,11 +108,11 @@ class Controller_Main extends Controller_Base
                 $redirect .= (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT'));
                 $redirect .= _A_::$app->server('REQUEST_URI');
                 if (empty(_A_::$app->server('REQUEST_URI'))) {
-                    $redirect = $base_url . '/admin_home';
+                    $redirect = _A_::$app->router()->UrlTo('admin_home');
                 }
             } else
                 $redirect = _A_::$app->server('HTTP_REFERER');
-            $url = _A_::$app->router()->UrlTo('/admin', ['url' => urlencode(base64_encode($redirect))]);
+            $url = _A_::$app->router()->UrlTo('admin',['url' => urlencode(base64_encode($redirect))]);
             $this->redirect($url);
         }
     }
@@ -123,11 +123,11 @@ class Controller_Main extends Controller_Base
             $msg = _A_::$app->get()['msg'];
             $base_url = _A_::$app->router()->UrlTo('/');
             if ($msg == 'remind_sent') {
-
-                $back_url = $base_url . '/user_authorization';
+                $prms = null;
                 if (isset(_A_::$app->get()['url'])) {
-                    $back_url .= '?url=' . _A_::$app->get()['url'];
+                    $prms['url'] = _A_::$app->get()['url'];
                 }
+                $back_url = _A_::$app->router()->UrlTo('authorization/user',$prms);
                 $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!!!';
 
             } elseif ($msg == 'remind_expired') {

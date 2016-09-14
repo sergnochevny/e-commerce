@@ -147,7 +147,7 @@ Class Model_Product extends Model_Model
         return $result;
     }
 
-    public function produkt_filtr_list()
+    public function product_filtr_list()
     {
         $x = 0;
         $results = mysql_query("select * from fabrix_categories");
@@ -159,32 +159,32 @@ Class Model_Product extends Model_Model
         return array('total_catigori_in_select' => $x, 'catigori_in_select' => $catigori);
     }
 
-    public function del_product($del_produkt_id)
+    public function del_product($del_p_id)
     {
-        $strSQL = "DELETE FROM fabrix_products WHERE pid = $del_produkt_id";
+        $strSQL = "DELETE FROM fabrix_products WHERE pid = $del_p_id";
         mysql_query($strSQL);
 
-        $strSQL = "DELETE FROM fabrix_product_categories WHERE pid = $del_produkt_id";
+        $strSQL = "DELETE FROM fabrix_product_categories WHERE pid = $del_p_id";
         mysql_query($strSQL);
 
-        $strSQL = "DELETE FROM fabrix_product_colours WHERE prodId = $del_produkt_id";
+        $strSQL = "DELETE FROM fabrix_product_colours WHERE prodId = $del_p_id";
         mysql_query($strSQL);
 
-        $strSQL = "DELETE FROM fabrix_product_patterns WHERE prodId = $del_produkt_id";
+        $strSQL = "DELETE FROM fabrix_product_patterns WHERE prodId = $del_p_id";
         mysql_query($strSQL);
 
-        $strSQL = "DELETE FROM fabrix_specials_products WHERE pid = $del_produkt_id";
+        $strSQL = "DELETE FROM fabrix_specials_products WHERE pid = $del_p_id";
         mysql_query($strSQL);
     }
 
     public function ConfirmProductInsert()
     {
-        $q = "DELETE FROM `fabrix_temp_product` WHERE `productId`=" . $_GET['produkt_id'] . " and `sid`='" . session_id() . "'";
+        $q = "DELETE FROM `fabrix_temp_product` WHERE `productId`=" . $_GET['p_id'] . " and `sid`='" . session_id() . "'";
         $result = mysql_query($q);
         return $result;
     }
 
-    public function getNewProdukt()
+    public function getNewproduct()
     {
         $this->cleanTempProducts();
 
@@ -193,7 +193,7 @@ Class Model_Product extends Model_Model
         if (isset($product_id) && $product_id > 0) {
             $result = mysql_query("INSERT INTO `fabrix_temp_product` set `productId` = '$product_id', sid='" . session_id() . "'");
 
-            _A_::$app->get('produkt_id', $product_id);
+            _A_::$app->get('p_id', $product_id);
         }
     }
 
@@ -211,10 +211,10 @@ Class Model_Product extends Model_Model
         $res = mysql_query($q);
     }
 
-    public function get_product_params($produkt_id)
+    public function get_product_params($p_id)
     {
 
-        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$produkt_id'");
+        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
         $rowsni = mysql_fetch_array($resulthatistim);
         $p_pname = $rowsni['pname'];
         $pnumber = $rowsni['pnumber'];
@@ -227,7 +227,7 @@ Class Model_Product extends Model_Model
         if ($piece == 1) $quatity = 1;
 
         return array(
-            'produkt_id' => $produkt_id,
+            'p_id' => $p_id,
             'Product_name' => $p_pname,
             'Product_number' => $pnumber,
             'Price' => $price,
@@ -241,13 +241,13 @@ Class Model_Product extends Model_Model
     }
 
 
-    public function getProduktInfo()
+    public function getproductInfo()
     {
 
 //        $back_url = urlencode($back_url);
 
-        $produkt_id = $_GET['produkt_id'];
-        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$produkt_id'");
+        $p_id = $_GET['p_id'];
+        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
         $rowsni = mysql_fetch_array($resulthatistim);
         $p_pname = $rowsni['pname'];
         $pnumber = $rowsni['pnumber'];
@@ -287,19 +287,19 @@ Class Model_Product extends Model_Model
         $sl_cat3 = 0;
         $sl_cat4 = 0;
         $patterns = [];
-        $result = mysql_query("select patternId from fabrix_product_patterns WHERE prodId='$produkt_id'");
+        $result = mysql_query("select patternId from fabrix_product_patterns WHERE prodId='$p_id'");
         while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
             $patterns[] = $row[0];
         };
 
         $pcolours = [];
-        $result = mysql_query("select colourId from fabrix_product_colours WHERE prodId='$produkt_id'");
+        $result = mysql_query("select colourId from fabrix_product_colours WHERE prodId='$p_id'");
         while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
             $pcolours[] = $row[0];
         };
 
         $categories = [];
-        $result = mysql_query("select cid from fabrix_product_categories WHERE pid='$produkt_id'");
+        $result = mysql_query("select cid from fabrix_product_categories WHERE pid='$p_id'");
         while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
             $categories[] = $row[0];
         };
@@ -343,7 +343,7 @@ Class Model_Product extends Model_Model
             'sd_cat' => $sl_cat,
             'pvisible' => $pvisible,
             'metadescription' => $metadescription,
-            'produkt_id' => $produkt_id,
+            'p_id' => $p_id,
             'Title' => $p_pname,
             'Meta_Description' => $metadescription,
             'Meta_Keywords' => $metakeywords,
@@ -387,9 +387,9 @@ Class Model_Product extends Model_Model
         );
     }
 
-    public function getImage($produkt_id)
+    public function getImage($p_id)
     {
-        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$produkt_id'");
+        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
         $rowsni = mysql_fetch_assoc($resulthatistim);
         return array('image1' => $rowsni['image1'], 'image2' => $rowsni['image2'], 'image3' => $rowsni['image3'], 'image4' => $rowsni['image4'], 'image5' => $rowsni['image5']);
     }
@@ -399,14 +399,14 @@ Class Model_Product extends Model_Model
         $result = mysql_query("update fabrix_products set $bd_g=null WHERE pid ='$pid'");
     }
 
-    public function dbUpdateMainPhoto($bd_g, $rest, $produkt_id)
+    public function dbUpdateMainPhoto($bd_g, $rest, $p_id)
     {
-        $result = mysql_query("update fabrix_products set $bd_g='$rest' WHERE pid ='$produkt_id'");
+        $result = mysql_query("update fabrix_products set $bd_g='$rest' WHERE pid ='$p_id'");
     }
 
-    public function dbUpdateMainNew($image2, $bd_g, $image1, $produkt_id)
+    public function dbUpdateMainNew($image2, $bd_g, $image1, $p_id)
     {
-        $result = mysql_query("update fabrix_products set image1='$image2', $bd_g='$image1' WHERE pid ='$produkt_id'");
+        $result = mysql_query("update fabrix_products set image1='$image2', $bd_g='$image1' WHERE pid ='$p_id'");
     }
 
     public function getPrName($p_id)
@@ -595,9 +595,23 @@ Class Model_Product extends Model_Model
     public function get_products_by_type($type = 'new', $start, $per_page, &$res_row_count = 0)
     {
         $q = "";
-        $image_suffix = '';
         switch ($type) {
-            case 'new':
+            case 'all':
+                if (!empty(_A_::$app->get('cat'))) {
+                    $cat_id = $this->validData(_A_::$app->get('cat'));
+                    $q = "SELECT a.* FROM `fabrix_products` a" .
+                        " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
+//                " WHERE  a.pnumber is not null and b.cid='$cat_id' ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
+                        " WHERE  a.pnumber is not null and b.cid='" . $cat_id . "'" .
+                        " ORDER BY b.display_order ASC, a.dt DESC, a.pid DESC" .
+                        " LIMIT $start,$per_page";
+                } else {
+                    $q = "SELECT * FROM `fabrix_products` WHERE pnumber is not null" .
+                        " ORDER BY pid DESC" .
+                        " LIMIT $start,$per_page";
+                }
+                break;
+            case 'last':
                 if (!empty(_A_::$app->get('cat'))) {
                     $cat_id = $this->validData(_A_::$app->get('cat'));
                     $q = "SELECT a.* FROM `fabrix_products` a" .
@@ -608,9 +622,16 @@ Class Model_Product extends Model_Model
                 }
                 break;
             case 'best':
-                $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and best = '1' ORDER BY pid DESC LIMIT " . $start . "," . $limit;
+                if (!empty(_A_::$app->get('cat'))) {
+                    $cat_id = $this->validData(_A_::$app->get('cat'));
+                    $q = "SELECT a.* FROM `fabrix_products` a" .
+                        " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
+                        " WHERE  a.pnumber is not null and a.pvisible = '1'  and a.best = '1' and b.cid='$cat_id' ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
+                } else {
+                    $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and best = '1' ORDER BY dt DESC, pid DESC LIMIT $start,$per_page";
+                }
                 break;
-            case 'special':
+            case 'specials':
                 if (!empty(_A_::$app->get('cat'))) {
                     $cat_id = $this->validData(_A_::$app->get('cat'));
                     $q = "SELECT a.* FROM `fabrix_products` a" .
@@ -634,14 +655,16 @@ Class Model_Product extends Model_Model
                 break;
         }
         $res = mysql_query($q);
+        $rows = null;
         if ($res) {
-        $rows = mysql_query($q);
-        $res_row_count = mysql_num_rows($rows);
-        if ($rows) {
-            $res = $rows;
-            $rows = [];
-            while ($row = mysql_fetch_array($res)) {
-                $rows[] = $row;
+            $rows = mysql_query($q);
+            $res_row_count = mysql_num_rows($rows);
+            if ($rows) {
+                $res = $rows;
+                $rows = [];
+                while ($row = mysql_fetch_array($res)) {
+                    $rows[] = $row;
+                }
             }
         }
         return $rows;
@@ -649,10 +672,18 @@ Class Model_Product extends Model_Model
 
     public function get_count_products_by_type($type)
     {
-        $q = "";
-        $image_suffix = '';
         switch ($type) {
-            case 'new':
+            case 'all':
+                if (!empty(_A_::$app->get('cat'))) {
+                    $cat_id = $this->validData(_A_::$app->get('cat'));
+                    $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
+                        " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
+                        " WHERE  a.pnumber is not null and b.cid='$cat_id'";
+                } else {
+                    $q_total = "SELECT COUNT(*) FROM `fabrix_products` WHERE pnumber is not null ";
+                }
+                break;
+            case 'last':
                 if (!empty(_A_::$app->get('cat'))) {
                     $cat_id = $this->validData(_A_::$app->get('cat'));
                     $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
@@ -664,9 +695,16 @@ Class Model_Product extends Model_Model
                 }
                 break;
             case 'best':
-                $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and best = '1' ORDER BY pid DESC LIMIT " . $start . "," . $limit;
+                if (!empty(_A_::$app->get('cat'))) {
+                    $cat_id = $this->validData(_A_::$app->get('cat'));
+                    $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
+                        " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
+                        " WHERE  a.pnumber is not null and a.best='1' and a.pvisible = '1' and b.cid='$cat_id'";
+                } else {
+                    $q_total = "SELECT COUNT(*) FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and best = '1'";
+                }
                 break;
-            case 'special':
+            case 'specials':
                 if (!empty(_A_::$app->get('cat'))) {
                     $cat_id = $this->validData(_A_::$app->get('cat'));
                     $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .

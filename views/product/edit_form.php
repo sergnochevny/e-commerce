@@ -301,7 +301,7 @@
             action: function(){
                 var idx = $('input[name=images]:checked').val();
                 if (!idx) idx = 1;
-                return 'upload_product_img?pid=<?php echo $_GET['produkt_id'];?>&idx='+idx
+                return "<?php echo _A_::$app->router()->UrlTo('product/upload_img', ['pid'=>_A_::$app->get('p_id')]);?>&idx="+idx
             },
             name: 'uploadfile',
             onSubmit: function (file, ext) {
@@ -312,7 +312,7 @@
             },
             onComplete: function (file, response) {
                 if (response === "success") {
-                    $('#modify_images2').load('modify_images<?php echo '?produkt_id='.$_GET['produkt_id'];?>');
+                    $('#modify_images2').load("<?php echo _A_::$app->router()->UrlTo('image/modify_images',['p_id' => _A_::$app-get('p_id')]);?>");
                 }
             }
         });

@@ -1,14 +1,13 @@
 <?php
 
-class Controller_Image extends Controller_Base
+class Controller_Image extends Controller_Controller
 {
-
 
     function del_pic()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $pid_id = $model->validData(_A_::$app->get('produkt_id') );
+        $pid_id = $model->validData(_A_::$app->get('p_id') );
         $im_id = $model->validData(_A_::$app->get('idx'));
         if (!empty($pid_id)) {
             if (!empty($im_id)) {
@@ -34,11 +33,11 @@ class Controller_Image extends Controller_Base
     function modify_images()
     {
         $this->main->test_access_rights();
-        if (!is_null(_A_::$app->get('produkt_id'))) {
-            $produkt_id = _A_::$app->get('produkt_id');
+        if (!is_null(_A_::$app->get('p_id'))) {
+            $p_id = _A_::$app->get('p_id');
             $model = new Model_Product();
-            $produkt_id = $model->validData($produkt_id);
-            $userInfo = $model->getImage($produkt_id);
+            $p_id = $model->validData($p_id);
+            $userInfo = $model->getImage($p_id);
             $image1 = $userInfo['image1'];
             $image2 = $userInfo['image2'];
             $image3 = $userInfo['image3'];
@@ -54,10 +53,14 @@ class Controller_Image extends Controller_Base
             $image4 = empty($image4{0}) || !is_file('upload/upload/' . $image4) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image4);
             $image5 = empty($image5{0}) || !is_file('upload/upload/' . $image5) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image5);
 
-            include('views/product/product_m_images.php');
-
+            $this->template->vars('not_image',$not_image);
+            $this->template->vars('image1',$image1);
+            $this->template->vars('image2',$image2);
+            $this->template->vars('image3',$image3);
+            $this->template->vars('image4',$image4);
+            $this->template->vars('image5',$image5);
+            $this->template->view_layout('m_images');
         }
-
     }
 
     function modify_images_from_form($userInfo)
@@ -87,23 +90,27 @@ class Controller_Image extends Controller_Base
         if (!file_exists($filename5)) {
             $image5 = "not_image.jpg";
         }
-        include('views/product/product_m_images.php');
-
+        $this->template->vars('image1',$image1);
+        $this->template->vars('image2',$image2);
+        $this->template->vars('image3',$image3);
+        $this->template->vars('image4',$image4);
+        $this->template->vars('image5',$image5);
+        $this->template->view_layout('m_images');
     }
 
     function save_img_link()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        if (!is_null(_A_::$app->get('produkt_id'))) {
+        if (!is_null(_A_::$app->get('p_id'))) {
             if (!is_null(_A_::$app->get('idx'))) {
-                $produkt_id = $model->validData(_A_::$app->get('produkt_id'));
-                $produkt_photo = $model->validData(_A_::$app->get('idx'));
-                $db_g = "image$produkt_photo";
-                $userInfo = $model->getImage($produkt_id);
+                $p_id = $model->validData(_A_::$app->get('p_id'));
+                $product_photo = $model->validData(_A_::$app->get('idx'));
+                $db_g = "image$product_photo";
+                $userInfo = $model->getImage($p_id);
                 $image1 = $userInfo['image1'];
                 $image2 = $userInfo[$db_g];
-                $userInfo = $model->dbUpdateMainNew($image2, $db_g, $image1, $produkt_id);
+                $userInfo = $model->dbUpdateMainNew($image2, $db_g, $image1, $p_id);
 
             }
         }
@@ -116,11 +123,11 @@ class Controller_Image extends Controller_Base
         $this->main->test_access_rights();
         $model = new Model_Product();
         if (!is_null(_A_::$app->get('pid'))) {
-            $produkt_photo = !is_null(_A_::$app->get('idx')) ? _A_::$app->get('idx') : 1;
-            $produkt_id = $model->validData(_A_::$app->get('pid'));
+            $product_photo = !is_null(_A_::$app->get('idx')) ? _A_::$app->get('idx') : 1;
+            $p_id = $model->validData(_A_::$app->get('pid'));
             $ts = uniqid();
             $uploaddir = 'upload/upload/';
-            $file = "p" . $produkt_id . "t" . $ts . '.jpg';
+            $file = "p" . $p_id . "t" . $ts . '.jpg';
             $ext = substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1);
             $filetypes = array('.jpg', '.gif', '.bmp', '.png', '.JPG', '.BMP', '.GIF', '.PNG', '.jpeg', '.JPEG');
 
@@ -128,10 +135,10 @@ class Controller_Image extends Controller_Base
                 echo "<p>Error format</p>";
             } else {
                 if (move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
-                    $db_g = "image$produkt_photo";
+                    $db_g = "image$product_photo";
                     $this->prepare_product_img($file);
                     // delete img;
-                    $model->dbUpdateMainPhoto($db_g, $file, $produkt_id);
+                    $model->dbUpdateMainPhoto($db_g, $file, $p_id);
                     echo "success";
                 } else {
                     echo "error";

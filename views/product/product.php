@@ -169,8 +169,7 @@
 
                         <b id="b_in_product">
                             <?php
-                            $pid = $_GET['p_id'];
-
+                            $pid = _A_::$app->get('p_id');
                             if ($userInfo['inventory'] > 0) {
                                 ?>
                                 <a id="add_cart"
@@ -201,7 +200,7 @@
                         <b id="b_in_product">
                             <?php
                             $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($userInfo['sdesc'] . ' ' . $userInfo['pnumber']);
-                            $mhref = $base_url . '/add_matches?p_id=' . $pid;
+                            $mhref = _A_::$app->router()->UrlTo('matches/add',['p_id' => $pid]);
                             ?>
                             <a href="<?php echo $ahref; ?>">
                                 <button type="button" class="single_add_to_cart_button button alt">Ask a Question

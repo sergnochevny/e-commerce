@@ -1,12 +1,12 @@
 <li class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
     <div class="product-inner">
-        <span class="onsale">Specials!</span>
+        <span class="onsale">New!</span>
         <?php if ($bProductDiscount) { ?>
             <span class="extra_discount">Extra Discount!</span>
         <?php }
         ?>
         <figure class="product-image-box" style="background-image:url(<?php echo $filename; ?>)">
-            <a href="<?php echo _A_::$app->router()->UrlTo('product/specials',['p_id'=>$row[0]]). $href; ?>">
+            <a href="<?php echo _A_::$app->router()->UrlTo('product/last', ['p_id'=>$row[0]]). $href; ?>">
             </a>
             <figcaption>
                 <?php
@@ -15,7 +15,7 @@
                     } else {
 //                        include('views/basket/main_product_addtobasket.php');
                         ?>
-                        <a class="button productsAddBasket" href="<?php echo _A_::$app->router()->UrlTo('product/specials',$url_prms); ?>">
+                        <a class="button productsAddBasket" href="<?php echo _A_::$app->router()->UrlTo('product/last', ['p_id'=>$row[0]]). $href; ?>">
                             View Details
                         </a>
                         <?php
@@ -23,7 +23,7 @@
                 ?>
             </figcaption>
         </figure>
-        <a href="<?php echo _A_::$app->router()->UrlTo('product/specials',['p_id'=>$row[0]]). $href; ?>">
+        <a href="<?php echo _A_::$app->router()->UrlTo('product/last', ['p_id'=>$row[0]]). $href; ?>">
             <span class="product-category"><?php echo $row['pname']; ?></span>
 
             <h3 class="descProduct"><?php echo (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>

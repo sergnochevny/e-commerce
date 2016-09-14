@@ -13,8 +13,12 @@
     </td>
     <td>
         <center>
-            <a href="discount_order?order_id=<?php echo $row[2] ?><?php echo isset($_GET['discounts_id']) ? '&discounts_id=' . $_GET['discounts_id'] : '' ?>"><input
-                    type="submit" value="View Order" class="button">
+            <a href="
+            <?php
+            $prms = ['order_id' => $row[2]];
+            if(_A_::$app->get('id')) $prms['id'] = _A_::$app->get('id');
+                echo _A_::$app->router()->UrlTo('orders/discount', $prms);?>">
+                <input type="submit" value="View Order" class="button">
             </a>
         </center>
     </td>

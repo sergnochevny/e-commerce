@@ -1,1 +1,1 @@
-<option value="<?php echo $href;?>" <?php echo (isset($_GET['cat']) && ($group_id == $_GET['cat']))?'selected':'';?>><?php echo $name;?></option>
+<option value="<?php echo $href;?>" <?php echo (!is_null(_A_::$app->get('cat')) && ($group_id == _A_::$app->get('cat')))?'selected':'';?>><?php echo $name;?></option>

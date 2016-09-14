@@ -10,7 +10,7 @@ echo "
           success: function(data) {
 
              $('#get_prise_in_cart').load('get_prise_in_cart');
-             $('#in_product').load('main_produkt_list');
+             $('#in_product').load(" . _A_::$app->UrlTo('shop/product_list') . ");
              return false;
 
           }

@@ -59,8 +59,8 @@ Class Model_Tools extends Model_Model
         $page_Name = '';
 
         $route_control = explode('/', $route_control)[0];
-        if ($route_control == 'post') {
-            $post_id = isset($_GET['post_id']) ? $_GET['post_id'] : null;
+        if (_A_::$app->router()->controller == 'blog' && _A_::$app->router()->action=='post') {
+            $post_id = !is_null(_A_::$app->get('post_id')) ? _A_::$app->get('post_id') : null;
             if (isset($post_id)) {
                 $result = mysql_query("select post_title from blog_posts WHERE ID='$post_id'");
                 if ($result && mysql_num_rows($result) > 0) {
@@ -75,7 +75,7 @@ Class Model_Tools extends Model_Model
                 }
             }
         } elseif ($route_control == "product") {
-            $p_id = $_GET['p_id'];
+            $p_id = _A_::$app->get('p_id');
             $result = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
             $row = mysql_fetch_array($result);
             $page_Description = $row['metadescription'];

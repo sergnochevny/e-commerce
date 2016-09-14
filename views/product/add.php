@@ -49,14 +49,14 @@
             $(document).on('click', 'a.pic_del_images',
                 function (event) {
                     event.preventDefault();
-                    var produkt_id = $(this).attr('href');
+                    var p_id = $(this).attr('href');
                     var i_idx = $(this).attr('data-img_idx');
 
                     $("#confirm_action").on('click.confirm_action',
                         function (event) {
                             event.preventDefault();
                             $.get(
-                                'del_pic?produkt_id=' + produkt_id + '&idx=' + i_idx,
+                                'del_pic?p_id=' + p_id + '&idx=' + i_idx,
                                 {},
                                 function(data){
                                     $('#modify_images2').html(data);
@@ -75,10 +75,10 @@
             $(document).on('click', '.b_modify_images_pic_main_icon',
                 function (event) {
                     event.preventDefault();
-                    var produkt_id = $(this).attr('data-produkt_id');
+                    var p_id = $(this).attr('data-p_id');
                     var i_idx = $(this).attr('data-img_idx');
                     $.get(
-                        'save_img_link?produkt_id=' + produkt_id + '&idx=' + i_idx,
+                        'save_img_link?p_id=' + p_id + '&idx=' + i_idx,
                         {},
                         function(data){
                             $('#modify_images2').html(data);
