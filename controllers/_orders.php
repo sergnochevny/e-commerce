@@ -1,18 +1,7 @@
 <?php
 
-class Controller_Order extends Controller_Base
+class Controller_Orders extends Controller_Controller
 {
-
-    protected $main;
-
-    function __construct($main)
-    {
-
-        $this->main = $main;
-        $this->registry = $main->registry;
-        $this->template = $main->template;
-
-    }
 
     function orders()
     {
@@ -20,13 +9,13 @@ class Controller_Order extends Controller_Base
 
         $back_url = _A_::$app->router()->UrlTo('/users', ['page' => !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1']);
 
-        $this->get_orders();
+        $this->get();
         $this->template->vars('back_url', $back_url);
 
         $this->main->view_admin('order/orders');
     }
 
-    function get_orders()
+    function get()
     {
         $this->main->test_access_rights();
         $model = new Model_Order();
@@ -101,7 +90,7 @@ class Controller_Order extends Controller_Base
         $this->main->view_admin('order/order');
     }
 
-    function get_order_details()
+    function get_details()
     {
         $this->main->test_access_rights();
         $model = new Model_Order();
@@ -119,7 +108,7 @@ class Controller_Order extends Controller_Base
         $this->template->vars('order_details', $order_details);
     }
 
-    public function customer_orders_history()
+    public function customer_history()
     {
         $user_id = (integer) _A_::$app->session('user')['aid'];
         $page = (integer)(empty(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
@@ -179,7 +168,7 @@ class Controller_Order extends Controller_Base
         $this->main->view('order/customer_orders_history');
     }
 
-    public function orders_history()
+    public function history()
     {
         $this->main->test_access_rights();
 
@@ -274,7 +263,7 @@ class Controller_Order extends Controller_Base
         $this->main->view_admin('order/orders_history');
     }
 
-    public function order_info()
+    public function info()
     {
         $base_url = _A_::$app->router()->UrlTo('/');
         $this->main->test_access_rights();
@@ -371,7 +360,7 @@ class Controller_Order extends Controller_Base
         $this->main->view_admin('order/order_info');
     }
 
-    public function customer_order_info()
+    public function customer_info()
     {
         $page = (integer)(!is_null(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
         $base_url = _A_::$app->router()->UrlTo('/');
@@ -442,7 +431,7 @@ class Controller_Order extends Controller_Base
         $this->main->view('order/customer_order_info');
     }
 
-    public function edit_orders_info()
+    public function edit_info()
     {
         $model = new Model_Order();
         $track_code = (string)trim(htmlspecialchars(_A_::$app->post('track_code')));

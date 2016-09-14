@@ -235,7 +235,7 @@ Class Controller_Index Extends Controller_Controller
     function search()
     {
         $model = new Model_Tools();
-        $search_qv = $model->validData($_GET['s']);
+        $search_qv = $model->validData(_A_::$app->get('s'));
         $this->template->vars('userInfo', $search_qv);
         $this->main->view('search/search');
     }

@@ -49,7 +49,7 @@
                                         $result .= '</td>';
 
                                         $result .= '<td>';
-                                            $result .= '<a href="'.BASE_URL.'/customer_order_info?oid='.urlencode(base64_encode($orders[$i][0])).'&page='.$page.''.'&orders_search_query='.$_GET['orders_search_query'].'" title="View more information" class="fa fa-eye"></a>';
+                                            $result .= '<a href="'._A_::$app->router()->UrlTo('order/customer_info',['oid'=>urlencode(base64_encode($orders[$i][0])),'page'=>$page,'orders_search_query'=>_A_::$app->get('orders_search_query')]).'" title="View more information" class="fa fa-eye"></a>';
                                         $result .= '</td>';
 
                                     $result .= '</tr>';

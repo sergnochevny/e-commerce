@@ -3,15 +3,15 @@
 class Controller_Discount extends Controller_Base
 {
 
-    function discounts()
+    function discount()
     {
         $this->main->test_access_rights();
-        $this->get_discounts_list();
+        $this->get_list();
 
-        $this->main->view_admin('discount/discounts');
+        $this->main->view_admin('discounts');
     }
 
-    function get_discounts_list()
+    function get_list()
     {
         $this->main->test_access_rights();
         $results = mysql_query("select * from fabrix_specials ORDER BY  `fabrix_specials`.`sid`DESC");
@@ -27,28 +27,28 @@ class Controller_Discount extends Controller_Base
             } else {
                 $row[11] = "NO";
             }
-            include('./views/discount/get_discounts_list.php');
+            include('./views/discount/get_list.php');
         }
-        $discounts_list = ob_get_contents();
+        $list = ob_get_contents();
         ob_end_clean();
 
-        $this->template->vars('discounts_list', $discounts_list);
+        $this->template->vars('list', $list);
     }
 
-    function del_discounts()
+    function del()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $discounts_id = $model->validData(_A_::$app->get('discounts_id'));
+        $id = $model->validData(_A_::$app->get('id'));
         if (!empty($discounts_id)) {
             $model->del_discount($discounts_id);
         }
 
-        $this->get_discounts_list();
-        $this->main->view_layout('discount/discounts_list');
+        $this->get_list();
+        $this->main->view_layout('list');
     }
 
-    function add_discounts()
+    function add()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
@@ -56,46 +56,46 @@ class Controller_Discount extends Controller_Base
         $userInfo = $model->get_new_discounts_data();
         $this->template->vars('userInfo', $userInfo);
 
-        $this->main->view_admin('discount/add_discounts');
+        $this->main->view_admin('add');
     }
 
-    function edit_discounts()
+    function edit()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $discount_id = $model->validData(_A_::$app->get('discounts_id'));
-        $userInfo = $model->get_edit_discounts_data($discount_id);
+        $id = $model->validData(_A_::$app->get('id'));
+        $userInfo = $model->get_edit_discounts_data($id);
         $this->template->vars('userInfo', $userInfo);
-        $this->main->view_admin('discount/edit_discounts');
+        $this->main->view_admin('edit');
     }
 
-    function edit_discounts_form()
+    function edit_form()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $discount_id = $model->validData(_A_::$app->get('discounts_id'));
-        $userInfo = $model->get_edit_discounts_data($discount_id);
+        $id = $model->validData(_A_::$app->get('id'));
+        $userInfo = $model->get_edit_discounts_data($id);
         $this->template->vars('userInfo', $userInfo);
-        $this->main->view_layout('discount/edit_discounts_form');
+        $this->main->view_layout('edit_form');
     }
 
 
-    function usage_discounts()
+    function usage()
     {
         $this->main->test_access_rights();
-        $this->data_usage_discounts();
-        $this->data_usage_order_discounts();
+        $this->data_usage();
+        $this->data_usage_order();
 
-        $this->main->view_admin('discount/usage_discounts');
+        $this->main->view_admin('usage');
     }
 
-    function data_usage_discounts()
+    function data_usage()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $discounts_id = $model->validData(_A_::$app->get('discounts_id'));
+        $id = $model->validData(_A_::$app->get('id'));
         if (!empty($discounts_id)) {
-            $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='" . $discounts_id . "'");
+            $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='" . $id . "'");
             $rowsni = mysql_fetch_array($resulthatistim);
             $p_discount_amount = $rowsni['discount_amount'];
             $allow_multiple = $rowsni['allow_multiple'];
@@ -119,14 +119,14 @@ class Controller_Discount extends Controller_Base
             $date_end = gmdate("F j, Y, g:i a", $date_end);
 
             ob_start();
-            include('views/discount/data_usage_discounts.php');
+            include('data_usage.php');
             $data_usage_discounts = ob_get_contents();
             ob_end_clean();
-            $this->template->vars('data_usage_discounts', $data_usage_discounts);
+            $this->main->template->vars('data_usage_discounts', $data_usage_discounts);
         }
     }
 
-    function data_usage_order_discounts()
+    function data_usage_order()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
@@ -156,7 +156,7 @@ class Controller_Discount extends Controller_Base
         }
     }
 
-    function edit_discounts_data()
+    function edit_data()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
@@ -253,7 +253,7 @@ class Controller_Discount extends Controller_Base
 
                 $this->template->vars('userInfo', $userInfo);
 
-                $this->main->view_admin('discount/edit_discounts');
+                $this->main->view_admin('edit_discounts');
 
             } else {
 
@@ -301,13 +301,13 @@ class Controller_Discount extends Controller_Base
                 $this->template->vars('warning', $warning);
                 $this->template->vars('error', $error);
 
-                $this->edit_discounts();
+                $this->edit();
 
             }
         }
     }
 
-    function save_discounts_data()
+    function save_data()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
@@ -403,7 +403,7 @@ class Controller_Discount extends Controller_Base
 
             $this->template->vars('userInfo', $userInfo);
 
-            $this->main->view_admin('discount/add_discounts');
+            $this->main->view_admin('add');
 
         } else {
 
@@ -454,7 +454,7 @@ class Controller_Discount extends Controller_Base
             $this->template->vars('warning', $warning);
             $this->template->vars('error', $error);
 
-            $this->add_discounts();
+            $this->add();
         }
     }
 

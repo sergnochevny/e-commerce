@@ -1362,7 +1362,7 @@ class Controller_Cart extends Controller_Controller
         $base_url = _A_::$app->router()->UrlTo('/');
         if (!empty(_A_::$app->get('p_id'))) {
             $model = new Model_Cart();
-            $p_id = $model->validData($_GET['p_id']);
+            $p_id = $model->validData(_A_::$app->get('p_id'));
             $product = $model->get_product_params($p_id);
 
             if (!is_null(_A_::$app->session('cart')['items'])) {
@@ -1475,7 +1475,7 @@ class Controller_Cart extends Controller_Controller
         $base_url = _A_::$app->router()->UrlTo('/');
         if (!empty(_A_::$app->get('p_id'))) {
             $model = new Model_Cart();
-            $p_id = $model->validData($_GET['p_id']);
+            $p_id = $model->validData(_A_::$app->get('p_id'));
             $product = $model->get_product_params($p_id);
 
             if (!is_null(_A_::$app->session('cart')['items'])) {

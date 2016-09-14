@@ -6,7 +6,6 @@ class Controller_User extends Controller_Controller
     public function user()
     {
         $this->main->test_access_rights();
-
         $this->get_main_users_list();
         $this->main->view_admin('users');
     }
@@ -14,7 +13,6 @@ class Controller_User extends Controller_Controller
     public function users_list()
     {
         $this->main->test_access_rights();
-
         $this->get_main_users_list();
         $this->main->view_layout('users_list');
     }
