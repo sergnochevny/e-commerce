@@ -1,16 +1,16 @@
 <tr>
-    <td><b><?php echo $p_discount_amount;?>% off </b><?php echo $discount_comment1;?></td>
+    <td><b><?= $p_discount_amount;?>% off </b><?= $discount_comment1;?></td>
     <td>
-        <center><?php echo $enabled;?></center>
+        <div class="text-center"><?= $enabled;?></div>
     </td>
     <td>
-        <center><?php echo $allow_multiple;?></center
+        <div class="text-center"><?= $allow_multiple;?></div
     </td>
     <td>
-        <center><?php echo !empty($coupon_code) ? $coupon_code : 'N/A';?></center>
+        <div class="text-center"><?= !empty($coupon_code) ? $coupon_code : 'N/A';?></div>
     </td>
-    <td><?php echo $date_start;?></td>
+    <td><?= $date_start;?></td>
     <td>
-        <center><?php echo $date_end;?></center>
+        <div class="text-center"><?= $date_end;?></div>
     </td>
 </tr>

@@ -118,10 +118,10 @@ class Controller_Comments extends Controller_Base
         $error_msg = array();
 
         if (strlen($Title) < TITLE_MIN_CHARS || strlen($Title) > TITLE_MAX_CHARS) {
-            $error_msg[] = "Title length < " . TITLE_MIN_CHARS . " chars!!!! Maximum " . TITLE_MAX_CHARS . " chars!";
+            $error_msg[] = "Title length < " . TITLE_MIN_CHARS . " chars! Maximum " . TITLE_MAX_CHARS . " chars!";
         }
         if (strlen($Data) < DATA_MIN_CHARS || strlen($Data) > DATA_MAX_CHARS) {
-            $error_msg[] = "Comment text < " . DATA_MIN_CHARS . " chars!!! Maximum " . DATA_MAX_CHARS . " chars!";
+            $error_msg[] = "Comment text < " . DATA_MIN_CHARS . " chars! Maximum " . DATA_MAX_CHARS . " chars!";
         }
         return $error_msg;
     }

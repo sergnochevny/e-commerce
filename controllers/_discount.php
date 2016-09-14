@@ -14,23 +14,20 @@ class Controller_Discount extends Controller_Base
     function get_list()
     {
         $this->main->test_access_rights();
-        $results = mysql_query("select * from fabrix_specials ORDER BY  `fabrix_specials`.`sid`DESC");
-        ob_start();
-        while ($row = mysql_fetch_array($results)) {
-            if ($row[14] == "1") {
-                $row[14] = "YES";
-            } else {
-                $row[14] = "NO";
+
+        $results = Model_Discount::getFabrixSpecialsIds();
+        if(!is_null($results)){
+            ob_start();
+            while ($row = mysql_fetch_array($results)) {
+
+                $row[14] = $row[14] == "1" ? "YES" : "NO";
+                $row[11] = $row[11] == "1" ? "YES" : "NO";
+
+                include('./views/discount/get_list.php');
             }
-            if ($row[11] == "1") {
-                $row[11] = "YES";
-            } else {
-                $row[11] = "NO";
-            }
-            include('./views/discount/get_list.php');
+            $list = ob_get_contents();
+            ob_end_clean();
         }
-        $list = ob_get_contents();
-        ob_end_clean();
 
         $this->main->template->vars('list', $list);
     }
@@ -93,34 +90,27 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $id = $model->validData(_A_::$app->get('id'));
         if (!empty($discounts_id)) {
-            $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='" . $id . "'");
-            $rowsni = mysql_fetch_array($resulthatistim);
-            $p_discount_amount = $rowsni['discount_amount'];
-            $allow_multiple = $rowsni['allow_multiple'];
-            $date_start = $rowsni['date_start'];
-            $date_end = $rowsni['date_end'];
-            $coupon_code = $rowsni['coupon_code'];
-            $discount_comment1 = $rowsni['discount_comment1'];
-            $enabled = $rowsni['enabled'];
-            $sid = $rowsni['sid'];
-            if ($enabled == "1") {
-                $enabled = "YES";
-            } else {
-                $enabled = "NO";
-            }
-            if ($allow_multiple == "1") {
-                $allow_multiple = "YES";
-            } else {
-                $allow_multiple = "NO";
-            }
+            $result = Model_Discount::getFabrixSpecialsByID((integer) $model->validData(_A_::$app->get('id')));
+            $row = mysql_fetch_array($result);
+            $p_discount_amount = $row['discount_amount'];
+            $allow_multiple = $row['allow_multiple'];
+            $date_start = $row['date_start'];
+            $date_end = $row['date_end'];
+            $coupon_code = $row['coupon_code'];
+            $discount_comment1 = $row['discount_comment1'];
+            $enabled = $row['enabled'];
+            $sid = $row['sid'];
+
+            $enabled = $enabled == "1" ? "YES" : "NO";
+            $allow_multiple = $allow_multiple == "1" ? "YES" : "NO";
+
             $date_start = gmdate("F j, Y, g:i a", $date_start);
             $date_end = gmdate("F j, Y, g:i a", $date_end);
 
             ob_start();
-            include('data_usage.php');
-            $data_usage_discounts = ob_get_contents();
+                include('data_usage.php');
+                $data_usage_discounts = ob_get_contents();
             ob_end_clean();
             $this->main->template->vars('data_usage_discounts', $data_usage_discounts);
         }
@@ -136,15 +126,15 @@ class Controller_Discount extends Controller_Base
             ob_start();
             $results = mysql_query("select * from fabrix_specials_usage WHERE specialId='" . $discounts_id . "'");
             while ($row = mysql_fetch_array($results)) {
-                $resulthatistim = mysql_query("select * from fabrix_orders WHERE oid='" . $row[2] . "'");
-                $rowsni = mysql_fetch_array($resulthatistim);
-                $order_aid = $rowsni['aid'];
-                $order_date = gmdate("F j, Y, g:i a", $rowsni['order_date']);
-                $resulthatistim = mysql_query("select * from fabrix_accounts WHERE aid='" . $order_aid . "'");
-                $rowsni = mysql_fetch_array($resulthatistim);
-                $u_email = $rowsni['email'];
-                $u_bill_firstname = $rowsni['bill_firstname'];
-                $u_bill_lastname = $rowsni['bill_lastname'];
+                $result = mysql_query("select * from fabrix_orders WHERE oid='" . $row[2] . "'");
+                $row = mysql_fetch_array($result);
+                $order_aid = $row['aid'];
+                $order_date = gmdate("F j, Y, g:i a", $row['order_date']);
+                $result = mysql_query("select * from fabrix_accounts WHERE aid='" . $order_aid . "'");
+                $row = mysql_fetch_array($result);
+                $u_email = $row['email'];
+                $u_bill_firstname = $row['bill_firstname'];
+                $u_bill_lastname = $row['bill_lastname'];
                 $i++;
 
                 include('views/discount/data_usage_order_discounts.php');
@@ -162,13 +152,8 @@ class Controller_Discount extends Controller_Base
         $model = new Model_Discount();
         include('include/post_edit_discounts_data.php');
 
-        if (strlen($date_end) > 0) {
-            $date_end = strtotime($date_end);
-        } else $date_end = 0;
-
-        if (strlen($start_date) > 0) {
-            $start_date = strtotime($start_date);
-        } else $start_date = 0;
+        $date_end = strlen($date_end) > 0 ? strtotime($date_end) : $date_end = 0;
+        $start_date = strlen($start_date) > 0 ? strtotime($start_date) : $start_date = 0;
 
         if (($generate_code == '1') || (strlen($coupon_code) > 0)) {
             $allow_multiple = 1;
