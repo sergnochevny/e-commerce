@@ -463,7 +463,7 @@ class Controller_User extends Controller_Controller
         $this->main->template->vars('action', _A_::$app->router()->UrlTo('save_edit_user', ['user_id' => _A_::$app->get('user_id')]));
         $this->main->template->vars('title', 'EDIT USER');
         $this->_edit_user();
-        $this->main->view_admin('user/edit_user');
+        $this->main->view_admin('edit');
     }
 
     function new_user()
@@ -472,7 +472,7 @@ class Controller_User extends Controller_Controller
         $this->template->vars('action', _A_::$app->router()->UrlTo('save_new_user'));
         $this->template->vars('title', 'NEW USER');
         $this->_new_user();
-        $this->main->view_admin('user/new_user');
+        $this->main->view_admin('new');
     }
 
     function save_edit_user()
