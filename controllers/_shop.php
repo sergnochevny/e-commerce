@@ -135,21 +135,20 @@ class Controller_Shop extends Controller_Controller
         $res = null;
 
         if (!empty(_A_::$app->get('cat'))) {
-            $res = isset($search) ? Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('cat'))) : Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('cat')), $search);
+            $res = isset($search) ? Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('cat')), $search) : Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('cat')));
         } else {
             if (!empty(_A_::$app->get('ptrn'))) {
-                $res = isset($search) ? Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('ptrn'))) : Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('ptrn')), $search);
+                $res = isset($search) ? Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('ptrn')), $search) : Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('ptrn')));
             } else {
                 if (!empty(_A_::$app->get('mnf'))) {
-                    $res = isset($search) ? Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf'))) : Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), $search);
+                    $res = isset($search) ? Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), null, $search) : Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), null);
                 } else {
-                    $res = isset($search) ? Model_Product::getProductsAndSearchParams() : Model_Product::getProductsAndSearchParams($search);
+                    $res = isset($search) ? Model_Product::getProductsAndSearchParams($search) : Model_Product::getProductsAndSearchParams();
                 }
             }
         }
 
 
-        $res = mysql_query($q_total);
         $total = mysql_fetch_row($res)[0];
 
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
@@ -157,59 +156,27 @@ class Controller_Shop extends Controller_Controller
 
         $start = (($page - 1) * $per_page);
         if (!empty(_A_::$app->get('cat'))) {
+            $catigori_name = $model->getCatName($model->validData(_A_::$app->get('cat')));
             $cat_id = $model->validData(_A_::$app->get('cat'));
-            $catigori_name = $model->getCatName($cat_id);
-            $q = "SELECT a.* FROM `fabrix_products` a" .
-                " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-                " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id'";
-
-            if (isset($search)) {
-                $q .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
-                    " or LOWER(a.pname) like '%" . $search . "%')";
-            }
-            $q .= " ORDER BY b.display_order LIMIT $start,$per_page";
+            $res = isset($search) ? Model_Product::getProductCategories($model->validData(_A_::$app->get('cat')), $start, $per_page, $search) : Model_Product::getProductCategories($model->validData(_A_::$app->get('cat')), $start, $per_page);
         } else {
             if (!empty(_A_::$app->get('ptrn'))) {
                 $ptrn_id = $model->validData(_A_::$app->get('ptrn'));
                 $ptrn_name = $model->getPtrnName($ptrn_id);
-                $q = "SELECT a.* FROM `fabrix_products` a" .
-                    " LEFT JOIN fabrix_product_patterns b ON a.pid = b.prodId " .
-                    " WHERE  a.pnumber is not null and a.pvisible = '1' and b.patternId='$ptrn_id'";
-
-                if (isset($search)) {
-                    $q .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
-                        " or LOWER(a.pname) like '%" . $search . "%')";
-                }
-
-                $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
-
+                $res = isset($search) ? Model_Product::getProductPatterns($model->validData(_A_::$app->get('ptrn')), $start, $per_page, $search) : Model_Product::getProductCategories($model->validData(_A_::$app->get('ptrn')), $start, $per_page);
                 $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
             } else {
                 if (!empty(_A_::$app->get('mnf'))) {
                     $mnf_id = $model->validData(_A_::$app->get('mnf'));
                     $mnf_name = $model->getMnfName($mnf_id);
-                    $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and manufacturerId = '$mnf_id'";
-                    if (isset($search)) {
-                        $q .= " and (LOWER(pnumber) like '%" . $search . "%'" .
-                            " or LOWER(pname) like '%" . $search . "%')";
-                    }
-                    $q .= " ORDER BY dt DESC, pid DESC LIMIT $start,$per_page";
-
+                    $res = isset($search) ? Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), true, $search, $start, $per_page) : Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), true, null, $start, $per_page);
                     $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
                 } else {
-
-                    $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1'";
-
-                    if (isset($search)) {
-                        $q .= " and (LOWER(pnumber) like '%" . $search . "%'" .
-                            " or LOWER(pname) like '%" . $search . "%')";
-                    }
-
-                    $q .= " ORDER BY dt DESC, pid DESC LIMIT $start,$per_page";
+                    $res = isset($search) ? Model_Product::getProductsAndSearchParams($search, true, $start, $per_page) : Model_Product::getProductsAndSearchParams(null, true, $start, $per_page);
                 }
             }
         }
-        $res = mysql_query($q);
+
         if ($res) {
             $res_count_rows = mysql_num_rows($res);
             $this->template->vars('count_rows', $res_count_rows);
@@ -230,18 +197,19 @@ class Controller_Shop extends Controller_Controller
                 }
                 $filename = _A_::$app->router()->UrlTo($filename);
 
-                $href = '';
+                $opt = null;
+
                 if (!empty(_A_::$app->get('page'))) {
-                    $href .= '&page=' . _A_::$app->get('page');
+                    $opt['page'] = _A_::$app->get('page');
                 }
                 if (!empty(_A_::$app->get('cat'))) {
-                    $href .= '&cat=' . _A_::$app->get('cat');
+                    $opt['cat'] = _A_::$app->get('cat');
                 }
                 if (!empty(_A_::$app->get('mnf'))) {
-                    $href .= '&mnf=' . _A_::$app->get('mnf');
+                    $opt['mnf'] = _A_::$app->get('mnf');
                 }
                 if (!empty(_A_::$app->get('ptrn'))) {
-                    $href .= '&ptrn=' . _A_::$app->get('ptrn');
+                    $opt['ptrn'] = _A_::$app->get('ptrn');
                 }
 
                 $pid = $row[0];

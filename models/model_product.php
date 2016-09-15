@@ -55,7 +55,7 @@ Class Model_Product extends Model_Model
         return $total;
     }
 
-    public static function getProductsByManufacturerAndSearchParams($manufacturerId, $searchQuery = null){
+    public static function getProductsByManufacturerAndSearchParams($manufacturerId, $order = null, $searchQuery = null,  $start = null, $per_page = null){
         $total = null;
 
         $q = "SELECT COUNT(*) FROM `fabrix_products` WHERE pnumber IS NOT NULL AND pvisible = '1' AND manufacturerId = '$manufacturerId'";
@@ -65,6 +65,10 @@ Class Model_Product extends Model_Model
                 " or LOWER(a.pname) like '%" . $searchQuery . "%')";
         }
 
+        if(!is_null($order)){
+            $q .= " ORDER BY dt DESC, pid DESC LIMIT $start,$per_page";
+        }
+
         if ($res = mysql_query($q)) {
             $total = mysql_fetch_row($res)[0];
         }
@@ -72,7 +76,7 @@ Class Model_Product extends Model_Model
         return $total;
     }
 
-    public static function getProductsAndSearchParams($searchQuery = null){
+    public static function getProductsAndSearchParams($searchQuery = null, $order = null, $start = null, $per_page = null){
         $total = null;
 
         $q =  "SELECT COUNT(*) FROM `fabrix_products` WHERE pnumber IS NOT NULL AND pvisible = '1' ";
@@ -81,6 +85,49 @@ Class Model_Product extends Model_Model
             $q .= " and (LOWER(a.pnumber) like '%" . $searchQuery . "%'" .
                 " or LOWER(a.pname) like '%" . $searchQuery . "%')";
         }
+
+        if(!is_null($order)){
+            $q .= " ORDER BY dt DESC, pid DESC LIMIT $start, $per_page";
+        }
+
+        if ($res = mysql_query($q)) {
+            $total = mysql_fetch_row($res)[0];
+        }
+
+        return $total;
+    }
+
+    public static function getProductCategories($cat_id, $start, $per_page, $searchQuery = null){
+        $total = null;
+
+        $q = "SELECT a.* FROM `fabrix_products` a" .
+            " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
+            " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id'";
+
+        if(!is_null($searchQuery)){
+            $q .= " and (LOWER(a.pnumber) like '%" . $searchQuery . "%'" .
+                " or LOWER(a.pname) like '%" . $searchQuery . "%')";
+        }
+        $q .= " ORDER BY b.display_order LIMIT $start,$per_page";
+        if ($res = mysql_query($q)) {
+            $total = mysql_fetch_row($res)[0];
+        }
+
+        return $total;
+    }
+
+    public static function getProductPatterns($ptrn_id, $start, $per_page, $searchQuery = null){
+        $total = null;
+
+        $q = "SELECT a.* FROM `fabrix_products` a" .
+            " LEFT JOIN fabrix_product_patterns b ON a.pid = b.prodId " .
+            " WHERE  a.pnumber is not null and a.pvisible = '1' and b.patternId='$ptrn_id'";
+
+        if(!is_null($searchQuery)){
+            $q .= " and (LOWER(a.pnumber) like '%" . $searchQuery . "%'" .
+                " or LOWER(a.pname) like '%" . $searchQuery . "%')";
+        }
+        $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
 
         if ($res = mysql_query($q)) {
             $total = mysql_fetch_row($res)[0];
