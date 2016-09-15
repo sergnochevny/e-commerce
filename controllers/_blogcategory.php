@@ -47,8 +47,8 @@ class Controller_BlogCategory extends Controller_Controller
     {
         $model = new Model_Blog();
         $group_id = $model->validData(_A_::$app->get('cat'));
-        $userInfo = $model->get_blog_category($group_id);
-        $this->main->template->vars('userInfo', $userInfo);
+        $data = $model->get_blog_category($group_id);
+        $this->main->template->vars('data', $data);
 
         $action_url = _A_::$app->router()->UrlTo('blogcategory/save', ['cat' => $group_id]);
         $this->main->template->vars('action_url', $action_url);
@@ -73,14 +73,14 @@ class Controller_BlogCategory extends Controller_Controller
             $this->main->template->vars('warning', $warning);
             $this->edit_form();
         } else {
-            $userInfo = [];
+            $data = [];
 
             $action_url = _A_::$app->router()->UrlTo('blogcategory/save', ['cat' => $group_id]);
             $this->main->template->vars('action_url', $action_url);
 
-            $userInfo['name'] = '';
-            $userInfo['slug'] = !is_null(_A_::$app->post('slug')) ? _A_::$app->post('slug') : null;
-            $userInfo['id'] = !is_null(_A_::$app->post('cat')) ? _A_::$app->get('cat') : '';
+            $data['name'] = '';
+            $data['slug'] = !is_null(_A_::$app->post('slug')) ? _A_::$app->post('slug') : null;
+            $data['id'] = !is_null(_A_::$app->post('cat')) ? _A_::$app->get('cat') : '';
 
             $error = ['Identity Category Name Field!'];
             $this->main->template->vars('error', $error);
@@ -89,7 +89,7 @@ class Controller_BlogCategory extends Controller_Controller
 
             $this->main->template->vars('button_title', 'Update');
             $this->main->template->vars('back_url', $back_url);
-            $this->main->template->vars('userInfo', $userInfo);
+            $this->main->template->vars('data', $data);
 
             $this->main->view_layout('form');
         }
@@ -99,8 +99,8 @@ class Controller_BlogCategory extends Controller_Controller
     {
         $model = new Model_Blog();
         $group_id = $model->validData(_A_::$app->get('cat'));
-        $userInfo = $model->get_blog_category($group_id);
-        $this->main->template->vars('userInfo', $userInfo);
+        $data = $model->get_blog_category($group_id);
+        $this->main->template->vars('data', $data);
         $back_url = _A_::$app->router()->UrlTo('blogcategory/admin');
         $action_url = _A_::$app->router()->UrlTo('blogcategory/save', ['cat' => $group_id]);
         $this->main->template->vars('button_title', 'Update');
@@ -111,19 +111,19 @@ class Controller_BlogCategory extends Controller_Controller
 
     public function new()
     {
-        $userInfo = [];
+        $data = [];
 
         $action_url = _A_::$app->router()->UrlTo('blogcategory/save_new');
         $this->main->template->vars('action_url', $action_url);
 
-        $userInfo['name'] = '';
-        $userInfo['slug'] = '';
-        $userInfo['id'] = '';
+        $data['name'] = '';
+        $data['slug'] = '';
+        $data['id'] = '';
 
         $back_url = _A_::$app->router()->UrlTo('blogcategory/admin');
         $this->main->template->vars('button_title', 'Save');
         $this->main->template->vars('back_url', $back_url);
-        $this->main->template->vars('userInfo', $userInfo);
+        $this->main->template->vars('data', $data);
 
         $this->main->view_admin('edit');
     }
@@ -142,18 +142,18 @@ class Controller_BlogCategory extends Controller_Controller
                 $warning = ['Category Data saved successfully!'];
                 $this->main->template->vars('warning', $warning);
 
-                $userInfo = [];
-                $userInfo['name'] = '';
-                $userInfo['slug'] = '';
-                $userInfo['id'] = '';
+                $data = [];
+                $data['name'] = '';
+                $data['slug'] = '';
+                $data['id'] = '';
             } else {
                 $warning = [mysql_error()];
                 $this->main->template->vars('error', $warning);
 
-                $userInfo = [];
-                $userInfo['name'] = $post_category_name;
-                $userInfo['slug'] = !is_null(_A_::$app->post('slug')) ? _A_::$app->post('slug') : '';
-                $userInfo['id'] = '';
+                $data = [];
+                $data['name'] = $post_category_name;
+                $data['slug'] = !is_null(_A_::$app->post('slug')) ? _A_::$app->post('slug') : '';
+                $data['id'] = '';
             }
 
             $action_url = _A_::$app->router()->UrlTo('blogcategory/save_new');
@@ -162,18 +162,18 @@ class Controller_BlogCategory extends Controller_Controller
             $back_url = _A_::$app->router()->UrlTo('blogcategory/admin');
             $this->main->template->vars('button_title', 'Save');
             $this->main->template->vars('back_url', $back_url);
-            $this->main->template->vars('userInfo', $userInfo);
+            $this->main->template->vars('data', $data);
 
             $this->main->view_layout('form');
         } else {
-            $userInfo = [];
+            $data = [];
 
             $action_url = _A_::$app->router()->UrlTo('blogcategory/save_new');
             $this->main->template->vars('action_url', $action_url);
 
-            $userInfo['name'] = '';
-            $userInfo['slug'] = !is_null(_A_::$app->post('slug')) ? _A_::$app->post('slug') : null;
-            $userInfo['id'] = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : '';
+            $data['name'] = '';
+            $data['slug'] = !is_null(_A_::$app->post('slug')) ? _A_::$app->post('slug') : null;
+            $data['id'] = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : '';
 
             $error = ['Identity Category Name Field!'];
             $this->main->template->vars('error', $error);
@@ -182,7 +182,7 @@ class Controller_BlogCategory extends Controller_Controller
 
             $this->main->template->vars('button_title', 'Save');
             $this->main->template->vars('back_url', $back_url);
-            $this->main->template->vars('userInfo', $userInfo);
+            $this->main->template->vars('data', $data);
 
             $this->main->view_layout('form');
         }

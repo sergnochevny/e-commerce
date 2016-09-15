@@ -154,16 +154,16 @@ Class Controller_User Extends Controller_Controller
             $this->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
             $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'), true);
 
-            $userInfo = (new Model_User())->get_user_data($user_id);
+            $data = (new Model_User())->get_user_data($user_id);
 
-            $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
-            $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
-            $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
-            $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
+            $data['bill_list_countries'] = $this->list_countries($data['bill_country']);
+            $data['ship_list_countries'] = $this->list_countries($data['ship_country']);
+            $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);
+            $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
 
-            $this->sendWelcomeEmail($userInfo['email']);
+            $this->sendWelcomeEmail($data['email']);
 
-            $this->template->vars('userInfo', $userInfo);
+            $this->template->vars('data', $data);
             $this->_edit_user_form();
         }
     }

@@ -24,19 +24,19 @@
     <div class="col-1">
         <p class="form-row">
             <label class="required_field"><strong>Product name:</strong></label>
-            <input type="text" name="p_name" value="<?= $userInfo['Product_name']; ?>" class="input-text ">
+            <input type="text" name="p_name" value="<?= $data['Product_name']; ?>" class="input-text ">
         </p>
 
         <p class="form-row">
             <label class="required_field"><strong>Product number:</strong></label>
-            <input type="text" name="product_num" value="<?= $userInfo['Product_number']; ?>" class="input-text ">
+            <input type="text" name="product_num" value="<?= $data['Product_number']; ?>" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Meta Description:</strong></label>
-            <input type="text" name="desc" placeholder="<?= $userInfo['Short_description']; ?>"
-                <?php if (!empty($userInfo['metadescription'])) {
-                    echo 'value="' . $userInfo['metadescription'] . '"';
+            <input type="text" name="desc" placeholder="<?= $data['Short_description']; ?>"
+                <?php if (!empty($data['metadescription'])) {
+                    echo 'value="' . $data['metadescription'] . '"';
                 }; ?>
                    class="input-text ">
 
@@ -44,7 +44,7 @@
 
         <p class="form-row">
             <label><strong>Meta Keywords:</strong></label>
-            <input type="text" name="mkey" value="<?= $userInfo['Meta_Keywords']; ?>" class="input-text ">
+            <input type="text" name="mkey" value="<?= $data['Meta_Keywords']; ?>" class="input-text ">
         </p>
         <hr/>
         <p class="form-row">
@@ -54,20 +54,20 @@
         <p class="form-row">
             <label><strong>Categories:</strong></label>
             <select multiple="" name="categori[]" style="height:85px;">
-                <?= $userInfo['sd_cat']; ?>
+                <?= $data['sd_cat']; ?>
             </select>
 
         </p>
 
         <p class="form-row">
             <label><strong>Width:</strong></label>
-            <input type="text" name="width" value="<?= $userInfo['Width']; ?>" class="input-text ">
+            <input type="text" name="width" value="<?= $data['Width']; ?>" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Piece:</strong></label>
             <?php
-            if (isset($userInfo['piece']) && ($userInfo['piece'] == "1")) {
+            if (isset($data['piece']) && ($data['piece'] == "1")) {
                 echo '<input type="checkbox" checked="checked" value="1" name="piece" class="input-checkbox">';
             } else {
                 echo '<input type="checkbox" name="piece" value="1" class="input-checkbox">';
@@ -77,13 +77,13 @@
 
         <p class="form-row">
             <label class="required_field"><strong>Price:</strong></label>
-            <input type="text" name="p_yard" value="<?= $userInfo['Price_Yard']; ?>" class="input-text ">
+            <input type="text" name="p_yard" value="<?= $data['Price_Yard']; ?>" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Hide regular price:</strong></label>
             <?php
-            if (isset($userInfo['visible']) && ($userInfo['visible'] == "1")) {
+            if (isset($data['visible']) && ($data['visible'] == "1")) {
                 echo '<input type="checkbox" checked="checked" value="1" name="hide_prise" class="input-checkbox">';
             } else {
                 echo '<input type="checkbox" name="hide_prise" value="1" class="input-checkbox">';
@@ -93,24 +93,24 @@
 
         <p class="form-row">
             <label><strong>Mfg. & Stock number:</strong></label>
-            <input type="text" name="st_nom" value="<?= $userInfo['Stock_number']; ?>" class="input-text ">
+            <input type="text" name="st_nom" value="<?= $data['Stock_number']; ?>" class="input-text ">
         </p>
 
         <hr/>
         <p class="form-row">
             <label><strong>Dimensions:</strong></label>
-            <input type="text" name="dimens" value="<?= $userInfo['Dimensions']; ?>" class="input-text ">
+            <input type="text" name="dimens" value="<?= $data['Dimensions']; ?>" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Current inventory:</strong></label>
-            <input type="text" name="curret_in" value="<?= $userInfo['Current_inventory']; ?>" class="input-text ">
+            <input type="text" name="curret_in" value="<?= $data['Current_inventory']; ?>" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Whole:</strong></label>
             <?php
-            if ( isset($userInfo['whole']) && ($userInfo['whole'] == "1")) {
+            if ( isset($data['whole']) && ($data['whole'] == "1")) {
                 echo '<input type="checkbox" checked="checked" name="whole" value="1" class="input-checkbox">';
             } else {
                 echo '<input type="checkbox" name="whole" value="1" class="input-checkbox">';
@@ -121,19 +121,19 @@
         <p class="form-row">
             <label><strong>Weight:</strong></label>
             <select name="weight_cat">
-                <option value="0" <?php if ($userInfo['weight_id'] == "0") {
+                <option value="0" <?php if ($data['weight_id'] == "0") {
                     echo 'selected=""';
                 } ?>>Use Category Weight
                 </option>
-                <option value="1" <?php if ($userInfo['weight_id'] == "1") {
+                <option value="1" <?php if ($data['weight_id'] == "1") {
                     echo 'selected=""';
                 } ?>>Light
                 </option>
-                <option value="2" <?php if ($userInfo['weight_id'] == "2") {
+                <option value="2" <?php if ($data['weight_id'] == "2") {
                     echo 'selected=""';
                 } ?>>Medium
                 </option>
-                <option value="3" <?php if ($userInfo['weight_id'] == "3") {
+                <option value="3" <?php if ($data['weight_id'] == "3") {
                     echo 'selected=""';
                 } ?>>Heavy
                 </option>
@@ -146,28 +146,28 @@
         <p class="form-row">
             <label><strong>Manufacturer:</strong></label>
             <select name="manufacturer">
-                <?= $userInfo['Manufacturer']; ?>
+                <?= $data['Manufacturer']; ?>
             </select>
         </p>
 
         <p class="form-row">
             <label><strong>New Manufacturer:</strong></label>
             <input type="text"
-                   name="New_Manufacturer" <?php echo isset($userInfo['New_Manufacturer']) ? 'value="' . $userInfo['New_Manufacturer'] . '"' : '' ?>
+                   name="New_Manufacturer" <?php echo isset($data['New_Manufacturer']) ? 'value="' . $data['New_Manufacturer'] . '"' : '' ?>
                    class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Colours: </strong></label>
             <select multiple="" name="colors[]" style="height:85px;">
-                <?= $userInfo['Colours']; ?>
+                <?= $data['Colours']; ?>
             </select>
         </p>
 
         <p class="form-row">
             <label><strong>New Colour:</strong></label>
             <input type="text"
-                   name="new_color" <?php echo isset($userInfo['New_Colour']) ? 'value="' . $userInfo['New_Colour'] . '"' : '' ?>
+                   name="new_color" <?php echo isset($data['New_Colour']) ? 'value="' . $data['New_Colour'] . '"' : '' ?>
                    class="input-text ">
         </p>
 
@@ -175,39 +175,39 @@
     <div class="col-2">
         <p class="form-row">
             <label><strong>Short description:</strong></label>
-            <input type="text" value="<?= $userInfo['Short_description']; ?>" name="short_desk" class="input-text ">
+            <input type="text" value="<?= $data['Short_description']; ?>" name="short_desk" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Long description:</strong></label>
 						<textarea class="input-text " cols="5" rows="2" name="Long_description">
-                        <?= $userInfo['Long_description']; ?>
+                        <?= $data['Long_description']; ?>
                         </textarea>
         </p>
         <hr/>
         <p class="form-row">
             <label><strong>Related fabric #:</strong></label>
-            <input type="text" value="<?= $userInfo['Related_fabric_1']; ?>" name="fabric_1" class="input-text ">
+            <input type="text" value="<?= $data['Related_fabric_1']; ?>" name="fabric_1" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Related fabric #:</strong></label>
-            <input type="text" value="<?= $userInfo['Related_fabric_2']; ?>" name="fabric_2" class="input-text ">
+            <input type="text" value="<?= $data['Related_fabric_2']; ?>" name="fabric_2" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Related fabric #:</strong></label>
-            <input type="text" value="<?= $userInfo['Related_fabric_3']; ?>" name="fabric_3" class="input-text ">
+            <input type="text" value="<?= $data['Related_fabric_3']; ?>" name="fabric_3" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Related fabric #:</strong></label>
-            <input type="text" value="<?= $userInfo['Related_fabric_4']; ?>" name="fabric_4" class="input-text ">
+            <input type="text" value="<?= $data['Related_fabric_4']; ?>" name="fabric_4" class="input-text ">
         </p>
 
         <p class="form-row">
             <label><strong>Related fabric #:</strong></label>
-            <input type="text" value="<?= $userInfo['Related_fabric_5']; ?>" name="fabric_5" class="input-text ">
+            <input type="text" value="<?= $data['Related_fabric_5']; ?>" name="fabric_5" class="input-text ">
         </p>
         <hr/>
 
@@ -238,14 +238,14 @@
         <p class="form-row">
             <label><strong>Pattern Types:</strong></label>
             <select multiple="" name="patterns[]" style="height:85px;">
-                <?= $userInfo['Pattern_Type']; ?>
+                <?= $data['Pattern_Type']; ?>
             </select>
         </p>
 
         <p class="form-row">
             <label><strong>New Pattern Type:</strong></label>
             <input type="text"
-                   name="new_pattern_type" <?php echo isset($userInfo['New_Pattern']) ? 'value="' . $userInfo['New_Pattern'] . '"' : '' ?>
+                   name="new_pattern_type" <?php echo isset($data['New_Pattern']) ? 'value="' . $data['New_Pattern'] . '"' : '' ?>
                    class="input-text ">
         </p>
 
@@ -253,7 +253,7 @@
         <p class="form-row">
             <label><strong>Best Textile:</strong></label>
             <?php
-            if (isset($userInfo['best']) && ($userInfo['best'] == "1")) {
+            if (isset($data['best']) && ($data['best'] == "1")) {
                 echo '<input type="checkbox" name="best" value="1" checked class="input-checkbox">';
             } else {
                 echo '<input type="checkbox" name="best" value="1" class="input-checkbox">';
@@ -263,7 +263,7 @@
         <p class="form-row">
             <label><strong>Specials:</strong></label>
             <?php
-            if ( isset($userInfo['Specials']) && ($userInfo['Specials'] == "1")) {
+            if ( isset($data['Specials']) && ($data['Specials'] == "1")) {
                 echo '<input type="checkbox" checked="checked" name="special" value="1" class="input-checkbox">';
             } else {
                 echo '<input type="checkbox" name="special" value="1" class="input-checkbox">';
@@ -274,7 +274,7 @@
             <label><strong>Visible:</strong></label>
             <select name="vis">
                 <?php
-                if ($userInfo['pvisible'] == "1") {
+                if ($data['pvisible'] == "1") {
                     echo '<option selected="" value="1">visible </option>
                         		<option value="0">invisible </option>';
                 } else {

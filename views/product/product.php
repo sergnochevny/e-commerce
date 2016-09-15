@@ -27,8 +27,8 @@
                     <div class="images">
                         <?php
                         $img1_exists = true;
-                        $filename = 'upload/upload/' . $userInfo['image1'];
-                        $filename1 = 'upload/upload/' . 'v_' . $userInfo['image1'];
+                        $filename = 'upload/upload/' . $data['image1'];
+                        $filename1 = 'upload/upload/' . 'v_' . $data['image1'];
                         if (!(file_exists($filename) && is_file($filename) && is_readable($filename))) {
                             $filename = "upload/upload/not_image.jpg";
                             $filename1 = null;
@@ -50,16 +50,16 @@
 
                         <div class="thumbnails columns-4">
                             <?php
-                            if (!empty($userInfo['image2']) || !empty($userInfo['image3']) ||
-                                !empty($userInfo['image4']) || !empty($userInfo['image5'])
+                            if (!empty($data['image2']) || !empty($data['image3']) ||
+                                !empty($data['image4']) || !empty($data['image5'])
                             ) {
                                 ?>
                                 <p><b>MORE IMAGES OF THIS FABRIC</b></p>
                                 <?php
                             }
-                            if (!empty($userInfo['image2'])) {
-                                $filename = 'upload/upload/' . $userInfo['image2'];
-                                $filename1 = 'upload/upload/' . 'v_' . $userInfo['image2'];
+                            if (!empty($data['image2'])) {
+                                $filename = 'upload/upload/' . $data['image2'];
+                                $filename1 = 'upload/upload/' . 'v_' . $data['image2'];
                                 if (!(file_exists($filename) && is_file($filename) && is_readable($filename))) {
                                     $filename = "upload/upload/not_image.jpg";
                                     $filename1 = null;
@@ -78,9 +78,9 @@
                                 <?php
                             }
 
-                            if (!empty($userInfo['image3'])) {
-                                $filename = 'upload/upload/' . $userInfo['image3'];
-                                $filename1 = 'upload/upload/' . 'v_' . $userInfo['image3'];
+                            if (!empty($data['image3'])) {
+                                $filename = 'upload/upload/' . $data['image3'];
+                                $filename1 = 'upload/upload/' . 'v_' . $data['image3'];
                                 if (!(file_exists($filename) && is_file($filename) && is_readable($filename))) {
                                     $filename = "upload/upload/not_image.jpg";
                                     $filename1 = null;
@@ -98,9 +98,9 @@
                                 </a>
                                 <?php
                             }
-                            if (!empty($userInfo['image4'])) {
-                                $filename = 'upload/upload/' . $userInfo['image4'];
-                                $filename1 = 'upload/upload/' . 'v_' . $userInfo['image4'];
+                            if (!empty($data['image4'])) {
+                                $filename = 'upload/upload/' . $data['image4'];
+                                $filename1 = 'upload/upload/' . 'v_' . $data['image4'];
                                 if (!(file_exists($filename) && is_file($filename) && is_readable($filename))) {
                                     $filename = "upload/upload/not_image.jpg";
                                     $filename1 = null;
@@ -118,9 +118,9 @@
                                 </a>
                                 <?php
                             }
-                            if (!empty($userInfo['image5'])) {
-                                $filename = 'upload/upload/' . $userInfo['image5'];
-                                $filename1 = 'upload/upload/' . 'v_' . $userInfo['image5'];
+                            if (!empty($data['image5'])) {
+                                $filename = 'upload/upload/' . $data['image5'];
+                                $filename1 = 'upload/upload/' . 'v_' . $data['image5'];
                                 if (!(file_exists($filename) && is_file($filename) && is_readable($filename))) {
                                     $filename = "upload/upload/not_image.jpg";
                                     $filename1 = null;
@@ -144,10 +144,10 @@
                     </div>
 
                     <div class="summary entry-summary">
-                        <h1 class="product_title product_title_style entry-title"><?= $userInfo['pname']; ?></h1>
+                        <h1 class="product_title product_title_style entry-title"><?= $data['pname']; ?></h1>
 
                         <div class="product_title_desc">
-                            <p><?= $userInfo['ldesc']; ?></p>
+                            <p><?= $data['ldesc']; ?></p>
                         </div>
                         <div class="product_title_price">
                             <?php if ($sys_hide_price == 0 && $hide_price == 0) { ?>
@@ -170,7 +170,7 @@
                         <b id="b_in_product">
                             <?php
                             $pid = _A_::$app->get('p_id');
-                            if ($userInfo['inventory'] > 0) {
+                            if ($data['inventory'] > 0) {
                                 ?>
                                 <a id="add_cart"
                                    href="<?php echo _A_::$app->router()->UrlTo('cart/add', ['p_id' => $pid]) ?>" <?php echo !isset($in_cart) ? '' : 'style="display: none;"'; ?>>
@@ -187,7 +187,7 @@
 
                         <b id="b_in_product">
                             <?php
-                            if ($userInfo['inventory'] > 0 && $allowed_samples) {
+                            if ($data['inventory'] > 0 && $allowed_samples) {
                                 ?>
                                 <a id="add_samples_cart"
                                    href="<?php echo _A_::$app->router()->UrlTo('cart/add_samples', ['p_id' => $pid]) ?>" <?php echo !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
@@ -199,7 +199,7 @@
 
                         <b id="b_in_product">
                             <?php
-                            $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($userInfo['sdesc'] . ' ' . $userInfo['pnumber']);
+                            $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
                             $mhref = _A_::$app->router()->UrlTo('matches/add',['p_id' => $pid]);
                             ?>
                             <a href="<?php echo $ahref; ?>">
@@ -226,25 +226,25 @@
                                 <tbody>
                                 <tr>
                                     <td class="row_title"><b>Name</b>:</td>
-                                    <td><?= $userInfo['pname']; ?></td>
+                                    <td><?= $data['pname']; ?></td>
                                 </tr>
                                 <tr>
                                     <td class="row_title"><b>Product #</b>:</td>
-                                    <td><?= $userInfo['pnumber']; ?></td>
+                                    <td><?= $data['pnumber']; ?></td>
                                 </tr>
-                                <?php if (($userInfo['piece'] == 1) && ($userInfo['inventory'] > 0)) { ?>
+                                <?php if (($data['piece'] == 1) && ($data['inventory'] > 0)) { ?>
                                     <tr>
                                         <td class="row_title"><b>Dimensions</b>:</td>
-                                        <td><?php echo $userInfo['dimensions']; ?></td>
+                                        <td><?php echo $data['dimensions']; ?></td>
                                     </tr>
                                 <?php } else { ?>
                                     <tr>
                                         <td class="row_title"><b>Width</b>:</td>
-                                        <td><?php echo $userInfo['width']; ?></td>
+                                        <td><?php echo $data['width']; ?></td>
                                     </tr>
-                                    <tr style="<?php echo ($userInfo['inventory'] > 0) ? '' : 'color: red;'; ?>">
+                                    <tr style="<?php echo ($data['inventory'] > 0) ? '' : 'color: red;'; ?>">
                                         <td class="row_title"><b>Avail. yardage</b>:</td>
-                                        <td><?php echo $userInfo['inventory'];
+                                        <td><?php echo $data['inventory'];
                                             ?></td>
                                     </tr>
                                 <?php } ?>

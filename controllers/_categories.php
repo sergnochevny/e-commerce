@@ -49,7 +49,7 @@ class Controller_Categories extends Controller_Base
         $category_id = $model->validData(_A_::$app->get('category_id'));
         $this->display_order();
         $category = $model->get_category($category_id);
-        $this->template->vars('userInfo', $category);
+        $this->template->vars('data', $category);
         $back_url = _A_::$app->router()->UrlTo('categories');
         $this->template->vars('back_url', $back_url);
         $this->main->view_admin('edit');
@@ -61,8 +61,8 @@ class Controller_Categories extends Controller_Base
         $model = new Model_Product();
         $category_id = $model->validData(_A_::$app->get('category_id'));
         $this->display_order_categories();
-        $userInfo = $model->get_data_categories($category_id);
-        $this->template->vars('userInfo', $userInfo);
+        $data = $model->get_data_categories($category_id);
+        $this->template->vars('data', $data);
         $back_url = _A_::$app->router()->UrlTo('categories');
         $this->template->vars('back_url', $back_url);
         $this->main->view_layout('edit_form');
@@ -124,12 +124,12 @@ class Controller_Categories extends Controller_Base
                 $this->template->vars('warning', $warning);
                 $this->edit_category_form();
             } else {
-                $userInfo = [];
+                $data = [];
 
-                $userInfo['cname'] = '';
-                $userInfo['seo'] = !is_null(_A_::$app->post('seo')) ? _A_::$app->get('seo') : null;
-                $userInfo['isStyle'] = !is_null(_A_::$app->post('ListStyle')) ? _A_::$app->post('ListStyle') : null;
-                $userInfo['isNew'] = !is_null(_A_::$app->post('ListNewItem')) ? _A_::$app->post('ListNewItem') : null;
+                $data['cname'] = '';
+                $data['seo'] = !is_null(_A_::$app->post('seo')) ? _A_::$app->get('seo') : null;
+                $data['isStyle'] = !is_null(_A_::$app->post('ListStyle')) ? _A_::$app->post('ListStyle') : null;
+                $data['isNew'] = !is_null(_A_::$app->post('ListNewItem')) ? _A_::$app->post('ListNewItem') : null;
 
                 $error = [mysql_error()];
                 $this->template->vars('error', $error);
@@ -137,18 +137,18 @@ class Controller_Categories extends Controller_Base
                 $this->display_order();
                 $back_url = _A_::$app->router()->UrlTo('categories');
                 $this->template->vars('back_url', $back_url);
-                $this->template->vars('userInfo', $userInfo);
+                $this->template->vars('data', $data);
 
                 $this->main->view_layout('edit_form');
 
             }
         } else {
-            $userInfo = [];
+            $data = [];
 
-            $userInfo['cname'] = '';
-            $userInfo['seo'] = !is_null(_A_::$app->post('seo')) ? _A_::$app->get('seo') : null;
-            $userInfo['isStyle'] = !is_null(_A_::$app->post('ListStyle')) ? _A_::$app->post('ListStyle') : null;
-            $userInfo['isNew'] = !is_null(_A_::$app->post('ListNewItem')) ? _A_::$app->post('ListNewItem') : null;
+            $data['cname'] = '';
+            $data['seo'] = !is_null(_A_::$app->post('seo')) ? _A_::$app->get('seo') : null;
+            $data['isStyle'] = !is_null(_A_::$app->post('ListStyle')) ? _A_::$app->post('ListStyle') : null;
+            $data['isNew'] = !is_null(_A_::$app->post('ListNewItem')) ? _A_::$app->post('ListNewItem') : null;
 
             $error = ['Identity Category Name Field!'];
             $this->template->vars('error', $error);
@@ -156,7 +156,7 @@ class Controller_Categories extends Controller_Base
             $this->display_order();
             $back_url = _A_::$app->router()->UrlTo('categories');
             $this->template->vars('back_url', $back_url);
-            $this->template->vars('userInfo', $userInfo);
+            $this->template->vars('data', $data);
 
             $this->main->view_layout('edit_form');
         }

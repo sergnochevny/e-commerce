@@ -6,7 +6,7 @@
     <div class="col-1">
         <p class="form-row">
             <label class="required_field"><strong>Category:</strong></label>
-            <input type="text" name="category" value="<?=$userInfo['name']?>"
+            <input type="text" name="category" value="<?=$data['name']?>"
                    class="input-text ">
         </p>
 

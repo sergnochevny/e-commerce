@@ -38,27 +38,27 @@
             <a class="required_field" data-promotion href="#promotion">Promotion</a></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <select name="iType">
-                <option value="0" <?php if ($userInfo['promotion_type'] == 0) {
+                <option value="0" <?php if ($data['promotion_type'] == 0) {
                     echo " SELECTED";
                 } ?> >Select the promotion type
                 </option>
-                <option value="1" <?php if ($userInfo['promotion_type'] == 1) {
+                <option value="1" <?php if ($data['promotion_type'] == 1) {
                     echo " SELECTED";
                 } ?> >Any purchase
                 </option>
-                <option value="2" <?php if ($userInfo['promotion_type'] == 2) {
+                <option value="2" <?php if ($data['promotion_type'] == 2) {
                     echo " SELECTED";
                 } ?> >First purchase
                 </option>
-                <option value="3" <?php if ($userInfo['promotion_type'] == 3) {
+                <option value="3" <?php if ($data['promotion_type'] == 3) {
                     echo " SELECTED";
                 } ?> >Next purchase after the start date
                 </option>
-                <option value="4" <?php if ($userInfo['promotion_type'] == 4) {
+                <option value="4" <?php if ($data['promotion_type'] == 4) {
                     echo " SELECTED";
                 } ?> >Users account total
                 </option>
-                <option value="5" <?php if ($userInfo['promotion_type'] == 5) {
+                <option value="5" <?php if ($data['promotion_type'] == 5) {
                     echo " SELECTED";
                 } ?> >Users account total for last month
                 </option>
@@ -68,22 +68,22 @@
         </div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <input type="text" name="coupon_code" id="coupon_code" style="width: 200px;"
-                   value="<?= $userInfo['coupon_code'] ?>" class="input-text" onkeyup="toggleCouponCode(true);">
+                   value="<?= $data['coupon_code'] ?>" class="input-text" onkeyup="toggleCouponCode(true);">
             <input type="checkbox" name="generate_code" id="generate_code" onclick="toggleCouponCode(true);" value="1"
-                   <?php echo (isset($userInfo['generate_code']) && $userInfo['generate_code'] == '1') ? 'checked' : '' ?> class="input-checkbox">
+                   <?php echo (isset($data['generate_code']) && $data['generate_code'] == '1') ? 'checked' : '' ?> class="input-checkbox">
             <span style="font-size: 10px;">Generate Coupon Code for me.</span>
         </div>
         <div class="b_MODIFY_DISCOUNT_left form-row"><a class="required_field" data-promotion href="#discount_details">Discount
                 details</a></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <input type="text" name="discount_amount" style="width: 150px;"
-                   value="<?= $userInfo['discount_amount'] ?>" class="input-text ">
+                   value="<?= $data['discount_amount'] ?>" class="input-text ">
             <select name="iAmntType" style="width: 75px;">
-                <option value="1"<?php if ($userInfo['discount_amount_type'] == '1') {
+                <option value="1"<?php if ($data['discount_amount_type'] == '1') {
                     echo "SELECTED";
                 } ?> >$
                 </option>
-                <option value="2"<?php if ($userInfo['discount_amount_type'] == '2') {
+                <option value="2"<?php if ($data['discount_amount_type'] == '2') {
                     echo "SELECTED";
                 } ?> >%
                 </option>
@@ -91,33 +91,33 @@
             <span style="color: black; font-size: 10px;">off the</span>
             <select name="iDscntType" id="iDscntType" onChange="toggleDiscountType(true);"
                     style="width: 110px;">
-                <option value="0"<?php if ($userInfo['discount_type'] == '0') {
+                <option value="0"<?php if ($data['discount_type'] == '0') {
                     echo " SELECTED";
                 } ?>>Select
                 </option>
-                <option value="1"<?php if ($userInfo['discount_type'] == '1') {
+                <option value="1"<?php if ($data['discount_type'] == '1') {
                     echo " SELECTED";
                 } ?>>Sub total
                 </option>
-                <option value="2"<?php if ($userInfo['discount_type'] == '2') {
+                <option value="2"<?php if ($data['discount_type'] == '2') {
                     echo " SELECTED";
                 } ?>>Shipping
                 </option>
-                <!--<option value="3"<?php if ($userInfo['discount_type'] == '3') {
+                <!--<option value="3"<?php if ($data['discount_type'] == '3') {
                     echo " SELECTED";
                 } ?>>Total (inc shipping and handling)</option>-->
             </select>
         </div>
-        <div id="l_ship" class="b_MODIFY_DISCOUNT_left form-row"  <?php echo ($userInfo['discount_type'] == '2')?'':'style="display: none;"'?>>
+        <div id="l_ship" class="b_MODIFY_DISCOUNT_left form-row"  <?php echo ($data['discount_type'] == '2')?'':'style="display: none;"'?>>
             <a class="required_field">Shipping</a>
         </div>
-        <div id="f_ship" class="b_MODIFY_DISCOUNT_right form-row"  <?php echo ($userInfo['discount_type'] == '2')?'':'style="display: none;"'?>>
+        <div id="f_ship" class="b_MODIFY_DISCOUNT_right form-row"  <?php echo ($data['discount_type'] == '2')?'':'style="display: none;"'?>>
 
             <select name="shipping_type" id="iShippingType">
-                <option value="0" <?php echo ($userInfo['shipping_type'] == "0")?'selected':''?>>Select Shipping Type</option>
-                <option value="1" <?php echo ($userInfo['shipping_type'] == "1")?'selected':''?>>Both</option>
-                <option value="2" <?php echo ($userInfo['shipping_type'] == "2")?'selected':''?>>Ground</option>
-                <option value="3" <?php echo ($userInfo['shipping_type'] == "3")?'selected':''?>>Express</option>
+                <option value="0" <?php echo ($data['shipping_type'] == "0")?'selected':''?>>Select Shipping Type</option>
+                <option value="1" <?php echo ($data['shipping_type'] == "1")?'selected':''?>>Both</option>
+                <option value="2" <?php echo ($data['shipping_type'] == "2")?'selected':''?>>Ground</option>
+                <option value="3" <?php echo ($data['shipping_type'] == "3")?'selected':''?>>Express</option>
             </select>
 
         </div>
@@ -125,17 +125,17 @@
         </div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <input type="text" name="restrictions" style="width: 150px;"
-                   value="<?= $userInfo['required_amount'] ?>" class="input-text ">
+                   value="<?= $data['required_amount'] ?>" class="input-text ">
             <select name="iReqType" style="width: 228px;">
-                <option value="0"<?php if ($userInfo['required_type'] == '0') {
+                <option value="0"<?php if ($data['required_type'] == '0') {
                     echo " SELECTED";
                 } ?>>Select
                 </option>
-                <option value="1"<?php if ($userInfo['required_type'] == '1') {
+                <option value="1"<?php if ($data['required_type'] == '1') {
                     echo " SELECTED";
                 } ?>>Total purchases
                 </option>
-                <option value="2"<?php if ($userInfo['required_type'] == '2') {
+                <option value="2"<?php if ($data['required_type'] == '2') {
                     echo " SELECTED";
                 } ?>>Total dollar amount
                 </option>
@@ -145,7 +145,7 @@
         <div class="b_MODIFY_DISCOUNT_left form-row"></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <?php
-            if ($userInfo['users_check'] == "1") {
+            if ($data['users_check'] == "1") {
                 echo '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" checked onclick="toggleUsers();">';
             } else {
                 echo '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" onclick="toggleUsers();">';
@@ -156,7 +156,7 @@
         <div class="b_MODIFY_DISCOUNT_left form-row">Users type</div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <?php
-        if ($userInfo['users_check'] == "2") {
+        if ($data['users_check'] == "2") {
             echo '<input type="radio"  id="users_check2" name="users_check" value="2" class="input-checkbox" checked onclick="toggleUsers();">';
         } else {
             echo '<input type="radio"  id="users_check2" name="users_check" value="2" class="input-checkbox" onclick="toggleUsers();">';
@@ -167,7 +167,7 @@
         <div class="b_MODIFY_DISCOUNT_left form-row"></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <?php
-        if ($userInfo['users_check'] == "3") {
+        if ($data['users_check'] == "3") {
             echo '<input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" checked  onclick="toggleUsers();">';
         } else {
             echo '<input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" onclick="toggleUsers();">';
@@ -178,7 +178,7 @@
         <div class="b_MODIFY_DISCOUNT_left form-row"></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <?php
-            if ($userInfo['users_check'] == "4") {
+            if ($data['users_check'] == "4") {
                 echo '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" checked onclick="toggleUsers();">';
             } else {
                 echo '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" onclick="toggleUsers();">';
@@ -191,13 +191,13 @@
         </div>
         <div class="b_MODIFY_DISCOUNT_right form-row" style="height:175px;">
             <select id="users_list" name="users_list[]" size="10" multiple style="height: auto;">
-                <?= $userInfo['users_list'] ?>
+                <?= $data['users_list'] ?>
             </select>
         </div>
         <div class="b_MODIFY_DISCOUNT_left form-row"></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <?php
-            if ($userInfo['sel_fabrics'] == "1") {
+            if ($data['sel_fabrics'] == "1") {
                 echo '<input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1" class="input-checkbox" checked  onclick="toggleDetails();">';
             } else {
                 echo '<input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1" class="input-checkbox"  onclick="toggleDetails();">';
@@ -208,7 +208,7 @@
         <div class="b_MODIFY_DISCOUNT_left form-row"></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <?php
-            if ($userInfo['sel_fabrics'] == "2") {
+            if ($data['sel_fabrics'] == "2") {
                 echo '<input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox" checked  onclick="toggleDetails();">';
             } else {
                 echo '<input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox"  onclick="toggleDetails();">';
@@ -221,7 +221,7 @@
         </div>
         <div class="b_MODIFY_DISCOUNT_right form-row" style="height:175px;">
             <select id="fabric_list" name="fabric_list[]" size="5" style="height: 160px;" multiple>
-                <?= $userInfo['fabric_list'] ?>
+                <?= $data['fabric_list'] ?>
             </select>
         </div>
         <div class="b_MODIFY_DISCOUNT_left form-row">
@@ -229,7 +229,7 @@
         </div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <?php
-            if ($userInfo['allow_multiple'] == "1") {
+            if ($data['allow_multiple'] == "1") {
                 echo '<input type="checkbox"  value="1" name="allow_multiple" id="allow_multiple" checked class="input-checkbox">';
             } else {
                 echo '<input type="checkbox" name="allow_multiple"  id="allow_multiple" value="1" class="input-checkbox">';
@@ -240,18 +240,18 @@
                 Date</a></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <input type="text" name="start_date" id="dateFrom"
-                   value="<?= $userInfo['date_start'] ?>" class="input-text ">
+                   value="<?= $data['date_start'] ?>" class="input-text ">
         </div>
         <div class="b_MODIFY_DISCOUNT_left form-row"><a class="required_field" data-promotion href="#end_date">End
                 Date</a></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
-            <input type="text" name="date_end" value="<?= $userInfo['date_end'] ?>"
+            <input type="text" name="date_end" value="<?= $data['date_end'] ?>"
                    id="dateTo" class="input-text ">
         </div>
         <div class="b_MODIFY_DISCOUNT_left form-row"><a data-promotion href="#enabled">Enabled</a></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <?php
-            if ($userInfo['enabled'] == "1") {
+            if ($data['enabled'] == "1") {
                 echo '<input type="checkbox"  value="1" name="enabled" checked="checked" class="input-checkbox">';
             } else {
                 echo '<input type="checkbox"  value="1" name="enabled" class="input-checkbox">';
@@ -262,7 +262,7 @@
                 sale countdown</a></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <?php
-            if ($userInfo['countdown'] == "1") {
+            if ($data['countdown'] == "1") {
                 echo '<input type="checkbox"  value="1" name="countdown" checked class="input-checkbox">';
             } else {
                 echo '<input type="checkbox"  value="1" name="countdown" class="input-checkbox">';
@@ -272,17 +272,17 @@
         <div class="b_MODIFY_DISCOUNT_left form-row">Comment 1 (200 char max)</div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <input type="text" name="discount_comment1"
-                   value='<?= $userInfo['discount_comment1'] ?>' class="input-text ">
+                   value='<?= $data['discount_comment1'] ?>' class="input-text ">
         </div>
         <div class="b_MODIFY_DISCOUNT_left form-row">Comment 2 (200 char max)</div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <input type="text" name="discount_comment2"
-                   value='<?= $userInfo['discount_comment2'] ?>' class="input-text ">
+                   value='<?= $data['discount_comment2'] ?>' class="input-text ">
         </div>
         <div class="b_MODIFY_DISCOUNT_left form-row">Comment 3 (200 char max)</div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <input type="text" name="discount_comment3"
-                   value='<?= $userInfo['discount_comment3'] ?>' class="input-text ">
+                   value='<?= $data['discount_comment3'] ?>' class="input-text ">
         </div>
         <br/><br/>
         <center>
