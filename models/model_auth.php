@@ -48,7 +48,7 @@ Class Model_Auth extends Model_Model
                 $mail = $this->user['email'];
                 $hash = $this->user['password'];
                 $hash = md5($mail) . $hash;
-                $salt = md5(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
+                $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
                 if ($remember == $this->hash_($hash, $salt, $this->cost)) {
                     return true;
                 } else {
@@ -77,9 +77,9 @@ Class Model_Auth extends Model_Model
                 $this->user = mysql_fetch_assoc($res);
                 $hash = $this->user['password'];
                 if ($hash == $this->check($password, $hash)) {
-                    if (isset($_POST['rememberme']) && $_POST['rememberme'] == 1) {
+                    if (!is_null(_A_::$app->post('rememberme')) && _A_::$app->post('rememberme') == 1) {
                         $hash = md5($mail) . $hash;
-                        $salt = md5(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
+                        $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
                         $hash = $this->hash_($hash, $salt, $this->cost);
                         $q = "update fabrix_accounts set remember = '" . mysql_real_escape_string($hash) . "' where aid = " . $this->user['aid'];
                         if (mysql_query($q)) setcookie('_r', $hash, time() + 60 * 60 * 24 * 30);
@@ -101,7 +101,7 @@ Class Model_Auth extends Model_Model
                 $login = $this->admin['login'];
                 $hash = $this->admin['password'];
                 $hash = md5($login) . $hash;
-                $salt = md5(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
+                $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
                 if ($remember == $this->hash_($hash, $salt, $this->cost)) {
                     return true;
                 } else {
@@ -130,9 +130,9 @@ Class Model_Auth extends Model_Model
             if (mysql_num_rows($res) > 0) {
                 $hash = $this->admin['password'];
                 if ($hash == $this->check($password, $hash)) {
-                    if (isset($_POST['rememberme']) && $_POST['rememberme'] == 1) {
+                    if (!is_null(_A_::$app->post('rememberme')) && _A_::$app->post('rememberme') == 1) {
                         $hash = md5($login) . $hash;
-                        $salt = md5(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
+                        $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
                         $hash = $this->hash_($hash, $salt, $this->cost);
                         $q = "update fabrix_admins set rememberme = '" . mysql_real_escape_string($hash) . "' where id = " . $this->admin['id'];
                         if (mysql_query($q)) setcookie('_ar', $hash, time() + 60 * 60 * 24 * 30);

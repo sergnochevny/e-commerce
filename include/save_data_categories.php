@@ -1,14 +1,10 @@
 <?php
-        $userInfo = $model->validData($_GET['category_id']);
-        $category_id = $userInfo['data'];
-        $userInfo = $model->validData($_POST['category']);
-        $post_category_name=mysql_real_escape_string($userInfo['data']);
-        $userInfo = $model->validData($_POST['display_order']);
-        $post_display_order=$userInfo['data'];
-        $userInfo = $model->validData($_POST['seo']);
-        $post_category_seo=mysql_real_escape_string($userInfo['data']);
-        $userInfo = $model->validData(isset($_POST['ListStyle'])?$_POST['ListStyle']:0);
-        $post_category_ListStyle=$userInfo['data'];
-        $userInfo = $model->validData(isset($_POST['ListNewItem'])?$_POST['ListNewItem']:0);
-        $post_category_ListNewItem=$userInfo['data'];
+$category_id = $model->validData(_A_::$app->get('category_id'));
+$data = $model->validData(_A_::$app->post('category'));
+$post_category_name = mysql_real_escape_string($data);
+$post_display_order = $model->validData(_A_::$app->post('display_order'));
+$data = $model->validData(_A_::$app->post('seo'));
+$post_category_seo = mysql_real_escape_string($data);
+$post_category_ListStyle = $model->validData(!is_null(_A_::$app->post('ListStyle')) ? _A_::$app->post('ListStyle') : 0);
+$post_category_ListNewItem = $model->validData(!is_null(_A_::$app->post('ListNewItem')) ? _A_::$app->post('ListNewItem') : 0);
 ?>
