@@ -35,8 +35,8 @@ class Controller_Discount extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Discount();
         $id = $model->validData(_A_::$app->get('id'));
-        if (!empty($discount_id)) {
-            $model->del_discount($discount_id);
+        if (!empty($id)) {
+            $model->del_discount($id);
         }
 
         $this->get_list();
