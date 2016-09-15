@@ -131,66 +131,34 @@ class Controller_Shop extends Controller_Controller
 
         $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
-
-        $res = null;
-
-        if (!empty(_A_::$app->get('cat'))) {
-            $res = isset($search) ? Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('cat')), $search) : Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('cat')));
-        } else {
-            if (!empty(_A_::$app->get('ptrn'))) {
-                $res = isset($search) ? Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('ptrn')), $search) : Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('ptrn')));
-            } else {
-                if (!empty(_A_::$app->get('mnf'))) {
-                    $res = isset($search) ? Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), null, $search) : Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), null);
-                } else {
-                    $res = isset($search) ? Model_Product::getProductsAndSearchParams($search) : Model_Product::getProductsAndSearchParams();
-                }
-            }
-        }
-
-
-        $total = mysql_fetch_row($res)[0];
-
+        $total = $model->get_total($search);
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
-
         $start = (($page - 1) * $per_page);
         if (!empty(_A_::$app->get('cat'))) {
-            $catigori_name = $model->getCatName($model->validData(_A_::$app->get('cat')));
             $cat_id = $model->validData(_A_::$app->get('cat'));
-            $res = isset($search) ? Model_Product::getProductCategories($model->validData(_A_::$app->get('cat')), $start, $per_page, $search) : Model_Product::getProductCategories($model->validData(_A_::$app->get('cat')), $start, $per_page);
+            $catigori_name = $model->getCatName($cat_id);
         } else {
             if (!empty(_A_::$app->get('ptrn'))) {
-                $ptrn_id = $model->validData(_A_::$app->get('ptrn'));
-                $ptrn_name = $model->getPtrnName($ptrn_id);
-                $res = isset($search) ? Model_Product::getProductPatterns($model->validData(_A_::$app->get('ptrn')), $start, $per_page, $search) : Model_Product::getProductCategories($model->validData(_A_::$app->get('ptrn')), $start, $per_page);
                 $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
             } else {
                 if (!empty(_A_::$app->get('mnf'))) {
                     $mnf_id = $model->validData(_A_::$app->get('mnf'));
                     $mnf_name = $model->getMnfName($mnf_id);
-                    $res = isset($search) ? Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), true, $search, $start, $per_page) : Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), true, null, $start, $per_page);
                     $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
-                } else {
-                    $res = isset($search) ? Model_Product::getProductsAndSearchParams($search, true, $start, $per_page) : Model_Product::getProductsAndSearchParams(null, true, $start, $per_page);
                 }
             }
         }
-
-        if ($res) {
-            $res_count_rows = mysql_num_rows($res);
-            $this->template->vars('count_rows', $res_count_rows);
-
+        $rows = $model->get_products($start, per_page, $res_count_rows, $search);
+        if (!is_null($rows)) {
+            $this->main->template->vars('count_rows', $res_count_rows);
             $mp = new Model_Price();
-
             $sys_hide_price = $mp->sysHideAllRegularPrices();
-            $this->template->vars('sys_hide_price', $sys_hide_price);
-
+            $this->main->template->vars('sys_hide_price', $sys_hide_price);
             ob_start();
-            while ($row = mysql_fetch_array($res)) {
+            foreach ($rows as $row) {
                 $cat_name = $model->getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
-
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
                 if (!(file_exists($filename) && is_file($filename))) {
                     $filename = 'upload/upload/not_image.jpg';
@@ -198,7 +166,6 @@ class Controller_Shop extends Controller_Controller
                 $filename = _A_::$app->router()->UrlTo($filename);
 
                 $opt = null;
-
                 if (!empty(_A_::$app->get('page'))) {
                     $opt['page'] = _A_::$app->get('page');
                 }
@@ -223,22 +190,27 @@ class Controller_Shop extends Controller_Controller
                 $saleprice = $row[5];
                 $sDiscount = 0;
                 $saleprice = $mp->calculateProductSalePrice($pid, $saleprice, $discountIds);
-                $bProductDiscount = $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
+                $this->template->vars('bProductDiscount', $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds));
                 $format_sale_price = '';
-                $saleprice = $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
-
-                $in_cart = in_array($row[0], $cart);
-
+                $this->template->vars('saleprice', $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece));
+                $this->template->vars('$format_sale_price', $format_sale_price);
+                $this->template->vars('in_cart', in_array($row[0], $cart));
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
-
-                include('./views/shop/list.php');
+                $this->main->template->vars('hide_price', $hide_price);
+                $this->template->vars('hide_price', $hide_price);
+                $this->template->vars('sys_hide_price', $sys_hide_price);
+                $this->template->vars('row', $row);
+                $this->template->vars('price', $price);
+                $this->template->vars('search', $search);
+                $this->template->vars('opt', $opt);
+                $this->template->view_layout('list');
             }
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
-            $this->template->vars('list', $list);
+            $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
+            $this->main->template->vars('list', $list);
 
             $paginator = new Controller_Paginator($this);
             $paginator->product_paginator_home($total, $page);

@@ -735,7 +735,7 @@ class Controller_Cart extends Controller_Controller
         $cart = _A_::$app->session('cart');
         unset($cart['discountIds']);
         _A_::$app->session('cart', $cart);
-        $this->products_in_cart();
+        $this->products_in();
         $cart_items = ob_get_contents();
         ob_end_clean();
         $this->main->template->vars('cart_items', $cart_items);
