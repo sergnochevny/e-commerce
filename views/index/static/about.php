@@ -64,5 +64,5 @@ include('views/index/main_gallery.php');
 
 </script>
 <?php
-include('views/product/block_footer_products.php');
+include('views/product/block_footer.php');
 ?> 

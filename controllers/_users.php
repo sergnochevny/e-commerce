@@ -139,7 +139,7 @@ class Controller_Users extends Controller_Controller
         $this->main->view_admin('new');
     }
 
-    private function _new_user()
+    public function _new_user()
     {
         $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
         $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
@@ -485,63 +485,6 @@ class Controller_Users extends Controller_Controller
         $this->main->view_layout('new_form');
     }
 
-    public function registration()
-    {
-        $this->main->template->vars('title', 'REGISTRATION USER');
-        $this->main->template->vars('action', _A_::$app->router()->UrlTo('users/save_registration'));
-        $prms = null;
-        if (!is_null(_A_::$app->get('url'))) {
-            $prms['url'] = _A_::$app->get('url');
-        }
-        $this->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
-        $this->_new_user();
-        $this->main->view('new');
-    }
-
-    function save_registration()
-    {
-        $prms = null;
-        if (!$this->_save_new_user()) {
-            $this->template->vars('title', 'REGISTRATION USER');
-            $this->template->vars('action', _A_::$app->router()->UrlTo('users/save_registration'));
-            $this->_new_user_form();
-        } else {
-            $user_id = _A_::$app->get('user_id');
-            $this->template->vars('title', 'CHANGE REGISTRATION DATA');
-            if (!is_null(_A_::$app->get('url'))) {
-                $prms['url'] = _A_::$app->get('url');
-            }
-            $this->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
-            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'), true);
-
-            $userInfo = (new Model_User())->get_user_data($user_id);
-
-            $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
-            $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
-            $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
-            $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
-
-            $this->sendWelcomeEmail($userInfo['email']);
-
-            $this->template->vars('userInfo', $userInfo);
-            $this->_edit_user_form();
-        }
-    }
-
-    private function sendWelcomeEmail($email)
-    {
-        $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
-        $subject = "Thank you for registering with iluvfabrix.com";
-        $body = "Thank you for registering with www.iluvfabrix.com.\n";
-        $body .= "\n";
-        $body .= "As a new user, you will get 20% off your first purchase (which you may use any time in the first year) unless we have a sale going on for a discount greater than 20%, in which case you get the greater of the two discounts.\n";
-        $body .= "\n";
-        $body .= "We will, from time to time, inform you by email of various time limited specials on the iluvfabrix site.  If you wish not to receive these emails, please respond to this email with the word Unsubscribe in the subject line.\n";
-        $body .= "\n";
-        $body .= "Once again, thank you.........and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
-
-        mail($email, $subject, $body, $headers);
-    }
 
 //    public function modify_accounts_password()
 //    {

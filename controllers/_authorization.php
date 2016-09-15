@@ -67,7 +67,7 @@ class Controller_Authorization extends Controller_Controller
             if (!is_null(_A_::$app->get('url'))) {
                 $prms['url'] = _A_::$app->get('url');
             }
-            $registration_url = _A_::$app->router()->UrlTo('users/registration', $prms);
+            $registration_url = _A_::$app->router()->UrlTo('user/registration', $prms);
             $lostpassword_url = _A_::$app->router()->UrlTo('authorization/lost_password', $prms);
             $this->main->template->vars('registration_url', $registration_url);
             $this->main->template->vars('lostpassword_url', $lostpassword_url);

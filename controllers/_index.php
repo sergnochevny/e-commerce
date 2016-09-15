@@ -3,8 +3,6 @@
 Class Controller_Index Extends Controller_Controller
 {
 
-
-//////////////////////////////////////////////////////////// INDEX
     function index()
     {
         $this->main->view('index');

@@ -7,7 +7,7 @@ class Controller_Image extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $pid_id = $model->validData(_A_::$app->get('p_id') );
+        $pid_id = $model->validData(_A_::$app->get('p_id'));
         $im_id = $model->validData(_A_::$app->get('idx'));
         if (!empty($pid_id)) {
             if (!empty($im_id)) {
@@ -24,7 +24,6 @@ class Controller_Image extends Controller_Controller
                 if (file_exists("upload/upload/v_" . $filename)) {
                     unlink("upload/upload/v_" . $filename);
                 }
-
             }
         }
         $this->modify();
@@ -47,18 +46,18 @@ class Controller_Image extends Controller_Controller
             $base_url = _A_::$app->router()->UrlTo('/');
 
             $not_image = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
-            $image1 = empty($image1{0}) || !is_file('upload/upload/' . $image1) ? '' : _A_::$app->router()->UrlTo('upload/upload/v_'.$image1);
+            $image1 = empty($image1{0}) || !is_file('upload/upload/' . $image1) ? '' : _A_::$app->router()->UrlTo('upload/upload/v_' . $image1);
             $image2 = empty($image2{0}) || !is_file('upload/upload/' . $image2) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image2);
             $image3 = empty($image3{0}) || !is_file('upload/upload/' . $image3) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image3);
             $image4 = empty($image4{0}) || !is_file('upload/upload/' . $image4) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image4);
             $image5 = empty($image5{0}) || !is_file('upload/upload/' . $image5) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $image5);
 
-            $this->template->vars('not_image',$not_image);
-            $this->template->vars('image1',$image1);
-            $this->template->vars('image2',$image2);
-            $this->template->vars('image3',$image3);
-            $this->template->vars('image4',$image4);
-            $this->template->vars('image5',$image5);
+            $this->template->vars('not_image', $not_image);
+            $this->template->vars('image1', $image1);
+            $this->template->vars('image2', $image2);
+            $this->template->vars('image3', $image3);
+            $this->template->vars('image4', $image4);
+            $this->template->vars('image5', $image5);
             $this->template->view_layout('m_images');
         }
     }
@@ -90,11 +89,11 @@ class Controller_Image extends Controller_Controller
         if (!file_exists($filename5)) {
             $image5 = "not_image.jpg";
         }
-        $this->template->vars('image1',$image1);
-        $this->template->vars('image2',$image2);
-        $this->template->vars('image3',$image3);
-        $this->template->vars('image4',$image4);
-        $this->template->vars('image5',$image5);
+        $this->template->vars('image1', $image1);
+        $this->template->vars('image2', $image2);
+        $this->template->vars('image3', $image3);
+        $this->template->vars('image4', $image4);
+        $this->template->vars('image5', $image5);
         $this->template->view_layout('m_images');
     }
 

@@ -3,7 +3,7 @@
 
 <div class="site-container">
     <?php
-    include "views/shop_header.php";
+    include("views/shop_header.php");
 
     include('views/index/main_gallery.php');
     ?>
@@ -91,7 +91,7 @@
                                                     <p class="woocommerce-result-count">
                                                         <?php
                                                         if (!empty(_A_::$app->get('cat'))) {
-                                                            echo 'CATEGORY: '.$catigori_name.'<br/>';
+                                                            echo 'CATEGORY: ' . $catigori_name . '<br/>';
                                                         }
                                                         echo isset($count_rows) ? "Showing " . $count_rows . " results" : "Showing ... results";
                                                         ?>
@@ -100,7 +100,7 @@
 
                                                     <section class="toko-posts-grid">
                                                         <div class="toko-post-row row">
-                                                            <?php echo isset($blog_posts)?$blog_posts:'';?>
+                                                            <?php echo isset($blog_posts) ? $blog_posts : ''; ?>
                                                             <div class="clearfix visible-md visible-lg"></div>
                                                         </div>
                                                     </section>
@@ -141,6 +141,6 @@
 
     </script>
 
-    <?php
-    include('views/product/block_footer_products.php');
-    ?>
+<?php
+include('views/product/block_footer.php');
+?>
