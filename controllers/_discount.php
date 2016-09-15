@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Discount extends Controller_Base
+class Controller_Discount extends Controller_Controller
 {
 
     function discount()
@@ -89,9 +89,9 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        if (!empty($discounts_id)) {
-            $result = Model_Discount::getFabrixSpecialsByID((integer) $model->validData(_A_::$app->get('id')));
-            $row = mysql_fetch_array($result);
+        if (!empty($discount_id)) {
+            $row = Model_Discount::getFabrixSpecialsByID((integer) $model->validData(_A_::$app->get('id')));
+
             $p_discount_amount = $row['discount_amount'];
             $allow_multiple = $row['allow_multiple'];
             $date_start = $row['date_start'];
@@ -119,25 +119,23 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $discount_id = $model->validData(_A_::$app->get('discount_id'));
         if (!empty($discount_id)) {
-            $i = 0;
+            $results = Model_Discount::getFabrixSpecialsUsageById((integer) $model->validData(_A_::$app->get('discount_id')));
+            $sizeOfResult = sizeof($results);
             ob_start();
-            $results = mysql_query("select * from fabrix_specials_usage WHERE specialId='" . $discount_id . "'");
-            while ($row = mysql_fetch_array($results)) {
-                $result = mysql_query("select * from fabrix_orders WHERE oid='" . $row[2] . "'");
-                $row = mysql_fetch_array($result);
-                $order_aid = $row['aid'];
-                $order_date = gmdate("F j, Y, g:i a", $row['order_date']);
-                $result = mysql_query("select * from fabrix_accounts WHERE aid='" . $order_aid . "'");
-                $row = mysql_fetch_array($result);
-                $u_email = $row['email'];
-                $u_bill_firstname = $row['bill_firstname'];
-                $u_bill_lastname = $row['bill_lastname'];
-                $i++;
 
+            for($i = 0; $i <= $sizeOfResult; $i++){
+                $orders = Model_Discount::getFabrixOrdersById($results[2]);
+                $order_aid = $orders['aid'];
+                $order_date = gmdate("F j, Y, g:i a", $orders['order_date']);
+                $account = Model_Discount::getFabrixAccountByOrderId($order_aid);
+                $u_email = $account['email'];
+                $u_bill_firstname = $account['bill_firstname'];
+                $u_bill_lastname = $account['bill_lastname'];
                 include('views/discount/data_usage_order_discounts.php');
             }
+
+
             $data_usage_order_discounts = ob_get_contents();
             ob_end_clean();
 

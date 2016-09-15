@@ -46,6 +46,42 @@ Class Model_Discount extends Model_Model
         return $res;
     }
 
+    public static function getFabrixSpecialsUsageById($id){
+        $res = null;
+        $q = mysql_query("select * from fabrix_specials_usage WHERE specialId='" . (integer) $id . "'");
+        $result = mysql_query($q);
+        if ($result) {
+            while ($row = mysql_fetch_assoc($result)) {
+                $res[] = $row;
+            }
+        }
+        return $res;
+    }
+
+    public static function getFabrixOrdersById($id){
+        $res = null;
+        $q = mysql_query("select * from fabrix_orders WHERE oid='" . (integer) $id . "'");
+        $result = mysql_query($q);
+        if ($result) {
+            while ($row = mysql_fetch_assoc($result)) {
+                $res[] = $row;
+            }
+        }
+        return $res;
+    }
+
+    public static function getFabrixAccountByOrderId($id){
+        $res = null;
+        $q = mysql_query("select * from fabrix_accounts WHERE aid='" . (integer) $id . "'");
+        $result = mysql_query($q);
+        if ($result) {
+            while ($row = mysql_fetch_assoc($result)) {
+                $res[] = $row;
+            }
+        }
+        return $res;
+    }
+
     function checkCouponCode($sid, $cde)
     {
 
