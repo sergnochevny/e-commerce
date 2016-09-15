@@ -461,10 +461,7 @@ class Controller_Blog extends Controller_Controller
 
     private function admin_prepapre()
     {
-        $prms['page'] = '1';
-        if (!empty(_A_::$app->get('page'))) {
-            $prms['page'] = _A_::$app->get('page');
-        }
+        $prms['page'] = (!empty(_A_::$app->get('page')))?_A_::$app->get('page'):'1';
         if (!empty(_A_::$app->get('cat'))) {
             $prms['cat'] = _A_::$app->get('cat');
         }
@@ -606,7 +603,7 @@ class Controller_Blog extends Controller_Controller
 
     public function new()
     {
-        $this->new_post_prepare();
+        $this->new_prepare();
         $this->main->view_admin('blog_new_post');
     }
 

@@ -7,23 +7,21 @@ class Controller_Discount extends Controller_Controller
     {
         $this->main->test_access_rights();
         $this->get_list();
-
         $this->main->view_admin('discounts');
     }
 
-    function get_list()
+    private function get_list()
     {
         $this->main->test_access_rights();
 
         $results = Model_Discount::getFabrixSpecialsIds();
-        if(!is_null($results)){
+        if (!is_null($results)) {
             ob_start();
             while ($row = mysql_fetch_array($results)) {
-
                 $row[14] = $row[14] == "1" ? "YES" : "NO";
                 $row[11] = $row[11] == "1" ? "YES" : "NO";
-
-                include('./views/discount/get_list.php');
+                $this->template->vars('row', $row);
+                $this->template->view_layouts('get_list');
             }
             $list = ob_get_contents();
             ob_end_clean();
@@ -32,7 +30,7 @@ class Controller_Discount extends Controller_Controller
         $this->main->template->vars('list', $list);
     }
 
-    function del()
+    public function del()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
@@ -45,28 +43,7 @@ class Controller_Discount extends Controller_Controller
         $this->main->view_layout('list');
     }
 
-    function add()
-    {
-        $this->main->test_access_rights();
-        $model = new Model_Discount();
-
-        $userInfo = $model->get_new_discounts_data();
-        $this->template->vars('userInfo', $userInfo);
-
-        $this->main->view_admin('add');
-    }
-
-    function edit()
-    {
-        $this->main->test_access_rights();
-        $model = new Model_Discount();
-        $id = $model->validData(_A_::$app->get('id'));
-        $userInfo = $model->get_edit_discounts_data($id);
-        $this->template->vars('userInfo', $userInfo);
-        $this->main->view_admin('edit');
-    }
-
-    function edit_form()
+    public function edit_form()
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
@@ -76,8 +53,7 @@ class Controller_Discount extends Controller_Controller
         $this->main->view_layout('edit_form');
     }
 
-
-    function usage()
+    public function usage()
     {
         $this->main->test_access_rights();
         $this->data_usage();
@@ -90,26 +66,23 @@ class Controller_Discount extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Discount();
         if (!empty($discount_id)) {
-            $row = Model_Discount::getFabrixSpecialsByID((integer) $model->validData(_A_::$app->get('id')));
-
-            $p_discount_amount = $row['discount_amount'];
+            ob_start();
+            $row = Model_Discount::getFabrixSpecialsByID((integer)$model->validData(_A_::$app->get('id')));
             $allow_multiple = $row['allow_multiple'];
             $date_start = $row['date_start'];
             $date_end = $row['date_end'];
-            $coupon_code = $row['coupon_code'];
-            $discount_comment1 = $row['discount_comment1'];
             $enabled = $row['enabled'];
             $sid = $row['sid'];
-
             $enabled = $enabled == "1" ? "YES" : "NO";
-            $allow_multiple = $allow_multiple == "1" ? "YES" : "NO";
 
-            $date_start = gmdate("F j, Y, g:i a", $date_start);
-            $date_end = gmdate("F j, Y, g:i a", $date_end);
-
-            ob_start();
-                include('data_usage.php');
-                $data_usage_discounts = ob_get_contents();
+            $this->template->vars('coupon_code', $row['coupon_code']);
+            $this->template->vars('discount_comment1',$row['discount_comment1']);
+            $this->template->vars('p_discount_amount', $row['discount_amount']);
+            $this->template->vars('allow_multiple', $allow_multiple == "1" ? "YES" : "NO");
+            $this->template->vars('date_start', gmdate("F j, Y, g:i a", $date_start));
+            $this->template->vars('date_end', gmdate("F j, Y, g:i a", $date_end));
+            $this->template->view_layouts('get_list');
+            $data_usage_discounts = ob_get_contents();
             ob_end_clean();
             $this->main->template->vars('data_usage_discounts', $data_usage_discounts);
         }
@@ -120,9 +93,9 @@ class Controller_Discount extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Discount();
         if (!empty($discount_id)) {
-            $rows = Model_Discount::getFabrixSpecialsUsageById((integer) $model->validData(_A_::$app->get('discount_id')));
+            $rows = Model_Discount::getFabrixSpecialsUsageById((integer)$model->validData(_A_::$app->get('discount_id')));
             ob_start();
-            foreach($rows as $key => $row){
+            foreach ($rows as $key => $row) {
                 $orders = Model_Discount::getFabrixOrdersById($row[2]);
                 $order_aid = $orders['aid'];
                 $order_date = gmdate("F j, Y, g:i a", $orders['order_date']);
@@ -131,7 +104,7 @@ class Controller_Discount extends Controller_Controller
                 $u_bill_firstname = $account['bill_firstname'];
                 $u_bill_lastname = $account['bill_lastname'];
 
-                $this->template->vars('i',$key+1);
+                $this->template->vars('i', $key + 1);
                 $this->template->vars('order_date', $order_date);
                 $this->template->vars('u_bill_firstname', $u_bill_firstname);
                 $this->template->vars('u_email', $u_email);
@@ -234,7 +207,6 @@ class Controller_Discount extends Controller_Controller
                 );
 
                 $this->template->vars('userInfo', $userInfo);
-
                 $this->main->view_admin('edit_discounts');
 
             } else {
@@ -260,7 +232,6 @@ class Controller_Discount extends Controller_Controller
                     }
                 }
 
-
                 $result = $model->updateFabrixSpecials($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end, $discount_id);
                 $error = [];
                 if ($result) {
@@ -272,9 +243,18 @@ class Controller_Discount extends Controller_Controller
                 $this->template->vars('error', $error);
 
                 $this->edit();
-
             }
         }
+    }
+
+    function edit()
+    {
+        $this->main->test_access_rights();
+        $model = new Model_Discount();
+        $id = $model->validData(_A_::$app->get('id'));
+        $userInfo = $model->get_edit_discounts_data($id);
+        $this->template->vars('userInfo', $userInfo);
+        $this->main->view_admin('edit');
     }
 
     function save_data()
@@ -393,7 +373,7 @@ class Controller_Discount extends Controller_Controller
                 $result = $model->deleteFabrixSpecialsProductById($discount_id);
                 if ($sel_fabrics == "2") {
                     foreach ($fabric_list as $fabric_id) {
-                        $result = $model-> saveFabrixSpecialsProducts($discount_id, $fabric_id);
+                        $result = $model->saveFabrixSpecialsProducts($discount_id, $fabric_id);
                     }
                 }
 
@@ -404,10 +384,17 @@ class Controller_Discount extends Controller_Controller
             }
             $this->template->vars('warning', $warning);
             $this->template->vars('error', $error);
-
             $this->add();
         }
     }
 
+    function add()
+    {
+        $this->main->test_access_rights();
+        $model = new Model_Discount();
+        $userInfo = $model->get_new_discounts_data();
+        $this->template->vars('userInfo', $userInfo);
+        $this->main->view_admin('add');
+    }
 
 }

@@ -79,7 +79,7 @@ class Controller_Main extends Controller_Base
                 }
             } else
                 $redirect = _A_::$app->server('HTTP_REFERER');
-            $url = _A_::$app->router()->UrlTo('user',['url' => urlencode(base64_encode($redirect))]);
+            $url = _A_::$app->router()->UrlTo('user', ['url' => urlencode(base64_encode($redirect))]);
             $this->redirect($url);
         }
     }
@@ -98,7 +98,7 @@ class Controller_Main extends Controller_Base
                 }
             } else
                 $redirect = _A_::$app->server('HTTP_REFERER');
-            $url = _A_::$app->router()->UrlTo('admin',['url' => urlencode(base64_encode($redirect))]);
+            $url = _A_::$app->router()->UrlTo('admin', ['url' => urlencode(base64_encode($redirect))]);
             $this->redirect($url);
         }
     }
@@ -112,7 +112,7 @@ class Controller_Main extends Controller_Base
                 if (isset(_A_::$app->get()['url'])) {
                     $prms['url'] = _A_::$app->get()['url'];
                 }
-                $back_url = _A_::$app->router()->UrlTo('user',$prms);
+                $back_url = _A_::$app->router()->UrlTo('user', $prms);
                 $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!!!';
 
             } elseif ($msg == 'remind_expired') {

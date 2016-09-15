@@ -23,7 +23,7 @@ Class Controller_User Extends Controller_Controller
                 if (!is_null(_A_::$app->get('url'))) {
                     $prms['url'] = _A_::$app->get('url');
                 }
-                $registration_url = _A_::$app->router()->UrlTo('users/registration', $prms);
+                $registration_url = _A_::$app->router()->UrlTo('user/registration', $prms);
                 $lostpassword_url = _A_::$app->router()->UrlTo('authorization/lost_password', $prms);
                 $this->template->vars('registration_url', $registration_url);
                 $this->template->vars('lostpassword_url', $lostpassword_url);
@@ -80,17 +80,7 @@ Class Controller_User Extends Controller_Controller
         return !is_null(_A_::$app->cookie('_ar'));
     }
 
-    public function is_logged()
-    {
-        return !is_null(_A_::$app->session('_'));
-    }
-
-    private function get_from_session()
-    {
-        return _A_::$app->session('user');
-    }
-
-    public function save_edit_registration_data()
+    public function save_edit()
     {
         if (!$this->is_user_logged()) {
             $this->redirect(_A_::$app->router()->UrlTo('/'));
@@ -103,7 +93,12 @@ Class Controller_User Extends Controller_Controller
         $this->_edit_user_form();
     }
 
-    public function change_registration_data()
+    private function get_from_session()
+    {
+        return _A_::$app->session('user');
+    }
+
+    public function change()
     {
         if ($this->is_logged()) {
             $user_id = $this->get_from_session();
@@ -123,6 +118,69 @@ Class Controller_User Extends Controller_Controller
         }
 
         $this->redirect(_A_::$app->router()->UrlTo('/'));
+    }
+
+    public function is_logged()
+    {
+        return !is_null(_A_::$app->session('_'));
+    }
+
+    public function registration()
+    {
+        $this->main->template->vars('title', 'REGISTRATION USER');
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save'));
+        $prms = null;
+        if (!is_null(_A_::$app->get('url'))) {
+            $prms['url'] = _A_::$app->get('url');
+        }
+        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
+        (new Controller_Users($this->main))->_new_user();
+        $this->main->view('new');
+    }
+
+    public function save()
+    {
+        $prms = null;
+        if (!$this->_save_new_user()) {
+            $this->template->vars('title', 'REGISTRATION USER');
+            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save'));
+            $this->_new_user_form();
+        } else {
+            $user_id = _A_::$app->get('user_id');
+            $this->template->vars('title', 'CHANGE REGISTRATION DATA');
+            if (!is_null(_A_::$app->get('url'))) {
+                $prms['url'] = _A_::$app->get('url');
+            }
+            $this->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
+            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'), true);
+
+            $userInfo = (new Model_User())->get_user_data($user_id);
+
+            $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
+            $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
+            $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
+            $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
+
+            $this->sendWelcomeEmail($userInfo['email']);
+
+            $this->template->vars('userInfo', $userInfo);
+            $this->_edit_user_form();
+        }
+    }
+
+    private function sendWelcomeEmail($email)
+    {
+        $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
+        $subject = "Thank you for registering with iluvfabrix.com";
+        $body = "Thank you for registering with www.iluvfabrix.com.\n";
+        $body .= "\n";
+        $body .= "As a new user, you will get 20% off your first purchase (which you may use any time in the first year) unless we have a sale going on for a discount greater than 20%, in which case you get the greater of the two discounts.\n";
+        $body .= "\n";
+        $body .= "We will, from time to time, inform you by email of various time limited specials on the iluvfabrix site.  If you wish not to receive these emails, please respond to this email with the word Unsubscribe in the subject line.\n";
+        $body .= "\n";
+        $body .= "Once again, thank you.........and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
+
+        mail($email, $subject, $body, $headers);
     }
 
 

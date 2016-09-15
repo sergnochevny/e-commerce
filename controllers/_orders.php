@@ -27,21 +27,21 @@ class Controller_Orders extends Controller_Controller
         $start = (($page - 1) * $per_page);
         if ($total < ($start + $per_page)) $per_page = $total - $start;
         $res_count_rows = 0;
-        $this->template->vars('page',$page);
-        $this->template->vars('user_id',$user_id);
+        $this->template->vars('page', $page);
+        $this->template->vars('user_id', $user_id);
         if (!empty($orders_count) && ((int)$orders_count > 0)) {
             $rows = $model->get_orders_by_user($user_id, $start, $per_page, $res_count_rows);
             $this->main->template->vars('count_rows', $res_count_rows);
             ob_start();
             foreach ($rows as $row) {
                 $row[22] = gmdate("F j, Y, g:i a", $row[22]);
-                $this->template->vars('row',$row);
+                $this->template->vars('row', $row);
                 $this->template->view_layout('list');
             }
             $orders_list = ob_get_contents();
             ob_end_clean();
             ob_start();
-            $this->template->vars('orders_list',$orders_list);
+            $this->template->vars('orders_list', $orders_list);
             $this->template->view_layout('detail');
             $orders = ob_get_contents();
             ob_end_clean();
@@ -71,13 +71,30 @@ class Controller_Orders extends Controller_Controller
         if (!is_null(_A_::$app->get('page'))) {
             $prms['page'] = _A_::$app->get('page');
         }
-
         $this->get_details();
         $userInfo = $model->get_order($order_id);
-
-        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('users/registration', $prms));
+        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user/registration', $prms));
         $this->main->template->vars('userInfo', $userInfo);
         $this->main->view_admin('order');
+    }
+
+    function get_details()
+    {
+        $this->main->test_access_rights();
+        $model = new Model_Order();
+        $order_id = $model->validData(_A_::$app->get('order_id'));
+        $order_details = '';
+        if (!empty($order_id)) {
+            ob_start();
+            $rows = $model->get_order_details($order_id);
+            foreach ($rows as $row) {
+                $this->template->vars('row', $row);
+                $this->template->view_layout('details');
+            }
+            $order_details = ob_get_contents();
+            ob_end_clean();
+        }
+        $this->main->template->vars('order_details', $order_details);
     }
 
     function discount()
@@ -96,28 +113,9 @@ class Controller_Orders extends Controller_Controller
         $this->main->view_admin('order');
     }
 
-    function get_details()
-    {
-        $this->main->test_access_rights();
-        $model = new Model_Order();
-        $order_id = $model->validData(_A_::$app->get('order_id'));
-        $order_details = '';
-        if (!empty($order_id)) {
-            ob_start();
-            $rows = $model->get_order_details($order_id);
-            foreach ($rows as $row) {
-                $this->template->vars('row',$row);
-                $this->template->view_layout('details');
-            }
-            $order_details = ob_get_contents();
-            ob_end_clean();
-        }
-        $this->main->template->vars('order_details', $order_details);
-    }
-
     public function customer_history()
     {
-        $user_id = (integer) _A_::$app->session('user')['aid'];
+        $user_id = (integer)_A_::$app->session('user')['aid'];
         $page = (integer)(empty(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
         $this->template->vars('page', $page);
 
@@ -149,30 +147,30 @@ class Controller_Orders extends Controller_Controller
                 $action = _A_::$app->router()->UrlTo('/') . '/customer_order_info?oid=' . urlencode(base64_encode($oid)) . '&=page' . $page;
                 $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
 
-                $this->template->vars('action',$action);
-                $this->template->vars('order_date',$order_date);
-                $this->template->vars('end_date',$end_date);
-                $this->template->vars('shipping_cost',$shipping_cost);
-                $this->template->vars('track_code',$track_code);
-                $this->template->vars('trid',$trid);
-                $this->template->vars('total',$total);
+                $this->template->vars('action', $action);
+                $this->template->vars('order_date', $order_date);
+                $this->template->vars('end_date', $end_date);
+                $this->template->vars('shipping_cost', $shipping_cost);
+                $this->template->vars('track_code', $track_code);
+                $this->template->vars('trid', $trid);
+                $this->template->vars('total', $total);
                 $this->template->view_layout('customer_list');
             }
             $customer_orders_list = ob_get_contents();
             ob_end_clean();
 
             if (isset($customer_orders_list) && !empty($customer_orders_list)) {
-                $this->template->vars('customer_orders_list', $customer_orders_list);
+                $this->main->template->vars('customer_orders_list', $customer_orders_list);
             }
 
             $paginator = new Controller_Paginator($this->main);
             $paginator->orders_paginator($total_pages, $page);
         } else {
             $mess = 'You have no orders yet.';
-            $this->template->vars('no_orders', $mess);
+            $this->main->template->vars('no_orders', $mess);
 
         }
-        $this->template->vars('page', $page);
+        $this->main->template->vars('page', $page);
         $this->main->view('customer_history');
     }
 
@@ -210,13 +208,13 @@ class Controller_Orders extends Controller_Controller
                         'page' => $page,
                         'orders_search_query' => _A_::$app->get('orders_search_query')
                     ]);
-                    $this->template->vars('action',$action);
-                    $this->template->vars('date',$date);
-                    $this->template->vars('end_date',$end_date);
-                    $this->template->vars('track_code',$track_code);
-                    $this->template->vars('trid',$trid);
-                    $this->template->vars('$total_price',$total_price);
-                    $this->template->vars('username',$username);
+                    $this->template->vars('action', $action);
+                    $this->template->vars('date', $date);
+                    $this->template->vars('end_date', $end_date);
+                    $this->template->vars('track_code', $track_code);
+                    $this->template->vars('trid', $trid);
+                    $this->template->vars('$total_price', $total_price);
+                    $this->template->vars('username', $username);
                     $this->template->view_layout('admin_list');
                 }
                 $admin_orders_list = ob_get_contents();
@@ -227,7 +225,7 @@ class Controller_Orders extends Controller_Controller
             $page = (integer)(empty(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
             $this->template->vars('page', $page);
             $per_page = 12;
-            $total_pages = (integer) Model_Order::getOrdersHistoryLength();
+            $total_pages = (integer)Model_Order::getOrdersHistoryLength();
             if ($page > ceil($total_pages / $per_page)) $page = ceil($total_pages / $per_page);
             if ($page <= 0) $page = 1;
             $start = (($page - 1) * $per_page);
@@ -249,13 +247,13 @@ class Controller_Orders extends Controller_Controller
                     $action = _A_::$app->router()->UrlTo('order_info', [
                         'oid' => urlencode(base64_encode($oid))
                     ]);
-                    $this->template->vars('action',$action);
-                    $this->template->vars('date',$date);
-                    $this->template->vars('end_date',$end_date);
-                    $this->template->vars('track_code',$track_code);
-                    $this->template->vars('trid',$trid);
-                    $this->template->vars('$total_price',$total_price);
-                    $this->template->vars('username',$username);
+                    $this->template->vars('action', $action);
+                    $this->template->vars('date', $date);
+                    $this->template->vars('end_date', $end_date);
+                    $this->template->vars('track_code', $track_code);
+                    $this->template->vars('trid', $trid);
+                    $this->template->vars('$total_price', $total_price);
+                    $this->template->vars('username', $username);
                     $this->template->view_layout('admin_list');
                 }
                 $admin_orders_list = ob_get_contents();
@@ -318,10 +316,10 @@ class Controller_Orders extends Controller_Controller
                     $sample_cost = strlen(trim($sample_cost)) > 0 ? '$' . number_format((double)$sample_cost, 2) : '';
                 }
 
-                $this->template->vars('is_sample',$is_sample);
-                $this->template->vars('product_name',$product_name);
-                $this->template->vars('sale_price',$sale_price);
-                $this->template->vars('quantity',$quantity);
+                $this->template->vars('is_sample', $is_sample);
+                $this->template->vars('product_name', $product_name);
+                $this->template->vars('sale_price', $sale_price);
+                $this->template->vars('quantity', $quantity);
                 $this->template->view_layout('detail_info');
             }
             $end_date = $end_date ? date('d/m/Y', strtotime($end_date)) : '';
@@ -392,10 +390,10 @@ class Controller_Orders extends Controller_Controller
                     $sample_cost = strlen(trim($sample_cost)) > 0 ? '$' . number_format((double)$sample_cost, 2) : '';
                 }
 
-                $this->template->vars('is_sample',$is_sample);
-                $this->template->vars('product_name',$product_name);
-                $this->template->vars('sale_price',$sale_price);
-                $this->template->vars('quantity',$quantity);
+                $this->template->vars('is_sample', $is_sample);
+                $this->template->vars('product_name', $product_name);
+                $this->template->vars('sale_price', $sale_price);
+                $this->template->vars('quantity', $quantity);
                 $this->template->view_layout('detail_info_customer');
 
             }
@@ -415,7 +413,7 @@ class Controller_Orders extends Controller_Controller
         $this->main->template->vars('total', $total);
         $this->main->template->vars('sub_price', $sub_price);
         $this->main->template->vars('is_sample', $is_sample);
-        if($is_sample){
+        if ($is_sample) {
             $this->main->template->vars('sample_cost', $sample_cost);
         }
         $this->main->template->vars('shipping_type', $shipping_type);
@@ -444,16 +442,16 @@ class Controller_Orders extends Controller_Controller
             'result' => null,
         ];
 
-        if ($model->update_order_detail_info($status,$status,$track_code,$end_date,$order_id)) {
-            
-            if($result['status'] === 1){
+        if ($model->update_order_detail_info($status, $status, $track_code, $end_date, $order_id)) {
+
+            if ($result['status'] === 1) {
 
                 $user_id = $model->get_user_by_order($order_id);
                 $user = new Model_User();
                 $user_data = $user->get_user_by_id($user_id);
                 $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
                 $subject = "Order delivery";
-                $body = 'Order №'.$order_id.' is delivered';
+                $body = 'Order №' . $order_id . ' is delivered';
 
                 $this->sendMail($user_data['email'], $subject, $body, $headers);
 
@@ -464,8 +462,9 @@ class Controller_Orders extends Controller_Controller
         }
         echo json_encode($result);
     }
-    
-    private function sendMail($email, $subject, $body, $headers){
+
+    private function sendMail($email, $subject, $body, $headers)
+    {
         mail($email, $subject, $body, $headers);
     }
 

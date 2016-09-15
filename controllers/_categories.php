@@ -5,7 +5,6 @@ class Controller_Categories extends Controller_Base
 
     public function categories()
     {
-
         $this->main->test_access_rights();
         $this->get_list();
         $this->main->view_admin('categories');
@@ -180,7 +179,7 @@ class Controller_Categories extends Controller_Base
         $this->display_order_wo_select();
         $back_url = _A_::$app->router()->UrlTo('categories');
         $this->template->vars('back_url', $back_url);
-        $this->main->view_layout('category/new_category_form');
+        $this->main->view_layout('new_form');
     }
 
     function save_new()
