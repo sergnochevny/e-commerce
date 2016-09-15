@@ -15,6 +15,7 @@ class Core
     protected $request;
 
     protected $db;
+    protected $connections;
     protected $config = [];
 
     public function __construct()

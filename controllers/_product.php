@@ -130,7 +130,7 @@ class Controller_Product extends Controller_Controller
         ob_end_clean();
         $this->template->vars('discount_info', $discount_info);
 
-        if (!is_null(_A_::$app->session('cart')['items'])) {
+        if (isset(_A_::$app->session('cart')['items'])) {
             $cart_items = _A_::$app->session('cart')['items'];
         } else {
             $cart_items = [];
@@ -409,7 +409,7 @@ class Controller_Product extends Controller_Controller
                     $post_fabric_2,$post_fabric_1,$post_mkey,$post_desc,$post_Long_description,$post_tp_name,
                     $post_short_desk,$best,$piece,$whole);
 
-                if ($result && $model->ConfirmProductInsert()) {
+                if ($result && $model->ConfirmProductInsert($p_id)) {
                     $this->template->vars('warning', ["Product Data saved successfully!"]);
                 } else {
                     $this->template->vars('error', [mysql_error()]);
