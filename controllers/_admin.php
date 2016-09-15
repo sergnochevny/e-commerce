@@ -80,4 +80,14 @@ Class Controller_Admin Extends Controller_Controller
         return $res;
     }
 
+    public function is_logged()
+    {
+        return !is_null(_A_::$app->session('_a'));
+    }
+
+    public function is_set_admin_remember()
+    {
+        return !is_null(_A_::$app->cookie('_ar'));
+    }
+
 }

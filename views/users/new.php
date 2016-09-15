@@ -9,7 +9,7 @@
 
                 <div id="customer_details" style="padding-top: 20px; margin: auto; width: 600px;">
                     <div id="user_form">
-                        <?php include('views/user/new_user_form.php')?>
+                        <?php include('views/users/new_user_form.php')?>
                     </div>
                 </div>
             </div>

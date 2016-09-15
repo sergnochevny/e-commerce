@@ -5,10 +5,10 @@
     <td><?php echo $row[30]?></td>
     <td >
         <center>
-            <a href="<?php echo _A_::$app->router()->UrlTo('user/edit',['user_id'=>$row[0],'page'=>$page])?>">
+            <a href="<?php echo _A_::$app->router()->UrlTo('users/edit',['user_id'=>$row[0],'page'=>$page])?>">
                 <i class="fa fa-pencil"></i>
             </a>
-            <a class="text-danger" id="del_user" href="<?php echo _A_::$app->router()->UrlTo('user/del',['user_id'=>$row[0],'page'=>$page])?>">
+            <a class="text-danger" id="del_user" href="<?php echo _A_::$app->router()->UrlTo('users/del',['user_id'=>$row[0],'page'=>$page])?>">
                 <i class=" fa fa-trash-o"></i>
             </a>
             <a class="text-success" href="<?php echo _A_::$app->router()->UrlTo('orders', ['user_id'=>$row[0],'page'=>$page])?>">
