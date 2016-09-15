@@ -393,7 +393,7 @@ class Controller_Discount extends Controller_Controller
                 $result = $model->deleteFabrixSpecialsProductById($discount_id);
                 if ($sel_fabrics == "2") {
                     foreach ($fabric_list as $fabric_id) {
-                        $result = $model->saveFabrixSpecialsProducts($discount_id, $fabric_id);
+                        $result = $model-> saveFabrixSpecialsProducts($discount_id, $fabric_id);
                     }
                 }
 
