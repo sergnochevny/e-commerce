@@ -1,26 +1,5 @@
 <?php
 
-#define the variables needed for the defaults for the samples
-define('SAMPLES_PRICE_EXPRESS_SHIPPING', 39.95);
-
-#define the variables needed for the defaults for the samples
-define('SAMPLES_QTY_MULTIPLE_MIN', 2);					#the minimum number of samples to qualify for the multiple price
-define('SAMPLES_QTY_MULTIPLE_MAX', 5);					#the maximum number of samples to qualify for the multiple price, after this number they are charged the additional price
-define('SAMPLES_PRICE_SINGLE', 14.00);					#the price if only one sample is purchased
-define('SAMPLES_PRICE_MULTIPLE', 28.00);				#the price if multiple min qty is met
-define('SAMPLES_PRICE_ADDITIONAL', 4.00);				#the price for each additional sample after the multiple max quantity
-define('SAMPLES_PRICE_WITH_PRODUCTS', 4.00);			#the price charge for samples if they are purchased with any other products
-
-define('SAMPLES_DESCRIPTION_PREFIX', 'SAMPLE - ');
-
-define('SAMPLES_PURCHASE_BEFORE_TIME_HOUR', 3);
-define('SAMPLES_PURCHASE_BEFORE_TIME_MINUTE', 00);
-define('SAMPLES_PURCHASE_AFTER_DAY', 1);
-define('SAMPLES_PURCHASE_BEFORE_DAY', 4);
-
-define('SAMPLES_SHIPPING_DISCLAIMER', 'I acknowledge that in rare cases samples may not arrive overnight due to circumstances beyond the control of iLuvFabrix.com. There are no guarantees or refunds given for this service.');
-
-
 Class Model_Samples extends Model_Model
 {
 

@@ -1,17 +1,5 @@
 <?php
 
-define('DISCOUNT_STRING_JOINER', '<br />');
-define("DISCOUNT_TYPE_NONE", 0);
-define("DISCOUNT_TYPE_SUBTOTAL", 1);
-define("DISCOUNT_TYPE_SHIPPING", 2);
-define("DISCOUNT_TYPE_TOTAL", 3);
-
-define('DISCOUNT_CATEGORY_ALL', 1);
-define('DISCOUNT_CATEGORY_COUPON', 2);
-define('DISCOUNT_CATEGORY_SHIPPING', 3);
-define('DISCOUNT_CATEGORY_PRODUCT', 4);
-
-
 Class Model_Price extends Model_Model
 {
 

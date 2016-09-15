@@ -4,16 +4,30 @@ class Controller_Paginator extends Controller_Controller
 {
     function product_paginator($total_rows, $page)
     {
-        $this->template->vars('url', 'admin_home');
+        $this->paginator($total_rows, $page, 'admin/home');
+    }
+
+    public function paginator($total_rows, $page, $url)
+    {
+        $this->template->vars('url', $url);
+        $this->_paginator($total_rows, $page);
+    }
+
+    protected function _paginator($total_rows, $page, $per_page = 12, $showbypage = 10)
+    {
         if (!is_null(_A_::$app->get('cat'))) {
             $cat_id = _A_::$app->get('cat');
             $this->template->vars('cat_id', $cat_id);
         }
-        $this->paginator($total_rows, $page);
-    }
+        if (!is_null(_A_::$app->get('mnf'))) {
+            $mnf_id = _A_::$app->get('mnf');
+            $this->template->vars('mnf_id', $mnf_id);
+        }
+        if (!is_null(_A_::$app->get('ptrn'))) {
+            $ptrn_id = _A_::$app->get('ptrn');
+            $this->template->vars('ptrn_id', $ptrn_id);
+        }
 
-    protected function paginator($total_rows, $page, $per_page = 12, $showbypage = 10)
-    {
         $num_pages = ceil($total_rows / $per_page);
         $last_page = $num_pages;
         $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;
@@ -42,13 +56,7 @@ class Controller_Paginator extends Controller_Controller
 
     function paginator_home($total_rows, $page, $url = 'blog', $per_page = 6)
     {
-
-        $this->template->vars('url', $url);
-        if (!is_null(_A_::$app->get('cat'))) {
-            $cat_id = _A_::$app->get('cat');
-            $this->template->vars('cat_id', $cat_id);
-        }
-        $this->paginator($total_rows, $page, $per_page);
+        $this->paginator($total_rows, $page, $per_page, $url);
     }
 
     function product_paginator_home($total_rows, $page, $url = 'shop')
@@ -58,51 +66,32 @@ class Controller_Paginator extends Controller_Controller
             $layout = 'product_paginator_search';
         }
 
-        $this->template->vars('url', $url);
-        if (!is_null(_A_::$app->get('cat'))) {
-            $cat_id = _A_::$app->get('cat');
-            $this->template->vars('cat_id', $cat_id);
-        }
-        if (!is_null(_A_::$app->get('mnf'))) {
-            $mnf_id = _A_::$app->get('mnf');
-            $this->template->vars('mnf_id', $mnf_id);
-        }
-        if (!is_null(_A_::$app->get('ptrn'))) {
-            $ptrn_id = _A_::$app->get('ptrn');
-            $this->template->vars('ptrn_id', $ptrn_id);
-        }
-        $this->paginator($total_rows, $page);
+        $this->paginator($total_rows, $page, $url);
     }
 
     function user_paginator($total_rows, $page)
     {
-        $this->template->vars('url', 'users');
-        $this->paginator($total_rows, $page);
+        $this->paginator($total_rows, $page, 'users');
     }
 
     public function orders_paginator($total_rows, $page)
     {
-        $this->template->vars('url', 'orders/customer_history');
-        $this->paginator($total_rows, $page);
+        $this->paginator($total_rows, $page, 'orders/customer_history');
     }
 
     public function orders_history_paginator($total_rows, $page)
     {
-        $this->template->vars('url', 'orders/history');
-        $this->paginator($total_rows, $page);
+        $this->paginator($total_rows, $page, 'orders/history');
     }
 
     public function comments_paginator($total_rows, $page)
     {
-        $this->template->vars('url', 'comments/admin');
-        $this->paginator($total_rows, $page);
+        $this->paginator($total_rows, $page, 'comments/admin');
     }
 
     public function user_comments_paginator($total_rows, $page)
     {
-        $this->template->vars('url', 'comments');
-        $this->paginator($total_rows, $page);
+        $this->paginator($total_rows, $page, 'comments');
     }
-
 
 }

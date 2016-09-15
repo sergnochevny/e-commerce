@@ -9,7 +9,7 @@ class Controller_Authorization extends Controller_Controller
         $model = new Model_Auth();
 
         if ($this->is_admin_logged()) {
-            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin_home');
+            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin/home');
             $this->redirect($url);
         }
         if ($this->is_user_logged()) {
@@ -21,7 +21,7 @@ class Controller_Authorization extends Controller_Controller
             if ($model->is_admin_remember($remember)) {
                 $admin = $model->get_admin_data();
                 _A_::$app->setSession('_a', $admin['id']);
-                $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin_home');
+                $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin/home');
                 $this->redirect($url);
             }
         }
@@ -48,7 +48,7 @@ class Controller_Authorization extends Controller_Controller
             if ($model->is_admin($login)) {
                 if ($this->admin_authorize($login, $password)) {
                     $url = base64_decode(urldecode(_A_::$app->post('redirect')));
-                    $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('admin_home');
+                    $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('admin/home');
                     $this->redirect($url);
                 }
             }
@@ -183,11 +183,11 @@ class Controller_Authorization extends Controller_Controller
                 $password = _A_::$app->post('pass');
                 if (!$this->admin_authorize($login, $password)) exit('Wrong Login or Password');
                 $url = base64_decode(urldecode(_A_::$app->post('redirect')));
-                $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('admin_home');
+                $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('admin/home');
                 $this->redirect($url);
             } else {
 
-                $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : base64_encode(_A_::$app->router()->UrlTo('admin_home'));
+                $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : base64_encode(_A_::$app->router()->UrlTo('admin/home'));
                 $this->template->vars('redirect', $redirect);
 
                 $menu = new Controller_Menu($this);
@@ -196,7 +196,7 @@ class Controller_Authorization extends Controller_Controller
                 $this->main->view_admin('admin');
             }
         } else {
-            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin_home');
+            $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin/home');
             $this->redirect($url);
         }
     }

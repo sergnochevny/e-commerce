@@ -19,13 +19,13 @@
     </td>
     <td>
         <center>
-            <a  rel="nofollow" href="edit_discounts?discounts_id=<?php echo $row[0];?>">
+            <a  rel="nofollow" href="edit_discounts?discount_id=<?php echo $row[0];?>">
                 <i class="fa fa-pencil"></i>
             </a>
-            <a id="del_discount"  rel="nofollow" href="del_discounts?discounts_id=<?php echo $row[0];?>">
+            <a id="del_discount"  rel="nofollow" href="del_discounts?discount_id=<?php echo $row[0];?>">
                 <i class=" fa fa-trash-o"></i>
             </a>
-            <a class="text-success"  rel="nofollow" href="usage_discounts?discounts_id=<?php echo $row[0];?>">
+            <a class="text-success"  rel="nofollow" href="usage_discounts?discount_id=<?php echo $row[0];?>">
                 <i class="fa fa-check-circle"></i>
             </a>
         </center>
