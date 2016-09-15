@@ -82,6 +82,45 @@ Class Model_Discount extends Model_Model
         return $res;
     }
 
+    public function deleteFabrixSpecialsUserById($id){
+        $q = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='" . (integer) $id . "'");
+        return mysql_query($q);
+    }
+
+    public function saveFabrixSpecialsUser($discount_id, $user_id){
+        $q = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . (integer) $discount_id . "',  '" . (integer) $user_id . "');");
+        return mysql_query($q);
+    }
+
+
+    public function deleteFabrixSpecialsProductById($id){
+        $q = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . (integer) $id . "'");
+        return mysql_query($q);
+    }
+
+    public function saveFabrixSpecialsProducts($discount_id, $fabric_id){
+        $q = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . (integer) $discount_id . "',  '" . (integer) $fabric_id . "');");
+        return mysql_query($q);
+    }
+
+
+    public function updateFabrixSpecials($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end, $discount_id){
+        $q = mysql_query("UPDATE fabrix_specials SET coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check',shipping_type='$shipping_type',product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end' WHERE sid ='$discount_id'");
+        return mysql_query($q);
+    }
+
+    public function saveFabrixSpecial($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end){
+        $q = mysql_query("INSERT INTO fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check', shipping_type='$shipping_type', product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end', date_added = 'CURRENT_TIMESTAMP'");
+        return mysql_query($q);
+    }
+
+
+    public function updateSpecials($discount_id, $user_id){
+        $q = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . (integer) $discount_id . "',  '" . (integer) $user_id . "');");
+        return mysql_query($q);
+    }
+
+
     function checkCouponCode($sid, $cde)
     {
 
