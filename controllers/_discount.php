@@ -120,26 +120,28 @@ class Controller_Discount extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Discount();
         if (!empty($discount_id)) {
-            $results = Model_Discount::getFabrixSpecialsUsageById((integer) $model->validData(_A_::$app->get('discount_id')));
-            $sizeOfResult = sizeof($results);
+            $rows = Model_Discount::getFabrixSpecialsUsageById((integer) $model->validData(_A_::$app->get('discount_id')));
             ob_start();
-
-            for($i = 0; $i <= $sizeOfResult; $i++){
-                $orders = Model_Discount::getFabrixOrdersById($results[2]);
+            foreach($rows as $key => $row){
+                $orders = Model_Discount::getFabrixOrdersById($row[2]);
                 $order_aid = $orders['aid'];
                 $order_date = gmdate("F j, Y, g:i a", $orders['order_date']);
                 $account = Model_Discount::getFabrixAccountByOrderId($order_aid);
                 $u_email = $account['email'];
                 $u_bill_firstname = $account['bill_firstname'];
                 $u_bill_lastname = $account['bill_lastname'];
-                include('views/discount/data_usage_order_discounts.php');
+
+                $this->template->vars('i',$key+1);
+                $this->template->vars('order_date', $order_date);
+                $this->template->vars('u_bill_firstname', $u_bill_firstname);
+                $this->template->vars('u_email', $u_email);
+                $this->template->vars('row', $row);
+                $this->template->view_layouts('data_usage_discounts');
             }
-
-
             $data_usage_order_discounts = ob_get_contents();
             ob_end_clean();
 
-            $this->template->vars('data_usage_order_discounts', $data_usage_order_discounts);
+            $this->main->template->vars('data_usage_order_discounts', $data_usage_order_discounts);
         }
     }
 
