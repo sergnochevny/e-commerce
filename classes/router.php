@@ -192,6 +192,7 @@ Class Router
             define('HTTP_URL_STRIP_FRAGMENT', 512);        // Strip any fragments (#identifier)
             define('HTTP_URL_STRIP_ALL', 1024);            // Strip anything but scheme and host
         }
+
         $this->route = (empty(_A_::$app->get('route'))) ? '' : _A_::$app->get('route');
         if (empty($this->route)) $this->route = 'index';
         $this->route = trim($this->route, '/\\');
@@ -201,7 +202,6 @@ Class Router
 
     private function setPath($path)
     {
-
         $path = rtrim($path, '/\\');
         $path .= DS;
 
