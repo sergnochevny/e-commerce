@@ -18,6 +18,77 @@ Class Model_Product extends Model_Model
         return $total;
     }
 
+    public static function getProductsWithCategoriesAndSearchParams($cat_id, $searchQuery = null){
+        $result = null;
+
+        $q = "SELECT COUNT(*) FROM `fabrix_products` a" .
+            " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
+            " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id'";
+        if(!is_null($searchQuery)){
+            $q .= " and (LOWER(a.pnumber) like '%" . $searchQuery . "%'" .
+                  " or LOWER(a.pname) like '%" . $searchQuery . "%'";
+        }
+
+        if ($res = mysql_query($q)) {
+            $result = mysql_fetch_row($res)[0];
+        }
+
+        return $result;
+    }
+
+    public static function getProductsWithPatternAndSearchParams($ptrn_id, $searchQuery = null){
+        $total = null;
+
+        $q = "SELECT COUNT(*) FROM `fabrix_products` a" .
+             " LEFT JOIN fabrix_product_patterns b ON a.pid = b.prodid " .
+             " WHERE  a.pnumber IS NOT NULL AND a.pvisible = '1' AND b.patternId='$ptrn_id'";
+
+        if(!is_null($searchQuery)){
+            $q .= " and (LOWER(a.pnumber) like '%" . $searchQuery . "%'" .
+                  " or LOWER(a.pname) like '%" . $searchQuery . "%')";
+        }
+
+        if ($res = mysql_query($q)) {
+            $total = mysql_fetch_row($res)[0];
+        }
+
+        return $total;
+    }
+
+    public static function getProductsByManufacturerAndSearchParams($manufacturerId, $searchQuery = null){
+        $total = null;
+
+        $q = "SELECT COUNT(*) FROM `fabrix_products` WHERE pnumber IS NOT NULL AND pvisible = '1' AND manufacturerId = '$manufacturerId'";
+
+        if(!is_null($searchQuery)){
+            $q .= " and (LOWER(a.pnumber) like '%" . $searchQuery . "%'" .
+                " or LOWER(a.pname) like '%" . $searchQuery . "%')";
+        }
+
+        if ($res = mysql_query($q)) {
+            $total = mysql_fetch_row($res)[0];
+        }
+
+        return $total;
+    }
+
+    public static function getProductsAndSearchParams($searchQuery = null){
+        $total = null;
+
+        $q =  "SELECT COUNT(*) FROM `fabrix_products` WHERE pnumber IS NOT NULL AND pvisible = '1' ";
+
+        if(!is_null($searchQuery)){
+            $q .= " and (LOWER(a.pnumber) like '%" . $searchQuery . "%'" .
+                " or LOWER(a.pname) like '%" . $searchQuery . "%')";
+        }
+
+        if ($res = mysql_query($q)) {
+            $total = mysql_fetch_row($res)[0];
+        }
+
+        return $total;
+    }
+
     public function get_products_list($start, $limit, $where = null)
     {
         $list = [];

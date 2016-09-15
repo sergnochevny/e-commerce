@@ -64,15 +64,15 @@ class Controller_Shop extends Controller_Controller
                 $format_price = sprintf('%s /yard', $price);
             }
 
-            $this->template->vars('cat_name',$cat_name);
-            $this->template->vars('url_prms',$url_prms);
-            $this->template->vars('filename',$filename);
-            $this->template->vars('row',$row);
-            $this->template->vars('piece',$piece);
-            $this->template->vars('price',$price);
-            $this->template->vars('inventory',$inventory);
-            $this->template->vars('format_price',$format_price);
-            $this->template->vars('hide_price',$row['makePriceVis']);
+            $this->template->vars('cat_name', $cat_name);
+            $this->template->vars('url_prms', $url_prms);
+            $this->template->vars('filename', $filename);
+            $this->template->vars('row', $row);
+            $this->template->vars('piece', $piece);
+            $this->template->vars('price', $price);
+            $this->template->vars('inventory', $inventory);
+            $this->template->vars('format_price', $format_price);
+            $this->template->vars('hide_price', $row['makePriceVis']);
             $this->template->view_layout('inner');
         }
 
@@ -132,41 +132,18 @@ class Controller_Shop extends Controller_Controller
         $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
 
+        $res = null;
+
         if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
-            $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
-                " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-                " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id'";
-            if (isset($search)) {
-                $q_total .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
-                    " or LOWER(a.pname) like '%" . $search . "%'";
-            }
+            $res = isset($search) ? Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('cat'))) : Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('cat')), $search);
         } else {
             if (!empty(_A_::$app->get('ptrn'))) {
-                $ptrn_id = $model->validData(_A_::$app->get('ptrn'));
-                $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
-                    " LEFT JOIN fabrix_product_patterns b ON a.pid = b.prodid " .
-                    " WHERE  a.pnumber is not null and a.pvisible = '1' and b.patternId='$ptrn_id'";
-
-                if (isset($search)) {
-                    $q_total .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
-                        " or LOWER(a.pname) like '%" . $search . "%')";
-                }
-
+                $res = isset($search) ? Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('ptrn'))) : Model_Product::getProductsWithCategoriesAndSearchParams($model->validData(_A_::$app->get('ptrn')), $search);
             } else {
                 if (!empty(_A_::$app->get('mnf'))) {
-                    $mnf_id = $model->validData(_A_::$app->get('mnf'));
-                    $q_total = "SELECT COUNT(*) FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and manufacturerId = '$mnf_id'";
-                    if (isset($search)) {
-                        $q_total .= " and (LOWER(pnumber) like '%" . $search . "%'" .
-                            " or LOWER(pname) like '%" . $search . "%')";
-                    }
+                    $res = isset($search) ? Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf'))) : Model_Product::getProductsByManufacturerAndSearchParams($model->validData(_A_::$app->get('mnf')), $search);
                 } else {
-                    $q_total = "SELECT COUNT(*) FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' ";
-                    if (isset($search)) {
-                        $q_total .= " and (LOWER(pnumber) like '%" . $search . "%'" .
-                            " or LOWER(pname) like '%" . $search . "%')";
-                    }
+                    $res = isset($search) ? Model_Product::getProductsAndSearchParams() : Model_Product::getProductsAndSearchParams($search);
                 }
             }
         }
@@ -190,8 +167,6 @@ class Controller_Shop extends Controller_Controller
                 $q .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
                     " or LOWER(a.pname) like '%" . $search . "%')";
             }
-
-//            $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
             $q .= " ORDER BY b.display_order LIMIT $start,$per_page";
         } else {
             if (!empty(_A_::$app->get('ptrn'))) {
@@ -330,7 +305,7 @@ class Controller_Shop extends Controller_Controller
 
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $model->validData(_A_::$app->get('cat'));
-            $this->template->vars('cat_id',$cat_id);
+            $this->template->vars('cat_id', $cat_id);
         }
 
         $total = $model->get_count_products_by_type($type);
@@ -383,20 +358,20 @@ class Controller_Shop extends Controller_Controller
                 $format_sale_price = '';
                 $saleprice = $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
 
-                $this->template->vars('cat_name',$cat_name);
-                $this->template->vars('url_prms',$url_prms);
-                $this->template->vars('filename',$filename);
-                $this->template->vars('row',$row);
-                $this->template->vars('pid',$pid);
-                $this->template->vars('piece',$piece);
-                $this->template->vars('price',$price);
-                $this->template->vars('inventory',$inventory);
-                $this->template->vars('format_sale_price',$format_sale_price);
-                $this->template->vars('saleprice',$saleprice);
-                $this->template->vars('bProductDiscount',$bProductDiscount);
-                $this->template->vars('sDiscount',$sDiscount);
+                $this->template->vars('cat_name', $cat_name);
+                $this->template->vars('url_prms', $url_prms);
+                $this->template->vars('filename', $filename);
+                $this->template->vars('row', $row);
+                $this->template->vars('pid', $pid);
+                $this->template->vars('piece', $piece);
+                $this->template->vars('price', $price);
+                $this->template->vars('inventory', $inventory);
+                $this->template->vars('format_sale_price', $format_sale_price);
+                $this->template->vars('saleprice', $saleprice);
+                $this->template->vars('bProductDiscount', $bProductDiscount);
+                $this->template->vars('sDiscount', $sDiscount);
                 $this->template->vars('in_cart', in_array($row[0], $cart));
-                $this->template->vars('hide_price',$row['makePriceVis']);
+                $this->template->vars('hide_price', $row['makePriceVis']);
                 $this->template->view_layout($type);
             }
 
