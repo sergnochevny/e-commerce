@@ -149,8 +149,8 @@ class Controller_Shop extends Controller_Controller
                 }
             }
         }
-        $rows = $model->get_products($start, per_page, $res_count_rows, $search);
-        if (!is_null($rows)) {
+        $rows = $model->get_products($start, $per_page, $res_count_rows = 0, $search);
+        if ($rows) {
             $this->main->template->vars('count_rows', $res_count_rows);
             $mp = new Model_Price();
             $sys_hide_price = $mp->sysHideAllRegularPrices();
@@ -193,12 +193,13 @@ class Controller_Shop extends Controller_Controller
                 $this->template->vars('bProductDiscount', $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds));
                 $format_sale_price = '';
                 $this->template->vars('saleprice', $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece));
-                $this->template->vars('$format_sale_price', $format_sale_price);
+                $this->template->vars('format_sale_price', $format_sale_price);
                 $this->template->vars('in_cart', in_array($row[0], $cart));
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
                 $this->main->template->vars('hide_price', $hide_price);
                 $this->template->vars('hide_price', $hide_price);
+                $this->template->vars('filename', $filename);
                 $this->template->vars('sys_hide_price', $sys_hide_price);
                 $this->template->vars('row', $row);
                 $this->template->vars('price', $price);

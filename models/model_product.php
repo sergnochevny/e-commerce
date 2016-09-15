@@ -737,38 +737,37 @@ Class Model_Product extends Model_Model
         return $total;
     }
 
-    public function get_products($start, $per_page, &$res_count_rows, $search = null){
+    public function get_products($start, $per_page, $res_count_rows = 0, $search = null){
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $this->validData(_A_::$app->get('cat'));
             $q = "SELECT a.* FROM `fabrix_products` a" .
                 " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-                " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cat_id'";
+                " WHERE  a.pnumber IS NOT NULL AND a.pvisible = '1' and b.cid='$cat_id'";
 
             if (isset($search)) {
                 $q .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
                     " or LOWER(a.pname) like '%" . $search . "%')";
             }
 
-//            $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
-            $q .= " ORDER BY b.display_order LIMIT $start,$per_page";
+            $q .= " ORDER BY b.display_order LIMIT $start, $per_page";
         } else {
             if (!empty(_A_::$app->get('ptrn'))) {
                 $ptrn_id = $this->validData(_A_::$app->get('ptrn'));
                 $q = "SELECT a.* FROM `fabrix_products` a" .
                     " LEFT JOIN fabrix_product_patterns b ON a.pid = b.prodId " .
-                    " WHERE  a.pnumber is not null and a.pvisible = '1' and b.patternId='$ptrn_id'";
+                    " WHERE  a.pnumber IS NOT NULL AND a.pvisible = '1' and b.patternId='$ptrn_id'";
 
                 if (isset($search)) {
                     $q .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
                         " or LOWER(a.pname) like '%" . $search . "%')";
                 }
-                $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
+                $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start, $per_page";
 
                 $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
             } else {
                 if (!empty(_A_::$app->get('mnf'))) {
                     $mnf_id = $this->validData(_A_::$app->get('mnf'));
-                    $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' and manufacturerId = '$mnf_id'";
+                    $q = "SELECT * FROM `fabrix_products` WHERE  pnumber IS NOT NULL AND pvisible = '1' AND manufacturerId = '$mnf_id'";
                     if (isset($search)) {
                         $q .= " and (LOWER(pnumber) like '%" . $search . "%'" .
                             " or LOWER(pname) like '%" . $search . "%')";
@@ -778,7 +777,7 @@ Class Model_Product extends Model_Model
                     $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
                 } else {
 
-                    $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1'";
+                    $q = "SELECT * FROM `fabrix_products` WHERE  pnumber IS NOT NULL AND pvisible = '1'";
 
                     if (isset($search)) {
                         $q .= " and (LOWER(pnumber) like '%" . $search . "%'" .
@@ -789,14 +788,16 @@ Class Model_Product extends Model_Model
                 }
             }
         }
-        $res = mysql_query($q);
+        $q = mysql_query($q);
+        $res = [];
         $rows = null;
-        if ($res) {
-            $res_count_rows = mysql_num_rows($res);
-            while ($row = mysql_fetch_array($res)) {
+        if (is_resource($q)) {
+            $res_count_rows = mysql_num_rows($q);
+            while ($row = mysql_fetch_array($q)) {
                 $res[] = $row;
             }
         }
 
+        return $res;
     }
 }

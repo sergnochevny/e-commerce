@@ -61,6 +61,7 @@ return [
 ],
     'ini_set' => [
         'display_errors' => 'On',
+        'error_reporting' => E_ERROR | E_WARNING | E_PARSE,
         'mysql.connect_timeout' => 60
     ],
     'setlocale' => [LC_ALL, 'en_US'],
