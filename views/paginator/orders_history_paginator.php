@@ -1,8 +1,6 @@
 <?php
 $opt = null;
-$opt['orders_search_query'] =
-    !is_null(_A_::$app->request()->get('orders_search_query')) ?
-        _A_::$app->request()->get('orders_search_query') : '';
+$opt['orders_search_query'] = !is_null(_A_::$app->get('orders_search_query')) ? _A_::$app->get('orders_search_query') : '';
 ?>
 <li>
     <?php
@@ -41,7 +39,7 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
 }
 ?>
 <li>
-    <? if($page < $last_page) {
+    <? if ($page < $last_page) {
         $opt['page'] = $last_page;
         echo '<a class="prev page-numbers" href="' . _A_::$app->router()->urlTo('orders_history', $opt) . '" >Last</a>';
     } else echo '<span class="page-numbers noclicable"> Last </span>';
