@@ -157,10 +157,8 @@ class Controller_Product extends Controller_Controller
                 }
                 $back_url = _A_::$app->router()->UrlTo($url, $url_prms);
             } else {
-
                 $back_url = _A_::$app->router()->UrlTo('cart');
             }
-
         } else {
             $back_url = _A_::$app->router()->UrlTo('matches');
         }
@@ -183,10 +181,11 @@ class Controller_Product extends Controller_Controller
         $model = new Model_Product();
 
         $prms = null;
+        $pid= _A_::$app->get('p_id');
         if(!is_null(_A_::$app->get('p_id'))){
             $prms['p_id']= _A_::$app->get('p_id');
         }
-        $action_url = _A_::$app->router()->UrlTo('edit_db',$prms);
+        $action_url = _A_::$app->router()->UrlTo('product/save_edit',$prms);
         $this->template->vars('action_url', $action_url);
         $prms = ['page'=>'1'];
         if (!empty(_A_::$app->get('page'))) {
@@ -195,10 +194,10 @@ class Controller_Product extends Controller_Controller
         if (!empty(_A_::$app->get('cat'))) {
             $prms['cat'] = _A_::$app->get('cat');
         }
-        $back_url = _A_::$app->router()->UrlTo('admin_home',$prms);
+        $back_url = _A_::$app->router()->UrlTo('admin/home',$prms);
         $this->template->vars('back_url', $back_url);
 
-        $userInfo = $model->getProductInfo();
+        $userInfo = $model->getProductInfo($pid);
 
         ob_start();
         $cimage = new Controller_Image($this->main);
@@ -211,12 +210,12 @@ class Controller_Product extends Controller_Controller
         $this->main->view_admin('edit');
     }
 
-    function edit_db()
+    function save_edit()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
 
-        $action_url = _A_::$app->router()->UrlTo('product/edit_db',['p_id' => _A_::$app->get('p_id')]);
+        $action_url = _A_::$app->router()->UrlTo('product/save_edit',['p_id' => _A_::$app->get('p_id')]);
         $this->template->vars('action_url', $action_url);
 
         if (!empty(_A_::$app->get('p_id'))) {
@@ -230,59 +229,11 @@ class Controller_Product extends Controller_Controller
                 if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
                 $this->template->vars('error', $error);
 
-                $sl_cat = 0;
-                $sl_cat2 = 0;
-                $sl_cat3 = 0;
-                $sl_cat4 = 0;
-
-
-                if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
-                    $post_categori = ['1'];
-                }
-                $results = mysql_query("select * from fabrix_categories");
-                while ($row = mysql_fetch_array($results)) {
-                    if (in_array($row[0], $post_categori)) {
-                        $sl_cat .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-                    } else {
-                        $sl_cat .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-                    }
-                }
-
-                if (empty($post_manufacturer{0})) {
-                    $post_manufacturer = 0;
-                }
-                $results = mysql_query("select * from fabrix_manufacturers");
-                while ($row = mysql_fetch_array($results)) {
-                    if ($row[0] == $post_manufacturer) {
-                        $sl_cat2 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-                    } else {
-                        $sl_cat2 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-                    }
-                }
-
-                if (!(isset($p_colors) && is_array($p_colors) && count($p_colors) > 0)) {
-                    $p_colors = [];
-                }
-                $results = mysql_query("select * from fabrix_colour");
-                while ($row = mysql_fetch_array($results)) {
-                    if (in_array($row[0], $p_colors)) {
-                        $sl_cat3 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-                    } else {
-                        $sl_cat3 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-                    }
-                }
-
-                if (!(isset($patterns) && is_array($patterns) && count($patterns) > 0)) {
-                    $patterns = [];
-                }
-                $results = mysql_query("select * from fabrix_patterns");
-                while ($row = mysql_fetch_array($results)) {
-                    if (in_array($row[0], $patterns)) {
-                        $sl_cat4 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-                    } else {
-                        $sl_cat4 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-                    }
-                }
+                $cats = $model->getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
+                $sl_cat = $cats['sl_cat'];
+                $sl_cat2 = $cats['sl_cat2'];
+                $sl_cat3 = $cats['sl_cat3'];
+                $sl_cat4 = $cats['sl_cat4'];
 
                 $userInfo = array(
                     'weight_id'                 => $post_weight_cat,
@@ -327,7 +278,6 @@ class Controller_Product extends Controller_Controller
                 );
 
                 $this->template->vars('userInfo', $userInfo);
-
                 ob_start();
                 $cimage = new Controller_Image($this->main);
                 $cimage->modify_images();
@@ -337,56 +287,17 @@ class Controller_Product extends Controller_Controller
                 $this->template->vars('modify_images', $m_images);
                 $this->main->view_layout('edit_form');
             } else {
-
-                if (!empty($New_Manufacturer)) {
-                    mysql_query("INSERT INTO fabrix_manufacturers set manufacturer='$New_Manufacturer'");
-                    $post_manufacturer = mysql_insert_id();
-                }
-                if (!empty($post_new_color)) {
-                    mysql_query("INSERT INTO fabrix_colour set colour='$post_new_color'");
-                    $p_colors[] = (string)mysql_insert_id();
-                }
-                if (!empty($pattern_type)) {
-                    $result = mysql_query("INSERT INTO fabrix_patterns SET pattern='$pattern_type'");
-                    $patterns[] = (string)mysql_insert_id();
-                }
-
-                //PageTitle='$post_title', patterns='$Pattern_Type', pcolours='$p_colors',
-                $sql = "update fabrix_products set manufacturerId='$post_manufacturer', weight_id='$post_weight_cat', specials='$post_special', inventory='$post_curret_in', dimensions='$post_dimens', makePriceVis='$post_hide_prise', stock_number='$post_st_nom', priceyard='$post_p_yard', width='$post_width', pnumber='$post_product_num', pvisible='$post_vis', rpnumber5='$post_fabric_5', rpnumber4='$post_fabric_4', rpnumber3='$post_fabric_3', rpnumber2='$post_fabric_2', rpnumber1='$post_fabric_1', metakeywords='$post_mkey', metadescription='$post_desc', ldesc='$post_Long_description', pname='$post_tp_name', sdesc='$post_short_desk', best = '$best', piece='$piece', whole='$whole' WHERE pid ='$p_id'";
-
-                //echo $sql;
-
-                $result = mysql_query($sql);
+                $result = $model->save($p_id, $New_Manufacturer,$post_new_color,$pattern_type,$post_weight_cat,
+                    $post_special,$post_curret_in, $post_dimens,$post_hide_prise,$post_st_nom,$post_p_yard,
+                    $post_width,$post_product_num,$post_vis,$post_fabric_5,$post_fabric_4,$post_fabric_3,
+                    $post_fabric_2,$post_fabric_1,$post_mkey,$post_desc,$post_Long_description,$post_tp_name,
+                    $post_short_desk,$best,$piece,$whole);
 
                 if ($result) {
-                    if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
-                        $post_categori = ['1'];
-                    }
-                    if (count($post_categori) > 0) {
-                        mysql_query("DELETE FROM fabrix_product_categories WHERE pid='$p_id'");
-                        foreach ($post_categori as $cid) {
-                            mysql_query("REPLACE INTO fabrix_product_categories SET pid='$p_id', cid='$cid'");
-                        }
-                    }
-
-                    if (count($p_colors) > 0) {
-                        mysql_query("DELETE FROM fabrix_product_colours WHERE prodID='$p_id'");
-                        foreach ($p_colors as $colourId) {
-                            mysql_query("REPLACE INTO fabrix_product_colours SET prodID='$p_id', colourId='$colourId'");
-                        }
-                    }
-
-                    if (count($patterns) > 0) {
-                        mysql_query("DELETE FROM fabrix_product_patterns WHERE prodID='$p_id'");
-                        foreach ($patterns as $patternId) {
-                            mysql_query("REPLACE INTO fabrix_product_patterns SET prodID='$p_id', patternId='$patternId'");
-                        }
-                    }
-
                     $this->template->vars('warning', ["Product Data saved successfully!"]);
                 } else {
-                    $this->template->vars('warning', [mysql_error()]);
-                }
+                    $this->template->vars('error', [mysql_error()]);
+                };
                 $this->edit_form();
             }
         } else {
@@ -432,59 +343,11 @@ class Controller_Product extends Controller_Controller
                 if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
                 $this->template->vars('error', $error);
 
-                $sl_cat = 0;
-                $sl_cat2 = 0;
-                $sl_cat3 = 0;
-                $sl_cat4 = 0;
-
-
-                if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
-                    $post_categori = ['1'];
-                }
-                $results = mysql_query("select * from fabrix_categories");
-                while ($row = mysql_fetch_array($results)) {
-                    if (in_array($row[0], $post_categori)) {
-                        $sl_cat .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-                    } else {
-                        $sl_cat .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-                    }
-                }
-
-                if (empty($post_manufacturer{0})) {
-                    $post_manufacturer = 0;
-                }
-                $results = mysql_query("select * from fabrix_manufacturers");
-                while ($row = mysql_fetch_array($results)) {
-                    if ($row[0] == $post_manufacturer) {
-                        $sl_cat2 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-                    } else {
-                        $sl_cat2 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-                    }
-                }
-
-                if (!(isset($p_colors) && is_array($p_colors) && count($p_colors) > 0)) {
-                    $p_colors = [];
-                }
-                $results = mysql_query("select * from fabrix_colour");
-                while ($row = mysql_fetch_array($results)) {
-                    if (in_array($row[0], $p_colors)) {
-                        $sl_cat3 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-                    } else {
-                        $sl_cat3 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-                    }
-                }
-
-                if (!(isset($patterns) && is_array($patterns) && count($patterns) > 0)) {
-                    $patterns = [];
-                }
-                $results = mysql_query("select * from fabrix_patterns");
-                while ($row = mysql_fetch_array($results)) {
-                    if (in_array($row[0], $patterns)) {
-                        $sl_cat4 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-                    } else {
-                        $sl_cat4 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-                    }
-                }
+                $cats = $model->getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
+                $sl_cat = $cats['sl_cat'];
+                $sl_cat2 = $cats['sl_cat2'];
+                $sl_cat3 = $cats['sl_cat3'];
+                $sl_cat4 = $cats['sl_cat4'];
 
                 $userInfo = array(
                     'weight_id' => $post_weight_cat,
@@ -530,7 +393,6 @@ class Controller_Product extends Controller_Controller
                 $this->template->vars('userInfo', $userInfo);
 
                 ob_start();
-                include_once('controllers/_image.php');
                 $cimage = new Controller_Image($this->main);
                 $cimage->modify_images();
                 $m_images = ob_get_contents();
@@ -538,54 +400,16 @@ class Controller_Product extends Controller_Controller
 
                 $this->template->vars('modify_images', $m_images);
 
-                $this->main->view_layout('product/edit_form');
+                $this->main->view_layout('edit_form');
             } else {
 
-                if (!empty($New_Manufacturer)) {
-                    mysql_query("INSERT INTO fabrix_manufacturers set manufacturer='$New_Manufacturer'");
-                    $post_manufacturer = mysql_insert_id();
-                }
-                if (!empty($post_new_color)) {
-                    mysql_query("INSERT INTO fabrix_colour set colour='$post_new_color'");
-                    $p_colors[] = (string)mysql_insert_id();
-                }
-                if (!empty($pattern_type)) {
-                    $result = mysql_query("INSERT INTO fabrix_patterns SET pattern='$pattern_type'");
-                    $patterns[] = (string)mysql_insert_id();
-                }
+                $result = $model->save($p_id, $New_Manufacturer,$post_new_color,$pattern_type,$post_weight_cat,
+                    $post_special,$post_curret_in, $post_dimens,$post_hide_prise,$post_st_nom,$post_p_yard,
+                    $post_width,$post_product_num,$post_vis,$post_fabric_5,$post_fabric_4,$post_fabric_3,
+                    $post_fabric_2,$post_fabric_1,$post_mkey,$post_desc,$post_Long_description,$post_tp_name,
+                    $post_short_desk,$best,$piece,$whole);
 
-                //PageTitle='$post_title', patterns='$Pattern_Type', pcolours='$p_colors',
-                $sql = "update fabrix_products set manufacturerId='$post_manufacturer', weight_id='$post_weight_cat', specials='$post_special', inventory='$post_curret_in', dimensions='$post_dimens', makePriceVis='$post_hide_prise', stock_number='$post_st_nom', priceyard='$post_p_yard', width='$post_width', pnumber='$post_product_num', pvisible='$post_vis', rpnumber5='$post_fabric_5', rpnumber4='$post_fabric_4', rpnumber3='$post_fabric_3', rpnumber2='$post_fabric_2', rpnumber1='$post_fabric_1', metakeywords='$post_mkey', metadescription='$post_desc', ldesc='$post_Long_description', pname='$post_tp_name', sdesc='$post_short_desk', best = '$best', piece='$piece', whole = '$whole'  WHERE pid ='$p_id'";
-
-                //echo $sql;
-
-                $result = mysql_query($sql);
-
-                if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
-                    $post_categori = ['1'];
-                }
-                if (count($post_categori) > 0) {
-                    mysql_query("DELETE FROM fabrix_product_categories WHERE pid='$p_id'");
-                    foreach ($post_categori as $cid) {
-                        mysql_query("REPLACE INTO fabrix_product_categories SET pid='$p_id', cid='$cid'");
-                    }
-                }
-
-                if (count($p_colors) > 0) {
-                    mysql_query("DELETE FROM fabrix_product_colours WHERE prodID='$p_id'");
-                    foreach ($p_colors as $colourId) {
-                        mysql_query("REPLACE INTO fabrix_product_colours SET prodID='$p_id', colourId='$colourId'");
-                    }
-                }
-
-                if (count($patterns) > 0) {
-                    mysql_query("DELETE FROM fabrix_product_patterns WHERE prodID='$p_id'");
-                    foreach ($patterns as $patternId) {
-                        mysql_query("REPLACE INTO fabrix_product_patterns SET prodID='$p_id', patternId='$patternId'");
-                    }
-                }
-
-                if ($model->ConfirmProductInsert()) {
+                if ($result && $model->ConfirmProductInsert()) {
                     $this->template->vars('warning', ["Product Data saved successfully!"]);
                 } else {
                     $this->template->vars('error', [mysql_error()]);
@@ -619,7 +443,7 @@ class Controller_Product extends Controller_Controller
         if (!empty(_A_::$app->get('cat'))) {
             $prms['cat'] = _A_::$app->get('cat');
         }
-        $back_url = _A_::$app->router()->UrlTo('admin_home',$prms);
+        $back_url = _A_::$app->router()->UrlTo('admin/home',$prms);
         $this->template->vars('back_url', $back_url);
 
         $userInfo = $model->getproductInfo();
@@ -652,7 +476,7 @@ class Controller_Product extends Controller_Controller
             if (!is_null(_A_::$app->get('cat'))) {
                 $prms['cat'] = _A_::$app->get('cat');
             }
-            $href = _A_::$app->router()->UrlTo('admin_home',$prms);
+            $href = _A_::$app->router()->UrlTo('admin/home',$prms);
             exit ("<script>window.location.href='" . $href . "';</script>");
         }
     }

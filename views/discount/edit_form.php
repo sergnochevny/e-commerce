@@ -1,8 +1,8 @@
 <div class="ui-widget-overlay" id="wait_loader">
     <i class="fa fa-spinner fa-pulse fa-4x"></i>
 </div>
-    <!--<form action="edit_discounts_data?discounts_id=id"  method="post">-->
-<form method="POST" id="discount" action="<?php echo _A_::$app->router()->UrlTo('discount/edit_data',['discounts_id'=>_A_::$app->get('discounts_id')]);?>"
+    <!--<form action="edit_discounts_data?discount_id=id"  method="post">-->
+<form method="POST" id="discount" action="<?php echo _A_::$app->router()->UrlTo('discount/edit_data',['discount_id'=>_A_::$app->get('discount_id')]);?>"
       class="enquiry-form ">
     <br/>
     <div class="form-row">

@@ -37,8 +37,8 @@ class Controller_Discount extends Controller_Base
         $this->main->test_access_rights();
         $model = new Model_Discount();
         $id = $model->validData(_A_::$app->get('id'));
-        if (!empty($discounts_id)) {
-            $model->del_discount($discounts_id);
+        if (!empty($discount_id)) {
+            $model->del_discount($discount_id);
         }
 
         $this->get_list();
@@ -82,7 +82,6 @@ class Controller_Discount extends Controller_Base
         $this->main->test_access_rights();
         $this->data_usage();
         $this->data_usage_order();
-
         $this->main->view_admin('usage');
     }
 
@@ -120,11 +119,11 @@ class Controller_Discount extends Controller_Base
     {
         $this->main->test_access_rights();
         $model = new Model_Discount();
-        $discounts_id = $model->validData(_A_::$app->get('discounts_id'));
-        if (!empty($discounts_id)) {
+        $discount_id = $model->validData(_A_::$app->get('discount_id'));
+        if (!empty($discount_id)) {
             $i = 0;
             ob_start();
-            $results = mysql_query("select * from fabrix_specials_usage WHERE specialId='" . $discounts_id . "'");
+            $results = mysql_query("select * from fabrix_specials_usage WHERE specialId='" . $discount_id . "'");
             while ($row = mysql_fetch_array($results)) {
                 $result = mysql_query("select * from fabrix_orders WHERE oid='" . $row[2] . "'");
                 $row = mysql_fetch_array($result);
@@ -174,10 +173,10 @@ class Controller_Discount extends Controller_Base
             $users_list = [];
         }
 
-        if (!empty($discounts_id)) {
+        if (!empty($discount_id)) {
             if (
                 ($iDscntType == '2' && $shipping_type == '0') ||
-                ((strlen($coupon_code) > 0) && ($generate_code == "0") && $model->checkCouponCode($discounts_id, $coupon_code)) ||
+                ((strlen($coupon_code) > 0) && ($generate_code == "0") && $model->checkCouponCode($discount_id, $coupon_code)) ||
                 (!isset($users_list) && ($users_check == '4')) ||
                 (!isset($fabric_list) && ($sel_fabrics == "2")) ||
                 ($start_date == 0) || ($date_end == 0) ||
@@ -188,7 +187,7 @@ class Controller_Discount extends Controller_Base
                 $error = [];
 
                 if ($iDscntType == '2' && $shipping_type == '0') $error[] = "The shipping type is required.";
-                if (($generate_code == "0") && (strlen($coupon_code) > 0) && $model->checkCouponCode($discounts_id, $coupon_code))
+                if (($generate_code == "0") && (strlen($coupon_code) > 0) && $model->checkCouponCode($discount_id, $coupon_code))
                     $error[] = "The coupon code is in use.";
                 if (($restrictions == '')) $error[] = "Identify 'retrictions' field";
                 if ($iType == '0') $error[] = "Identify 'promotion' field";
@@ -241,28 +240,28 @@ class Controller_Discount extends Controller_Base
             } else {
 
                 if ($generate_code == '1') {
-                    $coupon_code = $model->generateCouponCode($discounts_id);
+                    $coupon_code = $model->generateCouponCode($discount_id);
                     $allow_multiple = 1;
                     $sel_fabrics = 1;
                     $fabric_list = [];
                 }
 
-                $result = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='" . $discounts_id . "'");
+                $result = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='" . $discount_id . "'");
                 if ($users_check == "4") {
                     foreach ($users_list as $user_id) {
-                        $result = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . $discounts_id . "',  '" . $user_id . "');");
+                        $result = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . $discount_id . "',  '" . $user_id . "');");
                     }
                 }
 
-                $result = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . $discounts_id . "'");
+                $result = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . $discount_id . "'");
                 if ($sel_fabrics == "2") {
                     foreach ($fabric_list as $fabric_id) {
-                        $result = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . $discounts_id . "',  '" . $fabric_id . "');");
+                        $result = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . $discount_id . "',  '" . $fabric_id . "');");
                     }
                 }
 
 
-                $result = mysql_query("update fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check',shipping_type='$shipping_type',product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end' WHERE sid ='$discounts_id'");
+                $result = mysql_query("update fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check',shipping_type='$shipping_type',product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end' WHERE sid ='$discount_id'");
                 $error = [];
                 if ($result) {
                     $warning = ["The data updated successfully!"];
@@ -382,19 +381,19 @@ class Controller_Discount extends Controller_Base
             $result = mysql_query("INSERT INTO fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check', shipping_type='$shipping_type', product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end', date_added = '$timestamp'");
             $error = [];
             if ($result) {
-                $discounts_id = mysql_insert_id();
+                $discount_id = mysql_insert_id();
 
-                $result = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='" . $discounts_id . "'");
+                $result = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='" . $discount_id . "'");
                 if ($users_check == "4") {
                     foreach ($users_list as $user_id) {
-                        $result = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . $discounts_id . "',  '" . $user_id . "');");
+                        $result = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . $discount_id . "',  '" . $user_id . "');");
                     }
                 }
 
-                $result = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . $discounts_id . "'");
+                $result = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . $discount_id . "'");
                 if ($sel_fabrics == "2") {
                     foreach ($fabric_list as $fabric_id) {
-                        $result = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . $discounts_id . "',  '" . $fabric_id . "');");
+                        $result = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . $discount_id . "',  '" . $fabric_id . "');");
                     }
                 }
 

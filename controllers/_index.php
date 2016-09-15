@@ -10,18 +10,6 @@ Class Controller_Index Extends Controller_Controller
         $this->main->view('index');
     }
 
-    function admin_home()
-    {
-//        session_destroy();
-//        unset($_SESSION);
-        $this->main->test_access_rights();
-        $shop = new Controller_Shop($this->main);
-        $shop->all_products();
-        $shop->product_filtr_list();
-
-        $this->main->view_admin('admin_home');
-    }
-
     function service()
     {
         $this->main->view('static/service');

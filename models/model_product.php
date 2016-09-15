@@ -42,111 +42,6 @@ Class Model_Product extends Model_Model
         return $product;
     }
 
-    public function update_user_data($user_Same_as_billing, $user_email, $user_first_name, $user_last_name, $user_organization,
-                                     $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip, $user_telephone,
-                                     $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name, $s_organization, $user_s_address,
-                                     $user_s_address2, $user_s_city, $user_s_state, $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax,
-                                     $user_s_email, $user_id)
-    {
-        if ($user_Same_as_billing == "1") {
-            $q = "UPDATE `fabrix_accounts` SET" .
-                " `email` = '" . $user_email .
-                "',`bill_firstname` = '" . $user_first_name .
-                "',`bill_lastname` = '" . $user_last_name .
-                "',`bill_organization` = '" . $user_organization .
-                "',`bill_address1` = '" . $user_address .
-                "',`bill_address2` = '" . $user_address2 .
-                "',`bill_province` = '" . $user_s_state .
-                "',`bill_province_other` = ' ',`bill_city` =  '" . $user_city .
-                "',`bill_country` = '" . $user_country .
-                "',`bill_postal` = '" . $user_zip .
-                "',`bill_phone` = '" . $user_telephone .
-                "',`bill_fax` = '" . $user_fax .
-                "',`bill_email` = '" . $user_bil_email .
-                "',`ship_firstname` = '" . $user_first_name .
-                "',`ship_lastname` = '" . $user_last_name .
-                "',`ship_organization` = '" . $user_organization .
-                "',`ship_address1` = '" . $user_address .
-                "',`ship_address2` = '" . $user_address2 .
-                "',`ship_city` = '" . $user_city .
-                "',`ship_province` = '" . $user_s_state .
-                "',`ship_province_other` = ' ',`ship_country` = '" . $user_country .
-                "',`ship_postal` = '" . $user_zip .
-                "',`ship_phone` = '" . $user_telephone .
-                "',`ship_fax` = '" . $user_fax .
-                "',`ship_email` = '" . $user_bil_email .
-                "'WHERE  `aid` = $user_id;";
-        } else {
-            $q = "UPDATE `fabrix_accounts` SET " .
-                " `email` = '" . $user_email .
-                "',`bill_firstname` =  '" . $user_first_name .
-                "',`bill_lastname` =  '" . $user_last_name .
-                "',`bill_organization` =  '" . $user_organization .
-                "',`bill_address1` =  '" . $user_address .
-                "',`bill_address2` =  '" . $user_address2 .
-                "',`bill_province` =  '" . $user_state .
-                "',`bill_province_other` =  ' ',`bill_city` =  '" . $user_city .
-                "',`bill_country` =  '" . $user_country .
-                "',`bill_postal` =  '" . $user_zip .
-                "',`bill_phone` =  '" . $user_telephone .
-                "',`bill_fax` =  '" . $user_fax .
-                "',`bill_email` =  '" . $user_bil_email .
-                "',`ship_firstname` =  '" . $user_s_first_name .
-                "',`ship_lastname` =  '" . $user_s_last_name .
-                "',`ship_organization` =  '" . $s_organization .
-                "',`ship_address1` =  '" . $user_s_address .
-                "',`ship_address2` =  '" . $user_s_address2 .
-                "',`ship_city` =  '" . $user_s_city .
-                "',`ship_province` =  '" . $user_s_state .
-                "',`ship_province_other` =  ' ',`ship_country` =  '" . $user_s_country .
-                "',`ship_postal` =  '" . $user_s_zip .
-                "',`ship_phone` =  '" . $user_s_telephone .
-                "',`ship_fax` =  '" . $user_s_fax .
-                "',`ship_email` =  '" . $user_s_email .
-                "'WHERE  `aid` = $user_id;";
-
-        }
-        $result = mysql_query($q);
-        return $result;
-    }
-
-    public function insert_user($user_Same_as_billing, $user_email, $password, $user_first_name, $user_last_name, $user_organization,
-                                $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip,
-                                $user_telephone, $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name,
-                                $s_organization, $user_s_address, $user_s_address2, $user_s_city, $user_s_state,
-                                $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax, $user_s_email, $timestamp)
-    {
-        if ($user_Same_as_billing == "1") {
-            $q = "INSERT INTO  `fabrix_accounts`" .
-                "(`aid` ,`email` ,`password` ,`bill_firstname` ,`bill_lastname` ," .
-                "`bill_organization` ,`bill_address1` ,`bill_address2` ,`bill_province` ," .
-                "`bill_province_other` ,`bill_city` ,`bill_country` ,`bill_postal` ," .
-                "`bill_phone` ,`bill_fax` ,`bill_email` ,`ship_firstname` ,`ship_lastname` ," .
-                "`ship_organization` ,`ship_address1` ,`ship_address2` ,`ship_city` ," .
-                "`ship_province` ,`ship_province_other` ,`ship_country` ,`ship_postal` ," .
-                "`ship_phone` ,`ship_fax` ,`ship_email` ,`get_newsletter` ,`date_registered` ,`login_counter`)" .
-                "VALUES (NULL , '$user_email', '$password', '$user_first_name', '$user_last_name', '$user_organization', '$user_address'," .
-                " '$user_address2', '$user_state', ' ', '$user_city', '$user_country', '$user_zip', '$user_telephone', '$user_fax', " .
-                " '$user_bil_email', '$user_first_name', '$user_last_name', '$user_organization', '$user_address'," .
-                " '$user_address2', '$user_city', '$user_s_state', ' ', '$user_country', '$user_zip', '$user_telephone'," .
-                " '$user_fax', '$user_bil_email', '1', '$timestamp', '0');";
-        } else {
-            $q = "INSERT INTO  `fabrix_accounts` (`aid` , `email` , `password` , `bill_firstname` , `bill_lastname` ," .
-                " `bill_organization` , `bill_address1` , `bill_address2` , `bill_province` , `bill_province_other` ," .
-                " `bill_city` , `bill_country` , `bill_postal` , `bill_phone` , `bill_fax` , `bill_email` , " .
-                "`ship_firstname` , `ship_lastname` , `ship_organization` , `ship_address1` , `ship_address2` , " .
-                "`ship_city` , `ship_province` , `ship_province_other` , `ship_country` , `ship_postal` , " .
-                "`ship_phone` , `ship_fax` , `ship_email` , `get_newsletter` , `date_registered` , `login_counter`)" .
-                " VALUES (NULL ,  '$user_email', '$password', '$user_first_name', '$user_last_name', '$user_organization'," .
-                " '$user_address', '$user_address2', '$user_state', ' ', '$user_city', '$user_country', '$user_zip'," .
-                " '$user_telephone', '$user_fax', '$user_bil_email', '$user_s_first_name', '$user_s_last_name'," .
-                " '$s_organization', '$user_s_address', '$user_s_address2', '$user_s_city', '$user_s_state', ' '," .
-                " '$user_s_country', '$user_s_zip', '$user_s_telephone', '$user_s_fax', '$user_s_email', '1', '$timestamp', '0');";
-        }
-        $result = mysql_query($q);
-        return $result;
-    }
-
     public function product_filtr_list()
     {
         $x = 0;
@@ -240,13 +135,73 @@ Class Model_Product extends Model_Model
 
     }
 
+    public function getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns)
+    {
+        $sl_cat = '';
+        $sl_cat2 = '';
+        $sl_cat3 = '';
+        $sl_cat4 = '';
+        if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
+            $post_categori = ['1'];
+        }
+        $results = mysql_query("select * from fabrix_categories");
+        while ($row = mysql_fetch_array($results)) {
+            if (in_array($row[0], $post_categori)) {
+                $sl_cat .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
 
-    public function getproductInfo()
+        if (empty($post_manufacturer{0})) {
+            $post_manufacturer = 0;
+        }
+        $results = mysql_query("select * from fabrix_manufacturers");
+        while ($row = mysql_fetch_array($results)) {
+            if ($row[0] == $post_manufacturer) {
+                $sl_cat2 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat2 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+
+        if (!(isset($p_colors) && is_array($p_colors) && count($p_colors) > 0)) {
+            $p_colors = [];
+        }
+        $results = mysql_query("select * from fabrix_colour");
+        while ($row = mysql_fetch_array($results)) {
+            if (in_array($row[0], $p_colors)) {
+                $sl_cat3 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat3 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+
+        if (!(isset($patterns) && is_array($patterns) && count($patterns) > 0)) {
+            $patterns = [];
+        }
+        $results = mysql_query("select * from fabrix_patterns");
+        while ($row = mysql_fetch_array($results)) {
+            if (in_array($row[0], $patterns)) {
+                $sl_cat4 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat4 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+        return [
+            'sl_cat' => $sl_cat,
+            'sl_cat2' => $sl_cat2,
+            'sl_cat3' => $sl_cat3,
+            'sl_cat4' => $sl_cat4
+        ];
+    }
+
+    public function getProductInfo($pid)
     {
 
 //        $back_url = urlencode($back_url);
 
-        $p_id = $_GET['p_id'];
+        $p_id = $pid;
         $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
         $rowsni = mysql_fetch_array($resulthatistim);
         $p_pname = $rowsni['pname'];
@@ -282,10 +237,6 @@ Class Model_Product extends Model_Model
         if (empty($manufacturerId)) {
             $manufacturerId = "0";
         }
-        $sl_cat = 0;
-        $sl_cat2 = 0;
-        $sl_cat3 = 0;
-        $sl_cat4 = 0;
         $patterns = [];
         $result = mysql_query("select patternId from fabrix_product_patterns WHERE prodId='$p_id'");
         while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
@@ -305,38 +256,12 @@ Class Model_Product extends Model_Model
         };
 
         if (count($categories) < 1) $categories = ['1'];
-        $results = mysql_query("select * from fabrix_categories");
-        while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $categories)) {
-                $sl_cat .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-        $results = mysql_query("select * from fabrix_manufacturers");
-        while ($row = mysql_fetch_array($results)) {
-            if ($row[0] == $manufacturerId) {
-                $sl_cat2 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat2 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-        $results = mysql_query("select * from fabrix_colour");
-        while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $pcolours)) {
-                $sl_cat3 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat3 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-        $results = mysql_query("select * from fabrix_patterns");
-        while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $patterns)) {
-                $sl_cat4 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat4 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
+
+        $cats = $this->getProductCatInfo($categories, $manufacturerId, $pcolours, $patterns);
+        $sl_cat = $cats['sl_cat'];
+        $sl_cat2 = $cats['sl_cat2'];
+        $sl_cat3 = $cats['sl_cat3'];
+        $sl_cat4 = $cats['sl_cat4'];
 
         return array(
             'weight_id' => $weight_id,
@@ -718,5 +643,52 @@ Class Model_Product extends Model_Model
         $res = mysql_query($q_total);
         $total = mysql_fetch_row($res)[0];
         return $total;
+    }
+
+    public function save($p_id, $New_Manufacturer,$post_new_color,$pattern_type,$post_weight_cat,$post_special,$post_curret_in, $post_dimens,$post_hide_prise,$post_st_nom,$post_p_yard,$post_width,$post_product_num,$post_vis,$post_fabric_5,$post_fabric_4,$post_fabric_3,$post_fabric_2,$post_fabric_1,$post_mkey,$post_desc,$post_Long_description,$post_tp_name,$post_short_desk,$best,$piece,$whole){
+        if (!empty($New_Manufacturer)) {
+            mysql_query("INSERT INTO fabrix_manufacturers set manufacturer='$New_Manufacturer'");
+            $post_manufacturer = mysql_insert_id();
+        }
+        if (!empty($post_new_color)) {
+            mysql_query("INSERT INTO fabrix_colour set colour='$post_new_color'");
+            $p_colors[] = (string)mysql_insert_id();
+        }
+        if (!empty($pattern_type)) {
+            $result = mysql_query("INSERT INTO fabrix_patterns SET pattern='$pattern_type'");
+            $patterns[] = (string)mysql_insert_id();
+        }
+
+        //PageTitle='$post_title', patterns='$Pattern_Type', pcolours='$p_colors',
+        $sql = "update fabrix_products set manufacturerId='$post_manufacturer', weight_id='$post_weight_cat', specials='$post_special', inventory='$post_curret_in', dimensions='$post_dimens', makePriceVis='$post_hide_prise', stock_number='$post_st_nom', priceyard='$post_p_yard', width='$post_width', pnumber='$post_product_num', pvisible='$post_vis', rpnumber5='$post_fabric_5', rpnumber4='$post_fabric_4', rpnumber3='$post_fabric_3', rpnumber2='$post_fabric_2', rpnumber1='$post_fabric_1', metakeywords='$post_mkey', metadescription='$post_desc', ldesc='$post_Long_description', pname='$post_tp_name', sdesc='$post_short_desk', best = '$best', piece='$piece', whole = '$whole'  WHERE pid ='$p_id'";
+
+        $result = mysql_query($sql);
+
+        if($result){
+            if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
+                $post_categori = ['1'];
+            }
+            if (count($post_categori) > 0) {
+                mysql_query("DELETE FROM fabrix_product_categories WHERE pid='$p_id'");
+                foreach ($post_categori as $cid) {
+                    mysql_query("REPLACE INTO fabrix_product_categories SET pid='$p_id', cid='$cid'");
+                }
+            }
+
+            if (count($p_colors) > 0) {
+                mysql_query("DELETE FROM fabrix_product_colours WHERE prodID='$p_id'");
+                foreach ($p_colors as $colourId) {
+                    mysql_query("REPLACE INTO fabrix_product_colours SET prodID='$p_id', colourId='$colourId'");
+                }
+            }
+
+            if (count($patterns) > 0) {
+                mysql_query("DELETE FROM fabrix_product_patterns WHERE prodID='$p_id'");
+                foreach ($patterns as $patternId) {
+                    mysql_query("REPLACE INTO fabrix_product_patterns SET prodID='$p_id', patternId='$patternId'");
+                }
+            }
+        }
+        return $result;
     }
 }

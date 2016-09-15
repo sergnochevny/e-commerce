@@ -365,12 +365,13 @@ class Model_Order extends Model_Model
         return false;
     }
 
-    public function get_orders_by_user($user_id)
+    public function get_orders_by_user($user_id, $start, $per_page, &$res_count_rows)
     {
-        $results = mysql_query("select * from fabrix_orders WHERE aid='$user_id'");
-        if ($results) {
+        $res = mysql_query("select * from fabrix_orders WHERE aid='$user_id' ORDER BY order_date DESC LIMIT $start,$per_page");
+        if ($res) {
             $rows = [];
-            while ($row = mysql_fetch_array($results)) {
+            $res_count_rows = mysql_num_rows($res);
+            while ($row = mysql_fetch_array($res)) {
                 $rows[] = $row;
             }
             return $rows;
@@ -393,10 +394,10 @@ class Model_Order extends Model_Model
 
     public function update_order_detail_info($status, $status, $track_code, $end_date, $order_id)
     {
-        $request = 'UPDATE fabrix_orders SET 
-                    status = \'' . $status . '\', 
-                    track_code = \'' . $track_code . '\', 
-                    end_date = STR_TO_DATE(\'' . $end_date . '\', \'%m/%d/%Y\') WHERE oid = \'' . $order_id . '\'';
+        $request = "UPDATE fabrix_orders SET 
+                    status = '" . $status . "', 
+                    track_code = '" . $track_code . "', 
+                    end_date = STR_TO_DATE('" . $end_date . "', '%m/%d/%Y') WHERE oid = '" . $order_id . "'";
         return mysql_query($request);
     }
 

@@ -86,15 +86,15 @@ class Controller_Main extends Controller_Base
 
     function test_access_rights($redirect_to_url = true)
     {
-        $authorization = new Controller_Authorization($this);
-        if (!$authorization->is_admin_authorized()) {
+        $admin = new Controller_Admin($this);
+        if (!$admin->is_authorized()) {
             if ($redirect_to_url) {
                 $redirect = strtolower(explode('/', _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://";
                 $redirect .= _A_::$app->server('SERVER_NAME');
                 $redirect .= (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT'));
                 $redirect .= _A_::$app->server('REQUEST_URI');
                 if (empty(_A_::$app->server('REQUEST_URI'))) {
-                    $redirect = _A_::$app->router()->UrlTo('admin_home');
+                    $redirect = _A_::$app->router()->UrlTo('admin/home');
                 }
             } else
                 $redirect = _A_::$app->server('HTTP_REFERER');

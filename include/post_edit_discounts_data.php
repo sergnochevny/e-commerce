@@ -1,6 +1,6 @@
 <?php
-$userInfo = $model->validData(isset($_GET['discounts_id'])?$_GET['discounts_id']:null);
-$discounts_id = $userInfo['data'];
+$userInfo = $model->validData(isset($_GET['discount_id'])?$_GET['discount_id']:null);
+$discount_id = $userInfo['data'];
 $userInfo = $model->validData(isset($_POST['iType'])?$_POST['iType']:'');
 $iType = $userInfo['data'];
 $userInfo = $model->validData(isset($_POST['coupon_code'])?$_POST['coupon_code']:'');
@@ -57,14 +57,14 @@ if ($allow_multiple == "1") {
     $allow_multiple = "0";
 }
 
-//if (!empty($discounts_id)) {
+//if (!empty($discount_id)) {
 //    if (!empty($start_date)) {
 //        $d = substr($start_date, 0, 2);
 //        $m = substr($start_date, -3, 2);
 //        $y = substr($start_date, -4);
 //        $start_date = "$d-$m-$y";
 //        $start_date = strtotime($start_date);
-//        $result = mysql_query("update fabrix_specials set date_start='$start_date' WHERE sid ='$discounts_id'");
+//        $result = mysql_query("update fabrix_specials set date_start='$start_date' WHERE sid ='$discount_id'");
 //    }
 //    if (!empty($date_end)) {
 //        $d = substr($date_end, 0, 2);
@@ -72,7 +72,7 @@ if ($allow_multiple == "1") {
 //        $y = substr($date_end, -4);
 //        $date_end = "$d-$m-$y";
 //        $date_end = strtotime($date_end);
-//        $result = mysql_query("update fabrix_specials set date_end='$date_end' WHERE sid ='$discounts_id'");
+//        $result = mysql_query("update fabrix_specials set date_end='$date_end' WHERE sid ='$discount_id'");
 //    }
 //} else {
 //    if (!empty($date_end)) {
