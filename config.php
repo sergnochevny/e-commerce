@@ -61,7 +61,8 @@ return [
 ],
     'ini_set' => [
         'display_errors' => 'On',
-        'mysql.connect_timeout' => 60
+        'mysql.connect_timeout' => 60,
+        'error_reporting' => E_ALL & !E_DEPRECATED,
     ],
     'setlocale' => [LC_ALL, 'en_US'],
     'setlocale' => [LC_TIME, 'UTC'],

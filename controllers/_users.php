@@ -253,7 +253,7 @@ class Controller_Users extends Controller_Controller
                             $user_s_email, $user_id);
 
                         if ($result) {
-                            if (!is_null(_A_::$app->session['_']) && ($user_id == _A_::$app->session('_'))) {
+                            if (!is_null(_A_::$app->session('_')) && ($user_id == _A_::$app->session('_'))) {
                                 $user = $model->get_user_by_id($user_id);
                                 if (isset($user)) {
                                     _A_::$app->setSession('user', $user);

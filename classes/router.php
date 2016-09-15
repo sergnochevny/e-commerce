@@ -102,17 +102,6 @@ Class Router
     private function http_build_url($url, $parts = array(), $flags = null, &$new_url = false)
     {
         if (!function_exists('http_build_url')) {
-            define('HTTP_URL_REPLACE', 1);                // Replace every part of the first URL when there's one of the second URL
-            define('HTTP_URL_JOIN_PATH', 2);            // Join relative paths
-            define('HTTP_URL_JOIN_QUERY', 4);            // Join query strings
-            define('HTTP_URL_STRIP_USER', 8);            // Strip any user authentication information
-            define('HTTP_URL_STRIP_PASS', 16);            // Strip any password authentication information
-            define('HTTP_URL_STRIP_AUTH', 32);            // Strip any authentication information
-            define('HTTP_URL_STRIP_PORT', 64);            // Strip explicit port numbers
-            define('HTTP_URL_STRIP_PATH', 128);            // Strip complete path
-            define('HTTP_URL_STRIP_QUERY', 256);        // Strip query string
-            define('HTTP_URL_STRIP_FRAGMENT', 512);        // Strip any fragments (#identifier)
-            define('HTTP_URL_STRIP_ALL', 1024);            // Strip anything but scheme and host
 
             if (is_null($flags)) $flags = HTTP_URL_REPLACE;
             $keys = ['user', 'pass', 'port', 'path', 'query', 'fragment'];
@@ -190,10 +179,24 @@ Class Router
 
     protected function init()
     {
+        if (!function_exists('http_build_url')) {
+            define('HTTP_URL_REPLACE', 1);                // Replace every part of the first URL when there's one of the second URL
+            define('HTTP_URL_JOIN_PATH', 2);            // Join relative paths
+            define('HTTP_URL_JOIN_QUERY', 4);            // Join query strings
+            define('HTTP_URL_STRIP_USER', 8);            // Strip any user authentication information
+            define('HTTP_URL_STRIP_PASS', 16);            // Strip any password authentication information
+            define('HTTP_URL_STRIP_AUTH', 32);            // Strip any authentication information
+            define('HTTP_URL_STRIP_PORT', 64);            // Strip explicit port numbers
+            define('HTTP_URL_STRIP_PATH', 128);            // Strip complete path
+            define('HTTP_URL_STRIP_QUERY', 256);        // Strip query string
+            define('HTTP_URL_STRIP_FRAGMENT', 512);        // Strip any fragments (#identifier)
+            define('HTTP_URL_STRIP_ALL', 1024);            // Strip anything but scheme and host
+        }
         $this->route = (empty(_A_::$app->get('route'))) ? '' : _A_::$app->get('route');
         if (empty($this->route)) $this->route = 'index';
         $this->route = trim($this->route, '/\\');
         $this->setPath(SITE_PATH . 'controllers' . DS);
+
     }
 
     private function setPath($path)

@@ -91,7 +91,7 @@ class Controller_Cart extends Controller_Controller
     private function products_in($template = 'product_in')
     {
         $base_url = _A_::$app->router()->UrlTo('/');
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         if (count($cart_items) > 0) {
             foreach ($cart_items as $key => $item) {
                 $this->product_in($key, $item, $template);
@@ -122,7 +122,7 @@ class Controller_Cart extends Controller_Controller
         $format_price = '';
         $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
 
-        $discountIds = !is_null(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+        $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
         $saleprice = $item['priceyard'];
         $sDiscount = 0;
         $saleprice = round($mp->calculateProductSalePrice($p_id, $saleprice, $discountIds), 2);
@@ -156,7 +156,7 @@ class Controller_Cart extends Controller_Controller
     private function samples_in($template = 'sample_in_proceed')
     {
         $base_url = _A_::$app->router()->UrlTo('/');
-        $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+        $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
         if (count($cart_samples_items) > 0) {
             foreach ($cart_samples_items as $key => $item) {
                 $this->sample_in($key, $item, $template);
@@ -192,8 +192,8 @@ class Controller_Cart extends Controller_Controller
 
     function calc_samples_amount()
     {
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-        $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
         $ms = new Model_Samples();
         $cart_samples_sum = round($ms->calculateSamplesPrice($cart_items, $cart_samples_items), 2);
         $format_samples_sum = "$" . number_format($cart_samples_sum, 2);
@@ -215,21 +215,21 @@ class Controller_Cart extends Controller_Controller
         $total = 0;
         $aPrds = [];
 
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-        $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
-        $coupon_code = !is_null(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+        $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
         $ms = new Model_Samples();
         $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
-        $bExpressSamples = !is_null(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
+        $bExpressSamples = isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
         if (!$systemAllowExpressSamples) {
             $bExpressSamples = false;
         }
         if (count($cart_samples_items) == 0) $bExpressSamples = false;
 
-        $bAcceptExpress = !$systemAllowExpressSamples ? false : !is_null(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
+        $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
         $uid = !is_null(_A_::$app->session('user')) ? (int)_A_::$app->session('user')['aid'] : 0;
-        $shipping = (!is_null(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-        $bShipRoll = !is_null(_A_::$app->session('cart')['ship_roll']) ? (boolean)_A_::$app->session('cart')['ship_roll'] : false;
+        $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
+        $bShipRoll = isset(_A_::$app->session('cart')['ship_roll']) ? (boolean)_A_::$app->session('cart')['ship_roll'] : false;
         $total_items = $this->calc_items_amount();
         $total += $total_items;
         $total_samples_items = $this->calc_samples_amount();
@@ -246,7 +246,7 @@ class Controller_Cart extends Controller_Controller
 
             #calculate the discount
             if (count($aPrds) > 0) {
-                $discountIds = !is_null(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+                $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
                 $shipDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_SHIPPING, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
                 $couponDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_COUPON, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
                 $cart = _A_::$app->session('cart');
@@ -278,7 +278,7 @@ class Controller_Cart extends Controller_Controller
 
     function calc_items_amount()
     {
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $SUM = 0;
         foreach ($cart_items as $key => $item) {
             $SUM += round($item['quantity'] * $item['saleprice'], 2);
@@ -297,17 +297,17 @@ class Controller_Cart extends Controller_Controller
         $couponDiscount = 0;
         $aPrds = [];
 
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-        $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
-        $coupon_code = !is_null(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+        $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
         $ms = new Model_Samples();
         $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
-        $bExpressSamples = !$systemAllowExpressSamples ? false : !is_null(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
+        $bExpressSamples = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
         if (count($cart_samples_items) == 0) $bExpressSamples = false;
-        $bAcceptExpress = !$systemAllowExpressSamples ? false : !is_null(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
+        $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
         $uid = (!is_null(_A_::$app->session('user'))) ? (int)_A_::$app->session('user')['aid'] : 0;
-        $shipping = (!is_null(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-        $bShipRoll = (!is_null(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
+        $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
+        $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
         $total_items = $this->calc_items_amount();
         $total += $total_items;
         $total_samples_items = $this->calc_samples_amount();
@@ -346,7 +346,7 @@ class Controller_Cart extends Controller_Controller
 
     function calc_items_discount_amount()
     {
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $SUM = 0;
         foreach ($cart_items as $key => $item) $SUM += round($item['quantity'] * $item['discount'], 2);
         return $SUM;
@@ -396,16 +396,16 @@ class Controller_Cart extends Controller_Controller
         $express_samples_cost = 0;
         $total = 0;
 
-        if (!is_null(_A_::$app->session('cart')) && !is_null(_A_::$app->session('cart')['trid']) && !is_null(_A_::$app->session('user')) &&
-            !is_null(_A_::$app->session('cart')['payment']) && (_A_::$app->session('cart')['payment'] == 1)
+        if (!is_null(_A_::$app->session('cart')) && isset(_A_::$app->session('cart')['trid']) && !is_null(_A_::$app->session('user')) &&
+            isset(_A_::$app->session('cart')['payment']) && (_A_::$app->session('cart')['payment'] == 1)
         ) {
             if ((!is_null(_A_::$app->get('trid')) && (_A_::$app->get('trid') == _A_::$app->session('cart')['trid'])) ||
                 (!is_null(_A_::$app->post('trid')) && (_A_::$app->session('trid') == _A_::$app->session('cart')['trid']))
             ) {
 
                 $user = _A_::$app->session('user');
-                $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-                $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+                $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+                $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
                 if ((count($cart_samples_items) == 0) && (count($cart_items) == 0)) {
                     $url = _A_::$app->router()->UrlTo('shop');
                     $this->redirect($url);
@@ -429,12 +429,12 @@ class Controller_Cart extends Controller_Controller
                 $ms = new Model_Samples();
                 $msh = new Model_Shipping();
                 $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
-                $bExpressSamples = !$systemAllowExpressSamples ? false : !is_null(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
+                $bExpressSamples = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
                 if (count($cart_samples_items) == 0) $bExpressSamples = false;
-                $bAcceptExpress = !$systemAllowExpressSamples ? false : !is_null(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
-                $shipping = (!is_null(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-                $bShipRoll = (!is_null(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
-                $coupon_code = !is_null(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
+                $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
+                $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
+                $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
+                $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
                 $samples_sum = _A_::$app->session('cart')['samples_sum'];
 
                 $on_roll = 0;
@@ -494,7 +494,7 @@ class Controller_Cart extends Controller_Controller
                         }
                     }
 
-                    $discountIds = !is_null(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+                    $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
                     $mc->save_discount_usage($discountIds, $oid);
                     $this->thanx_mail();
                     _A_::$app->session('cart', null);
@@ -579,17 +579,17 @@ class Controller_Cart extends Controller_Controller
             $ship_lastname = $user['ship_lastname'];
             $email = $user['email'];
 
-            $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-            $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+            $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+            $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
             $ms = new Model_Samples();
             $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
-            $bExpressSamples = !$systemAllowExpressSamples ? false : !is_null(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
+            $bExpressSamples = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
             if (count($cart_samples_items) == 0) $bExpressSamples = false;
-            $bAcceptExpress = !$systemAllowExpressSamples ? false : !is_null(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
+            $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
             $uid = (!is_null(_A_::$app->session('user'))) ? (int)_A_::$app->session('user')['aid'] : 0;
-            $shipping = (!is_null(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-            $bShipRoll = (!is_null(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
-            $coupon_code = !is_null(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
+            $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
+            $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
+            $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
             $discount = 0;
             $model = new Model_Cart();
             if (count($cart_items) > 0) {
@@ -781,7 +781,7 @@ class Controller_Cart extends Controller_Controller
 
     function samples_legend()
     {
-        if (!is_null(_A_::$app->session('cart')['items']) && (count(_A_::$app->session('cart')['items']) > 0)) {
+        if (isset(_A_::$app->session('cart')['items']) && (count(_A_::$app->session('cart')['items']) > 0)) {
             $this->template->vars('cart_items', '_');
         }
         $this->template->view_layout('samples_legend');
@@ -797,13 +797,13 @@ class Controller_Cart extends Controller_Controller
         $couponDiscount = 0;
         $aPrds = [];
 
-        $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
-        $coupon_code = !is_null(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
+        $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+        $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
         $coupon_code = !is_null(_A_::$app->post('coupon')) ? _A_::$app->post('coupon') : $coupon_code;
         _A_::$app->session('cart')['coupon'] = $coupon_code;
         $ms = new Model_Samples();
         $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
-        $bExpressSamples = !is_null(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
+        $bExpressSamples = isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
         if ($systemAllowExpressSamples) {
             if (!is_null(_A_::$app->post('express_samples'))) {
                 $bExpressSamples = (int)_A_::$app->post('express_samples') == 1;
@@ -814,7 +814,7 @@ class Controller_Cart extends Controller_Controller
         $cart['express_samples'] = $bExpressSamples;
         _A_::$app->session('cart', $cart);
 
-        $bAcceptExpress = !is_null(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
+        $bAcceptExpress = isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
         if ($systemAllowExpressSamples) {
             if (!is_null(_A_::$app->post('accept_express'))) {
                 $bAcceptExpress = _A_::$app->post('accept_express') == 1;
@@ -836,9 +836,9 @@ class Controller_Cart extends Controller_Controller
             $cart['ship_roll'] = _A_::$app->post('roll');
             _A_::$app->session('cart', $cart);
         }
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $uid = (!is_null(_A_::$app->session('user'))) ? (int)_A_::$app->session('user')['aid'] : 0;
-        if (!is_null(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) {
+        if (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) {
             $shipping = (int)_A_::$app->session('cart')['ship'];
         } else {
             $shipping = DEFAULT_SHIPPING;
@@ -846,7 +846,7 @@ class Controller_Cart extends Controller_Controller
             $cart['ship'] = $shipping;
             _A_::$app->session('cart', $cart);
         }
-        if (!is_null(_A_::$app->session('cart')['ship_roll'])) {
+        if (isset(_A_::$app->session('cart')['ship_roll'])) {
             $bShipRoll = (boolean)_A_::$app->session('cart')['ship_roll'];
         } else {
             $bShipRoll = false;
@@ -872,7 +872,7 @@ class Controller_Cart extends Controller_Controller
             $ship_model = new Model_Shipping();
             $shipcost = round($ship_model->calculateShipping($shipping, $aPrds, $bShipRoll), 2);
             if (count($aPrds) > 0) {
-                $discountIds = !is_null(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+                $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
                 $shipDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_SHIPPING, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
                 $couponDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_COUPON, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
                 $cart = _A_::$app->session('cart');
@@ -932,12 +932,12 @@ class Controller_Cart extends Controller_Controller
 
     public function coupon_total_calc()
     {
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-        $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
         $total = _A_::$app->session('cart')['total'];
         $coupon_discount = _A_::$app->session('cart')['coupon_discount'];
         $taxes = _A_::$app->session('cart')['taxes'];
-        $coupon_code = !is_null(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
+        $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
         $uid = (!is_null(_A_::$app->session('user'))) ? (int)_A_::$app->session('user')['aid'] : 0;
 
         if ((count($cart_items) > 0) || (count($cart_samples_items) > 0)) {
@@ -1080,7 +1080,7 @@ class Controller_Cart extends Controller_Controller
     public function get_subtotal_ship()
     {
         $total = 0;
-        if (!is_null(_A_::$app->session('cart')['subtotal_ship'])) {
+        if (isset(_A_::$app->session('cart')['subtotal_ship'])) {
             $total = _A_::$app->session('cart')['subtotal_ship'];
         }
         echo '$' . number_format($total, 2) . ' USD';
@@ -1107,7 +1107,7 @@ class Controller_Cart extends Controller_Controller
             $model = new Model_Cart();
             $p_id = $model->validData(_A_::$app->get('p_id'));
             $product = $model->get_product_params($p_id);
-            $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+            $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
             if ($product['inventory'] > 0) {
 
                 $item_added = false;
@@ -1130,7 +1130,7 @@ class Controller_Cart extends Controller_Controller
                     $format_price = '';
                     $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
 
-                    $discountIds = !is_null(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+                    $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
                     $saleprice = $product['Price'];
                     $sDiscount = 0;
                     $saleprice = round($mp->calculateProductSalePrice($pid, $saleprice, $discountIds), 2);
@@ -1214,8 +1214,8 @@ class Controller_Cart extends Controller_Controller
             $model = new Model_Cart();
             $p_id = $model->validData(_A_::$app->get('p_id'));
             $product = $model->get_product_params($p_id);
-            $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-            $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+            $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+            $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
             if ($product['inventory'] > 0) {
 
                 $item_added = false;
@@ -1289,7 +1289,7 @@ class Controller_Cart extends Controller_Controller
 
     function get()
     {
-        if (!is_null(_A_::$app->get('cart')['items'])) {
+        if (isset(_A_::$app->get('cart')['items'])) {
             $cart_items = _A_::$app->get('cart')['items'];
         } else {
             $cart_items = [];
@@ -1310,7 +1310,7 @@ class Controller_Cart extends Controller_Controller
         $pid = _A_::$app->get('p_id');
         $quantity = _A_::$app->get('qnt');
         $response = [];
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         if (preg_match('/^\d+(\.\d{0,})?$/', $quantity)) {
 
             $model = new Model_Cart();
@@ -1378,7 +1378,7 @@ class Controller_Cart extends Controller_Controller
         if (!is_null(_A_::$app->get('p_id'))) {
 
             $pid = _A_::$app->get('p_id');
-            $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+            $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
             if (isset($cart_items[$pid])) {
                 unset($cart_items[$pid]);
 
@@ -1396,7 +1396,7 @@ class Controller_Cart extends Controller_Controller
     {
         if (!is_null(_A_::$app->get('p_id'))) {
             $pid = _A_::$app->session('p_id');
-            $cart_samples_items = !is_null(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
+            $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
             if (isset($cart_samples_items[$pid])) {
                 unset($cart_samples_items[$pid]);
                 $_cart = _A_::$app->session('cart');

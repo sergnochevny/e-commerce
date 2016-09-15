@@ -72,9 +72,9 @@ Class Model_Product extends Model_Model
         mysql_query($strSQL);
     }
 
-    public function ConfirmProductInsert()
+    public function ConfirmProductInsert($pid)
     {
-        $q = "DELETE FROM `fabrix_temp_product` WHERE `productId`=" . $_GET['p_id'] . " and `sid`='" . session_id() . "'";
+        $q = "DELETE FROM `fabrix_temp_product` WHERE `productId`=" . $pid . " and `sid`='" . session_id() . "'";
         $result = mysql_query($q);
         return $result;
     }

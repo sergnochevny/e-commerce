@@ -121,10 +121,10 @@ class Controller_Shop extends Controller_Controller
     {
         $model = new Model_Product();
         $image_suffix = 'b_';
-        $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
 
-        if (!is_null(_A_::$app->session('s')) && (!empty(_A_::$app->post['s']{0}))) {
+        if (!is_null(_A_::$app->session('s')) && (!empty(_A_::$app->post('s')))) {
             $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->session('s')))));
             $this->template->vars('search', _A_::$app->post('s'));
         }

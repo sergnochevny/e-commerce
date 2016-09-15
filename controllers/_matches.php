@@ -6,7 +6,7 @@ class Controller_Matches extends Controller_Controller
     function matches()
     {
         $matches = null;
-        if (!is_null(_A_::$app->session('matches')['items'])) {
+        if (isset(_A_::$app->session('matches')['items'])) {
             $matches_items = _A_::$app->session('matches')['items'];
             if (count($matches_items) > 0) {
                 ob_start();
@@ -36,7 +36,7 @@ class Controller_Matches extends Controller_Controller
 
         if (!is_null(_A_::$app->get('p_id')) && !empty(_A_::$app->get('p_id'))) {
             $p_id = _A_::$app->get('p_id');
-            $matches_items = !is_null(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
+            $matches_items = isset(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
             $item_added = false;
             if (count($matches_items) > 0) {
                 foreach ($matches_items as $key => $item) {
@@ -79,7 +79,7 @@ class Controller_Matches extends Controller_Controller
     {
         if (!is_null(_A_::$app->post('p_id')) && !empty(_A_::$app->post('p_id'))) {
             $p_id = _A_::$app->post('p_id');
-            $matches_items = !is_null(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
+            $matches_items = isset(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
             if (count($matches_items) > 0) {
                 foreach ($matches_items as $key => $item) {
                     if ($item['p_id'] == $p_id) {
@@ -95,7 +95,7 @@ class Controller_Matches extends Controller_Controller
 
     function clear()
     {
-        if (!is_null(_A_::$app->session('matches')['items'])) {
+        if (isset(_A_::$app->session('matches')['items'])) {
             _A_::$app->setSession('matches', null);
         }
     }
@@ -107,7 +107,7 @@ class Controller_Matches extends Controller_Controller
             $model = new Model_Cart();
             try {
                 $products = json_decode(_A_::$app->post('data'));
-                $cart_items = !is_null(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+                $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
                 $message = '';
                 if (is_array($products) && (count($products) > 0)) {
                     foreach ($products as $product_id) {
@@ -185,7 +185,7 @@ class Controller_Matches extends Controller_Controller
 
     function product_in($p_id)
     {
-        if (!is_null(_A_::$app->session('matches')['items'])) {
+        if (isset(_A_::$app->session('matches')['items'])) {
             $matches_items = _A_::$app->session('matches')['items'];
         } else {
             return false;
