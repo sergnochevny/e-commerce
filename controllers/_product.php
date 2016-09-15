@@ -8,13 +8,13 @@ class Controller_Product extends Controller_Controller
         $model = new Model_Product();
         $samples_model = new Model_Samples();
         $p_id = $model->validData(_A_::$app->get('p_id'));
-        $userInfo = $model->getPrName($p_id);
+        $data = $model->getPrName($p_id);
 
         $matches = new Controller_Matches($this->main);
         if ($matches->product_in($p_id)) $this->template->vars('in_matches', '1');
 
-        $this->template->vars('userInfo', $userInfo);
-        $priceyard = $userInfo['priceyard'];
+        $this->template->vars('data', $data);
+        $priceyard = $data['priceyard'];
         $pid = $p_id;
         $aPrds = [];
         $aPrds[] = $pid;    #add product id
@@ -49,7 +49,7 @@ class Controller_Product extends Controller_Controller
         $bTemp = false;
         $mp = new Model_Price();
         $sys_hide_price = $mp->sysHideAllRegularPrices();
-        $hide_price = $userInfo['vis_price'];
+        $hide_price = $data['vis_price'];
         $this->template->vars('sys_hide_price', $sys_hide_price);
         $this->template->vars('hide_price', $hide_price);
 
@@ -72,8 +72,8 @@ class Controller_Product extends Controller_Controller
             $rExDiscountPrice = $priceyard;
         }
 
-        $inventory = $userInfo['inventory'];
-        $piece = $userInfo['piece'];
+        $inventory = $data['inventory'];
+        $piece = $data['piece'];
         $format_price = '';
         $price = $mp->getPrintPrice($priceyard, $format_price, $inventory, $piece);
 
@@ -197,7 +197,7 @@ class Controller_Product extends Controller_Controller
         $back_url = _A_::$app->router()->UrlTo('admin/home',$prms);
         $this->template->vars('back_url', $back_url);
 
-        $userInfo = $model->getProductInfo($pid);
+        $data = $model->getProductInfo($pid);
 
         ob_start();
         $cimage = new Controller_Image($this->main);
@@ -206,7 +206,7 @@ class Controller_Product extends Controller_Controller
         ob_end_clean();
 
         $this->main->template->vars('modify_images', $m_images);
-        $this->main->template->vars('userInfo', $userInfo);
+        $this->main->template->vars('data', $data);
         $this->main->view_admin('edit');
     }
 
@@ -235,7 +235,7 @@ class Controller_Product extends Controller_Controller
                 $sl_cat3 = $cats['sl_cat3'];
                 $sl_cat4 = $cats['sl_cat4'];
 
-                $userInfo = array(
+                $data = array(
                     'weight_id'                 => $post_weight_cat,
                     'sd_cat'                    => $sl_cat,
                     'pvisible'                  => $post_vis,
@@ -277,7 +277,7 @@ class Controller_Product extends Controller_Controller
 
                 );
 
-                $this->template->vars('userInfo', $userInfo);
+                $this->template->vars('data', $data);
                 ob_start();
                 $cimage = new Controller_Image($this->main);
                 $cimage->modify_images();
@@ -311,8 +311,8 @@ class Controller_Product extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Product();
 
-        $userInfo = $model->getproductInfo();
-        $this->template->vars('userInfo', $userInfo);
+        $data = $model->getproductInfo();
+        $this->template->vars('data', $data);
 
         ob_start();
         $cimage = new Controller_Image($this->main);
@@ -349,7 +349,7 @@ class Controller_Product extends Controller_Controller
                 $sl_cat3 = $cats['sl_cat3'];
                 $sl_cat4 = $cats['sl_cat4'];
 
-                $userInfo = array(
+                $data = array(
                     'weight_id' => $post_weight_cat,
                     'sd_cat' => $sl_cat,
                     'pvisible' => $post_vis,
@@ -390,7 +390,7 @@ class Controller_Product extends Controller_Controller
                     'whole' => $whole
                 );
 
-                $this->template->vars('userInfo', $userInfo);
+                $this->template->vars('data', $data);
 
                 ob_start();
                 $cimage = new Controller_Image($this->main);
@@ -446,7 +446,7 @@ class Controller_Product extends Controller_Controller
         $back_url = _A_::$app->router()->UrlTo('admin/home',$prms);
         $this->template->vars('back_url', $back_url);
 
-        $userInfo = $model->getproductInfo();
+        $data = $model->getproductInfo();
         ob_start();
         $cimage = new Controller_Image($this->main);
         $cimage->modify_images();
@@ -455,7 +455,7 @@ class Controller_Product extends Controller_Controller
 
         $this->template->vars('modify_images', $m_images);
 
-        $this->template->vars('userInfo', $userInfo);
+        $this->template->vars('data', $data);
         $this->main->view_admin('add');
     }
 

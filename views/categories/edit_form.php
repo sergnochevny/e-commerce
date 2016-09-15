@@ -7,7 +7,7 @@
     <div class="col-1">
         <p class="form-row">
             <label class="required_field"><strong>Category:</strong></label>
-            <input type="text" name="category" value="<?=$userInfo['cname']?>"
+            <input type="text" name="category" value="<?=$data['cname']?>"
                    class="input-text ">
         </p>
         <p class="form-row">
@@ -19,14 +19,14 @@
         </p>
         <p class="form-row">
             <label><strong>Seo:</strong></label>
-            <input type="text" name="seo" value="<?=$userInfo['seo']?>" class="input-text ">
+            <input type="text" name="seo" value="<?=$data['seo']?>" class="input-text ">
             <small><strong>NOTE:</strong> the seo name will be parsed to be url compatible if necessary.</small>
         </p>
 
         <p class="form-row">
             <label><strong>List as a Style:</strong></label>
             <?php
-            if($userInfo['isStyle']=="1")
+            if($data['isStyle']=="1")
             {echo '<input type="checkbox" name="ListStyle" checked="checked" value="1" class="input-checkbox">';}
             else
             {echo '<input type="checkbox" name="ListStyle" value="1" class="input-checkbox">';}
@@ -36,7 +36,7 @@
         <p class="form-row">
             <label><strong>List as a New Item:</strong></label>
             <?php
-            if($userInfo['isNew']=="1")
+            if($data['isNew']=="1")
             {echo '<input type="checkbox" name="ListNewItem" checked="checked" value="1" class="input-checkbox">';}
             else
             {echo '<input type="checkbox" name="ListNewItem" value="1" class="input-checkbox">';}

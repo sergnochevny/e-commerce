@@ -6,32 +6,32 @@
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
                 <p class="woocommerce-result-count">
-                    Showing results: <?php echo $userInfo['results_serch']; ?>
+                    Showing results: <?php echo $data['results_serch']; ?>
                 </p>
                 <ul class="products">
                     <div class="product-inner">
                         <?php
                         $x = 0;
-                        while ($x < $userInfo['results_serch']) {
+                        while ($x < $data['results_serch']) {
                             $x++; ?>
 
                             <li class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
                                 <div class="product-inner">
                                     <figure class="product-image-box">
-                                        <a href="product_page?p_id=<?php echo $userInfo['product_id']; ?>">
-                                            <img width="#" height="266" src="<?php echo $userInfo['filename']; ?>"
+                                        <a href="product_page?p_id=<?php echo $data['product_id']; ?>">
+                                            <img width="#" height="266" src="<?php echo $data['filename']; ?>"
                                                  class="attachment-shop_catalog size-shop_catalog wp-post-image"
                                                  alt=""/></a>
                                     </figure>
-                                    <a href="product_page?p_id=<?php echo $userInfo['product_id']; ?>">
+                                    <a href="product_page?p_id=<?php echo $data['product_id']; ?>">
                                         <span class="onsale">Sale!</span>
                                         <span
-                                            class="product-category"><?php echo $userInfo['product_catigori']; ?></span>
+                                            class="product-category"><?php echo $data['product_catigori']; ?></span>
 
-                                        <h3><?php echo $userInfo['product_description']; ?></h3>
+                                        <h3><?php echo $data['product_description']; ?></h3>
 
                                         <div class="product-price-box clearfix">
-                                            <ins><span class="amount"><?php echo $userInfo['product_amount']; ?>
+                                            <ins><span class="amount"><?php echo $data['product_amount']; ?>
                                                     /yard</span></ins>
                                             </span>
                                         </div>

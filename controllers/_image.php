@@ -14,7 +14,7 @@ class Controller_Image extends Controller_Controller
                 $db_g = "image$im_id";
                 $images = $model->getImage($pid_id);
                 $filename = $images[$db_g];
-                $userInfo = $model->dbUpdate($db_g, $pid_id);
+                $data = $model->dbUpdate($db_g, $pid_id);
                 if (file_exists("upload/upload/" . $filename)) {
                     unlink("upload/upload/$filename");
                 }
@@ -36,12 +36,12 @@ class Controller_Image extends Controller_Controller
             $p_id = _A_::$app->get('p_id');
             $model = new Model_Product();
             $p_id = $model->validData($p_id);
-            $userInfo = $model->getImage($p_id);
-            $image1 = $userInfo['image1'];
-            $image2 = $userInfo['image2'];
-            $image3 = $userInfo['image3'];
-            $image4 = $userInfo['image4'];
-            $image5 = $userInfo['image5'];
+            $data = $model->getImage($p_id);
+            $image1 = $data['image1'];
+            $image2 = $data['image2'];
+            $image3 = $data['image3'];
+            $image4 = $data['image4'];
+            $image5 = $data['image5'];
 
             $base_url = _A_::$app->router()->UrlTo('/');
 
@@ -62,13 +62,13 @@ class Controller_Image extends Controller_Controller
         }
     }
 
-    public function modify_from_form($userInfo)
+    public function modify_from_form($data)
     {
-        $image1 = $userInfo['image1'];
-        $image2 = $userInfo['image2'];
-        $image3 = $userInfo['image3'];
-        $image4 = $userInfo['image4'];
-        $image5 = $userInfo['image5'];
+        $image1 = $data['image1'];
+        $image2 = $data['image2'];
+        $image3 = $data['image3'];
+        $image4 = $data['image4'];
+        $image5 = $data['image5'];
         $filename1 = 'upload/upload/v_' . $image1;
         if (!file_exists($filename1)) {
             $image1 = "not_image.jpg";
@@ -106,10 +106,10 @@ class Controller_Image extends Controller_Controller
                 $p_id = $model->validData(_A_::$app->get('p_id'));
                 $product_photo = $model->validData(_A_::$app->get('idx'));
                 $db_g = "image$product_photo";
-                $userInfo = $model->getImage($p_id);
-                $image1 = $userInfo['image1'];
-                $image2 = $userInfo[$db_g];
-                $userInfo = $model->dbUpdateMainNew($image2, $db_g, $image1, $p_id);
+                $data = $model->getImage($p_id);
+                $image1 = $data['image1'];
+                $image2 = $data[$db_g];
+                $data = $model->dbUpdateMainNew($image2, $db_g, $image1, $p_id);
 
             }
         }

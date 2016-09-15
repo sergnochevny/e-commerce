@@ -100,16 +100,16 @@ class Controller_Users extends Controller_Controller
     {
         $model = new Model_User();
         $user_id = $model->validData(_A_::$app->get('user_id'));
-        $userInfo = $model->get_user_data($user_id);
+        $data = $model->get_user_data($user_id);
 
-        $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
-        $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
-        $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
-        $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
+        $data['bill_list_countries'] = $this->list_countries($data['bill_country']);
+        $data['ship_list_countries'] = $this->list_countries($data['ship_country']);
+        $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);
+        $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
 
         $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
         $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
-        $this->template->vars('userInfo', $userInfo);
+        $this->template->vars('data', $data);
     }
 
     private function list_countries($select = null)
@@ -143,7 +143,7 @@ class Controller_Users extends Controller_Controller
         $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
         $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
 
-        $userInfo = array(
+        $data = array(
             'email' => '',
             'bill_firstname' => '',
             'bill_lastname' => '',
@@ -173,12 +173,12 @@ class Controller_Users extends Controller_Controller
             'ship_email' => ''
         );
 
-        $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
-        $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
-        $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
-        $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
+        $data['bill_list_countries'] = $this->list_countries($data['bill_country']);
+        $data['ship_list_countries'] = $this->list_countries($data['ship_country']);
+        $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);
+        $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
 
-        $this->template->vars('userInfo', $userInfo);
+        $this->template->vars('data', $data);
     }
 
     public function save_edit()
@@ -294,9 +294,9 @@ class Controller_Users extends Controller_Controller
         }
 
         if ($result) {
-            $userInfo = $model->get_user_data($user_id);
+            $data = $model->get_user_data($user_id);
         } else {
-            $userInfo = array(
+            $data = array(
                 'email' => $user_email,
                 'bill_firstname' => $user_first_name,
                 'bill_lastname' => $user_last_name,
@@ -328,11 +328,11 @@ class Controller_Users extends Controller_Controller
             );
         }
 
-        $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
-        $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
-        $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
-        $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
-        $this->template->vars('userInfo', $userInfo);
+        $data['bill_list_countries'] = $this->list_countries($data['bill_country']);
+        $data['ship_list_countries'] = $this->list_countries($data['ship_country']);
+        $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);
+        $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
+        $this->template->vars('data', $data);
         return $result;
     }
 
@@ -435,7 +435,7 @@ class Controller_Users extends Controller_Controller
             }
         }
         if (!$result) {
-            $userInfo = array(
+            $data = array(
                 'email' => $user_email,
                 'bill_firstname' => $user_first_name,
                 'bill_lastname' => $user_last_name,
@@ -466,12 +466,12 @@ class Controller_Users extends Controller_Controller
                 'ship_email' => $user_s_email
             );
 
-            $userInfo['bill_list_countries'] = $this->list_countries($userInfo['bill_country']);
-            $userInfo['ship_list_countries'] = $this->list_countries($userInfo['ship_country']);
-            $userInfo['bill_list_province'] = $this->list_province($userInfo['bill_country'], $userInfo['bill_province']);
-            $userInfo['ship_list_province'] = $this->list_province($userInfo['ship_country'], $userInfo['ship_province']);
+            $data['bill_list_countries'] = $this->list_countries($data['bill_country']);
+            $data['ship_list_countries'] = $this->list_countries($data['ship_country']);
+            $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);
+            $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
 
-            $this->template->vars('userInfo', $userInfo);
+            $this->template->vars('data', $data);
         }
 
         return ($result);
