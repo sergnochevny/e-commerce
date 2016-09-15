@@ -218,7 +218,7 @@
 <script type="text/javascript">
     (function($){
 
-        var base_url = '<?= $base_url?>';
+        var base_url = "<?= _A_::$app->router()->UrlTo('/')?>";
 
         $("#edit_user_form").on('submit',
             function(event){

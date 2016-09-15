@@ -85,7 +85,7 @@ Class Controller_Admin Extends Controller_Controller
         return !is_null(_A_::$app->session('_a'));
     }
 
-    public function is_set_admin_remember()
+    public function is_set_remember()
     {
         return !is_null(_A_::$app->cookie('_ar'));
     }

@@ -1,5 +1,5 @@
 <center>
-    <a href="<?php _A_::$app->router()->UrlTo('users/new',['page'=>$page])?>"><input type="submit" value="ADD NEW USER" class="button"/></a><br><br><br>
+    <a href="<?php _A_::$app->router()->UrlTo('users/add',['page'=>$page])?>"><input type="submit" value="ADD NEW USER" class="button"/></a><br><br><br>
 </center>
 <div class="">
     <table class="table table-striped table-bordered">

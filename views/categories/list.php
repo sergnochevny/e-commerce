@@ -14,7 +14,7 @@ if(isset($warning)){
 ?>
 
 <center>
-    <a href="<?php echo _A_::$app->router()->UrlTo('categories/new');?>">
+    <a href="<?php echo _A_::$app->router()->UrlTo('categories/add');?>">
         <input type="submit" value="ADD NEW CATEGORY" class="button"/>
     </a><br><br><br>
 </center>

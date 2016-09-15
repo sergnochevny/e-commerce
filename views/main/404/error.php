@@ -15,7 +15,7 @@
                         <p>
                             <span class="msg404">
                                 The link you followed probably broken, <br> or the page has been removed.<br><br>
-                                Return to <a href="<?= $base_url;?>">homepage.</>
+                                Return to <a href="<?= _A_::$app->router()->UrlTo('/');?>">homepage.</>
                             </span>
                         <p>
                     </div>

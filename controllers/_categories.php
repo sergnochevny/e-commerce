@@ -10,7 +10,7 @@ class Controller_Categories extends Controller_Base
         $this->main->view_admin('categories');
     }
 
-    public function list()
+    public function listof()
     {
         $this->main->test_access_rights();
         $this->get_list();
@@ -162,7 +162,7 @@ class Controller_Categories extends Controller_Base
         }
     }
 
-    public function new()
+    public function add()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();

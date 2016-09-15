@@ -461,7 +461,7 @@ class Controller_Blog extends Controller_Controller
         if (!empty(_A_::$app->get('cat'))) {
             $prms['cat'] = _A_::$app->get('cat');
         }
-        $this->template->vars('new_post_href', _A_::$app->router()->UrlTo('blog/new_post', $prms));
+        $this->template->vars('new_post_href', _A_::$app->router()->UrlTo('blog/add', $prms));
         $this->admin_main_cat();
         $this->admin_main_posts();
     }
@@ -597,7 +597,7 @@ class Controller_Blog extends Controller_Controller
         echo $this->edit_post_imgs($img);
     }
 
-    public function new()
+    public function add()
     {
         $this->new_prepare();
         $this->main->view_admin('blog_new_post');

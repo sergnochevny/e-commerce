@@ -6,11 +6,11 @@ class Controller_BlogCategory extends Controller_Controller
     public function admin()
     {
 
-        $this->list();
+        $this->listof();
         $this->main->view_admin('blog_categories');
     }
 
-    public function list()
+    public function listof()
     {
         $model = new Model_Blog();
         $rows = $model->get_blog_categories_list();
@@ -109,7 +109,7 @@ class Controller_BlogCategory extends Controller_Controller
         $this->main->view_layout('form');
     }
 
-    public function new()
+    public function add()
     {
         $data = [];
 

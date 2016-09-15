@@ -7,11 +7,11 @@ class Controller_Comments extends Controller_Controller
     public function comments()
     {
         $redirect_to_url = true;
-        $this->list();
+        $this->listof();
         $this->main->view("list");
     }
 
-    private function list()
+    private function listof()
     {
         $m = new Model_Comments();
         $page = !empty(_A_::$app->get('page'))?$m->validData(_A_::$app->get('page')):1;

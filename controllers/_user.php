@@ -77,7 +77,7 @@ Class Controller_User Extends Controller_Controller
 
     public function is_set_remember()
     {
-        return !is_null(_A_::$app->cookie('_ar'));
+        return !is_null(_A_::$app->cookie('_r'));
     }
 
     public function save_edit()

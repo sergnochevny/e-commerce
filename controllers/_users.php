@@ -6,11 +6,11 @@ class Controller_Users extends Controller_Controller
     public function users()
     {
         $this->main->test_access_rights();
-        $this->get_main_list();
+        $this->get_list();
         $this->main->view_admin('users');
     }
 
-    private function get_main_list()
+    private function get_list()
     {
         $this->main->test_access_rights();
         $model = new Model_User();
@@ -43,16 +43,16 @@ class Controller_Users extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_User();
-        $page_id = $model->validData(_A_::$app->get('page'));
+        $page = $model->validData(_A_::$app->get('page'));
         $user_id = $model->validData(_A_::$app->get('id'));
         $model->del_user($user_id);
-        $this->list();
+        $this->listof();
     }
 
-    public function list()
+    public function listof()
     {
         $this->main->test_access_rights();
-        $this->get_main_list();
+        $this->get_list();
         $this->main->view_layout('list');
     }
 
@@ -129,7 +129,7 @@ class Controller_Users extends Controller_Controller
         return $list;
     }
 
-    public function new()
+    public function add()
     {
         $this->main->test_access_rights();
         $this->template->vars('action', _A_::$app->router()->UrlTo('save_new_user'));

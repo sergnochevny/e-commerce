@@ -12,7 +12,7 @@
 
                 <div id="customer_details" style="margin: auto; width: 600px;">
                     <div id="category_form">
-                        <?php include('views/category/new_category_form.php') ?>
+                        <?php include('views/categories/new_form.php') ?>
                     </div>
                 </div>
             </div>
