@@ -76,8 +76,7 @@ class Controller_Comments extends Controller_Base
 
         $redirect_to_url = true;
         $this->main->is_user_authorized($redirect_to_url);
-
-        $this->main->view('comments/comments_add_form');
+        $this->main->view('comments_add_form');
     }
 
     public function comment_save()

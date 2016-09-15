@@ -493,7 +493,7 @@ class Controller_Users extends Controller_Controller
         if (!is_null(_A_::$app->get('url'))) {
             $prms['url'] = _A_::$app->get('url');
         }
-        $this->template->vars('back_url', _A_::$app->router()->UrlTo('authorization/user', $prms), true);
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
         $this->_new_user();
         $this->main->view('new');
     }
@@ -511,8 +511,8 @@ class Controller_Users extends Controller_Controller
             if (!is_null(_A_::$app->get('url'))) {
                 $prms['url'] = _A_::$app->get('url');
             }
-            $this->template->vars('back_url', _A_::$app->router()->UrlTo('authorization/user', $prms), true);
-            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit_registration_data'), true);
+            $this->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
+            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'), true);
 
             $userInfo = (new Model_User())->get_user_data($user_id);
 
@@ -541,45 +541,6 @@ class Controller_Users extends Controller_Controller
         $body .= "Once again, thank you.........and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
 
         mail($email, $subject, $body, $headers);
-    }
-
-    public function save_edit_registration_data()
-    {
-        $authorization = new Controller_Authorization($this->main);
-
-        if (!$authorization->is_user_logged()) {
-            $this->redirect(_A_::$app->router()->UrlTo('/'));
-        }
-
-        $user_id = $authorization->get_user_from_session();
-        _A_::$app->get('user_id', $user_id);
-        $this->template->vars('action', _A_::$app->router()->UrlTo('/user/save_edit_registration_data'));
-        $this->template->vars('title', 'CHANGE REGISTRATION DATA');
-        $this->_save_edit_user();
-        $this->_edit_user_form();
-    }
-
-    public function change_registration_data()
-    {
-        $authorization = new Controller_Authorization($this->main);
-        if ($authorization->is_user_logged()) {
-            $user_id = $authorization->get_user_from_session();
-            _A_::$app->get('user_id', $user_id);
-            $action = _A_::$app->router()->UrlTo('user/save_edit_registration_data');
-            $this->template->vars('action', $action);
-            $title = 'CHANGE REGISTRATION DATA';
-            $this->template->vars('title', $title);
-            $this->_edit_user();
-
-            $url = '';
-            if (!is_null(_A_::$app->get('url'))) {
-                $url = _A_::$app->router()->UrlTo(base64_decode(urldecode(_A_::$app->get('url'))));
-            }
-            $this->template->vars('back_url', _A_::$app->router()->UrlTo(((strlen($url) > 0) ? $url : 'shop')), true);
-            $this->main->view('edit');
-        }
-
-        $this->redirect(_A_::$app->router()->UrlTo('/'));
     }
 
 //    public function modify_accounts_password()

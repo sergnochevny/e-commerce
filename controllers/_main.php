@@ -28,8 +28,8 @@ class Controller_Main extends Controller_Base
         ob_end_clean();
         $this->template->vars('menu', $menu);
 
-        $authorization = new Controller_Authorization($this->main);
-        if ($authorization->is_admin_logged()) {
+        $admin = new Controller_Admin($this->main);
+        if ($admin->is_logged()) {
             ob_start();
             $this->template->view_layout('my_account_admin_menu', 'menu');
             $my_account_admin_menu = ob_get_contents();
@@ -67,8 +67,8 @@ class Controller_Main extends Controller_Base
 
     function is_user_authorized($redirect_to_url = false)
     {
-        $authorization = new Controller_Authorization($this);
-        if (!$authorization->is_user_authorized()) {
+        $user = new Controller_User($this);
+        if (!$user->is_authorized()) {
             if ($redirect_to_url) {
                 $redirect = strtolower(explode('/', _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://";
                 $redirect .= _A_::$app->server('SERVER_NAME');
@@ -79,7 +79,7 @@ class Controller_Main extends Controller_Base
                 }
             } else
                 $redirect = _A_::$app->server('HTTP_REFERER');
-            $url = _A_::$app->router()->UrlTo('authorization/user',['url' => urlencode(base64_encode($redirect))]);
+            $url = _A_::$app->router()->UrlTo('user',['url' => urlencode(base64_encode($redirect))]);
             $this->redirect($url);
         }
     }
@@ -112,20 +112,17 @@ class Controller_Main extends Controller_Base
                 if (isset(_A_::$app->get()['url'])) {
                     $prms['url'] = _A_::$app->get()['url'];
                 }
-                $back_url = _A_::$app->router()->UrlTo('authorization/user',$prms);
+                $back_url = _A_::$app->router()->UrlTo('user',$prms);
                 $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!!!';
 
             } elseif ($msg == 'remind_expired') {
 
                 $back_url = _A_::$app->router()->UrlTo('/');
                 $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
-
             }
-
             $this->template->vars('message', $message);
             $this->view('message');
         }
-
     }
 
     function view($page, $data = null)
@@ -133,13 +130,12 @@ class Controller_Main extends Controller_Base
         if (isset($data)) {
             $this->template->vars('data', $data);
         }
-
         $cart = new Controller_Cart(isset($this->main) ? $this->main : $this);
         $cart->get();
-        $authorization = new Controller_Authorization(isset($this->main) ? $this->main : $this);
+        $user = new Controller_User(isset($this->main) ? $this->main : $this);
 
         ob_start();
-        $toggle = $authorization->is_user_logged();
+        $toggle = $user->is_logged();
         if ($toggle) {
             $user = _A_::$app->session('user');
             $email = $user['email'];

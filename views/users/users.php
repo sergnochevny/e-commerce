@@ -10,7 +10,7 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <?php include('views/user/users_list.php') ?>
+                <?php include('views/users/users_list.php') ?>
             </div>
         </div>
         <div id="confirm_dialog" class="overlay"></div>

@@ -10,7 +10,7 @@
             <figcaption>
                 <?php
                     if ($in_cart) {
-                        include('views/basket/main_product_basket.php');
+                        include('views/cart/basket.php');
                     } else {
 //                        include('views/basket/main_product_addtobasket.php');
                         ?>
