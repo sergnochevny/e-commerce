@@ -118,11 +118,7 @@ class Controller_Comments extends Controller_Controller
         $this->main->test_access_rights();
 
         $m = new Model_Comments();
-        if (!empty(_A_::$app->get('page'))) {
-            $page = $m->validData(_A_::$app->get('page'));
-        } else {
-            $page = 1;
-        }
+        $page = !empty(_A_::$app->get('page')) ? $m->validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
         $start = (($page - 1) * $per_page);
         $this->template->vars('page', $page);

@@ -46,7 +46,6 @@ class Controller_Users extends Controller_Controller
         $page_id = $model->validData(_A_::$app->get('page'));
         $user_id = $model->validData(_A_::$app->get('id'));
         $model->del_user($user_id);
-
         $this->list();
     }
 

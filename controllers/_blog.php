@@ -261,12 +261,8 @@ class Controller_Blog extends Controller_Controller
     {
         $model = new Model_Blog();
 
-        $page = 1;
-        if (!empty(_A_::$app->get('page'))) {
-            $page = $model->validData(_A_::$app->get('page'));
-        }
+        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
         $per_page = 6;
-
         $cat_id = null;
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $model->validData(_A_::$app->get('cat'));
