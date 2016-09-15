@@ -75,7 +75,7 @@ class Controller_Orders extends Controller_Controller
         $this->get_details();
         $userInfo = $model->get_order($order_id);
 
-        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user/registration', $prms));
+        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('users/registration', $prms));
         $this->main->template->vars('userInfo', $userInfo);
         $this->main->view_admin('order');
     }

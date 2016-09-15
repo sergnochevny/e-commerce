@@ -1,9 +1,9 @@
 <?php
 
-class Controller_User extends Controller_Controller
+class Controller_Users extends Controller_Controller
 {
 
-    public function user()
+    public function users()
     {
         $this->main->test_access_rights();
         $this->get_main_list();
@@ -185,7 +185,7 @@ class Controller_User extends Controller_Controller
     public function save_edit()
     {
         $this->main->test_access_rights();
-        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit', ['user_id' => _A_::$app->get('user_id')]));
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('users/save_edit', ['user_id' => _A_::$app->get('user_id')]));
         $this->main->template->vars('title', 'EDIT USER');
         $this->_save_edit();
         $this->_edit_form();
@@ -345,7 +345,7 @@ class Controller_User extends Controller_Controller
     function save_new()
     {
         $this->main->test_access_rights();
-        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_new'));
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('users/save_new'));
         $this->main->template->vars('title', 'NEW USER');
         $this->_save_new();
         $this->_new_form();
@@ -488,7 +488,7 @@ class Controller_User extends Controller_Controller
     public function registration()
     {
         $this->main->template->vars('title', 'REGISTRATION USER');
-        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_registration'));
+        $this->main->template->vars('action', _A_::$app->router()->UrlTo('users/save_registration'));
         $prms = null;
         if (!is_null(_A_::$app->get('url'))) {
             $prms['url'] = _A_::$app->get('url');
@@ -503,7 +503,7 @@ class Controller_User extends Controller_Controller
         $prms = null;
         if (!$this->_save_new_user()) {
             $this->template->vars('title', 'REGISTRATION USER');
-            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_registration'));
+            $this->template->vars('action', _A_::$app->router()->UrlTo('users/save_registration'));
             $this->_new_user_form();
         } else {
             $user_id = _A_::$app->get('user_id');
