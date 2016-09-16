@@ -6,9 +6,9 @@ Class Model_Cart extends Model_Model
     public function get_product_params($p_id)
     {
 
-        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
-        $rowsni = mysql_fetch_array($resulthatistim);
-        return $rowsni;
+        $res = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
+        $row = mysql_fetch_array($res);
+        return $row;
     }
 
     public function get_price_in_cart()
