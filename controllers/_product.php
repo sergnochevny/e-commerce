@@ -3,7 +3,7 @@
 class Controller_Product extends Controller_Controller
 {
 
-    function product($url = 'shop')
+    function product()
     {
         $model = new Model_Product();
         $samples_model = new Model_Samples();
@@ -139,28 +139,34 @@ class Controller_Product extends Controller_Controller
         $in_cart = in_array($p_id, $cart);
         if ($in_cart) $this->template->vars('in_cart', '1');
 
-        if (is_null(_A_::$app->get('matches'))) {
-            if (is_null(_A_::$app->get('cart'))) {
+        $url_prms = ['page' => '1'];
+        if (!empty(_A_::$app->get('page'))) {
+            $url_prms['page'] = _A_::$app->get('page');
+        }
+        if ((!empty(_A_::$app->get('cat')))) {
+            $url_prms['cat'] = _A_::$app->get('cat');
+        }
+        if ((!empty(_A_::$app->get('mnf')))) {
+            $url_prms['mnf'] = _A_::$app->get('mnf');
+        }
+        if ((!empty(_A_::$app->get('ptrn')))) {
+            $url_prms['ptrn'] = _A_::$app->get('ptrn');
+        }
 
-                $url_prms = ['page' => '1'];
-                if (!empty(_A_::$app->get('page'))) {
-                    $url_prms['page'] = _A_::$app->get('page');
-                }
-                if ((!empty(_A_::$app->get('cat')))) {
-                    $url_prms['cat'] = _A_::$app->get('cat');
-                }
-                if ((!empty(_A_::$app->get('mnf')))) {
-                    $url_prms['mnf'] = _A_::$app->get('mnf');
-                }
-                if ((!empty(_A_::$app->get('ptrn')))) {
-                    $url_prms['ptrn'] = _A_::$app->get('ptrn');
-                }
-                $back_url = _A_::$app->router()->UrlTo($url, $url_prms);
-            } else {
-                $back_url = _A_::$app->router()->UrlTo('cart');
+        if (!is_null(_A_::$app->get('back'))) {
+            $back = _A_::$app->get('back');
+            switch ($back) {
+                case 'matches':
+                    $back_url = _A_::$app->router()->UrlTo('matches');
+                    break;
+                case 'cart':
+                    $back_url = _A_::$app->router()->UrlTo('cart');
+                    break;
+                default:
+                    $back_url = _A_::$app->router()->UrlTo('shop' . DS . $back, $url_prms);
             }
         } else {
-            $back_url = _A_::$app->router()->UrlTo('matches');
+            $back_url = _A_::$app->router()->UrlTo('shop', $url_prms);
         }
 
         if (!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
@@ -181,20 +187,20 @@ class Controller_Product extends Controller_Controller
         $model = new Model_Product();
 
         $prms = null;
-        $pid= _A_::$app->get('p_id');
-        if(!is_null(_A_::$app->get('p_id'))){
-            $prms['p_id']= _A_::$app->get('p_id');
+        $pid = _A_::$app->get('p_id');
+        if (!is_null(_A_::$app->get('p_id'))) {
+            $prms['p_id'] = _A_::$app->get('p_id');
         }
-        $action_url = _A_::$app->router()->UrlTo('product/save_edit',$prms);
+        $action_url = _A_::$app->router()->UrlTo('product/save_edit', $prms);
         $this->template->vars('action_url', $action_url);
-        $prms = ['page'=>'1'];
+        $prms = ['page' => '1'];
         if (!empty(_A_::$app->get('page'))) {
             $prms['page'] = _A_::$app->get('page');
         }
         if (!empty(_A_::$app->get('cat'))) {
             $prms['cat'] = _A_::$app->get('cat');
         }
-        $back_url = _A_::$app->router()->UrlTo('admin/home',$prms);
+        $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
         $this->template->vars('back_url', $back_url);
 
         $data = $model->getProductInfo($pid);
@@ -215,7 +221,7 @@ class Controller_Product extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Product();
 
-        $action_url = _A_::$app->router()->UrlTo('product/save_edit',['p_id' => _A_::$app->get('p_id')]);
+        $action_url = _A_::$app->router()->UrlTo('product/save_edit', ['p_id' => _A_::$app->get('p_id')]);
         $this->template->vars('action_url', $action_url);
 
         if (!empty(_A_::$app->get('p_id'))) {
@@ -236,44 +242,44 @@ class Controller_Product extends Controller_Controller
                 $sl_cat4 = $cats['sl_cat4'];
 
                 $data = array(
-                    'weight_id'                 => $post_weight_cat,
-                    'sd_cat'                    => $sl_cat,
-                    'pvisible'                  => $post_vis,
-                    'metadescription'           => $post_desc,
-                    'p_id'                      => $p_id,
-                    'Meta_Description'          => $post_desc,
-                    'Meta_Keywords'             => $post_mkey,
-                    'Product_name'              => $post_tp_name,
-                    'Product_number'            => $post_product_num,
-                    'Width'                     => $post_width,
-                    'Price_Yard'                => $post_p_yard,
-                    'Stock_number'              => $post_st_nom,
-                    'Dimensions'                => $post_dimens,
-                    'Current_inventory'         => $post_curret_in,
-                    'Specials'                  => $post_special,
-                    'Weight'                    => $post_weight_cat,
-                    'Manufacturer'              => $sl_cat2,
-                    'New_Manufacturer'          => $New_Manufacturer,
-                    'Colours'                   => $sl_cat3,
-                    'New_Colour'                => $post_new_color,
-                    'Pattern_Type'              => $sl_cat4,
-                    'New_Pattern'               => $pattern_type,
-                    'Short_description'         => $post_short_desk,
-                    'Long_description'          => $post_Long_description,
-                    'Related_fabric_1'          => $post_fabric_1,
-                    'Related_fabric_2'          => $post_fabric_2,
-                    'Related_fabric_3'          => $post_fabric_3,
-                    'Related_fabric_4'          => $post_fabric_4,
-                    'Related_fabric_5'          => $post_fabric_5,
-                    'Position_in_Brunschwig'    => 'test',
-                    'Position_in_Modern'        => 'test',
-                    'Position_in_Designer'      => 'test',
-                    'Position_in_Stripe'        => 'test',
-                    'Position_in_Just_Arrived'  => 'test',
-                    'visible'                   => $post_hide_prise,
-                    'best'                      => $best,
-                    'piece'                     => $piece,
-                    'whole'                     => $whole
+                    'weight_id' => $post_weight_cat,
+                    'sd_cat' => $sl_cat,
+                    'pvisible' => $post_vis,
+                    'metadescription' => $post_desc,
+                    'p_id' => $p_id,
+                    'Meta_Description' => $post_desc,
+                    'Meta_Keywords' => $post_mkey,
+                    'Product_name' => $post_tp_name,
+                    'Product_number' => $post_product_num,
+                    'Width' => $post_width,
+                    'Price_Yard' => $post_p_yard,
+                    'Stock_number' => $post_st_nom,
+                    'Dimensions' => $post_dimens,
+                    'Current_inventory' => $post_curret_in,
+                    'Specials' => $post_special,
+                    'Weight' => $post_weight_cat,
+                    'Manufacturer' => $sl_cat2,
+                    'New_Manufacturer' => $New_Manufacturer,
+                    'Colours' => $sl_cat3,
+                    'New_Colour' => $post_new_color,
+                    'Pattern_Type' => $sl_cat4,
+                    'New_Pattern' => $pattern_type,
+                    'Short_description' => $post_short_desk,
+                    'Long_description' => $post_Long_description,
+                    'Related_fabric_1' => $post_fabric_1,
+                    'Related_fabric_2' => $post_fabric_2,
+                    'Related_fabric_3' => $post_fabric_3,
+                    'Related_fabric_4' => $post_fabric_4,
+                    'Related_fabric_5' => $post_fabric_5,
+                    'Position_in_Brunschwig' => 'test',
+                    'Position_in_Modern' => 'test',
+                    'Position_in_Designer' => 'test',
+                    'Position_in_Stripe' => 'test',
+                    'Position_in_Just_Arrived' => 'test',
+                    'visible' => $post_hide_prise,
+                    'best' => $best,
+                    'piece' => $piece,
+                    'whole' => $whole
 
                 );
 
@@ -287,11 +293,11 @@ class Controller_Product extends Controller_Controller
                 $this->template->vars('modify_images', $m_images);
                 $this->main->view_layout('edit_form');
             } else {
-                $result = $model->save($p_id, $New_Manufacturer,$post_new_color,$pattern_type,$post_weight_cat,
-                    $post_special,$post_curret_in, $post_dimens,$post_hide_prise,$post_st_nom,$post_p_yard,
-                    $post_width,$post_product_num,$post_vis,$post_fabric_5,$post_fabric_4,$post_fabric_3,
-                    $post_fabric_2,$post_fabric_1,$post_mkey,$post_desc,$post_Long_description,$post_tp_name,
-                    $post_short_desk,$best,$piece,$whole);
+                $result = $model->save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
+                    $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
+                    $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3,
+                    $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
+                    $post_short_desk, $best, $piece, $whole);
 
                 if ($result) {
                     $this->template->vars('warning', ["Product Data saved successfully!"]);
@@ -328,7 +334,7 @@ class Controller_Product extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $prms = !is_null(_A_::$app->get('p_id')) ? ['p_id' => _A_::$app->get('p_id')]:null;
+        $prms = !is_null(_A_::$app->get('p_id')) ? ['p_id' => _A_::$app->get('p_id')] : null;
         $action_url = _A_::$app->router()->UrlTo('product/save', $prms);
         $this->template->vars('action_url', $action_url);
 
@@ -403,11 +409,11 @@ class Controller_Product extends Controller_Controller
                 $this->main->view_layout('edit_form');
             } else {
 
-                $result = $model->save($p_id, $New_Manufacturer,$post_new_color,$pattern_type,$post_weight_cat,
-                    $post_special,$post_curret_in, $post_dimens,$post_hide_prise,$post_st_nom,$post_p_yard,
-                    $post_width,$post_product_num,$post_vis,$post_fabric_5,$post_fabric_4,$post_fabric_3,
-                    $post_fabric_2,$post_fabric_1,$post_mkey,$post_desc,$post_Long_description,$post_tp_name,
-                    $post_short_desk,$best,$piece,$whole);
+                $result = $model->save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
+                    $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
+                    $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3,
+                    $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
+                    $post_short_desk, $best, $piece, $whole);
 
                 if ($result && $model->ConfirmProductInsert($p_id)) {
                     $this->template->vars('warning', ["Product Data saved successfully!"]);
@@ -416,7 +422,7 @@ class Controller_Product extends Controller_Controller
                 };
 
                 $model->getNewproduct();
-                $action_url = _A_::$app->router()->UrlTo('product/save',['p_id' => _A_::$app->get('p_id')]);
+                $action_url = _A_::$app->router()->UrlTo('product/save', ['p_id' => _A_::$app->get('p_id')]);
                 $this->template->vars('action_url', $action_url);
                 $this->edit_form();
             }
@@ -433,9 +439,9 @@ class Controller_Product extends Controller_Controller
 
         $model->getNewproduct();
 
-        $action_url = _A_::$app->router()->UrlTo('product/save',['p_id' => _A_::$app->get('p_id')]);
+        $action_url = _A_::$app->router()->UrlTo('product/save', ['p_id' => _A_::$app->get('p_id')]);
         $this->template->vars('action_url', $action_url);
-        $prms = ['page'=>'1'];
+        $prms = ['page' => '1'];
         if (!empty(_A_::$app->get('page'))) {
             $prms['page'] = _A_::$app->get('page');
         }
@@ -443,7 +449,7 @@ class Controller_Product extends Controller_Controller
         if (!empty(_A_::$app->get('cat'))) {
             $prms['cat'] = _A_::$app->get('cat');
         }
-        $back_url = _A_::$app->router()->UrlTo('admin/home',$prms);
+        $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
         $this->template->vars('back_url', $back_url);
 
         $data = $model->getproductInfo();
@@ -476,7 +482,7 @@ class Controller_Product extends Controller_Controller
             if (!is_null(_A_::$app->get('cat'))) {
                 $prms['cat'] = _A_::$app->get('cat');
             }
-            $href = _A_::$app->router()->UrlTo('admin/home',$prms);
+            $href = _A_::$app->router()->UrlTo('admin/home', $prms);
             exit ("<script>window.location.href='" . $href . "';</script>");
         }
     }

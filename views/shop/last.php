@@ -6,7 +6,7 @@
         <?php }
         ?>
         <figure class="product-image-box" style="background-image:url(<?php echo $filename; ?>)">
-            <a href="<?php echo _A_::$app->router()->UrlTo('product/last', ['p_id'=>$row[0]]). $href; ?>">
+            <a href="<?php echo _A_::$app->router()->UrlTo('product', $url_prms); ?>">
             </a>
             <figcaption>
                 <?php
@@ -15,7 +15,7 @@
                     } else {
 //                        include('views/basket/main_product_addtobasket.php');
                         ?>
-                        <a class="button productsAddBasket" href="<?php echo _A_::$app->router()->UrlTo('product/last', ['p_id'=>$row[0]]). $href; ?>">
+                        <a class="button productsAddBasket" href="<?php echo _A_::$app->router()->UrlTo('product', $url_prms); ?>">
                             View Details
                         </a>
                         <?php
@@ -23,7 +23,7 @@
                 ?>
             </figcaption>
         </figure>
-        <a href="<?php echo _A_::$app->router()->UrlTo('product/last', ['p_id'=>$row[0]]). $href; ?>">
+        <a href="<?php echo _A_::$app->router()->UrlTo('product', $url_prms); ?>">
             <span class="product-category"><?php echo $row['pname']; ?></span>
 
             <h3 class="descProduct"><?php echo (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>

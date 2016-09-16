@@ -232,7 +232,6 @@ class Controller_Shop extends Controller_Controller
         $this->show_category_list();
         $this->product_list_by_type('last', 50);
         $this->main->template->vars('page_title', 'What\'s New');
-
         $this->main->view('shop');
     }
 
@@ -277,7 +276,7 @@ class Controller_Shop extends Controller_Controller
                 }
                 $filename = _A_::$app->router()->UrlTo($filename);
 
-                $url_prms = ['p_id' => $row[0]];
+                $url_prms = ['p_id' => $row[0], 'back'=>$type];
                 if (!empty(_A_::$app->get('page'))) {
                     $url_prms['page'] = _A_::$app->get('page');
                 }

@@ -56,14 +56,15 @@ class Controller_Matches extends Controller_Controller
                         $images['image1'] = $suffix_img . $images['image1'];
                         $matches_items[] = ['p_id' => $p_id, 'img' => $images['image1']];
                     }
+                    $message = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
+                    $added = 1;
+                } else {
+                    $message = 'Error with added fabric to Matches.<br>Main image of the fabric is empty.';
                 }
             }
-            $_matches = _A_::$app->get('matches');
+            $_matches = _A_::$app->session('matches');
             $_matches['items'] = $matches_items;
-            _A_::$app->get('matches', $_matches);
-
-            $message = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
-            $added = 1;
+            _A_::$app->setSession('matches', $_matches);
         } else
             $message = 'Error with added fabric to Matches.';
         $this->template->vars('message', $message);
