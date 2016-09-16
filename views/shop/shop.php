@@ -131,11 +131,10 @@
             );
         $(document).on('click', '.page-number-s',
             function (event) {
-                debugger;
+
                 event.preventDefault();
                 var href = $(this).attr('href');
-                $('#f_search_1').attr('action', href);
-                $('#f_search_1').trigger('submit');
+                $('#f_search_1').attr('action', href).trigger('submit');
             }
         );
 
@@ -147,11 +146,10 @@
 
         $(document).on('click', '.a_search',
             function (event) {
-                debugger;
+
                 event.preventDefault();
                 var href = $(this).attr('href');
-                $('#f_search_1').attr('action', href);
-                $('#f_search_1').trigger('submit');
+                $('#f_search_1').attr('action', href).trigger('submit');
             }
         );
 

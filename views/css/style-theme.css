@@ -557,6 +557,7 @@ a img.aligncenter {
 .site-navigation .navbar-header .navbar-icon {
   padding: 0;
   margin-right: 0;
+  margin-top: 35px;
   border: none;
   color: #222222;
   font-size: 24px;
@@ -1706,7 +1707,7 @@ table.table-bordered center a{font-size: 120%;margin:0 5px;}
     width: 150px;
 }
 #contactSubmit:hover {
-  background-color: #999
+  background-color: #999;
   border-color: #999;
   color: #fff;
 }

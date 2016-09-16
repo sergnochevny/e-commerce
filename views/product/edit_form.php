@@ -327,7 +327,7 @@
                     url: url,
                     data: msg,
                     success: function (data) {
-                        debugger;
+
                         $('#form_product').html(data);
                         $('.danger').css('display','block');
                         $('html, body').stop().animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);

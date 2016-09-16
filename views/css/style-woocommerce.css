@@ -128,8 +128,8 @@
 .woocommerce form .form-row input.input-text {
     background-color: #fff;
     border: 1px solid #b0b0b0;
-    border-radius: 4px;
-    box-shadow: 0 0 3px 1px #dbdbdb inset;
+    border-radius: 2px;
+    box-shadow: inset 0 0 3px #b4b4b4;
     font-size: 12px;
     height: 36px;
     padding: 0 10px;
@@ -691,6 +691,9 @@
   padding: 0 0 10px;
   margin-bottom: 30px;
   overflow: hidden;
+}
+label {
+  cursor: pointer;
 }
 .woocommerce div.product form.cart .quantity input {
   border: 1px solid #222222;

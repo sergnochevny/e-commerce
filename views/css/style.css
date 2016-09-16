@@ -853,6 +853,7 @@ border-radius: 4px;
 .required_field:before {
     content: "* ";
     color: red;
+    margin-left: -10px;
 }
 
 #wait_loader {
@@ -1202,7 +1203,7 @@ td.product-subtotal{
     margin-top: -20px;
     float: left;
     display: block;
-    padding: 0 15px 10px 15px;
+    padding: 0 0 10px 0;
     border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
 }
