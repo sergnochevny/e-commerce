@@ -737,7 +737,7 @@ Class Model_Product extends Model_Model
         return $total;
     }
 
-    public function get_products($start, $per_page, $res_count_rows = false, $search = null){
+    public function get_products($start, $per_page, &$res_count_rows, $search = null){
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $this->validData(_A_::$app->get('cat'));
             $q = "SELECT a.* FROM `fabrix_products` a" .
@@ -762,8 +762,6 @@ Class Model_Product extends Model_Model
                         " or LOWER(a.pname) like '%" . $search . "%')";
                 }
                 $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start, $per_page";
-
-                $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
             } else {
                 if (!empty(_A_::$app->get('mnf'))) {
                     $mnf_id = $this->validData(_A_::$app->get('mnf'));
@@ -773,8 +771,6 @@ Class Model_Product extends Model_Model
                             " or LOWER(pname) like '%" . $search . "%')";
                     }
                     $q .= " ORDER BY dt DESC, pid DESC LIMIT $start,$per_page";
-
-                    $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
                 } else {
 
                     $q = "SELECT * FROM `fabrix_products` WHERE  pnumber IS NOT NULL AND pvisible = '1'";
@@ -784,16 +780,14 @@ Class Model_Product extends Model_Model
                             " or LOWER(pname) like '%" . $search . "%')";
                     }
 
-                    $q .= " ORDER BY dt DESC, pid DESC LIMIT $start,$per_page";
+                    $q .= " ORDER BY dt DESC, pid DESC LIMIT $start, $per_page";
                 }
             }
         }
         $q = mysql_query($q);
         $res = [];
         $rows = null;
-        if($res_count_rows){
-            return mysql_num_rows($q);
-        }
+        $res_count_rows = mysql_num_rows($q);
         if (is_resource($q)) {
             while ($row = mysql_fetch_array($q)) {
                 $res[] = $row;

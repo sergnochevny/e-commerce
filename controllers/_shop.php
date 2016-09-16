@@ -149,10 +149,9 @@ class Controller_Shop extends Controller_Controller
                 }
             }
         }
-        $rows = $model->get_products($start, $per_page, false, $search);
-        $res_count_rows = $model->get_products($start, $per_page, true, $search);
+        $rows = $model->get_products($start, $per_page, $count_rows, $search);
         if ($rows) {
-            $this->main->template->vars('count_rows', $res_count_rows);
+            $this->main->template->vars('count_rows', $count_rows);
             $mp = new Model_Price();
             $sys_hide_price = $mp->sysHideAllRegularPrices();
             $this->main->template->vars('sys_hide_price', $sys_hide_price);
@@ -322,7 +321,7 @@ class Controller_Shop extends Controller_Controller
             $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
             $this->main->template->vars('list', $list);
 
-            (new Controller_Paginator($this))->product_paginator_home($total, $page, 'shop/' . $type);
+            (new Controller_Paginator($this))->product_paginator_home($total, $page, 'shop' . DS . $type);
         } else {
             $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
