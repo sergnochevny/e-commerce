@@ -737,7 +737,7 @@ Class Model_Product extends Model_Model
         return $total;
     }
 
-    public function get_products($start, $per_page, $res_count_rows = 0, $search = null){
+    public function get_products($start, $per_page, $res_count_rows = false, $search = null){
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $this->validData(_A_::$app->get('cat'));
             $q = "SELECT a.* FROM `fabrix_products` a" .
@@ -791,8 +791,10 @@ Class Model_Product extends Model_Model
         $q = mysql_query($q);
         $res = [];
         $rows = null;
+        if($res_count_rows){
+            return mysql_num_rows($q);
+        }
         if (is_resource($q)) {
-            $res_count_rows = mysql_num_rows($q);
             while ($row = mysql_fetch_array($q)) {
                 $res[] = $row;
             }
