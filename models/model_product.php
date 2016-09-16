@@ -786,7 +786,6 @@ Class Model_Product extends Model_Model
         }
         $q = mysql_query($q);
         $res = [];
-        $rows = null;
         $res_count_rows = mysql_num_rows($q);
         if (is_resource($q)) {
             while ($row = mysql_fetch_array($q)) {

@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon-precomposed" href="<?php echo _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-startup-image" charset="UTF-8" href="<?php echo _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
     <link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/woocommerce-layout.css'); ?>' type='text/css'
           media='all'/>

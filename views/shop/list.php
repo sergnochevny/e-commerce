@@ -3,7 +3,7 @@
         <?php if ($bProductDiscount) { ?>
             <span class="extra_discount">Extra Discount!</span>
         <?php }
-        $opt['p_id'] = $row[0];
+            $opt['p_id'] = $row[0];
         ?>
         <figure class="product-image-box" style="background-image:url(<?php echo $filename; ?>)">
             <a <?php echo isset($search)?'class="a_search"':''?> href="<?php echo _A_::$app->router()->UrlTo('product', $opt); ?>">

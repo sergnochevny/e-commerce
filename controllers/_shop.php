@@ -124,9 +124,9 @@ class Controller_Shop extends Controller_Controller
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
 
-        if (!is_null(_A_::$app->session('s')) && (!empty(_A_::$app->post('s')))) {
-            $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->session('s')))));
-            $this->template->vars('search', _A_::$app->post('s'));
+        if (!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
+            $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->post('s')))));
+            $this->main->template->vars('search', _A_::$app->post('s'));
         }
 
         $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
