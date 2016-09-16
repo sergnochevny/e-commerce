@@ -428,8 +428,8 @@
             $('.a_search').on('click',
                 function (event) {
                     event.preventDefault();
-                    $('#f_search_1').attr('action', back_url);
-                    $('#f_search_1').trigger('submit');
+                    $('#f_search_1').attr('action', back_url)
+                                    .trigger('submit');
                 }
             );
         })(jQuery);

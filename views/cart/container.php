@@ -139,7 +139,7 @@
                                                     $('#row_subtotal_items').remove();
                                                     $('#coupon_section').remove();
                                                     if ($('[data-row=samples]').length > 0) {
-                                                        debugger;
+
                                                         $('#subtotal_samples_items').load(base_url + '/cart_samples_amount');
                                                         $('#samples_legend').load(base_url + '/cart_samples_legend');
                                                     }

@@ -131,10 +131,13 @@
         SHIPPING INFORMATION
         <hr/>
         <p class="form-row">
-            <label><strong>Same as Billing:</strong></label>
-            <input type="checkbox"
-                   name="Same_as_billing" <?php echo (isset($data['Same_as_billing']) &&  $data['Same_as_billing'] == 1)? 'checked' : '' ?>
-                   value="1" class="input-checkbox">
+            <label for="Same_as_billing">
+                <strong>Same as Billing:</strong>
+                <input type="checkbox"
+                       id="Same_as_billing"
+                       name="Same_as_billing" <?php echo (isset($data['Same_as_billing']) &&  $data['Same_as_billing'] == 1)? 'checked' : '' ?>
+                       value="1" class="input-checkbox">
+            </label>
         </p>
 
         <p class="form-row">
@@ -228,7 +231,7 @@
 
 <script type="text/javascript">
     (function($){
-        debugger;
+
         var base_url = '<?= _A_::$app->router()->urlTo('/') ?>';
 
         var danger = $('.danger');
@@ -244,12 +247,12 @@
             function (event) {
                 event.preventDefault();
                 var url = $(this).attr('action');
-                debugger;
+
                 $.post(
                     url,
                     $(this).serialize(),
                     function (data) {
-                        debugger;
+
                         $("#user_form").html(data);
                     }
                 )
