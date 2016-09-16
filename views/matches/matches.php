@@ -190,7 +190,7 @@
                 function (event) {
                     var p_id = $(this).attr('data-id');
 
-                    window.location = base_url + '/product_page?p_id=' + p_id;
+                    window.location = base_url + 'product?p_id=' + p_id;
 
                 }
             );
@@ -199,7 +199,7 @@
                 hoverClass: "ui-state-hover",
                 drop: function (event, ui) {
                     var p_id = $(ui.draggable).attr('data-id');
-                    var url = base_url + '/del_matches';
+                    var url = base_url + 'matches/del';
                     $('#content').waitloader('show');
                     $.post(
                         url,
@@ -217,7 +217,7 @@
                 drop: function (event, ui) {
                     $('#matches-page').waitloader('show');
                     var p_id = $(ui.draggable).attr('data-id');
-                    window.location = base_url + '/product_page?matches&p_id=' + p_id;
+                    window.location = base_url + '/product?p_id=' + p_id+'back=matches';
                 }
             });
 
@@ -252,7 +252,7 @@
 
                     var data = JSON.stringify(products);
                     var url = $(this).attr('href');
-                    var load_url = base_url + '/cart_amount';
+                    var load_url = base_url + 'cart/amount';
                     $('#matches-page').waitloader('show');
                     $.post(url, {data: data},
                         function (data) {
@@ -268,7 +268,7 @@
                                             "Basket": function () {
                                                 $(this).remove();
                                                 $('#matches-page').waitloader('show');
-                                                window.location = base_url + '/cart';
+                                                window.location = base_url + 'cart';
                                             }
                                         };
 

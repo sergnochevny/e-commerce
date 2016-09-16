@@ -256,7 +256,7 @@
         $("#new_user_form [name=country]").on('change',
             function (event) {
                 event.preventDefault();
-                var url = base_url + '/get_province_list';
+                var url = base_url + 'users/get_province_list';
                 var country = $(this).val();
                 $.get(
                     url,
@@ -271,7 +271,7 @@
         $("#new_user_form [name=s_country]").on('change',
             function (event) {
                 event.preventDefault();
-                var url = base_url + 'get_province_list';
+                var url = base_url + 'users/get_province_list';
                 var country = $(this).val();
                 $.get(
                     url,

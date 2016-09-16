@@ -8,9 +8,6 @@
     <td data-title="Product" class="product-name">
         <a href="<?php echo _A_::$app->router()->UrlTo('product',['p_id'=>$p_id,'back'=>'cart']); ?>"><?php echo $item['Product_name']; ?></a>
     </td>
-    <!--<td data-title="Product" class="product-number">
-        <span class="number"><?php echo $item['Product_number']; ?></span>
-    </td>-->
     <td data-title="Price" class="product-price">
         <span class="amount"><?php echo $item['format_price']; ?></span>
     </td>

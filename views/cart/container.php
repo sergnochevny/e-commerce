@@ -47,7 +47,7 @@
 
                 $('body').waitloader('show');
                 var input = this;
-                var url = base_url + '/change_product_cart';
+                var url = base_url + 'cart/change_product';
                 var p_id = $(this).parents('tr.cart_item').attr('data-pid');
                 var parent = $(this).parents('tr.cart_item');
 
@@ -62,11 +62,11 @@
                                 .done(function () {
                                     $(document).trigger('init_spinner');
                                     $('.main-content').waitloader('remove');
+                                    debugger;
+                                    $('#subtotal_items').load(base_url + 'cart/items_amount');
+                                    $('#subtotal').load(base_url + 'cart/amount');
+                                    $(document).trigger('calc_shipping_total');
                                 });
-                            $('#subtotal_items').load(base_url + '/cart_items_amount');
-                            $('#subtotal').load(base_url + '/cart_amount');
-                            $(document).trigger('calc_shipping_total');
-
                         }
                         if (data.msg) {
                             $.when(
@@ -133,18 +133,18 @@
                                             function () {
                                                 if ($('[data-row=items]').length > 0) {
                                                     $(document).trigger('init_spinner');
-                                                    $('#subtotal_items').load(base_url + '/cart_items_amount');
+                                                    $('#subtotal_items').load(base_url + 'cart/items_amount');
                                                 } else {
                                                     $('#row_subtotal').remove();
                                                     $('#row_subtotal_items').remove();
                                                     $('#coupon_section').remove();
                                                     if ($('[data-row=samples]').length > 0) {
-                                                        $('#subtotal_samples_items').load(base_url + '/cart_samples_amount');
-                                                        $('#samples_legend').load(base_url + '/cart_samples_legend');
+                                                        $('#subtotal_samples_items').load(base_url + 'cart/samples_amount');
+                                                        $('#samples_legend').load(base_url + 'cart/samples_legend');
                                                     }
                                                 }
                                                 if (($('[data-row=items]').length > 0) || ($('[data-row=samples]').length > 0)) {
-                                                    $('#subtotal').load(base_url + '/cart_amount');
+                                                    $('#subtotal').load(base_url + 'cart/amount');
                                                 } else
                                                     $(document).trigger('remove_inputs');
                                                 $(document).trigger('calc_shipping_total');
@@ -180,7 +180,7 @@
                                 $.when($(parent).remove()).done(
                                     function () {
                                         if ($('[data-row=samples]').length > 0) {
-                                            $('#subtotal_samples_items').load(base_url + '/cart_samples_amount');
+                                            $('#subtotal_samples_items').load(base_url + 'cart/samples_amount');
                                         } else {
                                             $('#row_subtotal').remove();
                                             $('#row_subtotal_samples').remove();
@@ -188,7 +188,7 @@
                                             $('#samples_table').remove();
                                         }
                                         if (($('[data-row=items]').length > 0) || ($('[data-row=samples]').length > 0)) {
-                                            $('#subtotal').load(base_url + '/cart_amount');
+                                            $('#subtotal').load(base_url + 'cart/amount');
                                         } else {
                                             $(document).trigger('remove_inputs');
                                         }
@@ -265,8 +265,9 @@
 
         $(document).on('calc_shipping_total',
             function () {
-                var url = base_url + '/shipping_calc';
-                var stotal_url = base_url + '/get_cart_subtotal_ship';
+                debugger;
+                var url = base_url + 'cart/shipping_calc';
+                var stotal_url = base_url + 'cart/get_subtotal_ship';
                 if ($('#select_ship').length > 0) {
                     var coupon = '';
                     if ($('#coupon_code').length > 0){
@@ -297,7 +298,7 @@
 
         $(document).on('calc_total',
             function () {
-                var url = base_url + '/coupon_total_calc';
+                var url = base_url + 'cart/coupon_total_calc';
                 var data= {};
                 $.post(
                     url,
@@ -377,7 +378,7 @@
 
         $(document).on('submit','#paypal_form',
             function(event) {
-                var url = base_url + '/pay_mail';
+                var url = base_url + 'cart/pay_mail';
                 $('#container_proceed_pay').waitloader('show');                
                 $.get(url);
             }
