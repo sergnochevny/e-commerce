@@ -369,11 +369,9 @@
                             ev.preventDefault();
                             $('#content').waitloader('show');
                             var url = $(this).attr('href');
-                            debugger;
                             $.post(url,
                                 {},
                                 function (data) {
-                                    debugger;
                                     var answer = JSON.parse(data);
                                     $.when(
                                         $('#content').waitloader('remove'),
