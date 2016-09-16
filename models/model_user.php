@@ -1,6 +1,6 @@
 <?php
 
-Class Model_User
+Class Model_User extends Model_Model
 {
     public function get_total_count_users()
     {

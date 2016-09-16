@@ -96,7 +96,7 @@ class Controller_Users extends Controller_Controller
         $this->main->view_admin('edit');
     }
 
-    private function _edit()
+    public function _edit()
     {
         $model = new Model_User();
         $user_id = $model->validData(_A_::$app->get('user_id'));
@@ -108,8 +108,8 @@ class Controller_Users extends Controller_Controller
         $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
 
         $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
-        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
-        $this->template->vars('data', $data);
+        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
+        $this->main->template->vars('data', $data);
     }
 
     private function list_countries($select = null)
@@ -178,7 +178,7 @@ class Controller_Users extends Controller_Controller
         $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);
         $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
 
-        $this->template->vars('data', $data);
+        $this->main->template->vars('data', $data);
     }
 
     public function save_edit()
@@ -190,7 +190,7 @@ class Controller_Users extends Controller_Controller
         $this->_edit_form();
     }
 
-    private function _save_edit()
+    public function _save_edit()
     {
         $result = false;
         $model = new Model_User();
@@ -336,12 +336,12 @@ class Controller_Users extends Controller_Controller
         return $result;
     }
 
-    private function _edit_form()
+    public function _edit_form()
     {
         $this->main->view_layout('edit_form');
     }
 
-    function save_new()
+    public function save_new()
     {
         $this->main->test_access_rights();
         $this->main->template->vars('action', _A_::$app->router()->UrlTo('users/save_new'));
@@ -350,7 +350,7 @@ class Controller_Users extends Controller_Controller
         $this->_new_form();
     }
 
-    private function _save_new()
+    public function _save_new()
     {
         $result = false;
         $model = new Model_User();
@@ -358,7 +358,7 @@ class Controller_Users extends Controller_Controller
         $timestamp = time();
         if (empty($user_email)) {
             $error[] = 'Identify email field!!!';
-            $this->template->vars('error', $error);
+            $this->main->template->vars('error', $error);
         } else {
             if ($model->user_exist($user_email)) {
                 $error[] = 'User with this email already exists!!!';
@@ -471,13 +471,13 @@ class Controller_Users extends Controller_Controller
             $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);
             $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
 
-            $this->template->vars('data', $data);
+            $this->main->template->vars('data', $data);
         }
 
         return ($result);
     }
 
-    private function _new_form()
+    public function _new_form()
     {
         $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
         $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));

@@ -91,7 +91,7 @@
                                                     <p class="woocommerce-result-count">
                                                         <?php
                                                         if (!empty(_A_::$app->get('cat'))) {
-                                                            echo 'CATEGORY: ' . $catigori_name . '<br/>';
+                                                            echo 'CATEGORY: ' . $category_name . '<br/>';
                                                         }
                                                         echo isset($count_rows) ? "Showing " . $count_rows . " results" : "Showing ... results";
                                                         ?>

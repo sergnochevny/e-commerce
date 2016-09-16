@@ -137,7 +137,7 @@ class Controller_Shop extends Controller_Controller
         $start = (($page - 1) * $per_page);
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $model->validData(_A_::$app->get('cat'));
-            $catigori_name = $model->getCatName($cat_id);
+            $category_name = $model->getCatName($cat_id);
         } else {
             if (!empty(_A_::$app->get('ptrn'))) {
                 $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
@@ -210,7 +210,7 @@ class Controller_Shop extends Controller_Controller
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
+            $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
             $this->main->template->vars('list', $list);
 
             $paginator = new Controller_Paginator($this);
@@ -318,7 +318,7 @@ class Controller_Shop extends Controller_Controller
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : '');
+            $this->main->template->vars('category_name', isset($category_name) ? $category_name : '');
             $this->main->template->vars('list', $list);
 
             (new Controller_Paginator($this))->product_paginator_home($total, $page, 'shop' . DS . $type);

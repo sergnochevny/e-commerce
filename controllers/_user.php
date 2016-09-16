@@ -25,10 +25,10 @@ Class Controller_User Extends Controller_Controller
                 }
                 $registration_url = _A_::$app->router()->UrlTo('user/registration', $prms);
                 $lostpassword_url = _A_::$app->router()->UrlTo('authorization/lost_password', $prms);
-                $this->template->vars('registration_url', $registration_url);
-                $this->template->vars('lostpassword_url', $lostpassword_url);
-                $this->template->vars('redirect', $redirect);
-                $this->main->view('user_authorization');
+                $this->main->template->vars('registration_url', $registration_url);
+                $this->main->template->vars('lostpassword_url', $lostpassword_url);
+                $this->main->template->vars('redirect', $redirect);
+                $this->main->view('user');
             }
         } else {
             $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('shop');
@@ -87,10 +87,11 @@ Class Controller_User Extends Controller_Controller
         }
         $user_id = $this->get_from_session();
         _A_::$app->get('user_id', $user_id);
-        $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'));
-        $this->template->vars('title', 'CHANGE REGISTRATION DATA');
-        $this->_save_edit_user();
-        $this->_edit_user_form();
+        $users = new Controller_Users();
+        $users->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'));
+        $users->main->template->vars('title', 'CHANGE REGISTRATION DATA');
+        $users->_save_edit();
+        $users->_edit_form();
     }
 
     private function get_from_session()
@@ -103,17 +104,18 @@ Class Controller_User Extends Controller_Controller
         if ($this->is_logged()) {
             $user_id = $this->get_from_session();
             _A_::$app->get('user_id', $user_id);
+            $users = new Controller_Users();
             $action = _A_::$app->router()->UrlTo('user/save_edit');
-            $this->template->vars('action', $action);
+            $users->main->template->vars('action', $action);
             $title = 'CHANGE REGISTRATION DATA';
-            $this->template->vars('title', $title);
-            $this->_edit_user();
+            $users->main->template->vars('title', $title);
+            $users->_edit();
 
             $url = '';
             if (!is_null(_A_::$app->get('url'))) {
                 $url = _A_::$app->router()->UrlTo(base64_decode(urldecode(_A_::$app->get('url'))));
             }
-            $this->template->vars('back_url', _A_::$app->router()->UrlTo(((strlen($url) > 0) ? $url : 'shop')), true);
+            $this->main->template->vars('back_url', _A_::$app->router()->UrlTo(((strlen($url) > 0) ? $url : 'shop')), true);
             $this->main->view('edit');
         }
 
@@ -134,25 +136,26 @@ Class Controller_User Extends Controller_Controller
             $prms['url'] = _A_::$app->get('url');
         }
         $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
-        (new Controller_Users($this->main))->_new_user();
+        (new Controller_Users())->_new_user();
         $this->main->view('new');
     }
 
     public function save()
     {
         $prms = null;
-        if (!$this->_save_new_user()) {
-            $this->template->vars('title', 'REGISTRATION USER');
-            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save'));
-            $this->_new_user_form();
+        $users = new Controller_Users();
+        if (!$users->_save_new()) {
+            $users->main->template->vars('title', 'REGISTRATION USER');
+            $users->main->template->vars('action', _A_::$app->router()->UrlTo('user/save'));
+            $users->_new_form();
         } else {
             $user_id = _A_::$app->get('user_id');
-            $this->template->vars('title', 'CHANGE REGISTRATION DATA');
+            $this->main->template->vars('title', 'CHANGE REGISTRATION DATA');
             if (!is_null(_A_::$app->get('url'))) {
                 $prms['url'] = _A_::$app->get('url');
             }
-            $this->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
-            $this->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'), true);
+            $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
+            $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'), true);
 
             $data = (new Model_User())->get_user_data($user_id);
 
@@ -163,8 +166,8 @@ Class Controller_User Extends Controller_Controller
 
             $this->sendWelcomeEmail($data['email']);
 
-            $this->template->vars('data', $data);
-            $this->_edit_user_form();
+            $this->main->template->vars('data', $data);
+            $users->_edit_form();
         }
     }
 

@@ -14,13 +14,13 @@
                 </center>
                 <h1 class="page-title">
                     <?php
-                    //                            echo $object->catigori_name();
+                    //                            echo $object->category_name();
                     ?>
                 </h1>
                 <p class="woocommerce-result-count">Showing <?php echo $count_rows; ?> results</p>
                 <form class="woocommerce-ordering" method="get">
                     <?php
-                    $rows = $ProductFiltrList['catigori_in_select'];
+                    $rows = $ProductFiltrList['category_in_select'];
                     ?>
                     <select
                         onChange="if(this.options[this.selectedIndex].value!=''){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}"
