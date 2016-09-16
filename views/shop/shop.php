@@ -102,7 +102,7 @@
                                         "Basket": function () {
                                             $(this).remove();
                                             $('#content').waitloader('show');
-                                            window.location = base_url + '/cart';
+                                            window.location = base_url + 'cart';
                                         }
                                     };
 

@@ -53,37 +53,37 @@ class Controller_Cart extends Controller_Controller
         $this->products_in('product_in_proceed');
         $cart_items = ob_get_contents();
         ob_end_clean();
-        $this->main->template->vars('cart_items', $cart_items);
         ob_start();
         $this->samples_in('sample_in_proceed');
         $cart_samples_items = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('cart_samples_items', $cart_samples_items);
         ob_start();
         $this->samples_amount();
         $sum_samples = ob_get_contents();
         ob_end_clean();
-        $this->main->template->vars('sum_samples', $sum_samples);
         ob_start();
         $this->shipping_proceed_calc();
         $shipping = ob_get_contents();
         ob_end_clean();
-        $this->main->template->vars('shipping', $shipping);
         ob_start();
         $this->total_proceed_calc();
         $total_proceed = ob_get_contents();
         ob_end_clean();
-        $this->main->template->vars('total_proceed', $total_proceed);
         ob_start();
         $this->proceed_bill_ship();
         $bill_ship_info = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('bill_ship_info', $bill_ship_info);
         $back_url = _A_::$app->router()->UrlTo('cart', ['proceed' => 1]);
 
         $prms['url'] = urlencode(base64_encode($back_url));
         $change_user_url = _A_::$app->router()->UrlTo('user/change', $prms);
 
+        $this->main->template->vars('cart_items', $cart_items);
+        $this->main->template->vars('cart_samples_items', $cart_samples_items);
+        $this->main->template->vars('sum_samples', $sum_samples);
+        $this->main->template->vars('shipping', $shipping);
+        $this->main->template->vars('total_proceed', $total_proceed);
+        $this->main->template->vars('bill_ship_info', $bill_ship_info);
         $this->main->template->vars('change_user_url', $change_user_url);
 
     }
@@ -103,7 +103,7 @@ class Controller_Cart extends Controller_Controller
         }
     }
 
-    private function product_in($p_id, &$item, $template = 'product_in_cart')
+    private function product_in($p_id, &$item, $template = 'product_in')
     {
         $model = new Model_Cart();
         $base_url = _A_::$app->router()->UrlTo('/');
@@ -115,6 +115,7 @@ class Controller_Cart extends Controller_Controller
         }
         $img_url = _A_::$app->router()->UrlTo($filename);
 
+        $cart = _A_::$app->session('cart');
         $mp = new Model_Price();
         $price = $product['priceyard'];
         $inventory = $product['inventory'];
@@ -122,15 +123,13 @@ class Controller_Cart extends Controller_Controller
         $format_price = '';
         $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
 
-        $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+        $discountIds = isset($cart['discountIds']) ? $cart['discountIds'] : [];
         $saleprice = $product['priceyard'];
         $sDiscount = 0;
         $saleprice = round($mp->calculateProductSalePrice($p_id, $saleprice, $discountIds), 2);
         $bProductDiscount = $mp->checkProductDiscount($p_id, $sDiscount, $saleprice, $discountIds);
 
-        $_cart = _A_::$app->session('cart');
-        $_cart['discountIds'] = $discountIds;
-        _A_::$app->setSession('cart', $_cart);
+        $cart['discountIds'] = $discountIds;
 
         $format_sale_price = '';
         $saleprice = round($mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece), 2);
@@ -148,6 +147,10 @@ class Controller_Cart extends Controller_Controller
         $item['subtotal'] = $t_pr;
         $t_pr = "$" . number_format($t_pr, 2);
         $item['format_subtotal'] = $t_pr;
+
+        _A_::$app->setSession('cart', $cart);
+
+        $this->template->vars('img_url', $img_url);
         $this->template->vars('item', $item);
         $this->template->vars('p_id', $p_id);
         $this->template->view_layout($template);
@@ -164,7 +167,7 @@ class Controller_Cart extends Controller_Controller
             }
             $_cart = _A_::$app->session('cart');
             $_cart['samples_items'] = $cart_samples_items;
-            _A_::$app->session('cart', $_cart);
+            _A_::$app->setSession('cart', $_cart);
         }
     }
 
@@ -214,27 +217,27 @@ class Controller_Cart extends Controller_Controller
         $express_samples_cost = 0;
         $total = 0;
         $aPrds = [];
-
-        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-        $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
-        $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
+        $cart = _A_::$app->session('cart');
+        $cart_items = isset($cart['items']) ? $cart['items'] : [];
+        $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
+        $coupon_code = isset($cart['coupon']) ? $cart['coupon'] : '';
         $ms = new Model_Samples();
         $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
-        $bExpressSamples = isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
+        $bExpressSamples = isset($cart['express_samples']) ? $cart['express_samples'] : false;
         if (!$systemAllowExpressSamples) {
             $bExpressSamples = false;
         }
         if (count($cart_samples_items) == 0) $bExpressSamples = false;
 
-        $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
+        $bAcceptExpress = !$systemAllowExpressSamples ? false : isset($cart['accept_express']) ? $cart['accept_express'] : false;
         $uid = !is_null(_A_::$app->session('user')) ? (int)_A_::$app->session('user')['aid'] : 0;
-        $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-        $bShipRoll = isset(_A_::$app->session('cart')['ship_roll']) ? (boolean)_A_::$app->session('cart')['ship_roll'] : false;
+        $shipping = (isset($cart['ship']) && $cart['ship'] > 0) ? (int)$cart['ship'] : DEFAULT_SHIPPING;
+        $bShipRoll = isset($cart['ship_roll']) ? (boolean)$cart['ship_roll'] : false;
         $total_items = $this->calc_items_amount();
         $total += $total_items;
         $total_samples_items = $this->calc_samples_amount();
         $total += $total_samples_items;
-        $shipcost = _A_::$app->session('cart')['shipcost'];
+        $shipcost = $cart['shipcost'];
         $ship_model = new Model_Shipping();
         $price_model = new Model_Price();
         if (count($cart_items) > 0) {
@@ -246,12 +249,10 @@ class Controller_Cart extends Controller_Controller
 
             #calculate the discount
             if (count($aPrds) > 0) {
-                $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+                $discountIds = isset($cart['discountIds']) ? $cart['discountIds'] : [];
                 $shipDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_SHIPPING, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
                 $couponDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_COUPON, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
-                $cart = _A_::$app->session('cart');
                 $cart['discountIds'] = $discountIds;
-                _A_::$app->setSession('cart', $cart);
             }
 
         }
@@ -262,6 +263,8 @@ class Controller_Cart extends Controller_Controller
             $express_samples_cost += SAMPLES_PRICE_EXPRESS_SHIPPING;
         }
         $total = $total + $shipcost + (isset($rollcost) ? $rollcost : 0) + (isset($express_samples_cost) ? $express_samples_cost : 0);
+
+        _A_::$app->setSession('cart', $cart);
 
         if ((count($cart_items) > 0) || (count($cart_samples_items) > 0)) {
             $this->template->vars('shipping', $shipping);
@@ -296,26 +299,26 @@ class Controller_Cart extends Controller_Controller
         $total = 0;
         $couponDiscount = 0;
         $aPrds = [];
-
-        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-        $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
-        $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
+        $cart = _A_::$app->session('cart');
+        $cart_items = isset($cart['items']) ? $cart['items'] : [];
+        $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
+        $coupon_code = isset($cart['coupon']) ? $cart['coupon'] : '';
         $ms = new Model_Samples();
         $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
-        $bExpressSamples = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
+        $bExpressSamples = !$systemAllowExpressSamples ? false : isset($cart['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
         if (count($cart_samples_items) == 0) $bExpressSamples = false;
-        $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
+        $bAcceptExpress = !$systemAllowExpressSamples ? false : isset($cart['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
         $uid = (!is_null(_A_::$app->session('user'))) ? (int)_A_::$app->session('user')['aid'] : 0;
-        $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-        $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
+        $shipping = (isset($cart['ship']) && $cart['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
+        $bShipRoll = (isset($cart['ship_roll'])) ? (boolean)$cart['ship_roll'] : flase;
         $total_items = $this->calc_items_amount();
         $total += $total_items;
         $total_samples_items = $this->calc_samples_amount();
         $total += $total_samples_items;
         $discount = $this->calc_items_discount_amount();
-        $shipcost = _A_::$app->session('cart')['shipcost'];
-        $shipDiscount = _A_::$app->session('cart')['ship_discount'];
-        $couponDiscount = _A_::$app->session('cart')['coupon_discount'];
+        $shipcost = $cart['shipcost'];
+        $shipDiscount = $cart['ship_discount'];
+        $couponDiscount = $cart['coupon_discount'];
 
         if ((count($cart_items) > 0) && ($bShipRoll)) $shipcost += RATE_ROLL;
         if ((count($cart_samples_items) > 0) && ($bExpressSamples) && !(count($cart_items) > 0)) $shipcost += SAMPLES_PRICE_EXPRESS_SHIPPING;
@@ -328,7 +331,6 @@ class Controller_Cart extends Controller_Controller
         if ($shipDiscount > 0) $total = round($total - $shipDiscount, 2);
         if ($couponDiscount > 0) $total = $total - $couponDiscount;
         $discount = $discount + $couponDiscount + $shipDiscount;
-        $cart = _A_::$app->session('cart');
         $cart['total'] = $total;
         _A_::$app->setSession('cart', $cart);
         $taxes = _A_::$app->session('cart')['taxes'];
@@ -740,41 +742,40 @@ class Controller_Cart extends Controller_Controller
         $this->products_in();
         $cart_items = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('cart_items', $cart_items);
         ob_start();
         $this->items_amount();
         $sum_items = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('sum_items', $sum_items);
         ob_start();
         $this->samples_amount();
         $sum_samples = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('sum_samples', $sum_samples);
         ob_start();
         $this->samples_legend();
         $cart_samples_legend = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('cart_samples_legend', $cart_samples_legend);
         ob_start();
         $this->samples_in();
         $cart_samples_items = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('cart_samples_items', $cart_samples_items);
         ob_start();
         $this->shipping_calc();
         $shipping = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('shipping', $shipping);
         ob_start();
         $this->coupon_total_calc();
         $coupon_total = ob_get_contents();
         ob_end_clean();
-        $this->template->vars('coupon_total', $coupon_total);
-
+        $this->main->template->vars('cart_items', $cart_items);
+        $this->main->template->vars('sum_items', $sum_items);
+        $this->main->template->vars('sum_samples', $sum_samples);
+        $this->main->template->vars('cart_samples_legend', $cart_samples_legend);
+        $this->main->template->vars('cart_samples_items', $cart_samples_items);
+        $this->main->template->vars('shipping', $shipping);
+        $this->main->template->vars('coupon_total', $coupon_total);
     }
 
-    function items_amount()
+    public function items_amount()
     {
         $SUM = $this->calc_items_amount();
         $cart_items_sum = "$" . number_format($SUM, 2);
@@ -799,62 +800,49 @@ class Controller_Cart extends Controller_Controller
         $couponDiscount = 0;
         $aPrds = [];
 
-        $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
-        $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
+        $cart = _A_::$app->session('cart');
+        $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
+        $coupon_code = isset($cart['coupon']) ? $cart['coupon'] : '';
         $coupon_code = !is_null(_A_::$app->post('coupon')) ? _A_::$app->post('coupon') : $coupon_code;
-        _A_::$app->session('cart')['coupon'] = $coupon_code;
+        $cart['coupon'] = $coupon_code;
         $ms = new Model_Samples();
         $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
-        $bExpressSamples = isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
+        $bExpressSamples = isset($cart['express_samples']) ? $cart['express_samples'] : false;
         if ($systemAllowExpressSamples) {
             if (!is_null(_A_::$app->post('express_samples'))) {
                 $bExpressSamples = (int)_A_::$app->post('express_samples') == 1;
             }
         } else $bExpressSamples = false;
         if (count($cart_samples_items) == 0) $bExpressSamples = false;
-        $cart = _A_::$app->session('cart');
         $cart['express_samples'] = $bExpressSamples;
-        _A_::$app->session('cart', $cart);
 
-        $bAcceptExpress = isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
+        $bAcceptExpress = isset($cart['accept_express']) ? $cart['accept_express'] : false;
         if ($systemAllowExpressSamples) {
             if (!is_null(_A_::$app->post('accept_express'))) {
                 $bAcceptExpress = _A_::$app->post('accept_express') == 1;
             }
         } else $bAcceptExpress = false;
-
-        $cart = _A_::$app->session('cart');
         $cart['accept_express'] = $bAcceptExpress;
-        _A_::$app->session('cart', $cart);
-
         if (!is_null(_A_::$app->post('ship'))) {
-            $cart = _A_::$app->session('cart');
             $cart['ship'] = _A_::$app->post('ship');
-            _A_::$app->session('cart', $cart);
         }
 
         if (!is_null(_A_::$app->post('roll'))) {
-            $cart = _A_::$app->session('cart');
             $cart['ship_roll'] = _A_::$app->post('roll');
-            _A_::$app->session('cart', $cart);
         }
-        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-        $uid = (!is_null(_A_::$app->session('user'))) ? (int)_A_::$app->session('user')['aid'] : 0;
-        if (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) {
-            $shipping = (int)_A_::$app->session('cart')['ship'];
+        $cart_items = isset($cart['items']) ? $cart['items'] : [];
+        $uid = !is_null(_A_::$app->session('user')) ? (int)_A_::$app->session('user')['aid'] : 0;
+        if (isset($cart['ship']) && $cart['ship'] > 0) {
+            $shipping = (int)$cart['ship'];
         } else {
             $shipping = DEFAULT_SHIPPING;
-            $cart = _A_::$app->session('cart');
             $cart['ship'] = $shipping;
-            _A_::$app->session('cart', $cart);
         }
-        if (isset(_A_::$app->session('cart')['ship_roll'])) {
-            $bShipRoll = (boolean)_A_::$app->session('cart')['ship_roll'];
+        if (isset($cart['ship_roll'])) {
+            $bShipRoll = (boolean)$cart['ship_roll'];
         } else {
             $bShipRoll = false;
-            $cart = _A_::$app->session('cart');
             $cart['ship_roll'] = 0;
-            _A_::$app->session('cart', $cart);
         }
 
         $total_items = $this->calc_items_amount();
@@ -874,29 +862,23 @@ class Controller_Cart extends Controller_Controller
             $ship_model = new Model_Shipping();
             $shipcost = round($ship_model->calculateShipping($shipping, $aPrds, $bShipRoll), 2);
             if (count($aPrds) > 0) {
-                $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+                $discountIds = isset($cart['discountIds']) ? $cart['discountIds'] : [];
                 $shipDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_SHIPPING, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
                 $couponDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_COUPON, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
-                $cart = _A_::$app->session('cart');
                 $cart['discountIds'] = $discountIds;
-                _A_::$app->session('cart', $cart);
             }
 
         }
-        $cart = _A_::$app->session('cart');
         $cart['shipcost'] = $shipcost;
         $cart['ship_discount'] = $shipDiscount;
         $cart['coupon_discount'] = $couponDiscount;
-        _A_::$app->session('cart', $cart);
 
         if ((count($cart_items) > 0) && ($bShipRoll)) $shipcost += RATE_ROLL;
         if ((count($cart_samples_items) > 0) && ($bExpressSamples) && !(count($cart_items) > 0)) $shipcost += SAMPLES_PRICE_EXPRESS_SHIPPING;
         if (count($cart_items) > 0) $total += RATE_HANDLING;
         $total = $total + $shipcost;
         if ($shipDiscount > 0) $total = round($total - $shipDiscount, 2);
-        _A_::$app->session('cart', $cart);
         $cart['subtotal_ship'] = $total;
-        _A_::$app->session('cart', $cart);
         $this->template->vars('subtotal_ship', $total);
         if ($couponDiscount > 0) $total = $total - $couponDiscount;
         $taxes = 0;
@@ -908,7 +890,7 @@ class Controller_Cart extends Controller_Controller
 
         $cart['taxes'] = $taxes;
         $cart['total'] = $total;
-        _A_::$app->session('cart', $cart);
+        _A_::$app->setSession('cart', $cart);
 
         $this->template->vars('taxes', $taxes);
         $this->template->vars('total', $total);
@@ -1088,7 +1070,7 @@ class Controller_Cart extends Controller_Controller
         echo '$' . number_format($total, 2) . ' USD';
     }
 
-    function amount()
+    public function amount()
     {
 
         $SUM = 0;
@@ -1353,15 +1335,15 @@ class Controller_Cart extends Controller_Controller
             ob_end_clean();
         }
 
-        ob_start();
         $item = $cart_items[$pid];
-        $this->product_in_cart($pid, $item);
+        ob_start();
+        $this->product_in($pid, $item);
+        $response['product'] = ob_get_contents();
+        ob_end_clean();
         $cart_items[$pid] = $item;
         $_cart = _A_::$app->session('cart');
         $_cart['items'] = $cart_items;
         _A_::$app->setSession('cart', $_cart);
-        $response['product'] = ob_get_contents();
-        ob_end_clean();
 
         echo json_encode($response);
 
