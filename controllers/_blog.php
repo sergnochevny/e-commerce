@@ -250,7 +250,7 @@ class Controller_Blog extends Controller_Controller
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
+            $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
         } else
             $list = 'No Post!!';
         $this->main->template->vars('blog_post', $list);
@@ -266,7 +266,7 @@ class Controller_Blog extends Controller_Controller
         $cat_id = null;
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $model->validData(_A_::$app->get('cat'));
-            $catigori_name = $model->getPostCatName($cat_id);
+            $category_name = $model->getPostCatName($cat_id);
         }
 
         $total = $model->get_count_publish_posts($cat_id);
@@ -328,7 +328,7 @@ class Controller_Blog extends Controller_Controller
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->main->template->vars('catigori_name', isset($catigori_name) ? $catigori_name : null);
+            $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
             $this->main->template->vars('blog_posts', $list);
 
             $paginator = new Controller_Paginator($this);
@@ -382,7 +382,7 @@ class Controller_Blog extends Controller_Controller
         $cat_id = null;
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id= $model->validData(_A_::$app->get('cat'));
-            $catigori_name = $model->getPostCatName($cat_id);
+            $category_name = $model->getPostCatName($cat_id);
         }
 
         $total = $model->get_count_posts($cat_id);
@@ -443,7 +443,7 @@ class Controller_Blog extends Controller_Controller
 
             $list = ob_get_contents();
             ob_end_clean();
-            $this->template->vars('cat_name', isset($catigori_name) ? $catigori_name : null);
+            $this->template->vars('cat_name', isset($category_name) ? $category_name : null);
             $this->template->vars('blog_posts', $list);
 
             $paginator = new Controller_Paginator($this);

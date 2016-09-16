@@ -26,7 +26,7 @@
                                     <a href="product_page?p_id=<?php echo $data['product_id']; ?>">
                                         <span class="onsale">Sale!</span>
                                         <span
-                                            class="product-category"><?php echo $data['product_catigori']; ?></span>
+                                            class="product-category"><?php echo $data['product_category']; ?></span>
 
                                         <h3><?php echo $data['product_description']; ?></h3>
 

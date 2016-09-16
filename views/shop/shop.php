@@ -38,7 +38,7 @@
                 <p class="woocommerce-result-count">
                     <?php
                         if (!empty(_A_::$app->get('cat'))) {
-                            echo 'CATEGORY: ' . $catigori_name . '<br/>';
+                            echo 'CATEGORY: ' . $category_name . '<br/>';
                         }
                         if (!empty(_A_::$app->get('mnf'))) {
                             echo 'MANUFACTURER: ' . $mnf_name . '<br/>';

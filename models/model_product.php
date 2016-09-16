@@ -46,12 +46,12 @@ Class Model_Product extends Model_Model
     {
         $x = 0;
         $results = mysql_query("select * from fabrix_categories");
-        $catigori = [];
+        $category = [];
         while ($row = mysql_fetch_array($results)) {
             $x++;
-            $catigori[] = [$row[0], $row[1]];
+            $category[] = [$row[0], $row[1]];
         }
-        return array('total_catigori_in_select' => $x, 'catigori_in_select' => $catigori);
+        return array('total_category_in_select' => $x, 'category_in_select' => $category);
     }
 
     public function del_product($del_p_id)

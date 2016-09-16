@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Categories extends Controller_Base
+class Controller_Categories extends Controller_Controller
 {
 
     public function categories()

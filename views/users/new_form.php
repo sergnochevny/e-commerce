@@ -228,26 +228,29 @@
 
 <script type="text/javascript">
     (function($){
-
+        debugger;
         var base_url = '<?= _A_::$app->router()->urlTo('/') ?>';
+
+        var danger = $('.danger');
+        if (danger.length>0){
+            danger.css('display', 'block');
+            $('html, body').stop().animate({scrollTop: parseInt(danger.offset().top) - 250 }, 1000);
+            setTimeout(function () {
+                $('.danger').css('display', 'none');
+            }, 8000);
+        }
 
         $("#new_user_form").on('submit',
             function (event) {
                 event.preventDefault();
                 var url = $(this).attr('action');
+                debugger;
                 $.post(
                     url,
                     $(this).serialize(),
                     function (data) {
-                        var danger = $('.danger');
+                        debugger;
                         $("#user_form").html(data);
-                        if (danger.length>0){
-                            danger.css('display', 'block');
-                            $('html, body').stop().animate({scrollTop: parseInt(danger.offset().top) - 250 }, 1000);
-                            setTimeout(function () {
-                                $('.danger').css('display', 'none');
-                            }, 8000);
-                        }
                     }
                 )
             }
@@ -271,7 +274,7 @@
         $("#new_user_form [name=s_country]").on('change',
             function (event) {
                 event.preventDefault();
-                var url = base_url + '/get_province_list';
+                var url = base_url + 'get_province_list';
                 var country = $(this).val();
                 $.get(
                     url,

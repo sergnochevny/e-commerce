@@ -1,6 +1,6 @@
 <?php
 
-class Model_Comment
+class Model_Comment extends Model_Model
 {
     private $ID;
     private $Title;
