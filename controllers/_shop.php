@@ -194,6 +194,7 @@ class Controller_Shop extends Controller_Controller
                 $format_sale_price = '';
                 $this->template->vars('saleprice', $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece));
                 $this->template->vars('format_sale_price', $format_sale_price);
+                $this->template->vars('format_price', $format_price);
                 $this->template->vars('in_cart', in_array($row[0], $cart));
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);
