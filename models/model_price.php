@@ -446,20 +446,20 @@ Class Model_Price extends Model_Model
         $ret = $price;
 
         #get the shipping
-        if ((array_key_exists('cship', $_COOKIE)) && ((int)$_COOKIE['cship'] > 0)) {
-            $shipping = (int)$_COOKIE['cship'];
+        if (!is_null(_A_::$app->cookie('cship')) && ((int)_A_::$app->cookie('cship') > 0)) {
+            $shipping = (int)_A_::$app->cookie('cship');
         } else {
             $shipping = DEFAULT_SHIPPING;
         }
-        if ((array_key_exists('cshproll', $_COOKIE)) && ((int)$_COOKIE['cshproll'] > 0)) {
+        if (!is_null(_A_::$app->cookie('cshproll')) && ((int)!is_null(_A_::$app->cookie('cshproll') > 0))){
             $bShipRoll = true;
         } else {
             $bShipRoll = false;
         }
 
         #grab the user id
-        if (isset($_SESSION['user'])) {
-            $uid = (int)$_SESSION['user']['aid'];
+        if (isset(_A_::$app->session('user')['aid'])) {
+            $uid = (int)_A_::$app->session('user')['aid'];
         } else {
             $uid = 0;
         }

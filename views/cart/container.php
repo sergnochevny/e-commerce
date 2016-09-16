@@ -9,7 +9,7 @@
     <?php include "views/header.php"; ?>
     <div class="main-content main-content-shop">
         <div id="cart_main_container" class="container">
-            <?php echo isset($cart_content)?$cart_content:'';?>
+            <?php echo isset($content)?$content:'';?>
         </div>
     </div>
 </div>
@@ -139,7 +139,6 @@
                                                     $('#row_subtotal_items').remove();
                                                     $('#coupon_section').remove();
                                                     if ($('[data-row=samples]').length > 0) {
-                                                        debugger;
                                                         $('#subtotal_samples_items').load(base_url + '/cart_samples_amount');
                                                         $('#samples_legend').load(base_url + '/cart_samples_legend');
                                                     }

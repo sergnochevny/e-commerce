@@ -130,7 +130,8 @@ Class Model_Product extends Model_Model
             'quantity' => $quatity,
             'inventory' => $inventory,
             'piece' => $piece,
-            'whole' => $whole
+            'whole' => $whole,
+            'image1' => $rowsni['image1']
         );
 
     }

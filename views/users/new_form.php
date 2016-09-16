@@ -228,7 +228,6 @@
 
 <script type="text/javascript">
     (function($){
-        debugger;
         var base_url = '<?= _A_::$app->router()->urlTo('/') ?>';
 
         var danger = $('.danger');
@@ -244,12 +243,10 @@
             function (event) {
                 event.preventDefault();
                 var url = $(this).attr('action');
-                debugger;
                 $.post(
                     url,
                     $(this).serialize(),
                     function (data) {
-                        debugger;
                         $("#user_form").html(data);
                     }
                 )
