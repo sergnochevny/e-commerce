@@ -397,9 +397,9 @@ class Controller_Shop extends Controller_Controller
     /*
     * @export
     */
-    public function product_filtr_list()
+    public function product_filter_list()
     {
-        $this->main->template->vars('ProductFiltrList', (new Model_Product())->product_filtr_list());
+        $this->main->template->vars('ProductFilterList', (new Model_Product())->product_filter_list());
     }
 
     function widget_popular()
@@ -436,7 +436,6 @@ class Controller_Shop extends Controller_Controller
                 $price = $row[5];
                 $inventory = $row[6];
                 $piece = $row[34];
-                $format_price = '';
                 $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
 
                 $discountIds = array();
@@ -464,6 +463,7 @@ class Controller_Shop extends Controller_Controller
                 $this->template->vars('pid', $pid);
                 $this->template->vars('cat_name', $cat_name);
                 $this->template->vars('filename', $filename);
+                $this->template->vars('format_price', $format_price);
                 $this->template->vars('row', $row);
                 $this->template->vars('hide_price', $hide_price);
                 $this->template->vars('sys_hide_price', $sys_hide_price);

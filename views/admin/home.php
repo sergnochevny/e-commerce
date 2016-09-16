@@ -20,7 +20,7 @@
                 <p class="woocommerce-result-count">Showing <?php echo $count_rows; ?> results</p>
                 <form class="woocommerce-ordering" method="get">
                     <?php
-                    $rows = $ProductFiltrList['category_in_select'];
+                    $rows = $ProductFilterList['category_in_select'];
                     ?>
                     <select
                         onChange="if(this.options[this.selectedIndex].value!=''){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}"

@@ -42,7 +42,7 @@ Class Model_Product extends Model_Model
         return $product;
     }
 
-    public function product_filtr_list()
+    public function product_filter_list()
     {
         $x = 0;
         $results = mysql_query("select * from fabrix_categories");
