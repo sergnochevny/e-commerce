@@ -1,11 +1,15 @@
 <body
     class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 
-<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
-<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/matches.css'); ?>' type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8"
+      href='<?php echo _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/matches.css'); ?>'
+      type='text/css' media='all'/>
 
-<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
-<script type='text/javascript' charset="UTF-8" src='<?php echo _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
+<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>'
+      type='text/css' media='all'/>
+<script type='text/javascript' charset="UTF-8"
+        src='<?php echo _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
 <div class="site-container">
     <?php
@@ -102,9 +106,11 @@
                                                                 <p align="left">
                                                                     <b>In
                                                                         &apos;Matches&apos; you can mix and match your
-                                                                        fabric samples by dragging them into the work area
+                                                                        fabric samples by dragging them into the work
+                                                                        area
                                                                         below.
-                                                                        Experiment with possible combinations and have fun.
+                                                                        Experiment with possible combinations and have
+                                                                        fun.
                                                                         <br/>
                                                                         If you want to purchase a fabric in matches area
                                                                         press
@@ -115,8 +121,10 @@
                                                                         can.
                                                                         <br/>
                                                                         If you want to remove all fabric &nbsp;from
-                                                                        your &apos;Matches&apos; press to "Clear Matches".
-                                                                        Before experiment with other fabrics you need to clear the area by clicking "Clear Matches".
+                                                                        your &apos;Matches&apos; press to "Clear
+                                                                        Matches".
+                                                                        Before experiment with other fabrics you need to
+                                                                        clear the area by clicking "Clear Matches".
                                                                     </b>
                                                                 </p>
                                                             </div>
@@ -133,14 +141,14 @@
                                                             <a id="all_to_basket"
                                                                href="<?php echo _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
                                                                 Add
-                                                                    All to Basket
-                                                                
+                                                                All to Basket
+
                                                             </a>
                                                             <a id="clear_matches"
                                                                href="<?php echo _A_::$app->router()->UrlTo('matches/clear'); ?>">
-                                                                
-                                                                    Clear Matches
-                                                                
+
+                                                                Clear Matches
+
                                                             </a>
                                                         </b>
 
@@ -217,7 +225,7 @@
                 drop: function (event, ui) {
                     $('#matches-page').waitloader('show');
                     var p_id = $(ui.draggable).attr('data-id');
-                    window.location = base_url + 'product?p_id=' + p_id+'&back=matches';
+                    window.location = base_url + 'product?p_id=' + p_id + '&back=matches';
                 }
             });
 
@@ -262,32 +270,31 @@
                                 $('span#cart_amount').load(load_url)
                             ).done(
                                 function () {
-                                    debugger;
 //                                    if($('span#cart_amount').length>0){
-                                        $('#clear_matches').trigger('click');
-                                        buttons = {
-                                            "Basket": function () {
-                                                $(this).remove();
-                                                $('#matches-page').waitloader('show');
-                                                window.location = base_url + 'cart';
-                                            }
-                                        };
-                                        $('#msg').dialog({
-                                            draggable: false,
-                                            dialogClass: 'msg',
-                                            title: 'Add All to Basket',
-                                            modal: true,
-                                            zIndex: 10000,
-                                            autoOpen: true,
-                                            width: '700',
-                                            resizable: false,
-                                            buttons: buttons,
-                                            close: function (event, ui) {
-                                                $(this).remove();
-                                            }
-                                        });
-                                        $('.msg').css('z-index', '10001');
-                                        $('.ui-widget-overlay').css('z-index', '10000');
+                                    $('#clear_matches').trigger('click');
+                                    buttons = {
+                                        "Basket": function () {
+                                            $(this).remove();
+                                            $('#matches-page').waitloader('show');
+                                            window.location = base_url + 'cart';
+                                        }
+                                    };
+                                    $('#msg').dialog({
+                                        draggable: false,
+                                        dialogClass: 'msg',
+                                        title: 'Add All to Basket',
+                                        modal: true,
+                                        zIndex: 10000,
+                                        autoOpen: true,
+                                        width: '700',
+                                        resizable: false,
+                                        buttons: buttons,
+                                        close: function (event, ui) {
+                                            $(this).remove();
+                                        }
+                                    });
+                                    $('.msg').css('z-index', '10001');
+                                    $('.ui-widget-overlay').css('z-index', '10000');
 //                                    }
                                 }
                             );

@@ -2,18 +2,8 @@
 
 class Controller_Paginator extends Controller_Controller
 {
-    function product_paginator($total_rows, $page)
-    {
-        $this->paginator($total_rows, $page, 'admin/home');
-    }
 
-    public function paginator($total_rows, $page, $url)
-    {
-        $this->template->vars('url', $url);
-        $this->_paginator($total_rows, $page);
-    }
-
-    protected function _paginator($total_rows, $page, $per_page = 12, $showbypage = 10)
+    public function paginator($total_rows, $page, $url, $per_page = 12, $showbypage = 10)
     {
         if (!is_null(_A_::$app->get('cat'))) {
             $cat_id = _A_::$app->get('cat');
@@ -36,6 +26,7 @@ class Controller_Paginator extends Controller_Controller
         $prev_page = $page - 1;
         $next_page = $page + 1;
 
+        $this->template->vars('url', $url);
         $this->template->vars('page', $page);
         $this->template->vars('total_rows', $total_rows);
         $this->template->vars('per_page', $per_page);
@@ -52,46 +43,6 @@ class Controller_Paginator extends Controller_Controller
         $paginator = ob_get_contents();
         ob_end_clean();
         $this->main->template->vars('paginator', $paginator);
-    }
-
-    function paginator_home($total_rows, $page, $url = 'blog', $per_page = 6)
-    {
-        $this->paginator($total_rows, $page, $per_page, $url);
-    }
-
-    function product_paginator_home($total_rows, $page, $url = 'shop')
-    {
-
-        if (!is_null(_A_::$app->post('s')) && (empty(_A_::$app->post('s')))) {
-            $layout = 'product_paginator_search';
-        }
-
-        $this->paginator($total_rows, $page, $url);
-    }
-
-    function user_paginator($total_rows, $page)
-    {
-        $this->paginator($total_rows, $page, 'users');
-    }
-
-    public function orders_paginator($total_rows, $page)
-    {
-        $this->paginator($total_rows, $page, 'orders/customer_history');
-    }
-
-    public function orders_history_paginator($total_rows, $page)
-    {
-        $this->paginator($total_rows, $page, 'orders/history');
-    }
-
-    public function comments_paginator($total_rows, $page)
-    {
-        $this->paginator($total_rows, $page, 'comments/admin');
-    }
-
-    public function user_comments_paginator($total_rows, $page)
-    {
-        $this->paginator($total_rows, $page, 'comments');
     }
 
 }

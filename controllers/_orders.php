@@ -52,7 +52,7 @@ class Controller_Orders extends Controller_Controller
             ob_end_clean();
         }
         $this->main->template->vars('orders', $orders);
-        (new Controller_Paginator($this))->paginator($total, $page, 'orders');
+        (new Controller_Paginator($this))->paginator($total, $page, 'orders', $per_page);
     }
 
     function order()
@@ -103,7 +103,7 @@ class Controller_Orders extends Controller_Controller
         $model = new Model_Order();
         $prms = null;
         $order_id = $model->validData(_A_::$app->get('order_id'));
-        if (!empty(_A_::$app->get('discount_id'){0})) {
+        if (!empty(_A_::$app->get('discount_id'))) {
             $prms['discount_id'] = _A_::$app->get('discount_id');
         }
         $this->get_details();
@@ -115,6 +115,7 @@ class Controller_Orders extends Controller_Controller
 
     public function customer_history()
     {
+        $this->main->is_user_authorized(true);
         $user_id = (integer)_A_::$app->session('user')['aid'];
         $page = (integer)(empty(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
         $this->template->vars('page', $page);
@@ -162,9 +163,7 @@ class Controller_Orders extends Controller_Controller
             if (isset($customer_orders_list) && !empty($customer_orders_list)) {
                 $this->main->template->vars('customer_orders_list', $customer_orders_list);
             }
-
-            $paginator = new Controller_Paginator($this->main);
-            $paginator->orders_paginator($total_pages, $page);
+            (new Controller_Paginator($this))->paginator($total, $page, 'orders/customer_history', $per_page);
         } else {
             $mess = 'You have no orders yet.';
             $this->main->template->vars('no_orders', $mess);
@@ -184,9 +183,9 @@ class Controller_Orders extends Controller_Controller
             $this->template->vars('page', $page);
 
             $per_page = 12;
-            $total_pages = (integer)Model_Order::getOrdersListLengthByQuery($like);
+            $total = (integer)Model_Order::getOrdersListLengthByQuery($like);
 
-            if ($page > ceil($total_pages / $per_page)) $page = ceil($total_pages / $per_page);
+            if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
             if ($page <= 0) $page = 1;
             $start = (($page - 1) * $per_page);
 
@@ -225,8 +224,8 @@ class Controller_Orders extends Controller_Controller
             $page = (integer)(empty(_A_::$app->get('page')) ? 0 : _A_::$app->get('page'));
             $this->template->vars('page', $page);
             $per_page = 12;
-            $total_pages = (integer)Model_Order::getOrdersHistoryLength();
-            if ($page > ceil($total_pages / $per_page)) $page = ceil($total_pages / $per_page);
+            $total = (integer)Model_Order::getOrdersHistoryLength();
+            if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
             if ($page <= 0) $page = 1;
             $start = (($page - 1) * $per_page);
 
@@ -262,10 +261,7 @@ class Controller_Orders extends Controller_Controller
 
             $this->main->template->vars('admin_orders_list', $admin_orders_list);
         }
-
-        $paginator = new Controller_Paginator($this->main);
-        $paginator->orders_history_paginator($total_pages, $page);
-
+        (new Controller_Paginator($this))->paginator($total, $page, 'orders/history', $per_page);
         $this->main->view_admin('orders_history');
     }
 

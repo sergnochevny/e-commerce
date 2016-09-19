@@ -129,12 +129,15 @@
                     );
                 }
             );
-        $(document).on('click', '.page-number-s',
+        $(document).on('click', '.page-numbers',
             function (event) {
-                event.preventDefault();
-                var href = $(this).attr('href');
-                $('#f_search_1').attr('action', href);
-                $('#f_search_1').trigger('submit');
+                var search = $('#f_search_1 #search').val();
+                if(search.trim().length > 0){
+                    event.preventDefault();
+                    var href = $(this).attr('href');
+                    $('#f_search_1').attr('action', href);
+                    $('#f_search_1').trigger('submit');
+                }
             }
         );
 

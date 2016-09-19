@@ -46,9 +46,7 @@ class Controller_Comments extends Controller_Controller
             $this->template->vars('user_name', $user_name);
         }
         $this->template->vars('toggle', $toggle);
-
-        $paginator = new Controller_Paginator($this->main);
-        $paginator->user_comments_paginator($total, $page);
+        (new Controller_Paginator($this))->paginator($total, $page, 'comments', $per_page);
         $this->main->template->vars("content", $content);
     }
 
@@ -133,9 +131,7 @@ class Controller_Comments extends Controller_Controller
         }
         $comments_list = ob_get_contents();
         ob_end_clean();
-
-        $paginator = new Controller_Paginator($this->main);
-        $paginator->comments_paginator($total, $page);
+        (new Controller_Paginator($this))->paginator($total, $page, 'comments/admin', $per_page);
         $this->main->template->vars('comments_list', $comments_list);
     }
 

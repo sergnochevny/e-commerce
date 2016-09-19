@@ -80,20 +80,6 @@ Class Controller_User Extends Controller_Controller
         return !is_null(_A_::$app->cookie('_r'));
     }
 
-    public function save_edit()
-    {
-        if (!$this->is_user_logged()) {
-            $this->redirect(_A_::$app->router()->UrlTo('/'));
-        }
-        $user_id = $this->get_from_session();
-        _A_::$app->get('user_id', $user_id);
-        $users = new Controller_Users();
-        $users->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'));
-        $users->main->template->vars('title', 'CHANGE REGISTRATION DATA');
-        $users->_save_edit();
-        $users->_edit_form();
-    }
-
     private function get_from_session()
     {
         return _A_::$app->session('user');
@@ -102,24 +88,31 @@ Class Controller_User Extends Controller_Controller
     public function change()
     {
         if ($this->is_logged()) {
-            $user_id = $this->get_from_session();
+            $user = $this->get_from_session();
+            $user_id = $user['aid'];
             _A_::$app->get('user_id', $user_id);
             $users = new Controller_Users();
-            $action = _A_::$app->router()->UrlTo('user/save_edit');
-            $users->main->template->vars('action', $action);
+            $action = _A_::$app->router()->UrlTo('user/change');
             $title = 'CHANGE REGISTRATION DATA';
-            $users->main->template->vars('title', $title);
-            $users->_edit();
-
-            $url = '';
-            if (!is_null(_A_::$app->get('url'))) {
-                $url = _A_::$app->router()->UrlTo(base64_decode(urldecode(_A_::$app->get('url'))));
+            if(_A_::$app->server('REQUEST_METHOD') == 'POST'){
+                $users->_save_edit();
+                $users->main->template->vars('action', $action);
+                $users->main->template->vars('title', $title);
+                $users->_edit_form();
+            } else {
+                $users->_edit();
+                $url = '';
+                if (!is_null(_A_::$app->get('url'))) {
+                    $url = _A_::$app->router()->UrlTo(base64_decode(urldecode(_A_::$app->get('url'))));
+                }
+                $users->main->template->vars('title', $title);
+                $users->main->template->vars('action', $action);
+                $users->main->template->vars('back_url', _A_::$app->router()->UrlTo(((strlen($url) > 0) ? $url : 'shop')), true);
+                $users->main->view('edit');
             }
-            $this->main->template->vars('back_url', _A_::$app->router()->UrlTo(((strlen($url) > 0) ? $url : 'shop')), true);
-            $this->main->view('edit');
+        } else {
+            $this->redirect(_A_::$app->router()->UrlTo('user'));
         }
-
-        $this->redirect(_A_::$app->router()->UrlTo('/'));
     }
 
     public function is_logged()
@@ -129,45 +122,28 @@ Class Controller_User Extends Controller_Controller
 
     public function registration()
     {
-        $this->main->template->vars('title', 'REGISTRATION USER');
-        $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save'));
-        $prms = null;
-        if (!is_null(_A_::$app->get('url'))) {
-            $prms['url'] = _A_::$app->get('url');
-        }
-        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
-        (new Controller_Users())->_new_user();
-        $this->main->view('new');
-    }
-
-    public function save()
-    {
-        $prms = null;
-        $users = new Controller_Users();
-        if (!$users->_save_new()) {
-            $users->main->template->vars('title', 'REGISTRATION USER');
-            $users->main->template->vars('action', _A_::$app->router()->UrlTo('user/save'));
-            $users->_new_form();
+        if(_A_::$app->server('REQUEST_METHOD') == 'POST') {
+            $prms = null;
+            $users = new Controller_Users();
+            if (!$users->_save_new()) {
+                $users->main->template->vars('title', 'REGISTRATION USER');
+                $users->main->template->vars('action', _A_::$app->router()->UrlTo('user/registration'));
+                $users->_new_form('authorization');
+            } else {
+                $this->template->view_layout('thanx');
+            }
         } else {
-            $user_id = _A_::$app->get('user_id');
-            $this->main->template->vars('title', 'CHANGE REGISTRATION DATA');
+            $prms = null;
             if (!is_null(_A_::$app->get('url'))) {
                 $prms['url'] = _A_::$app->get('url');
             }
-            $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
-            $this->main->template->vars('action', _A_::$app->router()->UrlTo('user/save_edit'), true);
+            $users = new Controller_Users();
+            $users->_new_user();
+            $users->template->vars('title', 'REGISTRATION USER');
+            $users->template->vars('action', _A_::$app->router()->UrlTo('user/registration'));
+            $users->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
+            $users->main->view('new');
 
-            $data = (new Model_User())->get_user_data($user_id);
-
-            $data['bill_list_countries'] = $this->list_countries($data['bill_country']);
-            $data['ship_list_countries'] = $this->list_countries($data['ship_country']);
-            $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);
-            $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
-
-            $this->sendWelcomeEmail($data['email']);
-
-            $this->main->template->vars('data', $data);
-            $users->_edit_form();
         }
     }
 
@@ -175,7 +151,7 @@ Class Controller_User Extends Controller_Controller
     {
         $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
         $subject = "Thank you for registering with iluvfabrix.com";
-        $body = "Thank you for registering with www.iluvfabrix.com.\n";
+        $body = "Thank you for registering with iluvfabrix.com.\n";
         $body .= "\n";
         $body .= "As a new user, you will get 20% off your first purchase (which you may use any time in the first year) unless we have a sale going on for a discount greater than 20%, in which case you get the greater of the two discounts.\n";
         $body .= "\n";
