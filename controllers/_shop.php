@@ -79,8 +79,7 @@ class Controller_Shop extends Controller_Controller
         $list = ob_get_contents();
         ob_end_clean();
         $this->main->template->vars('list', $list);
-        $paginator = new Controller_Paginator($this);
-        $paginator->product_paginator($total, $page);
+        (new Controller_Paginator($this))->paginator($total, $page, 'admin/home', $per_page);
     }
 
     /*
@@ -123,7 +122,7 @@ class Controller_Shop extends Controller_Controller
         $image_suffix = 'b_';
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
-
+        $search = null;
         if (!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
             $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->post('s')))));
             $this->main->template->vars('search', _A_::$app->post('s'));
@@ -215,7 +214,7 @@ class Controller_Shop extends Controller_Controller
             $this->main->template->vars('list', $list);
 
             $paginator = new Controller_Paginator($this);
-            $paginator->product_paginator_home($total, $page);
+            $paginator->paginator($total, $page,'shop',$per_page);
         } else {
             $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
@@ -321,7 +320,7 @@ class Controller_Shop extends Controller_Controller
             $this->main->template->vars('category_name', isset($category_name) ? $category_name : '');
             $this->main->template->vars('list', $list);
 
-            (new Controller_Paginator($this))->product_paginator_home($total, $page, 'shop' . DS . $type);
+            (new Controller_Paginator($this))->ginator_home($total, $page, 'shop' . DS . $type);
         } else {
             $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
@@ -454,6 +453,7 @@ class Controller_Shop extends Controller_Controller
                 $this->template->vars('last', $last);
                 $this->template->vars('first', $first);
                 $this->template->vars('saleprice', $saleprice);
+                $this->template->vars('price', $price);
                 $this->template->vars('format_sale_price', $format_sale_price);
                 $this->template->vars('bProductDiscount', $bProductDiscount);
                 $this->template->vars('sDiscount', $sDiscount);

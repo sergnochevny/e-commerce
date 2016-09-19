@@ -220,6 +220,15 @@
 
         var base_url = "<?= _A_::$app->router()->UrlTo('/')?>";
 
+        var danger = $('.danger');
+        if (danger.length>0){
+            danger.css('display', 'block');
+            $('html, body').stop().animate({scrollTop: parseInt(danger.offset().top) - 250 }, 1000);
+            setTimeout(function () {
+                $('.danger').css('display', 'none');
+            }, 8000);
+        }
+
         $("#edit_user_form").on('submit',
             function(event){
                 event.preventDefault();
@@ -228,15 +237,7 @@
                     url,
                     $(this).serialize(),
                     function(data){
-                        var danger = $('.danger');
                         $("#user_form").html(data);
-                        if (danger.length>0){
-                            danger.css('display', 'block');
-                            $('html, body').stop().animate({scrollTop: parseInt(danger.offset().top) - 250 }, 1000);
-                            setTimeout(function () {
-                                $('.danger').css('display', 'none');
-                            }, 8000);
-                        }
                     }
                 )
             }

@@ -276,7 +276,10 @@
                     if ($('#roll').length > 0) {
                         roll = $('#roll')[0].checked ? 1 : 0;
                     }
-                    var data = {ship: ship, roll: roll, coupon: coupon};
+                    var data = {ship: ship, roll: roll};
+                    if (coupon.trim().length > 0){
+                        data = {ship: ship, roll: roll, coupon: coupon};
+                    }
                 }
                 if ($('#express_samples').length > 0) {
                     var express_samples = $('#express_samples')[0].checked ? 1 : 0;
