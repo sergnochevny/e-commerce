@@ -43,10 +43,10 @@
                             <ul class="dropdown-menu topnav-search-dropdown">
                                 <li>
                                     <form id="f_search" role="search" method="post" class="woocommerce-product-search"
-                                          action="<?php echo _A_::$app->router()->UrlTo('shop'); ?>">
+                                          action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
                                         <label class="screen-reader-text" for="s">Search for:</label>
                                         <input id="search" type="search" class="search-field"
-                                               placeholder="Search Products&hellip;" value="<?php echo isset($search)?$search:''?>" name="s"
+                                               placeholder="Search Products&hellip;" value="<?= isset($search)?$search:''?>" name="s"
                                                title="Search for:"/>
                                         <input id="b_search" type="button" value="Search"/>
                                     </form>
@@ -55,8 +55,8 @@
                         </li>
                         <?php }?>
 
-                        <?php echo isset($my_account_admin_menu)?$my_account_admin_menu:''?>
-                        <?php echo isset($my_account_user_menu)?$my_account_user_menu:''?>
+                        <?= isset($my_account_admin_menu) ? $my_account_admin_menu : ''?>
+                        <?= isset($my_account_user_menu) ? $my_account_user_menu : ''?>
                         <!--<li class="dropdown open">
                             <a href="#" rel="nofollow" class="dropdown-toggle cart-subtotal" data-toggle="dropdown" aria-expanded="true">
                                 <i class="simple-icon-handbag"></i>
@@ -97,7 +97,7 @@
                             </a>
                         </div>
                     </div>
-                    <?php echo $menu ?>
+                    <?= $menu ?>
                 </div>
             </div>
         </div>

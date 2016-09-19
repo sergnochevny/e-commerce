@@ -31,7 +31,7 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
         ?>
         <li>
             <a class="prev page-numbers" <?= 'href="' . _A_::$app->router()->UrlTo($url, $opt).'"';?>>
-                <?php echo $i ?>
+                = $i ?>
             </a>
         </li>
         <?php
@@ -56,9 +56,9 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
     } else echo '<span class="page-numbers noclicable"> Next </span>';
     ?>
 </li>
-<input type="hidden" id="current_page" value="<?php echo $page; ?>">
+<input type="hidden" id="current_page" value="= $page; ?>">
 <?php
 if (isset($cat_id)) {
     ?>
-    <input type="hidden" id="current_cat" value="<?php echo $cat_id; ?>">
+    <input type="hidden" id="current_cat" value="= $cat_id; ?>">
 <?php } ?>

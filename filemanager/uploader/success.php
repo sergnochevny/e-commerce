@@ -9,11 +9,11 @@
 		}
 	</style>
 	<meta http-equiv="refresh"
-		  content="3;url=index.php?path=<?php echo strip_tags(preg_replace("/[^a-zA-Z0-9\.\[\]_| -]/", '', $_GET['path'])); ?>">
+		  content="3;url=index.php?path=<?= strip_tags(preg_replace("/[^a-zA-Z0-9\.\[\]_| -]/", '', $_GET['path'])); ?>">
 </head>
 <body>
-<center><br/><br/>
+<div class="text-center"><br/><br/>
 	<img src="success.jpg" alt="success">
-</center>
+</div>
 </body>
 </html>

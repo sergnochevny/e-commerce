@@ -64,7 +64,7 @@
             <nav role="navigation" class="paging-navigation">
                 <h4 class="sr-only">Orders navigation</h4>
                 <ul class='pagination'>
-                    <?php echo isset($paginator) ? $paginator : ''; ?>
+                    = isset($paginator) ? $paginator : ''; ?>
                 </ul>
             </nav>
         </div>

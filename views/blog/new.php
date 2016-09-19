@@ -12,15 +12,13 @@
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
 
-                <a href="<?php echo $back_url;?>"  class="back_button"><input type="submit" value="Back" class="button"></a>
+                <a href="<?= $back_url;?>"  class="back_button"><input type="submit" value="Back" class="button"></a>
 
                 <h1 class="page-title">ADD BLOG POST</h1>
 
                 <div id="customer_details" class="col2-set">
                     <div class="woocommerce">
-                        <div  id="blog_post_form">
-                        <?php include('views/blog/blog_new_post_form.php'); ?>
-                        </div>
+                        <div  id="blog_post_form"><?php include('views/blog/blog_new_post_form.php'); ?></div>
                     </div>
                 </div>
             </div>

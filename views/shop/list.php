@@ -5,8 +5,8 @@
         <?php }
             $opt['p_id'] = $row[0];
         ?>
-        <figure class="product-image-box" style="background-image:url(<?php echo $filename; ?>)">
-            <a <?php echo isset($search)?'class="a_search"':''?> href="<?php echo _A_::$app->router()->UrlTo('product', $opt); ?>">
+        <figure class="product-image-box" style="background-image:url(= $filename; ?>)">
+            <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt); ?>">
             </a>
             <figcaption>
                 <?php
@@ -15,7 +15,7 @@
                     } else {
 //                        include('views/basket/main_product_addtobasket.php');
                         ?>
-                        <a class="button productsAddBasket <?php echo isset($search)?'a_search':''?>" href="<?php echo _A_::$app->router()->UrlTo('product', $opt); ?>">
+                        <a class="button productsAddBasket <?= isset($search)?'a_search':''?>" href="<?= _A_::$app->router()->UrlTo('product', $opt); ?>">
                             View Details
                         </a>                
                         <?php
@@ -23,16 +23,16 @@
                 ?>
             </figcaption>
         </figure>
-        <a <?php echo isset($search)?'class="a_search"':''?> href="<?php echo _A_::$app->router()->UrlTo('product', $opt); ?>">
-            <span class="product-category"><?php echo $row['pname']; ?></span>
+        <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt); ?>">
+            <span class="product-category"><?= $row['pname']; ?></span>
 
-            <h3 class="descProduct"><?php echo (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>
+            <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>
 
             <div class="product-price-box clearfix">
                 <?php if ($sys_hide_price == 0 && $hide_price == 0) { ?>
                     <span class="price">
                         <ins>
-                            <span class="amount"><?php echo $format_price; ?></span>
+                            <span class="amount">= $format_price; ?></span>
                         </ins>
                     </span>
                 <?php } ?>
@@ -40,7 +40,7 @@
                     <span class="price salePrice" style="float:right;color: red;">
                     Sale:
                     <ins>
-                        <span class="amount_wd"><?php echo $format_sale_price; ?></span>
+                        <span class="amount_wd">= $format_sale_price; ?></span>
                     </ins>
                 </span>
                 <?php } ?>

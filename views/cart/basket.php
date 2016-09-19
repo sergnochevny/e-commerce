@@ -1,1 +1,1 @@
-<a class="button productsAddBasket" href="<?php echo _A_::$app->router()->UrlTo('cart');?>"><i class="simple-icon-handbag fa-2x"></i> Basket</a>
+<a class="button productsAddBasket" href="<?= _A_::$app->router()->UrlTo('cart');?>"><i class="simple-icon-handbag fa-2x"></i> Basket</a>

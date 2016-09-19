@@ -50,9 +50,9 @@
 								<h4 class="widget-title">My Account</h4>
 								<div class="menu-my-account-container">
 									<ul id="menu-my-account" class="menu">
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo _A_::$app->router()->UrlTo('authorization')?>">My Account</a></li>
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo _A_::$app->router()->UrlTo('shop')?>">Shop</a></li>
-                                        <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php echo _A_::$app->router()->UrlTo('blog')?>">Blog</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?= _A_::$app->router()->UrlTo('authorization')?>">My Account</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?= _A_::$app->router()->UrlTo('shop')?>">Shop</a></li>
+                                        <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?= _A_::$app->router()->UrlTo('blog')?>">Blog</a></li>
 									</ul>
 								</div>
 							</aside>

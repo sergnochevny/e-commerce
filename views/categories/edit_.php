@@ -6,7 +6,7 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <a href="<?php echo $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
+                <a href="= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
 
                 <br/>
 

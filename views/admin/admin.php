@@ -14,9 +14,9 @@
                             <div class="woocommerce">
                                 <h2>Login</h2>
 
-                                <form method="POST" id="formx" action="<?php echo _A_::$app->router()->UrlTo('admin'); ?>"
+                                <form method="POST" id="formx" action="<?= _A_::$app->router()->UrlTo('admin'); ?>"
                                       class="login">
-                                    <input type="hidden" name="redirect" value="<?php echo isset($redirect)?$redirect:_A_::$app->router()->UrlTo('/'); ?>"/>
+                                    <input type="hidden" name="redirect" value="<?= isset($redirect)?$redirect:_A_::$app->router()->UrlTo('/'); ?>"/>
                                     <p class="form-row form-row-wide">
                                         <label for="username">Username <span class="required">*</span></label>
                                         <input type="text" class="input-text" name="login" id="username" value=""/>
@@ -52,25 +52,4 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        (function ($) {
-            $('#formx').on('submit',
-                function(event){
-                    event.preventDefault();
-                    var msg = $(this).serialize();
-                    var url = $(this).attr['action'];
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        data: msg,
-                        success: function (data) {
-                            $('.results').html(data);
-                        },
-                        error: function (xhr, str) {
-                            alert('Error: ' + xhr.responseCode);
-                        }
-                    });
-                }
-            );
-        })(jQuery);
-    </script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/admin/admin.js'); ?>' type="text/javascript"></script>

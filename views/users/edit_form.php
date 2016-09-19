@@ -1,4 +1,4 @@
-<form id="edit_user_form" action="<?php echo $action?>" method="post">
+<form id="edit_user_form" action="= $action?>" method="post">
 
     <h1 class="page-title"><?= $title ?></h1>
 
@@ -84,16 +84,16 @@
         <p class="form-row">
             <label class="required_field"><strong> Country:</strong></label>
             <select name="country" value="<?= $data['bill_country'] ?>" class="input-text ">
-                <option <?php echo (isset($data['bill_country']) && !empty($data['bill_country']{0}))?'':'selected'?> disabled>Select Country</option>
-                <?php echo isset($data['bill_list_countries'] )?$data['bill_list_countries']:''?>
+                <option = (isset($data['bill_country']) && !empty($data['bill_country']{0}))?'':'selected'?> disabled>Select Country</option>
+                = isset($data['bill_list_countries'] )?$data['bill_list_countries']:''?>
             </select>
         </p>
 
         <p class="form-row">
             <label><strong> Province/State:</strong></label>
             <select name="province" value="<?= $data['bill_province'] ?>" class="input-text ">
-                <option <?php echo (isset($data['bill_province']) && !empty($data['bill_province']{0}))?'':'selected'?> disabled>Select Province</option>
-                <?php echo isset($data['bill_list_province'] )?$data['bill_list_province']:''?>
+                <option = (isset($data['bill_province']) && !empty($data['bill_province']{0}))?'':'selected'?> disabled>Select Province</option>
+                = isset($data['bill_list_province'] )?$data['bill_list_province']:''?>
             </select>
         </p>
 
@@ -131,7 +131,7 @@
         <hr/>
         <p class="form-row">
             <label><strong>Same as Billing:</strong></label>
-            <input type="checkbox" name="Same_as_billing" <?php echo isset($data['Same_as_billing']) ? 'checked':''?> value="1"  class="input-checkbox">
+            <input type="checkbox" name="Same_as_billing" = isset($data['Same_as_billing']) ? 'checked':''?> value="1"  class="input-checkbox">
         </p>
 
         <p class="form-row">
@@ -167,16 +167,16 @@
         <p class="form-row">
             <label class="required_field"><strong> Country:</strong></label>
             <select name="s_country" value="<?= $data['ship_country'] ?>" class="input-text ">
-                <option <?php echo (isset($data['ship_country']) && !empty($data['ship_country']{0}))?'':'selected'?> disabled>Select Country</option>
-                <?php echo isset($data['ship_list_countries'] )?$data['ship_list_countries']:''?>
+                <option = (isset($data['ship_country']) && !empty($data['ship_country']{0}))?'':'selected'?> disabled>Select Country</option>
+                = isset($data['ship_list_countries'] )?$data['ship_list_countries']:''?>
             </select>
         </p>
 
         <p class="form-row">
             <label><strong> Province/State:</strong></label>
             <select name="s_state" value="<?= $data['ship_province'] ?>" class="input-text ">
-                <option <?php echo (isset($data['ship_province']) && !empty($data['ship_province']{0}))?'':'selected'?> disabled>Select Province</option>
-                <?php echo isset($data['ship_list_province'] )?$data['ship_list_province']:''?>
+                <option = (isset($data['ship_province']) && !empty($data['ship_province']{0}))?'':'selected'?> disabled>Select Province</option>
+                = isset($data['ship_list_province'] )?$data['ship_list_province']:''?>
             </select>
         </p>
 

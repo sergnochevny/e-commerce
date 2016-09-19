@@ -1,4 +1,4 @@
-<a href="<?php echo $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
+<a href="= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
 
 <div class="row">
     <div class="col-md-12">
@@ -35,16 +35,16 @@
                                     <a>Samples cost</a>
                                 </td>
                                 <td data-title="Price" class="product-price">
-                                    <?php echo isset($sum_samples) ? $sum_samples : ''; ?>
+                                    = isset($sum_samples) ? $sum_samples : ''; ?>
                                 </td>
                                 <td></td>
                                 <td data-title="Subtotal" class="product-subtotal">
-                                    <span class="amount"><?php echo isset($sum_samples) ? $sum_samples : ''; ?></span>
+                                    <span class="amount">= isset($sum_samples) ? $sum_samples : ''; ?></span>
                                 </td>
                             </tr>
                         <?php } ?>
 
-                        <?php echo isset($shipping) ? $shipping : ''; ?>
+                        = isset($shipping) ? $shipping : ''; ?>
                         </tbody>
                     </table>
                     <!--</form>-->
@@ -56,7 +56,7 @@
                                 (isset($cart_items) && strlen($cart_items) > 0) ||
                                 (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
                             ) { ?>
-                                <?php echo isset($total_proceed) ? $total_proceed : ''; ?>
+                                = isset($total_proceed) ? $total_proceed : ''; ?>
                             <?php } ?>
                         </div>
                     </div>
@@ -75,13 +75,13 @@
                         <span>PLEASE REVIEW AND CONFIRM YOUR DETAILS</span>
                     </div>
                     <div id="proceed_bill_ship" class="collaterals">
-                        <?php echo isset($bill_ship_info) ? $bill_ship_info : '' ?>
+                        = isset($bill_ship_info) ? $bill_ship_info : '' ?>
                     </div>
                 </div>
             </div>
             <div class="wc-change_user_data">
                 <a id="change_user_data" class="checkout-button button alt wc-forward"
-                   href="<?php echo $change_user_url; ?>">
+                   href="= $change_user_url; ?>">
                     Edit Billing or Shipping
                 </a>
             </div>
@@ -98,7 +98,7 @@
             ) { ?>
 
                 <a id="proceed_agreem_button" class="checkout-button button alt wc-forward"
-                   href="<?php echo _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
+                   href="= _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
                     Proceed to Agreement</a>
             <?php } ?>
         </div>

@@ -2,14 +2,14 @@
     class="page page-id-1707 page-template-default woocommerce-cart woocommerce-page header-large ltr sticky-header-yes wpb-js-composer js-comp-ver-4.11.1 vc_responsive small-sticky">
 
 
-<link rel='stylesheet' href='<?php echo _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
-<script type='text/javascript' src='<?php echo _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
+<link rel='stylesheet' href='= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
+<script type='text/javascript' src='= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
 <div class="site-container">
     <?php include "views/header.php"; ?>
     <div class="main-content main-content-shop">
         <div id="cart_main_container" class="container">
-            <?php echo isset($content)?$content:'';?>
+            = isset($content)?$content:'';?>
         </div>
     </div>
 </div>
@@ -33,7 +33,7 @@
 
 <script type="text/javascript">
     (function ($) {
-        var base_url = '<?php echo _A_::$app->router()->UrlTo('/');?>';
+        var base_url = '= _A_::$app->router()->UrlTo('/');?>';
 
         $(document).on('change', 'input[data-role=quantity]',
             function (event) {
@@ -360,7 +360,7 @@
                         $.when($('#cart_main_container').html(data))
                             .done(
                                 function(){
-                                    $('html, body').animate({scrollTop: 0}, 1000);
+                                    $('html, body').stop().animate({scrollTop: 0}, 1000);
                                 }
                             );
                     }

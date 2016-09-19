@@ -64,7 +64,7 @@
                     });
 
                     setTimeout(function () {
-                        $('html,body').animate({
+                        $('html,body').stop().animate({
                             scrollTop: $('#newsletter-page').offset().top
                         }, 2000);
                     }, 300);

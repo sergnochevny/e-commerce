@@ -1,5 +1,4 @@
-
-<form method="POST" id="blog_post" action="<?php echo $action_url;?>" class="enquiry-form ">
+<form method="POST" id="blog_post" action="<?= $action_url;?>" class="enquiry-form ">
     <div>
         <p class="form-row">
             <?php
@@ -25,24 +24,24 @@
     </div>
     <div class="col-1">
         <p class="form-row">
-            <label class="required_field"><strong>Title:</strong></label>
-            <input type="text" name="title" value="<?php echo $data['title']; ?>" class="input-text ">
+            <label class="required_field" for="nw_f_title"><strong>Title:</strong></label>
+            <input type="text" id="nw_f_title" name="title" value="<?= $data['title']; ?>" class="input-text ">
         </p>
 
         <p class="form-row">
-            <label class="required_field"><strong>Description:</strong></label>
-            <textarea class="input-text" cols="5" rows="2" name="description"><?php echo $data['description'];?></textarea>
+            <label class="required_field" for="nw_f_desc"><strong>Description:</strong></label>
+            <textarea class="input-text" id="nw_f_desc" cols="5" rows="2" name="description"><?= $data['description'];?></textarea>
         </p>
 
         <p class="form-row">
-            <label class="required_field"><strong>Keywords:</strong></label>
-            <input type="text" name="keywords" value="<?php echo $data['keywords']; ?>" class="input-text ">
+            <label class="required_field" for="nw_f_keyword"><strong>Keywords:</strong></label>
+            <input type="text" name="keywords" id="nw_f_keyword" value="<?= $data['keywords']; ?>" class="input-text ">
         </p>
         <hr/>
 
         <p class="form-row">
-            <label class="required_field"><strong>Post Categories:</strong></label>
-            <select multiple="" name="categories[]" style="height:85px;"><?php echo $data['categories'];?></select>
+            <label class="required_field" for="nw_f_post_cat"><strong>Post Categories:</strong></label>
+            <select multiple="" name="categories[]" id="nw_f_post_cat" style="height:85px;"><?= $data['categories'];?></select>
         </p>
         <small>
             <strong>NOTE</strong>: Hold Ctrl to select multiple categories.
@@ -59,7 +58,7 @@
             <center>
                 <div id="modify_image">
                     <div class="b_modify_image_pic">
-                        <?php echo $data['img'];?>
+                        <?= $data['img'];?>
                     </div>
                     <br/>
 
@@ -70,7 +69,7 @@
             <div class="clear"></div>
         </div>
 
-        <div style="margin-top: 15px; width: 200px; height: 70px; margin-left: 125px;" class="s" style="display: block;">
+        <div style="margin-top: 15px; width: 200px; height: 70px; margin-left: 125px; display: block;" class="s">
             <div id="upload" class="apd" style="cursor: pointer;"><span>Upload file</span></div>
         </div>
         <hr/>
@@ -78,27 +77,17 @@
     </div><!--col-2-->
     <div class="col-xs-12">
         <p class="form-row">
-            <label  class="required_field"><strong>Content:</strong></label>
-            <textarea id="editable" class="input-text" style="height: auto;" cols="12" rows="25" name="content"><?php echo $data['content'];?></textarea>
+            <label class="required_field" for="editable"><strong>Content:</strong></label>
+            <textarea id="editable" class="input-text" style="height: auto;" cols="12" rows="25" name="content"><?= $data['content'];?></textarea>
         </p>
     </div>
     <div class="col-xs-12">
         <p class="form-row">
             <label><strong>Publish:</strong></label>
-            <?php
-            if ( isset($data['status']) && $data['status'] === "publish") {
-                echo '<input id="chkML" type="checkbox" checked="checked" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>';
-            } else {
-                echo '<input id="chkML" type="checkbox" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>';
-            }
-            ?>
+            <?= ( isset($data['status']) && $data['status'] === "publish") ? '<input id="chkML" type="checkbox" checked="checked" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>' : '<input id="chkML" type="checkbox" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>'; ?>
         </p>
     </div>
     <div class="col-xs-12">
-        <center>
-            <br/>
-            <input type="submit" value="Save" class="button" style="width: 150px;">
-            <br/>
-        </center>
+        <div class="text-center"> <br/> <input type="submit" value="Save" class="button" style="width: 150px;"> <br/> </div>
     </div>
 </form>

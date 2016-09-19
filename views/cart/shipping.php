@@ -3,8 +3,8 @@
     <label for="select_ship">Method: </label>
     <select id="select_ship"  size="1" name="ship">
         <option value="0">select shipping method</option>
-        <option <?php echo ($shipping == 1) ? 'selected' : '' ?> value="1">express post</option>
-        <option <?php echo ($shipping == 3) ? 'selected' : '' ?> value="3">ground ship</option>
+        <option = ($shipping == 1) ? 'selected' : '' ?> value="1">express post</option>
+        <option = ($shipping == 3) ? 'selected' : '' ?> value="3">ground ship</option>
     </select>
 
     <p>
@@ -13,12 +13,12 @@
         <?php if (count($cart_items) > 0) { ?>
             <tr>
                 <td>
-                    <input id="roll" type="checkbox" name="roll" value="1" <?php echo $bShipRoll ? 'checked' : ''; ?>>
+                    <input id="roll" type="checkbox" name="roll" value="1" = $bShipRoll ? 'checked' : ''; ?>>
                     <label for="roll">Ship my fabric on a roll.</label>
                 </td>
                 <td>
                     <p style="font-size:80%; margin: 0;"><b>NOTE: </b>
-                        This cost $<?php echo number_format(RATE_ROLL, 2); ?> USD
+                        This cost $= number_format(RATE_ROLL, 2); ?> USD
                     </p>
                 </td>
             </tr>
@@ -28,7 +28,7 @@
                 SHIPPING
             </td>
             <td>
-                <b><font color="#663300">$<?php echo number_format($shipcost, 2); ?> USD</font></b><br/>
+                <b><font color="#663300">$= number_format($shipcost, 2); ?> USD</font></b><br/>
             </td>
         </tr>
         <?php if (count($cart_items) > 0) { ?>
@@ -37,7 +37,7 @@
                     HANDLING
                 </td>
                 <td>
-                    <b><font color="#663300">$<?php echo number_format(RATE_HANDLING, 2); ?> USD</font></b><br/>
+                    <b><font color="#663300">$= number_format(RATE_HANDLING, 2); ?> USD</font></b><br/>
                 </td>
             </tr>
         <?php } ?>
@@ -47,7 +47,7 @@
                     SHIPPING DISCOUNT
                 </td>
                 <td>
-                    <b><font color="#663300">$<?php echo number_format($shipDiscount, 2); ?> USD</font></b>
+                    <b><font color="#663300">$= number_format($shipDiscount, 2); ?> USD</font></b>
                 </td>
             </tr>
         <?php } ?>

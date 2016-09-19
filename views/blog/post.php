@@ -1,11 +1,8 @@
-<body
-    class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive woocommerce">
-
+<body class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive woocommerce">
 <div class="site-container">
     <?php
-    include "views/shop_header.php";
-
-    include('views/index/main_gallery.php');
+        include "views/shop_header.php";
+        include('views/index/main_gallery.php');
     ?>
 
     <style>
@@ -72,26 +69,6 @@
     </style>
 
     <div class="main-content main-content-shop">
-        <div class="container">
-            <br/>
-
-            <?php echo isset($blog_post)?$blog_post:'';?>
-
-        </div>
+        <div class="container"> <br/> <?= isset($blog_post) ? $blog_post : ''; ?> </div>
     </div>
-    <script type="text/javascript">
-
-        (function ($) {
-            $(document).ready(
-                function (event) {
-
-                    setTimeout(function () {
-                        $('html,body').stop().animate({
-                            scrollTop: $('#blog-page').offset().top
-                        }, 2000);
-                    }, 300);
-                }
-            );
-        })(jQuery);
-
-    </script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/scroll.down.js'); ?>' type="text/javascript"></script>

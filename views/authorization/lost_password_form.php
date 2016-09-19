@@ -59,7 +59,7 @@
 
     <div class="entry-content">
         <div class="woocommerce">
-            <form method="POST" id="lost_password_form" action="<?php echo $action; ?>"
+            <form method="POST" id="lost_password_form" action="<?= $action; ?>"
                   class="login">
 
                 <p class="form-row form-row-wide">
@@ -79,43 +79,4 @@
     </div>
 
 </article>
-<script type="text/javascript">
-    (function ($) {
-
-        $('#lost_password_form').on('submit',
-            function (event) {
-                event.preventDefault();
-                var msg = $(this).serialize();
-                var url = $(this).attr('action');
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: msg,
-                    success: function (data) {
-                        $('#lost_password_container').html(data);
-                        if ($('.danger').length > 0) {
-                            setTimeout(
-                                function () {
-                                    $('.danger').remove();
-                                }
-                                , 5000
-                            );
-                        }
-                    },
-                    error: function (xhr, str) {
-                        alert('Error: ' + xhr.responseCode);
-                    }
-                });
-            }
-        );
-
-        $('#blost').on('click',
-            function (event) {
-                event.preventDefault();
-                $('#lost_password_form').trigger('submit');
-            }
-        );
-
-
-    })(jQuery);
-</script>
+<script src='<?= _A_::$app->router()->UrlTo('views/authorization/lost_password_form.js'); ?>' type="text/javascript"></script>

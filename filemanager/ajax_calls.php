@@ -264,11 +264,11 @@ if(isset($_GET['action']))
 					$("#jquery_jplayer_1").jPlayer({
 						ready: function () {
 						$(this).jPlayer("setMedia", {
-						title:"<?php $_GET['title']; ?>",
-							mp3: "<?php echo $preview_file; ?>",
-							m4a: "<?php echo $preview_file; ?>",
-						oga: "<?php echo $preview_file; ?>",
-							wav: "<?php echo $preview_file; ?>"
+						title:"<?php _A_::$app->get('title'); ?>",
+							mp3: "<?= $preview_file; ?>",
+							m4a: "<?= $preview_file; ?>",
+						oga: "<?= $preview_file; ?>",
+							wav: "<?= $preview_file; ?>"
 						});
 						},
 						swfPath: "js",
@@ -287,12 +287,12 @@ if(isset($_GET['action']))
 
 				$("#jquery_jplayer_1").jPlayer({
 					ready: function () {
-					$(this).jPlayer("setMedia", {
-						title:"<?php $_GET['title']; ?>",
-						m4v: "<?php echo $preview_file; ?>",
-						ogv: "<?php echo $preview_file; ?>",
-						flv: "<?php echo $preview_file; ?>"
-					});
+						$(this).jPlayer("setMedia", {
+							title:"<?php _A_::$app->get('title'); ?>",
+							m4v: "<?= $preview_file; ?>",
+							ogv: "<?= $preview_file; ?>",
+							flv: "<?= $preview_file; ?>"
+						});
 					},
 					swfPath: "js",
 					solution:"html,flash",

@@ -1,12 +1,12 @@
 jQuery(document).ready(function($){
 	'use strict';
-
+	var body = $('body');
 	/* Keyboard image navigation */
-	if ( $('body').hasClass('attachment-jpg') || 
-		$('body').hasClass('attachment-jpeg') || 
-		$('body').hasClass('attachment-jpe') || 
-		$('body').hasClass('attachment-gif') || 
-		$('body').hasClass('attachment-png') 
+	if ( body.hasClass('attachment-jpg') ||
+		body.hasClass('attachment-jpeg') ||
+		body.hasClass('attachment-jpe') ||
+		body.hasClass('attachment-gif') ||
+		body.hasClass('attachment-png')
 	) {
 		$( document ).keydown( function( e ) {
 			var url = false;
@@ -57,11 +57,9 @@ jQuery(document).ready(function($){
 			}
 		});
 
-		$(document).on('click', '#b_search',
-			function(event){
-				$('#f_search').trigger('submit');
-			}
-		);
+		$(document).on('click', '#b_search',function(event){
+			$('#f_search').trigger('submit');
+		});
 
 		$(function () {
 			//$("a.zoom").prettyPhoto({
@@ -87,7 +85,3 @@ jQuery(document).ready(function($){
 		});
 	}
 )(jQuery);
-
-
-
-

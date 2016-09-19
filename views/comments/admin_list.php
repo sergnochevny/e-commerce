@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <?php echo $comments_list; ?>
+        = $comments_list; ?>
         </tbody>
     </table>
 </div>
@@ -19,6 +19,6 @@
 <nav role="navigation" class="paging-navigation">
     <h4 class="sr-only">Products navigation</h4>
     <ul class='pagination'>
-        <?php echo isset($paginator) ? $paginator : ''; ?>
+        = isset($paginator) ? $paginator : ''; ?>
     </ul>
 </nav>

@@ -1,5 +1,5 @@
 
-<form id="blog_category_form" action="<?php echo $action_url;?>"  method="post">
+<form id="blog_category_form" action="<?= $action_url;?>"  method="post">
     <small style="color: black; font-size: 10px;">
         Use this form to update the title and details of the offer.<br />
     </small>
@@ -31,7 +31,7 @@
         </div>
         <br/>
         <br />
-        <center><input type="submit" value="<?php echo $button_title?>" class="button" /></center>
+        <div class="text-center"><input type="submit" value="<?= $button_title?>" class="button" /></div>
 
 </form>
 <script type="text/javascript">
@@ -44,9 +44,10 @@
                     url,
                     $(this).serialize(),
                     function(data){
+                        var danger = $('.danger');
                         $("#category_form").html(data);
-                        $('.danger').css('display','block');
-                        $('html, body').animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
+                        danger.css('display','block');
+                        $('html, body').stop().animate({scrollTop: parseInt(danger.offset().top) - 250 }, 1000);
                         setTimeout(function(){
                             $('.danger').css('display','none');
                         },8000);

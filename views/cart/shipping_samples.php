@@ -18,9 +18,9 @@
             <tr align="left" valign="middle">
                 <td valign="middle" class="viewDetails">
                     <input id="express_samples" type="checkbox" name="express_samples"
-                           value="1" <?php echo ($bExpressSamples) ? 'checked' : ''; ?>>
+                           value="1" = ($bExpressSamples) ? 'checked' : ''; ?>>
                     DELIVER MY SAMPLES BY OVERNIGHT COURIER<br>
-                    &nbsp;<font color="#663300">$<?php echo number_format(SAMPLES_PRICE_EXPRESS_SHIPPING, 2); ?> USD
+                    &nbsp;<font color="#663300">$= number_format(SAMPLES_PRICE_EXPRESS_SHIPPING, 2); ?> USD
                         surcharge</font>
                     <?php if ($bExpressSamples) { ?>
                         <p style="font-size:80%;">
@@ -39,7 +39,7 @@
 
             <tr align="left" valign="middle">
                 <td valign="middle" class="viewDetails" colspan="4" style="color: #000000;">
-                    <input id="accept_express" type="checkbox" name="accept_express" value="1" <?php echo($bAcceptExpress)?'checked':'';?>>
+                    <input id="accept_express" type="checkbox" name="accept_express" value="1" =($bAcceptExpress)?'checked':'';?>>
                     <span style="font-size: 80%;">
                         I acknowledge that in rare cases samples may not arrive overnight due to circumstances beyond the control of iLuvFabrix.com. There are no guarantees or refunds given for this service.
                     <span>

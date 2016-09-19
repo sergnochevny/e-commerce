@@ -8,7 +8,7 @@
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
                 <center>
-                    <a href="<?php echo $add_product_href; ?>">
+                    <a href="<?= $add_product_href; ?>">
                         <input type="submit" value="ADD NEW PRODUCT" class="button"/>
                     </a><br>
                 </center>
@@ -17,33 +17,29 @@
                     //                            echo $object->category_name();
                     ?>
                 </h1>
-                <p class="woocommerce-result-count">Showing <?php echo $count_rows; ?> results</p>
+                <p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
                 <form class="woocommerce-ordering" method="get">
-                    <?php
-                    $rows = $ProductFilterList['category_in_select'];
-                    ?>
+                    <?php $rows = $ProductFilterList['category_in_select']; ?>
                     <select
                         onChange="if(this.options[this.selectedIndex].value!=''){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}"
                         class="orderby">
                         <option value="admin_home">--FILTER BY CATEGORY--</option>
-                        <?php
-                        foreach ($rows as $row) {
-                            ?>
-                            <option
-                                value="<?php echo _A_::$app->router()->UrlTo('admin/home', ['cat' => $row[0]]) ?>" <?php echo (!is_null(_A_::$app->get('cat')) && ($row[0] == _A_::$app->get('cat'))) ? 'selected' : ''; ?>><?php echo $row[1]; ?>
+                        <?php foreach ($rows as $row) { ?>
+                            <option value="<?= _A_::$app->router()->UrlTo('admin/home', ['cat' => $row[0]]) ?>"
+                                <?= (!is_null(_A_::$app->get('cat')) && ($row[0] == _A_::$app->get('cat'))) ? 'selected' : ''; ?>>= $row[1]; ?>
                             </option>
                         <?php } ?>
                     </select>
                 </form>
                 <ul class="products">
                     <div class="product-inner">
-                        <?php echo $list; ?>
+                        <?= $list; ?>
                     </div>
                 </ul>
                 <nav role="navigation" class="paging-navigation">
                     <h4 class="sr-only">Products navigation</h4>
                     <ul class='pagination'>
-                        <?php echo isset($paginator) ? $paginator : '';?>
+                        <?= isset($paginator) ? $paginator : '';?>
                     </ul>
                 </nav>
             </div>
@@ -67,41 +63,4 @@
         </center>
     </div>
 </div>
-
-<script type="text/javascript">
-    (function ($) {
-        $(document).on('click.confirm_action', ".popup a.close",
-            function (event) {
-                $("#confirm_action").off('click.confirm_action');
-                $("#confirm_dialog").removeClass('overlay_display');
-            }
-        );
-
-        $(document).on('click.confirm_action', "#confirm_no",
-            function (event) {
-                $(".popup a.close").trigger('click');
-            }
-        );
-
-        $(document).on('click', "#del_product",
-            function (event) {
-                event.preventDefault();
-
-                var href = $(this).attr('href');
-
-                $("#confirm_action").on('click.confirm_action',
-                    function (event) {
-                        event.preventDefault();
-                        $("#confirm_dialog").removeClass('overlay_display');
-                        window.location.href = href;
-                    }
-                );
-
-                $("#confirm_dialog").addClass('overlay_display');
-            }
-        );
-    })(jQuery);
-</script>
-
-
- 
+<script src='<?= _A_::$app->router()->UrlTo('views/js/admin/home.js'); ?>' type="text/javascript"></script>

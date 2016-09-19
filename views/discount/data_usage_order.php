@@ -1,8 +1,8 @@
 <tr>
-    <td><center><?php echo $i ?></center></td>
-    <td><center><?php echo $order_date ?></center></td>
-    <td><center><?php echo $u_bill_firstname . ' ' . $u_bill_lastname ?></center></td>
-    <td><center><?php echo $u_email ?></center></td>
+    <td><center>= $i ?></center></td>
+    <td><center>= $order_date ?></center></td>
+    <td><center>= $u_bill_firstname . ' ' . $u_bill_lastname ?></center></td>
+    <td><center>= $u_email ?></center></td>
     <td>
         <center>
             <a href="

@@ -35,7 +35,7 @@
                                     Subtotal:
                                 </th>
                                 <td colspan="1" id="subtotal_items" data-title="Subtotal">
-                                    <?php echo isset($sum_items) ? $sum_items : ''; ?>
+                                    = isset($sum_items) ? $sum_items : ''; ?>
                                 </td>
                             </tr><?php } ?>
                         </tbody>
@@ -44,7 +44,7 @@
                     if (isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
 
                         <div id="samples_legend" class="darckBoxTable">
-                            <?php echo isset($cart_samples_legend)?$cart_samples_legend:''; ?>
+                            = isset($cart_samples_legend)?$cart_samples_legend:''; ?>
                         </div>
                         <div id="samples_table" class="darckBoxTable">
                             <table cellspacing="0" class="shop_table shop_table_responsive cart">
@@ -57,7 +57,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php echo isset($cart_samples_items) ? $cart_samples_items : '';
+                                = isset($cart_samples_items) ? $cart_samples_items : '';
 
                                 if (isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
                                     <tr id="row_subtotal_samples">
@@ -65,7 +65,7 @@
                                             Subtotal:
                                         </th>
                                         <td colspan="1" id="subtotal_samples_items" data-title="Subtotal">
-                                            <?php echo isset($sum_samples) ? $sum_samples : ''; ?>
+                                            = isset($sum_samples) ? $sum_samples : ''; ?>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -93,20 +93,20 @@
                                                 <th>Subtotal</th>
                                                 <td data-title="Subtotal" style="">
                                                     <span class="amount">
-                                                        <b id="subtotal"><?php echo $sum_all_items; ?></b>
+                                                        <b id="subtotal">= $sum_all_items; ?></b>
                                                     </span>
                                                 </td>
                                             </tr>
                                         <?php }?>
                                         <tr class="shipping" id="shipping">
-                                            <?php echo isset($shipping) ? $shipping : ''; ?>
+                                            = isset($shipping) ? $shipping : ''; ?>
                                         </tr>
 
                                         <tr class="subtotal">
                                             <th>Subtotal</th>
                                             <td data-title="Subtotal">
                                                     <span class="amount">
-                                                        <b id="subtotal_ship">$<?php echo number_format($subtotal_ship, 2); ?>
+                                                        <b id="subtotal_ship">$= number_format($subtotal_ship, 2); ?>
                                                             USD</b>
                                                     </span>
                                             </td>
@@ -117,11 +117,11 @@
                                 </div>
                             <?php } ?>
                             <div id="coupon_total">
-                                <?php echo isset($coupon_total)?$coupon_total:'';?>
+                                = isset($coupon_total)?$coupon_total:'';?>
                             </div>
                             <div class="wc-proceed-to-checkout">
                                 <a class="checkout-button button alt wc-forward"
-                                   href="<?php echo _A_::$app->router()->UrlTo('shop') ?>">CONTINUE
+                                   href="= _A_::$app->router()->UrlTo('shop') ?>">CONTINUE
                                     SHOPPING</a>
 
                                 <?php if (
@@ -130,7 +130,7 @@
                                 ) { ?>
 
                                     <a id="proceed_button" class="checkout-button button alt wc-forward"
-                                       href="<?php echo _A_::$app->router()->UrlTo('cart/proceed_checkout')?>">
+                                       href="= _A_::$app->router()->UrlTo('cart/proceed_checkout')?>">
                                         Proceed to Checkout</a>
                                 <?php } ?>
                             </div>

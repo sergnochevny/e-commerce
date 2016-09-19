@@ -35,8 +35,8 @@ if (isset($warning) || isset($error)) {
 ?>
 <div class="entry-content">
     <div class="woocommerce">
-        <form method="POST" id="psw_form" action="<?php echo $action; ?>" class="login">
-            <input type="hidden" name="remind" value="<?php echo isset($remind) ? $remind : ''; ?>"/>
+        <form method="POST" id="psw_form" action="<?= $action; ?>" class="login">
+            <input type="hidden" name="remind" value="<?= isset($remind) ? $remind : ''; ?>"/>
 
             <p class="form-row form-row-wide">
                 <label for="password">Password <span class="required">*</span></label>
@@ -54,46 +54,4 @@ if (isset($warning) || isset($error)) {
         </form>
     </div>
 </div>
-<script type="text/javascript">
-    (function ($) {
-
-        $('#psw_form').on('submit',
-            function (event) {
-                event.preventDefault();
-                var msg = $(this).serialize();
-                var url = $(this).attr('action');
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: msg,
-                    success: function (data) {
-                        $.when($('#chng_pass').html(data)).done(
-                            function () {
-                                if ($('.danger').length > 0) {
-                                    setTimeout(
-                                        function () {
-                                            $('.danger').remove();
-                                        }
-                                        , 8000
-                                    );
-                                }
-                            }
-                        );
-                    },
-                    error: function (xhr, str) {
-                        alert('Error: ' + xhr.responseCode);
-                    }
-                });
-            }
-        );
-
-        $('#bchange').on('click',
-            function (event) {
-                event.preventDefault();
-                $('#psw_form').trigger('submit');
-            }
-        );
-
-
-    })(jQuery);
-</script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/remind/change_password_form.js'); ?>' type="text/javascript"></script>

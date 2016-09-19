@@ -1,5 +1,5 @@
 <center>
-    <a href="<?php echo _A_::$app->router()->UrlTo('blogcategory/add'); ?>">
+    <a href="<?= _A_::$app->router()->UrlTo('blogcategory/add'); ?>">
         <input type="submit" value="ADD NEW CATEGORY" class="button"/>
     </a><br><br><br>
 </center>
@@ -56,7 +56,7 @@
         </tr>
         </thead>
         <tbody>
-        <?php echo $blog_categories_list; ?>
+        <?= $blog_categories_list; ?>
         </tbody>
     </table>
 </div>
