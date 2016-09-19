@@ -262,7 +262,6 @@
                                 $('span#cart_amount').load(load_url)
                             ).done(
                                 function () {
-                                    debugger;
 //                                    if($('span#cart_amount').length>0){
                                         $('#clear_matches').trigger('click');
                                         buttons = {

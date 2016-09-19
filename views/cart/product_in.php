@@ -20,7 +20,7 @@
     <td data-title="Quantity" class="product-quantity">
         <div class="quantity">
             <?php if($item['piece'] == 0){?>
-            <input data-role="quantity" data-whole="<?php echo ($item['whole'] == 1?'1':'0')?>" type="text" min="1" max="100000" class="qty text" title="Quantity" value="<?php echo $item['quantity']; ?>">
+            <input data-role="quantity" data-whole="<?php echo ($item['whole'] == 1?'1':'0')?>" type="number" min="1" max="100000" class="qty text" title="Quantity" value="<?php echo $item['quantity']; ?>">
             <?php } else {?>
                 <span class="quantity"><?php echo $item['quantity']; ?></span>
             <?php }?>

@@ -1460,8 +1460,8 @@ table.table-bordered center a{font-size: 120%;margin:0 5px;}
 .footer-widgets-bottom a:hover {text-decoration: none;}
 .footer-widgets-bottom .widget .widget-title {
   font-family: "Montserrat", sans-serif;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #4e4e4e;

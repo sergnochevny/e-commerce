@@ -62,7 +62,6 @@
                                 .done(function () {
                                     $(document).trigger('init_spinner');
                                     $('.main-content').waitloader('remove');
-                                    debugger;
                                     $('#subtotal_items').load(base_url + 'cart/items_amount');
                                     $('#subtotal').load(base_url + 'cart/amount');
                                     $(document).trigger('calc_shipping_total');
@@ -265,7 +264,6 @@
 
         $(document).on('calc_shipping_total',
             function () {
-                debugger;
                 var url = base_url + 'cart/shipping_calc';
                 var stotal_url = base_url + 'cart/get_subtotal_ship';
                 if ($('#select_ship').length > 0) {

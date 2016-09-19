@@ -292,7 +292,7 @@
                                     $('#msg').dialog({
                                         draggable: false,
                                         dialogClass: 'msg',
-                                        title: 'Add to Basket',
+                                        title: 'Added to Basket',
                                         modal: true,
                                         zIndex: 10000,
                                         autoOpen: true,
@@ -341,7 +341,7 @@
                                     $('#msg').dialog({
                                         draggable: false,
                                         dialogClass: 'msg',
-                                        title: 'Add to Basket',
+                                        title: 'Added to Basket',
                                         modal: true,
                                         zIndex: 10000,
                                         autoOpen: true,

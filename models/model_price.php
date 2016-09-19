@@ -20,10 +20,10 @@ Class Model_Price extends Model_Model
         if ($piece == 1 && $inventory > 0) {
             $price = $price * $inventory;
             $format_price = $this->formatPrice($price);
-            $format_price = sprintf('%s /piece', $format_price);
+            $format_price = sprintf('%s / piece', $format_price);
         } else {
             $format_price = $this->formatPrice($price);
-            $format_price = sprintf('%s /yard', $format_price);
+            $format_price = sprintf('%s / yard', $format_price);
         }
         return $price;
     }

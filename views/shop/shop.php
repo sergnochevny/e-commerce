@@ -34,7 +34,7 @@
                     <?php
                 }
                 ?>
-                <?php echo isset($search) ? '<p class="">Search: ' . $search . '</p>' : '' ?>
+                <?php echo isset($search) ? '<p class="">Search query: <b>' . $search . '</b></p>' : '' ?>
                 <p class="woocommerce-result-count">
                     <?php
                         if (!empty(_A_::$app->get('cat'))) {
@@ -109,7 +109,7 @@
                                     $('#msg').dialog({
                                         draggable: false,
                                         dialogClass: 'msg',
-                                        title: 'Add to Basket',
+                                        title: 'Added to Basket',
                                         modal: true,
                                         zIndex: 10000,
                                         autoOpen: true,

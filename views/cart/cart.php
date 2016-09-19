@@ -31,12 +31,12 @@
 
                         if (isset($cart_items) && strlen($cart_items) > 0) { ?>
                             <tr id="row_subtotal_items">
-                            <th colspan="6">
-                                Subtotal:
-                            </th>
-                            <td colspan="1" id="subtotal_items" data-title="Subtotal">
-                                <?php echo isset($sum_items) ? $sum_items : ''; ?>
-                            </td>
+                                <th colspan="7" style="padding-left: 0">
+                                    Subtotal:
+                                </th>
+                                <td colspan="1" id="subtotal_items" data-title="Subtotal">
+                                    <?php echo isset($sum_items) ? $sum_items : ''; ?>
+                                </td>
                             </tr><?php } ?>
                         </tbody>
                     </table>

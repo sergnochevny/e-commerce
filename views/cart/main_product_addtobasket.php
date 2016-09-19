@@ -1,1 +1,1 @@
-<a class="button productsAddBasket" href="<?php echo _A_::$app->router()->UrlTo('cart/add',['p_id'=>$row[0]]);?>" id="to_basket">Add to Basket</a>
+<a class="button productsAddBasket" href="<?php echo _A_::$app->router()->UrlTo('cart/add',['p_id'=>$row[0]]);?>" id="to_basket">Added to Basket</a>

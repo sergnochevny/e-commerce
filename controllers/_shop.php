@@ -58,10 +58,10 @@ class Controller_Shop extends Controller_Controller
             if ($piece == 1 && $inventory > 0) {
                 $price = $price * $inventory;
                 $price = "$" . number_format($price, 2);
-                $format_price = sprintf('%s /piece', $price);
+                $format_price = sprintf('%s / piece', $price);
             } else {
                 $price = "$" . number_format($price, 2);
-                $format_price = sprintf('%s /yard', $price);
+                $format_price = sprintf('%s / yard', $price);
             }
 
             $this->template->vars('cat_name', $cat_name);
