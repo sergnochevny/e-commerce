@@ -1,13 +1,13 @@
 <body class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 
-<link type='text/css' href='modal_windows/modal_windows/css/confirm.css' rel='stylesheet' media='screen'/>
-<script type='text/javascript' src='modal_windows/modal_windows/js/jquery.simplemodal.js'></script>
-<script type='text/javascript' src='modal_windows/modal_windows/js/modal_windows.js'></script>
+<link type='text/css' href='<?= _A_::$app->router()->UrlTo('modal_windows/modal_windows/css/confirm.css'); ?>' rel='stylesheet' media='screen'/>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('modal_windows/modal_windows/js/jquery.simplemodal.js'); ?>'></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('modal_windows/modal_windows/js/modal_windows.js'); ?>'></script>
 
 <div class="site-container">
     <?php include "views/header.php"; ?>
     <div class="main-content main-content-shop">
-        <center><h1>COMMENTS</h1></center>
+        <div class="text-center"><h1>COMMENTS</h1></div>
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
                 <?php include('views/comments/admin_comments_list.php') ?>
@@ -21,12 +21,12 @@
             <div class="b_cap_cod_main">
                 <p style="color: black;" id="dialog-text"></p>
                 <br/>
-                <center>
+                <div class="text-center">
                     <a id="confirm_action">
                         <input type="button" value="Yes confirm" class="button"/></a>
                     <a id="confirm_no">
                         <input type="button" value="No" class="button"/></a>
-                </center>
+                </div>
             </div>
         </div>
 
@@ -37,10 +37,6 @@
 
             <div class="" id="comment-view-dialog-data">
                 <p style="color: black;" id="dialog-text"></p>
-                <br/>
-                <center>
-
-                </center>
             </div>
         </div>
 
@@ -51,16 +47,12 @@
                         $("#confirm_action").off('click.confirm_action');
                         $("#confirm_dialog").removeClass('overlay_display');
                     }
-                );
-
-                $(document).on('click.confirm_action', "#confirm_no",
+                ).on('click.confirm_action', "#confirm_no",
                     function (event) {
 
                         $(".popup a.close").trigger('click');
                     }
-                );
-
-                $(document).on('click', 'a#del_user',
+                ).on('click', 'a#del_user',
                     function (event) {
                         event.preventDefault();
                         var href = $(this).attr('href');
@@ -78,17 +70,15 @@
                         $("#confirm_dialog").addClass('overlay_display');
 
                     }
-                );
-                $(document).on('click', 'a#public_comment',
+                ).on('click', 'a#public_comment',
                     function (event) {
                         event.preventDefault();
-                        var href = $(this).attr('href');
-                        var mode = "";
-                        var a1 = $(this).attr("value");
+                        var href = $(this).attr('href'),
+                            mode = "",
+                            a1 = $(this).attr("value");
 
-                        if(a1 == "1") $("#dialog-text").html("Hide comment?");
-                        else $("#dialog-text").html("Show comment?");
-                        
+                        $("#dialog-text").html((a1 == "1") ?"Hide comment?" : "Show comment?");
+
                         $("#confirm_action").on('click.confirm_action',
                             function (event) {
                                 event.preventDefault();
@@ -104,17 +94,14 @@
                     function (event) {
                         event.preventDefault();
                         var href = $(this).attr('href');
-
-
                         $.get(href, function(data){
                            $("#comment-view-dialog-data").html(data);
                         });
 
-                        $(".close").on('click.close',
-                            function (event){
-                                event.preventDefault();
-                                $("#comment-view-dialog").removeClass('overlay_display');
-                            });
+                        $(".close").on('click.close', function (event){
+                            event.preventDefault();
+                            $("#comment-view-dialog").removeClass('overlay_display');
+                        });
 
                         $("#comment-view-dialog").addClass('overlay_display');
                     }
@@ -129,16 +116,14 @@
                             $("#comment-view-dialog-data").html(data);
                             $("#add-form-send").bind("click", function(){
                                 $('#content').load(href_update);
-                                //$("#comment-view-dialog").removeClass('overlay_display');
                             });
                         });
 
-                        $(".close").on('click.close',
-                            function (event){
-                                event.preventDefault();
-                                $('#content').load(href_update);
-                                $("#comment-view-dialog").removeClass('overlay_display');
-                            });
+                        $(".close").on('click.close',function (event){
+                            event.preventDefault();
+                            $('#content').load(href_update);
+                            $("#comment-view-dialog").removeClass('overlay_display');
+                        });
 
                         $("#comment-view-dialog").addClass('overlay_display');
                     }

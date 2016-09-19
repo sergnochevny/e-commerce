@@ -4,9 +4,6 @@
         <i class="drip-icon-user"></i>
         <span class="topnav-label hidden-xs">My Account</span>
     </a>
-    <!--<ul class="dropdown-menu topnav-account-dropdown">
-        <li><a href="#" rel="nofollow">Sign In</a></li>
-    </ul>-->
     <ul class="dropdown-menu topnav-account-dropdown">
         <li><a href="#" rel="nofollow">Change Password</a></li>
         <li><a id="log_out" href="<?= _A_::$app->router()->UrlTo('admin/log_out');?>" rel="nofollow">Log Out</a></li>

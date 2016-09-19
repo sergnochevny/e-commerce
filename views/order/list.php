@@ -1,12 +1,19 @@
+<?php
+
+    $opt['order_id'] = $row[0];
+    $opt['user_id'] = $user_id;
+    $opt['page'] = $page;
+
+?>
 <tr>
-    <td ><center><b><?= $row[0]?></b></center></td>
-    <td><center><b><?= $row[22]?></b></center></td>
-    <td><center><b>ground ship</b></center></td>
-    <td><center><b><?= $row[12]?></b></center></td>
-    <td><center><b><?= $row[14]?></b></center></td>
-    <td >
-        <center>
-            <a  class="text-success" href="order?order_id=<?= $row[0]?>&user_id=<?= $user_id?>&page=<?= $page?>"><i class="fa fa-eye"></i></a>
-        </center>
+    <td><div class="text-center"><b><?= $row[0] ?></b></div></td>
+    <td><div class="text-center"><b><?= $row[22] ?></b></div></td>
+    <td><div class="text-center"><b>ground ship</b></div></td>
+    <td><div class="text-center"><b><?= $row[12] ?></b></div></td>
+    <td><div class="text-center"><b><?= $row[14] ?></b></div></td>
+    <td>
+        <div class="text-center">
+            <a class="text-success" href="<?= _A_::$app->router()->UrlTo('order', $opt) ?>"><i class="fa fa-eye"></i></a>
+        </div>
     </td>
 </tr>

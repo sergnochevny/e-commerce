@@ -1,5 +1,4 @@
-<body
-    class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
+<body class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 
 <div class="site-container">
     <?php include "views/header.php"; ?>
@@ -26,42 +25,4 @@
                 </center>
             </div>
         </div>
-
-        <script type="text/javascript">
-            (function($){
-                $(document).on('click.confirm_action', ".popup a.close",
-                    function (event) {
-                        $("#confirm_action").off('click.confirm_action');
-                        $("#confirm_dialog").removeClass('overlay_display');
-                    }
-                );
-
-                $(document).on('click.confirm_action', "#confirm_no",
-                    function (event) {
-                        $(".popup a.close").trigger('click');
-                    }
-                );
-
-                $(document).on('click', 'a#del_discount',
-                    function (event) {
-                        event.preventDefault();
-                        var href = $(this).attr('href');
-
-                        $("#confirm_action").on('click.confirm_action',
-                            function (event) {
-                                var body = $('body');
-                                event.preventDefault();
-                                body.waitloader('show');
-                                $('#content').load(href);
-                                body.waitloader('remove');
-                                $("#confirm_dialog").removeClass('overlay_display');
-                                $("#confirm_action").off('click.confirm_action');
-                            }
-                        );
-
-                        $("#confirm_dialog").addClass('overlay_display');
-
-                    }
-                );
-            })(jQuery);
-        </script>
+        <script src="<?= _A_::$app->router()->UrlTo('views/js/discount/discounts.js');?>"></script>

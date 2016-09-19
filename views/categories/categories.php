@@ -10,6 +10,7 @@
         </div>
 
         <div id="confirm_dialog" class="overlay"></div>
+
         <div class="popup">
             <div class="fcheck"></div>
             <a class="close" title="close"></a>
@@ -17,48 +18,11 @@
             <div class="b_cap_cod_main">
                 <p style="color: black;">You confirm the removal ?</p>
                 <br/>
-                <center>
-                    <a id="confirm_action">
-                        <input type="button" value="Yes confirm" class="button"/></a>
-                    <a id="confirm_no">
-                        <input type="button" value="No" class="button"/></a>
-                </center>
+                <div class="text-center">
+                    <a id="confirm_action"><input type="button" value="Yes confirm" class="button"/></a>
+                    <a id="confirm_no"><input type="button" value="No" class="button"/></a>
+                </div>
             </div>
         </div>
 
-        <script type="text/javascript">
-            (function($){
-                $(document).on('click.confirm_action', ".popup a.close",
-                    function (event) {
-                        $("#confirm_action").off('click.confirm_action');
-                        $("#confirm_dialog").removeClass('overlay_display');
-                    }
-                );
-
-                $(document).on('click.confirm_action', "#confirm_no",
-                    function (event) {
-
-                        $(".popup a.close").trigger('click');
-                    }
-                );
-
-                $(document).on('click', 'a#del_category',
-                    function (event) {
-                        event.preventDefault();
-                        var href = $(this).attr('href');
-
-                        $("#confirm_action").on('click.confirm_action',
-                            function (event) {
-                                event.preventDefault();
-                                $('#content').load(href);
-                                $("#confirm_dialog").removeClass('overlay_display');
-                                $("#confirm_action").off('click.confirm_action');
-                            }
-                        );
-
-                        $("#confirm_dialog").addClass('overlay_display');
-
-                    }
-                );
-            })(jQuery);
-        </script>
+        <script src='<?= _A_::$app->router()->UrlTo('views/js/categories/categories.js'); ?>' type="text/javascript"></script>

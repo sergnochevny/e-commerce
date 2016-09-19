@@ -25,6 +25,7 @@
                             if(!empty($orders)){
                                 $length = (integer) count($orders);
                                 $result = (string) '';
+
                                 for($i=0; $i < $length; $i++){
                                     $result .= '<tr>';
 

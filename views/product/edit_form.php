@@ -3,20 +3,20 @@
         <p class="form-row">
         <div class="col-xs-12 alert-success danger" style="display: none;">
             <?php
-            if (isset($warning)) {
-                foreach ($warning as $msg) {
-                    echo $msg . "<br>";
+                if (isset($warning)) {
+                    foreach ($warning as $msg) {
+                        echo $msg . "<br>";
+                    }
                 }
-            }
             ?>
         </div>
         <div class="col-xs-12 alert-danger danger" style="display: none;">
             <?php
-            if (isset($error)) {
-                foreach ($error as $msg) {
-                    echo $msg . "<br>";
+                if (isset($error)) {
+                    foreach ($error as $msg) {
+                        echo $msg . "<br>";
+                    }
                 }
-            }
             ?>
         </div>
         </p>

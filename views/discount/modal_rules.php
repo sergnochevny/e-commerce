@@ -88,23 +88,4 @@
     <h2>disable sale countdown</h2>
     <p>Checking this will not include it in the sale countdown on the product list, and product details page.</p>
 </div>
-<script type="text/javascript">
-    (
-        function($){
-            $(document).on('click', ".overlay",
-                function (event) {
-                    $(this).removeClass('overlay_display');
-                }
-            );
-
-            $(document).on('click', 'a[data-promotion]',
-                function (event) {
-                    event.preventDefault();
-                    var target = $(this).attr('href');
-                    $("div"+target).addClass('overlay_display');
-                }
-            );
-        }
-    )(jQuery);
-
-</script>
+<script src="<?= _A_::$app->router()->UrlTo('views/js/discount/modal_rules.js');?>"></script>

@@ -1,7 +1,6 @@
 <table border="0" cellpadding="0" cellspacing="0" style="margin: 0;">
     <tr>
-        <td class="copyProducts"><br/><strong>SAMPLES DETAILS &
-                COST</strong></td>
+        <td class="copyProducts"><br/><strong>SAMPLES DETAILS & COST</strong></td>
     </tr>
     <tr>
         <td class="copyProducts">

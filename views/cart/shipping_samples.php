@@ -6,9 +6,9 @@
         <?php
         if ($systemAllowExpressSamples) { ?>
             <?php
-            #if the user has not selected express post, show the teaser.  if they have then dont show it
-            if (!$bExpressSamples) {
-                ?>
+                #if the user has not selected express post, show the teaser.  if they have then dont show it
+                if (!$bExpressSamples) {
+            ?>
                 <tr>
                     <td valign="middle" class="copyProducts">
                         Express Post... generally delivered within 5-7 days
@@ -33,8 +33,8 @@
                 </td>
             </tr>
             <?php
-        }
-        if ($bExpressSamples) {
+                }
+                if ($bExpressSamples) {
             ?>
 
             <tr align="left" valign="middle">

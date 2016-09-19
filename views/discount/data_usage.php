@@ -4,7 +4,7 @@
         <div class="text-center"><?= $enabled;?></div>
     </td>
     <td>
-        <div class="text-center"><?= $allow_multiple;?></div
+        <div class="text-center"><?= $allow_multiple;?></div>
     </td>
     <td>
         <div class="text-center"><?= !empty($coupon_code) ? $coupon_code : 'N/A';?></div>

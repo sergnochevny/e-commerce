@@ -1,5 +1,33 @@
+'use strict';
 jQuery(document).ready(function($){
-	'use strict';
+	
+	function throwDanger(url, data, htmlData) {
+		$.post(
+			url,
+			data,
+			function(data){
+				var danger = $('.danger');
+
+				htmlData.html(data);
+				danger.css('display','block');
+
+				$('html, body').stop().animate({
+					scrollTop: parseInt(danger.offset().top) - 250 },
+					1000
+				);
+
+				setTimeout(function(){
+					$('.danger').css('display','none');
+				},8000);
+
+			}
+		)
+	}
+
+	function scrollToTop() {
+
+	}
+	
 	var body = $('body');
 	/* Keyboard image navigation */
 	if ( body.hasClass('attachment-jpg') ||

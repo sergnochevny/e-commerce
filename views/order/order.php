@@ -12,18 +12,10 @@
                     <div class="CSSTableGenerator">
                         <table>
                             <tr>
-                                <td>
-                                    Product Number
-                                </td>
-                                <td>
-                                    Product Name
-                                </td>
-                                <td>
-                                    Quantity
-                                </td>
-                                <td>
-                                    Price
-                                </td>
+                                <td>Product Number</td>
+                                <td>Product Name</td>
+                                <td>Quantity</td>
+                                <td>Price</td>
                             </tr>
                             <?= $order_details; ?>
                         </table>
@@ -45,8 +37,7 @@
                         <div class="b_orderList_detal_date_left"><b>Taxes:</b></div>
                         <div class="b_orderList_detal_date_right"><?= $data['taxes']; ?></div>
                         <div class="b_orderList_detal_date_left"><b>Total:</b></div>
-                        <div class="b_orderList_detal_date_right" style="color: black;"><b><?= $data['total']; ?>
-                                $</b></div>
+                        <div class="b_orderList_detal_date_right" style="color: black;"><b><?= $data['total']; ?>$</b></div>
                     </div>
                 </div>
                 <br/>

@@ -1,6 +1,4 @@
-<!--<script src="views/js/jquery.min.js" type="text/javascript"></script>-->
-<body
-    class="page page-template-default woocommerce-account woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
+<body class="page page-template-default woocommerce-account woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 <div class="site-container">
     <?php include "views/header.php"; ?>
     <div class="main-content">

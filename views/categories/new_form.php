@@ -34,49 +34,25 @@
 
         <div class="col-xs-12 alert-success danger" style="display: none;">
             <?php
-            if (isset($warning)) {
-                foreach ($warning as $msg) {
-                    echo '<span>' . $msg . '</span>';
+                if (isset($warning)) {
+                    foreach ($warning as $msg) {
+                        echo '<span>' . $msg . '</span>';
+                    }
                 }
-            }
             ?>
         </div>
         <div class="col-xs-12 alert-danger danger" style="display: none;">
             <?php
-            if (isset($error)) {
-                foreach ($error as $msg) {
-                    echo '<span>' . $msg . '</span><br/>';
+                if (isset($error)) {
+                    foreach ($error as $msg) {
+                        echo '<span>' . $msg . '</span><br/>';
+                    }
                 }
-            }
             ?>
         </div>
         <br/>
         <br/>
-
-        <center>
-            <input type="submit" value=" Add " class="button"/>
-        </center>
+        <div class="text-center"><input type="submit" value=" Add " class="button"/></div>
     </div>
 </form>
-<script type="text/javascript">
-    (function($){
-        $("#new_category_form").on('submit',
-            function (event) {
-                event.preventDefault();
-                var url = $(this).attr('action');
-                $.post(
-                    url,
-                    $(this).serialize(),
-                    function (data) {
-                        $("#category_form").html(data);
-                        $('.danger').css('display', 'block');
-                        $('html, body').stop().animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
-                        setTimeout(function () {
-                            $('.danger').css('display', 'none');
-                        }, 8000);
-                    }
-                )
-            }
-        );
-    })(jQuery);
-</script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/categories/new_form.js'); ?>' type="text/javascript"></script>

@@ -7,33 +7,19 @@
             <div id="content" class="main-content-inner" role="main">
                 <a href="discounts"><input type="submit" value="Back" class="button"></a>
 
-                <h1 class="page-title"> DISCOUNTS USAGE</h1>
+                <h1 class="page-title">DISCOUNTS USAGE</h1>
 
                 <div class="CSSTableGenerator">
                     <table>
                         <tr>
-                            <td>
-                                Details
-                            </td>
-                            <td>
-                                Enabled
-                            </td>
-                            <td>
-                                Multiple
-                            </td>
-                            <td>
-                                Coupon Code
-                            </td>
-                            <td>
-                                Start Date
-                            </td>
-                            <td>
-                                End Date
-                            </td>
+                            <td>Details</td>
+                            <td>Enabled</td>
+                            <td>Multiple</td>
+                            <td>Coupon Code</td>
+                            <td>Start Date</td>
+                            <td>End Date</td>
                         </tr>
-                        <?php
-                        echo $data_usage_discounts;
-                        ?>
+                        <?= $data_usage_discounts;?>
                     </table>
                 </div>
                 <hr>
@@ -49,9 +35,7 @@
                             <td style="width:200px;"></td>
                         </tr>
 
-                        <?php
-                        echo $data_usage_order_discounts;
-                        ?>
+                        <?= $data_usage_order_discounts;?>
                     </table>
                 </div>
                 <br/><br/>

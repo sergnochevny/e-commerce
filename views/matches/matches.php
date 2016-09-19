@@ -1,18 +1,18 @@
 <body
     class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 
-<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
-<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/matches.css'); ?>' type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>'
+      type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/matches.css'); ?>'
+      type='text/css' media='all'/>
 
-<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
-<script type='text/javascript' charset="UTF-8" src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
+<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>'
+      type='text/css' media='all'/>
+<script type='text/javascript' charset="UTF-8"
+        src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
 <div class="site-container">
-    <?php
-    include "views/shop_header.php";
-
-    //    include('views/index/main_gallery.php');
-    ?>
+    <?php include "views/shop_header.php"; ?>
 
     <style>
         .toko-posts-grid .toko-post {
@@ -102,21 +102,25 @@
                                                                 <p align="left">
                                                                     <b>In
                                                                         &apos;Matches&apos; you can mix and match your
-                                                                        fabric samples by dragging them into the work area
+                                                                        fabric samples by dragging them into the work
+                                                                        area
                                                                         below.
-                                                                        Experiment with possible combinations and have fun.
+                                                                        Experiment with possible combinations and have
+                                                                        fun.
                                                                         <br/>
                                                                         If you want to purchase a fabric in matches area
                                                                         press
-                                                                        to "Add All to Basket".
+                                                                        to &laquo;Add All to Basket&raquo;.
                                                                         <br/>
                                                                         If you want to remove a fabric &nbsp;from
                                                                         your &apos;Matches&apos; drag it to the trash
                                                                         can.
                                                                         <br/>
                                                                         If you want to remove all fabric &nbsp;from
-                                                                        your &apos;Matches&apos; press to "Clear Matches".
-                                                                        Before experiment with other fabrics you need to clear the area by clicking "Clear Matches".
+                                                                        your &apos;Matches&apos; press to &laquo;Clear
+                                                                        Matches&raquo;.
+                                                                        Before experiment with other fabrics you need to
+                                                                        clear the area by clicking "Clear Matches".
                                                                     </b>
                                                                 </p>
                                                             </div>
@@ -133,14 +137,14 @@
                                                             <a id="all_to_basket"
                                                                href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
                                                                 Add
-                                                                    All to Basket
-                                                                
+                                                                All to Basket
+
                                                             </a>
                                                             <a id="clear_matches"
                                                                href="<?= _A_::$app->router()->UrlTo('matches/clear'); ?>">
-                                                                
-                                                                    Clear Matches
-                                                                
+
+                                                                Clear Matches
+
                                                             </a>
                                                         </b>
 
@@ -174,16 +178,13 @@
             var a = 1;
             var base_url = '<?= _A_::$app->router()->UrlTo('/'); ?>';
 
-            $('#dragZoneArea > img').mousedown(function (eventObject) {
+            $('#dragZoneArea').children('img').mousedown(function (eventObject) {
                 $(this).css("z-index", a++);
-            });
-
-            $('#dragZoneArea > img').draggable({
+            }).draggable({
                 containment: "#dragZoneArea",
                 start: function (event, ui) {
                     $(this).css("z-index", a++);
                 }
-
             });
 
             $(document).on('dblclick', "img#product_img_holder",
@@ -198,8 +199,8 @@
             $('.deleteDragImg').droppable({
                 hoverClass: "ui-state-hover",
                 drop: function (event, ui) {
-                    var p_id = $(ui.draggable).attr('data-id');
-                    var url = base_url + 'matches/del';
+                    var p_id = $(ui.draggable).attr('data-id'),
+                        url = base_url + 'matches/del';
                     $('#content').waitloader('show');
                     $.post(
                         url,
@@ -217,7 +218,7 @@
                 drop: function (event, ui) {
                     $('#matches-page').waitloader('show');
                     var p_id = $(ui.draggable).attr('data-id');
-                    window.location = base_url + 'product?p_id=' + p_id+'&back=matches';
+                    window.location = base_url + 'product?p_id=' + p_id + '&back=matches';
                 }
             });
 
@@ -250,9 +251,9 @@
                         }
                     );
 
-                    var data = JSON.stringify(products);
-                    var url = $(this).attr('href');
-                    var load_url = base_url + 'cart/amount';
+                    var data = JSON.stringify(products),
+                        url = $(this).attr('href'),
+                        load_url = base_url + 'cart/amount';
                     $('#matches-page').waitloader('show');
                     $.post(url, {data: data},
                         function (data) {
@@ -263,30 +264,30 @@
                             ).done(
                                 function () {
 //                                    if($('span#cart_amount').length>0){
-                                        $('#clear_matches').trigger('click');
-                                        buttons = {
-                                            "Basket": function () {
-                                                $(this).remove();
-                                                $('#matches-page').waitloader('show');
-                                                window.location = base_url + 'cart';
-                                            }
-                                        };
-                                        $('#msg').dialog({
-                                            draggable: false,
-                                            dialogClass: 'msg',
-                                            title: 'Add All to Basket',
-                                            modal: true,
-                                            zIndex: 10000,
-                                            autoOpen: true,
-                                            width: '700',
-                                            resizable: false,
-                                            buttons: buttons,
-                                            close: function (event, ui) {
-                                                $(this).remove();
-                                            }
-                                        });
-                                        $('.msg').css('z-index', '10001');
-                                        $('.ui-widget-overlay').css('z-index', '10000');
+                                    $('#clear_matches').trigger('click');
+                                    buttons = {
+                                        "Basket": function () {
+                                            $(this).remove();
+                                            $('#matches-page').waitloader('show');
+                                            window.location = base_url + 'cart';
+                                        }
+                                    };
+                                    $('#msg').dialog({
+                                        draggable: false,
+                                        dialogClass: 'msg',
+                                        title: 'Add All to Basket',
+                                        modal: true,
+                                        zIndex: 10000,
+                                        autoOpen: true,
+                                        width: '700',
+                                        resizable: false,
+                                        buttons: buttons,
+                                        close: function (event, ui) {
+                                            $(this).remove();
+                                        }
+                                    });
+                                    $('.msg').css('z-index', '10001');
+                                    $('.ui-widget-overlay').css('z-index', '10000');
 //                                    }
                                 }
                             );
