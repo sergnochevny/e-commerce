@@ -2,9 +2,9 @@
     class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 
 <!--Slider-->
-<link rel='stylesheet' href='= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>' type='text/css'
+<link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>' type='text/css'
       media='all'/>
-<script type='text/javascript' src='= _A_::$app->router()->UrlTo('views/js/owl.carousel.min.js'); ?>'></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owl.carousel.min.js'); ?>'></script>
 
 <div class="site-container">
     <?php include "views/header.php"; ?>
@@ -23,30 +23,30 @@
                                             <div
                                                 class="toko-slides toko-slider-active owl-carousel owl-theme owl-loaded">
                                                 <div class="toko-slide"
-                                                     style="background-image:url(= _A_::$app->router()->UrlTo('views/images/slider/slide1.jpg'); ?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
+                                                     style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/slider/slide1.jpg'); ?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
                                                     <div class="toko-slide-inner">
                                                         <div class="toko-slide-detail"
-                                                             onclick="return location.href = '= _A_::$app->router()->UrlTo('shop'); ?>'">
+                                                             onclick="return location.href = '<?= _A_::$app->router()->UrlTo('shop'); ?>'">
                                                             <p class="toko-slide-desc">Featured Fabric Selection</p>
 
                                                             <h2 class="toko-slide-title">View our Fabrics</h2>
                                                             <a class="toko-slide-button"
-                                                               href="= _A_::$app->router()->UrlTo('shop'); ?>">Click
+                                                               href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Click
                                                                 to view our
                                                                 fabrics</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="toko-slide"
-                                                     style="background-image:url(= _A_::$app->router()->UrlTo('views/images/slider/slide2.jpg'); ?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
+                                                     style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/slider/slide2.jpg'); ?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
                                                     <div class="toko-slide-inner">
                                                         <div class="toko-slide-detail"
-                                                             onclick="return location.href = '= _A_::$app->router()->UrlTo('shop'); ?>'">
+                                                             onclick="return location.href = '<?= _A_::$app->router()->UrlTo('shop'); ?>'">
                                                             <p class="toko-slide-desc">Featured Fabric Selection</p>
 
                                                             <h2 class="toko-slide-title">View our Fabrics</h2>
                                                             <a class="toko-slide-button"
-                                                               href="= _A_::$app->router()->UrlTo('shop'); ?>">Click
+                                                               href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Click
                                                                 to view our
                                                                 fabrics</a>
                                                         </div>
@@ -95,8 +95,8 @@
                                                 class="wpb_column vc_column_container vc_col-sm-12 vc_custom_1439734514225">
                                                 <div class="wpb_wrapper">
                                                     <div class="toko-banner toko-banner-left"
-                                                         style="background-image:url(= _A_::$app->router()->UrlTo('views/images/temp/textile.png'); ?>)">
-                                                        <a href="= _A_::$app->router()->UrlTo('shop/last'); ?>">
+                                                         style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/temp/textile.png'); ?>)">
+                                                        <a href="<?= _A_::$app->router()->UrlTo('shop/last'); ?>">
                                                             <div class="toko-banner-detail">
                                                                 <p class="paragraf1">Brand new life, Brand new
                                                                     textile</p>
@@ -112,8 +112,8 @@
                                             <div
                                                 class="wpb_column vc_column_container vc_col-sm-6 vc_custom_1439734524172">
                                                 <div class="wpb_wrapper">
-                                                    <div class="toko-banner toko-banner-right" style="background-image:url(= _A_::$app->router()->UrlTo('views/images/temp/textile1.png'); ?>)">
-                                                        <a href="= _A_::$app->router()->UrlTo('shop/best'); ?>">
+                                                    <div class="toko-banner toko-banner-right" style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/temp/textile1.png'); ?>)">
+                                                        <a href="<?= _A_::$app->router()->UrlTo('shop/best'); ?>">
                                                             <div class="toko-banner-detail">
                                                                 <p class="paragraf1">New Collection</p>
                                                                 <h3 class="text-medium">Best textile</h3>
@@ -127,8 +127,8 @@
                                                 class="wpb_column vc_column_container vc_col-sm-6 vc_custom_1439734531955">
                                                 <div class="wpb_wrapper">
                                                     <div class="toko-banner toko-banner-left"
-                                                         style="background-image:url(= _A_::$app->router()->UrlTo('views/images/temp/textile2.png'); ?>)">
-                                                        <a href="= _A_::$app->router()->UrlTo('shop/popular'); ?>">
+                                                         style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/temp/textile2.png'); ?>)">
+                                                        <a href="<?= _A_::$app->router()->UrlTo('shop/popular'); ?>">
                                                             <div class="toko-banner-detail">
                                                                 <p class="paragraf1">New collection</p>
 
@@ -156,7 +156,7 @@
                                                         <h2 class="toko-cta-title">MOTHER'S DAY SALE</h2>
 
                                                         <p class="toko-cta-description">Limited Only 10 Days</p>
-                                                        <a href="= _A_::$app->router()->UrlTo('shop'); ?>"
+                                                        <a href="<?= _A_::$app->router()->UrlTo('shop'); ?>"
                                                            class="toko-cta-button">Shop
                                                             Now</a>
                                                     </div>
@@ -208,7 +208,7 @@
         $(document).ready(
             function (event) {
 
-                $('#toko-carousel-560').load("= _A_::$app->router()->UrlTo('shop/widget_bsells_horiz')?>");
+                $('#toko-carousel-560').load("<?= _A_::$app->router()->UrlTo('shop/widget_bsells_horiz')?>");
 
                 $('.toko-slider-active').owlCarousel({
                     items: 1,
@@ -223,7 +223,7 @@
                 });
 
                 $.get(
-                    "= _A_::$app->router()->UrlTo('shop/widget_new_carousel');?>",
+                    "<?= _A_::$app->router()->UrlTo('shop/widget_new_carousel');?>",
                     {},
                     function (data) {
                         $('#toko-carousel-871').html(data)

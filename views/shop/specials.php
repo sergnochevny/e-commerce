@@ -5,7 +5,7 @@
             <span class="extra_discount">Extra Discount!</span>
         <?php }
         ?>
-        <figure class="product-image-box" style="background-image:url(= $filename; ?>)">
+        <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
             <a href="<?= _A_::$app->router()->UrlTo('product',$url_prms); ?>">
             </a>
             <figcaption>
@@ -32,7 +32,7 @@
                 <?php if ($sys_hide_price == 0 && $hide_price == 0) { ?>
                     <span class="price">
                         <ins>
-                            <span class="amount">= $format_price; ?></span>
+                            <span class="amount"><?= $format_price; ?></span>
                         </ins>
                     </span>
                 <?php } ?>
@@ -40,7 +40,7 @@
                     <span class="price" style="float:right;color: red;">
                         Sale:
                         <ins>
-                            <span class="amount_wd">= $format_sale_price; ?></span>
+                            <span class="amount_wd"><?= $format_sale_price; ?></span>
                         </ins>
                     </span>
                 <?php } ?>

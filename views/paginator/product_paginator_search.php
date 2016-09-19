@@ -56,7 +56,7 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
                 }
                 echo 'href="' . _A_::$app->router()->UrlTo($url, $opt) . '" ' ;
                 ?>
-            >= $i ?></a>
+            ><?= $i ?></a>
         </li>
         <?php
     }

@@ -11,7 +11,7 @@
         </tr>
 	</thead>
 	<tbody>
-        = $orders_list?>
+        <?= $orders_list?>
 	</tbody>
     </table>
 	</div>

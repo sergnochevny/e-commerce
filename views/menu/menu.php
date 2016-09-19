@@ -3,10 +3,10 @@
         <ul id="menu-header-menu" class="site-menu nav navbar-nav navbar-right">
 
             <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item current_page_item active">
-                <a title="" href="= _A_::$app->router()->UrlTo('/')?>">Home</a>
+                <a title="" href="<?= _A_::$app->router()->UrlTo('/')?>">Home</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="Shop" aria-haspopup="true" class="has-submenu" href="= _A_::$app->router()->UrlTo('shop');?>">Shop<span class="caret"></span></a>
+                <a title="Shop" aria-haspopup="true" class="has-submenu" href="<?= _A_::$app->router()->UrlTo('shop');?>">Shop<span class="caret"></span></a>
                 <?php
                 echo isset($shop_menu)?$shop_menu:'';
                 ?>
@@ -18,25 +18,25 @@
                 </ul>
             </li>-->
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="Blog"  aria-haspopup="true" class="has-submenu" href="= _A_::$app->router()->UrlTo('blog')?>">Blog<span class="caret"></span></a>
+                <a title="Blog"  aria-haspopup="true" class="has-submenu" href="<?= _A_::$app->router()->UrlTo('blog')?>">Blog<span class="caret"></span></a>
                 <?php
                 echo isset($blog_menu)?$blog_menu:'';
                 ?>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="= _A_::$app->router()->UrlTo('newsletter')?>">Newsletter</a>
+                <a title="" href="<?= _A_::$app->router()->UrlTo('newsletter')?>">Newsletter</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="= _A_::$app->router()->UrlTo('service')?>">Service</a>
+                <a title="" href="<?= _A_::$app->router()->UrlTo('service')?>">Service</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="= _A_::$app->router()->UrlTo('about')?>">About us</a>
+                <a title="" href="<?= _A_::$app->router()->UrlTo('about')?>">About us</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="= _A_::$app->router()->UrlTo('contact')?>">Contact</a>
+                <a title="" href="<?= _A_::$app->router()->UrlTo('contact')?>">Contact</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="= _A_::$app->router()->UrlTo('matches')?>">Matches</a>
+                <a title="" href="<?= _A_::$app->router()->UrlTo('matches')?>">Matches</a>
             </li>
 
         </ul>

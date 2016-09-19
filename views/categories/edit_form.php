@@ -1,5 +1,5 @@
 
-<form id="category_edit_form" action="= _A_::$app->router()->UrlTo('categories/save_data',['category_id' => _A_::$app->get('category_id')]) ?>"  method="post">
+<form id="category_edit_form" action="<?= _A_::$app->router()->UrlTo('categories/save_data',['category_id' => _A_::$app->get('category_id')]) ?>"  method="post">
     <small style="color: black; font-size: 10px;">
         Use this form to update the title and details of the offer.<br />
         NOTE: the title cannot be more than 28 characters.
@@ -13,7 +13,7 @@
         <p class="form-row">
             <label><strong>Display order:</strong></label>
             <select name="display_order">
-                = $display_order_categories; ?>
+                <?= $display_order_categories; ?>
             </select>
 
         </p>

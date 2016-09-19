@@ -5,7 +5,7 @@
         <?php }
             $opt['p_id'] = $row[0];
         ?>
-        <figure class="product-image-box" style="background-image:url(= $filename; ?>)">
+        <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
             <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt); ?>">
             </a>
             <figcaption>
@@ -32,7 +32,7 @@
                 <?php if ($sys_hide_price == 0 && $hide_price == 0) { ?>
                     <span class="price">
                         <ins>
-                            <span class="amount">= $format_price; ?></span>
+                            <span class="amount"><?= $format_price; ?></span>
                         </ins>
                     </span>
                 <?php } ?>
@@ -40,7 +40,7 @@
                     <span class="price salePrice" style="float:right;color: red;">
                     Sale:
                     <ins>
-                        <span class="amount_wd">= $format_sale_price; ?></span>
+                        <span class="amount_wd"><?= $format_sale_price; ?></span>
                     </ins>
                 </span>
                 <?php } ?>

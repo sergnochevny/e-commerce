@@ -16,7 +16,7 @@
                           action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
                         <!--<label class="screen-reader-text" for="s">Search for:</label>-->
                         <input id="search" type="search" class="search-field"
-                               placeholder="Search Products&hellip;" value="= isset($search) ? $search : '' ?>"
+                               placeholder="Search Products&hellip;" value="<?= isset($search) ? $search : '' ?>"
                                name="s"
                                title="Search for:"/>
                         <input id="b_search_1" class="button-search" type="button" value="Search"/>
@@ -28,13 +28,13 @@
                     ?>
                     <p class="woocommerce-page-title">
                     <h3 class="toko-section-title">
-                        = $page_title; ?>
+                        <?= $page_title; ?>
                     </h3>
                     </p>
                     <?php
                 }
                 ?>
-                = isset($search) ? '<p class="">Search query: <b>' . $search . '</b></p>' : '' ?>
+                <?= isset($search) ? '<p class="">Search query: <b>' . $search . '</b></p>' : '' ?>
                 <p class="woocommerce-result-count">
                     <?php
                         if (!empty(_A_::$app->get('cat'))) {

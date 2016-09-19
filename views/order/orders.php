@@ -5,14 +5,14 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <a href="= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
-                = $orders; ?>
+                <a href="<?= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
+                <?= $orders; ?>
                 <br/>
             </div>
             <nav role="navigation" class="paging-navigation">
                 <h4 class="sr-only">Orders navigation</h4>
                 <ul class='pagination'>
-                    = isset($paginator) ? $paginator : ''; ?>
+                    <?= isset($paginator) ? $paginator : ''; ?>
                 </ul>
             </nav>
         </div>

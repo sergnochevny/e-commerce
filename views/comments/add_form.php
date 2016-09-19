@@ -49,7 +49,7 @@
                             <div class="form-group" id="comment-form-save">
                                 <label class="col-md-3 control-label" for="add-form-send"></label>
                                 <div class="col-md-8">
-                                    <a id="add-form-send" name="comment-send-button" class="add-button btn comment-button" onclick='sendComment("= (BASE_URL . '/comment_save'); ?>")'>Send comment</a>
+                                    <a id="add-form-send" name="comment-send-button" class="add-button btn comment-button" onclick='sendComment("<?= (BASE_URL . '/comment_save'); ?>")'>Send comment</a>
                                 </div>
                             </div>
 

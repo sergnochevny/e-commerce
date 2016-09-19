@@ -32,7 +32,7 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
         <li>
             <a class="prev page-numbers"
                 <?= 'href="' . _A_::$app->router()->UrlTo('/customer_orders_history', $opt); ?>>
-                = $i ?>
+                <?= $i ?>
             </a>
         </li>
         <?php
@@ -55,4 +55,4 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
     } else echo '<span class="page-numbers noclicable"> Next </span>';
     ?>
 </li>
-<input type="hidden" id="current_page" value="= $page; ?>">
+<input type="hidden" id="current_page" value="<?= $page; ?>">

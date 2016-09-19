@@ -1,4 +1,4 @@
-<a href="= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
+<a href="<?= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
 <div class="row">
     <div class="col-md-12">
         <article class="page type-page status-publish entry" style="overflow:hidden;">
@@ -72,7 +72,7 @@
                     <p class="copyProducts">Your personal information is never
                         under any circumstances shared with any other individuals
                         or organizations.<br>
-                        <A href="= _A_::$app->router()->UrlTo('privacy'); ?>" class="copyProducts">privacy policy</A>.<br>
+                        <A href="<?= _A_::$app->router()->UrlTo('privacy'); ?>" class="copyProducts">privacy policy</A>.<br>
                     </p>
                     <p class="copyCopy">Security Information</p>
                     <p class="copyProducts">All purchase transactions made on
@@ -88,20 +88,20 @@
         <input type="checkbox" name="agreeterm" id="agreeterm"/>
         I have read and agreed to your website Terms and Conditions.</p><br/>
         <div id="container_proceed_pay" class="wc-proceed-to-pay" style="display: none;">
-            <form method="post" id="paypal_form" name="paypal_form" action="= $paypal['url']?>">
+            <form method="post" id="paypal_form" name="paypal_form" action="<?= $paypal['url']?>">
 
                 <!-- PayPal Configuration -->
-                <input type="hidden" name="business" value="= $paypal['business']?>">
-                <input type="hidden" name="cmd" value="= $paypal['cmd']?>">
-                <input type="hidden" name="image_url" value="= $paypal['image_url']?>">
-                <input type="hidden" name="return" value="= $paypal['return']?>">
-                <input type="hidden" name="cancel_return" value="= $paypal['cancel_return']?>">
-                <input type="hidden" name="notify_url" value="= $paypal['notify_url']?>">
-                <input type="hidden" name="rm" value="= $paypal['rm']?>">
+                <input type="hidden" name="business" value="<?= $paypal['business']?>">
+                <input type="hidden" name="cmd" value="<?= $paypal['cmd']?>">
+                <input type="hidden" name="image_url" value="<?= $paypal['image_url']?>">
+                <input type="hidden" name="return" value="<?= $paypal['return']?>">
+                <input type="hidden" name="cancel_return" value="<?= $paypal['cancel_return']?>">
+                <input type="hidden" name="notify_url" value="<?= $paypal['notify_url']?>">
+                <input type="hidden" name="rm" value="<?= $paypal['rm']?>">
 
-                <input type="hidden" name="currency_code" value="= $paypal['currency_code']?>">
-                <input type="hidden" name="lc" value="= $paypal['lc']?>">
-                <input type="hidden" name="bn" value="= $paypal['bn']?>">
+                <input type="hidden" name="currency_code" value="<?= $paypal['currency_code']?>">
+                <input type="hidden" name="lc" value="<?= $paypal['lc']?>">
+                <input type="hidden" name="bn" value="<?= $paypal['bn']?>">
                 <input type="hidden" name="cbt" value="Continue >>">
 
                 <!-- Payment Page Information -->
@@ -114,7 +114,7 @@
                 <input type=hidden name="item_name" value="Fabric">
                 <input type=hidden name="item_number" value="1">
                 <input type="hidden" name="quantity" value="">
-                <input type=hidden name="amount" value="= $total; ?>">
+                <input type=hidden name="amount" value="<?= $total; ?>">
 
                 <input type="hidden" name="undefined_quantity" value="">
 

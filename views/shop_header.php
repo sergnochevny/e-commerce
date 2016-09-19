@@ -72,7 +72,7 @@
                                 <i class="simple-icon-handbag"></i>
                                 <span class="topnav-label">
                                     <span class="amount">
-                                        $= isset($SUM) ? $SUM : '0.00' ?>
+                                        $<?= isset($SUM) ? $SUM : '0.00' ?>
                                     </span>
                                 </span>
                             </a>

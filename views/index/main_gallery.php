@@ -1,6 +1,6 @@
 <!--Slider-->
-<link rel='stylesheet' href='= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>' type='text/css' media='all'/>
-<script type='text/javascript' src='= _A_::$app->router()->UrlTo('views/js/owl.carousel.min.js'); ?>'></script>
+<link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>' type='text/css' media='all'/>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owl.carousel.min.js'); ?>'></script>
 
 <div class="main-content">
     <div class="container">
@@ -15,7 +15,7 @@
                                     <div class="toko-slider-wrap">
                                         <div class="toko-slides toko-slider-active owl-carousel owl-theme owl-loaded">
                                             <div class="toko-slide"
-                                                 style="background-image:url(= _A_::$app->router()->UrlTo('views/images/slider/slide1.jpg');?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
+                                                 style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/slider/slide1.jpg');?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
                                                 <div class="toko-slide-inner">
                                                     <div class="toko-slide-detail">
                                                         <p class="toko-slide-desc">Featured Fabric Selection</p>
@@ -26,7 +26,7 @@
                                                 </div>
                                             </div>
                                             <div class="toko-slide"
-                                                 style="background-image:url(= _A_::$app->router()->UrlTo('views/images/slider/slide2.jpg');?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
+                                                 style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/slider/slide2.jpg');?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
                                                 <div class="toko-slide-inner">
                                                     <div class="toko-slide-detail">
                                                         <p class="toko-slide-desc">Featured Fabric Selection</p>

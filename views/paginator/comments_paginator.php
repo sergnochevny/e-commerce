@@ -30,7 +30,7 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
             <?php
             echo 'href="' . _A_::$app->router()->UrlTo('admin_comments', $opt) .'"';
             ?>
-            >= $i ?></a>
+            ><?= $i ?></a>
     </li>
 <?php
     }
@@ -52,4 +52,4 @@ for ($i = $nav_start; $i <= $nav_end; $i++) {
     } else echo '<span class="page-numbers noclicable"> Next </span>';
     ?>
 </li>
-<input type="hidden" id="current_page" value="= $page; ?>">
+<input type="hidden" id="current_page" value="<?= $page; ?>">

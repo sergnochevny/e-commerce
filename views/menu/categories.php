@@ -4,7 +4,7 @@
             CATEGORIES
         </p>
         <div class="list_categories">
-            = $list_all_category;?>
+            <?= $list_all_category;?>
         </div>
     </div>
 </div>

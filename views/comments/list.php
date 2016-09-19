@@ -11,7 +11,7 @@
             <nav role="navigation" class="paging-navigation">
                 <h4 class="sr-only">Products navigation</h4>
                 <ul class='pagination'>
-                    = isset($paginator) ? $paginator : ''; ?>
+                    <?= isset($paginator) ? $paginator : ''; ?>
                 </ul>
         </div>
     </div>

@@ -56,7 +56,7 @@
                     </thead>
                     <tbody>
 
-                        = $detail_info_customer; ?>
+                        <?= $detail_info_customer; ?>
                         <?php if($is_sample){ ?>
                             <tr>
                                 <td></td>

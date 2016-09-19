@@ -14,7 +14,7 @@
 
                                 <form method="POST" id="authorization" action="<?php _A_::$app->router()->UrlTo('user_authorization'); ?>/"
                                       class="login">
-                                    <input type="hidden" name="redirect" value="= isset($redirect)?$redirect:_A_::$app->router()->UrlTo('/'); ?>"/>
+                                    <input type="hidden" name="redirect" value="<?= isset($redirect)?$redirect:_A_::$app->router()->UrlTo('/'); ?>"/>
 
                                     <p class="form-row form-row-wide">
                                         <label for="username">Email Address <span class="required">*</span></label>
@@ -29,7 +29,7 @@
                                     <p class="form-row">
                                         <input type="hidden" id="_wpnonce" name="_wpnonce" value="c0312ae7bb"/>
                                         <input type="hidden" name="_wp_http_referer" value="#"/>
-                                        <input id="blogin" type="button" class="button" name="login" data-action="= _A_::$app->router()->UrlTo('user'); ?>" value="Login"/>
+                                        <input id="blogin" type="button" class="button" name="login" data-action="<?= _A_::$app->router()->UrlTo('user'); ?>" value="Login"/>
                                         <label for="rememberme" class="inline">
                                             <input name="rememberme" value="1" type="checkbox" id="rememberme"/>
                                             Remember me

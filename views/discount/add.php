@@ -1,8 +1,8 @@
 <body
     class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
-<link rel="stylesheet" href="= _A_::$app->router()->UrlTo('views/css/jquery-ui.css');?>">
+<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.css');?>">
 <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
-<script src="= _A_::$app->router()->UrlTo('views/js/jquery-ui.js');?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.js');?>"></script>
 <div class="site-container">
     <?php include "views/header.php"; ?>
     <div class="main-content main-content-shop">

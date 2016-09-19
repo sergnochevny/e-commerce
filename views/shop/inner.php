@@ -2,7 +2,7 @@
     <div class="product-inner">
         <figure class="product-image-box">
             <a href="#">
-                <img width="#" height="266" src="= $filename; ?>"
+                <img width="#" height="266" src="<?= $filename; ?>"
                      class="attachment-shop_catalog size-shop_catalog wp-post-image" alt=""/>
             </a>
             <figcaption>
@@ -16,14 +16,14 @@
             </figcaption>
         </figure>
         <a href="<?= _A_::$app->router()->UrlTo('product/edit', $url_prms); ?>">
-            <span class="product-category">= $row['pname']; ?></span>
+            <span class="product-category"><?= $row['pname']; ?></span>
 
             <h3><?= $row[8]; ?></h3>
 
             <div class="product-price-box clearfix">
                 <span class="price">
                     <ins>
-                        <span class="amount">= $format_price; ?></span>
+                        <span class="amount"><?= $format_price; ?></span>
                     </ins>
                 </span>
             </div>

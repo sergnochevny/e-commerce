@@ -1,11 +1,11 @@
 <body
     class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 
-<link rel='stylesheet' charset="UTF-8" href='= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
-<link rel='stylesheet' charset="UTF-8" href='= _A_::$app->router()->UrlTo('views/css/matches.css'); ?>' type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/matches.css'); ?>' type='text/css' media='all'/>
 
-<link rel='stylesheet' charset="UTF-8" href='= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
-<script type='text/javascript' charset="UTF-8" src='= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
+<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
+<script type='text/javascript' charset="UTF-8" src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
 <div class="site-container">
     <?php
@@ -67,7 +67,7 @@
         }
 
         .toko-posts-grid .toko-post-detail > p > span.opa {
-            background-image: url("= _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
+            background-image: url("<?= _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
             bottom: 0;
             display: block;
             height: 80px;
@@ -126,18 +126,18 @@
                                                             <div id="dragZoneArea">
                                                                 <div class="deleteDragImg icon-delete"></div>
                                                                 <div class="detailsDragImg"></div>
-                                                                = isset($matches_items) ? $matches_items : '' ?>
+                                                                <?= isset($matches_items) ? $matches_items : '' ?>
                                                             </div>
                                                         </div>
                                                         <b id="b_in_product">
                                                             <a id="all_to_basket"
-                                                               href="= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
+                                                               href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
                                                                 Add
                                                                     All to Basket
                                                                 
                                                             </a>
                                                             <a id="clear_matches"
-                                                               href="= _A_::$app->router()->UrlTo('matches/clear'); ?>">
+                                                               href="<?= _A_::$app->router()->UrlTo('matches/clear'); ?>">
                                                                 
                                                                     Clear Matches
                                                                 

@@ -37,14 +37,14 @@
                         $filename = _A_::$app->router()->UrlTo($filename);
                         $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                         ?>
-                        <a = isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
+                        <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                             itemprop="image"
                             class="woocommerce-main-image zoom"
                             title=""
-                            = isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                            = isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
+                            <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                            <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
                             <img width="499" height="499"
-                                 src="= isset($filename1) ? $filename1 : $filename; ?>"
+                                 src="<?= isset($filename1) ? $filename1 : $filename; ?>"
                                  class="attachment-shop_single size-shop_single wp-post-image" alt="" title=""/>
                         </a>
 
@@ -67,12 +67,12 @@
                                 $filename = _A_::$app->router()->UrlTo($filename);
                                 $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                                 ?>
-                                <a = isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
+                                <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
                                     title=""
-                                    = isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                                    = isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
-                                    <img width="110" height="110" src="= $filename; ?>"
+                                    <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                                    <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
+                                    <img width="110" height="110" src="<?= $filename; ?>"
                                          class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
                                 </a>
                                 <?php
@@ -88,12 +88,12 @@
                                 $filename = _A_::$app->router()->UrlTo($filename);
                                 $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                                 ?>
-                                <a = isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
+                                <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
                                     title=""
-                                    = isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                                    = isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
-                                    <img width="110" height="110" src="= $filename; ?>"
+                                    <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                                    <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
+                                    <img width="110" height="110" src="<?= $filename; ?>"
                                          class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
                                 </a>
                                 <?php
@@ -108,12 +108,12 @@
                                 $filename = _A_::$app->router()->UrlTo($filename);
                                 $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                                 ?>
-                                <a = isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
+                                <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
                                     title=""
-                                    = isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                                    = isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
-                                    <img width="110" height="110" src="= $filename; ?>"
+                                    <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                                    <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
+                                    <img width="110" height="110" src="<?= $filename; ?>"
                                          class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
                                 </a>
                                 <?php
@@ -128,12 +128,12 @@
                                 $filename = _A_::$app->router()->UrlTo($filename);
                                 $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
                                 ?>
-                                <a = isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
+                                <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
                                     title=""
-                                    = isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                                    = isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
-                                    <img width="110" height="110" src="= $filename; ?>"
+                                    <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                                    <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
+                                    <img width="110" height="110" src="<?= $filename; ?>"
                                          class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
                                 </a>
                                 <?php
@@ -154,7 +154,7 @@
                                 <p class="price">Price:
                                     <ins>
                                     <span class="amount">
-                                    = $format_price; ?>
+                                    <?= $format_price; ?>
                                     </span>
                                     </ins>
                                 </p>
@@ -162,7 +162,7 @@
                         </div>
                         <table class="table table-bordered table-striped red">
                             <tbody>
-                            = isset($discount_info) ? $discount_info : '' ?>
+                            <?= isset($discount_info) ? $discount_info : '' ?>
                             </tbody>
                         </table>
                         <div class="quantity"></div>
@@ -190,7 +190,7 @@
                             if ($data['inventory'] > 0 && $allowed_samples) {
                                 ?>
                                 <a id="add_samples_cart"
-                                   href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['p_id' => $pid]) ?>" = !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
+                                   href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['p_id' => $pid]) ?>" <?= !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
                                     <button type="button" class="single_add_to_cart_button button alt">Add Samples
                                     </button>
                                 </a>
@@ -208,12 +208,12 @@
                             </a>
                             <?php if ($img1_exists) { ?>
                                 <a id="add_matches"
-                                   href="= $mhref; ?>" = !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
+                                   href="<?= $mhref; ?>" <?= !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
                                     <button type="button" class="single_add_to_cart_button button alt">Add to Matches
                                     </button>
                                 </a>
                                 <a id="view_matches"
-                                   href="<?= _A_::$app->router()->UrlTo('matches'); ?>" = isset($in_matches) ? '' : 'style="display: none;"'; ?>>
+                                   href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= isset($in_matches) ? '' : 'style="display: none;"'; ?>>
                                     <button type="button" class="single_add_to_cart_button button alt">View Matches
                                     </button>
                                 </a>
@@ -235,16 +235,16 @@
                                 <?php if (($data['piece'] == 1) && ($data['inventory'] > 0)) { ?>
                                     <tr>
                                         <td class="row_title"><b>Dimensions</b>:</td>
-                                        <td>= $data['dimensions']; ?></td>
+                                        <td><?= $data['dimensions']; ?></td>
                                     </tr>
                                 <?php } else { ?>
                                     <tr>
                                         <td class="row_title"><b>Width</b>:</td>
-                                        <td>= $data['width']; ?></td>
+                                        <td><?= $data['width']; ?></td>
                                     </tr>
-                                    <tr style="= ($data['inventory'] > 0) ? '' : 'color: red;'; ?>">
+                                    <tr style="<?= ($data['inventory'] > 0) ? '' : 'color: red;'; ?>">
                                         <td class="row_title"><b>Avail. yardage</b>:</td>
-                                        <td>= $data['inventory'];
+                                        <td><?= $data['inventory'];
                                             ?></td>
                                     </tr>
                                 <?php } ?>

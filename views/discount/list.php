@@ -1,5 +1,5 @@
 <center>
-    <a href="= _A_::$app->router()->UrlTo('discounts/add');?>"><input type="submit" value="ADD DISCOUNT" class="button"/></a><br><br><br>
+    <a href="<?= _A_::$app->router()->UrlTo('discounts/add');?>"><input type="submit" value="ADD DISCOUNT" class="button"/></a><br><br><br>
 </center>
 
 <div class="">

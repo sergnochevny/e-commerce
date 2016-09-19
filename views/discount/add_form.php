@@ -1,7 +1,7 @@
 <div class="ui-widget-overlay" id="wait_loader">
     <i class="fa fa-spinner fa-pulse fa-4x"></i>
 </div>
-<form method="POST" id="discount" action="= _A_::$app->router()->UrlTo('discounts/save_data');?>" class="enquiry-form">
+<form method="POST" id="discount" action="<?= _A_::$app->router()->UrlTo('discounts/save_data');?>" class="enquiry-form">
     <br/>
     <div class="form-row">
         <?php
@@ -70,7 +70,7 @@
             <input type="text" name="coupon_code" id="coupon_code" style="width: 200px;"
                    value="<?= $data['coupon_code'] ?>" class="input-text" onkeyup="toggleCouponCode(true);">
             <input type="checkbox" name="generate_code" id="generate_code" onclick="toggleCouponCode(true);" value="1"
-                   = (isset($data['generate_code']) && $data['generate_code'] == '1') ? 'checked' : '' ?> class="input-checkbox">
+                   <?= (isset($data['generate_code']) && $data['generate_code'] == '1') ? 'checked' : '' ?> class="input-checkbox">
             <span style="font-size: 10px;">Generate Coupon Code for me.</span>
         </div>
         <div class="b_MODIFY_DISCOUNT_left form-row"><a class="required_field" data-promotion href="#discount_details">Discount
@@ -108,16 +108,16 @@
                 } ?>>Total (inc shipping and handling)</option>-->
             </select>
         </div>
-        <div id="l_ship" class="b_MODIFY_DISCOUNT_left form-row"  = ($data['discount_type'] == '2')?'':'style="display: none;"'?>>
+        <div id="l_ship" class="b_MODIFY_DISCOUNT_left form-row"  <?= ($data['discount_type'] == '2')?'':'style="display: none;"'?>>
             <a class="required_field">Shipping</a>
         </div>
-        <div id="f_ship" class="b_MODIFY_DISCOUNT_right form-row"  = ($data['discount_type'] == '2')?'':'style="display: none;"'?>>
+        <div id="f_ship" class="b_MODIFY_DISCOUNT_right form-row"  <?= ($data['discount_type'] == '2')?'':'style="display: none;"'?>>
 
             <select name="shipping_type" id="iShippingType">
-                <option value="0" = ($data['shipping_type'] == "0")?'selected':''?>>Select Shipping Type</option>
-                <option value="1" = ($data['shipping_type'] == "1")?'selected':''?>>Both</option>
-                <option value="2" = ($data['shipping_type'] == "2")?'selected':''?>>Ground</option>
-                <option value="3" = ($data['shipping_type'] == "3")?'selected':''?>>Express</option>
+                <option value="0" <?= ($data['shipping_type'] == "0")?'selected':''?>>Select Shipping Type</option>
+                <option value="1" <?= ($data['shipping_type'] == "1")?'selected':''?>>Both</option>
+                <option value="2" <?= ($data['shipping_type'] == "2")?'selected':''?>>Ground</option>
+                <option value="3" <?= ($data['shipping_type'] == "3")?'selected':''?>>Express</option>
             </select>
 
         </div>

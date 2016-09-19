@@ -1,4 +1,4 @@
-<form method="POST" id="product" action="= $action_url;?>" class="enquiry-form ">
+<form method="POST" id="product" action="<?= $action_url;?>" class="enquiry-form ">
     <div>
         <p class="form-row">
         <div class="col-xs-12 alert-success danger" style="display: none;">
@@ -153,7 +153,7 @@
         <p class="form-row">
             <label><strong>New Manufacturer:</strong></label>
             <input type="text"
-                   name="New_Manufacturer" = isset($data['New_Manufacturer']) ? 'value="' . $data['New_Manufacturer'] . '"' : '' ?>
+                   name="New_Manufacturer" <?= isset($data['New_Manufacturer']) ? 'value="' . $data['New_Manufacturer'] . '"' : '' ?>
                    class="input-text ">
         </p>
 
@@ -167,7 +167,7 @@
         <p class="form-row">
             <label><strong>New Colour:</strong></label>
             <input type="text"
-                   name="new_color" = isset($data['New_Colour']) ? 'value="' . $data['New_Colour'] . '"' : '' ?>
+                   name="new_color" <?= isset($data['New_Colour']) ? 'value="' . $data['New_Colour'] . '"' : '' ?>
                    class="input-text ">
         </p>
 
@@ -245,7 +245,7 @@
         <p class="form-row">
             <label><strong>New Pattern Type:</strong></label>
             <input type="text"
-                   name="new_pattern_type" = isset($data['New_Pattern']) ? 'value="' . $data['New_Pattern'] . '"' : '' ?>
+                   name="new_pattern_type" <?= isset($data['New_Pattern']) ? 'value="' . $data['New_Pattern'] . '"' : '' ?>
                    class="input-text ">
         </p>
 
@@ -301,7 +301,7 @@
             action: function(){
                 var idx = $('input[name=images]:checked').val();
                 if (!idx) idx = 1;
-                return "= _A_::$app->router()->UrlTo('product/upload_img', ['pid'=>_A_::$app->get('p_id')]);?>&idx="+idx
+                return "<?= _A_::$app->router()->UrlTo('product/upload_img', ['pid'=>_A_::$app->get('p_id')]);?>&idx="+idx
             },
             name: 'uploadfile',
             onSubmit: function (file, ext) {
@@ -312,7 +312,7 @@
             },
             onComplete: function (file, response) {
                 if (response === "success") {
-                    $('#modify_images2').load("= _A_::$app->router()->UrlTo('image/modify',['p_id' => _A_::$app-get('p_id')]);?>");
+                    $('#modify_images2').load("<?= _A_::$app->router()->UrlTo('image/modify',['p_id' => _A_::$app-get('p_id')]);?>");
                 }
             }
         });
