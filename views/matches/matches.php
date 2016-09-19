@@ -131,7 +131,7 @@
                                                         </div>
                                                         <b id="b_in_product">
                                                             <a id="all_to_basket"
-                                                               href="<?php echo _A_::$app->router()->UrlTo('cart/add_all_to'); ?>">
+                                                               href="<?php echo _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
                                                                 Add
                                                                     All to Basket
                                                                 
@@ -217,7 +217,7 @@
                 drop: function (event, ui) {
                     $('#matches-page').waitloader('show');
                     var p_id = $(ui.draggable).attr('data-id');
-                    window.location = base_url + '/product?p_id=' + p_id+'back=matches';
+                    window.location = base_url + 'product?p_id=' + p_id+'&back=matches';
                 }
             });
 
@@ -262,7 +262,8 @@
                                 $('span#cart_amount').load(load_url)
                             ).done(
                                 function () {
-                                    if($('span#cart_amount').length>0){
+                                    debugger;
+//                                    if($('span#cart_amount').length>0){
                                         $('#clear_matches').trigger('click');
                                         buttons = {
                                             "Basket": function () {
@@ -271,7 +272,6 @@
                                                 window.location = base_url + 'cart';
                                             }
                                         };
-
                                         $('#msg').dialog({
                                             draggable: false,
                                             dialogClass: 'msg',
@@ -288,7 +288,7 @@
                                         });
                                         $('.msg').css('z-index', '10001');
                                         $('.ui-widget-overlay').css('z-index', '10000');
-                                    }
+//                                    }
                                 }
                             );
 

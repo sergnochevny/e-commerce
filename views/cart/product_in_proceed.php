@@ -20,6 +20,6 @@
         </div>
     </td>
     <td data-title="Total" class="product-subtotal">
-        <span class="amount"><?php echo $t_pr; ?></span>
+        <span class="amount"><?php echo $item['format_subtotal']; ?></span>
     </td>
 </tr>

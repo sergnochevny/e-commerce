@@ -5,6 +5,7 @@ class Controller_Cart extends Controller_Controller
 
     function cart()
     {
+//        $this->main->is_user_authorized(true);
         if (!is_null(_A_::$app->get('proceed'))) {
             $this->proceed_checkout_prepare();
             ob_start();
