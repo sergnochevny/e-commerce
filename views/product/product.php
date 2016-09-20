@@ -209,7 +209,7 @@
                             <?php if ($img1_exists) { ?>
                                 <a id="add_matches"
                                    href="<?= $mhref; ?>" <?= !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
-                                    <button type="button" class="single_add_to_cart_button button alt">Add to Matches
+                                    <button type="button" class="single_add_to_cart_button button alt">Added to Matches
                                     </button>
                                 </a>
                                 <a id="view_matches"

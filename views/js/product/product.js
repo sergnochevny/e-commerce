@@ -125,7 +125,7 @@
                         $('#msg').dialog({
                             draggable: false,
                             dialogClass: 'msg',
-                            title: 'Add to Matches',
+                            title: 'Added to Matches',
                             modal: true,
                             zIndex: 10000,
                             autoOpen: true,
