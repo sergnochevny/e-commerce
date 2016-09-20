@@ -29,9 +29,9 @@
     <td data-title="Total" class="product-subtotal">
         <span class="amount"><?= $t_pr; ?></span>
     </td>
-    <td class="product-remove">
-        <a id="del_product_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_product');?>">
-            <i class=" fa fa-trash-o"></i>
+    <td class="product-remove text-center">
+        <a class="del_product_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_product');?>">
+            <i class="fa fa-trash-o"></i>
         </a>
     </td>
 </tr>

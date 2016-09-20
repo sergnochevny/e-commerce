@@ -19,7 +19,7 @@
             <a class="close" title="close"></a>
 
             <div class="b_cap_cod_main">
-                <p style="color: black;" id="dialog-text"></p>
+                <p style="color: black;" class="text-center"><b id="dialog-text"></b></p>
                 <br/>
                 <div class="text-center">
                     <a id="confirm_action">

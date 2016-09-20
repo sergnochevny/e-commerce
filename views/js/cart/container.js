@@ -65,7 +65,7 @@
         $(".popup a.close").trigger('click');
     });
 
-    $(document).on('click', '#del_product_cart',
+    $(document).on('click', '.del_product_cart',
         function (event) {
             event.preventDefault();
 
@@ -117,41 +117,36 @@
         }
     );
 
-    $(document).on('click', '#del_sample_cart',
+    $(document).on('click', '.del_sample_cart',
         function (event) {
             event.preventDefault();
             var url = $(this).attr('href'),
                 p_id = $(this).parents('tr.sample_item').attr('data-pid'),
                 parent = $(this).parents('tr.sample_item');
 
-            $("#confirm_action").on('click.confirm_action',
-                function (event) {
+            $("#confirm_action").on('click.confirm_action', function (event) {
                     event.preventDefault();
-                    $.get(url,
-                        {p_id: p_id},
-                        function (data) {
-                            $.when($(parent).remove()).done(function () {
-                                if ($('[data-row=samples]').length > 0) {
-                                    $('#subtotal_samples_items').load(base_url + 'cart/samples_amount');
-                                } else {
-                                    $('#row_subtotal').remove();
-                                    $('#row_subtotal_samples').remove();
-                                    $('#samples_legend').remove();
-                                    $('#samples_table').remove();
-                                }
-                                if (($('[data-row=items]').length > 0) || ($('[data-row=samples]').length > 0)) {
-                                    $('#subtotal').load(base_url + 'cart/amount');
-                                } else {
-                                    $(document).trigger('remove_inputs');
-                                }
-                                $(document).trigger('calc_shipping_total');
-                                $("#confirm_dialog").removeClass('overlay_display');
-                                $("#confirm_action").off('click.confirm_action');
-                            });
+                    $.get(url, {p_id: p_id}, function (data) {
+                    $.when($(parent).remove()).done(function () {
+                        if ($('[data-row=samples]').length > 0) {
+                            $('#subtotal_samples_items').load(base_url + 'cart/samples_amount');
+                        } else {
+                            $('#row_subtotal').remove();
+                            $('#row_subtotal_samples').remove();
+                            $('#samples_legend').remove();
+                            $('#samples_table').remove();
                         }
-                    );
-                }
-            );
+                        if (($('[data-row=items]').length > 0) || ($('[data-row=samples]').length > 0)) {
+                            $('#subtotal').load(base_url + 'cart/amount');
+                        } else {
+                            $(document).trigger('remove_inputs');
+                        }
+                        $(document).trigger('calc_shipping_total');
+                        $("#confirm_dialog").removeClass('overlay_display');
+                        $("#confirm_action").off('click.confirm_action');
+                    });
+                });
+            });
 
             $("#confirm_dialog").addClass('overlay_display');
 

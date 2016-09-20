@@ -21,7 +21,7 @@
     <a class="close" title="close"></a>
 
     <div class="b_cap_cod_main">
-        <p style="color: black;">You confirm the removal ?</p>
+        <p style="color: black;" class="text-center"><b>You confirm the removal?</b></p>
         <br/>
         <div class="text-center">
             <a id="confirm_action"><input type="button" value="Yes confirm" class="button"/></a>
