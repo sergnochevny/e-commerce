@@ -1,7 +1,4 @@
-<?php if (
-    (isset($cart_items) && count($cart_items) > 0) ||
-    (isset($cart_samples_items) && count($cart_samples_items) > 0)
-) { ?>
+<?php if ( (isset($cart_items) && count($cart_items) > 0) || (isset($cart_samples_items) && count($cart_samples_items) > 0) ) { ?>
     <div id="div_subtotal_table">
         <table id="subtotal_table" cellspacing="0"
                class="shop_table shop_table_responsive cart">

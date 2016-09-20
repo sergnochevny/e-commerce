@@ -34,7 +34,6 @@
                             <td>Email</td>
                             <td style="width:200px;"></td>
                         </tr>
-
                         <?= $data_usage_order_discounts;?>
                     </table>
                 </div>

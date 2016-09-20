@@ -1,6 +1,4 @@
-<div class="ui-widget-overlay" id="wait_loader">
-    <i class="fa fa-spinner fa-pulse fa-4x"></i>
-</div>
+<div class="ui-widget-overlay" id="wait_loader"><i class="fa fa-spinner fa-pulse fa-4x"></i></div>
 <form method="POST" id="discount" action="<?= _A_::$app->router()->UrlTo('discounts/save_data'); ?>" class="enquiry-form">
     <br/>
     <div class="form-row">
@@ -12,8 +10,7 @@
                     }
                 ?>
             </div>
-        <?php } ?>
-        <?php if (isset($error)) { ?>
+        <?php } if (isset($error)) { ?>
             <div class="col-xs-12 alert-danger danger" style="display: none;">
                 <?php
                     foreach ($error as $msg) {
@@ -24,10 +21,8 @@
         <?php } ?>
     </div>
     <br/>
-
     <div class="col-1">
-        <div class="b_MODIFY_DISCOUNT_left form-row">
-            <a class="required_field" data-promotion href="#promotion">Promotion</a></div>
+        <div class="b_MODIFY_DISCOUNT_left form-row"><a class="required_field" data-promotion href="#promotion">Promotion</a></div>
         <div class="b_MODIFY_DISCOUNT_right form-row">
             <select name="iType">
                 <option value="0" <?php if ($data['promotion_type'] == 0) {

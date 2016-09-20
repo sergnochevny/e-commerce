@@ -36,14 +36,8 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    (function ($) {
-        $(document).ready(function (event) {
-            $('#bsells_products').load('<?= _A_::$app->router()->UrlTo('shop/widget_bsells')?>');
-            $('#popular_products').load('<?= _A_::$app->router()->UrlTo('shop/widget_popular')?>');
-            $('#new_products').load('<?= _A_::$app->router()->UrlTo('shop/widget_new')?>/');
-            $('#best_products').load('<?= _A_::$app->router()->UrlTo('shop/widget_best')?>');
-            }
-        );
-    })(jQuery);
-</script>
+<input type="hidden" id="hidden_bsells_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_bsells')?>">
+<input type="hidden" id="hidden_popular_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_popular')?>">
+<input type="hidden" id="hidden_new_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_new')?>/">
+<input type="hidden" id="hidden_best_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_best')?>">
+<script src='<?= _A_::$app->router()->UrlTo('views/js/product/block_footer.js'); ?>' type="text/javascript"></script>

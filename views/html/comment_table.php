@@ -1,15 +1,4 @@
-<script type="text/javascript">
-    function publishComment(address, view_update){
-        var title = jQuery("#comment_title").text();
-        var data = jQuery("#comment_data").text();
-        jQuery.post(address, {comment_data : data, comment_title : title, publish : "1"}, function(data){
-            console.log(data);
-        });
-        jQuery.get(view_update, "", function(data){
-            console.log(data);
-        });
-    }
-</script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/html/comment_table.js'); ?>' type="text/javascript"></script>
 <table class="table table-bordered table-comment">
     <tr>
         <th class="text-center text-warning table-comment title">

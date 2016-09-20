@@ -10,45 +10,33 @@
     <p>
     <table class="table table-bordered table-condensed tableNoResp">
         <tbody>
-        <?php if (count($cart_items) > 0) { ?>
-            <tr>
-                <td>
-                    <input id="roll" type="checkbox" name="roll" value="1" <?= $bShipRoll ? 'checked' : ''; ?>>
-                    <label for="roll">Ship my fabric on a roll.</label>
-                </td>
-                <td>
-                    <p style="font-size:80%; margin: 0;"><b>NOTE: </b>
-                        This cost $<?= number_format(RATE_ROLL, 2); ?> USD
-                    </p>
-                </td>
-            </tr>
-        <?php } ?>
+            <?php if (count($cart_items) > 0) { ?>
+                <tr>
+                    <td>
+                        <input id="roll" type="checkbox" name="roll" value="1" <?= $bShipRoll ? 'checked' : ''; ?>>
+                        <label for="roll">Ship my fabric on a roll.</label>
+                    </td>
+                    <td>
+                        <p style="font-size:80%; margin: 0;"><b>NOTE: </b>
+                            This cost $<?= number_format(RATE_ROLL, 2); ?> USD
+                        </p>
+                    </td>
+                </tr>
+            <?php } ?>
         <tr>
-            <td>
-                SHIPPING
-            </td>
-            <td>
-                <b><font color="#663300">$<?= number_format($shipcost, 2); ?> USD</font></b><br/>
-            </td>
+            <td>SHIPPING</td>
+            <td><b><span style="color: #663300">$<?= number_format($shipcost, 2); ?> USD</span></b><br/></td>
         </tr>
         <?php if (count($cart_items) > 0) { ?>
             <tr>
-                <td>
-                    HANDLING
-                </td>
-                <td>
-                    <b><font color="#663300">$<?= number_format(RATE_HANDLING, 2); ?> USD</font></b><br/>
-                </td>
+                <td>HANDLING</td>
+                <td><b><span style="color: #663300">$<?= number_format(RATE_HANDLING, 2); ?> USD</span></b><br/></td>
             </tr>
         <?php } ?>
         <?php if ($shipDiscount > 0) { ?>
             <tr>
-                <td>
-                    SHIPPING DISCOUNT
-                </td>
-                <td>
-                    <b><font color="#663300">$<?= number_format($shipDiscount, 2); ?> USD</font></b>
-                </td>
+                <td>SHIPPING DISCOUNT</td>
+                <td><b><span color="#663300">$<?= number_format($shipDiscount, 2); ?> USD</span></b></td>
             </tr>
         <?php } ?>
         </tbody>
@@ -57,11 +45,11 @@
 
     <p style="font-size:80%;"><b>NOTE: </b>
         <?php
-        if ($shipping == 1) {
-            echo "Delivery can be generally expected within 5 days from the shipping date of the order (orders usually ship within 48 hours of payment).  Please note that this is an approximation as it relies on the mail, a service over which we have no control.";
-        } else {
-            echo "Delivery can be generally expected within 2 weeks from the shipping date of the order (orders usually ship within 48 hours of payment).  Please note that this is an approximation as it relies on the mail, a service over which we have no control.";
-        }
+            if ($shipping == 1) {
+                echo "Delivery can be generally expected within 5 days from the shipping date of the order (orders usually ship within 48 hours of payment).  Please note that this is an approximation as it relies on the mail, a service over which we have no control.";
+            } else {
+                echo "Delivery can be generally expected within 2 weeks from the shipping date of the order (orders usually ship within 48 hours of payment).  Please note that this is an approximation as it relies on the mail, a service over which we have no control.";
+            }
         ?>
     </p>
 

@@ -66,7 +66,7 @@
             ?>
         </div>
         <br/>
-        <br />
+        <br/>
         <div class="text-center"><input type="submit" value="Update" class="button" /></div>
 
 </form>

@@ -48,27 +48,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-
-    (function ($) {
-        $(document).ready(
-            function (event) {
-
-                $('.toko-slider-active').owlCarousel({
-                    items: 1,
-                    loop: true,
-                    nav: false,
-                    lazyLoad: true,
-                    autoplay: true,
-                    autoplayHoverPause: true,
-                    dots: true,
-                    stopOnHover: true,
-                    animateOut: 'fadeOut'
-                });
-
-            }
-        );
-    })(jQuery);
-
-</script>
-
+<script src='<?= _A_::$app->router()->UrlTo('views/js/index/main_gallery.js'); ?>' type="text/javascript"></script>

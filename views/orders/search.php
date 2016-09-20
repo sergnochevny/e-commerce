@@ -8,56 +8,39 @@
 
                 <table class="table table-striped table-bordered">
                     <thead>
-                        <tr>
-                            <th>Transaction id</th>
-                            <th>User</th>
-                            <th>Order date</th>
-                            <th>Status</th>
-                            <th>Total</th>
-                            <th></th>
+                    <tr>
+                        <th>Transaction id</th>
+                        <th>User</th>
+                        <th>Order date</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th></th>
 
-                        </tr>
+                    </tr>
                     </thead>
 
                     <tbody>
-                        <?php
+                    <?php
 
-                            if(!empty($orders)){
-                                $length = (integer) count($orders);
-                                $result = (string) '';
+                    if (!empty($orders)) {
+                        $length = (integer)count($orders);
+                        $result = (string)'';
 
-                                for($i=0; $i < $length; $i++){
-                                    $result .= '<tr>';
+                        for ($i = 0; $i < $length; $i++) {
+                            $result .= '<tr>';
 
-                                        $result .= '<td>';
-                                            $result .= $orders[$i][2];
-                                        $result .= '</td>';
+                            $result .= '<td>' . $orders[$i][2] . '</td>';
+                            $result .= '<td>' . $orders[$i][7] . '</td>';
+                            $result .= '<td>' . date('Y.m.d \a\t H:i', $orders[$i][3]) . '</td>';
+                            $result .= '<td>' . $orders[$i][4] . '</td>';
+                            $result .= '<td>' . money_format('%.2n', $orders[$i][5]) . '</td>';
+                            $result .= '<td>' . '<a href="' . _A_::$app->router()->UrlTo('order/customer_info', ['oid' => urlencode(base64_encode($orders[$i][0])), 'page' => $page, 'orders_search_query' => _A_::$app->get('orders_search_query')]) . '" title="View more information" class="fa fa-eye"></a>' . '</td>';
 
-                                        $result .= '<td>';
-                                            $result .= $orders[$i][7];
-                                        $result .= '</td>';
-    
-                                        $result .= '<td>';
-                                            $result .= date('Y.m.d \a\t H:i', $orders[$i][3]);
-                                        $result .= '</td>';
-
-                                        $result .= '<td>';
-                                            $result .= $orders[$i][4];
-                                        $result .= '</td>';
-
-                                        $result .= '<td>';
-                                            $result .=  money_format('%.2n',$orders[$i][5]);
-                                        $result .= '</td>';
-
-                                        $result .= '<td>';
-                                            $result .= '<a href="'._A_::$app->router()->UrlTo('order/customer_info',['oid'=>urlencode(base64_encode($orders[$i][0])),'page'=>$page,'orders_search_query'=>_A_::$app->get('orders_search_query')]).'" title="View more information" class="fa fa-eye"></a>';
-                                        $result .= '</td>';
-
-                                    $result .= '</tr>';
-                                }
-                                echo $result;
-                            }
-                        ?>
+                            $result .= '</tr>';
+                        }
+                        echo $result;
+                    }
+                    ?>
 
                     </tbody>
                 </table>

@@ -49,8 +49,8 @@
             $(document).on('click', 'a.pic_del_images',
                 function (event) {
                     event.preventDefault();
-                    var p_id = $(this).attr('href');
-                    var i_idx = $(this).attr('data-img_idx');
+                    var p_id = $(this).attr('href'),
+                        i_idx = $(this).attr('data-img_idx');
 
                     $("#confirm_action").on('click.confirm_action',
                         function (event) {

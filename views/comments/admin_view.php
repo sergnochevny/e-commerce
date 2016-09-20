@@ -1,3 +1,1 @@
-<div class="comment-data-view">
-    <?= $content ?>
-</div>
+<div class="comment-data-view"><?= $content ?></div>

@@ -3,6 +3,7 @@
         <p class="form-row">
         <div class="col-xs-12 alert-success danger" style="display: none;">
             <?php
+                $opt['pid'] = _A_::$app->get('p_id');
                 if (isset($warning)) {
                     foreach ($warning as $msg) {
                         echo $msg . "<br>";
@@ -293,55 +294,6 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    (function($){
-        var btnUpload = $('#upload');
-        var status1 = $('#status');
-
-        $('.danger').css('display','block');
-        $('html, body').stop().animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
-        setTimeout(function(){
-            $('.danger').css('display','none');
-        },8000);
-
-        new AjaxUpload(btnUpload, {
-            action: function(){
-                var idx = $('input[name=images]:checked').val();
-                if (!idx) idx = 1;
-                return "<?= _A_::$app->router()->UrlTo('product/upload_img', ['pid'=>_A_::$app->get('p_id')]);?>&idx="+idx
-            },
-            name: 'uploadfile',
-            onSubmit: function (file, ext) {
-                if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
-                    status.text('Error format');
-                    return false;
-                }
-            },
-            onComplete: function (file, response) {
-                if (response === "success") {
-                    $('#modify_images2').load("<?= _A_::$app->router()->UrlTo('image/modify',['p_id' => _A_::$app-get('p_id')]);?>");
-                }
-            }
-        });
-
-        $('form#product').on('submit',
-            function(event) {
-                event.preventDefault();
-                var msg = $(this).serialize();
-                var url = $(this).attr('action');
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: msg,
-                    success: function (data) {
-                        $('#form_product').html(data);
-                    },
-                    error: function (xhr, str) {
-                        alert('Error: ' + xhr.responseCode);
-                    }
-                });
-            }
-        );
-
-    })(jQuery);
-</script>
+<input type="hidden" id="product_upload_img" value="<?= _A_::$app->router()->UrlTo('product/upload_img', $opt);?>">
+<input type="hidden" id="image_modify" value="<?= _A_::$app->router()->UrlTo('image/modify',$opt);?>">
+<script src='<?= _A_::$app->router()->UrlTo('views/js/product/edit_form.js'); ?>' type="text/javascript"></script>

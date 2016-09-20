@@ -3,8 +3,8 @@
 
 <div class="site-container">
     <?php
-    include "views/header.php";
-    include('views/index/main_gallery.php');
+        include "views/header.php";
+        include('views/index/main_gallery.php');
     ?>
 
     <div class="main-content" id="contact-page">
