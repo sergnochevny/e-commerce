@@ -169,10 +169,10 @@
                                                 <div class="wpb_wrapper">
                                                     <div class="toko-divider text-left line-no icon-hide">
                                                         <div class="divider-inner" style="background-color: #fff">
-                                                            <h3 class="toko-section-title">Best Selling</h3>
-
-                                                            <p class="paragraf">Best item collection in 2015 we have in
-                                                                store</p>
+                                                            <h3 class="toko-section-title">Best Sellers</h3>
+                                                            <p class="paragraf">
+                                                                Best item collection in 2015 we have in store
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
