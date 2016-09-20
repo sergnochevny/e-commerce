@@ -1,15 +1,11 @@
 <body
     class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 
-<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>'
-      type='text/css' media='all'/>
-<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/matches.css'); ?>'
-      type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
+<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/matches.css'); ?>' type='text/css' media='all'/>
 
-<link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>'
-      type='text/css' media='all'/>
-<script type='text/javascript' charset="UTF-8"
-        src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
+<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
+<script type='text/javascript' charset="UTF-8" src='<?php echo _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
 <div class="site-container">
     <?php include "views/shop_header.php"; ?>
@@ -103,20 +99,17 @@
                                                                     <b>In
                                                                         &apos;Matches&apos; you can mix and match your
                                                                         fabric samples by dragging them into the work
-                                                                        area
-                                                                        below.
-                                                                        Experiment with possible combinations and have
-                                                                        fun.
+                                                                        area below.
+                                                                        Experiment with possible combinations and have fun.
                                                                         <br/>
                                                                         If you want to purchase a fabric in matches area
-                                                                        press
-                                                                        to &laquo;Add All to Basket&raquo;.
+                                                                        press to "Add All to Basket".
                                                                         <br/>
-                                                                        If you want to remove a fabric &nbsp;from
+                                                                        If you want to remove a fabric from
                                                                         your &apos;Matches&apos; drag it to the trash
                                                                         can.
                                                                         <br/>
-                                                                        If you want to remove all fabric &nbsp;from
+                                                                        If you want to remove all fabric from
                                                                         your &apos;Matches&apos; press to &laquo;Clear
                                                                         Matches&raquo;.
                                                                         Before experiment with other fabrics you need to
@@ -134,17 +127,12 @@
                                                             </div>
                                                         </div>
                                                         <b id="b_in_product">
-                                                            <a id="all_to_basket"
-                                                               href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
-                                                                Add
-                                                                All to Basket
-
+                                                            <a id="all_to_basket" href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
+                                                                Add All to Basket
                                                             </a>
                                                             <a id="clear_matches"
                                                                href="<?= _A_::$app->router()->UrlTo('matches/clear'); ?>">
-
                                                                 Clear Matches
-
                                                             </a>
                                                         </b>
 
@@ -178,7 +166,7 @@
             var a = 1;
             var base_url = '<?= _A_::$app->router()->UrlTo('/'); ?>';
 
-            $('#dragZoneArea').children('img').mousedown(function (eventObject) {
+            $('#dragZoneArea > img').mousedown(function (eventObject) {
                 $(this).css("z-index", a++);
             }).draggable({
                 containment: "#dragZoneArea",
@@ -199,8 +187,8 @@
             $('.deleteDragImg').droppable({
                 hoverClass: "ui-state-hover",
                 drop: function (event, ui) {
-                    var p_id = $(ui.draggable).attr('data-id'),
-                        url = base_url + 'matches/del';
+                    var p_id = $(ui.draggable).attr('data-id');
+                    var url = base_url + 'matches/del';
                     $('#content').waitloader('show');
                     $.post(
                         url,
@@ -218,7 +206,7 @@
                 drop: function (event, ui) {
                     $('#matches-page').waitloader('show');
                     var p_id = $(ui.draggable).attr('data-id');
-                    window.location = base_url + 'product?p_id=' + p_id + '&back=matches';
+                    window.location = base_url + 'product?p_id=' + p_id+'&back=matches';
                 }
             });
 
@@ -251,9 +239,9 @@
                         }
                     );
 
-                    var data = JSON.stringify(products),
-                        url = $(this).attr('href'),
-                        load_url = base_url + 'cart/amount';
+                    var data = JSON.stringify(products);
+                    var url = $(this).attr('href');
+                    var load_url = base_url + 'cart/amount';
                     $('#matches-page').waitloader('show');
                     $.post(url, {data: data},
                         function (data) {
@@ -263,6 +251,7 @@
                                 $('span#cart_amount').load(load_url)
                             ).done(
                                 function () {
+                                    debugger;
 //                                    if($('span#cart_amount').length>0){
                                     $('#clear_matches').trigger('click');
                                     buttons = {

@@ -34,9 +34,7 @@ class Controller_Users extends Controller_Controller
         ob_end_clean();
         $this->main->template->vars('main_users_list', $user_list);
         $this->main->template->vars('page', $page);
-        $paginator = new Controller_Paginator($this->main);
-        $paginator->user_paginator($total, $page);
-
+        (new Controller_Paginator($this))->paginator($total, $page, 'users', $per_page);
     }
 
     public function del()
@@ -67,10 +65,10 @@ class Controller_Users extends Controller_Controller
         echo $list;
     }
 
-    private function list_province($country, $select = null)
+    public function list_province($country, $select = null)
     {
         $list = '';
-        if (isset($country) && !empty($country{0})) {
+        if (isset($country) && !empty($country)) {
             $maddress = new Model_Address();
             $provincies = $maddress->get_country_province($country);
             ob_start();
@@ -112,7 +110,7 @@ class Controller_Users extends Controller_Controller
         $this->main->template->vars('data', $data);
     }
 
-    private function list_countries($select = null)
+    public function list_countries($select = null)
     {
         $list = '';
         $maddress = new Model_Address();
@@ -347,7 +345,7 @@ class Controller_Users extends Controller_Controller
         $this->main->template->vars('action', _A_::$app->router()->UrlTo('users/save_new'));
         $this->main->template->vars('title', 'NEW USER');
         $this->_save_new();
-        $this->_new_form();
+        $this->_new_form('users');
     }
 
     public function _save_new()
@@ -420,7 +418,8 @@ class Controller_Users extends Controller_Controller
                             $s_organization, $user_s_address, $user_s_address2, $user_s_city, $user_s_state,
                             $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax, $user_s_email, $timestamp);
                         if ($result) {
-                            _A_::$app->get('user_id', mysql_insert_id());
+                            $u_id = mysql_insert_id();
+                            _A_::$app->get('user_id', $u_id);
                             $warning = ['Data saved successfully!!!'];
                             $this->template->vars('warning', $warning);
                         } else {
@@ -477,10 +476,10 @@ class Controller_Users extends Controller_Controller
         return ($result);
     }
 
-    public function _new_form()
+    public function _new_form($back_url)
     {
         $prms['page'] = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
-        $this->template->vars('back_url', _A_::$app->router()->UrlTo('users', $prms));
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo($back_url, $prms));
         $this->main->view_layout('new_form');
     }
 

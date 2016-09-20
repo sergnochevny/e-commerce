@@ -5,7 +5,7 @@ class Controller_Cart extends Controller_Controller
 
     function cart()
     {
-//        $this->main->is_user_authorized(true);
+        $this->main->is_user_authorized(true);
         if (!is_null(_A_::$app->get('proceed'))) {
             $this->proceed_checkout_prepare();
             ob_start();
@@ -737,9 +737,9 @@ class Controller_Cart extends Controller_Controller
 //        session_destroy();
 //        unset($_SESSION);
         ob_start();
-//        $cart = _A_::$app->session('cart');
-//        unset($cart['discountIds']);
-//        _A_::$app->setSession('cart', $cart);
+        $cart = _A_::$app->session('cart');
+        unset($cart['discountIds']);
+        _A_::$app->setSession('cart', $cart);
         $this->products_in();
         $cart_items = ob_get_contents();
         ob_end_clean();

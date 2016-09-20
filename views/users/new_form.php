@@ -172,8 +172,8 @@
         <p class="form-row">
             <label class="required_field"><strong> Country:</strong></label>
             <select name="s_country" value="<?= $data['ship_country'] ?>" class="input-text ">
-                <option <?= (isset($data['ship_country']) && !empty($data['ship_country']{0}))?'':'selected'?> disabled value="0">Select Country</option>
-                <?= isset($data['ship_list_countries'] )?$data['ship_list_countries']:''?>
+                <option <?php echo (isset($data['ship_country']) && !empty($data['ship_country']{0}))?'':'selected'?> disabled value="0">Select Country</option>
+                <?php echo isset($data['ship_list_countries'] )?$data['ship_list_countries']:''?>
             </select>
         </p>
 
@@ -247,13 +247,13 @@
             function (event) {
                 event.preventDefault();
                 var url = $(this).attr('action');
-
+                $('#content').waitloader('show');
                 $.post(
                     url,
                     $(this).serialize(),
                     function (data) {
-
                         $("#user_form").html(data);
+                        $('#content').waitloader('remove');
                     }
                 )
             }
@@ -264,11 +264,13 @@
                 event.preventDefault();
                 var url = base_url + 'users/get_province_list';
                 var country = $(this).val();
+                $('#content').waitloader('show');
                 $.get(
                     url,
                     {country: country},
                     function (data) {
                         $('select[name=province]').html(data);
+                        $('#content').waitloader('remove');
                     }
                 )
             }
@@ -279,11 +281,13 @@
                 event.preventDefault();
                 var url = base_url + 'users/get_province_list';
                 var country = $(this).val();
+                $('#content').waitloader('show');
                 $.get(
                     url,
                     {country: country},
                     function (data) {
                         $('select[name=s_state]').html(data);
+                        $('#content').waitloader('remove');
                     }
                 )
             }

@@ -39,7 +39,7 @@ class Core
             foreach ($config as $key => $value) {
                 if (function_exists($key)) {
                     if (is_array($value)) {
-                        if (count(array_filter(array_keys($value), "is_int")) == count($value)){
+                        if (count(array_filter(array_keys($value), "is_int")) == count($value)) {
                             call_user_func_array($key, $value);
                         } else {
                             $closure = [];
@@ -106,11 +106,11 @@ class Core
 
     private function initGlobals()
     {
-        $this->post = array_filter($_POST);
-        $this->get = array_filter($_GET);
-        $this->server = array_filter($_SERVER);
-        $this->cookie = array_filter($_COOKIE);
-        $this->request = array_filter($_REQUEST);
+        $this->post = array_slice($_POST, 0);
+        $this->get = array_slice($_GET, 0);
+        $this->server = array_slice($_SERVER, 0);
+        $this->cookie = array_slice($_COOKIE, 0);
+        $this->request = array_slice($_REQUEST, 0);
     }
 
     private function initSession()
@@ -155,9 +155,9 @@ class Core
                         return $getProperty->invokeArgs($this, $arguments);
                 }
             } else {
-                if(method_exists($this, 'set'.$name)){
-                    call_user_func_array([$this,'set'.$name],$arguments);
-                } else{
+                if (method_exists($this, 'set' . $name)) {
+                    call_user_func_array([$this, 'set' . $name], $arguments);
+                } else {
                     $getProperty = new ReflectionMethod($class, 'getProperty');
                     $setProperty = new ReflectionMethod($class, 'setProperty');
                     array_unshift($arguments, $name);
@@ -181,12 +181,6 @@ class Core
         return null;
     }
 
-    public function setArrayProperty($property, $key, $value)
-    {
-        if (is_null($value)) unset($this->{$property}[$key] );
-        else $this->{$property}[$key] = $value;
-    }
-
     public function getProperty($property)
     {
         if (isset($this->{$property})) return $this->{$property};
@@ -198,18 +192,26 @@ class Core
         $this->{$property} = $value;
     }
 
-    public function setSession($key, $value){
+    public function setSession($key, $value)
+    {
         $this->setArrayProperty('session', $key, $value);
-        if(is_null($value)){
+        if (is_null($value)) {
             unset($_SESSION[$key]);
         } else {
             $_SESSION[$key] = $value;
         }
     }
 
-    public function setCookie($key, $value){
+    public function setArrayProperty($property, $key, $value)
+    {
+        if (is_null($value)) unset($this->{$property}[$key]);
+        else $this->{$property}[$key] = $value;
+    }
+
+    public function setCookie($key, $value)
+    {
         $this->setArrayProperty('session', $key, $value);
-        if(is_null($value)){
+        if (is_null($value)) {
             unset($_COOKIE[$key]);
             setcookie($key, '');
         } else {
