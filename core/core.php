@@ -228,7 +228,7 @@ class Core
             new Exception(
                 strtr('Data Base "{db}" not present in Application',
                     [
-                        "{dn}" => $name
+                        "{db}" => $name
                     ]
                 )
             );

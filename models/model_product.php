@@ -136,67 +136,6 @@ Class Model_Product extends Model_Model
 
     }
 
-    public function getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns)
-    {
-        $sl_cat = '';
-        $sl_cat2 = '';
-        $sl_cat3 = '';
-        $sl_cat4 = '';
-        if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
-            $post_categori = ['1'];
-        }
-        $results = mysql_query("select * from fabrix_categories");
-        while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $post_categori)) {
-                $sl_cat .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-
-        if (empty($post_manufacturer{0})) {
-            $post_manufacturer = 0;
-        }
-        $results = mysql_query("select * from fabrix_manufacturers");
-        while ($row = mysql_fetch_array($results)) {
-            if ($row[0] == $post_manufacturer) {
-                $sl_cat2 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat2 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-
-        if (!(isset($p_colors) && is_array($p_colors) && count($p_colors) > 0)) {
-            $p_colors = [];
-        }
-        $results = mysql_query("select * from fabrix_colour");
-        while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $p_colors)) {
-                $sl_cat3 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat3 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-
-        if (!(isset($patterns) && is_array($patterns) && count($patterns) > 0)) {
-            $patterns = [];
-        }
-        $results = mysql_query("select * from fabrix_patterns");
-        while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $patterns)) {
-                $sl_cat4 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat4 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-        return [
-            'sl_cat' => $sl_cat,
-            'sl_cat2' => $sl_cat2,
-            'sl_cat3' => $sl_cat3,
-            'sl_cat4' => $sl_cat4
-        ];
-    }
-
     public function getProductInfo($pid)
     {
 
@@ -311,6 +250,67 @@ Class Model_Product extends Model_Model
             'piece' => $piece,
             'whole' => $whole
         );
+    }
+
+    public function getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns)
+    {
+        $sl_cat = '';
+        $sl_cat2 = '';
+        $sl_cat3 = '';
+        $sl_cat4 = '';
+        if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
+            $post_categori = ['1'];
+        }
+        $results = mysql_query("select * from fabrix_categories");
+        while ($row = mysql_fetch_array($results)) {
+            if (in_array($row[0], $post_categori)) {
+                $sl_cat .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+
+        if (empty($post_manufacturer{0})) {
+            $post_manufacturer = 0;
+        }
+        $results = mysql_query("select * from fabrix_manufacturers");
+        while ($row = mysql_fetch_array($results)) {
+            if ($row[0] == $post_manufacturer) {
+                $sl_cat2 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat2 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+
+        if (!(isset($p_colors) && is_array($p_colors) && count($p_colors) > 0)) {
+            $p_colors = [];
+        }
+        $results = mysql_query("select * from fabrix_colour");
+        while ($row = mysql_fetch_array($results)) {
+            if (in_array($row[0], $p_colors)) {
+                $sl_cat3 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat3 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+
+        if (!(isset($patterns) && is_array($patterns) && count($patterns) > 0)) {
+            $patterns = [];
+        }
+        $results = mysql_query("select * from fabrix_patterns");
+        while ($row = mysql_fetch_array($results)) {
+            if (in_array($row[0], $patterns)) {
+                $sl_cat4 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat4 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+        return [
+            'sl_cat' => $sl_cat,
+            'sl_cat2' => $sl_cat2,
+            'sl_cat3' => $sl_cat3,
+            'sl_cat4' => $sl_cat4
+        ];
     }
 
     public function getImage($p_id)
@@ -640,13 +640,37 @@ Class Model_Product extends Model_Model
                     $q_total = "SELECT COUNT(*) FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1'";
                 }
                 break;
+            case 'bsells':
+                if (!empty(_A_::$app->get('cat'))) {
+                    $cat_id = $this->validData(_A_::$app->get('cat'));
+                    $q_total = "select COUNT(n.*)" .
+                        " from (SELECT a.pid, SUM(b.quantity) as s" .
+                        " FROM fabrix_products a" .
+                        " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
+                        " LEFT JOIN fabrix_product_categories pc ON a.pid = pc.pid and b.cid='$cat_id'" .
+                        " WHERE a.pnumber is not null and a.pvisible = '1'" .
+                        " GROUP BY a.pid" .
+                        " ORDER BY s DESC)" .
+                        " LEFT JOIN fabrix_products n ON m.pid = n.pid";
+                } else {
+                    $q_total = "select COUNT(n.*)" .
+                        " from (SELECT a.pid, SUM(b.quantity) as s" .
+                        " FROM fabrix_products a" .
+                        " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
+                        " WHERE a.pnumber is not null and a.pvisible = '1'" .
+                        " GROUP BY a.pid" .
+                        " ORDER BY s DESC)" .
+                        " LEFT JOIN fabrix_products n ON m.pid = n.pid";
+                }
+                break;
         }
         $res = mysql_query($q_total);
         $total = mysql_fetch_row($res)[0];
         return $total;
     }
 
-    public function save($p_id, $New_Manufacturer,$post_new_color,$pattern_type,$post_weight_cat,$post_special,$post_curret_in, $post_dimens,$post_hide_prise,$post_st_nom,$post_p_yard,$post_width,$post_product_num,$post_vis,$post_fabric_5,$post_fabric_4,$post_fabric_3,$post_fabric_2,$post_fabric_1,$post_mkey,$post_desc,$post_Long_description,$post_tp_name,$post_short_desk,$best,$piece,$whole){
+    public function save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat, $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard, $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3, $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name, $post_short_desk, $best, $piece, $whole)
+    {
         if (!empty($New_Manufacturer)) {
             mysql_query("INSERT INTO fabrix_manufacturers set manufacturer='$New_Manufacturer'");
             $post_manufacturer = mysql_insert_id();
@@ -665,7 +689,7 @@ Class Model_Product extends Model_Model
 
         $result = mysql_query($sql);
 
-        if($result){
+        if ($result) {
             if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
                 $post_categori = ['1'];
             }
@@ -693,7 +717,8 @@ Class Model_Product extends Model_Model
         return $result;
     }
 
-    public function get_total($search = null){
+    public function get_total($search = null)
+    {
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $this->validData(_A_::$app->get('cat'));
             $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
@@ -738,7 +763,8 @@ Class Model_Product extends Model_Model
         return $total;
     }
 
-    public function get_products($start, $per_page, &$res_count_rows, $search = null){
+    public function get_products($start, $per_page, &$res_count_rows, $search = null)
+    {
         if (!empty(_A_::$app->get('cat'))) {
             $cat_id = $this->validData(_A_::$app->get('cat'));
             $q = "SELECT a.* FROM `fabrix_products` a" .

@@ -307,6 +307,7 @@ class Controller_Shop extends Controller_Controller
                 $this->template->vars('price', $price);
                 $this->template->vars('inventory', $inventory);
                 $this->template->vars('format_sale_price', $format_sale_price);
+                $this->template->vars('format_price', $format_price);
                 $this->template->vars('saleprice', $saleprice);
                 $this->template->vars('bProductDiscount', $bProductDiscount);
                 $this->template->vars('sDiscount', $sDiscount);
@@ -320,7 +321,7 @@ class Controller_Shop extends Controller_Controller
             $this->main->template->vars('category_name', isset($category_name) ? $category_name : '');
             $this->main->template->vars('list', $list);
 
-            (new Controller_Paginator($this))->ginator_home($total, $page, 'shop' . DS . $type);
+            (new Controller_Paginator($this))->paginator($total, $page, 'shop' . DS . $type, $per_page);
         } else {
             $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
@@ -367,6 +368,15 @@ class Controller_Shop extends Controller_Controller
         $this->main->view('shop');
     }
 
+    public function bestsellers()
+    {
+        $this->template->vars('cart_enable', '_');
+        $this->show_category_list();
+        $this->product_list_by_type('bsells', 360);
+        $this->main->template->vars('page_title', 'Best Sellers');
+        $this->main->view('shop');
+    }
+
     public function modify_products_images()
     {
         $model = new Model_Product();
@@ -401,7 +411,7 @@ class Controller_Shop extends Controller_Controller
         $this->main->template->vars('ProductFilterList', (new Model_Product())->product_filter_list());
     }
 
-    function widget_popular()
+    public function widget_popular()
     {
         echo $this->widget_products('popular', 0, 5);
     }
@@ -481,27 +491,27 @@ class Controller_Shop extends Controller_Controller
         return $list;
     }
 
-    function widget_new()
+    public function widget_new()
     {
         echo $this->widget_products('new', 0, 5);
     }
 
-    function widget_new_carousel()
+    public function widget_new_carousel()
     {
         echo $this->widget_products('carousel', 0, 30, 'widget_new_products_carousel');
     }
 
-    function widget_best()
+    public function widget_best()
     {
         echo $this->widget_products('best', 0, 5);
     }
 
-    function widget_bsells()
+    public function widget_bsells()
     {
         echo $this->widget_products('bsells', 3, 5);
     }
 
-    function widget_bsells_horiz()
+    public function widget_bsells_horiz()
     {
         echo $this->widget_products('bsells', 0, 3, 'widget_bsells_products_horiz');
     }
