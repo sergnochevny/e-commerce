@@ -99,8 +99,8 @@ class Controller_Shop extends Controller_Controller
         $items = $model->get_items_for_menu('all');
         ob_start();
         foreach ($items as $item) {
-            $href = _A_::$app->router()->UrlTo('shop', ['cat' => $item['cid']]);
             $name = $item['cname'];
+            $href = _A_::$app->router()->UrlTo('shop', ['cat' => $item['cid']], $name);
             $this->template->vars('href', $href, true);
             $this->template->vars('name', $name, true);
             $this->template->view_layout('category_item', 'menu');

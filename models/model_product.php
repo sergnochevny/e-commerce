@@ -568,6 +568,29 @@ Class Model_Product extends Model_Model
                     $q = "SELECT * FROM `fabrix_products` WHERE  pnumber is not null and pvisible = '1' ORDER BY popular DESC LIMIT $start,$per_page";
                 }
                 break;
+            case 'bsells':
+                if (!empty(_A_::$app->get('cat'))) {
+                    $cat_id = $this->validData(_A_::$app->get('cat'));
+                    $q = "select n.*" .
+                        " from (SELECT a.pid, SUM(b.quantity) as s" .
+                        " FROM fabrix_products a" .
+                        " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
+                        " LEFT JOIN fabrix_product_categories pc ON a.pid = pc.pid and b.cid='$cat_id'" .
+                        " WHERE a.pnumber is not null and a.pvisible = '1'" .
+                        " GROUP BY a.pid" .
+                        " ORDER BY s DESC  LIMIT $start,$per_page) m" .
+                        " LEFT JOIN fabrix_products n ON m.pid = n.pid";
+                } else {
+                    $q = "select n.*" .
+                        " from (SELECT a.pid, SUM(b.quantity) as s" .
+                        " FROM fabrix_products a" .
+                        " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
+                        " WHERE a.pnumber is not null and a.pvisible = '1'" .
+                        " GROUP BY a.pid" .
+                        " ORDER BY s DESC  LIMIT $start,$per_page) m" .
+                        " LEFT JOIN fabrix_products n ON m.pid = n.pid";
+                }
+                break;
         }
         $res = mysql_query($q);
         $rows = null;
@@ -643,23 +666,23 @@ Class Model_Product extends Model_Model
             case 'bsells':
                 if (!empty(_A_::$app->get('cat'))) {
                     $cat_id = $this->validData(_A_::$app->get('cat'));
-                    $q_total = "select COUNT(n.*)" .
+                    $q_total = "select COUNT(n.pid)" .
                         " from (SELECT a.pid, SUM(b.quantity) as s" .
                         " FROM fabrix_products a" .
                         " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
                         " LEFT JOIN fabrix_product_categories pc ON a.pid = pc.pid and b.cid='$cat_id'" .
                         " WHERE a.pnumber is not null and a.pvisible = '1'" .
                         " GROUP BY a.pid" .
-                        " ORDER BY s DESC)" .
+                        " ORDER BY s DESC) m" .
                         " LEFT JOIN fabrix_products n ON m.pid = n.pid";
                 } else {
-                    $q_total = "select COUNT(n.*)" .
+                    $q_total = "select COUNT(n.pid)" .
                         " from (SELECT a.pid, SUM(b.quantity) as s" .
                         " FROM fabrix_products a" .
                         " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
                         " WHERE a.pnumber is not null and a.pvisible = '1'" .
                         " GROUP BY a.pid" .
-                        " ORDER BY s DESC)" .
+                        " ORDER BY s DESC) m" .
                         " LEFT JOIN fabrix_products n ON m.pid = n.pid";
                 }
                 break;
