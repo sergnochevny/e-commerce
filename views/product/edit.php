@@ -2,7 +2,7 @@
     class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 
 <script type="text/javascript" src="<?= _A_::$app->router()->UrlTo('upload/js/ajaxupload.3.5.js');?>"></script>
-<link rel='stylesheet' id='toko-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css');?>' type='text/css' media='all'/>
+<link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css');?>' type='text/css' media='all'/>
 <link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('upload/styles.css');?>">
 
 <div class="site-container">

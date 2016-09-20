@@ -988,7 +988,7 @@ div.product_meta .row_title{
     line-height: 40px;
 }
 
-.toko-post-detail img{
+.just-post-detail img{
     background-color: #eee;
     clear: both;
     float: right;
@@ -997,14 +997,14 @@ div.product_meta .row_title{
     padding: 15px;
 }
 @media (max-width:720px){
-.toko-post-detail img{
+.just-post-detail img{
     float: none;
     margin: 20px 0;
     max-width: none;
     width: 100%;
 }
 }
-.toko-post a.back_button{
+.just-post a.back_button{
     margin: 0 0 20px 0;
 }
 

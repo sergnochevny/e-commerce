@@ -43,8 +43,8 @@
     </select>
 </form>
 <div class="clear"></div>
-<section class="toko-posts-grid">
-    <div class="toko-post-row row">
+<section class="just-posts-grid">
+    <div class="just-post-row row">
         <?= $blog_posts; ?>
         <div class="clear"></div>
     </div>

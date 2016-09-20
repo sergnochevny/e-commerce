@@ -139,16 +139,21 @@
                                 </td>
                             </tr>
                             <?php if(!empty($total_discount)){ ?>
+                                <tr class="subtotal">
+                                    <td colspan="2"><hr></td>
+                                </tr>
                                 <tr style="color: red">
-                                    <td>You saved</td>
+                                    <td><b>You saved</b></td>
                                     <td class="text-right">
                                         <b><?= $total_discount; ?></b>
                                     </td>
                                 </tr>
                             <?php } ?>
+                            <tr class="subtotal">
+                                <td colspan="2"><hr></td>
+                            </tr>
                            </tbody>
                         </table>
-                        <hr>
                     </div>
                 </div>
 

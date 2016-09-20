@@ -55,7 +55,10 @@
             <?php } ?>
             <?php if (isset($discount) && ($discount > 0)) { ?>
                 <tr class="subtotal">
-                    <td  class="product-name" style="color: red;">You Saved</td>
+                    <td colspan="2"><hr></td>
+                </tr>
+                <tr class="subtotal">
+                    <td  class="product-name" style="color: red;"><b>You Saved</b></td>
                     <td data-title="You Saved" style="text-align:right;">
                         <span class="amount">
                             $<?= number_format($discount, 2); ?>
@@ -63,8 +66,10 @@
                     </td>
                 </tr>
             <?php } ?>
+            <tr class="subtotal">
+                <td colspan="2"><hr></td>
+            </tr>
             </tbody>
         </table>
-        <hr/>
     </div>
 <?php } ?>

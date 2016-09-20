@@ -27,7 +27,7 @@
                 if (isset($page_title)) {
                     ?>
                     <p class="woocommerce-page-title">
-                    <h3 class="toko-section-title">
+                    <h3 class="just-section-title">
                         <?= $page_title; ?>
                     </h3>
                     </p>

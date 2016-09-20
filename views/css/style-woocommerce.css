@@ -396,7 +396,7 @@
 }*/
 .woocommerce ul.products li.product .product-image-box figcaption a.button.add_to_cart_button,
 .woocommerce-page ul.products li.product .product-image-box figcaption a.button.add_to_cart_button,
-.toko-post-image-admin a.button.add_to_cart_button {
+.just-post-image-admin a.button.add_to_cart_button {
   background: #222222;
   font-size: 24px;
   padding: 0 14px;
@@ -407,12 +407,12 @@
 }
 .woocommerce ul.products li.product .product-image-box figcaption a.button.add_to_cart_button:hover,
 .woocommerce-page ul.products li.product .product-image-box figcaption a.button.add_to_cart_button:hover,
-.toko-post-image-admin a.button.add_to_cart_button:hover {
+.just-post-image-admin a.button.add_to_cart_button:hover {
   border: none;
 }
 .woocommerce ul.products li.product .product-image-box figcaption a.button.add_to_cart_button:before,
 .woocommerce-page ul.products li.product .product-image-box figcaption a.button.add_to_cart_button:before,
-.toko-post-image-admin a.button.add_to_cart_button:before
+.just-post-image-admin a.button.add_to_cart_button:before
  {
   line-height: inherit;
   display: inline-block;
@@ -433,7 +433,7 @@
 }
 .woocommerce ul.products li.product .product-image-box figcaption a.button.product-button,
 .woocommerce-page ul.products li.product .product-image-box figcaption a.button.product-button,
-.toko-post-image-admin a.button.product-button {
+.just-post-image-admin a.button.product-button {
   position: relative;
   top: 49.8%;
   background: #fff;
@@ -445,12 +445,12 @@
 }
 .woocommerce ul.products li.product .product-image-box figcaption a.button.product-button:hover,
 .woocommerce-page ul.products li.product .product-image-box figcaption a.button.product-button:hover,
-.toko-post-image-admin a.button.product-button  {
+.just-post-image-admin a.button.product-button  {
   border: none;
 }
 .woocommerce ul.products li.product .product-image-box figcaption a.button.product-button:before,
 .woocommerce-page ul.products li.product .product-image-box figcaption a.button.product-button:before,
-.toko-post-image-admin a.button.product-button:before  {
+.just-post-image-admin a.button.product-button:before  {
   line-height: inherit;
   display: inline-block;
   font-weight: 300;

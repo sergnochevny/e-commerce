@@ -12,11 +12,11 @@
     <link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('upload/styles.css') ?>">
 
     <style>
-        .toko-posts-grid .toko-post {
+        .just-posts-grid .just-post {
             margin: 0 0 20px;
         }
 
-        .toko-posts-grid .toko-post-image {
+        .just-posts-grid .just-post-image {
             background-position: center center;
             background-size: cover;
             height: 200px;
@@ -24,12 +24,12 @@
             overflow: hidden;
         }
 
-        .toko-posts-grid .toko-post-image a {
+        .just-posts-grid .just-post-image a {
             display: block;
             height: 200px;
         }
 
-        .toko-posts-grid .toko-post-detail .post-title {
+        .just-posts-grid .just-post-detail .post-title {
             margin: 0;
             font-size: 20px;
             font-weight: lighter;
@@ -40,11 +40,11 @@
             text-overflow: ellipsis;
         }
 
-        .toko-posts-grid .toko-post-detail .post-title a {
+        .just-posts-grid .just-post-detail .post-title a {
             color: #222222;
         }
 
-        .toko-posts-grid .toko-post-detail .post-date {
+        .just-posts-grid .just-post-detail .post-date {
             font-size: 14px !important;
             color: #5f5f5f !important;
             text-transform: uppercase;
@@ -52,7 +52,7 @@
             padding: 0;
         }
 
-        .toko-posts-grid .toko-post-detail > p {
+        .just-posts-grid .just-post-detail > p {
             display: block;
             font-size: 12px;
             font-weight: normal;
@@ -63,7 +63,7 @@
             position: relative;
         }
 
-        .toko-posts-grid .toko-post-detail > p > span.opa {
+        .just-posts-grid .just-post-detail > p > span.opa {
             background-image: url("<?php _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
             bottom: 0;
             display: block;

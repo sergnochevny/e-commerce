@@ -20,9 +20,9 @@
                             <div class="vc_row wpb_row vc_row-fluid vc_custom_1439733758005">
                                 <div class="wpb_column vc_column_container vc_col-sm-12">
                                     <div class="wpb_wrapper">
-                                        <div class="toko-divider text-left line-no icon-hide">
+                                        <div class="just-divider text-left line-no icon-hide">
                                             <div class="divider-inner" style="background-color: #fff">
-                                                <h3 class="toko-section-title">Newsletter</h3>
+                                                <h3 class="just-section-title">Newsletter</h3>
 
                                                 <p class="paragraf">DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</p>
                                             </div>
@@ -51,7 +51,7 @@
             $(document).ready(
                 function (event) {
 
-                    $('.toko-slider-active').owlCarousel({
+                    $('.just-slider-active').owlCarousel({
                         items: 1,
                         loop: true,
                         nav: false,

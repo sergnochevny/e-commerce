@@ -4,7 +4,7 @@
     $(document).ready(
         function (event) {
 
-            $('.toko-slider-active').owlCarousel({
+            $('.just-slider-active').owlCarousel({
                 items: 1,
                 loop: true,
                 nav: false,

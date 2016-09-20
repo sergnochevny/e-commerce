@@ -11,38 +11,40 @@
 --------------------------------------------------------------*/
 /* 1.0 BANNER
 -------------------------------------------------------------- */
-.toko-banner {
+.just-banner {
   position: relative;
   background: #fff;
   min-height: 200px;
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: contain;
-  box-shadow: 0 0 75px 0px #666 inset;
-    -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
+  box-shadow: 0 0 50px 0 #666 inset;
+  -webkit-box-shadow: 0 0 50px 0 #666 inset;
+  -moz-box-shadow: 0 0 50px 0 #666 inset;
+  -o-box-shadow: 0 0 50px 0 #666 inset;
+  -webkit-transition: all .4s ease-in-out;
+  -moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
 }
-.toko-banner:hover {
-	box-shadow: 0 0 2px 1px #ccc;
-	    -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;}
-.toko-banner .toko-banner-detail {
+.just-banner:hover {
+  box-shadow: 0 0 30px #ccc inset;
+  -webkit-box-shadow: 0 0 30px #ccc inset;
+  -moz-box-shadow: 0 0 30px #ccc inset;
+  -o-box-shadow: 0 0 30px #ccc inset;
+}
+
+.just-banner .just-banner-detail {
   z-index: 5;
   text-align: center;
   padding: 80px;
 }
 @media(max-width:720px){
-.toko-banner .toko-banner-detail {
+.just-banner .just-banner-detail {
   padding: 35px;
 }
 }
-.toko-banner .toko-banner-detail p.paragraf1 {
+.just-banner .just-banner-detail p.paragraf1 {
   color: #000;
   font-size: 100%;
   text-shadow: 1px 1px 0 #fff;
@@ -52,7 +54,7 @@
   text-transform: uppercase;
   margin: 0px;
 }
-.toko-banner .toko-banner-detail h3 {
+.just-banner .just-banner-detail h3 {
   color: #000;
   font-size: 36px;
   line-height: 40px;
@@ -64,7 +66,7 @@
   text-transform: capitalize;
   color: #222222;
 }
-.toko-banner .toko-banner-detail h3:after {
+.just-banner .just-banner-detail h3:after {
   content: '';
   width: 20px;
   height: 1px;
@@ -74,15 +76,15 @@
   display: block;
   top: 20px;
 }
-.toko-banner .toko-banner-detail h3.text-big {
+.just-banner .just-banner-detail h3.text-big {
   font-size: 60px;
   padding-bottom: 70px;
 }
-.toko-banner .toko-banner-detail h3.text-big:after {
+.just-banner .just-banner-detail h3.text-big:after {
   background: #555555;
   top: 42px;
 }
-.toko-banner .toko-banner-detail .paragraf2 {
+.just-banner .just-banner-detail .paragraf2 {
   color: #222222;
   font-size: 12px;
   font-weight: lighter;
@@ -90,28 +92,28 @@
   letter-spacing: 4px;
   margin: 0;
 }
-.toko-banner.toko-banner-center {
+.just-banner.just-banner-center {
   background-position: center center;
   background-size: auto 100%;
 }
-.toko-banner.toko-banner-left {
+.just-banner.just-banner-left {
   background-position: right center;
   background-size: auto 100%;
 }
-.toko-banner.toko-banner-left .toko-banner-detail {
+.just-banner.just-banner-left .just-banner-detail {
   float: left;
 }
-.toko-banner.toko-banner-right {
+.just-banner.just-banner-right {
   background-position: left center;
   background-size: auto 100%;
 }
-.toko-banner.toko-banner-right .toko-banner-detail {
+.just-banner.just-banner-right .just-banner-detail {
   float: right;
 }
 
 /* 2.0 CALL TO ACTION
 -------------------------------------------------------------- */
-.toko-cta .toko-cta-description {
+.just-cta .just-cta-description {
   color: #9c9c9c;
   font-size: 12px;
   text-transform: uppercase;
@@ -120,7 +122,7 @@
   display: block;
   margin: 0px;
 }
-.toko-cta .toko-cta-title {
+.just-cta .just-cta-title {
   color: #222222;
   font-size: 60px;
   text-transform: uppercase;
@@ -131,10 +133,10 @@
   border-bottom: 1px solid #9c9c9c;
   margin: 0;
 }
-.toko-cta .toko-cta-title span {
+.just-cta .just-cta-title span {
   font-weight: bold;
 }
-.toko-cta a.toko-cta-link {
+.just-cta a.just-cta-link {
   display: inline-block;
   margin: 40px 0 0;
   font-size: 13px;
@@ -145,10 +147,10 @@
   padding: 10px 20px;
   font-weight: 300;
 }
-.toko-cta a.toko-cta-link:hover {
+.just-cta a.just-cta-link:hover {
   text-decoration: none;
 }
-.toko-cta a.toko-cta-button {
+.just-cta a.just-cta-button {
   display: inline-block;
   margin: 40px 0 0;
   background: #667700;
@@ -160,28 +162,28 @@
   color: #ffffff;
   text-transform: uppercase;
 }
-.toko-cta a.toko-cta-button:hover {
+.just-cta a.just-cta-button:hover {
   background: #222;
   color: #ffffff !important;
 }
 
 /* 3.0 DIVIDER
 -------------------------------------------------------------- */
-.toko-divider {
+.just-divider {
   position: relative;
   padding: 6px 0;
 }
-.toko-divider .toko-section-title span {
+.just-divider .just-section-title span {
   margin: 0px 10px;
 }
-.toko-divider.line-yes .divider-inner:after {
+.just-divider.line-yes .divider-inner:after {
   display: none;
 }
-.toko-divider .divider-inner {
+.just-divider .divider-inner {
   margin: 0;
   padding: 0 0 20px;
 }
-.toko-divider .divider-inner:after {
+.just-divider .divider-inner:after {
   content: '';
   width: 30px;
   height: 1px;
@@ -190,23 +192,23 @@
   position: relative;
   bottom: -20px;
 }
-.toko-divider .divider-inner h3 {
+.just-divider .divider-inner h3 {
   font-size: 28px;
   color: #222222;
   text-transform: capitalize;
   margin: 0px;
   font-weight: 400;
 }
-.toko-divider .divider-inner p.paragraf {
+.just-divider .divider-inner p.paragraf {
   font-size: 100%;
   font-weight: 400;
   margin: 0px;
   color: #222;
 }
-.toko-divider.line-no {
+.just-divider.line-no {
   padding: 0 0 25px;
 }
-.toko-divider.line-yes:before {
+.just-divider.line-yes:before {
   content: " ";
   position: absolute;
   height: 2px;
@@ -216,79 +218,79 @@
   left: 0;
   z-index: 1;
 }
-.toko-divider.line-yes .divider-inner {
+.just-divider.line-yes .divider-inner {
   position: relative;
   z-index: 10;
   padding: 0 30px;
   display: inline-block;
 }
-.toko-divider.line-yes .divider-inner span {
+.just-divider.line-yes .divider-inner span {
   font-size: 24px;
 }
-.toko-divider.line-yes.text-left.icon-left .divider-inner, .toko-divider.line-yes.text-left.icon-right .divider-inner, .toko-divider.line-yes.text-left.icon-no .divider-inner, .toko-divider.line-yes.text-no.icon-left .divider-inner {
+.just-divider.line-yes.text-left.icon-left .divider-inner, .just-divider.line-yes.text-left.icon-right .divider-inner, .just-divider.line-yes.text-left.icon-no .divider-inner, .just-divider.line-yes.text-no.icon-left .divider-inner {
   padding-left: 2px;
 }
-.toko-divider.line-yes.text-left.icon-left .toko-section-title span, .toko-divider.line-yes.text-left.icon-right .toko-section-title span, .toko-divider.line-yes.text-left.icon-no .toko-section-title span, .toko-divider.line-yes.text-no.icon-left .toko-section-title span {
+.just-divider.line-yes.text-left.icon-left .just-section-title span, .just-divider.line-yes.text-left.icon-right .just-section-title span, .just-divider.line-yes.text-left.icon-no .just-section-title span, .just-divider.line-yes.text-no.icon-left .just-section-title span {
   margin-left: 0;
 }
-.toko-divider.line-yes.text-right.icon-right .divider-inner, .toko-divider.line-yes.text-right.icon-left .divider-inner, .toko-divider.line-yes.text-right.icon-no .divider-inner, .toko-divider.line-yes.text-no.icon-right .divider-inner {
+.just-divider.line-yes.text-right.icon-right .divider-inner, .just-divider.line-yes.text-right.icon-left .divider-inner, .just-divider.line-yes.text-right.icon-no .divider-inner, .just-divider.line-yes.text-no.icon-right .divider-inner {
   padding-right: 2px;
 }
-.toko-divider.line-yes.text-right.icon-right .toko-section-title span, .toko-divider.line-yes.text-right.icon-left .toko-section-title span, .toko-divider.line-yes.text-right.icon-no .toko-section-title span, .toko-divider.line-yes.text-no.icon-right .toko-section-title span {
+.just-divider.line-yes.text-right.icon-right .just-section-title span, .just-divider.line-yes.text-right.icon-left .just-section-title span, .just-divider.line-yes.text-right.icon-no .just-section-title span, .just-divider.line-yes.text-no.icon-right .just-section-title span {
   margin-left: 0;
 }
-.toko-divider.line-yes.text-no.icon-no {
+.just-divider.line-yes.text-no.icon-no {
   padding: 20px 0;
 }
 
 /* 4.0 BRANDS
 -------------------------------------------------------------- */
-.toko-brands-wrap.toko-no-carousel .toko-brand {
+.just-brands-wrap.just-no-carousel .just-brand {
   float: left;
   text-align: center;
   margin: 0 0 10px;
 }
-.toko-brands-wrap.toko-no-carousel.columns-5 .toko-brand {
+.just-brands-wrap.just-no-carousel.columns-5 .just-brand {
   width: 20%;
 }
-.toko-brands-wrap.toko-no-carousel.columns-4 .toko-brand {
+.just-brands-wrap.just-no-carousel.columns-4 .just-brand {
   width: 25%;
 }
-.toko-brands-wrap.toko-no-carousel.columns-3 .toko-brand {
+.just-brands-wrap.just-no-carousel.columns-3 .just-brand {
   width: 33.33333%;
 }
-.toko-brands-wrap.toko-no-carousel.columns-2 .toko-brand {
+.just-brands-wrap.just-no-carousel.columns-2 .just-brand {
   width: 50%;
 }
-.toko-brands-wrap.toko-no-carousel.columns-1 .toko-brand {
+.just-brands-wrap.just-no-carousel.columns-1 .just-brand {
   width: 100%;
 }
 @media (max-width: 991px) {
-  .toko-brands-wrap.toko-no-carousel .toko-brand {
+  .just-brands-wrap.just-no-carousel .just-brand {
     width: 50% !important;
   }
 }
 @media (max-width: 460px) {
-  .toko-brands-wrap.toko-no-carousel .toko-brand {
+  .just-brands-wrap.just-no-carousel .just-brand {
     width: 100% !important;
   }
 }
-.toko-brands-wrap .owl-carousel .owl-item {
+.just-brands-wrap .owl-carousel .owl-item {
   text-align: center;
 }
-.toko-brands-wrap .owl-carousel .owl-item img {
+.just-brands-wrap .owl-carousel .owl-item img {
   display: inline-block;
   width: auto;
   max-width: 100%;
 }
-.toko-brands-wrap .owl-carousel .owl-controls {
+.just-brands-wrap .owl-carousel .owl-controls {
   text-align: center;
   padding: 20px 0px;
 }
-.toko-brands-wrap .owl-carousel .owl-controls .owl-nav {
+.just-brands-wrap .owl-carousel .owl-controls .owl-nav {
   display: inline-block;
 }
-.toko-brands-wrap .owl-carousel .owl-controls .owl-nav > div {
+.just-brands-wrap .owl-carousel .owl-controls .owl-nav > div {
   display: inline-block;
   width: 20px;
   border: 1px solid #667700;
@@ -302,22 +304,22 @@
   -webkit-transition: background 1s;
   -moz-transition: background 1s;
 }
-.toko-brands-wrap .owl-carousel .owl-controls .owl-nav > div:hover {
+.just-brands-wrap .owl-carousel .owl-controls .owl-nav > div:hover {
   background: #667700;
 }
-.toko-brands-wrap .owl-carousel .owl-controls .owl-nav > div:hover i {
+.just-brands-wrap .owl-carousel .owl-controls .owl-nav > div:hover i {
   color: #ffffff;
 }
 
 /* 5.0 POSTS GRID
 -------------------------------------------------------------- */
-.toko-posts-grid .toko-post {
+.just-posts-grid .just-post {
   margin: 0 0 20px;
 }
-.toko-posts-grid .toko-post-image {
+.just-posts-grid .just-post-image {
   margin: 0 0 20px;
 }
-.toko-posts-grid .toko-post-detail .post-title {
+.just-posts-grid .just-post-detail .post-title {
   margin: 0 0 20px;
   font-size: 20px;
   font-weight: lighter;
@@ -327,17 +329,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.toko-posts-grid .toko-post-detail .post-title a {
+.just-posts-grid .just-post-detail .post-title a {
   color: #222222;
 }
-.toko-posts-grid .toko-post-detail .post-date {
+.just-posts-grid .just-post-detail .post-date {
   font-size: 14px;
   color: #222;
   text-transform: uppercase;
   font-weight: normal;
   padding: 0;
 }
-.toko-posts-grid .toko-post-detail p {
+.just-posts-grid .just-post-detail p {
   /*margin: 0 0 20px !important;
   padding: 0 !important;
   font-size: 12px !important;
@@ -346,25 +348,25 @@
 
 /* 6.0 PRODUCTS
 -------------------------------------------------------------- */
-.woocommerce.toko-carousel {
+.woocommerce.just-carousel {
   margin-right: -20px;
 }
-.woocommerce.toko-carousel ul.products.owl-loaded li.product {
+.woocommerce.just-carousel ul.products.owl-loaded li.product {
   padding-top: 10px;
   width: 100% !important;
 }
-.woocommerce.toko-carousel .owl-carousel .owl-controls {
+.woocommerce.just-carousel .owl-carousel .owl-controls {
     padding: 20px 0;
     position: absolute;
     right: 9px;
     text-align: center;
     top: -60px;
 }
-.woocommerce.toko-carousel .owl-carousel .owl-controls .owl-nav {
+.woocommerce.just-carousel .owl-carousel .owl-controls .owl-nav {
   display: inline-block;
 }
-.woocommerce.toko-carousel .owl-carousel .owl-controls .owl-nav > div > i{line-height: 22px; color:#fff;}
-.woocommerce.toko-carousel .owl-carousel .owl-controls .owl-nav > div {
+.woocommerce.just-carousel .owl-carousel .owl-controls .owl-nav > div > i{line-height: 22px; color:#fff;}
+.woocommerce.just-carousel .owl-carousel .owl-controls .owl-nav > div {
   display: inline-block;
   width: 20px;
   border: 1px solid #667700;
@@ -379,27 +381,27 @@
   -webkit-transition: background 1s;
   -moz-transition: background 1s;
 }
-.woocommerce.toko-carousel .owl-carousel .owl-controls .owl-nav > div:hover {
+.woocommerce.just-carousel .owl-carousel .owl-controls .owl-nav > div:hover {
   background: #fff;
   border: 1px solid #000;
 }
-.woocommerce.toko-carousel .owl-carousel .owl-controls .owl-nav > div:hover i {
+.woocommerce.just-carousel .owl-carousel .owl-controls .owl-nav > div:hover i {
   color: #000;
 }
 
 /* 7.0 SLIDER
 -------------------------------------------------------------- */
-.toko-slider-wrap {
+.just-slider-wrap {
   background: #222222;
 }
-.toko-slider-wrap .toko-slides .toko-slide {
+.just-slider-wrap .just-slides .just-slide {
   text-align: center;
   min-height: 580px;
 }
-.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner {
+.just-slider-wrap .just-slides .just-slide .just-slide-inner {
   padding-top: 190px;
 }
-.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner .toko-slide-detail {
+.just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail {
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 20px;
     display: inline-block;
@@ -407,20 +409,20 @@
     text-align: center;
 	cursor: pointer;
 }
-.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner .toko-slide-detail.left-slider {
+.just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail.left-slider {
   padding-left: 10%;
 }
-.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner .toko-slide-detail.center-slider {
+.just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail.center-slider {
   margin: 0px auto;
   text-align: center;
   display: block;
   max-width: 800px;
 }
-.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner .toko-slide-detail.right-slider {
+.just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail.right-slider {
   float: right;
   padding-right: 10%;
 }
-.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner .toko-slide-detail .toko-slide-desc {
+.just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail .just-slide-desc {
   font-size: 14px;
   color: #fff;
   letter-spacing: 4px;
@@ -430,7 +432,7 @@
   text-shadow: 1px 1px 1px #000;
 }
 @media(max-width:780px){
-	.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner .toko-slide-detail .toko-slide-title {
+	.just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail .just-slide-title {
     font-size: 30px !important;
     line-height: 30px !important;
 	}
@@ -438,7 +440,7 @@
 }
 b > a > .single_add_to_cart_button{width:100%;}
 .red{color:red;}
-.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner .toko-slide-detail .toko-slide-title {
+.just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail .just-slide-title {
   font-size: 72px;
   line-height: 76px;
   color: #667700;
@@ -448,7 +450,7 @@ b > a > .single_add_to_cart_button{width:100%;}
   padding: 4px 0px 18px;
   text-shadow: 1px 1px 1px #000;
 }
-.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner .toko-slide-detail a.toko-slide-button {
+.just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail a.just-slide-button {
   display: inline-block;
   text-transform: uppercase;
   background: #667700;
@@ -459,21 +461,21 @@ b > a > .single_add_to_cart_button{width:100%;}
   letter-spacing: 1px;
   text-shadow: 1px 1px 1px #000;
 }
-.toko-slider-wrap .toko-slides .toko-slide .toko-slide-inner .toko-slide-detail a.toko-slide-button:hover {
+.just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail a.just-slide-button:hover {
   color: #ffffff !important;
   background: #222;
 }
-.toko-slider-wrap .toko-slides .owl-controls {
+.just-slider-wrap .just-slides .owl-controls {
   position: absolute;
   bottom: 20px;
   text-align: center;
   width: 100%;
 }
-.toko-slider-wrap .toko-slides .owl-controls .owl-dots .owl-dot {
+.just-slider-wrap .just-slides .owl-controls .owl-dots .owl-dot {
   display: inline-block;
   margin: 0px 5px;
 }
-.toko-slider-wrap .toko-slides .owl-controls .owl-dots .owl-dot span {
+.just-slider-wrap .just-slides .owl-controls .owl-dots .owl-dot span {
   width: 10px;
   height: 10px;
   display: block;
@@ -483,9 +485,9 @@ b > a > .single_add_to_cart_button{width:100%;}
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
 }
-.toko-slider-wrap .toko-slides .owl-controls .owl-dots .owl-dot span:hover {
+.just-slider-wrap .just-slides .owl-controls .owl-dots .owl-dot span:hover {
   background: #fff;
 }
-.toko-slider-wrap .toko-slides .owl-controls .owl-dots .owl-dot.active span {
+.just-slider-wrap .just-slides .owl-controls .owl-dots .owl-dot.active span {
   background: #fff;
 }

@@ -96,7 +96,7 @@
                                 <span class="sr-only">Toggle navigation</span>
                                 <i class="fa fa-navicon"></i>
                             </button>
-                            <a class="navbar-brand" href="<?php _A_::$app->router()->UrlTo('/'); ?>">
+                            <a class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
                                 <div class="site-with-image">
                                     <img class="site-logo"
                                          src="<?= _A_::$app->router()->UrlTo('views/images/logo.gif'); ?>"

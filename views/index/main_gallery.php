@@ -12,27 +12,27 @@
                              class="vc_row wpb_row vc_row-fluid vc_custom_1439536789991 vc_row-no-padding">
                             <div class="wpb_column vc_column_container">
                                 <div class="wpb_wrapper">
-                                    <div class="toko-slider-wrap">
-                                        <div class="toko-slides toko-slider-active owl-carousel owl-theme owl-loaded">
-                                            <div class="toko-slide"
+                                    <div class="just-slider-wrap">
+                                        <div class="just-slides just-slider-active owl-carousel owl-theme owl-loaded">
+                                            <div class="just-slide"
                                                  style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/slider/slide1.jpg');?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
-                                                <div class="toko-slide-inner">
-                                                    <div class="toko-slide-detail">
-                                                        <p class="toko-slide-desc">Featured Fabric Selection</p>
+                                                <div class="just-slide-inner">
+                                                    <div class="just-slide-detail">
+                                                        <p class="just-slide-desc">Featured Fabric Selection</p>
 
-                                                        <h2 class="toko-slide-title">View our Fabrics</h2>
-                                                        <a class="toko-slide-button" href="shop">Shop Now</a>
+                                                        <h2 class="just-slide-title">View our Fabrics</h2>
+                                                        <a class="just-slide-button" href="shop">Shop Now</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="toko-slide"
+                                            <div class="just-slide"
                                                  style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/slider/slide2.jpg');?>);background-size:cover;background-position:center right;background-repeat:no-repeat;">
-                                                <div class="toko-slide-inner">
-                                                    <div class="toko-slide-detail">
-                                                        <p class="toko-slide-desc">Featured Fabric Selection</p>
+                                                <div class="just-slide-inner">
+                                                    <div class="just-slide-detail">
+                                                        <p class="just-slide-desc">Featured Fabric Selection</p>
 
-                                                        <h2 class="toko-slide-title">View our Fabrics</h2>
-                                                        <a class="toko-slide-button" href="shop">Shop Now</a>
+                                                        <h2 class="just-slide-title">View our Fabrics</h2>
+                                                        <a class="just-slide-button" href="shop">Shop Now</a>
                                                     </div>
                                                 </div>
                                             </div>

@@ -21,7 +21,7 @@
           media="all">
     <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/bootstrap.min.css') ?>" type="text/css"
           media="all">
-    <link charset="UTF-8" rel="stylesheet" id="toko-smartmenu-css"
+    <link charset="UTF-8" rel="stylesheet" id="just-smartmenu-css"
           href="<?= _A_::$app->router()->UrlTo('/views/css/jquery.smartmenus.bootstrap.css') ?>" type="text/css"
           media="all">
     <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/font-awesome.min.css') ?>" type="text/css"
@@ -41,7 +41,7 @@
     <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/prettyPhoto.min.css')?>" type="text/css"
           media="all">
 
-    <link charset="UTF-8" rel="stylesheet" id="toko-style-css" href="<?= _A_::$app->router()->UrlTo('/views/css/style.css')?>"
+    <link charset="UTF-8" rel="stylesheet" id="just-style-css" href="<?= _A_::$app->router()->UrlTo('/views/css/style.css')?>"
           type="text/css" media="all">
 </head>
 
@@ -84,8 +84,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <article class="page type-page status-publish entry">
-                        <div class="toko-post col-xs-12">
-                            <div class="toko-post-detail">
+                        <div class="just-post col-xs-12">
+                            <div class="just-post-detail">
                                 <p>
                                     To change the password , click the link charset="UTF-8" below. The link charset="UTF-8" is valid for 24 hours.
                                     If you did not request to change the password , just ignore this message.

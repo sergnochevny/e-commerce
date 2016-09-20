@@ -1,5 +1,5 @@
-<div class="toko-post col-xs-12 col-sm-6 col-md-4">
-    <div style="background-image: url('<?= $post_img; ?>');" class="toko-post-image toko-post-image-admin">
+<div class="just-post col-xs-12 col-sm-6 col-md-4">
+    <div style="background-image: url('<?= $post_img; ?>');" class="just-post-image just-post-image-admin">
         <a id="del_post"
            href="<?= $post_del_href; ?>" rel="nofollow"
            data-post_id="<?= $row['ID']; ?>" data-product_sku="" data-quantity="1"
@@ -7,10 +7,10 @@
         <a id="edit_post" href="<?= $post_edit_href; ?>"
            class="button product-button icon-modify"></a>
     </div>
-    <div class="toko-post-detail">
+    <div class="just-post-detail">
         <h3 class="post-title"><a href="<?= $post_edit_href; ?>"><?= isset($post_title) ? $post_title : ''; ?></a></h3>
 
-        <div class="toko-divider text-center line-yes icon-hide">
+        <div class="just-divider text-center line-yes icon-hide">
             <div style="background-color: #fff" class="divider-inner">
                 <span class="post-date"><?= $post_date; ?></span>
             </div>
@@ -39,7 +39,7 @@
             <h3 class="post-title">= isset($post_title) ? $post_title : ''; ?></h3>
 
             <div
-                class="toko-divider text-center line-yes icon-hide">
+                class="just-divider text-center line-yes icon-hide">
                 <div class="divider-inner"
                      style="background-color: #fff">
                     <span class="post-date">= $post_date; ?></span>

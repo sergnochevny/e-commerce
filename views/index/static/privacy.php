@@ -15,9 +15,9 @@
                             <div class="vc_row wpb_row vc_row-fluid vc_custom_1439733758005">
                                 <div class="wpb_column vc_column_container vc_col-sm-12">
                                     <div class="wpb_wrapper">
-                                        <div class="toko-divider text-left line-no icon-hide">
+                                        <div class="just-divider text-left line-no icon-hide">
                                             <div class="divider-inner" style="background-color: #fff">
-                                                <h3 class="toko-section-title">Privacy Policy</h3>
+                                                <h3 class="just-section-title">Privacy Policy</h3>
 
                                                 <p class="paragraf">We are committed to providing our visitors with a
                                                     web site that respects their privacy. This page summarizes the

@@ -3,7 +3,7 @@
 
 <script src="<?php _A_::$app->router()->UrlTo('tinymce/tinymce.min.js')?>"></script>
 <script type="text/javascript" src="<?php _A_::$app->router()->UrlTo('upload/js/ajaxupload.3.5.js')?>"></script>
-<link rel='stylesheet' id='toko-style-css' href='<?php _A_::$app->router()->UrlTo('views/css/style.css')?>' type='text/css' media='all'/>
+<link rel='stylesheet' id='just-style-css' href='<?php _A_::$app->router()->UrlTo('views/css/style.css')?>' type='text/css' media='all'/>
 <link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('upload/styles.css')?>">
 
 <div class="site-container">

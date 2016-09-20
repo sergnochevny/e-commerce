@@ -277,6 +277,7 @@ class Controller_Cart extends Controller_Controller
             $this->template->vars('bExpressSamples', $bExpressSamples);
             $this->template->vars('express_samples_cost', $express_samples_cost);
             $this->template->vars('total', $total);
+            $this->template->vars('shipcost', $shipcost);
             $this->template->view_layout('ship_in_proceed');
         }
     }
@@ -655,7 +656,7 @@ class Controller_Cart extends Controller_Controller
             if ($taxes > 0) $body .= sprintf("\nTaxes: $%01.2f \n", $taxes);
             $total = _A_::$app->session('cart')['total'];
             $body .= sprintf("\nTotal: $%01.2f \n", $total);
-            if ($discount > 0) $body .= sprintf("You saved: $%01.2f\n", $discount);
+            if ($discount > 0) $body .= sprintf("<b>You saved</b>: $%01.2f\n", $discount);
 
             $bill_firstname = trim($user['bill_firstname']);
             $bill_lastname = trim($user['bill_lastname']);

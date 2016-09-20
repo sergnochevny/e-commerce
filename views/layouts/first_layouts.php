@@ -24,7 +24,7 @@
           type='text/css' media='all'/>
     <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/bootstrap.min.css'); ?>'
           type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" id='toko-smartmenu-css'
+    <link rel='stylesheet' charset="UTF-8" id='just-smartmenu-css'
           href='<?= _A_::$app->router()->UrlTo('views/css/jquery.smartmenus.bootstrap.css'); ?>' type='text/css'
           media='all'/>
     <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/font-awesome.min.css'); ?>'
@@ -44,7 +44,7 @@
     <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/prettyPhoto.min.css'); ?>'
           type='text/css' media='all'/>
 
-    <link rel='stylesheet' id='toko-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css'); ?>'
+    <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css'); ?>'
           type='text/css'
           media='all'/>
     <script type="text/javascript">
