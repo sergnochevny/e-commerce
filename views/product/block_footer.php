@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <aside id="woocommerce_products-5" class="widget woocommerce widget_products">
-                        <h4 class="widget-title">Best Selling Products</h4>
+                        <h4 class="widget-title">Best Sellers Products</h4>
                         <ul id="bsells_products" class="product_list_widget">
                         </ul>
                     </aside>
