@@ -162,30 +162,48 @@ Class Router
 
     public function UrlTo($path, $params = null, $to_sef = null, $sef_exclude_params = [])
     {
-        $sef_exclude_params = array_merge($this->exclude_params, $sef_exclude_params);
-        $path = rtrim(trim($path), DS);
-        if (strpos($path, '{base_url}') !== false) {
-            $path = str_replace('{base_url}', $this->base_url, $path);
-        }
-        $_path = $path;
-        if (strpos($_path, $this->base_url) !== false) $_path = trim(str_replace($this->base_url, '', $path), '/\\');
-        if (preg_match('#(.*)\?(.*)#i', $_path, $matches)) $_path = $matches[1];
-        if (count($matches) > 2) {
-            parse_str($matches[2], $_params);
-            $params = array_merge($params, $_params);
-        }
-        $sef_include_params = isset($params) ? array_diff_key($params, array_flip($sef_exclude_params)) : [];
-        $_path = $this->http_build_url(trim($_path, DS), ['query' => http_build_query($sef_include_params)]);
-        if (isset($to_sef)) {
-            $path = $this->build_sef_url($to_sef, $_path);
+        if ($this->sef_enable()) {
+            $sef_exclude_params = array_merge($this->exclude_params, $sef_exclude_params);
+            $path = rtrim(trim($path), DS);
+            if (strpos($path, '{base_url}') !== false) {
+                $path = str_replace('{base_url}', $this->base_url, $path);
+            }
+            $_path = $path;
+            if (strpos($_path, $this->base_url) !== false) $_path = trim(str_replace($this->base_url, '', $path), '/\\');
+            if (preg_match('#(.*)\?(.*)#i', $_path, $matches)) $_path = $matches[1];
+            if (count($matches) > 2) {
+                parse_str($matches[2], $_params);
+                $params = array_merge($params, $_params);
+            }
+            $sef_include_params = isset($params) ? array_diff_key($params, array_flip($sef_exclude_params)) : [];
+            $_path = $this->http_build_url(trim($_path, DS), ['query' => http_build_query($sef_include_params)]);
+            if (isset($to_sef)) {
+                $path = $this->build_sef_url($to_sef, $_path);
+            } else {
+                $path = Model_Router::get_sef_url($_path);
+            }
+            $params = isset($params) ? array_intersect_key($params, array_flip($sef_exclude_params)) : [];
+            if (strpos($path, $this->base_url) == false) $path = $this->base_url . DS . $path;
+            if (!is_null($params) && is_array($params) && (count($params) > 0)) $url = $this->http_build_url($path, ['query' => http_build_query($params)]);
+            else $url = $this->http_build_url($path);
         } else {
-            $path = Model_Router::get_sef_url($_path);
+            $path = rtrim(trim($path), DS);
+            if (strpos($path, '{base_url}') !== false) {
+                $path = str_replace('{base_url}', $this->base_url, $path);
+            } else {
+                if (strpos($path, $this->base_url) == false)
+                    $path = $this->base_url . DS . $path;
+            }
+
+            if (!is_null($params)) $url = $this->http_build_url($path, ['query' => http_build_query($params)]);
+            else $url = $this->http_build_url($path);
         }
-        $params = isset($params) ? array_intersect_key($params, array_flip($sef_exclude_params)) : [];
-        if (strpos($path, $this->base_url) == false) $path = $this->base_url . DS . $path;
-        if (!is_null($params) && is_array($params) && (count($params) > 0)) $url = $this->http_build_url($path, ['query' => http_build_query($params)]);
-        else $url = $this->http_build_url($path);
         return $url;
+    }
+
+    private function sef_enable()
+    {
+        return true;
     }
 
     private function http_build_url($url, $parts = array(), $flags = null, &$new_url = false)
