@@ -23,12 +23,10 @@
     <div class="b_cap_cod_main">
         <p style="color: black;">You confirm the removal ?</p>
         <br/>
-        <center>
-            <a id="confirm_action">
-                <input type="button" value="Yes confirm" class="button"/></a>
-            <a id="confirm_no">
-                <input type="button" value="No" class="button"/></a>
-        </center>
+        <div class="text-center">
+            <a id="confirm_action"><input type="button" value="Yes confirm" class="button"/></a>
+            <a id="confirm_no"><input type="button" value="No" class="button"/></a>
+        </div>
     </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/blog/admin.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/admin.js'); ?>' type="text/javascript"></script>

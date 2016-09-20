@@ -8,17 +8,11 @@
             <h1 class="page-title"><?= $post_title; ?></h1>
 
             <?php if (isset($post_img)) { ?>
-                <div class="toko-post-image"
-                     style="background-image: url('<?= $post_img; ?>');">
-                </div>
+                <div class="toko-post-image" style="background-image: url('<?= $post_img; ?>');"></div>
             <?php } ?>
             <div class="toko-post-detail">
-                <div
-                    class="toko-divider text-center line-yes icon-hide">
-                    <div class="divider-inner"
-                         style="background-color: #fff">
-                        <span class="post-date"><?= $post_date; ?></span>
-                    </div>
+                <div class="toko-divider text-center line-yes icon-hide">
+                    <div class="divider-inner" style="background-color: #fff"><span class="post-date"><?= $post_date; ?></span></div>
                 </div>
                 <div><?= $post_content; ?></div>
             </div>

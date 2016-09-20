@@ -17,57 +17,14 @@
             <div class="b_cap_cod_main">
                 <p style="color: black;">You confirm the removal ?</p>
                 <br/>
-                <center>
+                <div class="text-center">
                     <a id="confirm_action">
                         <input type="button" value="Yes confirm" class="button"/></a>
                     <a id="confirm_no">
                         <input type="button" value="No" class="button"/></a>
-                </center>
+                </div>
             </div>
         </div>
-
-        <script type="text/javascript">
-            (function($){
-                $(document).on('click.confirm_action', ".popup a.close",function (event) {
-                    $("#confirm_action").off('click.confirm_action');
-                    $("#confirm_dialog").removeClass('overlay_display');
-                });
-
-                $(document).on('click.confirm_action', "#confirm_no", function (event) {
-                    $(".popup a.close").trigger('click');
-                });
-
-                $(document).on('click', 'a#del_blog_category',
-                    function (event) {
-                        event.preventDefault();
-                        var href = $(this).attr('href');
-                        $("#confirm_action").on('click.confirm_action',
-                            function (event) {
-                                event.preventDefault();
-                                $.get(
-                                    href,
-                                    {},
-                                    function(data){
-
-                                        $('#content').html(data);
-                                        $("#confirm_dialog").removeClass('overlay_display');
-                                        $("#confirm_action").off('click.confirm_action');
-                                        $('html, body').stop().animate({
-                                            scrollTop: parseInt($('.danger').offset().top) - 250
-                                        }, 1000);
-
-                                        setTimeout(function(){
-                                            $('.danger').remove();
-                                        },8000);
-
-                                    }
-                                );
-                            }
-                        );
-
-                        $("#confirm_dialog").addClass('overlay_display');
-
-                    }
-                );
-            })(jQuery);
+        <script src='<?= _A_::$app->router()->UrlTo('views/js/blogcategory/blog_categories.js'); ?>'
+                type="text/javascript">
         </script>

@@ -1,7 +1,5 @@
 <h1 class="entry-title">Change Password</h1>
-<?php
-if (isset($warning) || isset($error)) {
-    ?>
+<?php if (isset($warning) || isset($error)) { ?>
     <div class="entry-content danger" style="padding-bottom: 20px;">
         <?php
         if (isset($warning)) {
@@ -17,22 +15,20 @@ if (isset($warning) || isset($error)) {
         }
         ?>
         <?php
-        if (isset($error)) {
-            ?>
-            <div class="col-xs-12 alert-danger danger">
-                <?php
-                foreach ($error as $msg) {
-                    echo '<span>' . $msg . '</span><br/>';
-                }
+            if (isset($error)) {
                 ?>
-            </div>
-            <?php
-        }
+                <div class="col-xs-12 alert-danger danger">
+                    <?php
+                    foreach ($error as $msg) {
+                        echo '<span>' . $msg . '</span><br/>';
+                    }
+                    ?>
+                </div>
+                <?php
+            }
         ?>
     </div>
-    <?php
-}
-?>
+<?php } ?>
 <div class="entry-content">
     <div class="woocommerce">
         <form method="POST" id="psw_form" action="<?= $action; ?>" class="login">

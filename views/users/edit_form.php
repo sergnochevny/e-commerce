@@ -210,9 +210,9 @@
                    class="input-text ">
         </p>
         <br><br>
-        <center>
+        <div class="text-center">
             <input type="submit" value="SAVE USER DATA" class="button"/>
-        </center>
+        </div>
     </div>
 </form>
 <script type="text/javascript">

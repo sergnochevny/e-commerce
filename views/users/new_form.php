@@ -220,9 +220,9 @@
 
         <p class="form-row">
             <div class="col-xs-12">
-                <center>
+                <div class="text-center">
                     <input type="submit" value="SAVE USER DATA" class="button"/>
-                </center>
+                </div>
             </div>
         </p>
 

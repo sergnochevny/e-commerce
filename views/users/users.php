@@ -29,7 +29,6 @@
                 </div>
             </div>
         </div>
-
         <script type="text/javascript">
             (function($){
                 $(document).on('click.confirm_action', ".popup a.close",

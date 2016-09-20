@@ -17,12 +17,12 @@
             <div class="b_cap_cod_main">
                 <p style="color: black;">You confirm the removal ?</p>
                 <br/>
-                <center>
+                <div class="text-center">
                     <a id="confirm_action">
                         <input type="button" value="Yes confirm" class="button"/></a>
                     <a id="confirm_no">
                         <input type="button" value="No" class="button"/></a>
-                </center>
+                </div>
             </div>
         </div>
         <script src="<?= _A_::$app->router()->UrlTo('views/js/discount/discounts.js');?>"></script>

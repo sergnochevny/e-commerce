@@ -214,7 +214,7 @@
 
         <div class="form-row">
             <label><strong>Main images:</strong></label>
-            <center>
+            <div class="text-center">
                 <div id="modify_images2">
                     <?php
                     echo $modify_images;
@@ -224,7 +224,7 @@
                     <div class="clear"></div>
                 </div>
 
-            </center>
+            </div>
             <div class="clear"></div>
         </div>
 

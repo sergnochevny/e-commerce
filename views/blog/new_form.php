@@ -55,7 +55,7 @@
 
         <div class="form-row">
             <label class="required_field"><strong> Image:</strong></label>
-            <center>
+            <div class="text-center">
                 <div id="modify_image">
                     <div class="b_modify_image_pic">
                         <?= $data['img'];?>
@@ -65,7 +65,7 @@
                     <div class="clear"></div>
                 </div>
 
-            </center>
+            </div>
             <div class="clear"></div>
         </div>
 

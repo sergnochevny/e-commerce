@@ -4,7 +4,7 @@
     <td><?= $row['title'] ?></td>
     <td><?= $row['dt'] ?></td>
     <td>
-        <center>
+        <div class="text-center">
             <a id="edit-comment"
                href="<?= _A_::$app->router()->UrlTo('comments/edit', ['id' => $row['id'], 'page' => $page]) ?>"
                title="Edit comment">
@@ -21,7 +21,7 @@
                title="Delete comment">
                 <i class=" fa fa-trash-o"></i>
             </a>
-        </center>
+        </div>
     </td>
     <td>
         <a <?= $row['moderated'] == '0' ? "class=\"text-danger\"" : "class=\"text-success\"" ?>

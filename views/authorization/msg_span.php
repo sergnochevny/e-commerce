@@ -1,4 +1,4 @@
 <div id="customer_details" style="padding-top: 20px; margin: auto; width: 600px;">
     <div id="message"><p><span><?= isset($message) ? $message : ''; ?></span><p></div>
 </div>
-<script>(function ($) {$('html, body').stop().animate({scrollTop: 0 }, 1000);})(jQuery);</script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/msg_span.js'); ?>' type="text/javascript"></script>

@@ -222,12 +222,12 @@
                    value='<?= $data['discount_comment3'] ?>' class="input-text ">
         </div>
         <br/><br/>
-        <center>
+        <div class="text-center">
             <input type="submit" value="Update" name="login" class="button"
                    style="width: 150px;">
             <br/>
 
             <div class="results" style="color: red;"></div>
-        </center>
+        </div>
 </form>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/discount/edit_form.js');?>"></script>

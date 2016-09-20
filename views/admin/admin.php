@@ -38,9 +38,9 @@
                                     <p class="lost_password">
                                         <a href="#">Lost your password?</a>
                                     </p>
-                                    <center>
+                                    <div class="text-center">
                                         <div class="results" style="color: red;"></div>
-                                    </center>
+                                    </div>
                                 </form>
                             </div>
                         </div>

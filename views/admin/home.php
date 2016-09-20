@@ -7,11 +7,11 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <center>
+                <div class="text-center">
                     <a href="<?= $add_product_href; ?>">
                         <input type="submit" value="ADD NEW PRODUCT" class="button"/>
                     </a><br>
-                </center>
+                </div>
                 <h1 class="page-title">
                     <?php
                     //                            echo $object->category_name();
@@ -31,11 +31,11 @@
                         <?php } ?>
                     </select>
                 </form>
-                <ul class="products">
-                    <div class="product-inner">
+                <div class="products">
+                    <ul class="product-inner">
                         <?= $list; ?>
-                    </div>
-                </ul>
+                    </ul>
+                </div>
                 <nav role="navigation" class="paging-navigation">
                     <h4 class="sr-only">Products navigation</h4>
                     <ul class='pagination'>
@@ -55,12 +55,12 @@
     <div class="b_cap_cod_main">
         <p style="color: black;">You confirm the removal ?</p>
         <br/>
-        <center>
+        <div class="text-center">
             <a id="confirm_action">
                 <input type="button" value="Yes confirm" class="button"/></a>
             <a id="confirm_no">
                 <input type="button" value="No" class="button"/></a>
-        </center>
+        </div>
     </div>
 </div>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/admin/home.js'); ?>' type="text/javascript"></script>

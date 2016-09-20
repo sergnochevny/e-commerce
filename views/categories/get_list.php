@@ -4,7 +4,7 @@
 
 <?=
 '<tr>
-    <td><center>'. $row[1] .'</td>
+    <td><div class="text-center">'. $row[1] .'</div></td>
     <td>'.$row[2].'</td>
     <td><div class="text-center">'.$row[3].'</div></td>
     <td><div class="text-center">'.$row[4].'</div></td>
