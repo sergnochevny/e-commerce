@@ -34,8 +34,8 @@
 <?php } ?>
 
 <div class="row" style="margin:0">
-    <div class="col-md-3 col-sm-3 col-xs-6 alert-danger">TOTAL:</div>
-    <div class="col-md-9 col-sm-9 col-xs-6 alert-danger">
+    <div class="col-md-3 col-sm-3 col-xs-6 alert-danger" style="padding-top: 15px; padding-bottom: 15px">TOTAL:</div>
+    <div class="col-md-9 col-sm-9 col-xs-6 alert-danger" style="padding-top: 15px; padding-bottom: 15px">
         <div id="cart_total"><b>$<?= number_format($total, 2); ?>USD</b></div>
     </div>
 </div>

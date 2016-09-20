@@ -1,5 +1,5 @@
 <tr class="cart_item" data-pid="<?= $p_id; ?>" data-row="items">
-    <td class="product-thumbnail">
+    <td class="product-thumbnail" style="padding: 0">
         <a href="<?= _A_::$app->router()->UrlTo('product',['p_id'=>$p_id,'back'=>'cart']); ?>">
             <img width="110" height="110" alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
                  src="<?= $img_url; ?>">

@@ -1,6 +1,6 @@
 (function ($) {
 
-    $('#authorization').on('submit',function (event) {
+    $('#authorization').on('submit', function (event) {
 
         event.preventDefault();
 
@@ -15,10 +15,10 @@
                 var results = $('.results');
                 results.html(data);
 
-                if (data.trim().length > 0){
-                    setTimeout(function(){
+                if (data.trim().length > 0) {
+                    setTimeout(function () {
                         results.html('');
-                    },3000);
+                    }, 3000);
                 }
             },
             error: function (xhr, str) {

@@ -154,6 +154,7 @@ class Controller_Cart extends Controller_Controller
         $this->template->vars('img_url', $img_url);
         $this->template->vars('item', $item);
         $this->template->vars('p_id', $p_id);
+        $this->template->vars('t_pr', $t_pr);
         $this->template->view_layout($template);
     }
 
