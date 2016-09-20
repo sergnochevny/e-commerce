@@ -2,7 +2,9 @@
     margin-bottom: 0px !important;
     background-color: #ffffff !important;
 }
-
+body{
+    cursor: default;
+}
 .vc_custom_1439733758005 {
     margin-top: 0px !important;
     margin-bottom: 0px !important;
