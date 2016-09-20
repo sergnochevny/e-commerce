@@ -454,9 +454,9 @@ class Controller_Product extends Controller_Controller
 
         $data = $model->getproductInfo();
         ob_start();
-        $cimage = new Controller_Image($this->main);
-        $cimage->modify_images();
-        $m_images = ob_get_contents();
+            $cimage = new Controller_Image($this->main);
+            $cimage->modify_images();
+            $m_images = ob_get_contents();
         ob_end_clean();
 
         $this->template->vars('modify_images', $m_images);

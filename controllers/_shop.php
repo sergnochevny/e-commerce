@@ -31,53 +31,52 @@ class Controller_Shop extends Controller_Controller
         }
         $res_count_rows = 0;
         $rows = $model->get_products_by_type('all', $start, $per_page, $res_count_rows);
-        $this->template->vars('count_rows', $res_count_rows);
 
         ob_start();
-        foreach ($rows as $row) {
-            $cat_name = $model->getCatName($row[20]);
-            $row[8] = substr($row[8], 0, 100);
+            foreach ($rows as $row) {
+                $cat_name = $model->getCatName($row[20]);
+                $row[8] = substr($row[8], 0, 100);
 
-            $filename = 'upload/upload/' . $image_suffix . $row[14];
-            if (!(file_exists($filename) && is_file($filename))) {
-                $filename = 'upload/upload/not_image.jpg';
+                $filename = 'upload/upload/' . $image_suffix . $row[14];
+                if (!(file_exists($filename) && is_file($filename))) {
+                    $filename = 'upload/upload/not_image.jpg';
+                }
+                $filename = _A_::$app->router()->UrlTo($filename);
+
+                $url_prms = ['p_id' => $row[0]];
+                if (!empty(_A_::$app->get('page'))) {
+                    $url_prms['page'] = _A_::$app->get('page');
+                }
+                if (!empty(_A_::$app->get('cat'))) {
+                    $url_prms['cat'] = _A_::$app->get('cat');
+                }
+
+                $price = $row[5];
+                $inventory = $row[6];
+                $piece = $row[34];
+                if ($piece == 1 && $inventory > 0) {
+                    $price = $price * $inventory;
+                    $price = "$" . number_format($price, 2);
+                    $format_price = sprintf('%s / piece', $price);
+                } else {
+                    $price = "$" . number_format($price, 2);
+                    $format_price = sprintf('%s / yard', $price);
+                }
+
+                $this->template->vars('cat_name', $cat_name);
+                $this->template->vars('url_prms', $url_prms);
+                $this->template->vars('filename', $filename);
+                $this->template->vars('row', $row);
+                $this->template->vars('piece', $piece);
+                $this->template->vars('price', $price);
+                $this->template->vars('inventory', $inventory);
+                $this->template->vars('format_price', $format_price);
+                $this->template->vars('hide_price', $row['makePriceVis']);
+                $this->template->view_layout('inner');
             }
-            $filename = _A_::$app->router()->UrlTo($filename);
-
-            $url_prms = ['p_id' => $row[0]];
-            if (!empty(_A_::$app->get('page'))) {
-                $url_prms['page'] = _A_::$app->get('page');
-            }
-            if (!empty(_A_::$app->get('cat'))) {
-                $url_prms['cat'] = _A_::$app->get('cat');
-            }
-
-            $price = $row[5];
-            $inventory = $row[6];
-            $piece = $row[34];
-            if ($piece == 1 && $inventory > 0) {
-                $price = $price * $inventory;
-                $price = "$" . number_format($price, 2);
-                $format_price = sprintf('%s / piece', $price);
-            } else {
-                $price = "$" . number_format($price, 2);
-                $format_price = sprintf('%s / yard', $price);
-            }
-
-            $this->template->vars('cat_name', $cat_name);
-            $this->template->vars('url_prms', $url_prms);
-            $this->template->vars('filename', $filename);
-            $this->template->vars('row', $row);
-            $this->template->vars('piece', $piece);
-            $this->template->vars('price', $price);
-            $this->template->vars('inventory', $inventory);
-            $this->template->vars('format_price', $format_price);
-            $this->template->vars('hide_price', $row['makePriceVis']);
-            $this->template->view_layout('inner');
-        }
-
-        $list = ob_get_contents();
+            $list = ob_get_contents();
         ob_end_clean();
+        $this->main->template->vars('count_rows', $res_count_rows);
         $this->main->template->vars('list', $list);
         (new Controller_Paginator($this))->paginator($total, $page, 'admin/home', $per_page);
     }
