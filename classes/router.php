@@ -55,7 +55,7 @@ Class Router
             define('HTTP_URL_STRIP_ALL', 1024);            // Strip anything but scheme and host
         }
 
-        $this->parse_url();
+        $this->parse_request_url();
         $this->route = (empty(_A_::$app->get('route'))) ? '' : _A_::$app->get('route');
         if (empty($this->route)) $this->route = 'index';
         $this->route = trim($this->route, '/\\');
@@ -63,19 +63,23 @@ Class Router
 
     }
 
-    private function parse_url()
+    private function parse_request_url()
     {
-        $query_string = _A_::$app->server('QUERY_STRING');
-        $request_uri = _A_::$app->server('REQUEST_URI');
-        parse_str($query_string, $query);
-        $query_sef_url = $query['route'];
-        $query_path = str_replace('?', '&', $this->revert_sef_url($query_sef_url));
-        $query_string = str_replace($query_sef_url, $query_path, $query_string);
-        $request_uri = str_replace($query_sef_url, $query_path, $request_uri);
-        parse_str($query_string, $query);
-        _A_::$app->server('QUERY_STRING', $query_string);
-        _A_::$app->server('REQUEST_URI', $request_uri);
-        _A_::$app->setGet($query);
+        if($this->sef_enable()){
+            $query_string = _A_::$app->server('QUERY_STRING');
+            $request_uri = _A_::$app->server('REQUEST_URI');
+            parse_str($query_string, $query);
+            if (isset($query['route'])){
+                $query_sef_url = $query['route'];
+                $query_path = str_replace('?', '&', $this->revert_sef_url($query_sef_url));
+                $query_string = str_replace($query_sef_url, $query_path, $query_string);
+                $request_uri = str_replace($query_sef_url, $query_path, $request_uri);
+                parse_str($query_string, $query);
+                _A_::$app->server('QUERY_STRING', $query_string);
+                _A_::$app->server('REQUEST_URI', $request_uri);
+                _A_::$app->setGet($query);
+            }
+        }
     }
 
     private function revert_sef_url($sef_url, $suff = null, $pref = null)
@@ -203,7 +207,8 @@ Class Router
 
     private function sef_enable()
     {
-        return true;
+        $res = ENABLE_SEF && !Controller_Admin::is_logged();
+        return $res;
     }
 
     private function http_build_url($url, $parts = array(), $flags = null, &$new_url = false)

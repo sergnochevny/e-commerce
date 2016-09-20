@@ -28,8 +28,7 @@ class Controller_Main extends Controller_Base
         ob_end_clean();
         $this->template->vars('menu', $menu);
 
-        $admin = new Controller_Admin($this->main);
-        if ($admin->is_logged()) {
+        if (Controller_Admin::is_logged()) {
             ob_start();
             $this->template->view_layout('my_account_admin_menu', 'menu');
             $my_account_admin_menu = ob_get_contents();
@@ -132,10 +131,9 @@ class Controller_Main extends Controller_Base
         }
         $cart = new Controller_Cart(isset($this->main) ? $this->main : $this);
         $cart->get();
-        $user = new Controller_User(isset($this->main) ? $this->main : $this);
 
         ob_start();
-        $toggle = $user->is_logged();
+        $toggle = Controller_User::is_logged();
         if ($toggle) {
             $user = _A_::$app->session('user');
             $email = $user['email'];

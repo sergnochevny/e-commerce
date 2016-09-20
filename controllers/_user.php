@@ -38,8 +38,8 @@ Class Controller_User Extends Controller_Controller
 
     public function is_authorized()
     {
-        if (!is_null(_A_::$app->session('_'))) return true;
-        if (!is_null(_A_::$app->cookie('_r'))) {
+        if (self::is_logged()) return true;
+        if (self::is_set_remember()) {
             $remember = _A_::$app->cookie('_r');
             $model = new Model_Auth();
             if ($model->is_user_remember($remember)) {
@@ -75,26 +75,21 @@ Class Controller_User Extends Controller_Controller
         $this->redirect($url);
     }
 
-    public function is_set_remember()
+    public static function is_set_remember()
     {
         return !is_null(_A_::$app->cookie('_r'));
     }
 
-    private function get_from_session()
-    {
-        return _A_::$app->session('user');
-    }
-
     public function change()
     {
-        if ($this->is_logged()) {
+        if (self::is_logged()) {
             $user = $this->get_from_session();
             $user_id = $user['aid'];
             _A_::$app->get('user_id', $user_id);
             $users = new Controller_Users();
             $action = _A_::$app->router()->UrlTo('user/change');
             $title = 'CHANGE REGISTRATION DATA';
-            if(_A_::$app->server('REQUEST_METHOD') == 'POST'){
+            if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
                 $users->_save_edit();
                 $users->main->template->vars('action', $action);
                 $users->main->template->vars('title', $title);
@@ -115,14 +110,19 @@ Class Controller_User Extends Controller_Controller
         }
     }
 
-    public function is_logged()
+    public static function is_logged()
     {
         return !is_null(_A_::$app->session('_'));
     }
 
+    private function get_from_session()
+    {
+        return _A_::$app->session('user');
+    }
+
     public function registration()
     {
-        if(_A_::$app->server('REQUEST_METHOD') == 'POST') {
+        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
             $prms = null;
             $users = new Controller_Users();
             if (!$users->_save_new()) {

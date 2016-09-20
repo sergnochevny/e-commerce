@@ -1,6 +1,7 @@
 <?php
 return [
     'define' => [
+        'ENABLE_SEF' => true,
         'DS' => '/',
         'SITE_PATH' => function () {
             return str_replace(DIRECTORY_SEPARATOR, DS, realpath(dirname(__FILE__) . DS) . DS);

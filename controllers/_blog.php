@@ -101,7 +101,6 @@ class Controller_Blog extends Controller_Controller
                 if ((!empty(_A_::$app->get('cat')))) {
                     $prms['cat'] = _A_::$app->get('cat');
                 }
-                $post_href = _A_::$app->router()->UrlTo('blog/post', $prms);
 //                $prms = null;
 //                if (!empty(_A_::$app->get('page'))) {
 //                    $prms['page'] = _A_::$app->get('page');
@@ -112,6 +111,7 @@ class Controller_Blog extends Controller_Controller
 //                $url = _A_::$app->router()->UrlTo('blog/post/' . $post_name);
 //                $post_href = _A_::$app->router()->UrlTo('blog/post/' . $post_name, $prms);
                 $post_title = stripslashes($row['post_title']);
+                $post_href = _A_::$app->router()->UrlTo('blog/post', $prms, $post_title);
                 $post_date = date('F jS, Y', strtotime($row['post_date']));
 
                 $post_content = $model->getPostDescKeys($post_id);

@@ -6,7 +6,7 @@
             $opt['p_id'] = $row[0];
         ?>
         <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
-            <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt); ?>">
+            <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt, $row['pname']); ?>">
             </a>
             <figcaption>
                 <?php
@@ -15,7 +15,7 @@
                     } else {
 //                        include('views/basket/main_product_addtobasket.php');
                         ?>
-                        <a class="button productsAddBasket <?= isset($search)?'a_search':''?>" href="<?= _A_::$app->router()->UrlTo('product', $opt); ?>">
+                        <a class="button productsAddBasket <?= isset($search)?'a_search':''?>" href="<?= _A_::$app->router()->UrlTo('product', $opt, $row['pname']); ?>">
                             View Details
                         </a>                
                         <?php
@@ -23,7 +23,7 @@
                 ?>
             </figcaption>
         </figure>
-        <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt); ?>">
+        <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt, $row['pname']); ?>">
             <span class="product-category"><?= $row['pname']; ?></span>
 
             <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>

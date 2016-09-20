@@ -34,8 +34,8 @@ Class Controller_Admin Extends Controller_Controller
 
     public function is_authorized()
     {
-        if (!is_null(_A_::$app->session('_a'))) return true;
-        if (!is_null(_A_::$app->cookie('_ar'))) {
+        if (self::is_logged()) return true;
+        if (self::is_set_remember()) {
             $remember = _A_::$app->cookie('_ar');
             $model = new Model_Auth();
             if ($model->is_admin_remember($remember)) {
@@ -80,12 +80,12 @@ Class Controller_Admin Extends Controller_Controller
         return $res;
     }
 
-    public function is_logged()
+    public static function is_logged()
     {
         return !is_null(_A_::$app->session('_a'));
     }
 
-    public function is_set_remember()
+    public static function is_set_remember()
     {
         return !is_null(_A_::$app->cookie('_ar'));
     }

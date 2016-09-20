@@ -78,22 +78,22 @@ class Controller_Authorization extends Controller_Controller
 
     private function is_admin_logged()
     {
-        return (new Controller_Admin($this->main))->is_logged();
+        return Controller_Admin::is_logged();
     }
 
     private function is_user_logged()
     {
-        return (new Controller_User($this->main))->is_logged();
+        return Controller_User::is_logged();
     }
 
     private function is_set_admin_remember()
     {
-        return (new Controller_Admin($this->main))->is_set_remember();
+        return Controller_Admin::is_set_remember();
     }
 
     private function is_set_user_remember()
     {
-        return (new Controller_User($this->main))->is_set_remember();
+        return Controller_User::is_set_remember();
     }
 
     private function admin_authorize($login, $password)
