@@ -1,19 +1,23 @@
+<?php
+    $opt['user_id'] = $row[0];
+    $opt['page'] = $page;
+?>
 <tr>
     <td ><?= $row[0]?></td>
     <td><?= $row[1]?></td>
     <td><?= $row[3] . ' ' . $row[4]?></td>
     <td><?= $row[30]?></td>
     <td >
-        <center>
-            <a href="<?= _A_::$app->router()->UrlTo('users/edit',['user_id'=>$row[0],'page'=>$page])?>">
+        <div class="text-center">
+            <a href="<?= _A_::$app->router()->UrlTo('users/edit',$opt)?>">
                 <i class="fa fa-pencil"></i>
             </a>
-            <a class="text-danger" id="del_user" href="<?= _A_::$app->router()->UrlTo('users/del',['user_id'=>$row[0],'page'=>$page])?>">
+            <a class="text-danger" id="del_user" href="<?= _A_::$app->router()->UrlTo('users/del',$opt)?>">
                 <i class=" fa fa-trash-o"></i>
             </a>
-            <a class="text-success" href="<?= _A_::$app->router()->UrlTo('orders', ['user_id'=>$row[0],'page'=>$page])?>">
+            <a class="text-success" href="<?= _A_::$app->router()->UrlTo('orders', $opt)?>">
                 <i class="fa fa-eye"></i>
             </a>
-        </center>
+        </div>
     </td>
 </tr>

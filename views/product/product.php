@@ -271,7 +271,7 @@
                         url,
                         {},
                         function (answer) {
-                            data = JSON.parse(answer);
+                            var data = JSON.parse(answer);
                             $.when(
                                 $('span#cart_amount').html(data.sum),
                                 $(data.msg).appendTo('#content'),
@@ -281,7 +281,7 @@
                                 function () {
                                     $('#content').waitloader('remove');
 
-                                    buttons = {
+                                    var buttons = {
                                         "Basket": function () {
                                             $(this).remove();
                                             $('#content').waitloader('show');

@@ -133,8 +133,7 @@
             function (event) {
                 event.preventDefault();
                 var href = $(this).attr('href');
-                $('#f_search_1').attr('action', href);
-                $('#f_search_1').trigger('submit');
+                $('#f_search_1').attr('action', href).trigger('submit');
             }
         );
 
@@ -148,8 +147,7 @@
             function (event) {
                 event.preventDefault();
                 var href = $(this).attr('href');
-                $('#f_search_1').attr('action', href);
-                $('#f_search_1').trigger('submit');
+                $('#f_search_1').attr('action', href).trigger('submit');
             }
         );
 

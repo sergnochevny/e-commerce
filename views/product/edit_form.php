@@ -286,17 +286,24 @@
         </p>
     </div><!--col-2-->
     <div class="col-xs-12">
-        <center>
+        <div class="text-center">
             <br/>
             <input type="submit" value="Save" class="button" style="width: 150px;">
             <br/>
-        </center>
+        </div>
     </div>
 </form>
 <script type="text/javascript">
     (function($){
         var btnUpload = $('#upload');
         var status1 = $('#status');
+
+        $('.danger').css('display','block');
+        $('html, body').stop().animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
+        setTimeout(function(){
+            $('.danger').css('display','none');
+        },8000);
+
         new AjaxUpload(btnUpload, {
             action: function(){
                 var idx = $('input[name=images]:checked').val();
@@ -328,11 +335,6 @@
                     data: msg,
                     success: function (data) {
                         $('#form_product').html(data);
-                        $('.danger').css('display','block');
-                        $('html, body').stop().animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
-                        setTimeout(function(){
-                            $('.danger').css('display','none');
-                        },8000);
                     },
                     error: function (xhr, str) {
                         alert('Error: ' + xhr.responseCode);
