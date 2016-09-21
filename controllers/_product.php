@@ -184,7 +184,6 @@ class Controller_Product extends Controller_Controller
     function edit()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
 
         $prms = null;
         $pid = _A_::$app->get('p_id');
@@ -204,7 +203,15 @@ class Controller_Product extends Controller_Controller
         $this->template->vars('back_url', $back_url);
 
         $data = Model_Product::getProductInfo($pid);
-
+        ob_start();
+        foreach ($data['categories'] as $cat_id=>$category){
+            $this->template->vars('cat_id', $cat_id);
+            $this->template->vars('category', $category);
+            $this->template->view_layout('block_category');
+        }
+        $categories = ob_get_contents();
+        ob_end_clean();
+        $data['categories'] = $categories;
         ob_start();
         $cimage = new Controller_Image($this->main);
         $cimage->modify();

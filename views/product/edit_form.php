@@ -49,12 +49,16 @@
             <label><strong>Default category: Brunschwig & Fils</strong></label>
         </p>
 
-        <p class="form-row">
+        <div class="form-row" data-role="dialog">
             <label><strong>Categories:</strong></label>
             <select multiple="" name="categori[]" style="height:85px;">
                 <?= $data['sd_cat']; ?>
             </select>
-
+        </div>
+        <p class="form-row">
+            <ul>
+                <?= $data['categories']; ?>
+            </ul>
         </p>
 
         <p class="form-row">

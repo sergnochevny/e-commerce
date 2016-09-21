@@ -3,6 +3,150 @@
 Class Model_Product extends Model_Model
 {
 
+    public static function getProductInfo($pid)
+    {
+        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$pid' LIMIT 1");
+        $rowsni = mysql_fetch_array($resulthatistim);
+
+        $manufacturerId = $rowsni['manufacturerId'];
+        if (empty($manufacturerId)) {
+            $manufacturerId = "0";
+        }
+        $patterns = [];
+        $result = mysql_query("select patternId from fabrix_product_patterns WHERE prodId='$pid'");
+        while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
+            $patterns[] = $row[0];
+        };
+
+        $pcolours = [];
+        $result = mysql_query("select colourId from fabrix_product_colours WHERE prodId='$pid'");
+        while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
+            $pcolours[] = $row[0];
+        };
+
+        $categories = [];
+        $q = "select a.cid, a.display_order, b.cname " .
+            "from fabrix_product_categories a " .
+            "left join fabrix_categories b on b.cid = a.cid " .
+            "where a.pid='$pid'";
+        $result = mysql_query($q);
+        while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
+            $categories[$row[0]] = [$row[1], $row[2]];
+        };
+
+        if (count($categories) < 1) {
+            $result = mysql_query("select max(displayorder)+1 from fabrix_product_categories WHERE cid=1");
+            $row = mysql_fetch_array($result, MYSQL_NUM);
+            $categories['1'] = $row[0];
+        }
+        $_categories = array_keys($categories);
+        $cats = self::getProductCatInfo($_categories, $manufacturerId, $pcolours, $patterns);
+        $sl_cat = $cats['sl_cat'];
+        $sl_cat2 = $cats['sl_cat2'];
+        $sl_cat3 = $cats['sl_cat3'];
+        $sl_cat4 = $cats['sl_cat4'];
+
+        return array(
+            'weight_id' => $rowsni['weight_id'],
+            'sd_cat' => $sl_cat,
+            'pvisible' => $rowsni['pvisible'],
+            'metadescription' => $rowsni['metadescription'],
+            'p_id' => $pid,
+            'Title' => $rowsni['pname'],
+            'Meta_Description' => $rowsni['metadescription'],
+            'Meta_Keywords' => $rowsni['metakeywords'],
+            'categories' => $categories,
+            'Product_name' => $rowsni['pname'],
+            'Product_number' => $rowsni['pnumber'],
+            'Width' => $rowsni['width'],
+            'Price_Yard' => $rowsni['priceyard'],
+            'Stock_number' => $rowsni['stock_number'],
+            'Dimensions' => $rowsni['dimensions'],
+            'Current_inventory' => $rowsni['inventory'],
+            'Specials' => $rowsni['specials'],
+            'Manufacturer' => $sl_cat2,
+            'Colours' => $sl_cat3,
+            'Pattern_Type' => $sl_cat4,
+            'Short_description' => $rowsni['sdesc'],
+            'Long_description' => $rowsni['ldesc'],
+            'Related_fabric_1' => $rowsni['rpnumber1'],
+            'Related_fabric_2' => $rowsni['rpnumber2'],
+            'Related_fabric_3' => $rowsni['rpnumber3'],
+            'Related_fabric_4' => $rowsni['rpnumber4'],
+            'Related_fabric_5' => $rowsni['rpnumber5'],
+            'Main_images' => $rowsni['image1'],
+            'visible' => $rowsni['makePriceVis'],
+            'd_image2' => $rowsni['image2'],
+            'd_image3' => $rowsni['image3'],
+            'd_image4' => $rowsni['image4'],
+            'd_image5' => $rowsni['image5'],
+            'best' => $rowsni['best'],
+            'piece' => $rowsni['piece'],
+            'whole' => $rowsni['whole']
+        );
+    }
+
+    public static function getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns)
+    {
+        $sl_cat = '';
+        $sl_cat2 = '';
+        $sl_cat3 = '';
+        $sl_cat4 = '';
+        if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
+            $post_categori = ['1'];
+        }
+        $results = mysql_query("select * from fabrix_categories");
+        while ($row = mysql_fetch_array($results)) {
+            if (in_array($row[0], $post_categori)) {
+                $sl_cat .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+
+        if (empty($post_manufacturer{0})) {
+            $post_manufacturer = 0;
+        }
+        $results = mysql_query("select * from fabrix_manufacturers");
+        while ($row = mysql_fetch_array($results)) {
+            if ($row[0] == $post_manufacturer) {
+                $sl_cat2 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat2 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+
+        if (!(isset($p_colors) && is_array($p_colors) && count($p_colors) > 0)) {
+            $p_colors = [];
+        }
+        $results = mysql_query("select * from fabrix_colour");
+        while ($row = mysql_fetch_array($results)) {
+            if (in_array($row[0], $p_colors)) {
+                $sl_cat3 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat3 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+
+        if (!(isset($patterns) && is_array($patterns) && count($patterns) > 0)) {
+            $patterns = [];
+        }
+        $results = mysql_query("select * from fabrix_patterns");
+        while ($row = mysql_fetch_array($results)) {
+            if (in_array($row[0], $patterns)) {
+                $sl_cat4 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
+            } else {
+                $sl_cat4 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+            }
+        }
+        return [
+            'sl_cat' => $sl_cat,
+            'sl_cat2' => $sl_cat2,
+            'sl_cat3' => $sl_cat3,
+            'sl_cat4' => $sl_cat4
+        ];
+    }
+
     public function get_total_count($where = null)
     {
         $total = 0;
@@ -133,183 +277,6 @@ Class Model_Product extends Model_Model
             'image1' => $rowsni['image1']
         );
 
-    }
-
-    public static function getProductInfo($pid)
-    {
-
-//        $back_url = urlencode($back_url);
-
-        $p_id = $pid;
-        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id' LIMIT 1");
-        $rowsni = mysql_fetch_array($resulthatistim);
-        $p_pname = $rowsni['pname'];
-        $pnumber = $rowsni['pnumber'];
-        $pwidth = $rowsni['width'];
-        $yardage = $rowsni['yardage'];
-        $priceyard = $rowsni['priceyard'];
-        $inventory = $rowsni['inventory'];
-        $sdesc = $rowsni['sdesc'];
-        $p_ldesc = $rowsni['ldesc'];
-        $rpnumber1 = $rowsni['rpnumber1'];
-        $rpnumber2 = $rowsni['rpnumber2'];
-        $rpnumber3 = $rowsni['rpnumber3'];
-        $rpnumber4 = $rowsni['rpnumber4'];
-        $rpnumber5 = $rowsni['rpnumber5'];
-        $p_image1 = $rowsni['image1'];
-        $metadescription = $rowsni['metadescription'];
-        $metakeywords = $rowsni['metakeywords'];
-        $makePriceVis = $rowsni['makePriceVis'];
-        $metadescription = $rowsni['metadescription'];
-        $pvisible = $rowsni['pvisible'];
-        $Stock_number = $rowsni['stock_number'];
-        $dimensions = $rowsni['dimensions'];
-        $d_inventory = $rowsni['inventory'];
-        $d_specials = $rowsni['specials'];
-        $weight_id = $rowsni['weight_id'];
-        $piece = $rowsni['piece'];
-        $d_cid = $rowsni['cid'];
-        $best = $rowsni['best'];
-        $whole = $rowsni['whole'];
-
-        $manufacturerId = $rowsni['manufacturerId'];
-        if (empty($manufacturerId)) {
-            $manufacturerId = "0";
-        }
-        $patterns = [];
-        $result = mysql_query("select patternId from fabrix_product_patterns WHERE prodId='$p_id'");
-        while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
-            $patterns[] = $row[0];
-        };
-
-        $pcolours = [];
-        $result = mysql_query("select colourId from fabrix_product_colours WHERE prodId='$p_id'");
-        while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
-            $pcolours[] = $row[0];
-        };
-
-        $categories = [];
-        $result = mysql_query("select cid from fabrix_product_categories WHERE pid='$p_id'");
-        while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
-            $categories[] = $row[0];
-        };
-
-        if (count($categories) < 1) $categories = ['1'];
-
-        $cats = self::getProductCatInfo($categories, $manufacturerId, $pcolours, $patterns);
-        $sl_cat = $cats['sl_cat'];
-        $sl_cat2 = $cats['sl_cat2'];
-        $sl_cat3 = $cats['sl_cat3'];
-        $sl_cat4 = $cats['sl_cat4'];
-
-        return array(
-            'weight_id' => $weight_id,
-            'sd_cat' => $sl_cat,
-            'pvisible' => $pvisible,
-            'metadescription' => $metadescription,
-            'p_id' => $p_id,
-            'Title' => $p_pname,
-            'Meta_Description' => $metadescription,
-            'Meta_Keywords' => $metakeywords,
-            'Default_category' => 'test',
-            'Categories' => 'test',
-            'Product_name' => $p_pname,
-            'Product_number' => $pnumber,
-            'Width' => $pwidth,
-            'Price_Yard' => $priceyard,
-            'Stock_number' => $Stock_number,
-            'Hide_regular_price' => 'test',
-            'Dimensions' => $dimensions,
-            'Current_inventory' => $d_inventory,
-            'Specials' => $d_specials,
-            'Weight' => $pwidth,
-            'Manufacturer' => $sl_cat2,
-            'Colours' => $sl_cat3,
-            'Pattern_Type' => $sl_cat4,
-            'Short_description' => $sdesc,
-            'Long_description' => $p_ldesc,
-            'Related_fabric_1' => $rpnumber1,
-            'Related_fabric_2' => $rpnumber2,
-            'Related_fabric_3' => $rpnumber3,
-            'Related_fabric_4' => $rpnumber4,
-            'Related_fabric_5' => $rpnumber5,
-            'Main_images' => $p_image1,
-            'Position_in_Brunschwig' => 'test',
-            'Position_in_Modern' => 'test',
-            'Position_in_Designer' => 'test',
-            'Position_in_Stripe' => 'test',
-            'Position_in_Just_Arrived' => 'test',
-            'Long_description' => $p_ldesc,
-            'visible' => $makePriceVis,
-            'd_image2' => $rowsni['image2'],
-            'd_image3' => $rowsni['image3'],
-            'd_image4' => $rowsni['image4'],
-            'd_image5' => $rowsni['image5'],
-            'best' => $best,
-            'piece' => $piece,
-            'whole' => $whole
-        );
-    }
-
-    public static function getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns)
-    {
-        $sl_cat = '';
-        $sl_cat2 = '';
-        $sl_cat3 = '';
-        $sl_cat4 = '';
-        if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
-            $post_categori = ['1'];
-        }
-        $results = mysql_query("select * from fabrix_categories");
-        while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $post_categori)) {
-                $sl_cat .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-
-        if (empty($post_manufacturer{0})) {
-            $post_manufacturer = 0;
-        }
-        $results = mysql_query("select * from fabrix_manufacturers");
-        while ($row = mysql_fetch_array($results)) {
-            if ($row[0] == $post_manufacturer) {
-                $sl_cat2 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat2 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-
-        if (!(isset($p_colors) && is_array($p_colors) && count($p_colors) > 0)) {
-            $p_colors = [];
-        }
-        $results = mysql_query("select * from fabrix_colour");
-        while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $p_colors)) {
-                $sl_cat3 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat3 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-
-        if (!(isset($patterns) && is_array($patterns) && count($patterns) > 0)) {
-            $patterns = [];
-        }
-        $results = mysql_query("select * from fabrix_patterns");
-        while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $patterns)) {
-                $sl_cat4 .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat4 .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
-        }
-        return [
-            'sl_cat' => $sl_cat,
-            'sl_cat2' => $sl_cat2,
-            'sl_cat3' => $sl_cat3,
-            'sl_cat4' => $sl_cat4
-        ];
     }
 
     public function getImage($p_id)
