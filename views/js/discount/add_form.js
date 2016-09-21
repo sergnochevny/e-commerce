@@ -44,7 +44,7 @@
     $(document).ready(
         function () {
             $('content').waitloader('remove');
-            if ($('.danger').length > 0) {
+            if ($('.danger').length) {
                 $('.danger').css('display', 'block');
                 $('html, body').animate({scrollTop: parseInt($('.danger').offset().top) - 250}, 1000);
                 setTimeout(function () {

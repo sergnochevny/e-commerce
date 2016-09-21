@@ -20,10 +20,12 @@
                         $('#content').html(data);
                         $("#confirm_dialog").removeClass('overlay_display');
                         $("#confirm_action").off('click.confirm_action');
-                        $('html, body').stop().animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
-                        setTimeout(function(){
-                            $('.danger').remove();
-                        },8000);
+                        if($('.danger').length){
+                            $('html, body').stop().animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
+                            setTimeout(function(){
+                                $('.danger').remove();
+                            },8000);
+                        }
                     });
                 }
             );

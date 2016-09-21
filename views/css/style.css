@@ -1427,3 +1427,6 @@ td.product-subtotal{
     display: inline-block;
 
 }
+.categories ul{
+    list-style: none;
+}

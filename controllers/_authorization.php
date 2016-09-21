@@ -112,13 +112,14 @@ class Controller_Authorization extends Controller_Controller
             if (!_A_::$app->get('user_id')) {
                 $muser = new Model_User();
                 $mauth = new Model_Auth();
-                if (empty(_A_::$app->get('login'))) {
+                $this->main->template->vars('action', _A_::$app->router()->UrlTo('authorization/lost_password'));
+                if (empty(_A_::$app->post('login'))) {
                     $error = ['Empty Email. Identify your Email(Login).'];
                     $this->main->template->vars('error', $error);
                     $this->lost_password_form();
                     exit();
                 }
-                $email = _A_::$app->get('login');
+                $email = _A_::$app->post('login');
                 if (!$muser->user_exist($email)) {
                     $error = ['Wrong Email(Login) or this Email is not registered.'];
                     $this->main->template->vars('error', $error);
