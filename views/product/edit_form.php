@@ -202,27 +202,26 @@
                     <div class="form-row">
                         <label><strong>Main images:</strong></label>
                         <div class="text-center">
-                            <div id="modify_images2">
-                                <?php
-                                echo $modify_images;
-                                ?>
-                                <br/>
-
-                                <div class="clear"></div>
+                            <div id="modify_images2" class="col-sm-12 col-md-12">
+                                <div class="row">
+                                <div class="row">
+                                    <?= $modify_images; ?>
+                                </div>
+                                </div>
                             </div>
-
                         </div>
                         <div class="clear"></div>
                     </div>
-
-                    <div style="margin-top: 15px; width: 200px; height: 70px; margin-left: 125px;" class="s"
-                         style="display: block;">
-                        <div id="upload" class="apd" style="cursor: pointer;"><span>Upload file</span></div>
+                    <hr style="margin-bottom: 0">
+                    <small style="color:#999;"><b>NOTE</b>: Select a place, and then click "Upload file" to set the image there.</small>
+                    <div class="col-md-12 text-center" style="margin-top: 15px">
+                        <button id="upload" class="button alt" style="cursor: pointer;">Upload file</button>
                     </div>
-                    <small style="color:#999;">
-                        <strong>NOTE</strong>: Select a place, and then click "Upload file" to set the image there.
-                    </small>
-                    <hr/>
+                    <div class="col-md-12 text-center">
+                        <div class="row">
+                            <hr style="margin-bottom: 0">
+                        </div>
+                    </div>
                     <div class="form-row">
                         <label>
                             <strong>Pattern Types:</strong>
