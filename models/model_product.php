@@ -87,7 +87,6 @@ Class Model_Product extends Model_Model
         $product_id = mysql_insert_id();
         if (isset($product_id) && $product_id > 0) {
             $result = mysql_query("INSERT INTO `fabrix_temp_product` set `productId` = '$product_id', sid='" . session_id() . "'");
-
             _A_::$app->get('p_id', $product_id);
         }
     }
@@ -136,13 +135,13 @@ Class Model_Product extends Model_Model
 
     }
 
-    public function getProductInfo($pid)
+    public static function getProductInfo($pid)
     {
 
 //        $back_url = urlencode($back_url);
 
         $p_id = $pid;
-        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
+        $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id' LIMIT 1");
         $rowsni = mysql_fetch_array($resulthatistim);
         $p_pname = $rowsni['pname'];
         $pnumber = $rowsni['pnumber'];
@@ -197,7 +196,7 @@ Class Model_Product extends Model_Model
 
         if (count($categories) < 1) $categories = ['1'];
 
-        $cats = $this->getProductCatInfo($categories, $manufacturerId, $pcolours, $patterns);
+        $cats = self::getProductCatInfo($categories, $manufacturerId, $pcolours, $patterns);
         $sl_cat = $cats['sl_cat'];
         $sl_cat2 = $cats['sl_cat2'];
         $sl_cat3 = $cats['sl_cat3'];
@@ -252,7 +251,7 @@ Class Model_Product extends Model_Model
         );
     }
 
-    public function getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns)
+    public static function getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns)
     {
         $sl_cat = '';
         $sl_cat2 = '';

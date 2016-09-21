@@ -58,6 +58,7 @@ class Controller_Image extends Controller_Controller
             $this->template->vars('image3', $image3);
             $this->template->vars('image4', $image4);
             $this->template->vars('image5', $image5);
+            $this->template->vars('p_id', $p_id);
             $this->template->view_layout('m_images');
         }
     }

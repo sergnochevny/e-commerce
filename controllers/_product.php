@@ -203,12 +203,12 @@ class Controller_Product extends Controller_Controller
         $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
         $this->template->vars('back_url', $back_url);
 
-        $data = $model->getProductInfo($pid);
+        $data = Model_Product::getProductInfo($pid);
 
         ob_start();
-        $cimage = new Controller_Image($this->main);
-        $cimage->modify_images();
-        $m_images = ob_get_contents();
+            $cimage = new Controller_Image($this->main);
+            $cimage->modify();
+            $m_images = ob_get_contents();
         ob_end_clean();
 
         $this->main->template->vars('modify_images', $m_images);
@@ -235,7 +235,7 @@ class Controller_Product extends Controller_Controller
                 if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
                 $this->template->vars('error', $error);
 
-                $cats = $model->getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
+                $cats = Model_Product::getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
                 $sl_cat = $cats['sl_cat'];
                 $sl_cat2 = $cats['sl_cat2'];
                 $sl_cat3 = $cats['sl_cat3'];
@@ -315,15 +315,14 @@ class Controller_Product extends Controller_Controller
     function edit_form()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
 
-        $data = $model->getproductInfo();
+        $data = Model_Product::getProductInfo(_A_::$app->get('p_id'));
         $this->template->vars('data', $data);
 
         ob_start();
-        $cimage = new Controller_Image($this->main);
-        $cimage->modify_images();
-        $m_images = ob_get_contents();
+            $cimage = new Controller_Image($this->main);
+            $cimage->modify();
+            $m_images = ob_get_contents();
         ob_end_clean();
 
         $this->template->vars('modify_images', $m_images);
@@ -349,7 +348,7 @@ class Controller_Product extends Controller_Controller
                 if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
                 $this->template->vars('error', $error);
 
-                $cats = $model->getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
+                $cats = Model_Product::getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
                 $sl_cat = $cats['sl_cat'];
                 $sl_cat2 = $cats['sl_cat2'];
                 $sl_cat3 = $cats['sl_cat3'];
@@ -436,31 +435,34 @@ class Controller_Product extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
+        $prms = ['page' => '1'];
 
         $model->getNewproduct();
 
-        $action_url = _A_::$app->router()->UrlTo('product/save', ['p_id' => _A_::$app->get('p_id')]);
-        $this->template->vars('action_url', $action_url);
-        $prms = ['page' => '1'];
+        $pid = !is_null(_A_::$app->get('p_id')) ? _A_::$app->get('p_id') : NAN;
+        if(!is_nan($pid)){
+            $prms['p_id'] = _A_::$app->get('p_id');
+        }
+
         if (!empty(_A_::$app->get('page'))) {
             $prms['page'] = _A_::$app->get('page');
         }
-
         if (!empty(_A_::$app->get('cat'))) {
             $prms['cat'] = _A_::$app->get('cat');
         }
-        $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
-        $this->template->vars('back_url', $back_url);
 
-        $data = $model->getproductInfo();
+        $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
+
+        $data = Model_Product::getProductInfo($pid);
         ob_start();
             $cimage = new Controller_Image($this->main);
-            $cimage->modify_images();
+            $cimage->modify();
             $m_images = ob_get_contents();
         ob_end_clean();
 
+        $this->template->vars('back_url', $back_url);
         $this->template->vars('modify_images', $m_images);
-
+        $this->template->vars('action_url', _A_::$app->router()->UrlTo('product/save', $prms));
         $this->template->vars('data', $data);
         $this->main->view_admin('add');
     }
