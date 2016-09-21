@@ -211,8 +211,9 @@ class Controller_Orders extends Controller_Controller
                     $this->template->vars('date', $date);
                     $this->template->vars('end_date', $end_date);
                     $this->template->vars('track_code', $track_code);
+                    $this->template->vars('status', $status);
                     $this->template->vars('trid', $trid);
-                    $this->template->vars('$total_price', $total_price);
+                    $this->template->vars('total_price', $total_price);
                     $this->template->vars('username', $username);
                     $this->template->view_layout('admin_list');
                 }
@@ -262,7 +263,7 @@ class Controller_Orders extends Controller_Controller
             $this->main->template->vars('admin_orders_list', $admin_orders_list);
         }
         (new Controller_Paginator($this))->paginator($total, $page, 'orders/history', $per_page);
-        $this->main->view_admin('orders_history');
+        $this->main->view_admin('history');
     }
 
     public function info()

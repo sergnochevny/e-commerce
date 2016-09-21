@@ -10,7 +10,7 @@
         <div class="text-center"><h1>COMMENTS</h1></div>
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <?php include('views/comments/admin_comments_list.php') ?>
+                <?php include('views/comments/admin_list.php') ?>
             </div>
         </div>
         <div id="confirm_dialog" class="overlay"></div>

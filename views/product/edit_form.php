@@ -195,7 +195,7 @@
 
                     <div class="form-row">
                         <label><strong>Long description:</strong></label>
-                        <textarea class="input-text " cols="5" rows="2" name="Long_description"><?= trim($data['Long_description']); ?></textarea>
+                        <textarea class="input-text " style="height: 117px" name="Long_description"><?= trim($data['Long_description']); ?></textarea>
                     </div>
                     <hr/>
 
