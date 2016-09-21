@@ -26,8 +26,8 @@ class Controller_Discount extends Controller_Controller
             $list = ob_get_contents();
             ob_end_clean();
         }
-
         $this->main->template->vars('list', $list);
+
     }
 
     public function del()
