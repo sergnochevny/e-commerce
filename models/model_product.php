@@ -35,7 +35,7 @@ Class Model_Product extends Model_Model
         };
 
         if (count($categories) < 1) {
-            $result = mysql_query("select max(displayorder)+1 from fabrix_product_categories WHERE cid=1");
+            $result = mysql_query("select max(display_order)+1 from fabrix_product_categories WHERE cid=1");
             $row = mysql_fetch_array($result, MYSQL_NUM);
             $categories['1'] = $row[0];
         }
