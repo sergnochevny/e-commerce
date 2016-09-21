@@ -34,7 +34,7 @@
                     var danger = $('.danger');
                     $('.b_modify_image_pic').html(response);
 
-                    if(danger.length>0){
+                    if(danger.length){
                         $('html, body').stop().animate({
                             scrollTop: parseInt(danger.offset().top) - 250
                         }, 1000);
@@ -68,7 +68,7 @@
                             var danger = $('.danger');
                             $(document).trigger('init_form');
 
-                            if(danger.length > 0){
+                            if(danger.length){
                                 danger.css('display','block');
                                 $('html, body').stop().animate({
                                     scrollTop: parseInt(danger.offset().top) - 250

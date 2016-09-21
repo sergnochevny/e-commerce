@@ -48,15 +48,17 @@
                         <input type="text" name="mkey" value="<?= $data['Meta_Keywords']; ?>" class="input-text ">
                     </div>
 
-                    <div class="form-row">
-                        <strong>Categories:</strong>
-                    </div>
-                    <div class="panel panel-default form-row prod_sel_category_panel" data-role="dialog">
-                        <div class="col-sm-12">
+                        <div class="form-row">
+                            <strong>Categories:</strong>
+                        </div>
+                        <div class="categories" id="categories" data-role="dialog" style="/*display: none*/">
+                            <ul>
+                                <?= $data['sd_cat']; ?>
+                            </ul>
+                        </div>
+                        <div class="panel panel-default form-row prod_sel_category_panel" data-role="dialog">
+                            <div class="col-sm-12">
 
-        <!--                        <select multiple="" name="categori[]" style="height:85px;">-->
-        <!--                            --><?//= $data['sd_cat']; ?>
-        <!--                        </select>-->
                                 <div class="panel-body">
                                     <ul class="prod_sel_category">
                                         <?= $data['categories']; ?>

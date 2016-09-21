@@ -22,10 +22,12 @@
             function (data) {
                 var result = JSON.parse(data);
                 if (result['result'] = 0) {
-                    $('.danger').stop().show();
-                    setTimeout(function () {
-                        $('.danger').text('An error occurred, please, try again later').css('display', 'none');
-                    }, 8000);
+                    if($('.danger').length){
+                        $('.danger').stop().show();
+                        setTimeout(function () {
+                            $('.danger').text('An error occurred, please, try again later').css('display', 'none');
+                        }, 8000);
+                    }
                 } else {
                     if (result['status'] == 0) {
                         $('.status').text('In process');
@@ -35,11 +37,12 @@
                     $('.track_code').text(result['track_code']);
                     $('.end_date').text(result['end_date']);
                     $('#status_select').val(result['status']);
-                    $('.success').stop().show();
-                    setTimeout(function () {
-                        $('.success').text('Data updates have been successful').css('display', 'none');
-                    }, 8000);
-
+                    if($('.danger').length){
+                        $('.success').stop().show();
+                        setTimeout(function () {
+                            $('.success').text('Data updates have been successful').css('display', 'none');
+                        }, 8000);
+                    }
                 }
             }
         )

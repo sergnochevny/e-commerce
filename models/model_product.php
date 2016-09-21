@@ -97,11 +97,7 @@ Class Model_Product extends Model_Model
         }
         $results = mysql_query("select * from fabrix_categories");
         while ($row = mysql_fetch_array($results)) {
-            if (in_array($row[0], $post_categori)) {
-                $sl_cat .= '<option value="' . $row[0] . '" selected>' . $row[1] . '</option>';
-            } else {
-                $sl_cat .= '<option value="' . $row[0] . '">' . $row[1] . '</option>';
-            }
+            $sl_cat .= '<li><label><input type="checkbox" value="' . $row[0] . '" ' . (in_array($row[0], $post_categori) ? 'checked' : '') . '>' . $row[1] . '</label></li>';
         }
 
         if (empty($post_manufacturer{0})) {

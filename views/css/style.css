@@ -1413,6 +1413,9 @@ td.product-subtotal{
     display: inline-block;
 
 }
+.categories ul{
+    list-style: none;
+}
 
 .b_modify_images_pic{
     background-size: cover !important;

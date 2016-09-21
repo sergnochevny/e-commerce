@@ -1,6 +1,6 @@
 'use strict';
 jQuery(document).ready(function($){
-	
+
 	function throwDanger(url, data, htmlData) {
 		$.post(
 			url,
@@ -10,16 +10,16 @@ jQuery(document).ready(function($){
 
 				htmlData.html(data);
 				danger.css('display','block');
+				if(danger.length){
+					$('html, body').stop().animate({
+							scrollTop: parseInt(danger.offset().top) - 250 },
+						1000
+					);
 
-				$('html, body').stop().animate({
-					scrollTop: parseInt(danger.offset().top) - 250 },
-					1000
-				);
-
-				setTimeout(function(){
-					$('.danger').css('display','none');
-				},8000);
-
+					setTimeout(function(){
+						$('.danger').css('display','none');
+					},8000);
+				}
 			}
 		)
 	}

@@ -13,7 +13,7 @@
                 data: msg,
                 success: function (data) {
                     $.when($('#chng_pass').html(data)).done(function () {
-                        if ($('.danger').length > 0) {
+                        if ($('.danger').length) {
                             setTimeout(function () {
                                 $('.danger').remove();
                             }, 8000);
