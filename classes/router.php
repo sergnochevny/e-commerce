@@ -3,7 +3,6 @@
 
 Class Router
 {
-
     public $base_url;
     public $route;
     public $controller;
@@ -65,11 +64,11 @@ Class Router
 
     private function parse_request_url()
     {
-        if($this->sef_enable()){
+        if ($this->sef_enable()) {
             $query_string = _A_::$app->server('QUERY_STRING');
             $request_uri = _A_::$app->server('REQUEST_URI');
             parse_str($query_string, $query);
-            if (isset($query['route'])){
+            if (isset($query['route'])) {
                 $query_sef_url = $query['route'];
                 $query_path = str_replace('?', '&', $this->revert_sef_url($query_sef_url));
                 $query_string = str_replace($query_sef_url, $query_path, $query_string);
@@ -80,6 +79,12 @@ Class Router
                 _A_::$app->setGet($query);
             }
         }
+    }
+
+    private function sef_enable()
+    {
+        $res = ENABLE_SEF && !Controller_Admin::is_logged();
+        return $res;
     }
 
     private function revert_sef_url($sef_url, $suff = null, $pref = null)
@@ -205,12 +210,6 @@ Class Router
         return $url;
     }
 
-    private function sef_enable()
-    {
-        $res = ENABLE_SEF && !Controller_Admin::is_logged();
-        return $res;
-    }
-
     private function http_build_url($url, $parts = array(), $flags = null, &$new_url = false)
     {
         if (!function_exists('http_build_url')) {
@@ -218,7 +217,6 @@ Class Router
             if (is_null($flags)) $flags = HTTP_URL_REPLACE;
             $keys = ['user', 'pass', 'port', 'path', 'query', 'fragment'];
 
-            // HTTP_URL_STRIP_ALL becomes all the HTTP_URL_STRIP_Xs
             if ($flags & HTTP_URL_STRIP_ALL) {
                 $flags |= HTTP_URL_STRIP_USER;
                 $flags |= HTTP_URL_STRIP_PASS;
@@ -226,37 +224,28 @@ Class Router
                 $flags |= HTTP_URL_STRIP_PATH;
                 $flags |= HTTP_URL_STRIP_QUERY;
                 $flags |= HTTP_URL_STRIP_FRAGMENT;
-            } // HTTP_URL_STRIP_AUTH becomes HTTP_URL_STRIP_USER and HTTP_URL_STRIP_PASS
-            else if ($flags & HTTP_URL_STRIP_AUTH) {
+            } elseif ($flags & HTTP_URL_STRIP_AUTH) {
                 $flags |= HTTP_URL_STRIP_USER;
                 $flags |= HTTP_URL_STRIP_PASS;
             }
 
-            // Parse the original URL
             $parse_url = parse_url($url);
-
-            // Scheme and Host are always replaced
             if (isset($parts['scheme']))
                 $parse_url['scheme'] = $parts['scheme'];
             if (isset($parts['host']))
                 $parse_url['host'] = $parts['host'];
-
-            // (If applicable) Replace the original URL with it's new parts
             if ($flags & HTTP_URL_REPLACE) {
                 foreach ($keys as $key) {
                     if (isset($parts[$key]))
                         $parse_url[$key] = $parts[$key];
                 }
             } else {
-                // Join the original URL path with the new path
                 if (isset($parts['path']) && ($flags & HTTP_URL_JOIN_PATH)) {
                     if (isset($parse_url['path']))
                         $parse_url['path'] = rtrim(str_replace(basename($parse_url['path']), '', $parse_url['path']), '/') . '/' . ltrim($parts['path'], '/');
                     else
                         $parse_url['path'] = $parts['path'];
                 }
-
-                // Join the original query string with the new query string
                 if (isset($parts['query']) && ($flags & HTTP_URL_JOIN_QUERY)) {
                     if (isset($parse_url['query']))
                         $parse_url['query'] .= '&' . $parts['query'];
@@ -264,15 +253,10 @@ Class Router
                         $parse_url['query'] = $parts['query'];
                 }
             }
-
-            // Strips all the applicable sections of the URL
-            // Note: Scheme and Host are never stripped
             foreach ($keys as $key) {
                 if ($flags & (int)constant('HTTP_URL_STRIP_' . strtoupper($key)))
                     unset($parse_url[$key]);
             }
-
-
             $new_url = $parse_url;
 
             return

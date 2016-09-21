@@ -206,9 +206,9 @@ class Controller_Product extends Controller_Controller
         $data = Model_Product::getProductInfo($pid);
 
         ob_start();
-            $cimage = new Controller_Image($this->main);
-            $cimage->modify();
-            $m_images = ob_get_contents();
+        $cimage = new Controller_Image($this->main);
+        $cimage->modify();
+        $m_images = ob_get_contents();
         ob_end_clean();
 
         $this->main->template->vars('modify_images', $m_images);
@@ -286,7 +286,7 @@ class Controller_Product extends Controller_Controller
                 $this->template->vars('data', $data);
                 ob_start();
                 $cimage = new Controller_Image($this->main);
-                $cimage->modify_images();
+                $cimage->modify();
                 $m_images = ob_get_contents();
                 ob_end_clean();
 
@@ -320,9 +320,9 @@ class Controller_Product extends Controller_Controller
         $this->template->vars('data', $data);
 
         ob_start();
-            $cimage = new Controller_Image($this->main);
-            $cimage->modify();
-            $m_images = ob_get_contents();
+        $cimage = new Controller_Image($this->main);
+        $cimage->modify();
+        $m_images = ob_get_contents();
         ob_end_clean();
 
         $this->template->vars('modify_images', $m_images);
@@ -399,7 +399,7 @@ class Controller_Product extends Controller_Controller
 
                 ob_start();
                 $cimage = new Controller_Image($this->main);
-                $cimage->modify_images();
+                $cimage->modify();
                 $m_images = ob_get_contents();
                 ob_end_clean();
 
@@ -435,15 +435,12 @@ class Controller_Product extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
-        $prms = ['page' => '1'];
 
         $model->getNewproduct();
 
-        $pid = !is_null(_A_::$app->get('p_id')) ? _A_::$app->get('p_id') : NAN;
-        if(!is_nan($pid)){
-            $prms['p_id'] = _A_::$app->get('p_id');
-        }
-
+        $action_url = _A_::$app->router()->UrlTo('product/save', ['p_id' => _A_::$app->get('p_id')]);
+        $this->template->vars('action_url', $action_url);
+        $prms = ['page' => '1'];
         if (!empty(_A_::$app->get('page'))) {
             $prms['page'] = _A_::$app->get('page');
         }
@@ -462,7 +459,6 @@ class Controller_Product extends Controller_Controller
 
         $this->template->vars('back_url', $back_url);
         $this->template->vars('modify_images', $m_images);
-        $this->template->vars('action_url', _A_::$app->router()->UrlTo('product/save', $prms));
         $this->template->vars('data', $data);
         $this->main->view_admin('add');
     }

@@ -25,8 +25,8 @@ class Controller_Menu extends Controller_Controller
         $items = $model->get_items_for_menu('all');
         ob_start();
         foreach ($items as $item) {
-            $href = _A_::$app->router()->UrlTo('shop', ['cat' => $item['cid']]);
             $name = $item['cname'];
+            $href = _A_::$app->router()->UrlTo('shop', ['cat' => $item['cid']], $name);
             $this->template->vars('href', $href, true);
             $this->template->vars('name', $name, true);
             $this->template->view_layout('menu_item');
@@ -37,8 +37,8 @@ class Controller_Menu extends Controller_Controller
         $items = $model->get_items_for_menu('new');
         ob_start();
         foreach ($items as $item) {
-            $href = _A_::$app->router()->UrlTo('shop', ['cat', $item['cid']]);
             $name = $item['cname'];
+            $href = _A_::$app->router()->UrlTo('shop/last', ['cat' => $item['cid']], 'new ' . $name);
             $this->template->vars('href', $href, true);
             $this->template->vars('name', $name, true);
             $this->template->view_layout('menu_item');
@@ -49,8 +49,8 @@ class Controller_Menu extends Controller_Controller
         $items = $model->get_items_for_menu('manufacturer');
         ob_start();
         foreach ($items as $item) {
-            $href = _A_::$app->router()->UrlTo('shop', ['mnf' => $item['id']]);
             $name = $item['manufacturer'];
+            $href = _A_::$app->router()->UrlTo('shop', ['mnf' => $item['id']], $name);
             $this->template->vars('href', $href, true);
             $this->template->vars('name', $name, true);
             $this->template->view_layout('menu_item');
@@ -61,8 +61,8 @@ class Controller_Menu extends Controller_Controller
         $items = $model->get_items_for_menu('patterns');
         ob_start();
         foreach ($items as $item) {
-            $href = _A_::$app->router()->UrlTo('shop', ['ptrn' => $item['id']]);
             $name = $item['pattern'];
+            $href = _A_::$app->router()->UrlTo('shop', ['ptrn' => $item['id']], $name);
             $this->template->vars('href', $href, true);
             $this->template->vars('name', $name, true);
             $this->template->view_layout('menu_item');

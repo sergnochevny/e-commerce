@@ -12,7 +12,8 @@ Class Model_Router extends Model_Model
             $find_result = mysql_query($sql);
             if (!mysql_num_rows($find_result)) {
                 $sql = "INSERT INTO url_sef(url,sef) VALUES('" . $url . "', '" . mysql_escape_string($sef_url) . "')";
-                mysql_query($sql);
+                $res = mysql_query($sql);
+                if (!$res) $sef_url = $url;
                 break;
             } else {
                 $res = mysql_fetch_assoc($find_result);

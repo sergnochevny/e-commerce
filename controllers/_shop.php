@@ -138,6 +138,7 @@ class Controller_Shop extends Controller_Controller
             $category_name = $model->getCatName($cat_id);
         } else {
             if (!empty(_A_::$app->get('ptrn'))) {
+                $ptrn_name = $model->getPtrnName(_A_::$app->get('ptrn'));
                 $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
             } else {
                 if (!empty(_A_::$app->get('mnf'))) {
