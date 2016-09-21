@@ -207,7 +207,7 @@ class Controller_Product extends Controller_Controller
 
         ob_start();
         $cimage = new Controller_Image($this->main);
-        $cimage->modify_images();
+        $cimage->modify();
         $m_images = ob_get_contents();
         ob_end_clean();
 
@@ -286,7 +286,7 @@ class Controller_Product extends Controller_Controller
                 $this->template->vars('data', $data);
                 ob_start();
                 $cimage = new Controller_Image($this->main);
-                $cimage->modify_images();
+                $cimage->modify();
                 $m_images = ob_get_contents();
                 ob_end_clean();
 
@@ -322,7 +322,7 @@ class Controller_Product extends Controller_Controller
 
         ob_start();
         $cimage = new Controller_Image($this->main);
-        $cimage->modify_images();
+        $cimage->modify();
         $m_images = ob_get_contents();
         ob_end_clean();
 
@@ -400,7 +400,7 @@ class Controller_Product extends Controller_Controller
 
                 ob_start();
                 $cimage = new Controller_Image($this->main);
-                $cimage->modify_images();
+                $cimage->modify();
                 $m_images = ob_get_contents();
                 ob_end_clean();
 
@@ -455,7 +455,7 @@ class Controller_Product extends Controller_Controller
         $data = $model->getproductInfo();
         ob_start();
             $cimage = new Controller_Image($this->main);
-            $cimage->modify_images();
+            $cimage->modify();
             $m_images = ob_get_contents();
         ob_end_clean();
 
