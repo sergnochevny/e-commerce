@@ -5,7 +5,7 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <?php include('views/category/category_list.php') ?>
+                <?php include('views/categories/list.php') ?>
             </div>
         </div>
 

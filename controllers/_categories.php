@@ -20,14 +20,13 @@ class Controller_Categories extends Controller_Controller
     public function get_list()
     {
         $this->main->test_access_rights();
-        $model = new Model_Category();
         $categories = '';
-        $rows = $model->get_all();
+        $rows = Model_Category::get_all();
         foreach($rows as $row) {
             ob_start();
-            $this->template->vars('row', $row);
-            $this->template->view_layout('get_list');
-            $categories .= ob_get_contents();
+                $this->template->vars('row', $row);
+                $this->template->view_layout('get_list');
+                $categories .= ob_get_contents();
             ob_end_clean();
         }
         $this->template->vars('get_categories_list', $categories);
@@ -48,10 +47,9 @@ class Controller_Categories extends Controller_Controller
         $model = new Model_Category();
         $category_id = $model->validData(_A_::$app->get('category_id'));
         $this->display_order();
-        $category = $model->get_category($category_id);
+        $category = Model_Category::get_category($category_id);
         $this->template->vars('data', $category);
-        $back_url = _A_::$app->router()->UrlTo('categories');
-        $this->template->vars('back_url', $back_url);
+        $this->template->vars('back_url', _A_::$app->router()->UrlTo('categories'));
         $this->main->view_admin('edit');
     }
 
@@ -73,9 +71,9 @@ class Controller_Categories extends Controller_Controller
         $this->main->test_access_rights();
         $model = new Model_Category();
         $category_id = $model->validData(_A_::$app->get('category_id'));
-        $category = $model->get_category($category_id);
+        $category = Model_Category::get_category($category_id);
         $this->template->vars('displayorder', $category['displayorder']);
-        $rows = $model->get_all(['order' => ' ORDER BY displayorder ASC ']);
+        $rows = Model_Category::get_all(['order' => ' ORDER BY displayorder ASC ']);
         ob_start();
         foreach ($rows as $row) {
             $this->template->vars('row', $row);
@@ -90,7 +88,7 @@ class Controller_Categories extends Controller_Controller
     {
         $this->main->test_access_rights();
         $model = new Model_Category();
-        $rows = $model->get_all(['order' => ' ORDER BY displayorder ASC ']);
+        $rows = Model_Category::get_all(['order' => ' ORDER BY displayorder ASC ']);
         ob_start();
         foreach ($rows as $row) {
             $this->template->vars('row', $row);

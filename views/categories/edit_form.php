@@ -1,13 +1,16 @@
 <form id="category_edit_form" action="<?= _A_::$app->router()->UrlTo('categories/save_data',['category_id' => _A_::$app->get('category_id')]) ?>"  method="post">
-    <small style="color: black; font-size: 10px;">
-        Use this form to update the title and details of the offer.<br />
-        NOTE: the title cannot be more than 28 characters.
-    </small>
+    <p class="text-center">
+        <small style="color: black; font-size: 13px;">
+            Use this form to update the title and details of the offer.<br />
+        </small>
+    </p>
+    <hr>
     <div class="col-1">
         <p class="form-row">
             <label class="required_field"><strong>Category:</strong></label>
             <input type="text" name="category" value="<?=$data['cname']?>"
                    class="input-text ">
+            <small style="color: #999">NOTE: the title cannot be more than 28 characters.</small>
         </p>
         <p class="form-row">
             <label><strong>Display order:</strong></label>
@@ -23,27 +26,30 @@
         </p>
 
         <p class="form-row">
-            <label><strong>List as a Style:</strong></label>
-            <?php
-                if($data['isStyle']=="1"){
-                    echo '<input type="checkbox" name="ListStyle" checked="checked" value="1" class="input-checkbox">';
-                }
-                else{
-                    echo '<input type="checkbox" name="ListStyle" value="1" class="input-checkbox">';
-                }
-            ?>
-
+            <label>
+                <strong>List as a Style:</strong>
+                <?php
+                    if($data['isStyle']=="1"){
+                        echo '<input type="checkbox" name="ListStyle" checked="checked" value="1" class="input-checkbox">';
+                    }
+                    else{
+                        echo '<input type="checkbox" name="ListStyle" value="1" class="input-checkbox">';
+                    }
+                ?>
+            </label>
         </p>
         <p class="form-row">
-            <label><strong>List as a New Item:</strong></label>
-            <?php
-                if($data['isNew']=="1"){
-                    echo '<input type="checkbox" name="ListNewItem" checked="checked" value="1" class="input-checkbox">';
-                }
-                else{
-                    echo '<input type="checkbox" name="ListNewItem" value="1" class="input-checkbox">';
-                }
-            ?>
+            <label>
+                <strong>List as a New Item:</strong>
+                <?php
+                    if($data['isNew']=="1"){
+                        echo '<input type="checkbox" name="ListNewItem" checked="checked" value="1" class="input-checkbox">';
+                    }
+                    else{
+                        echo '<input type="checkbox" name="ListNewItem" value="1" class="input-checkbox">';
+                    }
+                ?>
+            </label>
         </p>
 
         <!--col-2-->

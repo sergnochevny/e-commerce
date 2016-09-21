@@ -3,7 +3,7 @@
 Class Model_Category extends Model_Model
 {
 
-    function get_all($prms = null)
+    public static function get_all($prms = null)
     {
         $q = "select * from fabrix_categories";
         if (isset($prms)) {
@@ -44,10 +44,10 @@ Class Model_Category extends Model_Model
         }
     }
 
-    public function get_category($id)
+    public static function get_category($id)
     {
         $row = null;
-        $resul = mysql_query("select * from fabrix_categories WHERE cid='$id'");
+        $resul = mysql_query("select * from fabrix_categories WHERE cid='$id' LIMIT 1");
         if ($resul) {
             $row = mysql_fetch_array($resul);
         }

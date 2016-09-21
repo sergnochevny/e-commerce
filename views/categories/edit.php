@@ -9,7 +9,7 @@
                 <br/>
                 <h1 class="page-title">MODIFY CATEGORY</h1>
                 <div id="customer_details" style="margin: auto; width: 600px;">
-                    <div id="category_form"><?php include('views/category/edit_category_form.php') ?></div>
+                    <div id="category_form"><?php include('views/categories/edit_form.php') ?></div>
                 </div>
             </div>
         </div>

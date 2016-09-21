@@ -17,12 +17,12 @@
     <table class="table table-striped table-bordered">
 		<thead>
             <tr>
-                <th>Category</th>
-                <th>SEO Name</th>
-                <th>Display Order</th>
-                <th>List as Style</th>
-                <th>List as New</th>
-                <th>Actions</th>
+                <th class="text-left">Category</th>
+                <th class="text-center">SEO Name</th>
+                <th class="text-center">Display Order</th>
+                <th class="text-center">List as Style</th>
+                <th class="text-center">List as New</th>
+                <th></th>
             </tr>
 		</thead>
 		<tbody><?= $get_categories_list; ?></tbody>

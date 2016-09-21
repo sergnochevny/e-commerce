@@ -3,21 +3,21 @@
 ?>
 
 <?=
-'<tr>
-    <td><div class="text-center">'. $row[1] .'</div></td>
-    <td>'.$row[2].'</td>
-    <td><div class="text-center">'.$row[3].'</div></td>
-    <td><div class="text-center">'.$row[4].'</div></td>
-    <td><div class="text-center">'.$row[5].'</div></td>
-    <td>
-        <div class="text-center">
-        <figcaption>
-            <a href="'._A_::$app->router()->UrlTo('edit_categories', $opt).'" class=""><i class="fa fa-pencil"></i></a>
-            <a href="'._A_::$app->router()->UrlTo('del_categories', $opt).'" id="del_category" rel="nofollow" class="text-danger">
-                <i class=" fa fa-trash-o"></i>
-            </a>
-        </figcaption>'.
-        '</div>
-    </td>
-</tr>';
+    '<tr>
+        <td><div class="text-left">'. $row[1] .'</div></td>
+        <td><div class="text-center">'.$row[2].'</div></td>
+        <td><div class="text-center">'.$row[3].'</div></td>
+        <td><div class="text-center">'.$row[4].'</div></td>
+        <td><div class="text-center">'.$row[5].'</div></td>
+        <td>
+            <div class="text-center">
+                <figcaption>
+                    <a href="'._A_::$app->router()->UrlTo('categories/edit', $opt).'" class=""><i class="fa fa-pencil"></i></a>
+                    <a href="'._A_::$app->router()->UrlTo('categories/del', $opt).'" id="del_category" rel="nofollow" class="text-danger">
+                        <i class=" fa fa-trash-o"></i>
+                    </a>
+                </figcaption>'.
+            '</div>
+        </td>
+    </tr>';
 ?>
