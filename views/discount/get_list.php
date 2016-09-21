@@ -1,16 +1,16 @@
 <?php
-    $opt['discount_id'] = $row[0];
+    $opt['discount_id'] = $row['sid'];
 
-    $row[12] = gmdate("F j, Y, g:i a", $row[12]);
-    $row[13] = gmdate("F j, Y, g:i a", $row[13]);
+    $row['date_start'] = gmdate("F j, Y, g:i a", $row['date_start']);
+    $row['date_end'] = gmdate("F j, Y, g:i a", $row['date_end']);
 ?>
 <tr>
-    <td><b><?= $row[2];?>% off </b><?= $row[17];?></td>
-    <td><div class="text-center"><?= $row[14];?></div></td>
-    <td><div class="text-center"><?= $row[11];?></div></td>
-    <td><div class="text-center"><?= !empty($row[1]) ? $row[1] : 'N/A'; ?></div></td>
-    <td><?= $row[12];?></td>
-    <td><div class="text-center"><?= $row[13];?></div></td>
+    <td><b><?= $row['discount_amount'];?>% off </b><?= $row['discount_comment1'];?></td>
+    <td><div class="text-center"><?= $row['enabled'];?></div></td>
+    <td><div class="text-center"><?= $row['allow_multiple'];?></div></td>
+    <td><div class="text-center"><?= !empty($row['coupon_code']) ? $row['coupon_code'] : 'N/A'; ?></div></td>
+    <td><?= $row['date_start'];?></td>
+    <td><div class="text-center"><?= $row['date_end'];?></div></td>
     <td>
         <div class="text-center">
             <a rel="nofollow" href="<?= _A_::$app->router()->UrlTo('edit_discounts', $opt); ?>">
