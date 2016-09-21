@@ -1377,3 +1377,53 @@ td.product-subtotal{
     font-size: large!important;
     font-weight: bold;
 }
+
+.prod_sel_category_panel{
+    border-color: #999;
+    box-shadow: inset 0 0 3px #b4b4b4;
+}
+.prod_sel_category_panel .panel-body{
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.prod_sel_category_panel .panel-footer{
+    background-color: #fff;
+    padding-left: 0;
+    padding-right: 0;
+}
+.prod_sel_category{
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+    margin-bottom: 0;
+}
+.prod_sel_category_item{
+    position: relative;
+}
+.prod_sel_category_item:not(:first-child){
+    padding-top: 5px;
+}
+.prod_sel_category_item:not(:last-child){
+    border-bottom: 1px solid #EEE;
+    padding-bottom: 5px;
+}
+.prod_sel_category_item:last-child{
+    margin-bottom: -10px;
+}
+.prod_sel_category_item .prod_sel_category_item_lab{
+    vertical-align: -22px;
+}
+.prod_sel_category_item:not(:first-child) > .rem_cat{
+    top: 9px;
+}
+.prod_sel_category_item > .rem_cat{
+    position: absolute;
+    right: 0;
+    color: red;
+    top: 3px;
+    cursor: pointer;
+}
+.prod_sel_category_item > input{
+    display: inline-block;
+
+}
