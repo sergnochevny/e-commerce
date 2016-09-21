@@ -1,10 +1,14 @@
 'use strict';
 (function($){
     var btnUpload = $('#upload'),
-        status1 = $('#status');
+        status1 = $('#status'),
+        danger = $('.danger');
 
-    $('.danger').css('display','block');
-    $('html, body').stop().animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
+    if(danger.length){
+        danger.css('display','block');
+        $('html, body').stop().animate({scrollTop: parseInt(danger.offset().top) - 250 }, 1000);
+    }
+
     setTimeout(function(){
         $('.danger').css('display','none');
     },8000);
