@@ -2,7 +2,7 @@
     <div style="background-image: url('<?= $post_img; ?>');" class="just-post-image just-post-image-admin">
         <a id="del_post"
            href="<?= $post_del_href; ?>" rel="nofollow"
-           data-post_id="<?= $post_id; ?>" data-product_sku="" data-quantity="1"
+           data-post_id="<?= $post_id ; ?>" data-product_sku="" data-quantity="1"
            class="button icon-delete add_to_cart_button   post_type_simple"></a>
         <a id="edit_post" href="<?= $post_edit_href; ?>"
            class="button product-button icon-modify"></a>
