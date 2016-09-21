@@ -450,7 +450,7 @@ class Controller_Product extends Controller_Controller
 
         $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
 
-        $data = Model_Product::getProductInfo($pid);
+        $data = Model_Product::getProductInfo(_A_::$app->get('p_id'));
         ob_start();
             $cimage = new Controller_Image($this->main);
             $cimage->modify();
