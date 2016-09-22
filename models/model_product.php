@@ -3,6 +3,22 @@
 Class Model_Product extends Model_Model
 {
 
+    public static function getProductBuildCategories($build_categories, $categories)
+    {
+        $_categories = implode(',', $categories);
+        $categories = [];
+        $q = "select a.cid, b.cname, max(a.display_order)+1 " .
+            "from fabrix_product_categories a " .
+            "left join fabrix_categories b on b.cid = a.cid " .
+            "where a.cid in ($_categories) " .
+            "group by a.cid, b.cname";
+        $result = mysql_query($q);
+        while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
+            $categories[$row[0]] = [isset($build_categories[$row[0]]) ? $build_categories[$row[0]] : $row[2], $row[1]];
+        };
+        return $categories;
+    }
+
     public static function getProductInfo($pid)
     {
         $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$pid' LIMIT 1");
@@ -97,7 +113,7 @@ Class Model_Product extends Model_Model
         }
         $results = mysql_query("select * from fabrix_categories");
         while ($row = mysql_fetch_array($results)) {
-            $sl_cat .= '<li><label><input type="checkbox" value="' . $row[0] . '" ' . (in_array($row[0], $post_categori) ? 'checked' : '') . '>' . $row[1] . '</label></li>';
+            $sl_cat .= '<li><label><input name="category[]" type="checkbox" value="' . $row[0] . '" ' . (in_array($row[0], $post_categori) ? 'checked' : '') . '>' . $row[1] . '</label></li>';
         }
 
         if (empty($post_manufacturer{0})) {

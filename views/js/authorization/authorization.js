@@ -15,7 +15,7 @@
                 var results = $('.results');
                 results.html(data);
 
-                if (data.trim().length > 0) {
+                if (data.trim().length) {
                     setTimeout(function () {
                         results.html('');
                     }, 3000);

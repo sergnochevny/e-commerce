@@ -7,15 +7,14 @@ class Controller_Product extends Controller_Controller
     {
         $model = new Model_Product();
         $samples_model = new Model_Samples();
-        $p_id = $model->validData(_A_::$app->get('p_id'));
-        $data = $model->getPrName($p_id);
+        $pid = $model->validData(_A_::$app->get('p_id'));
+        $data = $model->getPrName($pid);
 
         $matches = new Controller_Matches($this->main);
-        if ($matches->product_in($p_id)) $this->template->vars('in_matches', '1');
+        if ($matches->product_in($pid)) $this->template->vars('in_matches', '1');
 
         $this->template->vars('data', $data);
         $priceyard = $data['priceyard'];
-        $pid = $p_id;
         $aPrds = [];
         $aPrds[] = $pid;    #add product id
         $aPrds[] = 1;        #add qty
@@ -136,7 +135,7 @@ class Controller_Product extends Controller_Controller
             $cart_items = [];
         }
         $cart = array_keys($cart_items);
-        $in_cart = in_array($p_id, $cart);
+        $in_cart = in_array($pid, $cart);
         if ($in_cart) $this->template->vars('in_cart', '1');
 
         $url_prms = ['page' => '1'];
@@ -181,148 +180,154 @@ class Controller_Product extends Controller_Controller
         $this->main->view('product');
     }
 
-    function edit()
+    public function edit()
     {
         $this->main->test_access_rights();
 
-        $prms = null;
-        $pid = _A_::$app->get('p_id');
-        if (!is_null(_A_::$app->get('p_id'))) {
-            $prms['p_id'] = _A_::$app->get('p_id');
-        }
-        $action_url = _A_::$app->router()->UrlTo('product/save_edit', $prms);
-        $this->template->vars('action_url', $action_url);
-        $prms = ['page' => '1'];
-        if (!empty(_A_::$app->get('page'))) {
-            $prms['page'] = _A_::$app->get('page');
-        }
-        if (!empty(_A_::$app->get('cat'))) {
-            $prms['cat'] = _A_::$app->get('cat');
-        }
-        $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
-        $this->template->vars('back_url', $back_url);
-
-        $data = Model_Product::getProductInfo($pid);
-        ob_start();
-        foreach ($data['categories'] as $cat_id=>$category){
-            $this->template->vars('cat_id', $cat_id);
-            $this->template->vars('category', $category);
-            $this->template->view_layout('block_category');
-        }
-        $categories = ob_get_contents();
-        ob_end_clean();
-        $data['categories'] = $categories;
-        ob_start();
-        $cimage = new Controller_Image($this->main);
-        $cimage->modify();
-        $m_images = ob_get_contents();
-        ob_end_clean();
-
-        $this->main->template->vars('modify_images', $m_images);
-        $this->main->template->vars('data', $data);
-        $this->main->view_admin('edit');
-    }
-
-    function save_edit()
-    {
-        $this->main->test_access_rights();
-        $model = new Model_Product();
-
-        $action_url = _A_::$app->router()->UrlTo('product/save_edit', ['p_id' => _A_::$app->get('p_id')]);
-        $this->template->vars('action_url', $action_url);
-
-        if (!empty(_A_::$app->get('p_id'))) {
-            include('include/post_edit_db.php');
-
-            if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
-
-                $error = [];
-                if (empty($post_product_num{0})) $error[] = 'Identify Product Number field !';
-                if (empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
-                if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
-                $this->template->vars('error', $error);
-
-                $cats = Model_Product::getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
-                $sl_cat = $cats['sl_cat'];
-                $sl_cat2 = $cats['sl_cat2'];
-                $sl_cat3 = $cats['sl_cat3'];
-                $sl_cat4 = $cats['sl_cat4'];
-
-                $data = array(
-                    'weight_id' => $post_weight_cat,
-                    'sd_cat' => $sl_cat,
-                    'pvisible' => $post_vis,
-                    'metadescription' => $post_desc,
-                    'p_id' => $p_id,
-                    'Meta_Description' => $post_desc,
-                    'Meta_Keywords' => $post_mkey,
-                    'Product_name' => $post_tp_name,
-                    'Product_number' => $post_product_num,
-                    'Width' => $post_width,
-                    'Price_Yard' => $post_p_yard,
-                    'Stock_number' => $post_st_nom,
-                    'Dimensions' => $post_dimens,
-                    'Current_inventory' => $post_curret_in,
-                    'Specials' => $post_special,
-                    'Weight' => $post_weight_cat,
-                    'Manufacturer' => $sl_cat2,
-                    'New_Manufacturer' => $New_Manufacturer,
-                    'Colours' => $sl_cat3,
-                    'New_Colour' => $post_new_color,
-                    'Pattern_Type' => $sl_cat4,
-                    'New_Pattern' => $pattern_type,
-                    'Short_description' => $post_short_desk,
-                    'Long_description' => $post_Long_description,
-                    'Related_fabric_1' => $post_fabric_1,
-                    'Related_fabric_2' => $post_fabric_2,
-                    'Related_fabric_3' => $post_fabric_3,
-                    'Related_fabric_4' => $post_fabric_4,
-                    'Related_fabric_5' => $post_fabric_5,
-                    'Position_in_Brunschwig' => 'test',
-                    'Position_in_Modern' => 'test',
-                    'Position_in_Designer' => 'test',
-                    'Position_in_Stripe' => 'test',
-                    'Position_in_Just_Arrived' => 'test',
-                    'visible' => $post_hide_prise,
-                    'best' => $best,
-                    'piece' => $piece,
-                    'whole' => $whole
-
-                );
-
-                $this->template->vars('data', $data);
-                ob_start();
-                $cimage = new Controller_Image($this->main);
-                $cimage->modify();
-                $m_images = ob_get_contents();
-                ob_end_clean();
-
-                $this->template->vars('modify_images', $m_images);
-                $this->main->view_layout('edit_form');
-            } else {
-                $result = $model->save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
-                    $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
-                    $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3,
-                    $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
-                    $post_short_desk, $best, $piece, $whole);
-
-                if ($result) {
-                    $this->template->vars('warning', ["Product Data saved successfully!"]);
+        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
+            $model = new Model_Product();
+            if (!empty(_A_::$app->get('p_id'))) {
+                include('include/post_edit_db.php');
+                if (!is_null(_A_::$app->post('build_categories'))) {
+                    $pid = _A_::$app->get('p_id');
+                    $build_categories = _A_::$app->post('categories');
+                    $categories = _A_::$app->post('category');
+                    $data = Model_Product::getProductBuildCategories($build_categories, $categories);
+                    foreach ($data as $cat_id => $category) {
+                        $this->template->vars('cat_id', $cat_id);
+                        $this->template->vars('category', $category);
+                        $this->template->view_layout('block_category');
+                    }
                 } else {
-                    $this->template->vars('error', [mysql_error()]);
-                };
+                    $action_url = _A_::$app->router()->UrlTo('product/edit', ['p_id' => _A_::$app->get('p_id')]);
+                    $this->template->vars('action_url', $action_url);
+
+                    if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
+
+                        $error = [];
+                        if (empty($post_product_num{0})) $error[] = 'Identify Product Number field !';
+                        if (empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
+                        if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
+                        $this->template->vars('error', $error);
+
+                        $cats = Model_Product::getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
+                        $sl_cat = $cats['sl_cat'];
+                        $sl_cat2 = $cats['sl_cat2'];
+                        $sl_cat3 = $cats['sl_cat3'];
+                        $sl_cat4 = $cats['sl_cat4'];
+
+                        $data = array(
+                            'weight_id' => $post_weight_cat,
+                            'sd_cat' => $sl_cat,
+                            'pvisible' => $post_vis,
+                            'metadescription' => $post_desc,
+                            'p_id' => $p_id,
+                            'Meta_Description' => $post_desc,
+                            'Meta_Keywords' => $post_mkey,
+                            'Product_name' => $post_tp_name,
+                            'Product_number' => $post_product_num,
+                            'Width' => $post_width,
+                            'Price_Yard' => $post_p_yard,
+                            'Stock_number' => $post_st_nom,
+                            'Dimensions' => $post_dimens,
+                            'Current_inventory' => $post_curret_in,
+                            'Specials' => $post_special,
+                            'Weight' => $post_weight_cat,
+                            'Manufacturer' => $sl_cat2,
+                            'New_Manufacturer' => $New_Manufacturer,
+                            'Colours' => $sl_cat3,
+                            'New_Colour' => $post_new_color,
+                            'Pattern_Type' => $sl_cat4,
+                            'New_Pattern' => $pattern_type,
+                            'Short_description' => $post_short_desk,
+                            'Long_description' => $post_Long_description,
+                            'Related_fabric_1' => $post_fabric_1,
+                            'Related_fabric_2' => $post_fabric_2,
+                            'Related_fabric_3' => $post_fabric_3,
+                            'Related_fabric_4' => $post_fabric_4,
+                            'Related_fabric_5' => $post_fabric_5,
+                            'Position_in_Brunschwig' => 'test',
+                            'Position_in_Modern' => 'test',
+                            'Position_in_Designer' => 'test',
+                            'Position_in_Stripe' => 'test',
+                            'Position_in_Just_Arrived' => 'test',
+                            'visible' => $post_hide_prise,
+                            'best' => $best,
+                            'piece' => $piece,
+                            'whole' => $whole
+
+                        );
+
+                        $this->template->vars('data', $data);
+                        ob_start();
+                        $cimage = new Controller_Image($this->main);
+                        $cimage->modify();
+                        $m_images = ob_get_contents();
+                        ob_end_clean();
+
+                        $this->template->vars('modify_images', $m_images);
+                        $this->main->view_layout('edit_form');
+                    } else {
+                        $result = $model->save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
+                            $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
+                            $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3,
+                            $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
+                            $post_short_desk, $best, $piece, $whole);
+
+                        if ($result) {
+                            $this->template->vars('warning', ["Product Data saved successfully!"]);
+                        } else {
+                            $this->template->vars('error', [mysql_error()]);
+                        };
+                        $this->edit_form();
+                    }
+                }
+            } else {
+                $this->template->vars('error', ["Error! Not product id identity"]);
                 $this->edit_form();
             }
         } else {
-            $this->template->vars('error', "Error!");
-            $this->edit_form();
+            $prms = null;
+            $pid = _A_::$app->get('p_id');
+            if (!is_null(_A_::$app->get('p_id'))) {
+                $prms['p_id'] = _A_::$app->get('p_id');
+            }
+            $action_url = _A_::$app->router()->UrlTo('product/edit', $prms);
+            $this->template->vars('action_url', $action_url);
+            $prms = ['page' => '1'];
+            if (!empty(_A_::$app->get('page'))) {
+                $prms['page'] = _A_::$app->get('page');
+            }
+            if (!empty(_A_::$app->get('cat'))) {
+                $prms['cat'] = _A_::$app->get('cat');
+            }
+            $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
+            $this->template->vars('back_url', $back_url);
+
+            $data = Model_Product::getProductInfo($pid);
+            ob_start();
+            foreach ($data['categories'] as $cat_id => $category) {
+                $this->template->vars('cat_id', $cat_id);
+                $this->template->vars('category', $category);
+                $this->template->view_layout('block_category');
+            }
+            $categories = ob_get_contents();
+            ob_end_clean();
+            $data['categories'] = $categories;
+            ob_start();
+            $cimage = new Controller_Image($this->main);
+            $cimage->modify();
+            $m_images = ob_get_contents();
+            ob_end_clean();
+
+            $this->main->template->vars('modify_images', $m_images);
+            $this->main->template->vars('data', $data);
+            $this->main->view_admin('edit');
         }
     }
 
-    function edit_form()
+    private function edit_form()
     {
-        $this->main->test_access_rights();
-
         $data = Model_Product::getProductInfo(_A_::$app->get('p_id'));
         $this->template->vars('data', $data);
 
@@ -336,141 +341,133 @@ class Controller_Product extends Controller_Controller
         $this->main->view_layout('edit_form');
     }
 
-    function save()
-    {
-        $this->main->test_access_rights();
-        $model = new Model_Product();
-        $prms = !is_null(_A_::$app->get('p_id')) ? ['p_id' => _A_::$app->get('p_id')] : null;
-        $action_url = _A_::$app->router()->UrlTo('product/save', $prms);
-        $this->template->vars('action_url', $action_url);
-
-        if (!empty(_A_::$app->get('p_id'))) {
-            include('include/post_edit_db.php');
-
-            if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
-
-                $error = [];
-                if (empty($post_product_num{0})) $error[] = 'Identify Product Number field !';
-                if (empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
-                if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
-                $this->template->vars('error', $error);
-
-                $cats = Model_Product::getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
-                $sl_cat = $cats['sl_cat'];
-                $sl_cat2 = $cats['sl_cat2'];
-                $sl_cat3 = $cats['sl_cat3'];
-                $sl_cat4 = $cats['sl_cat4'];
-
-                $data = array(
-                    'weight_id' => $post_weight_cat,
-                    'sd_cat' => $sl_cat,
-                    'pvisible' => $post_vis,
-                    'metadescription' => $post_desc,
-                    'p_id' => $p_id,
-                    'Meta_Description' => $post_desc,
-                    'Meta_Keywords' => $post_mkey,
-                    'Product_name' => $post_tp_name,
-                    'Product_number' => $post_product_num,
-                    'Width' => $post_width,
-                    'Price_Yard' => $post_p_yard,
-                    'Stock_number' => $post_st_nom,
-                    'Dimensions' => $post_dimens,
-                    'Current_inventory' => $post_curret_in,
-                    'Specials' => $post_special,
-                    'Weight' => $post_weight_cat,
-                    'Manufacturer' => $sl_cat2,
-                    'New_Manufacturer' => $New_Manufacturer,
-                    'Colours' => $sl_cat3,
-                    'New_Colour' => $post_new_color,
-                    'Pattern_Type' => $sl_cat4,
-                    'New_Pattern' => $pattern_type,
-                    'Short_description' => $post_short_desk,
-                    'Long_description' => $post_Long_description,
-                    'Related_fabric_1' => $post_fabric_1,
-                    'Related_fabric_2' => $post_fabric_2,
-                    'Related_fabric_3' => $post_fabric_3,
-                    'Related_fabric_4' => $post_fabric_4,
-                    'Related_fabric_5' => $post_fabric_5,
-                    'Position_in_Brunschwig' => 'test',
-                    'Position_in_Modern' => 'test',
-                    'Position_in_Designer' => 'test',
-                    'Position_in_Stripe' => 'test',
-                    'Position_in_Just_Arrived' => 'test',
-                    'visible' => $post_hide_prise,
-                    'best' => $best,
-                    'piece' => $piece,
-                    'whole' => $whole
-                );
-
-                $this->template->vars('data', $data);
-
-                ob_start();
-                $cimage = new Controller_Image($this->main);
-                $cimage->modify();
-                $m_images = ob_get_contents();
-                ob_end_clean();
-
-                $this->template->vars('modify_images', $m_images);
-
-                $this->main->view_layout('edit_form');
-            } else {
-
-                $result = $model->save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
-                    $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
-                    $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3,
-                    $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
-                    $post_short_desk, $best, $piece, $whole);
-
-                if ($result && $model->ConfirmProductInsert($p_id)) {
-                    $this->template->vars('warning', ["Product Data saved successfully!"]);
-                } else {
-                    $this->template->vars('error', [mysql_error()]);
-                };
-
-                $model->getNewproduct();
-                $action_url = _A_::$app->router()->UrlTo('product/save', ['p_id' => _A_::$app->get('p_id')]);
-                $this->template->vars('action_url', $action_url);
-                $this->edit_form();
-            }
-        } else {
-            $this->template->vars('error', "Error!");
-            $this->edit_form();
-        }
-    }
-
     function add()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();
+        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
 
-        $model->getNewproduct();
+            $prms = !is_null(_A_::$app->get('p_id')) ? ['p_id' => _A_::$app->get('p_id')] : null;
+            $action_url = _A_::$app->router()->UrlTo('product/add', $prms);
+            $this->template->vars('action_url', $action_url);
 
-        $action_url = _A_::$app->router()->UrlTo('product/save', ['p_id' => _A_::$app->get('p_id')]);
-        $this->template->vars('action_url', $action_url);
-        $prms = ['page' => '1'];
-        if (!empty(_A_::$app->get('page'))) {
-            $prms['page'] = _A_::$app->get('page');
-        }
-        if (!empty(_A_::$app->get('cat'))) {
-            $prms['cat'] = _A_::$app->get('cat');
-        }
+            if (!empty(_A_::$app->get('p_id'))) {
+                include('include/post_edit_db.php');
 
-        $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
+                if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
 
-        $data = Model_Product::getProductInfo(_A_::$app->get('p_id'));
-        ob_start();
+                    $error = [];
+                    if (empty($post_product_num{0})) $error[] = 'Identify Product Number field !';
+                    if (empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
+                    if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
+                    $this->template->vars('error', $error);
+
+                    $cats = Model_Product::getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
+                    $sl_cat = $cats['sl_cat'];
+                    $sl_cat2 = $cats['sl_cat2'];
+                    $sl_cat3 = $cats['sl_cat3'];
+                    $sl_cat4 = $cats['sl_cat4'];
+
+                    $data = array(
+                        'weight_id' => $post_weight_cat,
+                        'sd_cat' => $sl_cat,
+                        'pvisible' => $post_vis,
+                        'metadescription' => $post_desc,
+                        'p_id' => $p_id,
+                        'Meta_Description' => $post_desc,
+                        'Meta_Keywords' => $post_mkey,
+                        'Product_name' => $post_tp_name,
+                        'Product_number' => $post_product_num,
+                        'Width' => $post_width,
+                        'Price_Yard' => $post_p_yard,
+                        'Stock_number' => $post_st_nom,
+                        'Dimensions' => $post_dimens,
+                        'Current_inventory' => $post_curret_in,
+                        'Specials' => $post_special,
+                        'Weight' => $post_weight_cat,
+                        'Manufacturer' => $sl_cat2,
+                        'New_Manufacturer' => $New_Manufacturer,
+                        'Colours' => $sl_cat3,
+                        'New_Colour' => $post_new_color,
+                        'Pattern_Type' => $sl_cat4,
+                        'New_Pattern' => $pattern_type,
+                        'Short_description' => $post_short_desk,
+                        'Long_description' => $post_Long_description,
+                        'Related_fabric_1' => $post_fabric_1,
+                        'Related_fabric_2' => $post_fabric_2,
+                        'Related_fabric_3' => $post_fabric_3,
+                        'Related_fabric_4' => $post_fabric_4,
+                        'Related_fabric_5' => $post_fabric_5,
+                        'visible' => $post_hide_prise,
+                        'best' => $best,
+                        'piece' => $piece,
+                        'whole' => $whole
+                    );
+
+                    $this->template->vars('data', $data);
+
+                    ob_start();
+                    $cimage = new Controller_Image($this->main);
+                    $cimage->modify();
+                    $m_images = ob_get_contents();
+                    ob_end_clean();
+
+                    $this->template->vars('modify_images', $m_images);
+
+                    $this->main->view_layout('edit_form');
+                } else {
+
+                    $result = $model->save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
+                        $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
+                        $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3,
+                        $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
+                        $post_short_desk, $best, $piece, $whole);
+
+                    if ($result && $model->ConfirmProductInsert($p_id)) {
+                        $this->template->vars('warning', ["Product Data saved successfully!"]);
+                    } else {
+                        $this->template->vars('error', [mysql_error()]);
+                    };
+
+                    $model->getNewproduct();
+                    $action_url = _A_::$app->router()->UrlTo('product/save', ['p_id' => _A_::$app->get('p_id')]);
+                    $this->template->vars('action_url', $action_url);
+                    $this->edit_form();
+                }
+            } else {
+                $this->template->vars('error', "Error!");
+                $this->edit_form();
+            }
+        } else {
+            $model->getNewproduct();
+
+            $action_url = _A_::$app->router()->UrlTo('product/add', ['p_id' => _A_::$app->get('p_id')]);
+            $this->template->vars('action_url', $action_url);
+            $prms = ['page' => '1'];
+            if (!empty(_A_::$app->get('page'))) {
+                $prms['page'] = _A_::$app->get('page');
+            }
+            if (!empty(_A_::$app->get('cat'))) {
+                $prms['cat'] = _A_::$app->get('cat');
+            }
+
+            $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
+
+            $data = Model_Product::getProductInfo(_A_::$app->get('p_id'));
+            ob_start();
             $cimage = new Controller_Image($this->main);
             $cimage->modify();
             $m_images = ob_get_contents();
-        ob_end_clean();
+            ob_end_clean();
 
-        $this->template->vars('back_url', $back_url);
-        $this->template->vars('modify_images', $m_images);
-        $this->template->vars('data', $data);
-        $this->main->view_admin('add');
+            $this->template->vars('back_url', $back_url);
+            $this->template->vars('modify_images', $m_images);
+            $this->template->vars('data', $data);
+            $this->main->view_admin('add');
+        }
     }
 
-    function del()
+    public function del()
     {
         $this->main->test_access_rights();
         $model = new Model_Product();

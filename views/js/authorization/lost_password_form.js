@@ -3,6 +3,7 @@
 (function ($) {
 
     if ($('.danger').length) {
+        $('.danger').stop().show();
         setTimeout(
             function () {
                 $('.danger').remove();

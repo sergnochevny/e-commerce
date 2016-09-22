@@ -165,7 +165,7 @@ class Controller_Authorization extends Controller_Controller
                                             $muser->update_password($hash, $user_id);
                                             $muser->clean_remind($user_id);
                                             $message = 'Congratulattions. Your Password has been changed succesfully!!!<br>';
-                                            $message .= 'Now you can go to the <a href="' . _A_::$app->router()->UrlTo('user') . '">login form</a> and use it.';
+                                            $message .= 'Now you can go to the <a href="' . _A_::$app->router()->UrlTo('authorization') . '">login form</a> and use it.';
                                             $this->main->template->vars('message', $message);
                                             $this->main->view_layout('msg_span');
                                             exit();
@@ -251,7 +251,7 @@ class Controller_Authorization extends Controller_Controller
                     if (!is_null(_A_::$app->get('url'))) {
                         $prms['url'] = _A_::$app->get('url');
                     }
-                    $back_url = _A_::$app->router()->UrlTo('user', $prms);
+                    $back_url = _A_::$app->router()->UrlTo('authorization', $prms);
                     $this->main->template->vars('action', $action);
                     $this->main->template->vars('back_url', $back_url);
                     $this->main->view('lost_password');

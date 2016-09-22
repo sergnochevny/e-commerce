@@ -1413,7 +1413,7 @@ td.product-subtotal{
     display: inline-block;
 
 }
-.categories ul{
+.modal ul.categories{
     list-style: none;
 }
 

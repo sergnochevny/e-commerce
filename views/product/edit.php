@@ -4,6 +4,8 @@
 <script type="text/javascript" src="<?= _A_::$app->router()->UrlTo('upload/js/ajaxupload.3.5.js');?>"></script>
 <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css');?>' type='text/css' media='all'/>
 <link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('upload/styles.css');?>">
+<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.css');?>">
+<script src="<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js');?>"></script>
 
 <div class="site-container">
     <?php include "views/header.php"; ?>

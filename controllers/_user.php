@@ -106,7 +106,7 @@ Class Controller_User Extends Controller_Controller
                 $users->main->view('edit');
             }
         } else {
-            $this->redirect(_A_::$app->router()->UrlTo('user'));
+            $this->redirect(_A_::$app->router()->UrlTo('authorization'));
         }
     }
 
@@ -141,7 +141,7 @@ Class Controller_User Extends Controller_Controller
             $users->_new_user();
             $users->template->vars('title', 'REGISTRATION USER');
             $users->template->vars('action', _A_::$app->router()->UrlTo('user/registration'));
-            $users->template->vars('back_url', _A_::$app->router()->UrlTo('user', $prms), true);
+            $users->template->vars('back_url', _A_::$app->router()->UrlTo('authorization', $prms), true);
             $users->main->view('new');
 
         }
