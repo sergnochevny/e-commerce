@@ -17,11 +17,11 @@ class Controller_Discount extends Controller_Controller
         $results = Model_Discount::getFabrixSpecialsIds();
         if (!is_null($results)) {
             ob_start();
-            while ($row = mysql_fetch_array($results)) {
-                $row[14] = $row[14] == "1" ? "YES" : "NO";
-                $row[11] = $row[11] == "1" ? "YES" : "NO";
+            foreach ($results as $key => $row ) {
+//                $row[14] = $row[14] == "1" ? "YES" : "NO";
+//                $row[11] = $row[11] == "1" ? "YES" : "NO";
                 $this->template->vars('row', $row);
-                $this->template->view_layouts('get_list');
+                $this->template->view_layout('get_list');
             }
             $list = ob_get_contents();
             ob_end_clean();

@@ -26,7 +26,7 @@
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
                 <?php
                     if (!is_null(_A_::$app->session('_a'))) {
-                        echo '<a title="" href="'._A_::$app->router()->UrlTo('user').'">Users</a>';
+                        echo '<a title="" href="'._A_::$app->router()->UrlTo('users').'">Users</a>';
                     }
                 ?>
             </li>

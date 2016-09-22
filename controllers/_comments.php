@@ -127,7 +127,7 @@ class Controller_Comments extends Controller_Controller
         ob_start();
         foreach ($rows as $row) {
             $row['email'] = $m->getUserEmail($row['userid']);
-            include('views/html/list.php');
+            include('views/html/comments_list.php');
         }
         $comments_list = ob_get_contents();
         ob_end_clean();
@@ -146,7 +146,7 @@ class Controller_Comments extends Controller_Controller
         $this->main->view_layout('admin_list');
     }
 
-    public function public()
+    public function get_index()
     {
         $this->main->test_access_rights();
         if (!is_null(_A_::$app->get('ID'))) {
@@ -163,7 +163,7 @@ class Controller_Comments extends Controller_Controller
 
             $model->update($comment);
         }
-        $this->get_comments_list();
+        $this->get_list();
         $this->main->view_layout('admin_list');
     }
 

@@ -158,7 +158,7 @@ class Controller_Blog extends Controller_Controller
     public function admin()
     {
         $this->admin_prepapre();
-        $this->main->view_admin('blog_admin');
+        $this->main->view_admin('admin');
     }
 
     private function admin_prepapre()
@@ -271,7 +271,7 @@ class Controller_Blog extends Controller_Controller
             ob_end_clean();
             $this->template->vars('cat_name', isset($category_name) ? $category_name : null);
             $this->template->vars('blog_posts', $list);
-            (new Controller_Paginator($this))->paginator($total, $page, 'admin_blog', $per_page);
+            (new Controller_Paginator($this))->paginator($total, $page, 'blog', $per_page);
         } else {
             $this->template->vars('count_rows', 0);
             $list = "No Result!!!";
@@ -297,7 +297,7 @@ class Controller_Blog extends Controller_Controller
     private function admin_content()
     {
         $this->admin_prepapre();
-        $this->main->view_layout('admin_content');
+        $this->main->view_layout('admin');
     }
 
     public function new_upload_img()

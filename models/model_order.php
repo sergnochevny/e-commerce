@@ -251,6 +251,7 @@ class Model_Order extends Model_Model
                     `order`.`trid`,
                     `order`.`track_code`,
                     `order`.`end_date`,
+                    `order`.`handling`,
                     `order`.`order_date` AS `date`,
                     `order`.`status`,
                     

@@ -7,7 +7,7 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <?php include('views/blog/blog_admin_content.php')?>
+                <?php include('views/blog/admin_content.php')?>
             </div>
         </div>
     </div>
