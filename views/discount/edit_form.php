@@ -112,15 +112,32 @@
                     <div class="form-row">
 
                         <div class="col-md-4">
-                            <label class="required_field" for="">Shipping</label>
+                            <label class="required_field" data-promotion for="restrictions">Restrictions <i data-promotion href="#discount_details" class="fa fa-question-circle"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <select name="shipping_type" id="iShippingType">
-                                <option value="0" <?= ($data['shipping_type'] == "0")?'selected':''?>>Select Shipping Type</option>
-                                <option value="1" <?= ($data['shipping_type'] == "1")?'selected':''?>>Both</option>
-                                <option value="2" <?= ($data['shipping_type'] == "2")?'selected':''?>>Ground</option>
-                                <option value="3" <?= ($data['shipping_type'] == "3")?'selected':''?>>Express</option>
-                            </select>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="text" name="restrictions"
+                                           value="<?= $data['required_amount'] ?>" class="input-text ">
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="iReqType">
+                                        <option value="0"<?php if ($data['required_type'] == '0') {
+                                            echo " SELECTED";
+                                        } ?>>Select
+                                        </option>
+                                        <option value="1"<?php if ($data['required_type'] == '1') {
+                                            echo " SELECTED";
+                                        } ?>>Total purchases
+                                        </option>
+                                        <option value="2"<?php if ($data['required_type'] == '2') {
+                                            echo " SELECTED";
+                                        } ?>>Total dollar amount
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -128,7 +145,7 @@
                     <div class="form-row">
 
                         <div class="col-md-4">
-                            <label class="required_field" for="">Users type</label>
+                            <label class="required_field" for="">Users type <i class="fa fa-question-circle" data-promotion href="#users"></i></label>
                         </div>
                         <div class="col-md-8">
                             <label style="font-size: 12px;">
@@ -204,7 +221,7 @@
                     <div class="form-row">
 
                         <div class="col-md-4">
-                            <label class="required_field" for="">Fabrics</label>
+                            <label class="required_field" for="">Fabrics <i class="fa fa-question-circle" data-promotion href="#fabrics"></i></label>
                         </div>
                         <div class="col-md-8">
                             <label for="">
@@ -273,18 +290,7 @@
                     <div class="form-row">
 
                         <div class="col-md-4">
-                            <label for="">Allow multiple</label>
-                        </div>
-                        <div class="col-md-8">
-                            <?= $data['allow_multiple'] == "1" ? '<input type="checkbox"  value="1" name="allow_multiple" id="allow_multiple" checked class="input-checkbox">' : '<input type="checkbox" name="allow_multiple"  id="allow_multiple" value="1" class="input-checkbox">'; ?>
-                        </div>
-
-                    </div>
-
-                    <div class="form-row">
-
-                        <div class="col-md-4">
-                            <label for="">Allow multiple</label>
+                            <label for="">Allow multiple <i class="fa fa-question-circle" data-promotion href="#allow_multiple"></i></label>
                         </div>
                         <div class="col-md-8">
                             <?= $data['allow_multiple'] == "1" ? '<input type="checkbox"  value="1" name="allow_multiple" id="allow_multiple" checked class="input-checkbox">' : '<input type="checkbox" name="allow_multiple"  id="allow_multiple" value="1" class="input-checkbox">'; ?>
@@ -294,7 +300,7 @@
 
                     <div class="form-row">
                         <div class="col-md-4">
-                            <label for="">Start Date</label>
+                            <label for="">Start Date <i class="fa fa-question-circle" data-promotion href="#start_date"></i></label>
                         </div>
                         <div class="col-md-8">
                             <input type="text" name="start_date" id="dateFrom" value="<?= $data['date_start'] ?>" class="input-text ">
@@ -303,7 +309,7 @@
 
                     <div class="form-row">
                         <div class="col-md-4">
-                            <label for="">End Date</label>
+                            <label for="">End Date <i class="fa fa-question-circle" data-promotion href="#end_date"></i></label>
                         </div>
                         <div class="col-md-8">
                             <input type="text" name="date_end" value="<?= $data['date_end'] ?>"
@@ -313,7 +319,7 @@
 
                     <div class="form-row">
                         <div class="col-md-4">
-                            <label for="">Enabled</label>
+                            <label for="">Enabled <i class="fa fa-question-circle" data-promotion="" href="#enabled"></i></label>
                         </div>
                         <div class="col-md-8">
                             <?= $data['enabled'] == "1" ? '<input type="checkbox"  value="1" name="enabled" checked="checked" class="input-checkbox">' : '<input type="checkbox"  value="1" name="enabled" class="input-checkbox">'; ?>
@@ -322,7 +328,7 @@
 
                     <div class="form-row">
                         <div class="col-md-4">
-                            <label for="">Disable sale countdown</label>
+                            <label for="">Disable sale countdown <i class="fa fa-question-circle" data-promotion href="#disable_sale_countdown"></i></label>
                         </div>
                         <div class="col-md-8">
                             <?= $data['countdown'] == "1" ? '<input type="checkbox"  value="1" name="countdown" checked class="input-checkbox">' : '<input type="checkbox"  value="1" name="countdown" class="input-checkbox">'; ?>

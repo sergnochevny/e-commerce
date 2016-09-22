@@ -1402,6 +1402,10 @@ td.product-subtotal{
     position: absolute;
 }
 
+.site-footer{
+    margin-top: 50px;
+}
+
 @media screen and (max-width: 320px) {
     .b_modify_images_main_pic{
         height: 218px !important;
