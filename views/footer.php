@@ -10,7 +10,7 @@
 								</div>
 								<h4 class="widget-title">Privacy Policy</h4>
 								<div class="textwidget">
-									<p class="copyProducts">Your personal information is never under any circumstances shared with any other individuals or organizations. <a class="copyProducts" href="<?php _A_::$app->router()->UrlTo('privacy');?>">privacy policy</a>.</p>
+									<p class="copyProducts">Your personal information is never under any circumstances shared with any other individuals or organizations. <a class="copyProducts" href="<?= _A_::$app->router()->UrlTo('privacy');?>">privacy policy</a>.</p>
 								</div>
 								<!--<h4 class="widget-title">Security Information</h4>
 								<div class="textwidget">
@@ -36,11 +36,11 @@
 								<h4 class="widget-title">Customer Services</h4>
 								<div class="menu-customer-services-container">
 									<ul id="menu-customer-services" class="menu">
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('/')?>">Home</a></li>
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('about')?>">About Us</a></li>
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('newsletter')?>">Newsletter</a></li>
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('service')?>">Service</a></li>
-										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?php _A_::$app->router()->UrlTo('contact')?>">Contact</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?= _A_::$app->router()->UrlTo('/')?>">Home</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?= _A_::$app->router()->UrlTo('about')?>">About Us</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?= _A_::$app->router()->UrlTo('newsletter')?>">Newsletter</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?= _A_::$app->router()->UrlTo('service')?>">Service</a></li>
+										<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="<?= _A_::$app->router()->UrlTo('contact')?>">Contact</a></li>
 									</ul>
 								</div>
 							</aside>

@@ -4,12 +4,11 @@
     <script defer src="<?= _A_::$app->router()->UrlTo('upload/js/ajaxupload.3.5.js') ?>" type="text/javascript"></script>
     <script defer src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
     <script defer src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit.js'); ?>' type="text/javascript"></script>
-    <script defer src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit_form.js'); ?>' type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('views/css/jquery-ui.css') ?>" media="all"/>
-    <link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('views/css/jquery-ui.theme.css') ?>" media="all"/>
+    <link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.css') ?>" media="all"/>
+    <link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.theme.css') ?>" media="all"/>
 
-    <link rel='stylesheet' href='<?php _A_::$app->router()->UrlTo('views/css/style.css') ?>' type='text/css' media='all'/>
-    <link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('upload/styles.css') ?>">
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/style.css') ?>' type='text/css' media='all'/>
+    <link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('upload/styles.css') ?>">
 
     <style>
         .just-posts-grid .just-post {
@@ -64,7 +63,7 @@
         }
 
         .just-posts-grid .just-post-detail > p > span.opa {
-            background-image: url("<?php _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
+            background-image: url("<?= _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
             bottom: 0;
             display: block;
             height: 80px;

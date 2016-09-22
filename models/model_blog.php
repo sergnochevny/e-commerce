@@ -3,14 +3,13 @@
 Class Model_Blog extends Model_Model
 {
 
-    public function blog_category_is_empty($group_id)
-    {
-        $q = "select * from blog_group_posts where group_id = '$group_id'";
+    public static function isCategoryEmpty($id){
+        $q = "SELECT * FROM blog_group_posts WHERE group_id = '$id'";
         $res = mysql_query($q);
         return ($res && (mysql_num_rows($res) < 1));
     }
 
-    public function del_blog_category($group_id)
+    public function deleteCategory($group_id)
     {
         $q = "delete from blog_group_posts where group_id = '$group_id'";
         $res = mysql_query($q);
@@ -37,7 +36,7 @@ Class Model_Blog extends Model_Model
         return $res;
     }
 
-    public function get_blog_post_by_post_name($post_name)
+    public static function getPostByName($post_name)
     {
         $result = null;
         $q = "select * from blog_posts where post_name = '$post_name'";
@@ -48,10 +47,10 @@ Class Model_Blog extends Model_Model
         return $result;
     }
 
-    public function get_blog_post_by_post_id($post_id)
+    public static function getPostById($id)
     {
         $result = null;
-        $q = "select * from blog_posts where id = '$post_id'";
+        $q = "select * from blog_posts where ID = '$id'";
         $res = mysql_query($q);
         if ($res && mysql_num_rows($res) > 0) {
             $result = mysql_fetch_assoc($res);
@@ -59,7 +58,7 @@ Class Model_Blog extends Model_Model
         return $result;
     }
 
-    public function get_post_categories_by_post_id($post_id)
+    public static function getPostRelatedCategories($post_id)
     {
         $result = [];
         $q = "select group_id from blog_group_posts where object_id = '$post_id'";
@@ -72,22 +71,19 @@ Class Model_Blog extends Model_Model
         return $result;
     }
 
-    public function get_blog_category($group_id)
+    public function getBlogCategoryByGroupId($group_id)
     {
-        $resulthatistim = mysql_query("select * from blog_groups WHERE group_id='$group_id'");
-        $rowsni = mysql_fetch_array($resulthatistim);
-        $name = $rowsni['name'];
-        $slug = $rowsni['pnumber'];
-        $id = $rowsni['group_id'];
+        $result = mysql_query("select * from blog_groups WHERE group_id='$group_id'");
+        $row = mysql_fetch_array($result);
 
         return array(
-            'id' => $id,
-            'name' => $name,
-            'slug' => $slug
+            'id' => $row['name'],
+            'name' => $row['pnumber'],
+            'slug' => $row['group_id']
         );
     }
 
-    public function del_post($post_id)
+    public function delete($post_id)
     {
         $strSQL = "DELETE FROM blog_group_posts WHERE object_id = $post_id";
         mysql_query($strSQL);
@@ -97,9 +93,10 @@ Class Model_Blog extends Model_Model
         mysql_query($strSQL);
         $strSQL = "DELETE FROM blog_posts WHERE id = $post_id";
         mysql_query($strSQL);
+        unset($strSQL);
     }
 
-    public function getPostImg($post_id)
+    public static function getPostImg($post_id)
     {
         $resulthatistim = mysql_query("select * from blog_post_img WHERE post_id='$post_id'");
         $res = null;
@@ -121,7 +118,7 @@ Class Model_Blog extends Model_Model
         return $res;
     }
 
-    public function save_new_post($title, $keywords, $description, $name, $img, $content, $status, $categories)
+    public function save($title, $keywords, $description, $name, $img, $content, $status, $categories)
     {
 
         $q = "insert into blog_posts" .
@@ -154,7 +151,7 @@ Class Model_Blog extends Model_Model
         }
     }
 
-    public function save_edit_post($post_id, $title, $keywords, $description, $name, $img, $content, $status, $categories)
+    public function update($post_id, $title, $keywords, $description, $name, $img, $content, $status, $categories)
     {
 
         $q = "update blog_posts" .
@@ -197,12 +194,12 @@ Class Model_Blog extends Model_Model
         return $res;
     }
 
-    public function insert_blog_category($post_category_name, $slug)
+    public function saveCategory($post_category_name, $slug)
     {
         return mysql_query("insert into blog_groups set name='$post_category_name', slug='$slug'");
     }
 
-    public function update_blog_category($post_category_name, $group_id)
+    public function updateCategory($post_category_name, $group_id)
     {
         return mysql_query("update blog_groups set name='$post_category_name' WHERE group_id ='$group_id'");
     }

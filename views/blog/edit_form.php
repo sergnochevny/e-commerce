@@ -110,3 +110,4 @@
     </div>
 </div>
 <input type="hidden" id="retAct" value="<?= _A_::$app->router()->UrlTo('blog/edit_upload_img')?>">
+<script defer src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit_form.js'); ?>' type="text/javascript"></script>

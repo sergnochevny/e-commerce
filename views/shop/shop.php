@@ -70,7 +70,7 @@
         </div>
     </div>
 </div>
-<input type="hidden" id="base_url" value="<?php _A_::$app->router()->UrlTo('/');?>">
+<input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/');?>">
 <script src='<?= _A_::$app->router()->UrlTo('views/js/shop/shop.js'); ?>' type="text/javascript"></script>
 	
     

@@ -12,7 +12,7 @@
                             <div class="woocommerce">
                                 <h2>Login</h2>
 
-                                <form method="POST" id="authorization" action="<?php _A_::$app->router()->UrlTo('user_authorization'); ?>/"
+                                <form method="POST" id="authorization" action="<?= _A_::$app->router()->UrlTo('user_authorization'); ?>/"
                                       class="login">
                                     <input type="hidden" name="redirect" value="<?= isset($redirect)?$redirect:_A_::$app->router()->UrlTo('/'); ?>"/>
 

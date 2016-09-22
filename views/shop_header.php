@@ -54,9 +54,9 @@
                             </ul>
                         </li>
 
-                        <!---<li class="dropdown" onclick="window.location.href = '<?php _A_::$app->router()->UrlTo('admin'); ?>';">
+                        <!---<li class="dropdown" onclick="window.location.href = '<?= _A_::$app->router()->UrlTo('admin'); ?>';">
 
-                            <a href="<?php _A_::$app->router()->UrlTo('admin'); ?>" class="dropdown-toggle" data-toggle="dropdown" rel="nofollow">
+                            <a href="<?= _A_::$app->router()->UrlTo('admin'); ?>" class="dropdown-toggle" data-toggle="dropdown" rel="nofollow">
                                 <i class="drip-icon-user"></i>
                                 <span class="topnav-label hidden-xs">My Account</span>
                             </a>

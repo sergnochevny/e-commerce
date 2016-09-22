@@ -5,7 +5,6 @@ class Controller_BlogCategory extends Controller_Controller
 
     public function admin()
     {
-
         $this->listof();
         $this->main->view_admin('blog_categories');
     }
@@ -13,7 +12,7 @@ class Controller_BlogCategory extends Controller_Controller
     public function listof()
     {
         $model = new Model_Blog();
-        $rows = $model->get_blog_categories_list();
+        $rows = Model_Blog::getCategories();
         $categories = '';
         ob_start();
         foreach ($rows as $row) {
@@ -30,8 +29,8 @@ class Controller_BlogCategory extends Controller_Controller
         $model = new Model_Blog();
         $group_id = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : null;
         if (isset($group_id)) {
-            if ($model->blog_category_is_empty($group_id)) {
-                $model->del_blog_category($group_id);
+            if (Model_Blog::isCategoryEmpty($group_id)) {
+                $model->deleteCategory($group_id);
                 $warning = ['Category deleted successfully!'];
                 $this->main->template->vars('warning', $warning);
             } else {
@@ -47,7 +46,7 @@ class Controller_BlogCategory extends Controller_Controller
     {
         $model = new Model_Blog();
         $group_id = $model->validData(_A_::$app->get('cat'));
-        $data = $model->get_blog_category($group_id);
+        $data = Model_Blog::getBlogCategoryByGroupID($group_id);
         $this->main->template->vars('data', $data);
 
         $action_url = _A_::$app->router()->UrlTo('blogcategory/save', ['cat' => $group_id]);
@@ -67,7 +66,7 @@ class Controller_BlogCategory extends Controller_Controller
         $post_category_name = mysql_real_escape_string($category);
         if (!empty($post_category_name{0})) {
             if (!empty($group_id)) {
-                $result = $model->update_blog_category($post_category_name, $group_id);
+                $result = $model->updateCategory($post_category_name, $group_id);
             }
             $warning = ['Category Data saved successfully!'];
             $this->main->template->vars('warning', $warning);
@@ -99,7 +98,7 @@ class Controller_BlogCategory extends Controller_Controller
     {
         $model = new Model_Blog();
         $group_id = $model->validData(_A_::$app->get('cat'));
-        $data = $model->get_blog_category($group_id);
+        $data = Model_Blog::getBlogCategoryByGroupId($group_id);
         $this->main->template->vars('data', $data);
         $back_url = _A_::$app->router()->UrlTo('blogcategory/admin');
         $action_url = _A_::$app->router()->UrlTo('blogcategory/save', ['cat' => $group_id]);
@@ -137,7 +136,7 @@ class Controller_BlogCategory extends Controller_Controller
             $slug = explode(' ', strtolower($post_category_name));
             $slug = array_filter($slug);
             $slug = implode('-', $slug);
-            $result = $model->insert_blog_category($post_category_name, $slug);
+            $result = $model->saveCategory($post_category_name, $slug);
             if ($result) {
                 $warning = ['Category Data saved successfully!'];
                 $this->main->template->vars('warning', $warning);
