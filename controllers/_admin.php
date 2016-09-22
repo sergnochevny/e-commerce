@@ -37,9 +37,8 @@ Class Controller_Admin Extends Controller_Controller
         if (self::is_logged()) return true;
         if (self::is_set_remember()) {
             $remember = _A_::$app->cookie('_ar');
-            $model = new Model_Auth();
-            if ($model->is_admin_remember($remember)) {
-                $admin = $model->get_admin_data();
+            if (Model_Auth::is_admin_remember($remember)) {
+                $admin = Model_Auth::get_admin_data();
                 _A_::$app->setSession('_a', $admin['id']);
                 return true;
             }
@@ -55,8 +54,7 @@ Class Controller_Admin Extends Controller_Controller
         $shop = new Controller_Shop($this->main);
         $shop->all_products();
         $shop->product_filter_list();
-
-        $this->main->view_admin('home');
+        $shop->main->view_admin('home');
     }
 
     public function log_out()
@@ -71,10 +69,9 @@ Class Controller_Admin Extends Controller_Controller
     {
         $login = mysql_real_escape_string(stripslashes(strip_tags(trim($login))));
         $password = mysql_real_escape_string(stripslashes(strip_tags(trim($password))));
-        $model = new Model_Auth();
-        $res = $model->admin_authorize($login, $password);
+        $res = Model_Auth::admin_authorize($login, $password);
         if ($res) {
-            $admin = $model->get_admin_data();
+            $admin = Model_Auth::get_admin_data();
             _A_::$app->setSession('_a', $admin['id']);
         }
         return $res;

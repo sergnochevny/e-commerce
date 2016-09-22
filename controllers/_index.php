@@ -111,8 +111,7 @@ Class Controller_Index Extends Controller_Controller
 //////////////////////////////////////////////////////////// IMAGE
     function search()
     {
-        $model = new Model_Tools();
-        $search_qv = $model->validData(_A_::$app->get('s'));
+        $search_qv = Model_Tools::validData(_A_::$app->get('s'));
         $this->template->vars('userInfo', $search_qv);
         $this->main->view('search');
     }

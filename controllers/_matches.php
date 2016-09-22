@@ -32,7 +32,6 @@ class Controller_Matches extends Controller_Controller
     function add()
     {
         $added = 0;
-        $model = new Model_Product();
 
         if (!is_null(_A_::$app->get('p_id')) && !empty(_A_::$app->get('p_id'))) {
             $p_id = _A_::$app->get('p_id');
@@ -48,7 +47,7 @@ class Controller_Matches extends Controller_Controller
 
             if (!$item_added) {
                 $suffix_img = 'b_';
-                $images = $model->getImage($p_id);
+                $images = Model_Product::getImage($p_id);
 
                 if (isset($images['image1'])) {
                     $file_img = 'upload/upload/' . $images['image1'];
@@ -105,7 +104,6 @@ class Controller_Matches extends Controller_Controller
     {
         $added = 0;
         if (!is_null(_A_::$app->post('data')) && !empty(_A_::$app->post('data'))) {
-            $model = new Model_Cart();
             try {
                 $products = json_decode(_A_::$app->post('data'));
                 $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
@@ -121,7 +119,7 @@ class Controller_Matches extends Controller_Controller
                             }
                         }
                         if (!$item_added) {
-                            $product = $model->get_product_params($product_id);
+                            $product = Model_Cart::get_product_params($product_id);
 
                             ////////////
                             $pid = $product_id;
@@ -131,17 +129,16 @@ class Controller_Matches extends Controller_Controller
 
                             if ($inventory > 0) {
 
-                                $mp = new Model_Price();
                                 $format_price = '';
-                                $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
+                                $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
                                 $discountIds = array();
                                 $saleprice = $product['Price'];
                                 $sDiscount = 0;
-                                $saleprice = $mp->calculateProductSalePrice($pid, $saleprice, $discountIds);
-                                $bProductDiscount = $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
+                                $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
+                                $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
                                 $format_sale_price = '';
-                                $saleprice = $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
+                                $saleprice = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
                                 $discount = $price - $saleprice;
                                 $format_discount = "$" . number_format($discount, 2);;
 

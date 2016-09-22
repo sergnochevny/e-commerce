@@ -2,8 +2,7 @@
 
 Class Model_Cart extends Model_Model
 {
-
-    public function get_product_params($p_id)
+    public static function get_product_params($p_id)
     {
 
         $res = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
@@ -11,7 +10,7 @@ Class Model_Cart extends Model_Model
         return $row;
     }
 
-    public function get_price_in_cart()
+    public static function get_price_in_cart()
     {
         $cart = $_SESSION['cart']['items'];
         $total = 0;

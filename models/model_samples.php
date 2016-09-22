@@ -3,7 +3,7 @@
 Class Model_Samples extends Model_Model
 {
 
-    function calculateSamplesPrice($products, $samples){
+    public static function calculateSamplesPrice($products, $samples){
 
         $numberSamples = count($samples);
 
@@ -33,7 +33,7 @@ Class Model_Samples extends Model_Model
 
     }
 
-    function allowSamplesExpressShipping(){
+    public static function allowSamplesExpressShipping(){
 
         $bol = false;
 
@@ -50,7 +50,7 @@ Class Model_Samples extends Model_Model
 
     }
 
-    function systemAllowSamplesExpressShipping(){
+    public static function systemAllowSamplesExpressShipping(){
 
         #default to false
         $return = false;
@@ -67,7 +67,7 @@ Class Model_Samples extends Model_Model
 
     }
 
-    function allowedSamples($pid) {
+    public static function allowedSamples($pid) {
 
         $sql = sprintf("SELECT piece FROM fabrix_products WHERE pid = %u ", $pid);
         $res = mysql_query($sql);

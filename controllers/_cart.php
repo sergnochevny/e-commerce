@@ -2,7 +2,6 @@
 
 class Controller_Cart extends Controller_Controller
 {
-
     function cart()
     {
         $this->main->is_user_authorized(true);
@@ -106,10 +105,9 @@ class Controller_Cart extends Controller_Controller
 
     private function product_in($p_id, &$item, $template = 'product_in')
     {
-        $model = new Model_Cart();
         $base_url = _A_::$app->router()->UrlTo('/');
 
-        $product = $model->get_product_params($p_id);
+        $product = Model_Cart::get_product_params($p_id);
         $filename = 'upload/upload/' . $item['image1'];
         if (!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
             $filename = "upload/upload/not_image.jpg";
@@ -117,23 +115,22 @@ class Controller_Cart extends Controller_Controller
         $img_url = _A_::$app->router()->UrlTo($filename);
 
         $cart = _A_::$app->session('cart');
-        $mp = new Model_Price();
         $price = $product['priceyard'];
         $inventory = $product['inventory'];
         $piece = $product['piece'];
         $format_price = '';
-        $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
+        $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
         $discountIds = isset($cart['discountIds']) ? $cart['discountIds'] : [];
         $saleprice = $product['priceyard'];
         $sDiscount = 0;
-        $saleprice = round($mp->calculateProductSalePrice($p_id, $saleprice, $discountIds), 2);
-        $bProductDiscount = $mp->checkProductDiscount($p_id, $sDiscount, $saleprice, $discountIds);
+        $saleprice = round(Model_Price::calculateProductSalePrice($p_id, $saleprice, $discountIds), 2);
+        $bProductDiscount = Model_Price::checkProductDiscount($p_id, $sDiscount, $saleprice, $discountIds);
 
         $cart['discountIds'] = $discountIds;
 
         $format_sale_price = '';
-        $saleprice = round($mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece), 2);
+        $saleprice = round(Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece), 2);
         $discount = round($price - $saleprice, 2);
         $format_discount = "$" . number_format($discount, 2);
 
@@ -175,9 +172,8 @@ class Controller_Cart extends Controller_Controller
 
     private function sample_in($p_id, &$item, $template = 'sample_in_proceed')
     {
-        $model = new Model_Product();
         $base_url = _A_::$app->router()->UrlTo('/');
-        $item = $model->get_product_params($p_id);
+        $item = Model_Product::get_product_params($p_id);
         $filename = 'upload/upload/' . $item['image1'];
         if (!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
             $filename = "upload/upload/not_image.jpg";
@@ -199,8 +195,7 @@ class Controller_Cart extends Controller_Controller
     {
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
-        $ms = new Model_Samples();
-        $cart_samples_sum = round($ms->calculateSamplesPrice($cart_items, $cart_samples_items), 2);
+        $cart_samples_sum = round(Model_Samples::calculateSamplesPrice($cart_items, $cart_samples_items), 2);
         $format_samples_sum = "$" . number_format($cart_samples_sum, 2);
         $_cart = _A_::$app->session('cart');
         $_cart['samples_sum'] = $cart_samples_sum;
@@ -223,8 +218,7 @@ class Controller_Cart extends Controller_Controller
         $cart_items = isset($cart['items']) ? $cart['items'] : [];
         $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
         $coupon_code = isset($cart['coupon']) ? $cart['coupon'] : '';
-        $ms = new Model_Samples();
-        $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
+        $systemAllowExpressSamples = Model_Samples::systemAllowSamplesExpressShipping();
         $bExpressSamples = isset($cart['express_samples']) ? $cart['express_samples'] : false;
         if (!$systemAllowExpressSamples) {
             $bExpressSamples = false;
@@ -240,8 +234,6 @@ class Controller_Cart extends Controller_Controller
         $total_samples_items = $this->calc_samples_amount();
         $total += $total_samples_items;
         $shipcost = $cart['shipcost'];
-        $ship_model = new Model_Shipping();
-        $price_model = new Model_Price();
         if (count($cart_items) > 0) {
 
             foreach ($cart_items as $key => $item) {
@@ -252,8 +244,8 @@ class Controller_Cart extends Controller_Controller
             #calculate the discount
             if (count($aPrds) > 0) {
                 $discountIds = isset($cart['discountIds']) ? $cart['discountIds'] : [];
-                $shipDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_SHIPPING, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
-                $couponDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_COUPON, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
+                $shipDiscount = round(Model_Price::calculateDiscount(DISCOUNT_CATEGORY_SHIPPING, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
+                $couponDiscount = round(Model_Price::calculateDiscount(DISCOUNT_CATEGORY_COUPON, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
                 $cart['discountIds'] = $discountIds;
             }
 
@@ -306,8 +298,7 @@ class Controller_Cart extends Controller_Controller
         $cart_items = isset($cart['items']) ? $cart['items'] : [];
         $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
         $coupon_code = isset($cart['coupon']) ? $cart['coupon'] : '';
-        $ms = new Model_Samples();
-        $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
+        $systemAllowExpressSamples = Model_Samples::systemAllowSamplesExpressShipping();
         $bExpressSamples = !$systemAllowExpressSamples ? false : isset($cart['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
         if (count($cart_samples_items) == 0) $bExpressSamples = false;
         $bAcceptExpress = !$systemAllowExpressSamples ? false : isset($cart['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
@@ -382,11 +373,10 @@ class Controller_Cart extends Controller_Controller
             $bill_country = trim($user['bill_country']);
             $ship_province = trim($user['ship_province']);
 
-            $ma = new Model_Address();
-            $this->template->vars('bill_country', trim($ma->get_country_by_id($bill_country)));
-            $this->template->vars('bill_province', trim($ma->get_province_by_id($bill_province)));
-            $this->template->vars('ship_country', trim($ma->get_country_by_id($ship_country)));
-            $this->template->vars('ship_province', trim($ma->get_province_by_id($ship_province)));
+            $this->template->vars('bill_country', trim(Model_Address::get_country_by_id($bill_country)));
+            $this->template->vars('bill_province', trim(Model_Address::get_province_by_id($bill_province)));
+            $this->template->vars('ship_country', trim(Model_Address::get_country_by_id($ship_country)));
+            $this->template->vars('ship_province', trim(Model_Address::get_province_by_id($ship_province)));
             $this->template->view_layout('bill_ship_info');
         }
     }
@@ -416,7 +406,6 @@ class Controller_Cart extends Controller_Controller
                     $this->redirect($url);
                 }
                 $pdiscount = 0;
-                $model = new Model_Product();
                 if (count($cart_items) > 0) {
                     foreach ($cart_items as $key => $item) {
                         $pdiscount += $item['discount'];
@@ -431,9 +420,7 @@ class Controller_Cart extends Controller_Controller
                 $taxes = _A_::$app->session('cart')['taxes'];
                 $total = _A_::$app->session('cart')['total'];
 
-                $ms = new Model_Samples();
-                $msh = new Model_Shipping();
-                $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
+                $systemAllowExpressSamples = Model_Samples::systemAllowSamplesExpressShipping();
                 $bExpressSamples = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
                 if (count($cart_samples_items) == 0) $bExpressSamples = false;
                 $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
@@ -457,22 +444,20 @@ class Controller_Cart extends Controller_Controller
                     $handlingcost += RATE_HANDLING;
                     $handling = 1;
                 }
-                $mc = new Model_Order();
-                $oid = $mc->register_order($aid, $trid, $shipping, $shipcost, $on_roll,
+                $oid = Model_Order::register_order($aid, $trid, $shipping, $shipcost, $on_roll,
                     $express_samples, $handling, $shipDiscount,
                     $couponDiscount, $discount, $taxes, $total);
                 if (isset($oid)) {
                     if (count($cart_items) > 0) {
-                        $mp = new Model_Product();
                         foreach ($cart_items as $pid => $item) {
-                            $product = $model->get_product_params($pid);
+                            $product = Model_Product::get_product_params($pid);
                             $pnumber = $product['pnumber'];
                             $pname = $product['pname'];
                             $qty = $item['quantity'];
                             $price = $item['price'];
                             $discount = $item['discount'];
                             $sale_price = $item['saleprice'];
-                            if ($mc->insert_order_detail($oid, $pid, $pnumber, $pname,
+                            if (Model_Order::insert_order_detail($oid, $pid, $pnumber, $pname,
                                 $qty, $price, $discount, $sale_price)
                             ) {
                                 $qty = $item['quantity'];
@@ -480,13 +465,13 @@ class Controller_Cart extends Controller_Controller
                                 $remainder = $inventory - $qty;
                                 $remainder = ($remainder <= 0) ? 0 : $remainder;
 
-                                $mp->set_product_inventory($pid, $remainder);
+                                Model_Product::set_product_inventory($pid, $remainder);
                             }
                         }
                     }
                     if (count($cart_samples_items) > 0) {
                         foreach ($cart_samples_items as $pid => $item) {
-                            $product = $model->get_product_params($pid);
+                            $product = Model_Product::get_product_params($pid);
                             $pnumber = $product['pnumber'];
                             $pname = $product['pname'];
                             $qty = 1;
@@ -494,13 +479,13 @@ class Controller_Cart extends Controller_Controller
                             $discount = 0;
                             $sale_price = 0;
                             $is_sample = 1;
-                            $mc->insert_order_detail($oid, $pid, $pnumber, $pname,
+                            Model_Order::insert_order_detail($oid, $pid, $pnumber, $pname,
                                 $qty, $price, $discount, $sale_price, $is_sample);
                         }
                     }
 
                     $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
-                    $mc->save_discount_usage($discountIds, $oid);
+                    Model_Order::save_discount_usage($discountIds, $oid);
                     $this->thanx_mail();
                     _A_::$app->setSession('cart', null);
                 } else {
@@ -537,15 +522,15 @@ class Controller_Cart extends Controller_Controller
             }
             $body = $body . "Thank you for your purchase. The following items will be shipped to you.\n";
 
-            $mail['headers'] = $headers;
-            $mail['subject'] = $subject;
-            $mail['body'] = $body;
+            $ma['headers'] = $headers;
+            $ma['subject'] = $subject;
+            $ma['body'] = $body;
 
-            $mail = $this->prepare_before_pay_mail($mail);
-            if (isset($mail)) {
-                $headers = $mail['headers'];
-                $subject = $mail['subject'];
-                $body = $mail['body'];
+            $ma = $this->prepare_before_pay_mail($ma);
+            if (isset($ma)) {
+                $headers = $ma['headers'];
+                $subject = $ma['subject'];
+                $body = $ma['body'];
 
                 mail($email, $subject, $body, $headers);
 
@@ -567,16 +552,15 @@ class Controller_Cart extends Controller_Controller
         }
     }
 
-    private function prepare_before_pay_mail($mail = null)
+    private function prepare_before_pay_mail($ma = null)
     {
         $shipcost = 0;
         $rollcost = 0;
         $express_samples_cost = 0;
         $total = 0;
-        $t = new Model_Shipping();
-        $headers = $mail['headers'];
-        $subject = $mail['subject'];
-        $body = $mail['body'];
+        $headers = $ma['headers'];
+        $subject = $ma['subject'];
+        $body = $ma['body'];
         if (!is_null(_A_::$app->session('cart')) && !is_null(_A_::$app->session('user'))) {
 
             $user = _A_::$app->session('user');
@@ -586,20 +570,18 @@ class Controller_Cart extends Controller_Controller
 
             $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
             $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
-            $ms = new Model_Samples();
-            $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
+            $systemAllowExpressSamples = Model_Samples::systemAllowSamplesExpressShipping();
             $bExpressSamples = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['express_samples']) ? _A_::$app->session('cart')['express_samples'] : false;
             if (count($cart_samples_items) == 0) $bExpressSamples = false;
             $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
             $uid = (!is_null(_A_::$app->session('user'))) ? (int)_A_::$app->session('user')['aid'] : 0;
             $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-            $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
+            $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : false;
             $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
             $discount = 0;
-            $model = new Model_Product();
             if (count($cart_items) > 0) {
                 foreach ($cart_items as $key => $item) {
-                    $product = $model->get_product_params($key);
+                    $product = Model_Product::get_product_params($key);
                     $pname = $product['Product_name'];
                     $pnumber = $product['Product_number'];
                     $formatprice = $item['format_sale_price'];
@@ -613,7 +595,7 @@ class Controller_Cart extends Controller_Controller
 
             if (count($cart_samples_items) > 0) {
                 foreach ($cart_samples_items as $key => $item) {
-                    $product = $model->get_product_params($key);
+                    $product = Model_Product::get_product_params($key);
                     $pname = $product['Product_name'];
                     $pnumber = $product['Product_number'];
 
@@ -681,11 +663,10 @@ class Controller_Cart extends Controller_Controller
             $ship_phone = trim($user['ship_phone']);
             $ship_fax = trim($user['ship_fax']);
 
-            $ma = new Model_Address();
-            $bill_country = trim($ma->get_country_by_id($bill_country));
-            $bill_province = trim($ma->get_province_by_id($bill_province));
-            $ship_country = trim($ma->get_country_by_id($ship_country));
-            $ship_province = trim($ma->get_province_by_id($ship_province));
+            $bill_country = trim(Model_Address::get_country_by_id($bill_country));
+            $bill_province = trim(Model_Address::get_province_by_id($bill_province));
+            $ship_country = trim(Model_Address::get_country_by_id($ship_country));
+            $ship_province = trim(Model_Address::get_province_by_id($ship_province));
 
             $trid = _A_::$app->session('cart')['trid'];
             $trdate = _A_::$app->session('cart')['trdate'];
@@ -713,11 +694,11 @@ class Controller_Cart extends Controller_Controller
             $body = $body . "$ship_phone\n";
             $body = $body . "$ship_fax\n\n";
 
-            $mail['headers'] = $headers;
-            $mail['subject'] = $subject;
-            $mail['body'] = $body;
+            $ma['headers'] = $headers;
+            $ma['subject'] = $subject;
+            $ma['body'] = $body;
         }
-        return $mail;
+        return $ma;
     }
 
     function get_shipping_name($type)
@@ -736,8 +717,6 @@ class Controller_Cart extends Controller_Controller
 
     private function prepare()
     {
-//        session_destroy();
-//        unset($_SESSION);
         ob_start();
         $cart = _A_::$app->session('cart');
         unset($cart['discountIds']);
@@ -808,8 +787,7 @@ class Controller_Cart extends Controller_Controller
         $coupon_code = isset($cart['coupon']) ? $cart['coupon'] : '';
         $coupon_code = !is_null(_A_::$app->post('coupon')) ? _A_::$app->post('coupon') : $coupon_code;
         $cart['coupon'] = $coupon_code;
-        $ms = new Model_Samples();
-        $systemAllowExpressSamples = $ms->systemAllowSamplesExpressShipping();
+        $systemAllowExpressSamples = Model_Samples::systemAllowSamplesExpressShipping();
         $bExpressSamples = isset($cart['express_samples']) ? $cart['express_samples'] : false;
         if ($systemAllowExpressSamples) {
             if (!is_null(_A_::$app->post('express_samples'))) {
@@ -856,18 +834,16 @@ class Controller_Cart extends Controller_Controller
         $cart_sum = "$" . number_format($total, 2);
         $this->template->vars('sum_all_items', $cart_sum);
 
-        $price_model = new Model_Price();
         if (count($cart_items) > 0) {
             foreach ($cart_items as $key => $item) {
                 $aPrds[] = $key;
                 $aPrds[] = $item['quantity'];
             }
-            $ship_model = new Model_Shipping();
-            $shipcost = round($ship_model->calculateShipping($shipping, $aPrds, $bShipRoll), 2);
+            $shipcost = round(Model_Shipping::calculateShipping($shipping, $aPrds, $bShipRoll), 2);
             if (count($aPrds) > 0) {
                 $discountIds = isset($cart['discountIds']) ? $cart['discountIds'] : [];
-                $shipDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_SHIPPING, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
-                $couponDiscount = round($price_model->calculateDiscount(DISCOUNT_CATEGORY_COUPON, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
+                $shipDiscount = round(Model_Price::calculateDiscount(DISCOUNT_CATEGORY_SHIPPING, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
+                $couponDiscount = round(Model_Price::calculateDiscount(DISCOUNT_CATEGORY_COUPON, $uid, $aPrds, $total, $shipcost, $coupon_code, $bCodeValid, false, $unused, $unused, $shipping, $discountIds), 2);
                 $cart['discountIds'] = $discountIds;
             }
 
@@ -886,7 +862,7 @@ class Controller_Cart extends Controller_Controller
         if ($couponDiscount > 0) $total = $total - $couponDiscount;
         $taxes = 0;
         if ($uid > 0) {
-            $tax_percentage = $price_model->user_TaxRate($uid);
+            $tax_percentage = Model_Price::user_TaxRate($uid);
             $taxes = round($total * ($tax_percentage / 100), 2);
             $total = round(($total + $taxes), 2);
         }
@@ -962,15 +938,15 @@ class Controller_Cart extends Controller_Controller
             $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
             $body = $body . "\n";
 
-            $mail['headers'] = $headers;
-            $mail['subject'] = $subject;
-            $mail['body'] = $body;
+            $ma['headers'] = $headers;
+            $ma['subject'] = $subject;
+            $ma['body'] = $body;
 
-            $mail = $this->prepare_before_pay_mail($mail);
-            if (isset($mail)) {
-                $headers = $mail['headers'];
-                $subject = $mail['subject'];
-                $body = $mail['body'];
+            $ma = $this->prepare_before_pay_mail($ma);
+            if (isset($ma)) {
+                $headers = $ma['headers'];
+                $subject = $ma['subject'];
+                $body = $ma['body'];
 
                 if (DEMO == 1) {
                     mail("dev@9thsphere.com", $subject, $body, $headers);
@@ -1028,10 +1004,9 @@ class Controller_Cart extends Controller_Controller
         $bill_phone = trim($user['bill_phone']);
         $this->template->vars('bill_phone', $bill_phone);
 
-        $ma = new Model_Address();
-        $bill_country = trim($ma->get_country_by_id($bill_country));
+        $bill_country = trim(Model_Address::get_country_by_id($bill_country));
         $this->template->vars('bill_country', $bill_country);
-        $bill_province = trim($ma->get_province_by_id($bill_province));
+        $bill_province = trim(Model_Address::get_province_by_id($bill_province));
         $this->template->vars('bill_province', $bill_province);
 
         $trid = uniqid();
@@ -1091,9 +1066,8 @@ class Controller_Cart extends Controller_Controller
 
         $base_url = _A_::$app->router()->UrlTo('/');
         if (!empty(_A_::$app->get('p_id'))) {
-            $model = new Model_Product();
-            $p_id = $model->validData(_A_::$app->get('p_id'));
-            $product = $model->get_product_params($p_id);
+            $p_id = Model_Product::validData(_A_::$app->get('p_id'));
+            $product = Model_Product::get_product_params($p_id);
             $_cart = _A_::$app->session('cart');
             $cart_items = isset($_cart['items']) ? $_cart['items'] : [];
             if ($product['inventory'] > 0) {
@@ -1110,22 +1084,21 @@ class Controller_Cart extends Controller_Controller
 
                 if (!$item_added) {
 
-                    $mp = new Model_Price();
                     $pid = $p_id;
                     $price = $product['Price'];
                     $inventory = $product['inventory'];
                     $piece = $product['piece'];
                     $format_price = '';
-                    $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
+                    $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
                     $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
                     $saleprice = $product['Price'];
                     $sDiscount = 0;
-                    $saleprice = round($mp->calculateProductSalePrice($pid, $saleprice, $discountIds), 2);
-                    $bProductDiscount = $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
+                    $saleprice = round(Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds), 2);
+                    $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
                     $_cart['discountIds'] = $discountIds;
                     $format_sale_price = '';
-                    $saleprice = round($mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece), 2);
+                    $saleprice = round(Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece), 2);
                     $discount = round(($price - $saleprice), 2);
                     $format_discount = "$" . number_format($discount, 2);
 
@@ -1197,9 +1170,8 @@ class Controller_Cart extends Controller_Controller
     {
         $base_url = _A_::$app->router()->UrlTo('/');
         if (!empty(_A_::$app->get('p_id'))) {
-            $model = new Model_Product();
-            $p_id = $model->validData(_A_::$app->get('p_id'));
-            $product = $model->get_product_params($p_id);
+            $p_id = Model_Product::validData(_A_::$app->get('p_id'));
+            $product = Model_Product::get_product_params($p_id);
             $cart = _A_::$app->session('cart');
             $cart_items = isset($cart['items']) ? $cart['items'] : [];
             $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
@@ -1213,12 +1185,10 @@ class Controller_Cart extends Controller_Controller
                 if (!$item_added) {
 
                     $cart_samples_items[$product['p_id']] = $product;
-                    $mp = new Model_Price();
-                    $ms = new Model_Samples();
-                    $cart_samples_sum = round($ms->calculateSamplesPrice($cart_items, $cart_samples_items), 2);
+                    $cart_samples_sum = round(Model_Samples::calculateSamplesPrice($cart_items, $cart_samples_items), 2);
 
                     $format_samples_sum = '';
-                    $tmp = $mp->getPrintPrice($cart_samples_sum, $format_samples_sum, 1, 1);
+                    $tmp = Model_Price::getPrintPrice($cart_samples_sum, $format_samples_sum, 1, 1);
                     $cart['samples_sum'] = $cart_samples_sum;
                     $cart['format_samples_sum'] = $format_samples_sum;
                 }
@@ -1292,9 +1262,7 @@ class Controller_Cart extends Controller_Controller
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         if (preg_match('/^\d+(\.\d{0,})?$/', $quantity)) {
 
-            $model = new Model_Product();
-
-            $product = $model->get_product_params($pid);
+            $product = Model_Product::get_product_params($pid);
             $inventory = $product['inventory'];
             $piece = $product['piece'];
             $whole = $product['whole'];

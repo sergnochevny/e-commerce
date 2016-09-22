@@ -3,7 +3,7 @@
 abstract class Model_Model
 {
 
-    public function validData($data)
+    public static function validData($data)
     {
         $data = stripslashes($data);
         $data = htmlspecialchars($data);

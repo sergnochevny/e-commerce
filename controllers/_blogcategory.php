@@ -5,14 +5,14 @@ class Controller_BlogCategory extends Controller_Controller
 
     public function admin()
     {
+
         $this->listof();
         $this->main->view_admin('blog_categories');
     }
 
     public function listof()
     {
-        $model = new Model_Blog();
-        $rows = Model_Blog::getCategories();
+        $rows = Model_Blog::get_blog_categories_list();
         $categories = '';
         ob_start();
         foreach ($rows as $row) {
@@ -26,11 +26,10 @@ class Controller_BlogCategory extends Controller_Controller
 
     public function del()
     {
-        $model = new Model_Blog();
         $group_id = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : null;
         if (isset($group_id)) {
-            if (Model_Blog::isCategoryEmpty($group_id)) {
-                $model->deleteCategory($group_id);
+            if (Model_Blog::blog_category_is_empty($group_id)) {
+                Model_Blog::del_blog_category($group_id);
                 $warning = ['Category deleted successfully!'];
                 $this->main->template->vars('warning', $warning);
             } else {
@@ -44,9 +43,8 @@ class Controller_BlogCategory extends Controller_Controller
 
     public function edit()
     {
-        $model = new Model_Blog();
-        $group_id = $model->validData(_A_::$app->get('cat'));
-        $data = Model_Blog::getBlogCategoryByGroupID($group_id);
+        $group_id = Model_Blog::validData(_A_::$app->get('cat'));
+        $data = Model_Blog::get_blog_category($group_id);
         $this->main->template->vars('data', $data);
 
         $action_url = _A_::$app->router()->UrlTo('blogcategory/save', ['cat' => $group_id]);
@@ -60,13 +58,12 @@ class Controller_BlogCategory extends Controller_Controller
 
     public function save()
     {
-        $model = new Model_Blog();
-        $group_id = $model->validData(_A_::$app->get('cat'));
-        $category = $model->validData(_A_::$app->post('category'));
+        $group_id = Model_Blog::validData(_A_::$app->get('cat'));
+        $category = Model_Blog::validData(_A_::$app->post('category'));
         $post_category_name = mysql_real_escape_string($category);
         if (!empty($post_category_name{0})) {
             if (!empty($group_id)) {
-                $result = $model->updateCategory($post_category_name, $group_id);
+                $result = Model_Blog::update_blog_category($post_category_name, $group_id);
             }
             $warning = ['Category Data saved successfully!'];
             $this->main->template->vars('warning', $warning);
@@ -96,9 +93,8 @@ class Controller_BlogCategory extends Controller_Controller
 
     public function edit_form()
     {
-        $model = new Model_Blog();
-        $group_id = $model->validData(_A_::$app->get('cat'));
-        $data = Model_Blog::getBlogCategoryByGroupId($group_id);
+        $group_id = Model_Blog::validData(_A_::$app->get('cat'));
+        $data = Model_Blog::get_blog_category($group_id);
         $this->main->template->vars('data', $data);
         $back_url = _A_::$app->router()->UrlTo('blogcategory/admin');
         $action_url = _A_::$app->router()->UrlTo('blogcategory/save', ['cat' => $group_id]);
@@ -129,14 +125,13 @@ class Controller_BlogCategory extends Controller_Controller
 
     public function save_new()
     {
-        $model = new Model_Blog();
-        $category = $model->validData(_A_::$app->post('category'));
+        $category = Model_Blog::validData(_A_::$app->post('category'));
         $post_category_name = mysql_real_escape_string($category);
         if (!empty($post_category_name{0})) {
             $slug = explode(' ', strtolower($post_category_name));
             $slug = array_filter($slug);
             $slug = implode('-', $slug);
-            $result = $model->saveCategory($post_category_name, $slug);
+            $result = Model_Blog::insert_blog_category($post_category_name, $slug);
             if ($result) {
                 $warning = ['Category Data saved successfully!'];
                 $this->main->template->vars('warning', $warning);

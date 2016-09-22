@@ -13,15 +13,13 @@ class Controller_Users extends Controller_Controller
     private function get_list()
     {
         $this->main->test_access_rights();
-        $model = new Model_User();
-
-        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
+        $page = !empty(_A_::$app->get('page')) ? Model_User::validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
-        $total = Model_User::totalQuantity();
+        $total = Model_User::get_total_count_users();
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
         $start = (($page - 1) * $per_page);
-        $rows = Model_User::getList($start, $per_page);
+        $rows = Model_User::get_users_list($start, $per_page);
 
         $this->template->vars('page', $page);
         ob_start();
@@ -34,16 +32,15 @@ class Controller_Users extends Controller_Controller
         ob_end_clean();
         $this->main->template->vars('main_users_list', $user_list);
         $this->main->template->vars('page', $page);
-        (new Controller_Paginator($this))->paginator($total, $page, 'users', $per_page);
+        (new Controller_Paginator($this->main))->paginator($total, $page, 'users', $per_page);
     }
 
     public function del()
     {
         $this->main->test_access_rights();
-        $model = new Model_User();
-        $page = $model->validData(_A_::$app->get('page'));
-        $user_id = $model->validData(_A_::$app->get('id'));
-        $model->del_user($user_id);
+        $page = Model_User::validData(_A_::$app->get('page'));
+        $user_id = Model_User::validData(_A_::$app->get('id'));
+        Model_User::del_user($user_id);
         $this->listof();
     }
 
@@ -69,8 +66,7 @@ class Controller_Users extends Controller_Controller
     {
         $list = '';
         if (isset($country) && !empty($country)) {
-            $maddress = new Model_Address();
-            $provincies = $maddress->get_country_province($country);
+            $provincies = Model_Address::get_country_province($country);
             ob_start();
             foreach ($provincies as $province) {
                 $this->template->vars('value', $province['id']);
@@ -96,9 +92,8 @@ class Controller_Users extends Controller_Controller
 
     public function _edit()
     {
-        $model = new Model_User();
-        $user_id = $model->validData(_A_::$app->get('user_id'));
-        $data = $model->get_user_data($user_id);
+        $user_id = Model_User::validData(_A_::$app->get('user_id'));
+        $data = Model_User::get_user_data($user_id);
 
         $data['bill_list_countries'] = $this->list_countries($data['bill_country']);
         $data['ship_list_countries'] = $this->list_countries($data['ship_country']);
@@ -113,8 +108,7 @@ class Controller_Users extends Controller_Controller
     public function list_countries($select = null)
     {
         $list = '';
-        $maddress = new Model_Address();
-        $countries = $maddress->get_countries_all();
+        $countries = Model_Address::get_countries_all();
         ob_start();
         foreach ($countries as $country) {
             $this->template->vars('value', $country['id']);
@@ -191,7 +185,6 @@ class Controller_Users extends Controller_Controller
     public function _save_edit()
     {
         $result = false;
-        $model = new Model_User();
         include('include/save_edit_user_post.php');
         $user_id = !is_null(_A_::$app->get('user_id')) ? _A_::$app->get('user_id') : null;
         if (!empty($user_id)) {
@@ -199,7 +192,7 @@ class Controller_Users extends Controller_Controller
                 $error = ['Identify email field!!!'];
                 $this->template->vars('error', $error);
             } else {
-                if ($model->user_exist($user_email, $user_id)) {
+                if (Model_User::user_exist($user_email, $user_id)) {
                     $error[] = 'User with this email already exists!!!';
                     $this->template->vars('error', $error);
                 } else {
@@ -244,7 +237,7 @@ class Controller_Users extends Controller_Controller
 
                     } else {
 
-                        $result = $model->update($user_Same_as_billing, $user_email, $user_first_name, $user_last_name, $user_organization,
+                        $result = Model_User::update_user_data($user_Same_as_billing, $user_email, $user_first_name, $user_last_name, $user_organization,
                             $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip, $user_telephone,
                             $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name, $s_organization, $user_s_address,
                             $user_s_address2, $user_s_city, $user_s_state, $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax,
@@ -252,7 +245,7 @@ class Controller_Users extends Controller_Controller
 
                         if ($result) {
                             if (!is_null(_A_::$app->session('_')) && ($user_id == _A_::$app->session('_'))) {
-                                $user = Model_User::getUserById($user_id);
+                                $user = Model_User::get_user_by_id($user_id);
                                 if (isset($user)) {
                                     _A_::$app->setSession('user', $user);
                                 }
@@ -260,12 +253,11 @@ class Controller_Users extends Controller_Controller
 
                             if (!empty($user_create_password)) {
                                 if ($user_confirm_password == $user_create_password) {
-                                    $model_auth = new Model_Auth();
-                                    $salt = $model_auth->generatestr();
-                                    $password = $model_auth->hash_($user_create_password, $salt, 12);
-                                    $check = $model_auth->check($user_create_password, $password);
+                                    $salt = Model_Auth::generatestr();
+                                    $password = Model_Auth::hash_($user_create_password, $salt, 12);
+                                    $check = Model_Auth::check($user_create_password, $password);
                                     if ($password == $check) {
-                                        $result = $model->update_password($password, $user_id);
+                                        $result = Model_User::update_password($password, $user_id);
                                         if ($result) {
                                             $warning = ['All data saved successfully!!!'];
                                             $this->template->vars('warning', $warning);
@@ -292,7 +284,7 @@ class Controller_Users extends Controller_Controller
         }
 
         if ($result) {
-            $data = $model->get_user_data($user_id);
+            $data = Model_User::get_user_data($user_id);
         } else {
             $data = array(
                 'email' => $user_email,
@@ -351,14 +343,13 @@ class Controller_Users extends Controller_Controller
     public function _save_new()
     {
         $result = false;
-        $model = new Model_User();
         include('include/save_edit_user_post.php');
         $timestamp = time();
         if (empty($user_email)) {
             $error[] = 'Identify email field!!!';
             $this->main->template->vars('error', $error);
         } else {
-            if ($model->user_exist($user_email)) {
+            if (Model_User::user_exist($user_email)) {
                 $error[] = 'User with this email already exists!!!';
                 $this->template->vars('error', $error);
             } else {
@@ -407,12 +398,11 @@ class Controller_Users extends Controller_Controller
                     $this->template->vars('error', $error);
 
                 } else {
-                    $model_auth = new Model_Auth();
-                    $salt = $model_auth->generatestr();
-                    $password = $model_auth->hash_($user_create_password, $salt, 12);
-                    $check = $model_auth->check($user_create_password, $password);
+                    $salt = Model_Auth::generatestr();
+                    $password = Model_Auth::hash_($user_create_password, $salt, 12);
+                    $check = Model_Auth::check($user_create_password, $password);
                     if ($password == $check) {
-                        $result = $model->save($user_Same_as_billing, $user_email, $password, $user_first_name, $user_last_name, $user_organization,
+                        $result = Model_User::insert_user($user_Same_as_billing, $user_email, $password, $user_first_name, $user_last_name, $user_organization,
                             $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip,
                             $user_telephone, $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name,
                             $s_organization, $user_s_address, $user_s_address2, $user_s_city, $user_s_state,
@@ -488,22 +478,19 @@ class Controller_Users extends Controller_Controller
 //    {
 //        $per_page = 200;
 //        $page = 1;
-//
-//        $muser = new Model_User();
-//        $model_auth = new Model_Auth();
-//        $total = $muser->get_total_count_users();
+//        $total = Model_User::get_total_count_users();
 //        $count = 0;
 //        while ($page <= ceil($total / $per_page)) {
 //            $start = (($page++ - 1) * $per_page);
-//            $rows = $muser->get_users_list($start, $per_page);
+//            $rows = Model_User::get_users_list($start, $per_page);
 //            foreach ($rows as $row) {
 //                $id = $row['aid'];
 //                $current_password = $row['password'];
 //                if (!strpos('$2a$12$', $current_password)) {
-//                    $salt = $model_auth->generatestr();
-//                    $password = $model_auth->hash_($current_password, $salt, 12);
-//                    $check = $model_auth->check($current_password, $password);
-//                    if ($password == $check) $muser->update_password($password, $id);
+//                    $salt = Model_Auth::generatestr();
+//                    $password = Model_Auth::hash_($current_password, $salt, 12);
+//                    $check = Model_Auth::check($current_password, $password);
+//                    if ($password == $check) Model_User::update_password($password, $id);
 //                }
 //            }
 //            $count += count($rows);

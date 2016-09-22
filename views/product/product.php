@@ -1,11 +1,8 @@
 <body
     class="single single-product woocommerce woocommerce-page header-large ltr sticky-header-yes wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3 small-sticky">
 <div class="site-container">
-
-    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>'
-          type='text/css' media='all'/>
-    <script type='text/javascript'
-            src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
+    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
     <?php include "views/header.php"; ?>
 
@@ -35,7 +32,7 @@
                             $img1_exists = false;
                         }
                         $filename = _A_::$app->router()->UrlTo($filename);
-                        $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
+                        $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
                         ?>
                         <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                             itemprop="image"
@@ -65,7 +62,7 @@
                                     $filename1 = null;
                                 }
                                 $filename = _A_::$app->router()->UrlTo($filename);
-                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
+                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
                                 ?>
                                 <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
@@ -86,7 +83,7 @@
                                     $filename1 = null;
                                 }
                                 $filename = _A_::$app->router()->UrlTo($filename);
-                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
+                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
                                 ?>
                                 <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
@@ -106,7 +103,7 @@
                                     $filename1 = null;
                                 }
                                 $filename = _A_::$app->router()->UrlTo($filename);
-                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
+                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
                                 ?>
                                 <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
@@ -126,7 +123,7 @@
                                     $filename1 = null;
                                 }
                                 $filename = _A_::$app->router()->UrlTo($filename);
-                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1): null;
+                                $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
                                 ?>
                                 <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
                                     class="zoom"
@@ -200,7 +197,7 @@
                         <b id="b_in_product">
                             <?php
                             $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
-                            $mhref = _A_::$app->router()->UrlTo('matches/add',['p_id' => $pid]);
+                            $mhref = _A_::$app->router()->UrlTo('matches/add', ['p_id' => $pid]);
                             ?>
                             <a href="<?= $ahref; ?>">
                                 <button type="button" class="single_add_to_cart_button button alt">Ask a Question
@@ -256,8 +253,8 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/');?>">
-    <input type="hidden" id="back_url" value="<?= $back_url;?>">
+    <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
+    <input type="hidden" id="back_url" value="<?= $back_url; ?>">
     <script src='<?= _A_::$app->router()->UrlTo('views/js/product/product.js'); ?>' type="text/javascript"></script>
 
 

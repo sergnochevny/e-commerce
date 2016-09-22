@@ -33,10 +33,9 @@ class Controller_Discount extends Controller_Controller
     public function del()
     {
         $this->main->test_access_rights();
-        $model = new Model_Discount();
-        $id = $model->validData(_A_::$app->get('id'));
+        $id = Model_Discount::validData(_A_::$app->get('id'));
         if (!empty($id)) {
-            $model->del_discount($id);
+            Model_Discount::del_discount($id);
         }
 
         $this->get_list();
@@ -46,9 +45,8 @@ class Controller_Discount extends Controller_Controller
     public function edit_form()
     {
         $this->main->test_access_rights();
-        $model = new Model_Discount();
-        $id = $model->validData(_A_::$app->get('id'));
-        $userInfo = $model->get_edit_discounts_data($id);
+        $id = Model_Discount::validData(_A_::$app->get('id'));
+        $userInfo = Model_Discount::get_edit_discounts_data($id);
         $this->template->vars('userInfo', $userInfo);
         $this->main->view_layout('edit_form');
     }
@@ -64,10 +62,9 @@ class Controller_Discount extends Controller_Controller
     function data_usage()
     {
         $this->main->test_access_rights();
-        $model = new Model_Discount();
         if (!empty($discount_id)) {
             ob_start();
-            $row = Model_Discount::getFabrixSpecialsByID((integer)$model->validData(_A_::$app->get('id')));
+            $row = Model_Discount::getFabrixSpecialsByID((integer)Model_Discount::validData(_A_::$app->get('id')));
             $allow_multiple = $row['allow_multiple'];
             $date_start = $row['date_start'];
             $date_end = $row['date_end'];
@@ -91,9 +88,8 @@ class Controller_Discount extends Controller_Controller
     function data_usage_order()
     {
         $this->main->test_access_rights();
-        $model = new Model_Discount();
         if (!empty($discount_id)) {
-            $rows = Model_Discount::getFabrixSpecialsUsageById((integer)$model->validData(_A_::$app->get('discount_id')));
+            $rows = Model_Discount::getFabrixSpecialsUsageById((integer)Model_Discount::validData(_A_::$app->get('discount_id')));
             ob_start();
             foreach ($rows as $key => $row) {
                 $orders = Model_Discount::getFabrixOrdersById($row[2]);
@@ -121,7 +117,6 @@ class Controller_Discount extends Controller_Controller
     function edit_data()
     {
         $this->main->test_access_rights();
-        $model = new Model_Discount();
         include('include/post_edit_discounts_data.php');
 
         $date_end = strlen($date_end) > 0 ? strtotime($date_end) : $date_end = 0;
@@ -149,7 +144,7 @@ class Controller_Discount extends Controller_Controller
         if (!empty($discount_id)) {
             if (
                 ($iDscntType == '2' && $shipping_type == '0') ||
-                ((strlen($coupon_code) > 0) && ($generate_code == "0") && $model->checkCouponCode($discount_id, $coupon_code)) ||
+                ((strlen($coupon_code) > 0) && ($generate_code == "0") && Model_Discount::checkCouponCode($discount_id, $coupon_code)) ||
                 (!isset($users_list) && ($users_check == '4')) ||
                 (!isset($fabric_list) && ($sel_fabrics == "2")) ||
                 ($start_date == 0) || ($date_end == 0) ||
@@ -160,7 +155,7 @@ class Controller_Discount extends Controller_Controller
                 $error = [];
 
                 if ($iDscntType == '2' && $shipping_type == '0') $error[] = "The shipping type is required.";
-                if (($generate_code == "0") && (strlen($coupon_code) > 0) && $model->checkCouponCode($discount_id, $coupon_code))
+                if (($generate_code == "0") && (strlen($coupon_code) > 0) && Model_Discount::checkCouponCode($discount_id, $coupon_code))
                     $error[] = "The coupon code is in use.";
                 if (($restrictions == '')) $error[] = "Identify 'retrictions' field";
                 if ($iType == '0') $error[] = "Identify 'promotion' field";
@@ -179,8 +174,8 @@ class Controller_Discount extends Controller_Controller
 
                 $this->template->vars('error', $error);
 
-                $fabrics = $model->get_edit_form_checked_fabrics_by_array($fabric_list, $sel_fabrics);
-                $users = $model->get_edit_form_checked_users_by_array($users_list, $users_check);
+                $fabrics = Model_Discount::get_edit_form_checked_fabrics_by_array($fabric_list, $sel_fabrics);
+                $users = Model_Discount::get_edit_form_checked_users_by_array($users_list, $users_check);
 
                 $userInfo = array(
                     'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
@@ -212,27 +207,27 @@ class Controller_Discount extends Controller_Controller
             } else {
 
                 if ($generate_code == '1') {
-                    $coupon_code = $model->generateCouponCode($discount_id);
+                    $coupon_code = Model_Discount::generateCouponCode($discount_id);
                     $allow_multiple = 1;
                     $sel_fabrics = 1;
                     $fabric_list = [];
                 }
 
-                $model->deleteFabrixSpecialsUserById($discount_id);
+                Model_Discount::deleteFabrixSpecialsUserById($discount_id);
                 if ($users_check == "4") {
                     foreach ($users_list as $user_id) {
-                        $model->saveFabrixSpecialsUser($discount_id, $user_id);
+                        Model_Discount::saveFabrixSpecialsUser($discount_id, $user_id);
                     }
                 }
 
-                $model->deleteFabrixSpecialsProductById($discount_id);
+                Model_Discount::deleteFabrixSpecialsProductById($discount_id);
                 if ($sel_fabrics == "2") {
                     foreach ($fabric_list as $fabric_id) {
-                        $model->saveFabrixSpecialsUser($discount_id, $fabric_id);
+                        Model_Discount::saveFabrixSpecialsUser($discount_id, $fabric_id);
                     }
                 }
 
-                $result = $model->updateFabrixSpecials($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end, $discount_id);
+                $result = Model_Discount::updateFabrixSpecials($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end, $discount_id);
                 $error = [];
                 if ($result) {
                     $warning = ["The data updated successfully!"];
@@ -247,20 +242,21 @@ class Controller_Discount extends Controller_Controller
         }
     }
 
-    function edit()
+    public function edit()
     {
         $this->main->test_access_rights();
-        $model = new Model_Discount();
-        $id = $model->validData(_A_::$app->get('id'));
-        $userInfo = $model->get_edit_discounts_data($id);
-        $this->template->vars('data', $userInfo);
-        $this->main->view_admin('edit');
+        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
+            $this->save_product('product/edit');
+        } else {
+            $id = Model_Discount::validData(_A_::$app->get('id'));
+            $data = Model_Discount::get_edit_discounts_data($id);
+            $this->template->vars('data', $data);
+            $this->main->view_admin('edit');
+        }
     }
 
-    function save_data()
+    private function save_data()
     {
-        $this->main->test_access_rights();
-        $model = new Model_Discount();
         include('include/post_edit_discounts_data.php');
 
         $date_end = strlen($date_end) > 0 ? strtotime($date_end) : 0;
@@ -287,7 +283,7 @@ class Controller_Discount extends Controller_Controller
 
         if (
             ($iDscntType == '2' && $shipping_type == '0') ||
-            (($generate_code == "0") && (strlen($coupon_code) > 0) && $model->checkCouponCode(0, $coupon_code)) ||
+            (($generate_code == "0") && (strlen($coupon_code) > 0) && Model_Discount::checkCouponCode(0, $coupon_code)) ||
             (!isset($users_list) && ($users_check == '4')) ||
             (!isset($fabric_list) && ($sel_fabrics == "2")) ||
             ($start_date == 0) || ($date_end == 0) ||
@@ -298,7 +294,7 @@ class Controller_Discount extends Controller_Controller
             $error = [];
 
             if ($iDscntType == '2' && $shipping_type == '0') $error[] = "The shipping type is required.";
-            if (($generate_code == "0") && (strlen($coupon_code) > 0) && $model->checkCouponCode(0, $coupon_code))
+            if (($generate_code == "0") && (strlen($coupon_code) > 0) && Model_Discount::checkCouponCode(0, $coupon_code))
                 $error[] = "The coupon code is in use.";
             if (($restrictions == '')) $error[] = "Identify 'restrictions' field";
             if ($iType == '0') $error[] = "Identify 'promotion' field";
@@ -317,10 +313,10 @@ class Controller_Discount extends Controller_Controller
 
             $this->template->vars('error', $error);
 
-            $fabrics = $model->get_edit_form_checked_fabrics_by_array($fabric_list, $sel_fabrics);
-            $users = $model->get_edit_form_checked_users_by_array($users_list, $users_check);
+            $fabrics = Model_Discount::get_edit_form_checked_fabrics_by_array($fabric_list, $sel_fabrics);
+            $users = Model_Discount::get_edit_form_checked_users_by_array($users_list, $users_check);
 
-            $userInfo = array(
+            $data = array(
                 'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
                 'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '',
                 'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '',
@@ -344,36 +340,36 @@ class Controller_Discount extends Controller_Controller
                 'generate_code' => $generate_code
             );
 
-            $this->template->vars('userInfo', $userInfo);
+            $this->template->vars('userInfo', $data);
 
             $this->main->view_admin('add');
 
         } else {
 
             if ($generate_code == '1') {
-                $coupon_code = $model->generateCouponCode(0);
+                $coupon_code = Model_Discount::generateCouponCode(0);
                 $allow_multiple = 1;
                 $sel_fabrics = 1;
                 $fabric_list = [];
             }
 
             $timestamp = time();
-            $result = $model->saveFabrixSpecial($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end);
+            $result = Model_Discount::saveFabrixSpecial($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end);
             $error = [];
             if ($result) {
                 $discount_id = mysql_insert_id();
 
-                $result = $model->deleteFabrixSpecialsUserById($discount_id);
+                $result = Model_Discount::deleteFabrixSpecialsUserById($discount_id);
                 if ($users_check == "4") {
                     foreach ($users_list as $user_id) {
-                        $model->saveFabrixSpecialsUser($discount_id, $user_id);
+                        Model_Discount::saveFabrixSpecialsUser($discount_id, $user_id);
                     }
                 }
 
-                $result = $model->deleteFabrixSpecialsProductById($discount_id);
+                $result = Model_Discount::deleteFabrixSpecialsProductById($discount_id);
                 if ($sel_fabrics == "2") {
                     foreach ($fabric_list as $fabric_id) {
-                        $result = $model->saveFabrixSpecialsProducts($discount_id, $fabric_id);
+                        $result = Model_Discount::saveFabrixSpecialsProducts($discount_id, $fabric_id);
                     }
                 }
 
@@ -388,11 +384,10 @@ class Controller_Discount extends Controller_Controller
         }
     }
 
-    function add()
+    public function add()
     {
         $this->main->test_access_rights();
-        $model = new Model_Discount();
-        $userInfo = $model->get_new_discounts_data();
+        $userInfo = Model_Discount::get_new_discounts_data();
         $this->template->vars('userInfo', $userInfo);
         $this->main->view_admin('add');
     }

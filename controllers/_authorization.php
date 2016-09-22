@@ -18,8 +18,8 @@ class Controller_Authorization extends Controller_Controller
         }
         if ($this->is_set_admin_remember()) {
             $remember = _A_::$app->cookie('_ar');
-            if ($model->is_admin_remember($remember)) {
-                $admin = $model->get_admin_data();
+            if (Model_Auth::is_admin_remember($remember)) {
+                $admin = Model_Auth::get_admin_data();
                 _A_::$app->setSession('_a', $admin['id']);
                 $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin/home');
                 $this->redirect($url);
@@ -27,8 +27,8 @@ class Controller_Authorization extends Controller_Controller
         }
         if ($this->is_set_user_remember()) {
             $remember = _A_::$app->cookie('_r');
-            if ($model->is_user_remember($remember)) {
-                $user = $model->get_user_data();
+            if (Model_Auth::is_user_remember($remember)) {
+                $user = Model_Auth::get_user_data();
                 _A_::$app->setSession('_', $user['aid']);
                 _A_::$app->setSession('user', $user);
                 $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('shop');
@@ -45,14 +45,14 @@ class Controller_Authorization extends Controller_Controller
             $login = _A_::$app->post('login');
             $password = _A_::$app->post('pass');
 
-            if ($model->is_admin($login)) {
+            if (Model_Auth::is_admin($login)) {
                 if ($this->admin_authorize($login, $password)) {
                     $url = base64_decode(urldecode(_A_::$app->post('redirect')));
                     $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('admin/home');
                     $this->redirect($url);
                 }
             }
-            if ($model->is_user($login)) {
+            if (Model_Auth::is_user($login)) {
                 if ($this->user_authorize($login, $password)) {
                     $url = base64_decode(urldecode(_A_::$app->post('redirect')));
                     $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('shop');
@@ -110,8 +110,6 @@ class Controller_Authorization extends Controller_Controller
     {
         if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
             if (!_A_::$app->get('user_id')) {
-                $muser = new Model_User();
-                $mauth = new Model_Auth();
                 $this->main->template->vars('action', _A_::$app->router()->UrlTo('authorization/lost_password'));
                 if (empty(_A_::$app->post('login'))) {
                     $error = ['Empty Email. Identify your Email(Login).'];
@@ -120,17 +118,17 @@ class Controller_Authorization extends Controller_Controller
                     exit();
                 }
                 $email = _A_::$app->post('login');
-                if (!$muser->user_exist($email)) {
+                if (!Model_User::user_exist($email)) {
                     $error = ['Wrong Email(Login) or this Email is not registered.'];
                     $this->main->template->vars('error', $error);
                     $this->lost_password_form();
                     exit();
                 }
-                $user = Model_User::getUserByEmail($email);
+                $user = Model_User::get_user_by_email($email);
                 $user_id = $user['aid'];
                 $date = date('Y-m-d H:i:s', time());
-                $remind = $mauth->generate_hash($date);
-                if ($muser->set_remind_for_change_pass($remind, $date, $user_id)) {
+                $remind = Model_Auth::generate_hash($date);
+                if (Model_User::set_remind_for_change_pass($remind, $date, $user_id)) {
                     $remind_url = _A_::$app->router()->UrlTo('authorization/lost_password', ['remind' => urlencode(base64_encode($remind))]);
                     if ($this->send_remind($email, $remind_url)) {
 
@@ -144,25 +142,24 @@ class Controller_Authorization extends Controller_Controller
                 $user_id = _A_::$app->get('user_id');
                 $remind = _A_::$app->get('remind');
                 if (isset($remind)) {
-                    if (Model_User::getUserById($user_id)) {
-                        $user = Model_User::getUserById($user_id);
+                    if (Model_User::user_exist(null, $user_id)) {
+                        $user = Model_User::get_user_by_id($user_id);
                         if (isset($user)) {
                             $result = true;
                             $time = strtotime($user['remind_time']);
                             $now = time();
                             if (($now - $time) <= 3600) {
                                 $result = true;
-                                $mauth = new Model_Auth();
-                                if ($remind == $mauth->check($user['remind_time'], $user['remind'])) {
+                                if ($remind == Model_Auth::check($user['remind_time'], $user['remind'])) {
                                     $password = _A_::$app->post('password');
                                     $confirm = _A_::$app->post('confirm');
                                     if ((isset($password) && strlen(trim($password)) > 0) &&
                                         (isset($confirm) && strlen(trim($confirm)) > 0)
                                     ) {
                                         if ($password == $confirm) {
-                                            $hash = $mauth->generate_hash($password);
-                                            $muser->update_password($hash, $user_id);
-                                            $muser->clean_remind($user_id);
+                                            $hash = Model_Auth::generate_hash($password);
+                                            Model_User::update_password($hash, $user_id);
+                                            Model_User::clean_remind($user_id);
                                             $message = 'Congratulattions. Your Password has been changed succesfully!!!<br>';
                                             $message .= 'Now you can go to the <a href="' . _A_::$app->router()->UrlTo('authorization') . '">login form</a> and use it.';
                                             $this->main->template->vars('message', $message);
@@ -216,16 +213,14 @@ class Controller_Authorization extends Controller_Controller
                 $remind = _A_::$app->get('remind');
                 if (isset($remind)) {
                     $remind = base64_decode(urldecode($remind));
-                    $muser = new Model_User();
-                    if ($muser->remind_exist($remind)) {
-                        $user = $muser->get_user_by_remind($remind);
+                    if (Model_User::remind_exist($remind)) {
+                        $user = Model_User::get_user_by_remind($remind);
                         if (isset($user)) {
                             $user_id = $user['aid'];
                             $time = strtotime($user['remind_time']);
                             $now = time();
-                            $mauth = new Model_Auth();
                             if ((($now - $time) <= 3600) &&
-                                ($remind == $mauth->check($user['remind_time'], $user['remind']))
+                                ($remind == Model_Auth::check($user['remind_time'], $user['remind']))
                             ) {
                                 $result = true;
                                 $action = _A_::$app->router()->UrlTo('authorization/lost_password', ['user_id' => $user_id]);

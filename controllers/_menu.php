@@ -18,11 +18,10 @@ class Controller_Menu extends Controller_Controller
 
     function show_shop_menu()
     {
-        $model = new Model_Tools();
         $base_url = _A_::$app->router()->UrlTo('/');
 
         $this->template->vars('base_url', $base_url);
-        $items = $model->get_items_for_menu('all');
+        $items = Model_Tools::get_items_for_menu('all');
         ob_start();
         foreach ($items as $item) {
             $name = $item['cname'];
@@ -34,7 +33,7 @@ class Controller_Menu extends Controller_Controller
         $menu_all_category = ob_get_contents();
         ob_end_clean();
 
-        $items = $model->get_items_for_menu('new');
+        $items = Model_Tools::get_items_for_menu('new');
         ob_start();
         foreach ($items as $item) {
             $name = $item['cname'];
@@ -46,7 +45,7 @@ class Controller_Menu extends Controller_Controller
         $menu_new_category = ob_get_contents();
         ob_end_clean();
 
-        $items = $model->get_items_for_menu('manufacturer');
+        $items = Model_Tools::get_items_for_menu('manufacturer');
         ob_start();
         foreach ($items as $item) {
             $name = $item['manufacturer'];
@@ -58,7 +57,7 @@ class Controller_Menu extends Controller_Controller
         $menu_manufacturers = ob_get_contents();
         ob_end_clean();
 
-        $items = $model->get_items_for_menu('patterns');
+        $items = Model_Tools::get_items_for_menu('patterns');
         ob_start();
         foreach ($items as $item) {
             $name = $item['pattern'];
@@ -85,11 +84,10 @@ class Controller_Menu extends Controller_Controller
 
     function show_blog_menu()
     {
-        $model = new Model_Tools();
         $base_url = _A_::$app->router()->UrlTo('/');
 
         $this->template->vars('base_url', $base_url);
-        $items = $model->get_items_for_menu('blog_category');
+        $items = Model_Tools::get_items_for_menu('blog_category');
         ob_start();
         foreach ($items as $item) {
             $href = _A_::$app->router()->UrlTo('/blog', ['cat' => $item['group_id']]);

@@ -3,13 +3,14 @@
 Class Model_Blog extends Model_Model
 {
 
-    public static function isCategoryEmpty($id){
-        $q = "SELECT * FROM blog_group_posts WHERE group_id = '$id'";
+    public static function blog_category_is_empty($group_id)
+    {
+        $q = "select * from blog_group_posts where group_id = '$group_id'";
         $res = mysql_query($q);
         return ($res && (mysql_num_rows($res) < 1));
     }
 
-    public function deleteCategory($group_id)
+    public static function del_blog_category($group_id)
     {
         $q = "delete from blog_group_posts where group_id = '$group_id'";
         $res = mysql_query($q);
@@ -19,16 +20,12 @@ Class Model_Blog extends Model_Model
         }
     }
 
-    public static function getCategories(&$quantity = null)
+    public static function get_blog_categories()
     {
         $res = null;
         $q = "select * from blog_groups";
         $result = mysql_query($q);
-
         if ($result) {
-            if(!is_null($quantity)){
-                $quantity = mysql_num_rows($result);
-            }
             while ($row = mysql_fetch_assoc($result)) {
                 $res[] = $row;
             }
@@ -36,7 +33,7 @@ Class Model_Blog extends Model_Model
         return $res;
     }
 
-    public static function getPostByName($post_name)
+    public static function get_blog_post_by_post_name($post_name)
     {
         $result = null;
         $q = "select * from blog_posts where post_name = '$post_name'";
@@ -47,10 +44,10 @@ Class Model_Blog extends Model_Model
         return $result;
     }
 
-    public static function getPostById($id)
+    public static function get_blog_post_by_post_id($post_id)
     {
         $result = null;
-        $q = "select * from blog_posts where ID = '$id'";
+        $q = "select * from blog_posts where id = '$post_id'";
         $res = mysql_query($q);
         if ($res && mysql_num_rows($res) > 0) {
             $result = mysql_fetch_assoc($res);
@@ -58,7 +55,7 @@ Class Model_Blog extends Model_Model
         return $result;
     }
 
-    public static function getPostRelatedCategories($post_id)
+    public static function get_post_categories_by_post_id($post_id)
     {
         $result = [];
         $q = "select group_id from blog_group_posts where object_id = '$post_id'";
@@ -71,7 +68,7 @@ Class Model_Blog extends Model_Model
         return $result;
     }
 
-    public function getBlogCategoryByGroupId($group_id)
+    public static function get_blog_category($group_id)
     {
         $result = mysql_query("select * from blog_groups WHERE group_id='$group_id'");
         $row = mysql_fetch_array($result);
@@ -83,7 +80,7 @@ Class Model_Blog extends Model_Model
         );
     }
 
-    public function delete($post_id)
+    public function del_post($post_id)
     {
         $strSQL = "DELETE FROM blog_group_posts WHERE object_id = $post_id";
         mysql_query($strSQL);
@@ -93,7 +90,6 @@ Class Model_Blog extends Model_Model
         mysql_query($strSQL);
         $strSQL = "DELETE FROM blog_posts WHERE id = $post_id";
         mysql_query($strSQL);
-        unset($strSQL);
     }
 
     public static function getPostImg($post_id)
@@ -107,7 +103,7 @@ Class Model_Blog extends Model_Model
         return $res;
     }
 
-    public function getPostDescKeys($post_id)
+    public static function getPostDescKeys($post_id)
     {
         $resulthatistim = mysql_query("select * from blog_post_keys_descriptions WHERE post_id='$post_id'");
         $res = null;
@@ -118,7 +114,7 @@ Class Model_Blog extends Model_Model
         return $res;
     }
 
-    public function save($title, $keywords, $description, $name, $img, $content, $status, $categories)
+    public static function save_new_post($title, $keywords, $description, $name, $img, $content, $status, $categories)
     {
 
         $q = "insert into blog_posts" .
@@ -151,7 +147,7 @@ Class Model_Blog extends Model_Model
         }
     }
 
-    public function update($post_id, $title, $keywords, $description, $name, $img, $content, $status, $categories)
+    public static function save_edit_post($post_id, $title, $keywords, $description, $name, $img, $content, $status, $categories)
     {
 
         $q = "update blog_posts" .
@@ -183,7 +179,7 @@ Class Model_Blog extends Model_Model
         }
     }
 
-    public function getPostCatName($cat_id)
+    public static function getPostCatName($cat_id)
     {
         $resulthatistim = mysql_query("select * from blog_groups WHERE group_id='$cat_id'");
         $rowsni = mysql_fetch_array($resulthatistim);
@@ -194,17 +190,17 @@ Class Model_Blog extends Model_Model
         return $res;
     }
 
-    public function saveCategory($post_category_name, $slug)
+    public static function insert_blog_category($post_category_name, $slug)
     {
         return mysql_query("insert into blog_groups set name='$post_category_name', slug='$slug'");
     }
 
-    public function updateCategory($post_category_name, $group_id)
+    public static function update_blog_category($post_category_name, $group_id)
     {
         return mysql_query("update blog_groups set name='$post_category_name' WHERE group_id ='$group_id'");
     }
 
-    public function get_blog_categories_list()
+    public static function get_blog_categories_list()
     {
         $q = "select a.group_id, a.name, count(b.group_id) as amount from blog_groups a " .
             " left join blog_group_posts b on a.group_id=b.group_id" .
@@ -219,7 +215,7 @@ Class Model_Blog extends Model_Model
         return $categories;
     }
 
-    public function get_count_publish_posts($cid = null)
+    public static function get_count_publish_posts($cid = null)
     {
         if (!is_null($cid)) {
             $q_total = "SELECT COUNT(*) FROM `blog_posts` a" .
@@ -233,7 +229,7 @@ Class Model_Blog extends Model_Model
         return $total[0];
     }
 
-    public function get_publish_post_list($cat_id, $start, $per_page, &$res_count_rows)
+    public static function get_publish_post_list($cat_id, $start, $per_page, &$res_count_rows)
     {
         if (!is_null($cat_id)) {
             $q = "SELECT a.* FROM `blog_posts` a" .
@@ -255,7 +251,7 @@ Class Model_Blog extends Model_Model
 
     }
 
-    public function get_count_posts($cid = null)
+    public static function get_count_posts($cid = null)
     {
         if (!is_null($cid)) {
             $q_total = "SELECT COUNT(*) FROM `blog_posts` a" .
@@ -268,7 +264,7 @@ Class Model_Blog extends Model_Model
         return mysql_fetch_row($res)[0];
     }
 
-    public function get_post_list($cat_id, $start, $per_page, &$res_count_rows)
+    public static function get_post_list($cat_id, $start, $per_page, &$res_count_rows)
     {
         if (!is_null($cat_id)) {
             $q = "SELECT a.* FROM `blog_posts` a" .

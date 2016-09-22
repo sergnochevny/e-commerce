@@ -3,7 +3,7 @@
 Class Model_Price extends Model_Model
 {
 
-    function sysHideAllRegularPrices()
+    public static function sysHideAllRegularPrices()
     {
         $hideAllRegularPrices = false;
         $sqlGetGlobalPrice = 'SELECT * FROM fabrix_system_master;';
@@ -15,26 +15,26 @@ Class Model_Price extends Model_Model
         return $hideAllRegularPrices;
     }
 
-    function getPrintPrice($price, &$format_price, $inventory = 0, $piece = 0)
+    public static function getPrintPrice($price, &$format_price, $inventory = 0, $piece = 0)
     {
         if ($piece == 1 && $inventory > 0) {
             $price = $price * $inventory;
-            $format_price = $this->formatPrice($price);
+            $format_price = self::formatPrice($price);
             $format_price = sprintf('%s / piece', $format_price);
         } else {
-            $format_price = $this->formatPrice($price);
+            $format_price = self::formatPrice($price);
             $format_price = sprintf('%s / yard', $format_price);
         }
         return $price;
     }
 
-    function formatPrice($price)
+    public static function formatPrice($price)
     {
         $price = "$" . number_format($price, 2);
         return $price;
     }
 
-    function calculateDiscount($discount_category, $uid, $aPrdcts, $rPrice, $rShip, $sCoupon, &$bCodeValid, $bReturnString, &$sPriceDiscount, &$sShippingDiscount, $shipType, &$discountIds)
+    public static function calculateDiscount($discount_category, $uid, $aPrdcts, $rPrice, $rShip, $sCoupon, &$bCodeValid, $bReturnString, &$sPriceDiscount, &$sShippingDiscount, $shipType, &$discountIds)
     {
 
         #strings for the single and multiple discounts
@@ -86,7 +86,7 @@ Class Model_Price extends Model_Model
 
         if ($uid > 0) {
             $sSQL .= sprintf(" OR (s.user_type=4 AND su.aid=%u)", $uid);
-            $sSQL .= sprintf(" OR (user_type=%u)", $this->getUserType($uid));
+            $sSQL .= sprintf(" OR (user_type=%u)", self::getUserType($uid));
         }
         $sSQL .= ")";
 
@@ -136,7 +136,7 @@ Class Model_Price extends Model_Model
 
             while ($rs = mysql_fetch_assoc($result)) {
 
-                $bDoDiscount = $this->checkDiscountApplies($rs, $uid, $rPrice);
+                $bDoDiscount = self::checkDiscountApplies($rs, $uid, $rPrice);
 
                 if ($bDoDiscount) {
 
@@ -212,7 +212,7 @@ Class Model_Price extends Model_Model
 
                         }
 
-                        $tmpDiscount = $this->discountIt($discount_category, $rPrice, $rShip, $rs['discount_amount'], $rs['discount_amount_type'], $rs['discount_type'], $rs['product_type'], $rs['sid'], $aPrdcts, $sPds);
+                        $tmpDiscount = self::discountIt($discount_category, $rPrice, $rShip, $rs['discount_amount'], $rs['discount_amount_type'], $rs['discount_type'], $rs['product_type'], $rs['sid'], $aPrdcts, $sPds);
                         if ($discount_category == DISCOUNT_CATEGORY_SHIPPING) {
                             $rShip -= $tmpDiscount;
                         } else $rPrice -= $tmpDiscount;
@@ -282,7 +282,7 @@ Class Model_Price extends Model_Model
 
     }
 
-    function checkDiscountApplies($rs, $uid, $rPrice)
+    public static function checkDiscountApplies($rs, $uid, $rPrice)
     {
 
         $bDoDiscount = false;
@@ -296,17 +296,17 @@ Class Model_Price extends Model_Model
                 break;
 
             case 2: #First purchase
-                $iPur = $this->getTransactionDetails($uid, false, true);
+                $iPur = self::getTransactionDetails($uid, false, true);
                 if ($iPur == 0) {
                     $bDoDiscount = true;
                 }
                 break;
 
             case 3: #Next Purchase
-                if ($this->isNextPurchase($uid, $rs['date_start'])) {
+                if (self::isNextPurchase($uid, $rs['date_start'])) {
                     if ((int)$rs['required_amount'] > 0) {
                         if ($rs['required_type'] == 1) {            #number of purchases
-                            $iPur = $this->getTransactionDetails($uid, false, true);
+                            $iPur = self::getTransactionDetails($uid, false, true);
                             if ($iPur >= $rs['required_amount']) {
                                 $bDoDiscount = true;
                             }
@@ -323,12 +323,12 @@ Class Model_Price extends Model_Model
 
             case 4: #Account Total
                 if ($rs['required_type'] == 1) {            #number of purchases
-                    $iPur = $this->getTransactionDetails($uid, false, true);
+                    $iPur = self::getTransactionDetails($uid, false, true);
                     if ($iPur >= $rs['required_amount']) {
                         $bDoDiscount = true;
                     }
                 } else if ($rs['required_type'] == 2) {        #amount spent
-                    $iPur = $this->getTransactionDetails($uid, true, true);
+                    $iPur = self::getTransactionDetails($uid, true, true);
                     if ($iPur >= $rs['required_amount']) {
                         $bDoDiscount = true;
                     }
@@ -338,12 +338,12 @@ Class Model_Price extends Model_Model
             case 5: #Account Total For Last Month
 
                 if ($rs['required_type'] == 1) {            #number of purchases
-                    $iPur = $this->getTransactionDetails($uid, false, false);
+                    $iPur = self::getTransactionDetails($uid, false, false);
                     if ($iPur >= $rs['required_amount']) {
                         $bDoDiscount = true;
                     }
                 } else if ($rs['required_type'] == 2) {        #amount spent
-                    $iPur = $this->getTransactionDetails($uid, true, false);
+                    $iPur = self::getTransactionDetails($uid, true, false);
                     if ($iPur >= $rs['required_amount']) {
                         $bDoDiscount = true;
                     }
@@ -356,7 +356,7 @@ Class Model_Price extends Model_Model
 
     }
 
-    function isNextPurchase($id, $iStart)
+    public static function isNextPurchase($id, $iStart)
     {
 
         $bNext = false;
@@ -434,7 +434,7 @@ Class Model_Price extends Model_Model
 
     }
 
-    function calculateProductSalePrice($pid, $price, &$discountIds)
+    public static function calculateProductSalePrice($pid, $price, &$discountIds)
     {
 
         #do the check to see if there is a system wide discount
@@ -469,7 +469,7 @@ Class Model_Price extends Model_Model
         $NOT_USED = '';
         $shipcost = 0;
 
-        $rSystemDiscount = $this->calculateDiscount(DISCOUNT_CATEGORY_PRODUCT, $uid, $aPrds, $price, $shipcost, '', $bTemp, false, $NOT_USED, $NOT_USED, $shipping, $discountIds);
+        $rSystemDiscount = self::calculateDiscount(DISCOUNT_CATEGORY_PRODUCT, $uid, $aPrds, $price, $shipcost, '', $bTemp, false, $NOT_USED, $NOT_USED, $shipping, $discountIds);
         if ($rSystemDiscount > 0) {
             $ret = $price - $rSystemDiscount;
         }
@@ -478,7 +478,7 @@ Class Model_Price extends Model_Model
 
     }
 
-    function doDiscount($rAmt, $rDis, $iType)
+    public static function doDiscount($rAmt, $rDis, $iType)
     {
 
         $rRet = 0;
@@ -511,7 +511,7 @@ Class Model_Price extends Model_Model
 
     }*/
 
-    function discountIt($discount_category, $rTtl, $rShip, $rDis, $iDisAmntType, $iDisType, $iPrdType, $iSid, $aPrd, $sPds)
+    public static function discountIt($discount_category, $rTtl, $rShip, $rDis, $iDisAmntType, $iDisType, $iPrdType, $iSid, $aPrd, $sPds)
     {
 
         $rRet = 0;
@@ -534,9 +534,9 @@ Class Model_Price extends Model_Model
         //discount_type = 2 - shipping
         //discount_type = 3 - total w/ shipping
         if ($iDisType == 2) {
-            $rRet = $this->doDiscount($rShip, $rDis, $iDisAmntType);
+            $rRet = self::doDiscount($rShip, $rDis, $iDisAmntType);
         } else if ($iDisType == 3) {
-            $rRet = $this->doDiscount(($rTtl + $rShip + RATE_HANDLING), $rDis, $iDisAmntType);
+            $rRet = self::doDiscount(($rTtl + $rShip + RATE_HANDLING), $rDis, $iDisAmntType);
         } else {
 
             if (($discount_category != DISCOUNT_CATEGORY_COUPON) && ($iDisAmntType == 1)) {    #$ amount
@@ -554,7 +554,7 @@ Class Model_Price extends Model_Model
                 $iQty = 1;
             }
 
-            $rRet = $this->doDiscount($rTtl, $rDis, $iDisAmntType, $iQty);
+            $rRet = self::doDiscount($rTtl, $rDis, $iDisAmntType, $iQty);
             $rRet = $iQty * $rRet;
 
         }
@@ -564,7 +564,7 @@ Class Model_Price extends Model_Model
     }
 
 
-    function getProductsTotal($aPrd, $iSid, $sPds)
+    public static function getProductsTotal($aPrd, $iSid, $sPds)
     {
 
         #make sure we receive an special id and a list of the product ids
@@ -606,10 +606,10 @@ Class Model_Price extends Model_Model
 
     }
 
-    function getUserType($uid)
+    public static function getUserType($uid)
     {
 
-        $iTtl = $this->getTransactionDetails($uid, false, true);
+        $iTtl = self::getTransactionDetails($uid, false, true);
 
         if ($iTtl > 0) {
             return 3;
@@ -619,7 +619,7 @@ Class Model_Price extends Model_Model
 
     }
 
-    function getTransactionDetails($id, $bVolume, $bTotal)
+    public static function getTransactionDetails($id, $bVolume, $bTotal)
     {
 
         $rRet = 0;
@@ -655,7 +655,7 @@ Class Model_Price extends Model_Model
     }
 
 
-    function saveDiscountUsage($discountIds, $oid)
+    public static function saveDiscountUsage($discountIds, $oid)
     {
 
         #delete any record of discounts on this order, in case thankyou.php is refreshed.
@@ -671,7 +671,7 @@ Class Model_Price extends Model_Model
 
     }
 
-    function getNextChangeInDiscoutDate($discountIds)
+    public static function getNextChangeInDiscoutDate($discountIds)
     {
         $query = "";
         if (count($discountIds) > 0) {
@@ -688,10 +688,10 @@ Class Model_Price extends Model_Model
         }
     }
 
-    function displayDiscountTimeRemaining($discountIds)
+    public static function displayDiscountTimeRemaining($discountIds)
     {
 
-        $changeDate = $this->getNextChangeInDiscoutDate($discountIds);
+        $changeDate = self::getNextChangeInDiscoutDate($discountIds);
         $changeDate += 86399;
 
         $now = time();
@@ -717,7 +717,7 @@ Class Model_Price extends Model_Model
         return $displayString;
     }
 
-    public function user_TaxRate($aid)
+    public static function user_TaxRate($aid)
     {
 
         $sql = sprintf('SELECT bill_province FROM fabrix_accounts WHERE aid =' . $aid);

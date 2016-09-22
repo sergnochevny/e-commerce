@@ -5,6 +5,7 @@ class Controller_Blog extends Controller_Controller
 
     public function post()
     {
+
 //        $this->widget_new_products();
 //        $this->widget_best_products();
 //        $this->widget_bsells_products();
@@ -19,35 +20,38 @@ class Controller_Blog extends Controller_Controller
         $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('blog', $prms));
 
 //        $post_name = _A_::$app->router()->args[0];
-//        $row = $model->get_blog_post_by_post_name($post_name);
+//        $row = Model_Blog::get_blog_post_by_post_name($post_name);
         $post_id = _A_::$app->get('id');
-        $row = Model_Blog::getPostById($post_id);
+        $row = Model_Blog::get_blog_post_by_post_id($post_id);
         if (isset($row)) {
             ob_start();
 
-//              $post_id = $row['ID'];
-//              _A_::$app->get('post_id', $post_id);
+//            $post_id = $row['ID'];
+//            _A_::$app->get('post_id', $post_id);
 
-                $post_content = stripslashes($row['post_content']);
-                $post_title = stripslashes($row['post_title']);
-                $post_date = date('F jS, Y', strtotime($row['post_date']));
-                $post_content = str_replace('{base_url}', _A_::$app->router()->UrlTo('/'), $post_content);
-                $post_content = preg_replace('#(style="[^>]*")#U', '', $post_content);
-                $post_img = Model_Blog::getPostImg($post_id);
-                $file_img = str_replace('{base_url}/', '', $post_img);
-                $post_img = file_exists($file_img) && is_file($file_img) && is_readable($file_img) ? _A_::$app->router()->UrlTo($post_img) : null;
+            $post_content = stripslashes($row['post_content']);
+            $post_title = stripslashes($row['post_title']);
+            $post_date = date('F jS, Y', strtotime($row['post_date']));
+            $post_content = str_replace('{base_url}', _A_::$app->router()->UrlTo('/'), $post_content);
+            $post_content = preg_replace('#(style="[^>]*")#U', '', $post_content);
+            $post_img = Model_Blog::getPostImg($post_id);
+            $file_img = str_replace('{base_url}/', '', $post_img);
+            if (file_exists($file_img) && is_file($file_img) && is_readable($file_img)) {
+                $post_img = _A_::$app->router()->UrlTo($post_img);
+            } else
+                $post_img = null;
 
-                $this->template->vars('post_img', $post_img);
-                $this->template->vars('file_img', $file_img);
-                $this->template->vars('post_content', $post_content);
-                $this->template->vars('post_date', $post_date);
-                $this->template->vars('post_title', $post_title);
-                $this->template->vars('post_id', $post_id);
-                $this->template->vars('post_img', $post_img);
+            $this->template->vars('post_img', $post_img);
+            $this->template->vars('file_img', $file_img);
+            $this->template->vars('post_content', $post_content);
+            $this->template->vars('post_date', $post_date);
+            $this->template->vars('post_title', $post_title);
+            $this->template->vars('post_id', $post_id);
+            $this->template->vars('post_img', $post_img);
 
-                $this->template->view_layout('post_content');
+            $this->template->view_layout('post_content');
 
-                $list = ob_get_contents();
+            $list = ob_get_contents();
             ob_end_clean();
             $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
         } else
@@ -64,22 +68,20 @@ class Controller_Blog extends Controller_Controller
 
     private function posts()
     {
-        $model = new Model_Blog();
-
-        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
+        $page = !empty(_A_::$app->get('page')) ? Model_Blog::validData(_A_::$app->get('page')) : 1;
         $per_page = 6;
         $cat_id = null;
         if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
-            $category_name = $model->getPostCatName($cat_id);
+            $cat_id = Model_Blog::validData(_A_::$app->get('cat'));
+            $category_name = Model_Blog::getPostCatName($cat_id);
         }
 
-        $total = $model->get_count_publish_posts($cat_id);
+        $total = Model_Blog::get_count_publish_posts($cat_id);
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
         $start = (($page - 1) * $per_page);
 
-        $rows = $model->get_publish_post_list($cat_id, $start, $per_page, $res_count_rows);
+        $rows = Model_Blog::get_publish_post_list($cat_id, $start, $per_page, $res_count_rows);
         if ($rows) {
             $this->template->vars('count_rows', $res_count_rows);
 
@@ -109,7 +111,7 @@ class Controller_Blog extends Controller_Controller
                 $post_href = _A_::$app->router()->UrlTo('blog/post', $prms, $post_title);
                 $post_date = date('F jS, Y', strtotime($row['post_date']));
 
-                $post_content = $model->getPostDescKeys($post_id);
+                $post_content = Model_Blog::getPostDescKeys($post_id);
                 if (isset($post_content) && is_array($post_content)) {
                     $post_content = stripslashes($post_content['description']);
                 } else {
@@ -118,7 +120,7 @@ class Controller_Blog extends Controller_Controller
                     $post_content = preg_replace('#(style="[^>]*")#U', '', $post_content);
                 }
 
-                $post_img = $model->getPostImg($post_id);
+                $post_img = Model_Blog::getPostImg($post_id);
                 $filename = str_replace('{base_url}/', '', $post_img);
                 if (!(file_exists($filename) && is_file($filename))) {
                     $post_img = '{base_url}/upload/upload/not_image.jpg';
@@ -142,7 +144,7 @@ class Controller_Blog extends Controller_Controller
             ob_end_clean();
             $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
             $this->main->template->vars('blog_posts', $list);
-            (new Controller_Paginator($this))->paginator($total, $page, 'blog', $per_page);
+            (new Controller_Paginator($this->main))->paginator($total, $page, 'blog', $per_page);
         } else {
             $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
@@ -169,10 +171,8 @@ class Controller_Blog extends Controller_Controller
 
     function admin_cat()
     {
-        $model = new Model_Tools();
         $base_url = _A_::$app->router()->UrlTo('/');
-
-        $items = $model->get_items_for_menu('blog_category');
+        $items = Model_Tools::get_items_for_menu('blog_category');
         ob_start();
         foreach ($items as $item) {
             $group_id = $item['group_id'];
@@ -192,26 +192,24 @@ class Controller_Blog extends Controller_Controller
 
     function admin_posts()
     {
-        $model = new Model_Blog();
-
         $page = 1;
         if (!empty(_A_::$app->get('page'))) {
-            $page = $model->validData(_A_::$app->get('page'));
+            $page = Model_Blog::validData(_A_::$app->get('page'));
         }
         $per_page = 6;
 
         $cat_id = null;
         if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
-            $category_name = $model->getPostCatName($cat_id);
+            $cat_id = Model_Blog::validData(_A_::$app->get('cat'));
+            $category_name = Model_Blog::getPostCatName($cat_id);
         }
 
-        $total = $model->get_count_posts($cat_id);
+        $total = Model_Blog::get_count_posts($cat_id);
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
         $start = (($page - 1) * $per_page);
 
-        $rows = $model->get_post_list($cat_id, $start, $per_page, $res_count_rows);
+        $rows = Model_Blog::get_post_list($cat_id, $start, $per_page, $res_count_rows);
         if ($rows) {
             $this->template->vars('count_rows', $res_count_rows);
 
@@ -234,7 +232,7 @@ class Controller_Blog extends Controller_Controller
                 $post_title = stripslashes($row['post_title']);
                 $post_date = date('F jS, Y', strtotime($row['post_date']));
 
-                $post_content = $model->getPostDescKeys($post_id);
+                $post_content = Model_Blog::getPostDescKeys($post_id);
                 if (isset($post_content) && is_array($post_content)) {
                     $post_content = stripslashes($post_content['description']);
                 } else {
@@ -243,7 +241,7 @@ class Controller_Blog extends Controller_Controller
                     $post_content = preg_replace('#(style="[^>]*")#U', '', $post_content);
                 }
 
-                $post_img = $model->getPostImg($post_id);
+                $post_img = Model_Blog::getPostImg($post_id);
                 $filename = str_replace('{base_url}/', '', $post_img);
                 if (!(file_exists($filename) && is_file($filename))) {
                     $post_img = '{base_url}/upload/upload/not_image.jpg';
@@ -266,7 +264,7 @@ class Controller_Blog extends Controller_Controller
             ob_end_clean();
             $this->template->vars('cat_name', isset($category_name) ? $category_name : null);
             $this->template->vars('blog_posts', $list);
-            (new Controller_Paginator($this))->paginator($total, $page, 'blog/admin', $per_page);
+            (new Controller_Paginator($this->main))->paginator($total, $page, 'blog/admin', $per_page);
         } else {
             $this->template->vars('count_rows', 0);
             $list = "No Result!!!";
@@ -276,10 +274,9 @@ class Controller_Blog extends Controller_Controller
 
     function del()
     {
-        $model = new Model_Blog();
-        $post_id = $model->validData(_A_::$app->get('post_id'));
+        $post_id = Model_Blog::validData(_A_::$app->get('post_id'));
         if (!empty($post_id)) {
-            $model->delete($post_id);
+            Model_Blog::del_post($post_id);
             $warning = ['Article removed successfully!!!'];
             $this->template->vars('warning', $warning);
         } else {
@@ -396,11 +393,11 @@ class Controller_Blog extends Controller_Controller
     public function get_categories($selected_categories = [])
     {
         $res = '';
-        $categories = Model_Blog::getCategories();
+        $categories = Model_Blog::get_categories();
         ob_start();
-            $this->template->vars('categories', $categories);
-            $this->template->view_layout('categories_select_options');
-            $res = ob_get_contents();
+        $this->template->vars('categories', $categories);
+        $this->template->view_layout('categories_select_options');
+        $res = ob_get_contents();
         ob_end_clean();
         return $res;
     }
@@ -409,7 +406,6 @@ class Controller_Blog extends Controller_Controller
     {
 
         $base_url = _A_::$app->router()->UrlTo('/');
-        $model = new Model_Blog();
         $categories = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
         $keywords = !is_null(_A_::$app->post('keywords')) ? _A_::$app->post('keywords') : '';
         $title = !is_null(_A_::$app->post('title')) ? _A_::$app->post('title') : '';
@@ -469,7 +465,7 @@ class Controller_Blog extends Controller_Controller
 
             $content = mysql_real_escape_string($this->convertation(html_entity_decode(stripslashes($content))));
 
-            $model->save($title, $keywords, $description, $name, $img, $content, $status, $categories);
+            Model_Blog::save_new_post($title, $keywords, $description, $name, $img, $content, $status, $categories);
 
             $this->new_post_prepare();
             $warning = ['Article saved successfully!!!'];
@@ -681,10 +677,7 @@ class Controller_Blog extends Controller_Controller
 
     private function edit_prepare()
     {
-        $model = new Model_Blog();
-
         $base_url = _A_::$app->router()->UrlTo('/');
-
         $prms = null;
         if (!empty(_A_::$app->get('page'))) {
             $prms['page'] = _A_::$app->get('page');
@@ -696,11 +689,11 @@ class Controller_Blog extends Controller_Controller
 
         $post_id = _A_::$app->get('post_id');
 
-        $row = Model_Blog::getPostById($post_id);
+        $row = Model_Blog::get_blog_post_by_post_id($post_id);
         if (isset($row)) {
-            $categories = Model_Blog::getPostRelatedCategories($post_id);
+            $categories = Model_Blog::get_post_categories_by_post_id($post_id);
             $post_categories = $this->get_categories($categories);
-            $post_k_d = $model->getPostDescKeys($post_id);
+            $post_k_d = Model_Blog::getPostDescKeys($post_id);
             $post_description = stripslashes($post_k_d['description']);
             $post_keywords = stripslashes($post_k_d['keywords']);
             $action_url = _A_::$app->router()->UrlTo('blog/save_edit_post', ['post_id' => $post_id]);
@@ -711,7 +704,7 @@ class Controller_Blog extends Controller_Controller
             $post_status = $row['post_status'];
             date_default_timezone_set('UTC');
             $post_date = date('F jS, Y', strtotime($row['post_date']));
-            $post_img = $model->getPostImg($post_id);
+            $post_img = Model_Blog::getPostImg($post_id);
             $file_img = str_replace('{base_url}', '', $post_img);
             if (file_exists($file_img) && is_file($file_img) && is_readable($file_img)) {
                 $post_img = _A_::$app->router()->UrlTo($post_img);
@@ -738,7 +731,6 @@ class Controller_Blog extends Controller_Controller
     {
 
         $base_url = _A_::$app->router()->UrlTo('/');
-        $model = new Model_Blog();
         $post_id = _A_::$app->get('post_id');
         $categories = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
         $keywords = !is_null(_A_::$app->post('keywords')) ? _A_::$app->post('keywords') : '';
@@ -818,7 +810,7 @@ class Controller_Blog extends Controller_Controller
 
             $content = mysql_real_escape_string($this->convertation(html_entity_decode(stripslashes($content))));
 
-            $model->update($post_id, $title, $keywords, $description, $name, $img, $content, $status, $categories);
+            Model_Blog::save_edit_post($post_id, $title, $keywords, $description, $name, $img, $content, $status, $categories);
 
             $this->edit_post_prepare();
             $warning = ['Article saved successfully!!!'];
