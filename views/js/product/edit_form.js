@@ -77,5 +77,12 @@
             });
         }
     )
+    $(document).on('click', 'span.rem_cat',
+        function(event){
+            event.preventDefault();
+            debugger;
+            $(this).parent('li.prod_sel_category_item').remove();
+        }
+    );
 
 })(jQuery);
