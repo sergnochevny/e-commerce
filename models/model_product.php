@@ -102,18 +102,19 @@ Class Model_Product extends Model_Model
         );
     }
 
-    public static function getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns)
+    public static function getProductCatInfo($post_categories, $post_manufacturer, $p_colors, $patterns)
     {
         $sl_cat = '';
         $sl_cat2 = '';
         $sl_cat3 = '';
         $sl_cat4 = '';
-        if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
-            $post_categori = ['1'];
+        if (!(isset($post_categories) && is_array($post_categories) && count($post_categories) > 0)) {
+            $post_categories = ['1'=>null];
         }
         $results = mysql_query("select * from fabrix_categories");
+        $post_categories = array_keys($post_categories);
         while ($row = mysql_fetch_array($results)) {
-            $sl_cat .= '<li><label><input name="category[]" type="checkbox" value="' . $row[0] . '" ' . (in_array($row[0], $post_categori) ? 'checked' : '') . '>' . $row[1] . '</label></li>';
+            $sl_cat .= '<li><label><input name="category[]" type="checkbox" value="' . $row[0] . '" ' . (in_array($row[0], $post_categories) ? 'checked' : '') . '>' . $row[1] . '</label></li>';
         }
 
         if (empty($post_manufacturer{0})) {
@@ -670,40 +671,46 @@ Class Model_Product extends Model_Model
         return $total;
     }
 
-    public function save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat, $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard, $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3, $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name, $post_short_desk, $best, $piece, $whole)
+    public function save($p_id, $post_categories, $patterns, $colors, $post_manufacturer, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat, $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard, $post_width, $post_product_num, $post_vis, $post_mkey, $post_desc, $post_Long_description, $post_tp_name, $post_short_desk, $best, $piece, $whole)
     {
         if (!empty($New_Manufacturer)) {
-            mysql_query("INSERT INTO fabrix_manufacturers set manufacturer='$New_Manufacturer'");
-            $post_manufacturer = mysql_insert_id();
+            $result = mysql_query("INSERT INTO fabrix_manufacturers set manufacturer='$New_Manufacturer'");
+            if($result) $post_manufacturer = mysql_insert_id();
         }
         if (!empty($post_new_color)) {
-            mysql_query("INSERT INTO fabrix_colour set colour='$post_new_color'");
-            $p_colors[] = (string)mysql_insert_id();
+            $result = mysql_query("INSERT INTO fabrix_colour set colour='$post_new_color'");
+            if($result) $colors[] = mysql_insert_id();
         }
         if (!empty($pattern_type)) {
             $result = mysql_query("INSERT INTO fabrix_patterns SET pattern='$pattern_type'");
-            $patterns[] = (string)mysql_insert_id();
+            if($result) $patterns[] = mysql_insert_id();
         }
 
-        //PageTitle='$post_title', patterns='$Pattern_Type', pcolours='$p_colors',
-        $sql = "update fabrix_products set manufacturerId='$post_manufacturer', weight_id='$post_weight_cat', specials='$post_special', inventory='$post_curret_in', dimensions='$post_dimens', makePriceVis='$post_hide_prise', stock_number='$post_st_nom', priceyard='$post_p_yard', width='$post_width', pnumber='$post_product_num', pvisible='$post_vis', rpnumber5='$post_fabric_5', rpnumber4='$post_fabric_4', rpnumber3='$post_fabric_3', rpnumber2='$post_fabric_2', rpnumber1='$post_fabric_1', metakeywords='$post_mkey', metadescription='$post_desc', ldesc='$post_Long_description', pname='$post_tp_name', sdesc='$post_short_desk', best = '$best', piece='$piece', whole = '$whole'  WHERE pid ='$p_id'";
+        $sql = "update fabrix_products set manufacturerId='$post_manufacturer', weight_id='$post_weight_cat', specials='$post_special', inventory='$post_curret_in', dimensions='$post_dimens', makePriceVis='$post_hide_prise', stock_number='$post_st_nom', priceyard='$post_p_yard', width='$post_width', pnumber='$post_product_num', pvisible='$post_vis', metakeywords='$post_mkey', metadescription='$post_desc', ldesc='$post_Long_description', pname='$post_tp_name', sdesc='$post_short_desk', best = '$best', piece='$piece', whole = '$whole'  WHERE pid ='$p_id'";
 
         $result = mysql_query($sql);
 
         if ($result) {
-            if (!(isset($post_categori) && is_array($post_categori) && count($post_categori) > 0)) {
-                $post_categori = ['1'];
+            if (!(isset($post_categories) && is_array($post_categories) && count($post_categories) > 0)) {
+                $post_categories = ['1'=>null];
             }
-            if (count($post_categori) > 0) {
-                mysql_query("DELETE FROM fabrix_product_categories WHERE pid='$p_id'");
-                foreach ($post_categori as $cid) {
-                    mysql_query("REPLACE INTO fabrix_product_categories SET pid='$p_id', cid='$cid'");
+            if (count($post_categories) > 0) {
+                $res = mysql_query("select * from fabrix_product_categories  where pid='$p_id'");
+                if ($res) {
+                    while($category = mysql_fetch_assoc($res)){
+                        mysql_query("DELETE FROM fabrix_product_categories WHERE pid = ".$category['pid']." and cid = ".$category['cid']);
+                        mysql_query("update fabrix_product_categories SET display_order=display_order-1 where display_order > ".$category['display_order']." and cid=".$category['cid']);
+                    }
+                }
+                foreach ($post_categories as $cid=>$category) {
+                    mysql_query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= ".$category." and cid='$cid'");
+                    mysql_query("REPLACE INTO fabrix_product_categories SET pid='$p_id', cid='$cid', display_order = '$category'");
                 }
             }
 
-            if (count($p_colors) > 0) {
+            if (count($colors) > 0) {
                 mysql_query("DELETE FROM fabrix_product_colours WHERE prodID='$p_id'");
-                foreach ($p_colors as $colourId) {
+                foreach ($colors as $colourId) {
                     mysql_query("REPLACE INTO fabrix_product_colours SET prodID='$p_id', colourId='$colourId'");
                 }
             }
