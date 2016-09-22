@@ -17,11 +17,11 @@ class Controller_Users extends Controller_Controller
 
         $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
-        $total = $model->get_total_count_users();
+        $total = Model_User::totalQuantity();
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
         $start = (($page - 1) * $per_page);
-        $rows = $model->get_users_list($start, $per_page);
+        $rows = Model_User::getList($start, $per_page);
 
         $this->template->vars('page', $page);
         ob_start();
@@ -244,7 +244,7 @@ class Controller_Users extends Controller_Controller
 
                     } else {
 
-                        $result = $model->update_user_data($user_Same_as_billing, $user_email, $user_first_name, $user_last_name, $user_organization,
+                        $result = $model->update($user_Same_as_billing, $user_email, $user_first_name, $user_last_name, $user_organization,
                             $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip, $user_telephone,
                             $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name, $s_organization, $user_s_address,
                             $user_s_address2, $user_s_city, $user_s_state, $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax,
@@ -252,7 +252,7 @@ class Controller_Users extends Controller_Controller
 
                         if ($result) {
                             if (!is_null(_A_::$app->session('_')) && ($user_id == _A_::$app->session('_'))) {
-                                $user = $model->get_user_by_id($user_id);
+                                $user = Model_User::getUserById($user_id);
                                 if (isset($user)) {
                                     _A_::$app->setSession('user', $user);
                                 }
@@ -412,7 +412,7 @@ class Controller_Users extends Controller_Controller
                     $password = $model_auth->hash_($user_create_password, $salt, 12);
                     $check = $model_auth->check($user_create_password, $password);
                     if ($password == $check) {
-                        $result = $model->insert_user($user_Same_as_billing, $user_email, $password, $user_first_name, $user_last_name, $user_organization,
+                        $result = $model->save($user_Same_as_billing, $user_email, $password, $user_first_name, $user_last_name, $user_organization,
                             $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip,
                             $user_telephone, $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name,
                             $s_organization, $user_s_address, $user_s_address2, $user_s_city, $user_s_state,

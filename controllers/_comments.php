@@ -115,21 +115,19 @@ class Controller_Comments extends Controller_Controller
     {
         $this->main->test_access_rights();
 
-        $m = new Model_Comments();
-        $page = !empty(_A_::$app->get('page')) ? $m->validData(_A_::$app->get('page')) : 1;
+        $page = !empty(_A_::$app->get('page')) ? (new Model_Comments())->validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
         $start = (($page - 1) * $per_page);
         $this->template->vars('page', $page);
 
-        $rows = $m->getAll($start, $per_page);
-        $total = $m->getTotalCountComments();
+        $rows = Model_Comments::getAll($total,$start, $per_page);
 
         ob_start();
-        foreach ($rows as $row) {
-            $row['email'] = $m->getUserEmail($row['userid']);
-            include('views/html/comments_list.php');
-        }
-        $comments_list = ob_get_contents();
+            foreach ($rows as $row) {
+                $row['email'] = Model_User::getUserById($row['userid'])['email'];
+                include('views/html/comments_list.php');
+            }
+            $comments_list = ob_get_contents();
         ob_end_clean();
         (new Controller_Paginator($this))->paginator($total, $page, 'comments/admin', $per_page);
         $this->main->template->vars('comments_list', $comments_list);

@@ -444,8 +444,7 @@ class Controller_Orders extends Controller_Controller
             if ($result['status'] === 1) {
 
                 $user_id = $model->get_user_by_order($order_id);
-                $user = new Model_User();
-                $user_data = $user->get_user_by_id($user_id);
+                $user_data =  Model_User::getUserById($user_id);
                 $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
                 $subject = "Order delivery";
                 $body = 'Order №' . $order_id . ' is delivered';

@@ -52,12 +52,12 @@ Class Controller_User Extends Controller_Controller
         return false;
     }
 
-    public function authorize($mail, $password)
+    public function authorize($email, $password)
     {
-        $mail = mysql_real_escape_string(stripslashes(strip_tags(trim($mail))));
+        $email = mysql_real_escape_string(stripslashes(strip_tags(trim($email))));
         $password = mysql_real_escape_string(stripslashes(strip_tags(trim($password))));
         $model = new Model_Auth();
-        $res = $model->user_authorize($mail, $password);
+        $res = $model->user_authorize($email, $password);
         if ($res) {
             $user = $model->get_user_data();
             _A_::$app->setSession('_', $user['aid']);

@@ -126,7 +126,7 @@ class Controller_Authorization extends Controller_Controller
                     $this->lost_password_form();
                     exit();
                 }
-                $user = $muser->get_user_by_email($email);
+                $user = Model_User::getUserByEmail($email);
                 $user_id = $user['aid'];
                 $date = date('Y-m-d H:i:s', time());
                 $remind = $mauth->generate_hash($date);
@@ -144,9 +144,8 @@ class Controller_Authorization extends Controller_Controller
                 $user_id = _A_::$app->get('user_id');
                 $remind = _A_::$app->get('remind');
                 if (isset($remind)) {
-                    $muser = new Model_User();
-                    if ($muser->user_exist_by_id($user_id)) {
-                        $user = $muser->get_user_by_id($user_id);
+                    if (Model_User::getUserById($user_id)) {
+                        $user = Model_User::getUserById($user_id);
                         if (isset($user)) {
                             $result = true;
                             $time = strtotime($user['remind_time']);

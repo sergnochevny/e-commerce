@@ -50,7 +50,7 @@ class Model_Comments extends Model_Model
         return true;
     }
 
-    public function getAll($begin = -1, $count = -1, $moderated = -1)
+    public static function getAll(&$total, $begin = -1, $count = -1, $moderated = -1)
     {
 
         $query = "select * from fabrix_comments";
@@ -66,8 +66,9 @@ class Model_Comments extends Model_Model
         }
 
         $data = array();
+        $total = mysql_num_rows($res);
         for ($i = 0; $row = mysql_fetch_assoc($res); $i++) {
-            $name = $this->getUserName($row['userid']);
+            $name = self::getUserName($row['userid']);
 
             if (!empty($name)) {
                 $row['username'] = $name;
@@ -78,7 +79,7 @@ class Model_Comments extends Model_Model
         return $data;
     }
 
-    public function getUserName($ID)
+    public static function getUserName($ID)
     {
         $query = sprintf("select bill_firstname, bill_lastname from fabrix_accounts where aid = %d", $ID);
         $res = mysql_query($query);

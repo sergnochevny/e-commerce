@@ -2,10 +2,10 @@
 
 Class Model_User extends Model_Model
 {
-    public function get_total_count_users()
+    public static function totalQuantity()
     {
         $total = 0;
-        $q_total = "SELECT COUNT(*) FROM `fabrix_accounts`";
+        $q_total = "SELECT COUNT(*) FROM iluvfabrix.fabrix_accounts";
 
         if ($res = mysql_query($q_total)) {
             $total = mysql_fetch_row($res)[0];
@@ -14,29 +14,39 @@ Class Model_User extends Model_Model
         return $total;
     }
 
-    public function get_users_list($start, $limit)
+    public static function getList($start, $limit)
     {
-        $list = [];
-        $q = "SELECT * FROM `fabrix_accounts` ORDER BY aid LIMIT " . $start . ", " . $limit;
+        $list = (array) [];
+        $q = "SELECT * FROM iluvfabrix.fabrix_accounts ORDER BY aid LIMIT " . $start . ", " . $limit;
         if ($res = mysql_query($q)) {
             while ($row = mysql_fetch_array($res)) {
                 $list[] = $row;
             }
         }
-
         return $list;
     }
 
     public function del_user($user_id)
     {
-        $strSQL = "DELETE FROM fabrix_accounts WHERE aid = $user_id";
+        $strSQL = "DELETE FROM iluvfabrix.fabrix_accounts WHERE aid = $user_id";
         mysql_query($strSQL);
     }
 
-    public function get_user_by_email($email)
+    public static function getUserByEmail($email)
     {
         $user = null;
-        $strSQL = "select * from fabrix_accounts where email = '" . mysql_real_escape_string($email) . "'";
+        $strSQL = "select * from iluvfabrix.fabrix_accounts where email = '" . mysql_real_escape_string($email) . "' LIMIT 1";
+        $result = mysql_query($strSQL);
+        if ($result) {
+            $user = mysql_fetch_assoc($result);
+        }
+        return $user;
+    }
+
+    public static function getUserById($id)
+    {
+        $user = null;
+        $strSQL = "select * from iluvfabrix.fabrix_accounts where aid = '" . $id . "' LIMIT 1";
         $result = mysql_query($strSQL);
         if ($result) {
             $user = mysql_fetch_assoc($result);
@@ -46,37 +56,40 @@ Class Model_User extends Model_Model
 
     public function set_remind_for_change_pass($remind, $date, $user_id)
     {
-        $q = "update fabrix_accounts set remind = '" . mysql_real_escape_string($remind) . "', remind_time = '" . $date . "' where aid = " . $user_id;
+        $q = "update iluvfabrix.fabrix_accounts set remind = '" . mysql_real_escape_string($remind) . "', remind_time = '" . $date . "' where aid = " . $user_id;
         $res = mysql_query($q);
         return ($res && mysql_affected_rows());
     }
 
     public function clean_remind($user_id)
     {
-        $q = "update fabrix_accounts set remind = NULL, remind_time = NULL where aid = " . $user_id;
+        $q = "update iluvfabrix.fabrix_accounts set remind = NULL, remind_time = NULL where aid = " . $user_id;
         $res = mysql_query($q);
         return ($res && mysql_affected_rows());
     }
 
-    public function user_exist($email, $id = null)
+    public function user_exist($email = null, $id = null)
     {
-        if (isset($id)) {
-            $q = "select * from fabrix_accounts where email = '" . mysql_real_escape_string($email) . "' and aid <> '$id'";
-        } else {
-            $q = "select * from fabrix_accounts where email = '" . mysql_real_escape_string($email) . "'";
+        if(is_null($email) && is_null($id)){
+            throw new ErrorException('Both parameters cannot be empty!');
         }
-        $result = mysql_query($q);
-        return (!$result || mysql_num_rows($result) > 0);
-    }
 
-    public function user_exist_by_id($id = null)
-    {
-        if (isset($id)) {
-            $q = "select * from fabrix_accounts where aid = '$id'";
-            $result = mysql_query($q);
-            return (!$result || mysql_num_rows($result) > 0);
+        $q = "select * from iluvfabrix.fabrix_accounts where";
+
+        if (isset($email)) {
+            $q .= "aid <> '$id'";
         }
-        return false;
+        if (isset($id)){
+            if(!isset($email)){
+                $q .= "email = '" . mysql_real_escape_string($email) . "'";
+            }else{
+                $q .= "and email = '" . mysql_real_escape_string($email) . "'";
+            }
+        }
+
+        $result = mysql_query($q);
+
+        return (!$result || mysql_num_rows($result) > 0);
     }
 
     public function remind_exist($remind)
@@ -97,24 +110,13 @@ Class Model_User extends Model_Model
         return $user;
     }
 
-    public function get_user_by_id($id)
-    {
-        $user = null;
-        $strSQL = "select * from fabrix_accounts where aid = '" . $id . "'";
-        $result = mysql_query($strSQL);
-        if ($result) {
-            $user = mysql_fetch_assoc($result);
-        }
-        return $user;
-    }
-
     public function update_password($password, $user_id)
     {
         $result = mysql_query("UPDATE `fabrix_accounts` SET `password` =  '$password' WHERE  `aid` =$user_id;");
         return $result;
     }
 
-    public function update_user_data($user_Same_as_billing, $user_email, $user_first_name, $user_last_name, $user_organization,
+    public function update($user_Same_as_billing, $user_email, $user_first_name, $user_last_name, $user_organization,
                                      $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip, $user_telephone,
                                      $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name, $s_organization, $user_s_address,
                                      $user_s_address2, $user_s_city, $user_s_state, $user_s_country, $user_s_zip, $user_s_telephone, $user_s_fax,
@@ -182,7 +184,7 @@ Class Model_User extends Model_Model
         return $result;
     }
 
-    public function insert_user($user_Same_as_billing, $user_email, $password, $user_first_name, $user_last_name, $user_organization,
+    public function save($user_Same_as_billing, $user_email, $password, $user_first_name, $user_last_name, $user_organization,
                                 $user_address, $user_address2, $user_state, $user_city, $user_country, $user_zip,
                                 $user_telephone, $user_fax, $user_bil_email, $user_s_first_name, $user_s_last_name,
                                 $s_organization, $user_s_address, $user_s_address2, $user_s_city, $user_s_state,
@@ -219,9 +221,9 @@ Class Model_User extends Model_Model
         return $result;
     }
 
-    public function get_user_data($user_id)
+    public static function get_user_data($user_id)
     {
-        $rowsni = $this->get_user_by_id($user_id);
+        $rowsni = Model_User::getUserById($user_id);
         if(isset($rowsni)){
             return array(
                 'email' => $rowsni['email'],
