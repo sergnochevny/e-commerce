@@ -3,7 +3,7 @@
 Class Model_Discount extends Model_Model
 {
 
-    function generateCouponCode($sid)
+    public static function generateCouponCode($sid)
     {
 
         $sCde = "";
@@ -14,8 +14,8 @@ Class Model_Discount extends Model_Model
         }
 
         #ensure that the code is unique (keep getting a new one until it is)
-        while ($this->checkCouponCode($sid, $sCde)) {
-            $sCde = $this->generateCouponCode();
+        while (self::checkCouponCode($sid, $sCde)) {
+            $sCde = self::generateCouponCode();
         }
 
         return $sCde;
@@ -82,46 +82,46 @@ Class Model_Discount extends Model_Model
         return $res;
     }
 
-    public function deleteFabrixSpecialsUserById($id){
+    public static function deleteFabrixSpecialsUserById($id){
         $q = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='" . (integer) $id . "'");
         return mysql_query($q);
     }
 
-    public function saveFabrixSpecialsUser($discount_id, $user_id){
+    public static function saveFabrixSpecialsUser($discount_id, $user_id){
         $q = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . (integer) $discount_id . "',  '" . (integer) $user_id . "');");
         return mysql_query($q);
     }
 
 
-    public function deleteFabrixSpecialsProductById($id){
+    public static function deleteFabrixSpecialsProductById($id){
         $q = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . (integer) $id . "'");
         return mysql_query($q);
     }
 
-    public function saveFabrixSpecialsProducts($discount_id, $fabric_id){
+    public static function saveFabrixSpecialsProducts($discount_id, $fabric_id){
         $q = mysql_query("INSERT INTO  `fabrix_specials_products` (`sid` ,`pid`)VALUES('" . (integer) $discount_id . "',  '" . (integer) $fabric_id . "');");
         return mysql_query($q);
     }
 
 
-    public function updateFabrixSpecials($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end, $discount_id){
+    public static function updateFabrixSpecials($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end, $discount_id){
         $q = mysql_query("UPDATE fabrix_specials SET coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check',shipping_type='$shipping_type',product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end' WHERE sid ='$discount_id'");
         return mysql_query($q);
     }
 
-    public function saveFabrixSpecial($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end){
+    public static function saveFabrixSpecial($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end){
         $q = mysql_query("INSERT INTO fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check', shipping_type='$shipping_type', product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end', date_added = 'CURRENT_TIMESTAMP'");
         return mysql_query($q);
     }
 
 
-    public function updateSpecials($discount_id, $user_id){
+    public static function updateSpecials($discount_id, $user_id){
         $q = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . (integer) $discount_id . "',  '" . (integer) $user_id . "');");
         return mysql_query($q);
     }
 
 
-    function checkCouponCode($sid, $cde)
+    public static function checkCouponCode($sid, $cde)
     {
 
         $iCnt = 0;
@@ -143,7 +143,7 @@ Class Model_Discount extends Model_Model
         }
 
     }
-    public function del_discount($id)
+    public static function del_discount($id)
     {
 
         $sSQL = sprintf("DELETE FROM fabrix_specials_products WHERE sid=%u", $id);
@@ -155,7 +155,7 @@ Class Model_Discount extends Model_Model
 
     }
 
-    public function get_edit_discounts_data($id)
+    public static function get_edit_discounts_data($id)
     {
         $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='$id'");
         $rowsni = mysql_fetch_array($resulthatistim);
@@ -196,7 +196,8 @@ Class Model_Discount extends Model_Model
             }
         }
 
-        return array('discount_comment1' => $rowsni['discount_comment1'],
+        return array(
+            'discount_comment1' => $rowsni['discount_comment1'],
             'discount_comment2' => $rowsni['discount_comment2'],
             'discount_comment3' => $rowsni['discount_comment3'],
             'discount_amount' => $rowsni['discount_amount'],
@@ -220,7 +221,7 @@ Class Model_Discount extends Model_Model
         );
     }
 
-    public function get_new_discounts_data()
+    public static function get_new_discounts_data()
     {
         date_default_timezone_set('UTC');
 

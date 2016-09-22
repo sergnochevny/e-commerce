@@ -322,7 +322,7 @@ class Model_Order extends Model_Model
         return null;
     }
 
-    public function insert_order_detail($order_id, $product_id, $product_number, $product_name,
+    public static function insert_order_detail($order_id, $product_id, $product_number, $product_name,
                                         $quantity, $price, $discount, $sale_price, $is_sample = 0)
     {
         $q = "insert into  fabrix_order_details " .
@@ -334,7 +334,7 @@ class Model_Order extends Model_Model
         return $res;
     }
 
-    function save_discount_usage($discountIds, $oid)
+    public static function save_discount_usage($discountIds, $oid)
     {
         if (isset($discountIds) && is_array($discountIds) && (count($discountIds) > 0)) {
             $discounts = array_unique($discountIds, SORT_NUMERIC);
@@ -347,7 +347,7 @@ class Model_Order extends Model_Model
         }
     }
 
-    public function get_order($order_id)
+    public static function get_order($order_id)
     {
         $resulthatistim = mysql_query("select * from fabrix_orders WHERE oid='$order_id'");
         $rowsni = mysql_fetch_array($resulthatistim);
@@ -355,7 +355,7 @@ class Model_Order extends Model_Model
         return array('shipping_cost' => $rowsni['shipping_cost'], 'order_date' => $dat, 'handling' => $rowsni['handling'], 'shipping_discount' => $rowsni['shipping_discount'], 'coupon_discount' => $rowsni['coupon_discount'], 'total_discount' => $rowsni['total_discount'], 'taxes' => $rowsni['taxes'], 'total' => $rowsni['total']);
     }
 
-    public function get_count_orders_by_user($user_id)
+    public static function get_count_orders_by_user($user_id)
     {
 
         $result = mysql_query("SELECT COUNT(*) FROM fabrix_orders WHERE aid='$user_id'");
@@ -380,7 +380,7 @@ class Model_Order extends Model_Model
         return false;
     }
 
-    public function get_order_details($oid)
+    public static function get_order_details($oid)
     {
         $results = mysql_query("select * from fabrix_order_details WHERE order_id='$oid'");
         if ($results) {
@@ -393,7 +393,7 @@ class Model_Order extends Model_Model
         return false;
     }
 
-    public function update_order_detail_info($status, $status, $track_code, $end_date, $order_id)
+    public static function update_order_detail_info($status, $status, $track_code, $end_date, $order_id)
     {
         $request = "UPDATE fabrix_orders SET 
                     status = '" . $status . "', 
@@ -402,7 +402,7 @@ class Model_Order extends Model_Model
         return mysql_query($request);
     }
 
-    public function get_user_by_order($order_id){
+    public static function get_user_by_order($order_id){
         return mysql_query('SELECT aid FROM fabrix_orders WHERE oid ='.$order_id);
     }
 

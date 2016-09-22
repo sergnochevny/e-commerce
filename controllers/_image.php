@@ -6,15 +6,14 @@ class Controller_Image extends Controller_Controller
     public function del_pic()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
-        $pid_id = $model->validData(_A_::$app->get('p_id'));
-        $im_id = $model->validData(_A_::$app->get('idx'));
+        $pid_id = Model_Product::validData(_A_::$app->get('p_id'));
+        $im_id = Model_Product::validData(_A_::$app->get('idx'));
         if (!empty($pid_id)) {
             if (!empty($im_id)) {
                 $db_g = "image$im_id";
-                $images = $model->getImage($pid_id);
+                $images = Model_Product::getImage($pid_id);
                 $filename = $images[$db_g];
-                $data = $model->dbUpdate($db_g, $pid_id);
+                $data = Model_Product::dbUpdate($db_g, $pid_id);
                 if (file_exists("upload/upload/" . $filename)) {
                     unlink("upload/upload/$filename");
                 }
@@ -34,9 +33,8 @@ class Controller_Image extends Controller_Controller
         $this->main->test_access_rights();
         if (!is_null(_A_::$app->get('p_id'))) {
             $p_id = _A_::$app->get('p_id');
-            $model = new Model_Product();
-            $p_id = $model->validData($p_id);
-            $data = $model->getImage($p_id);
+            $p_id = Model_Product::validData($p_id);
+            $data = Model_Product::getImage($p_id);
             $image1 = $data['image1'];
             $image2 = $data['image2'];
             $image3 = $data['image3'];
@@ -101,16 +99,15 @@ class Controller_Image extends Controller_Controller
     public function save_link()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
         if (!is_null(_A_::$app->get('p_id'))) {
             if (!is_null(_A_::$app->get('idx'))) {
-                $p_id = $model->validData(_A_::$app->get('p_id'));
-                $product_photo = $model->validData(_A_::$app->get('idx'));
+                $p_id = Model_Product::validData(_A_::$app->get('p_id'));
+                $product_photo = Model_Product::validData(_A_::$app->get('idx'));
                 $db_g = "image$product_photo";
-                $data = $model->getImage($p_id);
+                $data = Model_Product::getImage($p_id);
                 $image1 = $data['image1'];
                 $image2 = $data[$db_g];
-                $data = $model->dbUpdateMainNew($image2, $db_g, $image1, $p_id);
+                $data = Model_Product::dbUpdateMainNew($image2, $db_g, $image1, $p_id);
 
             }
         }
@@ -121,10 +118,9 @@ class Controller_Image extends Controller_Controller
     public function upload_product()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
         if (!is_null(_A_::$app->get('pid'))) {
             $product_photo = !is_null(_A_::$app->get('idx')) ? _A_::$app->get('idx') : 1;
-            $p_id = $model->validData(_A_::$app->get('pid'));
+            $p_id = Model_Product::validData(_A_::$app->get('pid'));
             $ts = uniqid();
             $uploaddir = 'upload/upload/';
             $file = "p" . $p_id . "t" . $ts . '.jpg';
@@ -138,7 +134,7 @@ class Controller_Image extends Controller_Controller
                     $db_g = "image$product_photo";
                     $this->prepare_product($file);
                     // delete img;
-                    $model->dbUpdateMainPhoto($db_g, $file, $p_id);
+                    Model_Product::dbUpdateMainPhoto($db_g, $file, $p_id);
                     echo "success";
                 } else {
                     echo "error";

@@ -2,7 +2,7 @@
 
 Class Model_Menu extends Model_Model
 {
-    public function get_list(){
+    public static function get_list(){
 
     }
 }

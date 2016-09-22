@@ -33,7 +33,7 @@ Class Model_Category extends Model_Model
         return $rows;
     }
 
-    public function del($id)
+    public static function del($id)
     {
         if (!empty($id)) {
             $strSQL = "update fabrix_products set cid = NULL WHERE cid = $id";
@@ -54,7 +54,7 @@ Class Model_Category extends Model_Model
         return $row;
     }
 
-    public function insert($post_category_name, $post_category_seo, $post_display_order, $post_category_ListStyle, $post_category_ListNewItem)
+    public static function insert($post_category_name, $post_category_seo, $post_display_order, $post_category_ListStyle, $post_category_ListNewItem)
     {
         $strSQL = "INSERT INTO fabrix_categories(cname,seo,displayorder,isStyle,isNew) VALUES ('$post_category_name','$post_category_seo','$post_display_order','$post_category_ListStyle','$post_category_ListNewItem')";
         $res = mysql_query($strSQL);
@@ -65,7 +65,7 @@ Class Model_Category extends Model_Model
         return null;
     }
 
-    public function update($post_category_name,$post_category_seo,$post_display_order,$post_category_ListStyle,$post_category_ListNewItem,$category_id){
+    public static function update($post_category_name,$post_category_seo,$post_display_order,$post_category_ListStyle,$post_category_ListNewItem,$category_id){
         if (!empty($category_id)) {
 
             $res = mysql_query("select * from fabrix_categories WHERE cid='$category_id'");

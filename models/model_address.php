@@ -1,7 +1,7 @@
 <?php
 Class Model_Address extends Model_Model
 {
-    function get_total_count_province_state()
+    public static function get_total_count_province_state()
     {
         $total = 0;
         $q_total = "SELECT COUNT(*) FROM `fabrix_province_state`";
@@ -13,7 +13,7 @@ Class Model_Address extends Model_Model
         return $total;
     }
 
-    function get_total_count_countries()
+    public static function get_total_count_countries()
     {
         $total = 0;
         $q_total = "SELECT COUNT(*) FROM `fabrix_countries`";
@@ -25,7 +25,7 @@ Class Model_Address extends Model_Model
         return $total;
     }
 
-    function get_countries_all()
+    public static function get_countries_all()
     {
         $list = [];
         $q = "SELECT * FROM `fabrix_countries` ORDER BY display_order, name";
@@ -38,7 +38,7 @@ Class Model_Address extends Model_Model
         return $list;
     }
 
-    function get_province_all()
+    public static function get_province_all()
     {
         $list = [];
         $q = "SELECT * FROM `fabrix_province_state` ORDER BY name";
@@ -51,7 +51,7 @@ Class Model_Address extends Model_Model
         return $list;
     }
 
-    function get_country_province($country)
+    public static function get_country_province($country)
     {
         $list = [];
         $q = "SELECT * FROM `fabrix_province_state` WHERE country = '$country' ORDER BY name";
@@ -64,7 +64,7 @@ Class Model_Address extends Model_Model
         return $list;
     }
 
-    function get_country_by_id($id)
+    public static function get_country_by_id($id)
     {
         $country = '';
         $q = "SELECT * FROM `fabrix_countries` WHERE id = '$id'";
@@ -75,7 +75,7 @@ Class Model_Address extends Model_Model
         return $country;
     }
 
-    function get_province_by_id($id)
+    public static function get_province_by_id($id)
     {
         $province = '';
         $q = "SELECT * FROM `fabrix_province_state` WHERE id = '$id'";

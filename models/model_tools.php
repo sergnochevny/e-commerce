@@ -3,7 +3,7 @@
 Class Model_Tools extends Model_Model
 {
 
-    public function get_items_for_menu($type)
+    public static function get_items_for_menu($type)
     {
         $res = [];
         $row_new_count = 50;
@@ -52,7 +52,7 @@ Class Model_Tools extends Model_Model
         return $res;
     }
 
-    public function meta_page($route_control)
+    public static function meta_page($route_control)
     {
         $page_Description = '';
         $page_KeyWords = '';

@@ -4,7 +4,7 @@ Class Model_Shipping extends Model_Model
 {
 
 #define the rates that are used outside the calculate shipping funciton
-    function calculateShipping($ship, $aPrds, $bShipRoll)
+    public static function calculateShipping($ship, $aPrds, $bShipRoll)
     {
         #make sure that there are products here;
         if (count($aPrds) > 0) {

@@ -5,10 +5,8 @@ class Controller_Product extends Controller_Controller
 
     function product()
     {
-        $model = new Model_Product();
-        $samples_model = new Model_Samples();
-        $pid = $model->validData(_A_::$app->get('p_id'));
-        $data = $model->getPrName($pid);
+        $pid = Model_Product::validData(_A_::$app->get('p_id'));
+        $data = Model_Product::getPrName($pid);
 
         $matches = new Controller_Matches($this->main);
         if ($matches->product_in($pid)) $this->template->vars('in_matches', '1');
@@ -46,8 +44,7 @@ class Controller_Product extends Controller_Controller
             $uid = (int)_A_::$app->session('user')['aid'];
         }
         $bTemp = false;
-        $mp = new Model_Price();
-        $sys_hide_price = $mp->sysHideAllRegularPrices();
+        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
         $hide_price = $data['vis_price'];
         $this->template->vars('sys_hide_price', $sys_hide_price);
         $this->template->vars('hide_price', $hide_price);
@@ -58,7 +55,7 @@ class Controller_Product extends Controller_Controller
         $sPriceDiscount = '';
         $rSystemDiscount = 0;
         $rDiscountPrice = 0;
-        $rSystemDiscount = $mp->calculateDiscount(DISCOUNT_CATEGORY_ALL, $uid, $aPrds, $priceyard, $shipcost, '', $bTemp, true, $sPriceDiscount, $sSystemDiscount, $shipping, $discountIds);
+        $rSystemDiscount = Model_Price::calculateDiscount(DISCOUNT_CATEGORY_ALL, $uid, $aPrds, $priceyard, $shipcost, '', $bTemp, true, $sPriceDiscount, $sSystemDiscount, $shipping, $discountIds);
         if ((strlen($sSystemDiscount) > 0) || ($rSystemDiscount > 0)) {
             $bSystemDiscount = true;
             $rDiscountPrice = $priceyard - $rSystemDiscount;
@@ -74,16 +71,16 @@ class Controller_Product extends Controller_Controller
         $inventory = $data['inventory'];
         $piece = $data['piece'];
         $format_price = '';
-        $price = $mp->getPrintPrice($priceyard, $format_price, $inventory, $piece);
+        $price = Model_Price::getPrintPrice($priceyard, $format_price, $inventory, $piece);
 
         #check if the product has its own discount
         $sDiscount = '';
-        $bDiscount = $mp->checkProductDiscount($pid, $sDiscount, $rExDiscountPrice, $discountIds);
+        $bDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $rExDiscountPrice, $discountIds);
         $this->template->vars('format_price', $format_price);
 
         ob_start();
         if ($rSystemDiscount > 0) {
-            $tmp = $mp->getPrintPrice($rDiscountPrice, $sDiscountPrice, $inventory, $piece);
+            $tmp = Model_Price::getPrintPrice($rDiscountPrice, $sDiscountPrice, $inventory, $piece);
             $field_name = "Sale price:";
             $field_value = sprintf("%s<br><strong>%s</strong>", $sPriceDiscount, $sDiscountPrice);
             $this->template->vars('field_name', $field_name);
@@ -92,7 +89,7 @@ class Controller_Product extends Controller_Controller
         }
 
         if ($bDiscount) {
-            $tmp = $mp->getPrintPrice($rExDiscountPrice, $sDiscountPrice, $inventory, $piece);
+            $tmp = Model_Price::getPrintPrice($rExDiscountPrice, $sDiscountPrice, $inventory, $piece);
             if ($bSystemDiscount) {
                 $field_name = "Extra disc. price:";
             } else {
@@ -117,9 +114,9 @@ class Controller_Product extends Controller_Controller
         }
 
         if (count($discountIds) > 0) {
-            if ($mp->getNextChangeInDiscoutDate($discountIds) > 0) {
+            if (Model_Price::getNextChangeInDiscoutDate($discountIds) > 0) {
                 $field_name = 'Sale ends in:';
-                $field_value = $mp->displayDiscountTimeRemaining($discountIds);
+                $field_value = Model_Price::displayDiscountTimeRemaining($discountIds);
                 $this->template->vars('field_name', $field_name);
                 $this->template->vars('field_value', $field_value);
                 $this->template->view_layout('discount_info');
@@ -173,7 +170,7 @@ class Controller_Product extends Controller_Controller
             $this->main->template->vars('search', _A_::$app->post('s'));
         }
 
-        $allowed_samples = $samples_model->allowedSamples($pid);
+        $allowed_samples = Model_Samples::allowedSamples($pid);
         $this->template->vars('allowed_samples', $allowed_samples);
         $this->template->vars('cart_enable', '_');
         $this->template->vars('back_url', $back_url);
@@ -183,108 +180,101 @@ class Controller_Product extends Controller_Controller
     public function edit()
     {
         $this->main->test_access_rights();
-
         if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
-            $model = new Model_Product();
-            if (!empty(_A_::$app->get('p_id'))) {
-                include('include/post_edit_db.php');
-                if (!is_null(_A_::$app->post('build_categories'))) {
-                    $pid = _A_::$app->get('p_id');
-                    $build_categories = _A_::$app->post('categories');
-                    $categories = _A_::$app->post('category');
-                    $data = Model_Product::getProductBuildCategories($build_categories, $categories);
-                    foreach ($data as $cat_id => $category) {
-                        $this->template->vars('cat_id', $cat_id);
-                        $this->template->vars('category', $category);
-                        $this->template->view_layout('block_category');
-                    }
-                } else {
-                    $pid = _A_::$app->get('p_id');
-                    $action_url = _A_::$app->router()->UrlTo('product/edit', ['p_id' => $pid]);
-                    $this->template->vars('action_url', $action_url);
+            $this->save_product('product/edit');
+        } else {
+            $this->product_form('product/edit', 'edit');
+        }
+    }
 
-                    $data = array(
-                        'weight_id' => $post_weight_cat,
-                        'sd_cat' => $post_categories,
-                        'pvisible' => $post_vis,
-                        'metadescription' => $post_desc,
-                        'p_id' => $p_id,
-                        'Meta_Description' => $post_desc,
-                        'Meta_Keywords' => $post_mkey,
-                        'Product_name' => $post_tp_name,
-                        'Product_number' => $post_product_num,
-                        'Width' => $post_width,
-                        'Price_Yard' => $post_p_yard,
-                        'Stock_number' => $post_st_nom,
-                        'Dimensions' => $post_dimens,
-                        'Current_inventory' => $post_curret_in,
-                        'Specials' => $post_special,
-                        'Weight' => $post_weight_cat,
-                        'Manufacturer' => $post_manufacturer,
-                        'New_Manufacturer' => $New_Manufacturer,
-                        'Colours' => $p_colors,
-                        'New_Colour' => $post_new_color,
-                        'Pattern_Type' => $patterns,
-                        'New_Pattern' => $pattern_type,
-                        'Short_description' => $post_short_desk,
-                        'Long_description' => $post_Long_description,
-                        'visible' => $post_hide_prise,
-                        'best' => $best,
-                        'piece' => $piece,
-                        'whole' => $whole
-                    );
-
-                    if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
-
-                        $error = [];
-                        if (empty($post_product_num{0})) $error[] = 'Identify Product Number field !';
-                        if (empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
-                        if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
-                        $this->template->vars('error', $error);
-                        $this->edit_form($pid, $data);
-                    } else {
-                        $result = $model->save($p_id, $post_categories, $patterns, $p_colors, $post_manufacturer,
-                            $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
-                            $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
-                            $post_width, $post_product_num, $post_vis, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
-                            $post_short_desk, $best, $piece, $whole);
-
-                        if ($result) {
-                            $this->template->vars('warning', ["Product Data saved successfully!"]);
-                        } else {
-                            $this->template->vars('error', [mysql_error()]);
-                        };
-                        $this->edit_form($pid, $data);
-                    }
+    private function save_product($url, $new = false)
+    {
+        include('include/post_edit_db.php');
+        if (!empty(_A_::$app->get('p_id'))) {
+            $pid = _A_::$app->get('p_id');
+            if (!is_null(_A_::$app->post('build_categories'))) {
+                $build_categories = _A_::$app->post('categories');
+                $categories = _A_::$app->post('category');
+                $data = Model_Product::getProductBuildCategories($build_categories, $categories);
+                foreach ($data as $cat_id => $category) {
+                    $this->template->vars('cat_id', $cat_id);
+                    $this->template->vars('category', $category);
+                    $this->template->view_layout('block_category');
                 }
             } else {
-                $this->template->vars('error', ["Error! Not product id identity"]);
-                $this->edit_form();
+                $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
+                $this->template->vars('action_url', $action_url);
+
+                $data = array(
+                    'weight_id' => $post_weight_cat,
+                    'sd_cat' => $post_categories,
+                    'pvisible' => $post_vis,
+                    'metadescription' => $post_desc,
+                    'p_id' => $p_id,
+                    'Meta_Description' => $post_desc,
+                    'Meta_Keywords' => $post_mkey,
+                    'Product_name' => $post_tp_name,
+                    'Product_number' => $post_product_num,
+                    'Width' => $post_width,
+                    'Price_Yard' => $post_p_yard,
+                    'Stock_number' => $post_st_nom,
+                    'Dimensions' => $post_dimens,
+                    'Current_inventory' => $post_curret_in,
+                    'Specials' => $post_special,
+                    'Weight' => $post_weight_cat,
+                    'Manufacturer' => $post_manufacturer,
+                    'New_Manufacturer' => $New_Manufacturer,
+                    'Colours' => $p_colors,
+                    'New_Colour' => $post_new_color,
+                    'Pattern_Type' => $patterns,
+                    'New_Pattern' => $pattern_type,
+                    'Short_description' => $post_short_desk,
+                    'Long_description' => $post_Long_description,
+                    'visible' => $post_hide_prise,
+                    'best' => $best,
+                    'piece' => $piece,
+                    'whole' => $whole
+                );
+
+                if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
+
+                    $error = [];
+                    if (empty($post_product_num{0})) $error[] = 'Identify Product Number field !';
+                    if (empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
+                    if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
+                    $this->template->vars('error', $error);
+                    $this->edit_form($pid, $data);
+                } else {
+                    $result = Model_Product::save($p_id, $post_categories, $patterns, $p_colors, $post_manufacturer,
+                        $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
+                        $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
+                        $post_width, $post_product_num, $post_vis, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
+                        $post_short_desk, $best, $piece, $whole);
+
+                    if ($result) {
+                        $this->template->vars('warning', ["Product Data saved successfully!"]);
+                        if ($new) {
+                            Model_Product::getNewproduct();
+                            $pid = _A_::$app->get('p_id');
+                            $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
+                            $this->template->vars('action_url', $action_url);
+                            $this->edit_form($pid);
+                        } else $this->edit_form($pid, $data);
+                    } else {
+                        $this->template->vars('error', [mysql_error()]);
+                        $this->edit_form($pid, $data);
+                    };
+                }
             }
         } else {
-            $prms = null;
-            $pid = _A_::$app->get('p_id');
-            if (!is_null(_A_::$app->get('p_id'))) {
-                $prms['p_id'] = _A_::$app->get('p_id');
-            }
-            $action_url = _A_::$app->router()->UrlTo('product/edit', $prms);
-            $this->template->vars('action_url', $action_url);
-            $prms = null;
-            if (!empty(_A_::$app->get('page'))) {
-                $prms['page'] = _A_::$app->get('page');
-            }
-            if (!empty(_A_::$app->get('cat'))) {
-                $prms['cat'] = _A_::$app->get('cat');
-            }
-            $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
-            ob_start();
-            $this->edit_form($pid);
-            $edit_form = ob_get_contents();
-            ob_end_clean();
-
-            $this->template->vars('back_url', $back_url);
-            $this->main->template->vars('edit_form', $edit_form);
-            $this->main->view_admin('edit');
+            $this->template->vars('error', ["Error! Not product id identity"]);
+            if ($new) {
+                Model_Product::getNewproduct();
+                $pid = _A_::$app->get('p_id');
+                $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
+                $this->template->vars('action_url', $action_url);
+                $this->edit_form($pid);
+            } else $this->edit_form();
         }
     }
 
@@ -325,142 +315,52 @@ class Controller_Product extends Controller_Controller
         $this->main->view_layout('edit_form');
     }
 
-    function add()
+    /**
+     * @param $url
+     * @param $template
+     */
+    private function product_form($url, $template)
+    {
+        $pid = _A_::$app->get('p_id');
+        $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
+        $this->template->vars('action_url', $action_url);
+        $prms = null;
+        if (!empty(_A_::$app->get('page'))) {
+            $prms['page'] = _A_::$app->get('page');
+        }
+        if (!empty(_A_::$app->get('cat'))) {
+            $prms['cat'] = _A_::$app->get('cat');
+        }
+        $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
+        ob_start();
+        $this->edit_form($pid);
+        $edit_form = ob_get_contents();
+        ob_end_clean();
+
+        $this->template->vars('back_url', $back_url);
+        $this->main->template->vars('edit_form', $edit_form);
+        $this->main->view_admin($template);
+    }
+
+    public function add()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
         if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
-
-            $prms = !is_null(_A_::$app->get('p_id')) ? ['p_id' => _A_::$app->get('p_id')] : null;
-            $action_url = _A_::$app->router()->UrlTo('product/add', $prms);
-            $this->template->vars('action_url', $action_url);
-
-            if (!empty(_A_::$app->get('p_id'))) {
-                include('include/post_edit_db.php');
-
-                if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
-
-                    $error = [];
-                    if (empty($post_product_num{0})) $error[] = 'Identify Product Number field !';
-                    if (empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
-                    if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
-                    $this->template->vars('error', $error);
-
-                    $cats = Model_Product::getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
-                    $sl_cat = $cats['sl_cat'];
-                    $sl_cat2 = $cats['sl_cat2'];
-                    $sl_cat3 = $cats['sl_cat3'];
-                    $sl_cat4 = $cats['sl_cat4'];
-
-                    $data = array(
-                        'weight_id' => $post_weight_cat,
-                        'sd_cat' => $sl_cat,
-                        'pvisible' => $post_vis,
-                        'metadescription' => $post_desc,
-                        'p_id' => $p_id,
-                        'Meta_Description' => $post_desc,
-                        'Meta_Keywords' => $post_mkey,
-                        'Product_name' => $post_tp_name,
-                        'Product_number' => $post_product_num,
-                        'Width' => $post_width,
-                        'Price_Yard' => $post_p_yard,
-                        'Stock_number' => $post_st_nom,
-                        'Dimensions' => $post_dimens,
-                        'Current_inventory' => $post_curret_in,
-                        'Specials' => $post_special,
-                        'Weight' => $post_weight_cat,
-                        'Manufacturer' => $sl_cat2,
-                        'New_Manufacturer' => $New_Manufacturer,
-                        'Colours' => $sl_cat3,
-                        'New_Colour' => $post_new_color,
-                        'Pattern_Type' => $sl_cat4,
-                        'New_Pattern' => $pattern_type,
-                        'Short_description' => $post_short_desk,
-                        'Long_description' => $post_Long_description,
-                        'Related_fabric_1' => $post_fabric_1,
-                        'Related_fabric_2' => $post_fabric_2,
-                        'Related_fabric_3' => $post_fabric_3,
-                        'Related_fabric_4' => $post_fabric_4,
-                        'Related_fabric_5' => $post_fabric_5,
-                        'visible' => $post_hide_prise,
-                        'best' => $best,
-                        'piece' => $piece,
-                        'whole' => $whole
-                    );
-
-                    $this->template->vars('data', $data);
-
-                    ob_start();
-                    $cimage = new Controller_Image($this->main);
-                    $cimage->modify();
-                    $m_images = ob_get_contents();
-                    ob_end_clean();
-
-                    $this->template->vars('modify_images', $m_images);
-
-                    $this->main->view_layout('edit_form');
-                } else {
-
-                    $result = $model->save($p_id, $post_categories, $patterns, $p_colors, $post_manufacturer,
-                        $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
-                        $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
-                        $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3,
-                        $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
-                        $post_short_desk, $best, $piece, $whole);
-
-                    if ($result && $model->ConfirmProductInsert($p_id)) {
-                        $this->template->vars('warning', ["Product Data saved successfully!"]);
-                    } else {
-                        $this->template->vars('error', [mysql_error()]);
-                    };
-
-                    $model->getNewproduct();
-                    $action_url = _A_::$app->router()->UrlTo('product/save', ['p_id' => _A_::$app->get('p_id')]);
-                    $this->template->vars('action_url', $action_url);
-                    $this->edit_form();
-                }
-            } else {
-                $this->template->vars('error', "Error!");
-                $this->edit_form();
-            }
+            $this->save_product('product/add', true);
         } else {
-            $model->getNewproduct();
-
-            $action_url = _A_::$app->router()->UrlTo('product/add', ['p_id' => _A_::$app->get('p_id')]);
-            $this->template->vars('action_url', $action_url);
-            $prms = ['page' => '1'];
-            if (!empty(_A_::$app->get('page'))) {
-                $prms['page'] = _A_::$app->get('page');
-            }
-            if (!empty(_A_::$app->get('cat'))) {
-                $prms['cat'] = _A_::$app->get('cat');
-            }
-
-            $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
-
-            $data = Model_Product::getProductInfo(_A_::$app->get('p_id'));
-            ob_start();
-            $cimage = new Controller_Image($this->main);
-            $cimage->modify();
-            $m_images = ob_get_contents();
-            ob_end_clean();
-
-            $this->template->vars('back_url', $back_url);
-            $this->template->vars('modify_images', $m_images);
-            $this->template->vars('data', $data);
-            $this->main->view_admin('add');
+            Model_Product::getNewproduct();
+            $this->product_form('product/add', 'add');
         }
     }
 
     public function del()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
-        $del_p_id = $model->validData(_A_::$app->get('p_id'));
+        $del_p_id = Model_Product::validData(_A_::$app->get('p_id'));
         if (!empty($del_p_id)) {
 
             $this->del_image($del_p_id);
-            $model->del_product($del_p_id);
+            Model_Product::del_product($del_p_id);
 
             $prms = null;
             if (!is_null(_A_::$app->get('page'))) {
@@ -476,8 +376,7 @@ class Controller_Product extends Controller_Controller
 
     private function del_image($pid)
     {
-        $model = new Model_Product();
-        $images = $model->getImage($pid);
+        $images = Model_Product::getImage($pid);
         $fields_idx = [1, 2, 3, 4, 5];
         foreach ($fields_idx as $idx) {
             $filename = $images['image' . $idx];

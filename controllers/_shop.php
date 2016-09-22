@@ -6,10 +6,9 @@ class Controller_Shop extends Controller_Controller
     public function all_products()
     {
         $this->main->test_access_rights();
-        $model = new Model_Product();
         $image_suffix = 'b_';
 
-        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
+        $page = !empty(_A_::$app->get('page')) ? Model_Product::validData(_A_::$app->get('page')) : 1;
 
         $add_product_prms['page'] = $page;
         if (!empty(_A_::$app->get('cat'))) {
@@ -18,23 +17,23 @@ class Controller_Shop extends Controller_Controller
 
         $this->main->template->vars('add_product_href', _A_::$app->router()->UrlTo('product/add', $add_product_prms));
 
-        $model->cleanTempProducts();
+        Model_Product::cleanTempProducts();
         $per_page = 12;
 
-        $total = $model->get_count_products_by_type('all');
+        $total = Model_Product::get_count_products_by_type('all');
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
         $start = (($page - 1) * $per_page);
 
         if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
+            $cat_id = Model_Product::validData(_A_::$app->get('cat'));
         }
         $res_count_rows = 0;
-        $rows = $model->get_products_by_type('all', $start, $per_page, $res_count_rows);
+        $rows = Model_Product::get_products_by_type('all', $start, $per_page, $res_count_rows);
 
         ob_start();
             foreach ($rows as $row) {
-                $cat_name = $model->getCatName($row[20]);
+                $cat_name = Model_Product::getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
 
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
@@ -78,7 +77,7 @@ class Controller_Shop extends Controller_Controller
         ob_end_clean();
         $this->main->template->vars('count_rows', $res_count_rows);
         $this->main->template->vars('list', $list);
-        (new Controller_Paginator($this))->paginator($total, $page, 'admin/home', $per_page);
+        (new Controller_Paginator($this->main))->paginator($total, $page, 'admin/home', $per_page);
     }
 
     /*
@@ -94,9 +93,7 @@ class Controller_Shop extends Controller_Controller
 
     private function show_category_list()
     {
-        $model = new Model_Tools();
-
-        $items = $model->get_items_for_menu('all');
+        $items = Model_Tools::get_items_for_menu('all');
         ob_start();
         foreach ($items as $item) {
             $name = $item['cname'];
@@ -117,7 +114,6 @@ class Controller_Shop extends Controller_Controller
 
     private function product_list()
     {
-        $model = new Model_Product();
         $image_suffix = 'b_';
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
@@ -127,36 +123,35 @@ class Controller_Shop extends Controller_Controller
             $this->main->template->vars('search', _A_::$app->post('s'));
         }
 
-        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
+        $page = !empty(_A_::$app->get('page')) ? Model_Product::validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
-        $total = $model->get_total($search);
+        $total = Model_Product::get_total($search);
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
         $start = (($page - 1) * $per_page);
         if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
-            $category_name = $model->getCatName($cat_id);
+            $cat_id = Model_Product::validData(_A_::$app->get('cat'));
+            $category_name = Model_Product::getCatName($cat_id);
         } else {
             if (!empty(_A_::$app->get('ptrn'))) {
-                $ptrn_name = $model->getPtrnName(_A_::$app->get('ptrn'));
+                $ptrn_name = Model_Product::getPtrnName(_A_::$app->get('ptrn'));
                 $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
             } else {
                 if (!empty(_A_::$app->get('mnf'))) {
-                    $mnf_id = $model->validData(_A_::$app->get('mnf'));
-                    $mnf_name = $model->getMnfName($mnf_id);
+                    $mnf_id = Model_Product::validData(_A_::$app->get('mnf'));
+                    $mnf_name = Model_Product::getMnfName($mnf_id);
                     $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
                 }
             }
         }
-        $rows = $model->get_products($start, $per_page, $count_rows, $search);
+        $rows = Model_Product::get_products($start, $per_page, $count_rows, $search);
         if ($rows) {
             $this->main->template->vars('count_rows', $count_rows);
-            $mp = new Model_Price();
-            $sys_hide_price = $mp->sysHideAllRegularPrices();
+            $sys_hide_price = Model_Price::sysHideAllRegularPrices();
             $this->main->template->vars('sys_hide_price', $sys_hide_price);
             ob_start();
             foreach ($rows as $row) {
-                $cat_name = $model->getCatName($row[20]);
+                $cat_name = Model_Product::getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
                 if (!(file_exists($filename) && is_file($filename))) {
@@ -183,15 +178,15 @@ class Controller_Shop extends Controller_Controller
                 $inventory = $row[6];
                 $piece = $row[34];
                 $format_price = '';
-                $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
+                $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
                 $discountIds = array();
                 $saleprice = $row[5];
                 $sDiscount = 0;
-                $saleprice = $mp->calculateProductSalePrice($pid, $saleprice, $discountIds);
-                $this->template->vars('bProductDiscount', $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds));
+                $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
+                $this->template->vars('bProductDiscount', Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds));
                 $format_sale_price = '';
-                $this->template->vars('saleprice', $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece));
+                $this->template->vars('saleprice', Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece));
                 $this->template->vars('format_sale_price', $format_sale_price);
                 $this->template->vars('format_price', $format_price);
                 $this->template->vars('in_cart', in_array($row[0], $cart));
@@ -236,38 +231,34 @@ class Controller_Shop extends Controller_Controller
 
     private function product_list_by_type($type = 'last', $max_count_items = 50)
     {
-        $model = new Model_Product();
         $image_suffix = 'b_';
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
-        $page = !empty(_A_::$app->get('page')) ? $model->validData(_A_::$app->get('page')) : 1;
+        $page = !empty(_A_::$app->get('page')) ? Model_Product::validData(_A_::$app->get('page')) : 1;
         $per_page = 12;
 
         if (!empty(_A_::$app->get('cat'))) {
-            $cat_id = $model->validData(_A_::$app->get('cat'));
+            $cat_id = Model_Product::validData(_A_::$app->get('cat'));
             $this->template->vars('cat_id', $cat_id);
         }
 
-        $total = $model->get_count_products_by_type($type);
+        $total = Model_Product::get_count_products_by_type($type);
         if ($total > $max_count_items) $total = $max_count_items;
         if ($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
         if ($page <= 0) $page = 1;
         $start = (($page - 1) * $per_page);
         if ($total < ($start + $per_page)) $per_page = $total - $start;
         $res_count_rows = 0;
-        $rows = $model->get_products_by_type($type, $start, $per_page, $res_count_rows);
+        $rows = Model_Product::get_products_by_type($type, $start, $per_page, $res_count_rows);
         $this->template->vars('count_rows', $res_count_rows);
 
         if ($rows) {
-
-            $mp = new Model_Price();
-
-            $sys_hide_price = $mp->sysHideAllRegularPrices();
+            $sys_hide_price = Model_Price::sysHideAllRegularPrices();
             $this->template->vars('sys_hide_price', $sys_hide_price);
 
             ob_start();
             foreach ($rows as $row) {
-                $cat_name = $model->getCatName($row[20]);
+                $cat_name = Model_Product::getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
                 if (!(file_exists($filename) && is_file($filename))) {
@@ -288,15 +279,15 @@ class Controller_Shop extends Controller_Controller
                 $inventory = $row[6];
                 $piece = $row[34];
                 $format_price = '';
-                $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
+                $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
                 $discountIds = array();
                 $saleprice = $row[5];
                 $sDiscount = 0;
-                $saleprice = $mp->calculateProductSalePrice($pid, $saleprice, $discountIds);
-                $bProductDiscount = $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
+                $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
+                $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
                 $format_sale_price = '';
-                $saleprice = $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
+                $saleprice = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
 
                 $this->template->vars('cat_name', $cat_name);
                 $this->template->vars('url_prms', $url_prms);
@@ -321,7 +312,7 @@ class Controller_Shop extends Controller_Controller
             $this->main->template->vars('category_name', isset($category_name) ? $category_name : '');
             $this->main->template->vars('list', $list);
 
-            (new Controller_Paginator($this))->paginator($total, $page, 'shop' . DS . $type, $per_page);
+            (new Controller_Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, $per_page);
         } else {
             $this->main->template->vars('count_rows', 0);
             $list = "No Result!!!";
@@ -379,16 +370,15 @@ class Controller_Shop extends Controller_Controller
 
     public function modify_products_images()
     {
-        $model = new Model_Product();
         $c_image = new Controller_Image();
         $per_page = 12;
         $page = 1;
 
-        $total = $model->get_total_count();
+        $total = Model_Product::get_total_count();
         $count = 0;
         while ($page <= ceil($total / $per_page)) {
             $start = (($page++ - 1) * $per_page);
-            $rows = $model->get_products_list($start, $per_page);
+            $rows = Model_Product::get_products_list($start, $per_page);
             foreach ($rows as $row) {
                 for ($i = 1; $i < 5; $i++) {
                     $fimage = $row['image' . $i];
@@ -408,7 +398,7 @@ class Controller_Shop extends Controller_Controller
     */
     public function product_filter_list()
     {
-        $this->main->template->vars('ProductFilterList', (new Model_Product())->product_filter_list());
+        $this->main->template->vars('ProductFilterList', Model_Product::product_filter_list());
     }
 
     public function widget_popular()
@@ -418,13 +408,9 @@ class Controller_Shop extends Controller_Controller
 
     public function widget_products($type, $start, $limit, $layout = 'widget_products')
     {
-        $model = new Model_Product();
-        $rows = $model->get_prod_list_by_type($type, $start, $limit, $row_count, $image_suffix);
+        $rows = Model_Product::get_prod_list_by_type($type, $start, $limit, $row_count, $image_suffix);
         if ($rows) {
-
-            $mp = new Model_Price();
-
-            $sys_hide_price = $mp->sysHideAllRegularPrices();
+            $sys_hide_price = Model_Price::sysHideAllRegularPrices();
             $this->template->vars('sys_hide_price', $sys_hide_price);
 
             ob_start();
@@ -432,7 +418,7 @@ class Controller_Shop extends Controller_Controller
             $last = false;
             $i = 1;
             foreach ($rows as $row) {
-                $cat_name = $model->getCatName($row[20]);
+                $cat_name = Model_Product::getCatName($row[20]);
                 $row[8] = substr($row[8], 0, 100);
 
                 $filename = 'upload/upload/' . $image_suffix . $row[14];
@@ -445,15 +431,15 @@ class Controller_Shop extends Controller_Controller
                 $price = $row[5];
                 $inventory = $row[6];
                 $piece = $row[34];
-                $price = $mp->getPrintPrice($price, $format_price, $inventory, $piece);
+                $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
                 $discountIds = array();
                 $saleprice = $row[5];
                 $sDiscount = 0;
-                $saleprice = $mp->calculateProductSalePrice($pid, $saleprice, $discountIds);
-                $bProductDiscount = $mp->checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
+                $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
+                $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
                 $format_sale_price = '';
-                $saleprice = $mp->getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
+                $saleprice = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
 
                 $hide_price = $row['makePriceVis'];
                 $this->template->vars('hide_price', $hide_price);

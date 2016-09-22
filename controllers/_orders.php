@@ -15,9 +15,8 @@ class Controller_Orders extends Controller_Controller
     function get()
     {
         $this->main->test_access_rights();
-        $model = new Model_Order();
-        $user_id = $model->validData(_A_::$app->get('user_id'));
-        $orders_count = $model->get_count_orders_by_user($user_id);
+        $user_id = Model_Order::validData(_A_::$app->get('user_id'));
+        $orders_count = Model_Order::get_count_orders_by_user($user_id);
         $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : '1';
         $per_page = 12;
 
@@ -52,15 +51,14 @@ class Controller_Orders extends Controller_Controller
             ob_end_clean();
         }
         $this->main->template->vars('orders', $orders);
-        (new Controller_Paginator($this))->paginator($total, $page, 'orders', $per_page);
+        (new Controller_Paginator($this->main))->paginator($total, $page, 'orders', $per_page);
     }
 
     function order()
     {
         $this->main->test_access_rights();
         $prms = null;
-        $model = new Model_Order();
-        $order_id = $model->validData(_A_::$app->get('order_id'));
+        $order_id = Model_Order::validData(_A_::$app->get('order_id'));
 
         if (!is_null(_A_::$app->get('order_id'))) {
             $prms['order_id'] = _A_::$app->get('order_id');
@@ -72,7 +70,7 @@ class Controller_Orders extends Controller_Controller
             $prms['page'] = _A_::$app->get('page');
         }
         $this->get_details();
-        $userInfo = $model->get_order($order_id);
+        $userInfo = Model_Order::get_order($order_id);
         $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user/registration', $prms));
         $this->main->template->vars('userInfo', $userInfo);
         $this->main->view_admin('order');
@@ -81,12 +79,11 @@ class Controller_Orders extends Controller_Controller
     function get_details()
     {
         $this->main->test_access_rights();
-        $model = new Model_Order();
-        $order_id = $model->validData(_A_::$app->get('order_id'));
+        $order_id = Model_Order::validData(_A_::$app->get('order_id'));
         $order_details = '';
         if (!empty($order_id)) {
             ob_start();
-            $rows = $model->get_order_details($order_id);
+            $rows = Model_Order::get_order_details($order_id);
             foreach ($rows as $row) {
                 $this->template->vars('row', $row);
                 $this->template->view_layout('details');
@@ -100,14 +97,13 @@ class Controller_Orders extends Controller_Controller
     function discount()
     {
         $this->main->test_access_rights();
-        $model = new Model_Order();
         $prms = null;
-        $order_id = $model->validData(_A_::$app->get('order_id'));
+        $order_id = Model_Order::validData(_A_::$app->get('order_id'));
         if (!empty(_A_::$app->get('discount_id'))) {
             $prms['discount_id'] = _A_::$app->get('discount_id');
         }
         $this->get_details();
-        $userInfo = $model->get_order($order_id);
+        $userInfo = Model_Order::get_order($order_id);
         $this->main->template->vars('back_url', _A_::$app->router()->UrlTo(empty(_A_::$app->get('discount_id')) ? 'discounts' : 'discounts/usage', $prms));
         $this->main->template->vars('userInfo', $userInfo);
         $this->main->view_admin('order');
@@ -137,7 +133,6 @@ class Controller_Orders extends Controller_Controller
             ob_start();
             foreach ($orders as $order) {
                 extract($order);
-
                 $shipping_cost = strlen(trim($shipping_cost)) > 0 ? '$' . number_format($shipping_cost, 2) : '';
                 $shipping_discount = strlen(trim($shipping_discount)) > 0 ? '$' . number_format($shipping_discount, 2) : '';
                 $coupon_discount = strlen(trim($coupon_discount)) > 0 ? '$' . number_format($coupon_discount, 2) : '';
@@ -145,7 +140,7 @@ class Controller_Orders extends Controller_Controller
                 $handling = strlen(trim($handling)) > 0 ? '$' . number_format($handling, 2) : '';
                 $status = ($status == 0 ? '<i title="In process" class="fa fa-clock-o"></i>' : '<i title="Done" class="fa fa-check"></i>');
                 $order_date = date('F j, Y, g:i a', $order_date);
-                $action = _A_::$app->router()->UrlTo('/') . '/customer_order_info?oid=' . urlencode(base64_encode($oid)) . '&=page' . $page;
+                $action = _A_::$app->router()->UrlTo('/customer_order_info',['oid' => urlencode(base64_encode($oid)),'page' => $page]);
                 $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
 
                 $this->template->vars('action', $action);
@@ -163,7 +158,7 @@ class Controller_Orders extends Controller_Controller
             if (isset($customer_orders_list) && !empty($customer_orders_list)) {
                 $this->main->template->vars('customer_orders_list', $customer_orders_list);
             }
-            (new Controller_Paginator($this))->paginator($total, $page, 'orders/customer_history', $per_page);
+            (new Controller_Paginator($this->main))->paginator($total, $page, 'orders/customer_history', $per_page);
         } else {
             $mess = 'You have no orders yet.';
             $this->main->template->vars('no_orders', $mess);
@@ -262,7 +257,7 @@ class Controller_Orders extends Controller_Controller
 
             $this->main->template->vars('admin_orders_list', $admin_orders_list);
         }
-        (new Controller_Paginator($this))->paginator($total, $page, 'orders/history', $per_page);
+        (new Controller_Paginator($this->main))->paginator($total, $page, 'orders/history', $per_page);
         $this->main->view_admin('history');
     }
 
@@ -308,7 +303,7 @@ class Controller_Orders extends Controller_Controller
 
                 if ($is_sample == 1) {
                     $length = array_fill(0, $quantity, 0);
-                    $sample_cost = (new Model_Samples())->calculateSamplesPrice(0, $length);
+                    $sample_cost = Model_Samples::calculateSamplesPrice(0, $length);
                     $sub_price_count = $sub_price_count + $sample_cost;
                     $sample_cost = strlen(trim($sample_cost)) > 0 ? '$' . number_format((double)$sample_cost, 2) : '';
                 }
@@ -382,7 +377,7 @@ class Controller_Orders extends Controller_Controller
 
                 if ($is_sample == 1) {
                     $length = array_fill(0, $quantity, 0);
-                    $sample_cost = (new Model_Samples())->calculateSamplesPrice(0, $length);
+                    $sample_cost = Model_Samples::calculateSamplesPrice(0, $length);
                     $sub_price_count = $sub_price_count + $sample_cost;
                     $sample_cost = strlen(trim($sample_cost)) > 0 ? '$' . number_format((double)$sample_cost, 2) : '';
                 }
@@ -426,7 +421,6 @@ class Controller_Orders extends Controller_Controller
 
     public function edit_info()
     {
-        $model = new Model_Order();
         $track_code = (string)trim(htmlspecialchars(_A_::$app->post('track_code')));
         $status = (string)trim(htmlspecialchars(_A_::$app->post('status')));
         $order_id = (integer)trim(htmlspecialchars(_A_::$app->post('order_id')));
@@ -439,13 +433,12 @@ class Controller_Orders extends Controller_Controller
             'result' => null,
         ];
 
-        if ($model->update_order_detail_info($status, $status, $track_code, $end_date, $order_id)) {
+        if (Model_Order::update_order_detail_info($status, $status, $track_code, $end_date, $order_id)) {
 
             if ($result['status'] === 1) {
 
                 $user_id = $model->get_user_by_order($order_id);
-                $user = new Model_User();
-                $user_data = $user->get_user_by_id($user_id);
+                $user_data = Model_User::get_user_by_id($user_id);
                 $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
                 $subject = "Order delivery";
                 $body = 'Order №' . $order_id . ' is delivered';

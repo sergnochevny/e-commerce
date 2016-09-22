@@ -12,11 +12,6 @@
                         <input type="submit" value="ADD NEW PRODUCT" class="button"/>
                     </a><br>
                 </div>
-                <h1 class="page-title">
-                    <?php
-                    //                            echo $object->category_name();
-                    ?>
-                </h1>
                 <p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
                 <form class="woocommerce-ordering" method="get">
                     <?php $rows = $ProductFilterList['category_in_select']; ?>

@@ -41,9 +41,8 @@ Class Controller_User Extends Controller_Controller
         if (self::is_logged()) return true;
         if (self::is_set_remember()) {
             $remember = _A_::$app->cookie('_r');
-            $model = new Model_Auth();
-            if ($model->is_user_remember($remember)) {
-                $user = $model->get_user_data();
+            if (Model_Auth::is_user_remember($remember)) {
+                $user = Model_Auth::get_user_data();
                 _A_::$app->setSession('_', $user['aid']);
                 _A_::$app->setSession('user', $user);
                 return true;
@@ -56,10 +55,9 @@ Class Controller_User Extends Controller_Controller
     {
         $mail = mysql_real_escape_string(stripslashes(strip_tags(trim($mail))));
         $password = mysql_real_escape_string(stripslashes(strip_tags(trim($password))));
-        $model = new Model_Auth();
-        $res = $model->user_authorize($mail, $password);
+        $res = Model_Auth::user_authorize($mail, $password);
         if ($res) {
-            $user = $model->get_user_data();
+            $user = Model_Auth::get_user_data();
             _A_::$app->setSession('_', $user['aid']);
             _A_::$app->setSession('user', $user);
         }

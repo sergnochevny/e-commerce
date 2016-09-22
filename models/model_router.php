@@ -38,8 +38,7 @@ Class Model_Router extends Model_Model
         return $sef_url;
     }
 
-    public
-    static function get_url($sef_url)
+    public static function get_url($sef_url)
     {
         $url = $sef_url;
         if ($sef_url != '') {
