@@ -234,8 +234,8 @@ class Controller_Blog extends Controller_Controller
                     $prms['cat'] = _A_::$app->get('cat');
                 }
 
-                $post_edit_href = _A_::$app->router()->UrlTo('blog/edit_post', $prms);
-                $post_del_href = _A_::$app->router()->UrlTo('blog/del_post', $prms);
+                $post_edit_href = _A_::$app->router()->UrlTo('blog/edit', $prms);
+                $post_del_href = _A_::$app->router()->UrlTo('blog/del', $prms);
                 $post_title = stripslashes($row['post_title']);
                 $post_date = date('F jS, Y', strtotime($row['post_date']));
 
@@ -401,8 +401,7 @@ class Controller_Blog extends Controller_Controller
     public function get_categories($selected_categories = [])
     {
         $res = '';
-        $model = new Model_Blog();
-        $categories = $model->get_categories();
+        $categories = Model_Blog::getCategories();
         ob_start();
         $this->template->vars('categories', $categories);
         $this->template->view_layout('categories_select_options');

@@ -20,12 +20,16 @@ Class Model_Blog extends Model_Model
         }
     }
 
-    public function get_blog_categories()
+    public static function getCategories(&$quantity = null)
     {
         $res = null;
         $q = "select * from blog_groups";
         $result = mysql_query($q);
+
         if ($result) {
+            if(!is_null($quantity)){
+                $quantity = mysql_num_rows($result);
+            }
             while ($row = mysql_fetch_assoc($result)) {
                 $res[] = $row;
             }

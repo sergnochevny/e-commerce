@@ -1,10 +1,10 @@
 <body
     class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 
-    <script type="text/javascript" src="upload/js/ajaxupload.3.5.js"></script>
-    <!---<script src="<?php _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js') ?>"></script>--->
-    <script src="<?php _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>"></script>
-
+    <script defer src="<?= _A_::$app->router()->UrlTo('upload/js/ajaxupload.3.5.js') ?>" type="text/javascript"></script>
+    <script defer src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
+    <script defer src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit.js'); ?>' type="text/javascript"></script>
+    <script defer src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit_form.js'); ?>' type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('views/css/jquery-ui.css') ?>" media="all"/>
     <link rel="stylesheet" type="text/css" href="<?php _A_::$app->router()->UrlTo('views/css/jquery-ui.theme.css') ?>" media="all"/>
 
@@ -86,9 +86,8 @@
                         <h6>EDIT BLOG POST</h6>
                     </div>
                     <div id="customer_details" class="col2-set">
-                        <div class="woocommerce"><div id="blog_post_form"><?php include('views/blog/blog_edit_post_form.php'); ?></div></div>
+                        <div class="woocommerce"><div id="blog_post_form"><?php include('views/blog/edit_form.php'); ?></div></div>
                     </div>
                 </div>
             </div>
         </div>
-        <script src='<?= _A_::$app->router()->UrlTo('views/blog/edit.js'); ?>' type="text/javascript"></script>
