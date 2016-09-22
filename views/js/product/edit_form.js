@@ -33,12 +33,15 @@
     $('form#product').on('submit',
         function (event) {
             event.preventDefault();
-            var msg = $(this).serialize();
+            var data = new FormData(this);
             var url = $(this).attr('action');
             $.ajax({
                 type: 'POST',
                 url: url,
-                data: msg,
+                data: data,
+                cache: false,
+                processData: false,
+                contentType: false,
                 success: function (data) {
                     $('#form_product').html(data);
                 },
@@ -68,20 +71,45 @@
                 cache: false,
                 processData: false,
                 contentType: false,
-                success: function(data){
-                    form.find('.prod_sel_category').html(data);
+                success: function (data) {
+                    $.when(
+                        form.find('.prod_sel_category').html(data)
+                    ).done(
+                        function () {
+                            $('span.rem_cat').on('click',
+                                function (event) {
+                                    evRemoveCategories.call(this, event);
+                                }
+                            );
+                        }
+                    );
                 },
-                complete: function(){
+                complete: function () {
                     form.waitloader('remove');
                 }
             });
         }
-    )
-    $(document).on('click', 'span.rem_cat',
-        function(event){
-            event.preventDefault();
-            debugger;
-            $(this).parent('li.prod_sel_category_item').remove();
+    );
+    function evRemoveCategories(event) {
+        event.preventDefault();
+        var cat_id = $(this).prev().find('input').attr('data-catid');
+        var checked = false;
+        $('ul.categories input').each(
+            function () {
+                if ($(this).val() == cat_id) this.checked = !this.checked;
+                checked = checked || this.checked;
+            }
+        );
+        $(this).parent('li.prod_sel_category_item').remove();
+        if (!checked) {
+            $('ul.categories input')[0].checked = true;
+            $('form#product #build_categories').trigger('click');
+        }
+    }
+
+    $('span.rem_cat').on('click',
+        function (event) {
+            evRemoveCategories.call(this, event);
         }
     );
 

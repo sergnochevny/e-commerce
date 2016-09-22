@@ -199,8 +199,40 @@ class Controller_Product extends Controller_Controller
                         $this->template->view_layout('block_category');
                     }
                 } else {
-                    $action_url = _A_::$app->router()->UrlTo('product/edit', ['p_id' => _A_::$app->get('p_id')]);
+                    $pid = _A_::$app->get('p_id');
+                    $action_url = _A_::$app->router()->UrlTo('product/edit', ['p_id' => $pid]);
                     $this->template->vars('action_url', $action_url);
+
+                    $data = array(
+                        'weight_id' => $post_weight_cat,
+                        'sd_cat' => $post_categories,
+                        'pvisible' => $post_vis,
+                        'metadescription' => $post_desc,
+                        'p_id' => $p_id,
+                        'Meta_Description' => $post_desc,
+                        'Meta_Keywords' => $post_mkey,
+                        'Product_name' => $post_tp_name,
+                        'Product_number' => $post_product_num,
+                        'Width' => $post_width,
+                        'Price_Yard' => $post_p_yard,
+                        'Stock_number' => $post_st_nom,
+                        'Dimensions' => $post_dimens,
+                        'Current_inventory' => $post_curret_in,
+                        'Specials' => $post_special,
+                        'Weight' => $post_weight_cat,
+                        'Manufacturer' => $post_manufacturer,
+                        'New_Manufacturer' => $New_Manufacturer,
+                        'Colours' => $p_colors,
+                        'New_Colour' => $post_new_color,
+                        'Pattern_Type' => $patterns,
+                        'New_Pattern' => $pattern_type,
+                        'Short_description' => $post_short_desk,
+                        'Long_description' => $post_Long_description,
+                        'visible' => $post_hide_prise,
+                        'best' => $best,
+                        'piece' => $piece,
+                        'whole' => $whole
+                    );
 
                     if (empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
 
@@ -209,69 +241,12 @@ class Controller_Product extends Controller_Controller
                         if (empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
                         if (empty($post_p_yard{0})) $error[] = 'Identify Price field !';
                         $this->template->vars('error', $error);
-
-                        $cats = Model_Product::getProductCatInfo($post_categori, $post_manufacturer, $p_colors, $patterns);
-                        $sl_cat = $cats['sl_cat'];
-                        $sl_cat2 = $cats['sl_cat2'];
-                        $sl_cat3 = $cats['sl_cat3'];
-                        $sl_cat4 = $cats['sl_cat4'];
-
-                        $data = array(
-                            'weight_id' => $post_weight_cat,
-                            'sd_cat' => $sl_cat,
-                            'pvisible' => $post_vis,
-                            'metadescription' => $post_desc,
-                            'p_id' => $p_id,
-                            'Meta_Description' => $post_desc,
-                            'Meta_Keywords' => $post_mkey,
-                            'Product_name' => $post_tp_name,
-                            'Product_number' => $post_product_num,
-                            'Width' => $post_width,
-                            'Price_Yard' => $post_p_yard,
-                            'Stock_number' => $post_st_nom,
-                            'Dimensions' => $post_dimens,
-                            'Current_inventory' => $post_curret_in,
-                            'Specials' => $post_special,
-                            'Weight' => $post_weight_cat,
-                            'Manufacturer' => $sl_cat2,
-                            'New_Manufacturer' => $New_Manufacturer,
-                            'Colours' => $sl_cat3,
-                            'New_Colour' => $post_new_color,
-                            'Pattern_Type' => $sl_cat4,
-                            'New_Pattern' => $pattern_type,
-                            'Short_description' => $post_short_desk,
-                            'Long_description' => $post_Long_description,
-                            'Related_fabric_1' => $post_fabric_1,
-                            'Related_fabric_2' => $post_fabric_2,
-                            'Related_fabric_3' => $post_fabric_3,
-                            'Related_fabric_4' => $post_fabric_4,
-                            'Related_fabric_5' => $post_fabric_5,
-                            'Position_in_Brunschwig' => 'test',
-                            'Position_in_Modern' => 'test',
-                            'Position_in_Designer' => 'test',
-                            'Position_in_Stripe' => 'test',
-                            'Position_in_Just_Arrived' => 'test',
-                            'visible' => $post_hide_prise,
-                            'best' => $best,
-                            'piece' => $piece,
-                            'whole' => $whole
-
-                        );
-
-                        $this->template->vars('data', $data);
-                        ob_start();
-                        $cimage = new Controller_Image($this->main);
-                        $cimage->modify();
-                        $m_images = ob_get_contents();
-                        ob_end_clean();
-
-                        $this->template->vars('modify_images', $m_images);
-                        $this->main->view_layout('edit_form');
+                        $this->edit_form($pid, $data);
                     } else {
-                        $result = $model->save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
+                        $result = $model->save($p_id, $post_categories, $patterns, $p_colors, $post_manufacturer,
+                            $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
                             $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
-                            $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3,
-                            $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
+                            $post_width, $post_product_num, $post_vis, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
                             $post_short_desk, $best, $piece, $whole);
 
                         if ($result) {
@@ -279,7 +254,7 @@ class Controller_Product extends Controller_Controller
                         } else {
                             $this->template->vars('error', [mysql_error()]);
                         };
-                        $this->edit_form();
+                        $this->edit_form($pid, $data);
                     }
                 }
             } else {
@@ -294,7 +269,7 @@ class Controller_Product extends Controller_Controller
             }
             $action_url = _A_::$app->router()->UrlTo('product/edit', $prms);
             $this->template->vars('action_url', $action_url);
-            $prms = ['page' => '1'];
+            $prms = null;
             if (!empty(_A_::$app->get('page'))) {
                 $prms['page'] = _A_::$app->get('page');
             }
@@ -302,34 +277,42 @@ class Controller_Product extends Controller_Controller
                 $prms['cat'] = _A_::$app->get('cat');
             }
             $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
+            ob_start();
+            $this->edit_form($pid);
+            $edit_form = ob_get_contents();
+            ob_end_clean();
+
             $this->template->vars('back_url', $back_url);
-
-            $data = Model_Product::getProductInfo($pid);
-            ob_start();
-            foreach ($data['categories'] as $cat_id => $category) {
-                $this->template->vars('cat_id', $cat_id);
-                $this->template->vars('category', $category);
-                $this->template->view_layout('block_category');
-            }
-            $categories = ob_get_contents();
-            ob_end_clean();
-            $data['categories'] = $categories;
-            ob_start();
-            $cimage = new Controller_Image($this->main);
-            $cimage->modify();
-            $m_images = ob_get_contents();
-            ob_end_clean();
-
-            $this->main->template->vars('modify_images', $m_images);
-            $this->main->template->vars('data', $data);
+            $this->main->template->vars('edit_form', $edit_form);
             $this->main->view_admin('edit');
         }
     }
 
-    private function edit_form()
+    private function edit_form($pid, $data = null)
     {
-        $data = Model_Product::getProductInfo(_A_::$app->get('p_id'));
-        $this->template->vars('data', $data);
+        if (isset($data)) {
+            $post_categories = $data['sd_cat'];
+            $post_manufacturer = $data['Manufacturer'];
+            $p_colors = $data['Colours'];
+            $patterns = $data['Pattern_Type'];
+            $cats = Model_Product::getProductCatInfo($post_categories, $post_manufacturer, $p_colors, $patterns);
+            $data['sd_cat'] = $cats['sl_cat'];
+            $data['Manufacturer'] = $cats['sl_cat2'];
+            $data['Colours'] = $cats['sl_cat3'];
+            $data['Pattern_Type'] = $cats['sl_cat4'];
+
+            $categories = array_keys($post_categories);
+            $data['categories'] = Model_Product::getProductBuildCategories($post_categories, $categories);
+        } else $data = Model_Product::getProductInfo($pid);
+        ob_start();
+        foreach ($data['categories'] as $cat_id => $category) {
+            $this->template->vars('cat_id', $cat_id);
+            $this->template->vars('category', $category);
+            $this->template->view_layout('block_category');
+        }
+        $categories = ob_get_contents();
+        ob_end_clean();
+        $data['categories'] = $categories;
 
         ob_start();
         $cimage = new Controller_Image($this->main);
@@ -338,6 +321,7 @@ class Controller_Product extends Controller_Controller
         ob_end_clean();
 
         $this->template->vars('modify_images', $m_images);
+        $this->template->vars('data', $data);
         $this->main->view_layout('edit_form');
     }
 
@@ -417,7 +401,8 @@ class Controller_Product extends Controller_Controller
                     $this->main->view_layout('edit_form');
                 } else {
 
-                    $result = $model->save($p_id, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
+                    $result = $model->save($p_id, $post_categories, $patterns, $p_colors, $post_manufacturer,
+                        $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
                         $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard,
                         $post_width, $post_product_num, $post_vis, $post_fabric_5, $post_fabric_4, $post_fabric_3,
                         $post_fabric_2, $post_fabric_1, $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
