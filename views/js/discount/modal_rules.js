@@ -7,7 +7,7 @@
             }
         );
 
-        $(document).on('click', 'a[data-promotion]',
+        $(document).on('click', 'i[data-promotion]',
             function (event) {
                 event.preventDefault();
                 var target = $(this).attr('href');

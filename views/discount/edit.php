@@ -11,10 +11,17 @@
 
                 <div id="customer_details" style="margin: auto; width: 650px;">
                     <h1 class="page-title"> MODIFY DISCOUNT</h1>
-                    <small style="color: black; font-size: 10px;">
-                        Use this form to add/update discounts to the system. <br/>
-                        Clicking on the section title will open a help file explaining that section.
-                    </small>
+                    <p class="text-center">
+                        <small style="color: black; font-size: 13px;">
+                            Use this form to add/update discounts to the system.
+                        </small>
+                    </p>
+                    <hr>
+                    <p class="text-center">
+                        <small style="color: black; font-size: 11px; color: #999">
+                            Clicking on the section title will open a help file explaining that section.
+                        </small>
+                    </p>
                     <div id="discount_form">
                         <?php include('views/discount/edit_form.php') ?>
                     </div>

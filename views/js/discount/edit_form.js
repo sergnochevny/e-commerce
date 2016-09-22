@@ -2,7 +2,7 @@
 
 (function($){
 
-    $('#dateTo').datepicker({
+    $('#dateTo, #dateFrom').datepicker({
         dateFormat: 'mm/dd/yy',
         onSelect: function (dateText, inst) {
             $('#dateFrom').datepicker('option', 'maxDate', new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay));
@@ -51,11 +51,11 @@
 })(jQuery);
 
 function toggleDiscountType(enable){
-    var dtlSlct = document.getElementById('iDscntType');
-    var mlt = document.getElementById('allow_multiple');
-    var fbtAll = document.getElementById('sel_fabrics1');
-    var l_ship = document.getElementById('l_ship');
-    var f_ship = document.getElementById('f_ship');
+    var dtlSlct = document.getElementById('iDscntType'),
+        mlt = document.getElementById('allow_multiple'),
+        fbtAll = document.getElementById('sel_fabrics1'),
+        l_ship = document.getElementById('l_ship'),
+        f_ship = document.getElementById('f_ship');
 
     if(dtlSlct.selectedIndex == 2){
 
@@ -75,11 +75,11 @@ function toggleDiscountType(enable){
 }
 
 function toggleCouponCode(enable) {
-    var txtCoupon = document.getElementById('coupon_code');
-    var chckCoupon = document.getElementById('generate_code');
-    var chckMlt = document.getElementById('allow_multiple');
-    var fbtAll = document.getElementById('sel_fabrics1');
-    var fbtSlct = document.getElementById('sel_fabrics2');
+    var txtCoupon = document.getElementById('coupon_code'),
+        chckCoupon = document.getElementById('generate_code'),
+        chckMlt = document.getElementById('allow_multiple'),
+        fbtAll = document.getElementById('sel_fabrics1'),
+        fbtSlct = document.getElementById('sel_fabrics2');
 
     //if the coupon code is entered or the generate the coupon code box is checked then we have to make the multiple box checked
     //this is because we are enforcing the system to make is so that all promotions with a coupon code are added to other deals
@@ -105,9 +105,9 @@ function toggleFabrics(){
 }
 
 function toggleDetails() {
-    var fbtAll = document.getElementById('sel_fabrics1');
-    var fbtSlct = document.getElementById('sel_fabrics2');
-    var dtlSlct = document.getElementById('iDscntType');
+    var fbtAll = document.getElementById('sel_fabrics1'),
+        fbtSlct = document.getElementById('sel_fabrics2'),
+        dtlSlct = document.getElementById('iDscntType');
 
     toggleFabrics();
 
@@ -120,8 +120,8 @@ function toggleDetails() {
 }
 
 function toggleUsers() {
-    var ul = document.getElementById('users_list');
-    var uc4= document.getElementById('users_check4');
+    var ul = document.getElementById('users_list'),
+        uc4= document.getElementById('users_check4');
     ul.disabled = !uc4.checked;
 }
 
@@ -129,10 +129,10 @@ function toggleUsers() {
 //    toggleDiscountType(false);
 //    toggleCouponCode(false);
 
-var fl = document.getElementById('fabric_list');
-var sf1 = document.getElementById('sel_fabrics1');
-var ul = document.getElementById('users_list');
-var uc4= document.getElementById('users_check4');
+var fl = document.getElementById('fabric_list'),
+    sf1 = document.getElementById('sel_fabrics1'),
+    ul = document.getElementById('users_list'),
+    uc4= document.getElementById('users_check4');
 
 fl.disabled = sf1.checked;
 ul.disabled = !uc4.checked;

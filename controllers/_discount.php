@@ -253,7 +253,7 @@ class Controller_Discount extends Controller_Controller
         $model = new Model_Discount();
         $id = $model->validData(_A_::$app->get('id'));
         $userInfo = $model->get_edit_discounts_data($id);
-        $this->template->vars('userInfo', $userInfo);
+        $this->template->vars('data', $userInfo);
         $this->main->view_admin('edit');
     }
 

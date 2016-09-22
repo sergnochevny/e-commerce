@@ -3,6 +3,8 @@
 
     $row['date_start'] = gmdate("F j, Y, g:i a", $row['date_start']);
     $row['date_end'] = gmdate("F j, Y, g:i a", $row['date_end']);
+    $row['enabled'] = $row['enabled'] == "1" ? "YES" : "NO";
+    $row['allow_multiple'] = $row['allow_multiple'] == "1" ? "YES" : "NO";
 ?>
 <tr>
     <td><b><?= $row['discount_amount'];?>% off </b><?= $row['discount_comment1'];?></td>
@@ -13,7 +15,7 @@
     <td><div class="text-center"><?= $row['date_end'];?></div></td>
     <td>
         <div class="text-center">
-            <a rel="nofollow" href="<?= _A_::$app->router()->UrlTo('edit_discounts', $opt); ?>">
+            <a rel="nofollow" href="<?= _A_::$app->router()->UrlTo('discount/edit', $opt); ?>">
                 <i class="fa fa-pencil"></i>
             </a>
             <a id="del_discount" rel="nofollow" href="<?= _A_::$app->router()->UrlTo('del_discounts', $opt); ?>">
