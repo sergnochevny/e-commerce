@@ -98,7 +98,6 @@
 
             $(document).on('click.confirm_action', "#confirm_no",
                 function (event) {
-
                     $(".popup a.close").trigger('click');
                 }
             );
