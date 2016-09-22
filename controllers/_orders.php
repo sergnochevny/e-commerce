@@ -202,8 +202,8 @@ class Controller_Orders extends Controller_Controller
                     $total_price = strlen(trim($total_price)) > 0 ? '$' . number_format($total_price, 2) : '';
                     $handling = strlen(trim($handling)) > 0 ? '$' . number_format($handling, 2) : '';
                     $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
-                    $action = _A_::$app->router()->UrlTo('order_info', [
-                        'oid' => urlencode(base64_encode($oid)),
+                    $action = _A_::$app->router()->UrlTo('orders/info', [
+                        'oid' => $oid,
                         'page' => $page,
                         'orders_search_query' => _A_::$app->get('orders_search_query')
                     ]);
@@ -244,7 +244,7 @@ class Controller_Orders extends Controller_Controller
                     $handling = strlen(trim($handling)) > 0 ? '$' . number_format($handling, 2) : '';
                     $date = date('F j, Y, g:i a', $date);
                     $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
-                    $action = _A_::$app->router()->UrlTo('order_info', [
+                    $action = _A_::$app->router()->UrlTo('orders/info', [
                         'oid' => urlencode(base64_encode($oid))
                     ]);
                     $this->template->vars('action', $action);
@@ -270,13 +270,13 @@ class Controller_Orders extends Controller_Controller
     {
         $this->main->test_access_rights();
         $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-        $oid = (integer)urldecode(base64_decode(!is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));
+        $oid = (integer) _A_::$app->get('oid') ? _A_::$app->get('oid') : null;
         $prms['page'] = $page;
 
         if (!is_null(_A_::$app->get('orders_search_query'))) {
             $prms['orders_search_query'] = _A_::$app->get('orders_search_query');
         }
-        $back_url = _A_::$app->router()->UrlTo('orders_history', $prms);
+        $back_url = _A_::$app->router()->UrlTo('orders/history', $prms);
 
         $config = [
             'oid' => $oid
@@ -348,7 +348,7 @@ class Controller_Orders extends Controller_Controller
         $this->main->template->vars('status_code', $status_code);
         $this->main->template->vars('total_discount', $total_discount);
 
-        $this->main->view_admin('order_info');
+        $this->main->view_admin('info');
     }
 
     public function customer_info()
@@ -424,7 +424,7 @@ class Controller_Orders extends Controller_Controller
         $this->main->view('customer_info');
     }
 
-    public function edit_info()
+    public function edit()
     {
         $model = new Model_Order();
         $track_code = (string)trim(htmlspecialchars(_A_::$app->post('track_code')));

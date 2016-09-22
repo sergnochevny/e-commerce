@@ -27,7 +27,7 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>Transaction id</th>
+                        <th style="max-width: 360px;">Transaction id</th>
                         <th>User</th>
                         <th>Order date</th>
                         <th>Delivery date</th>

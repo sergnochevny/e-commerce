@@ -10,8 +10,6 @@
                 <a href="<?= $back_url ?>">
                     <input type="button" value="Back" class="button">
                 </a>
-                <br>
-                <br>
                 <div class="col-lg-12" style="width: 100%; float:left;">
                     <div class="row">
                         <div class="col-xs-12 alert-success success" style="display: none; margin-bottom:0;"></div>
@@ -19,7 +17,7 @@
                     </div>
                     <br>
                     <div class="row">
-                        <form action="<?= _A_::$app->router()->UrlTo('orders/edit_info'); ?>" id="edit_orders_info"
+                        <form action="<?= _A_::$app->router()->UrlTo('orders/edit'); ?>" id="edit_orders_info"
                               method="post">
                             <div class="col-xs-4">
                                 <div class="row">
@@ -63,7 +61,7 @@
                         <td class="product-name"><b>Track Code</b></td>
                         <td data-title="Shipping Discount" style="text-align:right;">
                             <span class="track_code">
-                                <?= $track_code ?>
+                                <?= ($track_code == 0) ? 'Missing' : $track_code?>
                             </span>
                         </td>
                         <td style="border-left: 1px solid rgba(0,0,0,.1)">
@@ -71,7 +69,7 @@
                         </td>
                         <td class="text-right">
                              <span class="end_date">
-                                <?= $end_date ?>
+                                <?= ($end_date == 0) ? 'Not specified' : $end_date ?>
                              </span>
                         </td>
                         <td class="product-name" style="border-left: 1px solid rgba(0,0,0,.1)"><b>Order status</b></td>

@@ -6,8 +6,8 @@
                 <th class="text-center">Email</th>
                 <th class="text-center">Title</th>
                 <th class="text-center">Date</th>
-                <th class="text-center">Action</th>
-                <th class="text-center">Show on site</th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
             </tr>
         </thead>
         <tbody>
