@@ -41,13 +41,13 @@ Class Model_Product extends Model_Model
         };
 
         $categories = [];
-        $q = "select a.cid, a.display_order, b.cname " .
+        $q = "select a.cid, a.display_order " .
             "from fabrix_product_categories a " .
             "left join fabrix_categories b on b.cid = a.cid " .
             "where a.pid='$pid'";
         $result = mysql_query($q);
         while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
-            $categories[$row[0]] = [$row[1], $row[2]];
+            $categories[$row[0]] = $row[1];
         };
 
         if (count($categories) < 1) {
