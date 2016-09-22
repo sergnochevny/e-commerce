@@ -3,12 +3,12 @@
 class Controller_Menu extends Controller_Controller
 {
 
-    function show_menu()
+    public function show_menu()
     {
         $base_url = _A_::$app->router()->UrlTo('/');
         $this->show_shop_menu();
         $this->show_blog_menu();
-        $this->template->vars('base_url', $base_url);
+        $this->main->template->vars('base_url', $base_url);
         ob_start();
         $this->template->view_layout('menu');
         $menu = ob_get_contents();
@@ -16,7 +16,7 @@ class Controller_Menu extends Controller_Controller
         $this->main->template->vars('menu', $menu);
     }
 
-    function show_shop_menu()
+    public function show_shop_menu()
     {
         $base_url = _A_::$app->router()->UrlTo('/');
 
@@ -82,7 +82,7 @@ class Controller_Menu extends Controller_Controller
 
     }
 
-    function show_blog_menu()
+    public function show_blog_menu()
     {
         $base_url = _A_::$app->router()->UrlTo('/');
 
@@ -105,8 +105,7 @@ class Controller_Menu extends Controller_Controller
         $blog_menu = ob_get_contents();
         ob_end_clean();
 
-        $this->main->template->vars('blog_menu', $blog_menu);
-
+        $this->template->vars('blog_menu', $blog_menu);
     }
 
 }

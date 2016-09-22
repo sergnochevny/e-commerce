@@ -6,7 +6,6 @@ class Controller_Authorization extends Controller_Controller
     public function authorization()
     {
         $prms = null;
-        $model = new Model_Auth();
 
         if ($this->is_admin_logged()) {
             $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin/home');

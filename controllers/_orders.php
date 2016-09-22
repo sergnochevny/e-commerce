@@ -29,7 +29,7 @@ class Controller_Orders extends Controller_Controller
         $this->template->vars('page', $page);
         $this->template->vars('user_id', $user_id);
         if (!empty($orders_count) && ((int)$orders_count > 0)) {
-            $rows = $model->get_orders_by_user($user_id, $start, $per_page, $res_count_rows);
+            $rows = Model_Order::get_orders_by_user($user_id, $start, $per_page, $res_count_rows);
             $this->main->template->vars('count_rows', $res_count_rows);
             ob_start();
             foreach ($rows as $row) {
@@ -421,7 +421,6 @@ class Controller_Orders extends Controller_Controller
 
     public function edit()
     {
-        $model = new Model_Order();
         $track_code = (string)trim(htmlspecialchars(_A_::$app->post('track_code')));
         $status = (string)trim(htmlspecialchars(_A_::$app->post('status')));
         $order_id = (integer)trim(htmlspecialchars(_A_::$app->post('order_id')));
@@ -438,7 +437,7 @@ class Controller_Orders extends Controller_Controller
 
             if ($result['status'] === 1) {
 
-                $user_id = $model->get_user_by_order($order_id);
+                $user_id = Model_Order::get_user_by_order($order_id);
                 $user_data = Model_User::get_user_by_id($user_id);
                 $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
                 $subject = "Order delivery";

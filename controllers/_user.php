@@ -57,7 +57,7 @@ Class Controller_User Extends Controller_Controller
         $password = mysql_real_escape_string(stripslashes(strip_tags(trim($password))));
         $res = Model_Auth::user_authorize($email, $password);
         if ($res) {
-            $user = $model->get_user_data();
+            $user = Model_Auth::get_user_data();
             _A_::$app->setSession('_', $user['aid']);
             _A_::$app->setSession('user', $user);
         }

@@ -2,7 +2,7 @@
 
 Class Model_User extends Model_Model
 {
-    public static function totalQuantity()
+    public static function get_total_count_users()
     {
         $total = 0;
         $q_total = "SELECT COUNT(*) FROM fabrix_accounts";
@@ -14,7 +14,7 @@ Class Model_User extends Model_Model
         return $total;
     }
 
-    public static function getList($start, $limit)
+    public static function get_users_list($start, $limit)
     {
         $list = [];
         $q = "SELECT * FROM fabrix_accounts ORDER BY aid LIMIT " . $start . ", " . $limit;
