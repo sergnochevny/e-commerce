@@ -25,7 +25,6 @@
                         </div>
                     </div>
                 </div>
-                <b id="tests"></b>
             </div>
         </div>
     </div>
