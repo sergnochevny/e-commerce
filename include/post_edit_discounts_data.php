@@ -1,5 +1,5 @@
 <?php
-$discount_id = Model_Discount::validData(!is_null(_A_::$app->get('discount_id'))?_A_::$app->get('discount_id'):null);
+$discount_id = Model_Discount::validData(!is_null(_A_::$app->get('d_id'))?_A_::$app->get('d_id'):null);
 $iType = Model_Discount::validData(!is_null(_A_::$app->post('iType'))?_A_::$app->post('iType'):'');
 $coupon_code = Model_Discount::validData(!is_null(_A_::$app->post('coupon_code'))?_A_::$app->post('coupon_code'):'');
 $generate_code = Model_Discount::validData(!is_null(_A_::$app->post('generate_code'))?_A_::$app->post('generate_code'):false);
@@ -12,7 +12,7 @@ $iReqType = Model_Discount::validData(_A_::$app->post('iReqType'));
 $users_check = Model_Discount::validData(_A_::$app->post('users_check'));
 $users_list = !is_null(_A_::$app->post('users_list')) ? _A_::$app->post('users_list') : null;
 $sel_fabrics = Model_Discount::validData(_A_::$app->post('sel_fabrics'));
-$fabric_list = !is_null(_A_::$app->post('fabric_list')) ? _A_::$app->post('fabric_list') : null;
+$filter_products = !is_null(_A_::$app->post('filter_products')) ? _A_::$app->post('filter_products') : null;
 $allow_multiple = Model_Discount::validData(!is_null(_A_::$app->post('allow_multiple'))?_A_::$app->post('allow_multiple'):'0');
 $start_date = Model_Discount::validData(!is_null(_A_::$app->post('start_date'))?_A_::$app->post('start_date'):'');
 $date_end = Model_Discount::validData(!is_null(_A_::$app->post('date_end'))?_A_::$app->post('date_end'):'');

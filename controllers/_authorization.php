@@ -35,7 +35,7 @@ class Controller_Authorization extends Controller_Controller
             }
         }
 
-        if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
+        if ((_A_::$app->request_is_post()) &&
             !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))
         ) {
             if (empty(_A_::$app->post('login'))) exit('Empty Email/Username field');
@@ -107,7 +107,7 @@ class Controller_Authorization extends Controller_Controller
 
     public function lost_password()
     {
-        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
+        if (_A_::$app->request_is_post()) {
             if (!_A_::$app->get('user_id')) {
                 $this->main->template->vars('action', _A_::$app->router()->UrlTo('authorization/lost_password'));
                 if (empty(_A_::$app->post('login'))) {
@@ -208,7 +208,7 @@ class Controller_Authorization extends Controller_Controller
             }
         } else {
             $result = false;
-            if (_A_::$app->server('REQUEST_METHOD') == 'GET') {
+            if (_A_::$app->request_is_get()) {
                 $remind = _A_::$app->get('remind');
                 if (isset($remind)) {
                     $remind = base64_decode(urldecode($remind));

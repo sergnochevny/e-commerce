@@ -6,7 +6,7 @@ Class Controller_User Extends Controller_Controller
     public function user()
     {
         if (!$this->is_authorized()) {
-            if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
+            if ((_A_::$app->request_is_post()) &&
                 !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))
             ) {
                 if (empty(_A_::$app->post('login')) && empty(_A_::$app->post('pass'))) exit('Empty Email or Password field');
@@ -87,7 +87,7 @@ Class Controller_User Extends Controller_Controller
             $users = new Controller_Users();
             $action = _A_::$app->router()->UrlTo('user/change');
             $title = 'CHANGE REGISTRATION DATA';
-            if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
+            if (_A_::$app->request_is_post()) {
                 $users->_save_edit();
                 $users->main->template->vars('action', $action);
                 $users->main->template->vars('title', $title);
@@ -120,7 +120,7 @@ Class Controller_User Extends Controller_Controller
 
     public function registration()
     {
-        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
+        if (_A_::$app->request_is_post()) {
             $prms = null;
             $users = new Controller_Users();
             if (!$users->_save_new()) {

@@ -23,7 +23,7 @@
                         </small>
                     </p>
                     <div id="discount_form">
-                        <?php include('views/discount/edit_form.php') ?>
+                        <?= $form; ?>
                     </div>
                 </div>
                 <br/>

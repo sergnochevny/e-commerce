@@ -6,7 +6,7 @@ Class Controller_Admin Extends Controller_Controller
     public function admin()
     {
         if (!$this->is_authorized()) {
-            if ((_A_::$app->server('REQUEST_METHOD') == 'POST') &&
+            if ((_A_::$app->request_is_post()) &&
                 !is_null(_A_::$app->post('login')) && !is_null(_A_::$app->post('pass'))
             ) {
                 if (empty(_A_::$app->post('login')) && empty(_A_::$app->post('pass'))) exit('Empty Login or Password field');
