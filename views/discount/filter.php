@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div class="panel-footer">
-            <a href="<?= $filter_type; ?>" name="edit_filter" class="button alt">Add</a>
+            <a href="<?= $filter_type; ?>" data-destination="<?= $destination;?>" data-title="<?= $title;?>" name="edit_filter" class="button alt">Add</a>
         </div>
     </div>
 </div>

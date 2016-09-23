@@ -27,6 +27,7 @@
 
     function postdata(url, data, context, callback) {
         $('body').waitloader('show');
+        var this_ = this;
         $.ajax({
             type: 'POST',
             url: url,
@@ -35,9 +36,11 @@
             processData: false,
             contentType: false,
             success: function (data) {
+                $('body').waitloader('show');
                 $.when(context.html(data)).done(
                     function(){
-                        if(callback) callback.apply(this);
+                        if(callback) callback.apply(this_);
+                        $('body').waitloader('remove');
                     }
                 );
             },
@@ -55,7 +58,7 @@
             event.preventDefault();
             var data = new FormData(this);
             var url = $(this).attr('action');
-            postdata(url, data, $('#discount_form'));
+            postdata.apply(this, url, data, $('#discount_form'));
         }
     );
 
@@ -63,12 +66,32 @@
         var data = new FormData($('form#discount')[0]);
         var url = $('form#discount').attr('action');
         data.append('method', $(this).attr('href'));
-        postdata(url, data, $('#modal_content'),
+        var destination = $(this).attr('data-destination');
+        var title =  $(this).attr('data-title');
+        postdata.apply(this, url, data, $('#modal_content'),
             function(){
+                $('#modal-title').html(title);
+                $('#build_filter').attr('data-destination', destination);
                 $('#modal').modal('show');
             }
         );
     }
+
+    $('#build_filter').on('click',
+        function(){
+            var destination = $('"'+$(this).attr('data-destination')+'"').parent('div');
+            var data = new FormData($('form#discount')[0]);
+            var url = $('form#discount').attr('action');
+            data.append('method', $(this).attr('href'));
+            data.append('type', $(this).attr('data-destination'));
+            postdata.apply(this, url, data, destination,
+                function(){
+                    $('#modal').find('#modal_content').empty();
+                }
+            );
+        }
+    );
+
 
     $('form#discount a[name=edit_filter]').on('click',
         function(event){
