@@ -77,7 +77,8 @@
                     <div class="form-row">
                         <div class="col-md-4">
                             <label class="required_field" for="discount_amount">
-                                Discount details <i data-promotion href="#discount_details" class="fa fa-question-circle"></i>
+                                Discount details <i data-promotion href="#discount_details"
+                                                    class="fa fa-question-circle"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
@@ -89,26 +90,28 @@
                                 </div>
                                 <div class="col-md-2">
                                     <select name="iAmntType" style="padding-left: 5px">
-                                        <option value="1" <?= ($data['discount_amount_type'] == '1')?'selected':''?>>
+                                        <option
+                                            value="1" <?= ($data['discount_amount_type'] == '1') ? 'selected' : '' ?>>
                                             $
                                         </option>
-                                        <option value="2" <?= ($data['discount_amount_type'] == '2')?'selected':''?>>
+                                        <option
+                                            value="2" <?= ($data['discount_amount_type'] == '2') ? 'selected' : '' ?>>
                                             %
                                         </option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <select name="iDscntType" id="iDscntType" onChange="toggleDiscountType(true);">
-                                        <option value="0" <?= ($data['discount_type'] == '0')?'selected':''?>>
+                                        <option value="0" <?= ($data['discount_type'] == '0') ? 'selected' : '' ?>>
                                             Select
                                         </option>
-                                        <option value="1" <?= ($data['discount_type'] == '1')?'selected':''?>>
+                                        <option value="1" <?= ($data['discount_type'] == '1') ? 'selected' : '' ?>>
                                             Sub total
                                         </option>
-                                        <option value="2" <?= ($data['discount_type'] == '2')?'selected':''?>>
+                                        <option value="2" <?= ($data['discount_type'] == '2') ? 'selected' : '' ?>>
                                             Shipping
                                         </option>
-                                        <option value="3" <?= ($data['discount_type'] == '3')?'selected':''?>>
+                                        <option value="3" <?= ($data['discount_type'] == '3') ? 'selected' : '' ?>>
                                             Total (inc shipping and handling)
                                         </option>
                                     </select>
@@ -119,23 +122,25 @@
                     <div class="form-row">
                         <div class="col-md-4">
                             <label class="required_field" data-promotion for="restrictions">
-                                Restrictions <i data-promotion href="#discount_details" class="fa fa-question-circle"></i>
+                                Restrictions <i data-promotion href="#discount_details"
+                                                class="fa fa-question-circle"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <input type="text" name="restrictions" value="<?= $data['required_amount'] ?>" class="input-text ">
+                                    <input type="text" name="restrictions" value="<?= $data['required_amount'] ?>"
+                                           class="input-text ">
                                 </div>
                                 <div class="col-md-8">
                                     <select name="iReqType">
-                                        <option value="0" <?= ($data['required_type'] == '0')?'selected':''?>>
+                                        <option value="0" <?= ($data['required_type'] == '0') ? 'selected' : '' ?>>
                                             Select
                                         </option>
-                                        <option value="1" <?= ($data['required_type'] == '1')?'selected':''?>>
+                                        <option value="1" <?= ($data['required_type'] == '1') ? 'selected' : '' ?>>
                                             Total purchases
                                         </option>
-                                        <option value="2" <?= ($data['required_type'] == '2')?'selected':''?>>
+                                        <option value="2" <?= ($data['required_type'] == '2') ? 'selected' : '' ?>>
                                             Total dollar amount
                                         </option>
                                     </select>
@@ -167,7 +172,11 @@
                                 <?= $data['users_check'] == "4" ? '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" onclick="toggleUsers();">'; ?>
                                 All selected users (i.e. use the users selected below)
                             </label>
-                            <?= isset($data['users'])?$data['users']:'';?>
+                            <?php if (isset($data['users'])): ?>
+                                <div data-filter-panel>
+                                    <?= $data['users']; ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -186,7 +195,11 @@
                                 <?= $data['sel_fabrics'] == "2" ? '<input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox" checked  onclick="toggleDetails();">' : '<input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox"  onclick="toggleDetails();">'; ?>
                                 All selected fabrics (i.e. use the fabrics selected below)
                             </label>
-                            <?= isset($data['filter_products'])?$data['filter_products']:'';?>
+                            <?php if (isset($data['filter_products'])): ?>
+                                <div data-filter-panel>
+                                    <?= $data['filter_products']; ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -285,5 +298,23 @@
             </div>
         </div>
     </div>
+    <div id="modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Select Categories</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modal_content" style="max-height: 400px; overflow-y: auto;">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="build_categories" type="button" class="btn-primary" data-dismiss="modal">Ok</button>
+                    <button type="button" class="btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </form>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/discount/form.js'); ?>"></script>

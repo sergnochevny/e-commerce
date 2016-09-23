@@ -16,9 +16,8 @@
             </ul>
         </div>
         <div class="panel-footer">
-            <a href="<?= $filter_type; ?>" id="edit_filter" class="button alt">Add</a>
+            <a href="<?= $filter_type; ?>" name="edit_filter" class="button alt">Add</a>
         </div>
-
     </div>
 </div>
 <?php endif; ?>

@@ -116,147 +116,6 @@ class Controller_Discount extends Controller_Controller
         $this->main->view_admin('add');
     }
 
-    private function edit_data()
-    {
-        include('include/post_edit_discounts_data.php');
-
-        $date_end = strlen($date_end) > 0 ? strtotime($date_end) : $date_end = 0;
-        $start_date = strlen($start_date) > 0 ? strtotime($start_date) : $start_date = 0;
-
-        if (($generate_code == '1') || (strlen($coupon_code) > 0)) {
-            $allow_multiple = 1;
-            $sel_fabrics = 1;
-            $fabric_list = [];
-        }
-
-        if ($sel_fabrics == "2") {
-            $iDscntType = '1';
-        }
-        if ($iDscntType == '2') {
-            $allow_multiple = 1;
-        }
-        if ($iDscntType != '2')
-            $shipping_type = '0';
-
-        if ($users_check != '4') {
-            $users_list = [];
-        }
-
-        if (!empty($discount_id)) {
-            if (
-                ($iDscntType == '2' && $shipping_type == '0') ||
-                ((strlen($coupon_code) > 0) && ($generate_code == "0") && Model_Discount::checkCouponCode($discount_id, $coupon_code)) ||
-                (!isset($users_list) && ($users_check == '4')) ||
-                (!isset($fabric_list) && ($sel_fabrics == "2")) ||
-                ($start_date == 0) || ($date_end == 0) ||
-                ($iType == '0') ||
-                (!isset($discount_amount) || $discount_amount == '' || $discount_amount == '0.00' || $iDscntType == '0') ||
-                ($restrictions == '')
-            ) {
-                $error = [];
-
-                if ($iDscntType == '2' && $shipping_type == '0') $error[] = "The shipping type is required.";
-                if (($generate_code == "0") && (strlen($coupon_code) > 0) && Model_Discount::checkCouponCode($discount_id, $coupon_code))
-                    $error[] = "The coupon code is in use.";
-                if (($restrictions == '')) $error[] = "Identify 'retrictions' field";
-                if ($iType == '0') $error[] = "Identify 'promotion' field";
-                if (!isset($discount_amount) || $discount_amount == '' || $discount_amount == '0.00' || $iDscntType == '0') $error[] = "Identify 'discount details' fields";
-                if ($start_date == 0) $error[] = "Identify 'start date' field";
-                if ($date_end == 0) $error[] = "Identify 'end date' field";
-                if (!isset($users_list) && ($users_check == '4')) {
-                    $error[] = "Set the option 'All selected users'. Select at least one user from the list , in this case!";
-                }
-                if (!isset($fabric_list) && ($sel_fabrics == '2')) {
-                    $error[] = "Set the option 'All selected fabrics'. Select at least one fabric from the list , in this case!";
-                }
-
-                if (!isset($fabric_list)) $fabric_list = [];
-                if (!isset($users_list)) $users_list = [];
-
-                $this->template->vars('error', $error);
-
-                $fabrics = Model_Discount::get_edit_form_checked_fabrics_by_array($fabric_list, $sel_fabrics);
-                $users = Model_Discount::get_edit_form_checked_users_by_array($users_list, $users_check);
-
-                $userInfo = array(
-                    'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
-                    'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '',
-                    'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '',
-                    'discount_amount' => !is_null(_A_::$app->post('discount_amount')) ? _A_::$app->post('discount_amount') : '',
-                    'coupon_code' => $coupon_code,
-                    'allow_multiple' => $allow_multiple,
-                    'date_start' => !is_null(_A_::$app->post('start_date')) ? _A_::$app->post('start_date') : '',
-                    'date_end' => !is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '',
-                    'enabled' => !is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : '',
-                    'fabric_list' => $fabrics,
-                    'users_list' => $users,
-                    'countdown' => !is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : '',
-                    'sel_fabrics' => $sel_fabrics,
-                    'users_check' => $users_check,
-                    'required_amount' => !is_null(_A_::$app->post('restrictions')) ? _A_::$app->post('restrictions') : '0.00',
-                    'promotion_type' => !is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '0',
-                    'discount_type' => $iDscntType,
-                    'required_type' => !is_null(_A_::$app->post('iReqType')) ? _A_::$app->post('iReqType') : '0',
-                    'discount_amount_type' => !is_null(_A_::$app->post('iAmntType')) ? _A_::$app->post('iAmntType') : '0',
-                    'shipping_type' => $shipping_type,
-                    'generate_code' => $generate_code
-                );
-
-                $this->template->vars('userInfo', $userInfo);
-                $this->main->view_admin('edit_discounts');
-
-            } else {
-
-                if ($generate_code == '1') {
-                    $coupon_code = Model_Discount::generateCouponCode($discount_id);
-                    $allow_multiple = 1;
-                    $sel_fabrics = 1;
-                    $fabric_list = [];
-                }
-
-                Model_Discount::deleteFabrixSpecialsUserById($discount_id);
-                if ($users_check == "4") {
-                    foreach ($users_list as $user_id) {
-                        Model_Discount::saveFabrixSpecialsUser($discount_id, $user_id);
-                    }
-                }
-
-                Model_Discount::deleteFabrixSpecialsProductById($discount_id);
-                if ($sel_fabrics == "2") {
-                    foreach ($fabric_list as $fabric_id) {
-                        Model_Discount::saveFabrixSpecialsUser($discount_id, $fabric_id);
-                    }
-                }
-
-                $result = Model_Discount::updateFabrixSpecials($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end, $discount_id);
-                $error = [];
-                if ($result) {
-                    $warning = ["The data updated successfully!"];
-                } else {
-                    $error = [mysql_error()];
-                }
-                $this->template->vars('warning', $warning);
-                $this->template->vars('error', $error);
-
-                $this->edit();
-            }
-        }
-    }
-
-    public function edit()
-    {
-        $this->main->test_access_rights();
-        if (_A_::$app->request_is_post()) {
-            $this->save_data('discount/edit');
-        }
-        ob_start();
-        $this->form('discount/edit');
-        $form = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('form', $form);
-        $this->main->view_admin('edit');
-    }
-
     private function save_data($url)
     {
         include('include/post_edit_discounts_data.php');
@@ -401,6 +260,167 @@ class Controller_Discount extends Controller_Controller
         $this->template->vars('action', _A_::$app->router()->UrlTo($url, $prms));
         $this->template->vars('data', $data);
         $this->main->view_layout('form');
+    }
+
+    private function edit_data()
+    {
+        include('include/post_edit_discounts_data.php');
+
+        $date_end = strlen($date_end) > 0 ? strtotime($date_end) : $date_end = 0;
+        $start_date = strlen($start_date) > 0 ? strtotime($start_date) : $start_date = 0;
+
+        if (($generate_code == '1') || (strlen($coupon_code) > 0)) {
+            $allow_multiple = 1;
+            $sel_fabrics = 1;
+            $fabric_list = [];
+        }
+
+        if ($sel_fabrics == "2") {
+            $iDscntType = '1';
+        }
+        if ($iDscntType == '2') {
+            $allow_multiple = 1;
+        }
+        if ($iDscntType != '2')
+            $shipping_type = '0';
+
+        if ($users_check != '4') {
+            $users_list = [];
+        }
+
+        if (!empty($discount_id)) {
+            if (
+                ($iDscntType == '2' && $shipping_type == '0') ||
+                ((strlen($coupon_code) > 0) && ($generate_code == "0") && Model_Discount::checkCouponCode($discount_id, $coupon_code)) ||
+                (!isset($users_list) && ($users_check == '4')) ||
+                (!isset($fabric_list) && ($sel_fabrics == "2")) ||
+                ($start_date == 0) || ($date_end == 0) ||
+                ($iType == '0') ||
+                (!isset($discount_amount) || $discount_amount == '' || $discount_amount == '0.00' || $iDscntType == '0') ||
+                ($restrictions == '')
+            ) {
+                $error = [];
+
+                if ($iDscntType == '2' && $shipping_type == '0') $error[] = "The shipping type is required.";
+                if (($generate_code == "0") && (strlen($coupon_code) > 0) && Model_Discount::checkCouponCode($discount_id, $coupon_code))
+                    $error[] = "The coupon code is in use.";
+                if (($restrictions == '')) $error[] = "Identify 'retrictions' field";
+                if ($iType == '0') $error[] = "Identify 'promotion' field";
+                if (!isset($discount_amount) || $discount_amount == '' || $discount_amount == '0.00' || $iDscntType == '0') $error[] = "Identify 'discount details' fields";
+                if ($start_date == 0) $error[] = "Identify 'start date' field";
+                if ($date_end == 0) $error[] = "Identify 'end date' field";
+                if (!isset($users_list) && ($users_check == '4')) {
+                    $error[] = "Set the option 'All selected users'. Select at least one user from the list , in this case!";
+                }
+                if (!isset($fabric_list) && ($sel_fabrics == '2')) {
+                    $error[] = "Set the option 'All selected fabrics'. Select at least one fabric from the list , in this case!";
+                }
+
+                if (!isset($fabric_list)) $fabric_list = [];
+                if (!isset($users_list)) $users_list = [];
+
+                $this->template->vars('error', $error);
+
+                $fabrics = Model_Discount::get_edit_form_checked_fabrics_by_array($fabric_list, $sel_fabrics);
+                $users = Model_Discount::get_edit_form_checked_users_by_array($users_list, $users_check);
+
+                $userInfo = array(
+                    'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
+                    'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '',
+                    'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '',
+                    'discount_amount' => !is_null(_A_::$app->post('discount_amount')) ? _A_::$app->post('discount_amount') : '',
+                    'coupon_code' => $coupon_code,
+                    'allow_multiple' => $allow_multiple,
+                    'date_start' => !is_null(_A_::$app->post('start_date')) ? _A_::$app->post('start_date') : '',
+                    'date_end' => !is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '',
+                    'enabled' => !is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : '',
+                    'fabric_list' => $fabrics,
+                    'users_list' => $users,
+                    'countdown' => !is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : '',
+                    'sel_fabrics' => $sel_fabrics,
+                    'users_check' => $users_check,
+                    'required_amount' => !is_null(_A_::$app->post('restrictions')) ? _A_::$app->post('restrictions') : '0.00',
+                    'promotion_type' => !is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '0',
+                    'discount_type' => $iDscntType,
+                    'required_type' => !is_null(_A_::$app->post('iReqType')) ? _A_::$app->post('iReqType') : '0',
+                    'discount_amount_type' => !is_null(_A_::$app->post('iAmntType')) ? _A_::$app->post('iAmntType') : '0',
+                    'shipping_type' => $shipping_type,
+                    'generate_code' => $generate_code
+                );
+
+                $this->template->vars('userInfo', $userInfo);
+                $this->main->view_admin('edit_discounts');
+
+            } else {
+
+                if ($generate_code == '1') {
+                    $coupon_code = Model_Discount::generateCouponCode($discount_id);
+                    $allow_multiple = 1;
+                    $sel_fabrics = 1;
+                    $fabric_list = [];
+                }
+
+                Model_Discount::deleteFabrixSpecialsUserById($discount_id);
+                if ($users_check == "4") {
+                    foreach ($users_list as $user_id) {
+                        Model_Discount::saveFabrixSpecialsUser($discount_id, $user_id);
+                    }
+                }
+
+                Model_Discount::deleteFabrixSpecialsProductById($discount_id);
+                if ($sel_fabrics == "2") {
+                    foreach ($fabric_list as $fabric_id) {
+                        Model_Discount::saveFabrixSpecialsUser($discount_id, $fabric_id);
+                    }
+                }
+
+                $result = Model_Discount::updateFabrixSpecials($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end, $discount_id);
+                $error = [];
+                if ($result) {
+                    $warning = ["The data updated successfully!"];
+                } else {
+                    $error = [mysql_error()];
+                }
+                $this->template->vars('warning', $warning);
+                $this->template->vars('error', $error);
+
+                $this->edit();
+            }
+        }
+    }
+
+    public function edit()
+    {
+        $this->main->test_access_rights();
+        if (_A_::$app->request_is_post()) {
+            if (!is_null(_A_::$app->post('method'))) {
+                include ('include/post_edit_discounts_data.php');
+                switch (_A_::$app->post('method')) {
+                    case 'users':
+                        $selected = array_values($users);
+                        break;
+                    case 'prod':
+                    case 'mnf':
+                    case 'cat':
+                        $selected = array_values($filter_products);
+                        break;
+                }
+                $this->template->vars('type', _A_::$app->post('method').'_select');
+                $this->template->vars('selected',$selected);
+                $filter = Model_Discount::get_filter_data(_A_::$app->post('method'));
+                $this->template->vars('filter',$filter);
+                $this->template->view_layout('select_filter');
+                exit;
+            } else {
+                $this->save_data('discount/edit');
+            }
+        }
+        ob_start();
+        $this->form('discount/edit');
+        $form = ob_get_contents();
+        ob_end_clean();
+        $this->template->vars('form', $form);
+        $this->main->view_admin('edit');
     }
 
 }
