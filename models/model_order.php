@@ -366,7 +366,7 @@ class Model_Order extends Model_Model
         return false;
     }
 
-    public function get_orders_by_user($user_id, $start, $per_page, &$res_count_rows)
+    public static function get_orders_by_user($user_id, $start, $per_page, &$res_count_rows)
     {
         $res = mysql_query("select * from fabrix_orders WHERE aid='$user_id' ORDER BY order_date DESC LIMIT $start,$per_page");
         if ($res) {
