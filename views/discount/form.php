@@ -187,11 +187,11 @@
                                                                             href="#fabrics"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <label for="">
+                            <label for="sel_fabrics1">
                                 <?= $data['sel_fabrics'] == "1" ? '<input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1" class="input-checkbox" checked  onclick="toggleDetails();">' : '<input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1" class="input-checkbox"  onclick="toggleDetails();">'; ?>
                                 All fabrics
                             </label>
-                            <label for="">
+                            <label for="sel_fabrics2">
                                 <?= $data['sel_fabrics'] == "2" ? '<input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox" checked  onclick="toggleDetails();">' : '<input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox"  onclick="toggleDetails();">'; ?>
                                 All selected fabrics (i.e. use the fabrics selected below)
                             </label>
