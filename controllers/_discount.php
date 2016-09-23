@@ -3,7 +3,7 @@
 class Controller_Discount extends Controller_Controller
 {
 
-    function discount()
+    public function discount()
     {
         $this->main->test_access_rights();
         $this->get_list();
@@ -17,9 +17,7 @@ class Controller_Discount extends Controller_Controller
         $results = Model_Discount::getFabrixSpecialsIds();
         if (!is_null($results)) {
             ob_start();
-            foreach ($results as $key => $row ) {
-//                $row[14] = $row[14] == "1" ? "YES" : "NO";
-//                $row[11] = $row[11] == "1" ? "YES" : "NO";
+            foreach ($results as $key => $row) {
                 $this->template->vars('row', $row);
                 $this->template->view_layout('get_list');
             }
@@ -37,7 +35,6 @@ class Controller_Discount extends Controller_Controller
         if (!empty($id)) {
             Model_Discount::del_discount($id);
         }
-
         $this->get_list();
         $this->main->view_layout('list');
     }
@@ -73,7 +70,7 @@ class Controller_Discount extends Controller_Controller
             $enabled = $enabled == "1" ? "YES" : "NO";
 
             $this->template->vars('coupon_code', $row['coupon_code']);
-            $this->template->vars('discount_comment1',$row['discount_comment1']);
+            $this->template->vars('discount_comment1', $row['discount_comment1']);
             $this->template->vars('p_discount_amount', $row['discount_amount']);
             $this->template->vars('allow_multiple', $allow_multiple == "1" ? "YES" : "NO");
             $this->template->vars('date_start', gmdate("F j, Y, g:i a", $date_start));
@@ -387,8 +384,8 @@ class Controller_Discount extends Controller_Controller
     public function add()
     {
         $this->main->test_access_rights();
-        $userInfo = Model_Discount::get_new_discounts_data();
-        $this->template->vars('userInfo', $userInfo);
+        $data = Model_Discount::get_new_discounts_data();
+        $this->template->vars('data', $data);
         $this->main->view_admin('add');
     }
 

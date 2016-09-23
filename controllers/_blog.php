@@ -393,7 +393,7 @@ class Controller_Blog extends Controller_Controller
     public function get_categories($selected_categories = [])
     {
         $res = '';
-        $categories = Model_Blog::get_categories();
+        $categories = Model_Blog::get_blog_categories();
         ob_start();
         $this->template->vars('categories', $categories);
         $this->template->view_layout('categories_select_options');
@@ -705,7 +705,7 @@ class Controller_Blog extends Controller_Controller
             date_default_timezone_set('UTC');
             $post_date = date('F jS, Y', strtotime($row['post_date']));
             $post_img = Model_Blog::getPostImg($post_id);
-            $file_img = str_replace('{base_url}', '', $post_img);
+            $file_img = trim(str_replace('{base_url}', '', $post_img),'/\\');
             if (file_exists($file_img) && is_file($file_img) && is_readable($file_img)) {
                 $post_img = _A_::$app->router()->UrlTo($post_img);
             } else {
