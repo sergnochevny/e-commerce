@@ -1,6 +1,16 @@
 'use strict';
 (function ($) {
 
+    $('content').waitloader('remove');
+
+    if ($('.danger').length) {
+        $('.danger').show();
+        $('html, body').animate({scrollTop: parseInt($('.danger').offset().top) - 250}, 1000);
+        setTimeout(function () {
+            $('.danger').hide();
+        }, 8000);
+    }
+
     $('#dateFrom').datepicker({
         dateFormat: 'mm/dd/yy',
         onSelect: function (dateText, inst) {
@@ -15,46 +25,64 @@
         }
     });
 
+    function postdata(url, data, context, callback) {
+        $('body').waitloader('show');
+        debugger;
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                $.when(context.html(data)).done(
+                    function(){
+                        debugger;
+                        if(callback) callback.apply(this);
+                    }
+                );
+            },
+            error: function (xhr, str) {
+                alert('Error: ' + xhr.responseCode);
+            },
+            complete: function () {
+                $('body').waitloader('remove');
+            }
+        });
+    }
+
     $('form#discount').on('submit',
         function (event) {
-//            event.preventDefault();
-//            var msg = $(this).serialize();
-//            var url = $(this).attr('action');
-            $('body').waitloader('show');
-//            $.ajax({
-//                type: 'POST',
-//                url: url,
-//                data: msg,
-//                success: function (data) {
-//                    $('#discount_form').html(data);
-//                    $('.danger').css('display', 'block');
-//                    $('body').waitloader('remove');
-//                    $('html, body').animate({scrollTop: parseInt($('.danger').offset().top) - 250 }, 1000);
-//                    setTimeout(function () {
-//                        $('.danger').css('display', 'none');
-//                    }, 8000);
-//                },
-//                error: function (xhr, str) {
-//                    alert('Error: ' + xhr.responseCode);
-//                }
-//            });
+            event.preventDefault();
+            var data = new FormData(this);
+            var url = $(this).attr('action');
+            postdata(url, data, $('#discount_form'));
         }
     );
 
-    $(document).ready(
-        function () {
-            $('content').waitloader('remove');
-            if ($('.danger').length) {
-                $('.danger').css('display', 'block');
-                $('html, body').animate({scrollTop: parseInt($('.danger').offset().top) - 250}, 1000);
-                setTimeout(function () {
-                    $('.danger').css('display', 'none');
-                }, 8000);
+    function evFilterAdd(event) {
+        var data = new FormData($('form#discount')[0]);
+        var url = $('form#discount').attr('action');
+        data.append('method', $(this).attr('href'));
+        postdata(url, data, $('#modal_content'),
+            function(){
+                debugger;
+                $('#modal').modal('show');
             }
+        );
+    }
+
+    $('form#discount a[name=edit_filter]').on('click',
+        function(event){
+            event.preventDefault();
+            evFilterAdd.apply(this, event);
         }
     );
 
-})(jQuery);
+})
+(jQuery);
 
 function toggleDiscountType(enable) {
     var dtlSlct = document.getElementById('iDscntType');
@@ -130,15 +158,3 @@ function toggleUsers() {
     var uc4 = document.getElementById('users_check4');
     ul.disabled = !uc4.checked;
 }
-
-//    toggleDetails();
-//    toggleDiscountType(false);
-//    toggleCouponCode(false);
-
-var fl = document.getElementById('fabric_list');
-var sf1 = document.getElementById('sel_fabrics1');
-var ul = document.getElementById('users_list');
-var uc4 = document.getElementById('users_check4');
-
-fl.disabled = sf1.checked;
-ul.disabled = !uc4.checked;

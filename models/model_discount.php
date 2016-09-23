@@ -154,6 +154,44 @@ Class Model_Discount extends Model_Model
 
     }
 
+    public static function get_filter_data($type)
+    {
+        switch ($type){
+            case 'users':
+                $q = "select * from fabrix_accaunts order by email, bill_firstname, bill_lastname";
+                $results = mysql_query($q);
+                $filter = null;
+                while ($row = mysql_fetch_array($results)) {
+                    $filter[] = [$row[0], $row[1].' - '.$row[3].' '.$row[4]];
+                }
+                break;
+            case 'prod':
+                $q = "select * from fabrix_products order by pnumber, pname";
+                $results = mysql_query($q);
+                $filter = null;
+                while ($row = mysql_fetch_array($results)) {
+                    $filter[] = [$row[0],$row[2].' - '.$row[1]];
+                }
+                break;
+            case 'mnf':
+                $q = "select * from fabrix_manufacturers order by manufacturer";
+                $results = mysql_query($q);
+                $filter = null;
+                while ($row = mysql_fetch_array($results)) {
+                    $filter[] = [$row[0],$row[1]];
+                }
+                break;
+            case 'cat':
+                $q = "select * from fabrix_categories order by cname";
+                $results = mysql_query($q);
+                $filter = null;
+                while ($row = mysql_fetch_array($results)) {
+                    $filter[] = [$row[0],$row[1]];
+                }
+        }
+        return $filter;
+    }
+
     public static function get_discounts_data($id = null)
     {
         if (isset($id)) {
