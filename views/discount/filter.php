@@ -1,5 +1,5 @@
 <?php if(isset($filter_products)): ?>
-<div class="panel panel-default form-row filter_sel_panel">
+<div class="panel panel-default form-row filter_sel_panel" data-filter="<?= $destination;?>">
     <div class="col-sm-12">
         <div class="panel-body">
             <ul class="filter_sel">
@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div class="panel-footer">
-            <a href="<?= $filter_type; ?>" name="edit_filter" class="button alt">Add</a>
+            <a href="<?= $filter_type; ?>" data-destination="<?= $destination;?>" data-title="<?= $title;?>" name="edit_filter" class="button alt">Add</a>
         </div>
     </div>
 </div>

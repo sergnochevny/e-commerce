@@ -303,14 +303,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Select Categories</h4>
+                    <h4 id="modal-title" class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
                     <div id="modal_content" style="max-height: 400px; overflow-y: auto;">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="build_categories" type="button" class="btn-primary" data-dismiss="modal">Ok</button>
+                    <button id="build_filter" href="filter" type="button" class="btn-primary" data-dismiss="modal">Ok</button>
                     <button type="button" class="btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div><!-- /.modal-content -->
