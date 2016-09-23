@@ -1,4 +1,4 @@
-<script src='<?= _A_::$app->router()->UrlTo('views/js/comments/admin_edit.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/comments/admin_edit.js'); ?>' type ="text/javascript"></script>
 <form class="form-horizontal comment-form container-fluid" method="post">
     <fieldset>
         <legend>Edit comment</legend>
@@ -23,7 +23,7 @@
         <div class="form-group row" id="comment-form-save">
             <label class="col-md-3 control-label" for="add-form-send"></label>
             <div class="col-md-8">
-                <a id="add-form-send" name="comment-send-button" class="comment-button btn" onclick='sendComment("<?= _A_::$app->router()->UrlTo('comment_update_save', ['ID' => _A_::$app->get('ID')]);?>")'>Save</a>
+                <a id="add-form-send" name="comment-send-button" class="comment-button btn" onclick='sendComment("<?= _A_::$app->router()->UrlTo('edit', ['ID' => _A_::$app->get('ID')]);?>")'>Save</a>
             </div>
         </div>
 

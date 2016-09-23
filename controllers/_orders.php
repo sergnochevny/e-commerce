@@ -51,7 +51,7 @@ class Controller_Orders extends Controller_Controller
             ob_end_clean();
         }
         $this->main->template->vars('orders', $orders);
-        (new Controller_Paginator($this->main))->paginator($total, $page, 'orders', $per_page);
+        (new Controller_Paginator($this->main))->paginator($total, $page, 'orders', ($per_page != 0) ? $per_page : 1);
     }
 
     function order()

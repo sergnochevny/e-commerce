@@ -5,12 +5,9 @@
             $("#confirm_action").off('click.confirm_action');
             $("#confirm_dialog").removeClass('overlay_display');
         }
-    ).on('click.confirm_action', "#confirm_no",
-        function (event) {
-
-            $(".popup a.close").trigger('click');
-        }
-    ).on('click', 'a#del_user',
+    ).on('click.confirm_action', "#confirm_no",function (event) {
+        $(".popup a.close").trigger('click');
+    }).on('click', 'a.del_user',
         function (event) {
             event.preventDefault();
             var href = $(this).attr('href');
@@ -28,7 +25,7 @@
             $("#confirm_dialog").addClass('overlay_display');
 
         }
-    ).on('click', 'a#public_comment',
+    ).on('click', 'a.public_comment',
         function (event) {
             event.preventDefault();
             var href = $(this).attr('href'),
@@ -48,10 +45,11 @@
             $("#confirm_dialog").addClass('overlay_display');
         }
     );
-    $(document).on('click', 'a#view-comment',
+    $(document).on('click', 'a.view-comment',
         function (event) {
             event.preventDefault();
             var href = $(this).attr('href');
+
             $.get(href, function(data){
                 $("#comment-view-dialog-data").html(data);
             });
@@ -64,7 +62,7 @@
             $("#comment-view-dialog").addClass('overlay_display');
         }
     );
-    $(document).on('click', 'a#edit-comment',
+    $(document).on('click', 'a.edit-comment',
         function (event) {
             event.preventDefault();
             var href = $(this).attr('href'),
@@ -82,8 +80,9 @@
                 $('#content').load(href_update);
                 $("#comment-view-dialog").removeClass('overlay_display');
             });
-
             $("#comment-view-dialog").addClass('overlay_display');
         }
     );
+
+
 })(jQuery);
