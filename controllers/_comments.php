@@ -178,8 +178,8 @@ class Controller_Comments extends Controller_Controller
             $comment['username'] = $m->getUserName($comment['userid']);
 
             ob_start();
-            include('views/html/comment_table.php');
-            $content = ob_get_contents();
+                include('views/html/comment_table.php');
+                $content = ob_get_contents();
             ob_clean();
         }
         $this->template->vars("content", $content);
@@ -190,10 +190,10 @@ class Controller_Comments extends Controller_Controller
     {
         $this->main->test_access_rights();
         $m = new Model_Comments();
-        $ID = _A_::$app->get('ID');
-        if (empty($ID)) exit(0);
-        $comment = new Model_Comment($m->get($ID));
+        $id = _A_::$app->get('id');
+        if (empty($id)) exit(0);
 
+        $comment = new Model_Comment($m->get($id));
 
         $this->template->vars('moderated', $comment->getModerated());
         $this->template->vars('title', $comment->getTitle());
