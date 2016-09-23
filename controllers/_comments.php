@@ -124,7 +124,7 @@ class Controller_Comments extends Controller_Controller
 
         ob_start();
             foreach ($rows as $row) {
-                $row['email'] = Model_User::getUserById($row['userid'])['email'];
+                $row['email'] = Model_User::get_user_by_id($row['userid'])['email'];
                 include('views/html/comments_list.php');
             }
             $comments_list = ob_get_contents();

@@ -37,7 +37,7 @@ class Controller_Categories extends Controller_Controller
         $this->main->test_access_rights();
         $del_category_id = Model_Category::validData(_A_::$app->get('category_id'));
         Model_Category::del($del_category_id);
-        $this->category_list();
+        $this->listof();
     }
 
     public function edit()
@@ -114,7 +114,7 @@ class Controller_Categories extends Controller_Controller
             If(Model_Category::update($post_category_name,$post_category_seo,$post_display_order,$post_category_ListStyle,$post_category_ListNewItem,$category_id)){
                 $warning = ['Category Data saved successfully!'];
                 $this->template->vars('warning', $warning);
-                $this->edit_category_form();
+                $this->edit_form();
             } else {
                 $data = [];
 
