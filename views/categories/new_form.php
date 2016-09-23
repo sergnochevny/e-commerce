@@ -22,7 +22,7 @@
         <p class="form-row">
             <label><strong>Seo:</strong></label>
             <input type="text" name="seo"  <?= isset($seo)?  'value="'.$seo.'"':''; ?> class="input-text ">
-            <small><strong>NOTE:</strong> the seo name will be parsed to be url compatible if necessary.</small>
+            <small style="color: #999"><strong>NOTE:</strong> the seo name will be parsed to be url compatible if necessary.</small>
         </p>
         <p class="form-row">
             <label>
