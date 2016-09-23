@@ -27,7 +27,6 @@
 
     function postdata(url, data, context, callback) {
         $('body').waitloader('show');
-        debugger;
         $.ajax({
             type: 'POST',
             url: url,
@@ -36,10 +35,8 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                debugger;
                 $.when(context.html(data)).done(
                     function(){
-                        debugger;
                         if(callback) callback.apply(this);
                     }
                 );
@@ -68,7 +65,6 @@
         data.append('method', $(this).attr('href'));
         postdata(url, data, $('#modal_content'),
             function(){
-                debugger;
                 $('#modal').modal('show');
             }
         );
