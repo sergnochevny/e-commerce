@@ -180,7 +180,7 @@ class Controller_Product extends Controller_Controller
     public function edit()
     {
         $this->main->test_access_rights();
-        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
+        if (_A_::$app->request_is_post()) {
             $this->save_product('product/edit');
         } else {
             $this->product_form('product/edit', 'edit');
@@ -345,7 +345,7 @@ class Controller_Product extends Controller_Controller
     public function add()
     {
         $this->main->test_access_rights();
-        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
+        if (_A_::$app->request_is_post()) {
             $this->save_product('product/add', true);
         } else {
             Model_Product::getNewproduct();

@@ -135,7 +135,7 @@ class Core
         }
     }
 
-    function __call($name, $arguments)
+    public function __call($name, $arguments)
     {
         $direct_set = strpos($name, 'set') !== false;
         $name = strtolower(str_replace(['set', ' '], '', $name));
@@ -233,6 +233,14 @@ class Core
                 )
             );
         }
+    }
+
+    public function request_is_post(){
+        return $this->server('REQUEST_METHOD') == 'POST';
+    }
+
+    public function request_is_get(){
+        return $this->server('REQUEST_METHOD') == 'GET';
     }
 }
 

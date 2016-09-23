@@ -12,20 +12,22 @@ class Controller_Discount extends Controller_Controller
 
     private function get_list()
     {
-        $this->main->test_access_rights();
-
         $results = Model_Discount::getFabrixSpecialsIds();
         if (!is_null($results)) {
             ob_start();
             foreach ($results as $key => $row) {
                 $this->template->vars('row', $row);
-                $this->template->view_layout('get_list');
+                $this->template->view_layout('row_list');
             }
             $list = ob_get_contents();
             ob_end_clean();
         }
-        $this->main->template->vars('list', $list);
-
+        $this->template->vars('list', $list);
+        ob_start();
+        $this->template->view_layout('list');
+        $list = ob_get_contents();
+        ob_end_clean();
+        $this->template->vars('list', $list);
     }
 
     public function del()
@@ -36,16 +38,6 @@ class Controller_Discount extends Controller_Controller
             Model_Discount::del_discount($id);
         }
         $this->get_list();
-        $this->main->view_layout('list');
-    }
-
-    public function edit_form()
-    {
-        $this->main->test_access_rights();
-        $id = Model_Discount::validData(_A_::$app->get('id'));
-        $userInfo = Model_Discount::get_edit_discounts_data($id);
-        $this->template->vars('userInfo', $userInfo);
-        $this->main->view_layout('edit_form');
     }
 
     public function usage()
@@ -56,9 +48,8 @@ class Controller_Discount extends Controller_Controller
         $this->main->view_admin('usage');
     }
 
-    function data_usage()
+    private function data_usage()
     {
-        $this->main->test_access_rights();
         if (!empty($discount_id)) {
             ob_start();
             $row = Model_Discount::getFabrixSpecialsByID((integer)Model_Discount::validData(_A_::$app->get('id')));
@@ -82,7 +73,7 @@ class Controller_Discount extends Controller_Controller
         }
     }
 
-    function data_usage_order()
+    private function data_usage_order()
     {
         $this->main->test_access_rights();
         if (!empty($discount_id)) {
@@ -111,9 +102,22 @@ class Controller_Discount extends Controller_Controller
         }
     }
 
-    function edit_data()
+    public function add()
     {
         $this->main->test_access_rights();
+        if (_A_::$app->request_is_post()) {
+            $this->save_data('discount/add');
+        }
+        ob_start();
+        $this->form('discount/add');
+        $form = ob_get_contents();
+        ob_end_clean();
+        $this->template->vars('form', $form);
+        $this->main->view_admin('add');
+    }
+
+    private function edit_data()
+    {
         include('include/post_edit_discounts_data.php');
 
         $date_end = strlen($date_end) > 0 ? strtotime($date_end) : $date_end = 0;
@@ -242,17 +246,18 @@ class Controller_Discount extends Controller_Controller
     public function edit()
     {
         $this->main->test_access_rights();
-        if (_A_::$app->server('REQUEST_METHOD') == 'POST') {
-            $this->save_product('product/edit');
-        } else {
-            $id = Model_Discount::validData(_A_::$app->get('id'));
-            $data = Model_Discount::get_edit_discounts_data($id);
-            $this->template->vars('data', $data);
-            $this->main->view_admin('edit');
+        if (_A_::$app->request_is_post()) {
+            $this->save_data('discount/edit');
         }
+        ob_start();
+        $this->form('discount/edit');
+        $form = ob_get_contents();
+        ob_end_clean();
+        $this->template->vars('form', $form);
+        $this->main->view_admin('edit');
     }
 
-    private function save_data()
+    private function save_data($url)
     {
         include('include/post_edit_discounts_data.php');
 
@@ -265,22 +270,14 @@ class Controller_Discount extends Controller_Controller
             $fabric_list = [];
         }
 
-        if ($sel_fabrics == "2") {
-            $iDscntType = '1';
-        }
-        if ($iDscntType == '2') {
-            $allow_multiple = 1;
-        }
-        if ($iDscntType != '2')
-            $shipping_type = '0';
-
-        if ($users_check != '4') {
-            $users_list = [];
-        }
+        if ($sel_fabrics == "2") $iDscntType = '1';
+        if ($iDscntType == '2') $allow_multiple = 1;
+        else $shipping_type = '0';
+        if ($users_check != '4') $users_list = [];
 
         if (
             ($iDscntType == '2' && $shipping_type == '0') ||
-            (($generate_code == "0") && (strlen($coupon_code) > 0) && Model_Discount::checkCouponCode(0, $coupon_code)) ||
+            (($generate_code == "0") && (strlen($coupon_code) > 0) && Model_Discount::checkCouponCode($discount_id, $coupon_code)) ||
             (!isset($users_list) && ($users_check == '4')) ||
             (!isset($fabric_list) && ($sel_fabrics == "2")) ||
             ($start_date == 0) || ($date_end == 0) ||
@@ -336,15 +333,12 @@ class Controller_Discount extends Controller_Controller
                 'shipping_type' => $shipping_type,
                 'generate_code' => $generate_code
             );
-
-            $this->template->vars('userInfo', $data);
-
-            $this->main->view_admin('add');
+            $this->form($url, $data);
 
         } else {
 
             if ($generate_code == '1') {
-                $coupon_code = Model_Discount::generateCouponCode(0);
+                $coupon_code = Model_Discount::generateCouponCode($discount_id);
                 $allow_multiple = 1;
                 $sel_fabrics = 1;
                 $fabric_list = [];
@@ -377,16 +371,36 @@ class Controller_Discount extends Controller_Controller
             }
             $this->template->vars('warning', $warning);
             $this->template->vars('error', $error);
-            $this->add();
         }
     }
 
-    public function add()
+    private function form($url, $data = null)
     {
-        $this->main->test_access_rights();
-        $data = Model_Discount::get_new_discounts_data();
+        $prms = null;
+        if (!isset($data)) {
+            $id = Model_Discount::validData(_A_::$app->get('d_id'));
+            $data = Model_Discount::get_discounts_data($id);
+            $prms['d_id'] = $id;
+        }
+
+        $filter_products = $data['filter_products'];
+        ob_start();
+        $this->template->vars('filter_products', $filter_products);
+        $this->template->vars('filter_type', $data['filter_type']);
+        $this->template->view_layout('filter');
+        $data['filter_products'] = ob_get_contents();
+        ob_end_clean();
+        $users = $data['users'];
+        ob_start();
+        $this->template->vars('filter_products', $users);
+        $this->template->vars('filter_type', 'users');
+        $this->template->view_layout('filter');
+        $data['users'] = ob_get_contents();
+        ob_end_clean();
+
+        $this->template->vars('action', _A_::$app->router()->UrlTo($url, $prms));
         $this->template->vars('data', $data);
-        $this->main->view_admin('add');
+        $this->main->view_layout('form');
     }
 
 }

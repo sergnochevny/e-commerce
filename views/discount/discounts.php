@@ -5,7 +5,7 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <?php include('views/discount/list.php') ?>
+                <?= $list; ?>
             </div>
         </div>
 
