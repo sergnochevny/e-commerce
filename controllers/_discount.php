@@ -233,34 +233,6 @@ class Controller_Discount extends Controller_Controller
         }
     }
 
-    private function generate_users_filter(&$data){
-        $users = $data['users'];
-        ob_start();
-        $this->template->vars('filter_products', $users);
-        $this->template->vars('filter_type', 'users');
-        $this->template->vars('destination', 'users');
-        $this->template->vars('title', 'Select Users');
-        $this->template->view_layout('filter');
-        $data['users'] = ob_get_contents();
-        ob_end_clean();
-    }
-
-    private function generate_prod_filter(&$data){
-        $filter_products = $data['filter_products'];
-        $sel_fabrics = $data['sel_fabrics'];
-        $title = "Select Products";
-        if ($sel_fabrics == 3) $title = "Select Categories";
-        if ($sel_fabrics == 4) $title = "Select Manufacturers";
-        ob_start();
-        $this->template->vars('filter_products', $filter_products);
-        $this->template->vars('filter_type', $data['filter_type']);
-        $this->template->vars('destination', 'filter_products');
-        $this->template->vars('title', $title);
-        $this->template->view_layout('filter');
-        $data['filter_products'] = ob_get_contents();
-        ob_end_clean();
-    }
-
     private function form($url, $data = null)
     {
         $prms = null;
@@ -269,11 +241,41 @@ class Controller_Discount extends Controller_Controller
             $data = Model_Discount::get_discounts_data($id);
             $prms['d_id'] = $id;
         }
+        ob_start();
         $this->generate_prod_filter($data);
+        $data['filter_products'] = ob_get_contents();
+        ob_end_clean();
+        ob_start();
         $this->generate_users_filter($data);
+        $data['users'] = ob_get_contents();
+        ob_end_clean();
         $this->template->vars('action', _A_::$app->router()->UrlTo($url, $prms));
         $this->template->vars('data', $data);
         $this->main->view_layout('form');
+    }
+
+    private function generate_prod_filter($data)
+    {
+        $filter_products = $data['filter_products'];
+        $sel_fabrics = $data['sel_fabrics'];
+        $title = "Select Products";
+        if ($sel_fabrics == 3) $title = "Select Categories";
+        if ($sel_fabrics == 4) $title = "Select Manufacturers";
+        $this->template->vars('filter_products', $filter_products);
+        $this->template->vars('filter_type', $data['filter_type']);
+        $this->template->vars('destination', 'filter_products');
+        $this->template->vars('title', $title);
+        $this->template->view_layout('filter');
+    }
+
+    private function generate_users_filter($data)
+    {
+        $users = $data['users'];
+        $this->template->vars('filter_products', $users);
+        $this->template->vars('filter_type', 'users');
+        $this->template->vars('destination', 'users');
+        $this->template->vars('title', 'Select Users');
+        $this->template->view_layout('filter');
     }
 
     private function edit_data()
@@ -412,12 +414,13 @@ class Controller_Discount extends Controller_Controller
                 if (_A_::$app->post('method') !== 'filter') {
                     switch (_A_::$app->post('method')) {
                         case 'users':
-                            $selected = array_values($users);
+                            $selected = isset($users)?array_values($users):[];
+
                             break;
                         case 'prod':
                         case 'mnf':
                         case 'cat':
-                            $selected = array_values($filter_products);
+                            $selected = isset($filter_products)?array_values($filter_products):[];
                             break;
                     }
                     $this->template->vars('type', _A_::$app->post('method') . '_select');
@@ -427,7 +430,6 @@ class Controller_Discount extends Controller_Controller
                     $this->template->view_layout('select_filter');
                 } else {
                     $data = array(
-                        'fabrics' => $fabrics,
                         'users' => $users,
                         'sel_fabrics' => $sel_fabrics,
                         'users_check' => $users_check,
@@ -437,9 +439,9 @@ class Controller_Discount extends Controller_Controller
                     );
                     Model_Discount::get_filter_selected(_A_::$app->post('type'), $data);
 
-                    if(_A_::$app->post('type') === 'users'){
+                    if (_A_::$app->post('type') === 'users') {
                         $this->generate_users_filter($data);
-                    }else{
+                    } else {
                         $this->generate_prod_filter($data);
                     }
                 }

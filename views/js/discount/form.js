@@ -25,9 +25,8 @@
         }
     });
 
-    function postdata(url, data, context, callback) {
+    function postdata(this_, url, data, context, callback) {
         $('body').waitloader('show');
-        var this_ = this;
         $.ajax({
             type: 'POST',
             url: url,
@@ -36,7 +35,6 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                $('body').waitloader('show');
                 $.when(context.html(data)).done(
                     function(){
                         if(callback) callback.apply(this_);
@@ -46,10 +44,8 @@
             },
             error: function (xhr, str) {
                 alert('Error: ' + xhr.responseCode);
-            },
-            complete: function () {
                 $('body').waitloader('remove');
-            }
+            },
         });
     }
 
@@ -58,7 +54,7 @@
             event.preventDefault();
             var data = new FormData(this);
             var url = $(this).attr('action');
-            postdata.apply(this, url, data, $('#discount_form'));
+            postdata(this, url, data, $('#discount_form'));
         }
     );
 
@@ -68,7 +64,7 @@
         data.append('method', $(this).attr('href'));
         var destination = $(this).attr('data-destination');
         var title =  $(this).attr('data-title');
-        postdata.apply(this, url, data, $('#modal_content'),
+        postdata(this, url, data, $('#modal_content'),
             function(){
                 $('#modal-title').html(title);
                 $('#build_filter').attr('data-destination', destination);
@@ -79,14 +75,25 @@
 
     $('#build_filter').on('click',
         function(){
-            var destination = $('"'+$(this).attr('data-destination')+'"').parent('div');
+            var destination = $('[data-filter='+$(this).attr('data-destination')+']').parent('div');
             var data = new FormData($('form#discount')[0]);
             var url = $('form#discount').attr('action');
             data.append('method', $(this).attr('href'));
             data.append('type', $(this).attr('data-destination'));
-            postdata.apply(this, url, data, destination,
+            postdata(this, url, data, destination,
                 function(){
-                    $('#modal').find('#modal_content').empty();
+                    $('#modal').modal('hide');
+                    $('span[data-rem_row]').on('click',
+                        function (event) {
+                            evRemoveFilterRow.apply(this, event);
+                        }
+                    );
+                    $('form#discount a[name=edit_filter]').on('click',
+                        function(event){
+                            event.preventDefault();
+                            evFilterAdd.apply(this, event);
+                        }
+                    );
                 }
             );
         }
@@ -97,6 +104,23 @@
         function(event){
             event.preventDefault();
             evFilterAdd.apply(this, event);
+        }
+    );
+
+    function evRemoveFilterRow(event) {
+        $(this).parent('li.prod_sel_category_item').remove();
+    }
+
+    $('span[data-rem_row]').on('click',
+        function (event) {
+            event.preventDefault();
+            evRemoveFilterRow.apply(this, event);
+        }
+    );
+
+    $('#modal').on('hidden.bs.modal',
+        function(){
+            $(this).find('#modal_content').empty();
         }
     );
 
@@ -173,7 +197,7 @@ function toggleDetails() {
 }
 
 function toggleUsers() {
-    var ul = document.getElementById('users_list');
+    var ul = document.getElementById('users');
     var uc4 = document.getElementById('users_check4');
     ul.disabled = !uc4.checked;
 }
