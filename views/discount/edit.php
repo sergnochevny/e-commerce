@@ -9,7 +9,7 @@
             <div id="content" class="main-content-inner" role="main">
                 <a href="discounts"><input type="submit" value="Back" class="button"></a>
 
-                <div id="customer_details" style="margin: auto; width: 650px;">
+                <div id="customer_details">
                     <h1 class="page-title"> MODIFY DISCOUNT</h1>
                     <p class="text-center">
                         <small style="color: black; font-size: 13px;">

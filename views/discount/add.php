@@ -9,7 +9,7 @@
             <div id="content" class="main-content-inner" role="main">
                 <a href="discounts"><input type="submit" value="Back" class="button"></a>
 
-                <div id="customer_details" style="margin: auto; width: 650px;">
+                <div id="customer_details">
                     <h1 class="page-title">ADD DISCOUNT</h1>
                     <small style="color: black; font-size: 10px;">
                         Use this form to add/update discounts to the system. <br/>

@@ -8,7 +8,7 @@
                 <a href="<?= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
                 <br/>
                 <h1 class="page-title">MODIFY CATEGORY</h1>
-                <div id="customer_details" style="margin: auto; width: 600px;">
+                <div id="customer_details">
                     <div id="category_form"><?php include('views/categories/edit_form.php') ?></div>
                 </div>
             </div>

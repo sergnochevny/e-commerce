@@ -1,5 +1,5 @@
 <tr>
-    <td style="max-width: 360px;"><?= $trid?></td>
+    <td class="text-left" style="max-width: 360px;"><?= $trid?></td>
     <td><?= $username ?></td>
     <td><?= date("m/d/Y", $date)?></td>
     <td><?= isset($end_date) && !empty($end_date) ? date("m/d/Y", $end_date) : 'Not specified yet' ?></td>

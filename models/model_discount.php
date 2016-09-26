@@ -51,7 +51,7 @@ Class Model_Discount extends Model_Model
     public static function getFabrixSpecialsByID($id)
     {
         $res = null;
-        $q = mysql_query("select * from fabrix_specials WHERE sid='" . (integer)$id . "'");
+        $q = "select * from fabrix_specials WHERE sid='" . (integer)$id . "'";
         $result = mysql_query($q);
         if ($result) {
             while ($row = mysql_fetch_assoc($result)) {
