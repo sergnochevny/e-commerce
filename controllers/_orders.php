@@ -265,7 +265,7 @@ class Controller_Orders extends Controller_Controller
     {
         $this->main->test_access_rights();
         $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-        $oid = !is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null;
+        $oid = !is_null(_A_::$app->get('oid')) ? urldecode(base64_decode(_A_::$app->get('oid'))) : null;
         $prms['page'] = $page;
 
         if (!is_null(_A_::$app->get('orders_search_query'))) {
@@ -274,11 +274,11 @@ class Controller_Orders extends Controller_Controller
         $back_url = _A_::$app->router()->UrlTo('orders/history', $prms);
 
         $config = [
-            'oid' => $oid
+            'oid' => (int) $oid
         ];
 
         $customer_order = Model_Order::getOrderDetailInfo($config);
-        if (count($customer_order) > 0) {
+        if (!empty($customer_order) && $customer_order > 0) {
             ob_start();
             $sub_price_count = (integer)0;
             foreach ($customer_order as $order) {

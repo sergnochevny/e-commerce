@@ -47,8 +47,7 @@ class Model_Order extends Model_Model
     public static function getOrderDetailInfo($arr)
     {
         if (isset($arr) && count($arr) === 1) {
-
-            $data = (array)[];
+            $result = null;
 
             $query = '
                SELECT
@@ -85,19 +84,15 @@ class Model_Order extends Model_Model
                     `fo`.`oid` = ' . $arr['oid'] . '
             ';
 
-            if ($res = mysql_query($query)) {
+            $res = mysql_query($query);
+            if ($res) {
                 while ($row = mysql_fetch_assoc($res)) {
-                    $data[] = $row;
+                    $result[] = $row;
                 }
-
-                return $data;
-            } else {
-                return null;
             }
-
-        } else {
-            return null;
+            return $result;
         }
+        return false;
     }
 
     /**
