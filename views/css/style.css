@@ -1354,7 +1354,7 @@ td.product-subtotal{
 }
 .prod_sel_category_item .prod_sel_category_item_lab{
     vertical-align: -22px;
-    font-size: 14px;
+    font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
