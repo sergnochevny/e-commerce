@@ -187,14 +187,23 @@
                                                                             href="#fabrics"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <label for="sel_fabrics1">
-                                <?= $data['sel_fabrics'] == "1" ? '<input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1" class="input-checkbox" checked  onclick="toggleDetails();">' : '<input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1" class="input-checkbox"  onclick="toggleDetails();">'; ?>
+                            <label>
+                                <input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1" class="input-checkbox" <?= $data['sel_fabrics'] == "1" ? 'checked' : ''?>>
                                 All fabrics
                             </label>
-                            <label for="sel_fabrics2">
-                                <?= $data['sel_fabrics'] == "2" ? '<input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox" checked  onclick="toggleDetails();">' : '<input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox"  onclick="toggleDetails();">'; ?>
-                                All selected fabrics (i.e. use the fabrics selected below)
+                            <label>
+                                <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox" <?= $data['sel_fabrics'] == "2" ? 'checked' : ''?>>
+                                All selected fabrics *
                             </label>
+                            <label>
+                                <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3" class="input-checkbox" <?= $data['sel_fabrics'] == "3" ? 'checked' : ''?>>
+                                All selected categories *
+                            </label>
+                            <label>
+                                <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4" class="input-checkbox" <?= $data['sel_fabrics'] == "4" ? 'checked' : ''?>>
+                                All selected manufacturers *
+                            </label>
+                            <label>* - i.e. use the item selected below</label>
                             <?php if (isset($data['filter_products'])): ?>
                                 <div data-filter-panel>
                                     <?= $data['filter_products']; ?>
