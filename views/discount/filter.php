@@ -1,5 +1,5 @@
 <?php if(isset($filter_products)): ?>
-<div class="panel panel-default form-row prod_sel_category_panel">
+<div class="panel panel-default form-row prod_sel_category_panel" data-filter="<?= $destination;?>">
     <div class="col-sm-12">
         <div class="panel-body">
             <ul class="prod_sel_category">
@@ -10,7 +10,7 @@
                         </div>
                         <input name="<?= ($filter_type !== 'users')?'filter_products':'users'?>[]" type="hidden" value="<?= $key;?>">
                     </div>
-                    <span class="rem_cat">×</span>
+                    <span data-rem_row class="rem_cat">×</span>
                 </li>
                 <?php endforeach;?>
             </ul>

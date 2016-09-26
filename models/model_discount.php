@@ -204,6 +204,10 @@ Class Model_Discount extends Model_Model
                     " inner join fabrix_accounts a on b.aid=a.aid " .
                     " where b.aid in($select)" .
                     " order by email, bill_firtname, bill_lastname"
+//                    "select a.* from fabrix_specials_users b" .
+//                    " inner join fabrix_accounts a on b.aid=a.aid " .
+//                    " where b.aid in($select)" .
+//                    " order by email, bill_firtname, bill_lastname"
                 );
                 while ($row = mysql_fetch_array($results)) {
                     $users[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
@@ -213,16 +217,18 @@ Class Model_Discount extends Model_Model
         } elseif($type == 'filter_products') {
             $sel_fabrics = $data['sel_fabrics'];
             $filter_products = null;
-            $filter_type = 'prod';
             switch ($sel_fabrics) {
                 case 2:
                     $filter_type = 'prod';
-                    $select = implode($data['prod_select']);
+                    $select = implode(',',$data['prod_select']);
                     $results = mysql_query(
-                        "select a.* from fabrix_specials_products b" .
-                        " inner join fabrix_products a on b.pid=a.pid " .
-                        " where b.pid in ($select) and stype = 1" .
+                        "select * from fabrix_products" .
+                        " where pid in ($select)" .
                         " order by pnumber, pname"
+//                        "select a.* from fabrix_specials_products b" .
+//                        " inner join fabrix_products a on b.pid=a.pid " .
+//                        " where b.pid in ($select) and stype = 1" .
+//                        " order by pnumber, pname"
                     );
                     while ($row = mysql_fetch_array($results)) {
                         $filter_products[$row[0]] = $row[2] . '-' . $row[1];
@@ -230,12 +236,15 @@ Class Model_Discount extends Model_Model
                     break;
                 case 3:
                     $filter_type = 'mnf';
-                    $select = implode($data['mnf_select']);
+                    $select = implode(',',$data['mnf_select']);
                     $results = mysql_query(
-                        "select a.* from fabrix_specials_products b" .
-                        " inner join fabrix_manufacturers a on b.pid=a.id " .
-                        " where b.pid in ($select) and stype = 2" .
+                        "select * from fabrix_manufacturers" .
+                        " where id in ($select)" .
                         " order by manufacturer"
+//                        "select a.* from fabrix_specials_products b" .
+//                        " inner join fabrix_manufacturers a on b.pid=a.id " .
+//                        " where b.pid in ($select) and stype = 2" .
+//                        " order by manufacturer"
                     );
                     while ($row = mysql_fetch_array($results)) {
                         $filter_products[$row[0]] = $row[1];
@@ -243,12 +252,15 @@ Class Model_Discount extends Model_Model
                     break;
                 case 4:
                     $filter_type = 'cat';
-                    $select = implode($data['cat_select']);
+                    $select = implode(',',$data['cat_select']);
                     $results = mysql_query(
-                        "select a.* from fabrix_specials_products b" .
-                        " inner join fabrix_categories a on b.pid=a.cid " .
-                        " where b.pid in ($select) and stype = 3" .
+                        "select * from fabrix_categories " .
+                        " where cid in ($select)" .
                         " order by cname"
+//                        "select a.* from fabrix_specials_products b" .
+//                        " inner join fabrix_categories a on b.pid=a.cid " .
+//                        " where b.pid in ($select) and stype = 3" .
+//                        " order by cname"
                     );
                     while ($row = mysql_fetch_array($results)) {
                         $filter_products[$row[0]] = $row[1];
