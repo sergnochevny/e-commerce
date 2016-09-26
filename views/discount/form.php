@@ -55,13 +55,13 @@
                                 Coupon Code <i data-promotion href="#coupon_code" class="fa fa-question-circle"></i>
                             </label>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-xs-12 col-sm-12 col-md-8">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-xs-12 col-sm-6 col-md-4">
                                     <input type="text" name="coupon_code" id="coupon_code"
                                            value="<?= $data['coupon_code'] ?>" class="input-text">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xs-12 col-sm-6 col-md-6">
                                     <label style="font-size: 10px; margin-top: 7px" for="generate_code">
                                         <input type="checkbox" name="generate_code" id="generate_code" value="1"
                                             <?= (isset($data['generate_code']) && $data['generate_code'] == '1') ? 'checked' : '' ?>
@@ -79,26 +79,28 @@
                                                     class="fa fa-question-circle"></i>
                             </label>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-xs-12 col-md-8">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-xs-4 col-md-4">
                                     <input type="text" name="discount_amount"
                                            value="<?= $data['discount_amount'] ?>" id="discount_amount"
                                            class="input-text ">
                                 </div>
-                                <div class="col-md-2">
-                                    <select name="iAmntType" style="padding-left: 5px">
-                                        <option
-                                            value="1" <?= ($data['discount_amount_type'] == '1') ? 'selected' : '' ?>>
-                                            $
-                                        </option>
-                                        <option
-                                            value="2" <?= ($data['discount_amount_type'] == '2') ? 'selected' : '' ?>>
-                                            %
-                                        </option>
-                                    </select>
+                                <div class="col-xs-2 col-md-2">
+                                    <div class="row">
+                                        <select name="iAmntType" style="padding-left: 5px">
+                                            <option
+                                                value="1" <?= ($data['discount_amount_type'] == '1') ? 'selected' : '' ?>>
+                                                $
+                                            </option>
+                                            <option
+                                                value="2" <?= ($data['discount_amount_type'] == '2') ? 'selected' : '' ?>>
+                                                %
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xs-6 col-md-6">
                                     <select name="iDscntType" id="iDscntType">
                                         <option value="0" <?= ($data['discount_type'] == '0') ? 'selected' : '' ?>>
                                             Select
@@ -132,13 +134,13 @@
                                 <i data-promotion href="#discount_details" class="fa fa-question-circle"></i>
                             </label>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-xs-12 col-md-8">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-xs-6 col-md-4">
                                     <input type="text" name="restrictions" value="<?= $data['required_amount'] ?>"
                                            class="input-text ">
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-xs-6 col-md-8" style="padding-left: 0">
                                     <select name="iReqType">
                                         <option value="0" <?= ($data['required_type'] == '0') ? 'selected' : '' ?>>
                                             Select
@@ -162,7 +164,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <div class="col-md-12 panel panel-default">
+                            <div class="col-md-12 panel panel-default" style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
                                 <label style="font-size: 12px;">
                                     <?= $data['users_check'] == "1" ? '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" onclick="toggleUsers();">'; ?>
                                     All users
@@ -195,32 +197,34 @@
                                                                             href="#fabrics"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <label style="font-size: 12px;">
-                                <input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1"
-                                       class="input-checkbox" <?= $data['sel_fabrics'] == "1" ? 'checked' : '' ?>>
-                                All fabrics
-                            </label>
-                            <label style="font-size: 12px;">
-                                <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2"
-                                       class="input-checkbox" <?= $data['sel_fabrics'] == "2" ? 'checked' : '' ?>>
-                                All selected fabrics *
-                            </label>
-                            <label style="font-size: 12px;">
-                                <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3"
-                                       class="input-checkbox" <?= $data['sel_fabrics'] == "3" ? 'checked' : '' ?>>
-                                All selected categories *
-                            </label>
-                            <label style="font-size: 12px;">
-                                <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4"
-                                       class="input-checkbox" <?= $data['sel_fabrics'] == "4" ? 'checked' : '' ?>>
-                                All selected manufacturers *
-                            </label>
-                            <label style="font-size: 12px;">* - i.e. use the item selected below</label>
-                            <?php if (isset($data['filter_products'])): ?>
-                                <div data-filter-panel-fabrics>
-                                    <?= $data['filter_products']; ?>
-                                </div>
-                            <?php endif; ?>
+                            <div class="col-md-12 panel panel-default" style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
+                                <label style="font-size: 12px;">
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1"
+                                           class="input-checkbox" <?= $data['sel_fabrics'] == "1" ? 'checked' : '' ?>>
+                                    All fabrics
+                                </label>
+                                <label style="font-size: 12px;">
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2"
+                                           class="input-checkbox" <?= $data['sel_fabrics'] == "2" ? 'checked' : '' ?>>
+                                    All selected fabrics *
+                                </label>
+                                <label style="font-size: 12px;">
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3"
+                                           class="input-checkbox" <?= $data['sel_fabrics'] == "3" ? 'checked' : '' ?>>
+                                    All selected categories *
+                                </label>
+                                <label style="font-size: 12px;">
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4"
+                                           class="input-checkbox" <?= $data['sel_fabrics'] == "4" ? 'checked' : '' ?>>
+                                    All selected manufacturers *
+                                </label>
+                                <label style="font-size: 12px;">* - i.e. use the item selected below</label>
+                                <?php if (isset($data['filter_products'])): ?>
+                                    <div data-filter-panel-fabrics>
+                                        <?= $data['filter_products']; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
 
