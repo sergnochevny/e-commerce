@@ -1368,7 +1368,6 @@ td.product-subtotal{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1; /* number of lines to show */
-    max-height: 50px;       /* fallback */
 }
 .prod_sel_category_item:not(:first-child) > .rem_cat{
     top: 9px;
