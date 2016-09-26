@@ -124,80 +124,133 @@
         }
     );
 
-})
-(jQuery);
+    $('input:radio[name=sel_fabrics]').on('change',
+        function(event, stop){
+            toggleDetails(stop);
+            toggleFabrics(stop);
+        }
+    );
 
-function toggleDiscountType(enable) {
-    var dtlSlct = document.getElementById('iDscntType');
-    var mlt = document.getElementById('allow_multiple');
-    var fbtAll = document.getElementById('sel_fabrics1');
-    var l_ship = document.getElementById('l_ship');
-    var f_ship = document.getElementById('f_ship');
+    $('select#iDscntType').on('change',
+        function(event, stop){
+            toggleDiscountType(stop);
+        }
+    );
 
-    if (dtlSlct.selectedIndex == 2) {
+    $('input#allow_multiple').on('change',
+        function(event, stop){
+            toggleMultiple(stop);
+        }
+    );
 
-        mlt.checked = true;
-        fbtAll.checked = true;
-        l_ship.style.display = '';
-        f_ship.style.display = '';
+    $('input#generate_code').on('change',
+        function(event, stop){
+            toggleCouponCode(stop);
+        }
+    );
 
-        toggleFabrics();
-    } else {
-        l_ship.style.display = 'none';
-        f_ship.style.display = 'none';
+    $('input#coupon_code').on('keyup',
+        function(event, stop){
+            toggleCouponCode(stop);
+        }
+    );
+
+    function toggleDiscountType(stop) {
+        debugger;
+        var dtlSlct = document.getElementById('iDscntType');
+        var dtlSlctSh = document.getElementById('iShippingType');
+        var mlt = document.getElementById('allow_multiple');
+        var fbtAll = document.getElementById('sel_fabrics1');
+
+        if (dtlSlct.selectedIndex == 2) {
+
+            $(dtlSlct).parent('div').removeClass('col-md-6');
+            $(dtlSlct).parent('div').addClass('col-md-3');
+            $(dtlSlctSh).parent('div').fadeIn();
+
+            mlt.checked = true;
+            fbtAll.checked = true;
+            if(!stop){
+                $(fbtAll).trigger('change',true);
+            }
+
+            toggleFabrics();
+        } else {
+            $.when($(dtlSlctSh).parent('div').fadeOut()).done(
+                function(){
+                    $(dtlSlct).parent('div').addClass('col-md-6');
+                    $(dtlSlct).parent('div').removeClass('col-md-3');
+                }
+            );
+        }
+
+        toggleDetailSelect(dtlSlct, false);
+
     }
 
-    toggleDetailSelect(dtlSlct, false);
+    function toggleCouponCode(stop) {
+        var txtCoupon = document.getElementById('coupon_code');
+        var chckCoupon = document.getElementById('generate_code');
+        var chckMlt = document.getElementById('allow_multiple');
+        var fbtAll = document.getElementById('sel_fabrics1');
+        if ((txtCoupon.value.length > 0) || (chckCoupon.checked)) {
+            debugger;
+            chckMlt.checked = true;
+            fbtAll.checked = true;
+            if(!stop) {
+                $(fbtAll).trigger('change', true);
+            }
+            toggleFabrics();
+        }
 
-}
-
-function toggleCouponCode(enable) {
-    var txtCoupon = document.getElementById('coupon_code');
-    var chckCoupon = document.getElementById('generate_code');
-    var chckMlt = document.getElementById('allow_multiple');
-    var fbtAll = document.getElementById('sel_fabrics1');
-    var fbtSlct = document.getElementById('sel_fabrics2');
-
-    //if the coupon code is entered or the generate the coupon code box is checked then we have to make the multiple box checked
-    //this is because we are enforcing the system to make is so that all promotions with a coupon code are added to other deals
-    //we also can not be doing the
-    if ((txtCoupon.value.length > 0) || (chckCoupon.checked)) {
-        chckMlt.checked = true;
-        fbtAll.checked = true;
-
-        toggleFabrics();
     }
 
-}
-
-function toggleDetailSelect(dtlSlct, disable) {
-    dtlSlct.disabled = disable;
-}
-
-function toggleFabrics() {
-    var fl = document.getElementById('fabric_list');
-    var sf1 = document.getElementById('sel_fabrics1');
-
-    fl.disabled = sf1.checked;
-}
-
-function toggleDetails() {
-    var fbtAll = document.getElementById('sel_fabrics1');
-    var fbtSlct = document.getElementById('sel_fabrics2');
-    var dtlSlct = document.getElementById('iDscntType');
-
-    toggleFabrics();
-
-    if (fbtSlct.checked) {
-        dtlSlct.selectedIndex = 1;
+    function toggleDetailSelect(dtlSlct, disable) {
+        dtlSlct.disabled = disable;
     }
 
-    toggleDiscountType(true);
+    function toggleFabrics() {
+        var sf1 = document.getElementById('sel_fabrics1');
+        if (sf1.checked) $('[data-filter-panel-fabrics]').remove();
+    }
 
-}
+    function toggleDetails(stop) {
+        var fbtSlct = document.getElementById('sel_fabrics1');
+        var dtlSlct = document.getElementById('iDscntType');
+        if (!fbtSlct.checked) {
+            dtlSlct.selectedIndex = 1;
+            var txtCoupon = document.getElementById('coupon_code');
+            var chckCoupon = document.getElementById('generate_code');
+            $(txtCoupon).val('');
+            chckCoupon.checked = false;
+            if(!stop) {
+                $(dtlSlct).trigger('change', true);
+                $(chckCoupon).trigger('change', true);
+            }
+        }
 
-function toggleUsers() {
-    var ul = document.getElementById('users');
-    var uc4 = document.getElementById('users_check4');
-    ul.disabled = !uc4.checked;
-}
+    }
+
+    function toggleMultiple(stop){
+        var multiple = document.getElementById("allow_multiple");
+        var dtlSlct = document.getElementById('iDscntType');
+        if(!multiple.checked) {
+            dtlSlct.selectedIndex = 1;
+            var txtCoupon = document.getElementById('coupon_code');
+            var chckCoupon = document.getElementById('generate_code');
+            $(txtCoupon).val('');
+            chckCoupon.checked = false;
+            if(!stop) {
+                $(dtlSlct).trigger('change', true);
+                $(chckCoupon).trigger('change', true);
+            }
+        }
+    }
+
+    function toggleUsers() {
+        var ul = document.getElementById('users');
+        var uc4 = document.getElementById('users_check4');
+        ul.disabled = !uc4.checked;
+    }
+
+})(jQuery);

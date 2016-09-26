@@ -59,13 +59,11 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <input type="text" name="coupon_code" id="coupon_code"
-                                           value="<?= $data['coupon_code'] ?>" class="input-text"
-                                           onkeyup="toggleCouponCode(true);">
+                                           value="<?= $data['coupon_code'] ?>" class="input-text">
                                 </div>
                                 <div class="col-md-6">
                                     <label style="font-size: 10px; margin-top: 7px" for="generate_code">
-                                        <input type="checkbox" name="generate_code" id="generate_code"
-                                               onclick="toggleCouponCode(true);" value="1"
+                                        <input type="checkbox" name="generate_code" id="generate_code" value="1"
                                             <?= (isset($data['generate_code']) && $data['generate_code'] == '1') ? 'checked' : '' ?>
                                                class="input-checkbox">
                                         Generate Coupon Code for me.</label>
@@ -101,7 +99,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <select name="iDscntType" id="iDscntType" onChange="toggleDiscountType(true);">
+                                    <select name="iDscntType" id="iDscntType">
                                         <option value="0" <?= ($data['discount_type'] == '0') ? 'selected' : '' ?>>
                                             Select
                                         </option>
@@ -116,14 +114,22 @@
                                         </option>
                                     </select>
                                 </div>
+                                <div class="col-md-3"  style="display: none;">
+                                    <select name="iShippingType" id="iShippingType">
+                                        <option value="0">Select Shipping Type</option>
+                                        <option value="1">Both</option>
+                                        <option value="2" selected>Ground</option>
+                                        <option value="3">Express</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-4">
                             <label class="required_field" data-promotion for="restrictions">
-                                Restrictions <i data-promotion href="#discount_details"
-                                                class="fa fa-question-circle"></i>
+                                Restrictions
+                                <i data-promotion href="#discount_details" class="fa fa-question-circle"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
@@ -174,7 +180,7 @@
                                     All selected users (i.e. use the users selected below)
                                 </label>
                                 <?php if (isset($data['users'])): ?>
-                                    <div data-filter-panel>
+                                    <div data-filter-panel-users>
                                         <?= $data['users']; ?>
                                     </div>
                                 <?php endif; ?>
@@ -189,8 +195,29 @@
                                                                             href="#fabrics"></i></label>
                         </div>
                         <div class="col-md-8">
+                            <label style="font-size: 12px;">
+                                <input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1"
+                                       class="input-checkbox" <?= $data['sel_fabrics'] == "1" ? 'checked' : '' ?>>
+                                All fabrics
+                            </label>
+                            <label style="font-size: 12px;">
+                                <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2"
+                                       class="input-checkbox" <?= $data['sel_fabrics'] == "2" ? 'checked' : '' ?>>
+                                All selected fabrics *
+                            </label>
+                            <label style="font-size: 12px;">
+                                <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3"
+                                       class="input-checkbox" <?= $data['sel_fabrics'] == "3" ? 'checked' : '' ?>>
+                                All selected categories *
+                            </label>
+                            <label style="font-size: 12px;">
+                                <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4"
+                                       class="input-checkbox" <?= $data['sel_fabrics'] == "4" ? 'checked' : '' ?>>
+                                All selected manufacturers *
+                            </label>
+                            <label style="font-size: 12px;">* - i.e. use the item selected below</label>
                             <?php if (isset($data['filter_products'])): ?>
-                                <div data-filter-panel>
+                                <div data-filter-panel-fabrics>
                                     <?= $data['filter_products']; ?>
                                 </div>
                             <?php endif; ?>
@@ -204,7 +231,7 @@
                                                             href="#allow_multiple"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <?= $data['allow_multiple'] == "1" ? '<input type="checkbox"  value="1" name="allow_multiple" id="allow_multiple" checked class="input-checkbox">' : '<input type="checkbox" name="allow_multiple"  id="allow_multiple" value="1" class="input-checkbox">'; ?>
+                            <input type="checkbox"  value="1" name="allow_multiple" id="allow_multiple" <?= $data['allow_multiple'] == "1" ? 'checked':''?> class="input-checkbox">
                         </div>
 
                     </div>
