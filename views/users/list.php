@@ -3,10 +3,10 @@
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Date Registered</th>
+                <th class="text-center">Id</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Date Registered</th>
                 <th></th>
             </tr>
         </thead>

@@ -28,9 +28,9 @@
                     <thead>
                     <tr>
                         <th style="max-width: 360px;">Transaction id</th>
-                        <th>User</th>
+                        <th class="text-center">User</th>
                         <th>Order date</th>
-                        <th>Delivery date</th>
+                        <th class="text-center">Delivery date</th>
                         <th>Track code</th>
                         <th class="text-center">Status</th>
                         <th class="text-right">Total</th>
