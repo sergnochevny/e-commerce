@@ -1325,8 +1325,10 @@ td.product-subtotal{
 }
 .prod_sel_category_panel .panel-body{
     padding: 10px 30px 5px;
-    max-height: 200px;
+    height: 200px;
+    max-height: 400px;
     overflow-y: scroll;
+    resize: vertical;
 }
 .prod_sel_category_panel .panel-footer{
     background-color: #fff;
@@ -1352,6 +1354,13 @@ td.product-subtotal{
 }
 .prod_sel_category_item .prod_sel_category_item_lab{
     vertical-align: -22px;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    max-height: 80px;       /* fallback */
 }
 .prod_sel_category_item:not(:first-child) > .rem_cat{
     top: 9px;

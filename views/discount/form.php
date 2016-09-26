@@ -156,27 +156,29 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <label style="font-size: 12px;">
-                                <?= $data['users_check'] == "1" ? '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" onclick="toggleUsers();">'; ?>
-                                All users
-                            </label>
-                            <label style="font-size: 12px;">
-                                <?= $data['users_check'] == "2" ? '<input type="radio" id="users_check2" name="users_check" value="2" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check2" name="users_check" value="2" class="input-checkbox" onclick="toggleUsers();">'; ?>
-                                All new users
-                            </label>
-                            <label style="font-size: 12px;">
-                                <?= $data['users_check'] == "3" ? '<input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" onclick="toggleUsers();">'; ?>
-                                All registered users
-                            </label>
-                            <label style="font-size: 12px;">
-                                <?= $data['users_check'] == "4" ? '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" onclick="toggleUsers();">'; ?>
-                                All selected users (i.e. use the users selected below)
-                            </label>
-                            <?php if (isset($data['users'])): ?>
-                                <div data-filter-panel>
-                                    <?= $data['users']; ?>
-                                </div>
-                            <?php endif; ?>
+                            <div class="col-md-12 panel panel-default">
+                                <label style="font-size: 12px;">
+                                    <?= $data['users_check'] == "1" ? '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" onclick="toggleUsers();">'; ?>
+                                    All users
+                                </label>
+                                <label style="font-size: 12px;">
+                                    <?= $data['users_check'] == "2" ? '<input type="radio" id="users_check2" name="users_check" value="2" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check2" name="users_check" value="2" class="input-checkbox" onclick="toggleUsers();">'; ?>
+                                    All new users
+                                </label>
+                                <label style="font-size: 12px;">
+                                    <?= $data['users_check'] == "3" ? '<input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" onclick="toggleUsers();">'; ?>
+                                    All registered users
+                                </label>
+                                <label style="font-size: 12px;">
+                                    <?= $data['users_check'] == "4" ? '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" onclick="toggleUsers();">'; ?>
+                                    All selected users (i.e. use the users selected below)
+                                </label>
+                                <?php if (isset($data['users'])): ?>
+                                    <div data-filter-panel>
+                                        <?= $data['users']; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
 
@@ -187,23 +189,23 @@
                                                                             href="#fabrics"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <label>
+                            <label style="font-size: 12px;">
                                 <input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1" class="input-checkbox" <?= $data['sel_fabrics'] == "1" ? 'checked' : ''?>>
                                 All fabrics
                             </label>
-                            <label>
+                            <label style="font-size: 12px;">
                                 <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" class="input-checkbox" <?= $data['sel_fabrics'] == "2" ? 'checked' : ''?>>
                                 All selected fabrics *
                             </label>
-                            <label>
+                            <label style="font-size: 12px;">
                                 <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3" class="input-checkbox" <?= $data['sel_fabrics'] == "3" ? 'checked' : ''?>>
                                 All selected categories *
                             </label>
-                            <label>
+                            <label style="font-size: 12px;">
                                 <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4" class="input-checkbox" <?= $data['sel_fabrics'] == "4" ? 'checked' : ''?>>
                                 All selected manufacturers *
                             </label>
-                            <label>* - i.e. use the item selected below</label>
+                            <label style="font-size: 12px;">* - i.e. use the item selected below</label>
                             <?php if (isset($data['filter_products'])): ?>
                                 <div data-filter-panel>
                                     <?= $data['filter_products']; ?>
