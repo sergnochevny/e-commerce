@@ -1,6 +1,6 @@
 <?php
 
-    $opt['o_id'] = $row[0];
+    $opt['oid'] = $row[0];
     $opt['user_id'] = $user_id;
     $opt['page'] = $page;
 

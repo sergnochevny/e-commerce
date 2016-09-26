@@ -265,7 +265,7 @@ class Controller_Orders extends Controller_Controller
     {
         $this->main->test_access_rights();
         $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-        $oid = (integer)urldecode(base64_decode(!is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null));
+        $oid = !is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null;
         $prms['page'] = $page;
 
         if (!is_null(_A_::$app->get('orders_search_query'))) {
