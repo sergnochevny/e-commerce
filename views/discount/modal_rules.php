@@ -9,10 +9,6 @@
     <p>checks to see if a purchase has been made after the start date. If none has been made, the other restrictions are checked, if they are met then the user will receive the discount.</p>
     <b>Total current order amount</b>
     <p>uses the restrictions number field, if the total of all the items purchased (before shipping and handling) is greater then the number entered in to the restrictions number field then they will receive the discount.</p>
-    <b>Users account total</b>
-    <p>uses the details for all of the users past purchases. Requires that the restrictions fields are filled out to avoid this selection working as an 'Any purchase' promotion.</p>
-    <b>Users account total for last month</b>
-    <p>uses the details for all of the users purchases in the previous month (not last 30 days - i.e. if the promotion is on in November the system will check for purchases for October). Requires that the restrictions fields are filled out to avoid this selection working as an 'Any purchase' promotion.</p>
 </div>
 <div id="coupon_code" class="overlay" style="z-index: 99999999;"></div>
 <div class="popup" style="z-index: 99999999; font-size: 12px; color: black;">
