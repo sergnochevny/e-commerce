@@ -27,10 +27,7 @@
             <div class="col-md-12">
                 <a id="add-form-send"
                    name="comment-send-button"
-                   class="comment-button btn"
-                   onclick='sendComment("<?= _A_::$app->router()->UrlTo('edit', [
-                       'ID' => _A_::$app->get('ID')
-                   ]);?>")'>
+                   class="comment-button btn">
                     <b>Save</b>
                 </a>
             </div>

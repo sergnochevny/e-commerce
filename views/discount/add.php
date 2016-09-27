@@ -16,7 +16,7 @@
                         Clicking on the section title will open a help file explaining that section.
                     </small>
                     <div id="discount_form">
-                        <?php include('views/discount/add_form.php') ?>
+                        <?php include('views/discount/form.php') ?>
                     </div>
                 </div>
                 <br/>

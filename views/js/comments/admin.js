@@ -31,6 +31,11 @@
         }
     );
 
+    $('#publish-comment').on('click',function(e){
+        e.preventDefault();
+
+    });
+
     $(document).on('click', 'a.public_comment',function (event) {
         event.preventDefault();
         var href = $(this).attr('href'),

@@ -200,6 +200,13 @@ class Controller_Comments extends Controller_Controller
         $this->template->view_layout("admin_edit");
     }
 
+    public function publicComment(){
+        $this->main->test_access_rights();
+        $m = new Model_Comments();
+        $id = _A_::$app->get('id');
+        if (empty($id)) exit(0);
+    }
+
     public function update()
     {
 
