@@ -608,11 +608,15 @@ a img.aligncenter {
 }
 .site-navigation .navbar-header a.navbar-brand .site-with-image img.site-logo {
   max-height: 65px;
+  margin-left: -8px;
 }
 .site-navigation .navbar-header a.navbar-brand .site-tagline {
   margin: 0 0 0 12px;
   font-size: 12px;
   line-height: 10px;
+}
+.header-to-action{
+  margin-bottom: 20px;
 }
 .site-navigation .header-block {
   border-bottom: 1px solid #cacaca;
@@ -626,7 +630,8 @@ a img.aligncenter {
 }
 @media (max-width: 991px) {
   .site-navigation .navbar-collapse {
-    padding: 20px 0 0;
+    overflow: hidden;
+    padding: 0;
     margin: 0;
   }
 }
@@ -1761,4 +1766,4 @@ table.table-bordered center a{font-size: 120%;margin:0 5px;}
     width: 100% !important;
 	left: 0 !important;
 } 
-body.archive .main-content{padding-top:50px;}
+body.archive .main-content{padding-top:25px;}
