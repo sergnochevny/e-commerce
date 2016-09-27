@@ -156,7 +156,6 @@
     );
 
     function toggleDiscountType(stop) {
-        debugger;
         var dtlSlct = document.getElementById('iDscntType');
         var dtlSlctSh = document.getElementById('iShippingType');
         var mlt = document.getElementById('allow_multiple');

@@ -104,7 +104,7 @@ class Controller_Orders extends Controller_Controller
         }
         $this->get_details();
         $userInfo = Model_Order::get_order($order_id);
-        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo(empty(_A_::$app->get('discount_id')) ? 'discounts' : 'discounts/usage', $prms));
+        $this->main->template->vars('back_url', _A_::$app->router()->UrlTo(empty(_A_::$app->get('discount_id')) ? 'discount' : 'discount/usage', $prms));
         $this->main->template->vars('userInfo', $userInfo);
         $this->main->view_admin('order');
     }
