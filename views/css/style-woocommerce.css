@@ -18,13 +18,19 @@
 .woocommerce-page input.button {
     background-color: #666;
     border: 0 none;
-    border-radius: 5px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
     color: #fff;
     font-size: 100%;
-    height: 40px;
-    line-height: 40px;
-    
+    height: 30px;
+    line-height: 30px;
 	padding:0 15px !important;
+    font-weight: 400;
+    -webkit-transition: all .3s cubic-bezier(.2,1,.25,1);
+    -moz-transition: all .3s cubic-bezier(.2,1,.25,1);
+    -o-transition: all .3s cubic-bezier(.2,1,.25,1);
+    transition: all .3s cubic-bezier(.2,1,.25,1);
 }
 .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover,
 .woocommerce-page a.button:hover,
