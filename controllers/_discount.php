@@ -407,6 +407,7 @@ class Controller_Discount extends Controller_Controller
 
     public function edit()
     {
+        $id = Model_Discount::validData(_A_::$app->get('d_id'));
         $this->main->test_access_rights();
         if (_A_::$app->request_is_post()) {
             if (!is_null(_A_::$app->post('method'))) {
@@ -437,7 +438,7 @@ class Controller_Discount extends Controller_Controller
                         'mnf_select' => !is_null(_A_::$app->post('mnf_select')) ? _A_::$app->post('mnf_select') : null,
                         'cat_select' => !is_null(_A_::$app->post('cat_select')) ? _A_::$app->post('cat_select') : null,
                     );
-                    Model_Discount::get_filter_selected(_A_::$app->post('type'), $data);
+                    Model_Discount::get_filter_selected(_A_::$app->post('type'), $data, $id);
 
                     if (_A_::$app->post('type') === 'users') {
                         $this->generate_users_filter($data);

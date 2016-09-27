@@ -116,7 +116,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="col-md-3"  style="display: none;">
+                                <div class="col-md-3" style="display: none;">
                                     <select name="iShippingType" id="iShippingType">
                                         <option value="0">Select Shipping Type</option>
                                         <option value="1">Both</option>
@@ -164,7 +164,8 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <div class="col-md-12 panel panel-default" style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
+                            <div class="col-md-12 panel panel-default"
+                                 style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
                                 <label style="font-size: 12px;">
                                     <?= $data['users_check'] == "1" ? '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" onclick="toggleUsers();">'; ?>
                                     All users
@@ -181,11 +182,11 @@
                                     <?= $data['users_check'] == "4" ? '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" onclick="toggleUsers();">'; ?>
                                     All selected users (i.e. use the users selected below)
                                 </label>
-                                <?php if (isset($data['users'])): ?>
-                                    <div data-filter-panel-users>
+                                <div data-filter-panel-users>
+                                    <?php if (isset($data['users'])): ?>
                                         <?= $data['users']; ?>
-                                    </div>
-                                <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -197,33 +198,34 @@
                                                                             href="#fabrics"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <div class="col-md-12 panel panel-default" style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
+                            <div class="col-md-12 panel panel-default"
+                                 style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
                                 <label style="font-size: 12px;">
                                     <input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1"
                                            class="input-checkbox" <?= $data['sel_fabrics'] == "1" ? 'checked' : '' ?>>
                                     All fabrics
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2"
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" data-type="filter_products"
                                            class="input-checkbox" <?= $data['sel_fabrics'] == "2" ? 'checked' : '' ?>>
                                     All selected fabrics *
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3"
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3" data-type="filter_products"
                                            class="input-checkbox" <?= $data['sel_fabrics'] == "3" ? 'checked' : '' ?>>
                                     All selected categories *
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4"
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4" data-type="filter_products"
                                            class="input-checkbox" <?= $data['sel_fabrics'] == "4" ? 'checked' : '' ?>>
                                     All selected manufacturers *
                                 </label>
                                 <label style="font-size: 12px;">* - i.e. use the item selected below</label>
-                                <?php if (isset($data['filter_products'])): ?>
-                                    <div data-filter-panel-fabrics>
+                                <div data-filter-panel-fabrics>
+                                    <?php if (isset($data['filter_products'])): ?>
                                         <?= $data['filter_products']; ?>
-                                    </div>
-                                <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -235,7 +237,9 @@
                                                             href="#allow_multiple"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <input type="checkbox"  value="1" name="allow_multiple" id="allow_multiple" <?= $data['allow_multiple'] == "1" ? 'checked':''?> class="input-checkbox">
+                            <input type="checkbox" value="1" name="allow_multiple"
+                                   id="allow_multiple" <?= $data['allow_multiple'] == "1" ? 'checked' : '' ?>
+                                   class="input-checkbox">
                         </div>
 
                     </div>
@@ -335,7 +339,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="build_filter" href="filter" type="button" class="btn-primary" data-dismiss="modal">Ok</button>
+                    <button id="build_filter" href="filter" type="button" class="btn-primary" data-dismiss="modal">Ok
+                    </button>
                     <button type="button" class="btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div><!-- /.modal-content -->

@@ -154,6 +154,150 @@ Class Model_Discount extends Model_Model
 
     }
 
+    public static function get_filter_selected($type, &$data, $id)
+    {
+        if ($type == 'users') {
+            $users = [];
+            $users_check = $data['users_check'];
+            if (isset($data['users'])) $select = implode(',', $data['users']);
+            else {
+                $data['users'] = self::get_filter_selected_data($type, $id);
+                $select = implode(',', isset($data['users']) ? array_keys($data['users']) : []);
+            }
+            if ($users_check == '4') {
+                if (strlen($select > 1)) {
+                    $results = mysql_query(
+                        "select a.* from fabrix_specials_users b" .
+                        " inner join fabrix_accounts a on b.aid=a.aid " .
+                        " where b.aid in($select)" .
+                        " order by email, bill_firtname, bill_lastname"
+                    );
+                    while ($row = mysql_fetch_array($results)) {
+                        $users[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
+                    }
+                }
+            }
+            $data['users'] = $users;
+        } elseif ($type == 'filter_products') {
+            $sel_fabrics = $data['sel_fabrics'];
+            $filter_products = [];
+            switch ($sel_fabrics) {
+                case 2:
+                    $filter_type = 'prod';
+                    if (isset($data['prod_select'])) $select = implode(',', $data['prod_select']);
+                    else {
+                        $data['prod_select'] = self::get_filter_selected_data($filter_type, $id);
+                        $select = implode(',', isset($data['prod_select']) ? array_keys($data['prod_select']) : []);
+                    }
+                    if (strlen($select) > 0) {
+                        $results = mysql_query(
+                            "select * from fabrix_products" .
+                            " where pid in ($select)" .
+                            " order by pnumber, pname"
+                        );
+                        while ($row = mysql_fetch_array($results)) {
+                            $filter_products[$row[0]] = $row[2] . '-' . $row[1];
+                        }
+                    }
+                    break;
+                case 4:
+                    $filter_type = 'mnf';
+                    if (isset($data['mnf_select'])) $select = implode(',', $data['mnf_select']);
+                    else {
+                        $data['mnf_select'] = self::get_filter_selected_data($filter_type, $id);
+                        $select = implode(',', isset($data['mnf_select']) ? array_keys($data['mnf_select']) : []);
+                    }
+                    if (strlen($select) > 0) {
+                        $results = mysql_query(
+                            "select * from fabrix_manufacturers" .
+                            " where id in ($select)" .
+                            " order by manufacturer"
+                        );
+                        while ($row = mysql_fetch_array($results)) {
+                            $filter_products[$row[0]] = $row[1];
+                        }
+                    }
+                    break;
+                case 3:
+                    $filter_type = 'cat';
+                    if (isset($data['cat_select'])) $select = implode(',', $data['cat_select']);
+                    else {
+                        $data['cat_select'] = self::get_filter_selected_data($filter_type, $id);
+                        $select = implode(',', isset($data['cat_select']) ? array_keys($data['cat_select']) : []);
+                    }
+                    if (strlen($select) > 0) {
+                        $results = mysql_query(
+                            "select * from fabrix_categories " .
+                            " where cid in ($select)" .
+                            " order by cname"
+                        );
+                        while ($row = mysql_fetch_array($results)) {
+                            $filter_products[$row[0]] = $row[1];
+                        }
+                    }
+                    break;
+            }
+            $data['filter_products'] = $filter_products;
+            $data['filter_type'] = $filter_type;
+        }
+    }
+
+    public static function get_filter_selected_data($type, $id)
+    {
+        $data = [];
+        switch ($type) {
+            case 'users':
+                $results = mysql_query(
+                    "select a.* from fabrix_specials_users b" .
+                    " inner join fabrix_accounts a on b.uid=a.uid " .
+                    " where sid='$id'" .
+                    " order by email, bill_firtname, bill_lastname"
+                );
+                if ($results)
+                    while ($row = mysql_fetch_array($results)) {
+                        $data[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
+                    }
+                break;
+            case 'prod':
+                $results = mysql_query(
+                    "select a.* from fabrix_specials_products b" .
+                    " inner join fabrix_products a on b.pid=a.pid " .
+                    " where b.sid='$id' and b.stype = 1" .
+                    " order by a.pnumber, a.pname"
+                );
+                if ($results)
+                    while ($row = mysql_fetch_array($results)) {
+                        $data[$row[0]] = $row[2] . '-' . $row[1];
+                    }
+                break;
+            case 'mnf':
+                $results = mysql_query(
+                    "select a.* from fabrix_specials_products b" .
+                    " inner join fabrix_manufacturers a on b.pid=a.id " .
+                    " where b.sid='$id' and b.stype = 2" .
+                    " order by a.manufacturer"
+                );
+                if ($results)
+                    while ($row = mysql_fetch_array($results)) {
+                        $data[$row[0]] = $row[1];
+                    }
+                break;
+            case 'cat':
+                $results = mysql_query(
+                    "select a.* from fabrix_specials_products b" .
+                    " inner join fabrix_categories a on b.pid=a.cid " .
+                    " where b.sid='$id' and b.stype = 3" .
+                    " order by a.cname"
+                );
+                if ($results)
+                    while ($row = mysql_fetch_array($results)) {
+                        $data[$row[0]] = $row[1];
+                    }
+                break;
+        }
+        return $data;
+    }
+
     public static function get_filter_data($type)
     {
         switch ($type) {
@@ -192,88 +336,9 @@ Class Model_Discount extends Model_Model
         return $filter;
     }
 
-    public static function get_filter_selected($type, &$data)
-    {
-
-        if ($type == 'users') {
-            $users_check = $data['users_check'];
-            $select = implode(',', $data['users']);
-            if ($users_check == '4') {
-                $results = mysql_query(
-                    "select a.* from fabrix_specials_users b" .
-                    " inner join fabrix_accounts a on b.aid=a.aid " .
-                    " where b.aid in($select)" .
-                    " order by email, bill_firtname, bill_lastname"
-//                    "select a.* from fabrix_specials_users b" .
-//                    " inner join fabrix_accounts a on b.aid=a.aid " .
-//                    " where b.aid in($select)" .
-//                    " order by email, bill_firtname, bill_lastname"
-                );
-                while ($row = mysql_fetch_array($results)) {
-                    $users[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
-                }
-            }
-            $data['users'] = $users;
-        } elseif($type == 'filter_products') {
-            $sel_fabrics = $data['sel_fabrics'];
-            $filter_products = null;
-            switch ($sel_fabrics) {
-                case 2:
-                    $filter_type = 'prod';
-                    $select = implode(',',$data['prod_select']);
-                    $results = mysql_query(
-                        "select * from fabrix_products" .
-                        " where pid in ($select)" .
-                        " order by pnumber, pname"
-//                        "select a.* from fabrix_specials_products b" .
-//                        " inner join fabrix_products a on b.pid=a.pid " .
-//                        " where b.pid in ($select) and stype = 1" .
-//                        " order by pnumber, pname"
-                    );
-                    while ($row = mysql_fetch_array($results)) {
-                        $filter_products[$row[0]] = $row[2] . '-' . $row[1];
-                    }
-                    break;
-                case 3:
-                    $filter_type = 'mnf';
-                    $select = implode(',',$data['mnf_select']);
-                    $results = mysql_query(
-                        "select * from fabrix_manufacturers" .
-                        " where id in ($select)" .
-                        " order by manufacturer"
-//                        "select a.* from fabrix_specials_products b" .
-//                        " inner join fabrix_manufacturers a on b.pid=a.id " .
-//                        " where b.pid in ($select) and stype = 2" .
-//                        " order by manufacturer"
-                    );
-                    while ($row = mysql_fetch_array($results)) {
-                        $filter_products[$row[0]] = $row[1];
-                    }
-                    break;
-                case 4:
-                    $filter_type = 'cat';
-                    $select = implode(',',$data['cat_select']);
-                    $results = mysql_query(
-                        "select * from fabrix_categories " .
-                        " where cid in ($select)" .
-                        " order by cname"
-//                        "select a.* from fabrix_specials_products b" .
-//                        " inner join fabrix_categories a on b.pid=a.cid " .
-//                        " where b.pid in ($select) and stype = 3" .
-//                        " order by cname"
-                    );
-                    while ($row = mysql_fetch_array($results)) {
-                        $filter_products[$row[0]] = $row[1];
-                    }
-                    break;
-            }
-            $data['filter_products'] = $filter_products;
-            $data['filter_type'] = $filter_type;
-        }
-    }
-
     public static function get_discounts_data($id = null)
     {
+        $filter_types = [1 => null, 2 => 'prod', 3 => 'mnf', 4 => 'cat'];
         if (isset($id)) {
             $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='$id'");
             $rowsni = mysql_fetch_array($resulthatistim);
@@ -283,31 +348,15 @@ Class Model_Discount extends Model_Model
 
             $sel_fabrics = $rowsni['product_type'];
             $filter_products = null;
-            $filter_type = 'prod';
-            if ($sel_fabrics == 2) {
-                $results = mysql_query(
-                    "select a.* from fabrix_specials_products b" .
-                    " inner join fabrix_products a on b.pid=a.pid " .
-                    " where sid='$id' and stype = 1" .
-                    " order by pnumber, pname"
-                );
-                while ($row = mysql_fetch_array($results)) {
-                    $filter_products[$row[0]] = $row[2] . '-' . $row[1];
-                }
+            $filter_type = $filter_types[$sel_fabrics];
+            if (in_array($filter_type, array_filter(array_values($filter_types)))) {
+                $filter_products = self::get_filter_selected_data($filter_type, $id);
             }
 
             $users_check = $rowsni['user_type'];
             $users = null;
             if ($users_check == '4') {
-                $results = mysql_query(
-                    "select a.* from fabrix_specials_users b" .
-                    " inner join fabrix_accounts a on b.uid=a.uid " .
-                    " where sid='$id'" .
-                    " order by email, bill_firtname, bill_lastname"
-                );
-                while ($row = mysql_fetch_array($results)) {
-                    $users[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
-                }
+                $users = self::get_filter_selected_data('users', $id);
             }
             return array(
                 'discount_comment1' => $rowsni['discount_comment1'],
