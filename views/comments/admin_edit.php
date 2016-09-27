@@ -2,28 +2,37 @@
 <form class="form-horizontal comment-form container-fluid" method="post">
     <fieldset>
         <legend>Edit comment</legend>
-
         <div id="comment-message-error" class="comment-message-error"></div>
-        <div class="form-group row" id="comment-form-head">
-            <label class="col-md-3 control-label" for="comment_title">Title</label>
-            <div class="col-md-8">
+        <div class="form-row" id="comment-form-head">
+            <div class="col-md-12">
+                <label for="comment_title"><b>Title</b></label>
                 <input id="comment_title" name="comment_title" class="form-control input-md" type="text" value="<?= isset($title) ? $title : '' ?>">
             </div>
         </div>
-        <div class="form-group row" id="comment-form-data">
-            <label class="col-md-3 control-label" for="comment_data">Comment text</label>
-            <div class="col-md-8">
+        <div class="form-row" id="comment-form-data">
+            <div class="col-md-12">
+                <label for="comment_data"><b>Comment text</b></label>
                 <textarea class="form-control" id="comment_data" name="comment_data"><?= isset($data) ? $data : "" ?></textarea>
-                <div class="row col-md-4">
-                    <input type="checkbox" id="comment_public" name="comment_public" class="" <?php if($moderated == 1) echo "checked"; ?> >
-                    <label for="comment_public" class="">Public comment</label>
-                </div>
             </div>
         </div>
-        <div class="form-group row" id="comment-form-save">
-            <label class="col-md-3 control-label" for="add-form-send"></label>
-            <div class="col-md-8">
-                <a id="add-form-send" name="comment-send-button" class="comment-button btn" onclick='sendComment("<?= _A_::$app->router()->UrlTo('edit', ['ID' => _A_::$app->get('ID')]);?>")'>Save</a>
+        <div class="form-row" id="comment-form-data">
+            <div class="col-md-12">
+                <label for="comment_public" class="">
+                    <input type="checkbox" id="comment_public" name="comment_public" class="" <?php if($moderated == 1) echo "checked"; ?> >
+                    <b>Public comment</b>
+                </label>
+            </div>
+        </div>
+        <div class="form-row" id="comment-form-save">
+            <div class="col-md-12">
+                <a id="add-form-send"
+                   name="comment-send-button"
+                   class="comment-button btn"
+                   onclick='sendComment("<?= _A_::$app->router()->UrlTo('edit', [
+                       'ID' => _A_::$app->get('ID')
+                   ]);?>")'>
+                    <b>Save</b>
+                </a>
             </div>
         </div>
 

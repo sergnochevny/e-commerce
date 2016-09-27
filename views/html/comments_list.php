@@ -9,12 +9,11 @@
     <td><?= $row['dt'] ?></td>
 
     <td>
-        <a <?= $row['moderated'] == '0' ? "class=\"text-danger\"" : "class=\"text-success\"" ?>
-            class="public_comment"
+        <a <?= $row['moderated'] == '0' ? "class=\"text-danger public_comment\"" : "class=\"text-success public_comment\"" ?>
             href="<?= _A_::$app->router()->UrlTo('comments/public', $opt) ?>"
             title="<?= $row['moderated'] == '1' ? 'Hide comment' : 'Show comment' ?>"
             data-value="<?= $row['moderated'] ?>">
-            <?= $row['moderated'] == '1' ? "Display" : "Hide" ?>
+            <?= $row['moderated'] == '1' ? "Displaying" : "Hiden" ?>
             <i class="fa <?= $row['moderated'] == '0' ? 'fa-minus-square-o' : 'fa-check-square-o'; ?>"></i>
         </a>
     </td>
@@ -25,7 +24,7 @@
                title="Edit comment"><i class="fa fa-pencil"></i>
             </a>
             <a class="text-success view-comment"
-               href="<?= _A_::$app->router()->UrlTo('comments/view', $opt) ?>"
+               href="<?= _A_::$app->router()->UrlTo('comments/comment', $opt) ?>"
                title="View comment"><i class="fa fa-eye"></i>
             </a>
 

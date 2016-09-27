@@ -158,6 +158,13 @@ class Controller_Blog extends Controller_Controller
         $this->main->view_admin('admin');
     }
 
+
+    public function admin_categories()
+    {
+        $this->main->test_access_rights();
+        $this->main->view_admin('admin_categories');
+    }
+
     private function admin_prepapre()
     {
         $prms['page'] = (!empty(_A_::$app->get('page'))) ? _A_::$app->get('page') : '1';

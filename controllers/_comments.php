@@ -169,11 +169,11 @@ class Controller_Comments extends Controller_Controller
     {
         $this->main->test_access_rights();
         $m = new Model_Comments();
-        if (!is_null(_A_::$app->get('ID'))) {
-            $comment = $m->get(_A_::$app->get('ID'));
+        if (!is_null(_A_::$app->get('id'))) {
+            $comment = $m->get(_A_::$app->get('id'));
             if (empty($comment)) exit(0);
 
-            $update_url = _A_::$app->router()->UrlTo('comments/update_save');
+            $update_url = _A_::$app->router()->UrlTo('comments/update');
 
             $comment['username'] = $m->getUserName($comment['userid']);
 
@@ -194,7 +194,6 @@ class Controller_Comments extends Controller_Controller
         if (empty($id)) exit(0);
 
         $comment = new Model_Comment($m->get($id));
-
         $this->template->vars('moderated', $comment->getModerated());
         $this->template->vars('title', $comment->getTitle());
         $this->template->vars('data', $comment->getData());
@@ -210,9 +209,7 @@ class Controller_Comments extends Controller_Controller
         $title = htmlspecialchars(_A_::$app->post('comment_title'));
         $moderated = sprintf("%d", _A_::$app->post('publish'));
 
-        //echo "Publish = $moderated";
-
-        $ID = _A_::$app->get('ID');
+        $ID = _A_::$app->post('id');
         if (empty($ID)) exit(0);
 
         $comment = new Model_Comment($m->get($ID));
@@ -224,12 +221,12 @@ class Controller_Comments extends Controller_Controller
         if (count($errors) > 0) {
             $this->template->vars("errs", $this->validateCommentData($data, $title));
             $this->template->view_layout("save_error");
-            return 0;
         }
         if ($m->update($comment)) {
             $this->template->view_layout("admin_save_complete");
-            return 0;
         }
+        $this->get_list();
+        $this->main->view_admin('admin');
     }
 
     public function update_list()
