@@ -54,9 +54,7 @@ Class Model_Discount extends Model_Model
         $q = "select * from fabrix_specials WHERE sid='" . (integer)$id . "'";
         $result = mysql_query($q);
         if ($result) {
-            while ($row = mysql_fetch_assoc($result)) {
-                $res[] = $row;
-            }
+            $res = mysql_fetch_assoc($result);
         }
         return $res;
     }
@@ -67,9 +65,7 @@ Class Model_Discount extends Model_Model
         $q = "select * from fabrix_specials_usage WHERE specialId='" . (integer)$id . "'";
         $result = mysql_query($q);
         if ($result) {
-            while ($row = mysql_fetch_assoc($result)) {
-                $res[] = $row;
-            }
+            $res = mysql_fetch_assoc($result);
         }
         return $res;
     }

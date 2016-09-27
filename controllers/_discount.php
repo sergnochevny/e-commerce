@@ -43,16 +43,16 @@ class Controller_Discount extends Controller_Controller
     public function usage()
     {
         $this->main->test_access_rights();
-        $this->data_usage();
+        $this->data_usage(_A_::$app->get('d_id'));
         $this->data_usage_order();
         $this->main->view_admin('usage');
     }
 
-    private function data_usage()
+    private function data_usage($discount_id = null)
     {
         if (!empty($discount_id)) {
             ob_start();
-            $row = Model_Discount::getFabrixSpecialsByID((integer)Model_Discount::validData(_A_::$app->get('id')));
+            $row = Model_Discount::getFabrixSpecialsByID((integer)$discount_id);
             $allow_multiple = $row['allow_multiple'];
             $date_start = $row['date_start'];
             $date_end = $row['date_end'];
@@ -60,13 +60,14 @@ class Controller_Discount extends Controller_Controller
             $sid = $row['sid'];
             $enabled = $enabled == "1" ? "YES" : "NO";
 
+            $this->template->vars('row', $row);
             $this->template->vars('coupon_code', $row['coupon_code']);
             $this->template->vars('discount_comment1', $row['discount_comment1']);
             $this->template->vars('p_discount_amount', $row['discount_amount']);
             $this->template->vars('allow_multiple', $allow_multiple == "1" ? "YES" : "NO");
             $this->template->vars('date_start', gmdate("F j, Y, g:i a", $date_start));
             $this->template->vars('date_end', gmdate("F j, Y, g:i a", $date_end));
-            $this->template->view_layouts('get_list');
+            $this->template->view_layout('row_list');
             $data_usage_discounts = ob_get_contents();
             ob_end_clean();
             $this->main->template->vars('data_usage_discounts', $data_usage_discounts);
