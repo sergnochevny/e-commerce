@@ -5,72 +5,76 @@
         </small>
     </p>
     <hr>
-    <div class="col-1">
-        <p class="form-row">
-            <label class="required_field"><strong>Category:</strong></label>
-            <input type="text" name="category" value="<?=$data['cname']?>"
-                   class="input-text ">
-            <small style="color: #999">NOTE: the title cannot be more than 28 characters.</small>
-        </p>
-        <p class="form-row">
-            <label><strong>Display order:</strong></label>
-            <select name="display_order">
-                <?= $display_order_categories; ?>
-            </select>
+    <div class="col-md-12">
+        <div class="row">
 
-        </p>
-        <p class="form-row">
-            <label><strong>Seo:</strong></label>
-            <input type="text" name="seo" value="<?=$data['seo']?>" class="input-text ">
-            <small><strong>NOTE:</strong> the seo name will be parsed to be url compatible if necessary.</small>
-        </p>
-
-        <p class="form-row">
-            <label>
-                <strong>List as a Style:</strong>
-                <?php
+            <div class="form-row">
+                <label class="required_field"><strong>Category:</strong></label>
+                <input type="text" name="category" value="<?=$data['cname']?>"
+                       class="input-text ">
+                <small style="color: #999">NOTE: the title cannot be more than 28 characters.</small>
+            </div>
+            <div class="form-row">
+                <label><strong>Display order:</strong></label>
+                <select name="display_order">
+                    <?= $display_order_categories; ?>
+                </select>
+            </div>
+            <div class="form-row">
+                <label><strong>Seo:</strong></label>
+                <input type="text" name="seo" value="<?=$data['seo']?>" class="input-text ">
+                <small><strong>NOTE:</strong> the seo name will be parsed to be url compatible if necessary.</small>
+            </div>
+            <div class="form-row">
+                <label for="ListStyle">
+                    <b>List as a Style:</b>
+                    <?php
                     if($data['isStyle']=="1"){
-                        echo '<input type="checkbox" name="ListStyle" checked="checked" value="1" class="input-checkbox">';
+                        echo '<input type="checkbox" id="ListStyle" name="ListStyle" checked="checked" value="1" class="input-checkbox">';
                     }
                     else{
-                        echo '<input type="checkbox" name="ListStyle" value="1" class="input-checkbox">';
+                        echo '<input type="checkbox" id="ListStyle" name="ListStyle" value="1" class="input-checkbox">';
                     }
-                ?>
-            </label>
-        </p>
-        <p class="form-row">
-            <label>
-                <strong>List as a New Item:</strong>
-                <?php
+                    ?>
+                </label>
+            </div>
+            <div class="form-row">
+                <label for="ListNewItem">
+                    <b>List as a New Item:</b>
+                    <?php
                     if($data['isNew']=="1"){
-                        echo '<input type="checkbox" name="ListNewItem" checked="checked" value="1" class="input-checkbox">';
+                        echo '<input type="checkbox" id="ListNewItem" name="ListNewItem" checked="checked" value="1" class="input-checkbox">';
                     }
                     else{
-                        echo '<input type="checkbox" name="ListNewItem" value="1" class="input-checkbox">';
+                        echo '<input type="checkbox" id="ListNewItem" name="ListNewItem" value="1" class="input-checkbox">';
                     }
-                ?>
-            </label>
-        </p>
-
-        <!--col-2-->
-        <div class="col-xs-12 alert-success danger" style="display: none;">
-            <?php
-                if(isset($warning)){
+                    ?>
+                </label>
+            </div>
+            <?php if(isset($warning)){ ?>
+                <div class="col-xs-12 alert-success danger" style="display: none;"><?php
                     foreach($warning as $msg){
                         echo $msg."\r\n";
                     }
-                }
-            ?>
+                ?></div>
+            <?php }?>
+            <?php if(isset($error)){ ?>
+                <div class="col-xs-12 alert-danger danger" style="display: none;"><?php
+                        foreach($error as $msg){
+                            echo $msg."\r\n";
+                        }
+                ?></div>
+            <?php }?>
         </div>
-        <div class="col-xs-12 alert-danger danger" style="display: none;">
-            <?php
-                if(isset($error)){
-                    foreach($error as $msg){
-                        echo $msg."\r\n";
-                    }
-                }
-            ?>
-        </div>
+    </div>
+    <div class="col-1">
+
+
+
+
+
+        <!--col-2-->
+
         <br/>
         <br/>
         <div class="text-center"><input type="submit" value="Update" class="button" /></div>
