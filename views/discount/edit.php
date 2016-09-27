@@ -7,7 +7,7 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <a href="discounts"><input type="submit" value="Back" class="button"></a>
+                <a href="<?=_A_::$app->router()->UrlTo('discount')?>"><input type="submit" value="Back" class="button"></a>
 
                 <div id="customer_details">
                     <h1 class="page-title"> MODIFY DISCOUNT</h1>

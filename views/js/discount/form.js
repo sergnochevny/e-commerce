@@ -36,8 +36,8 @@
             contentType: false,
             success: function (data) {
                 $.when(context.html(data)).done(
-                    function(){
-                        if(callback) callback.apply(this_);
+                    function () {
+                        if (callback) callback.apply(this_);
                         $('body').waitloader('remove');
                     }
                 );
@@ -63,9 +63,9 @@
         var url = $('form#discount').attr('action');
         data.append('method', $(this).attr('href'));
         var destination = $(this).attr('data-destination');
-        var title =  $(this).attr('data-title');
+        var title = $(this).attr('data-title');
         postdata(this, url, data, $('#modal_content'),
-            function(){
+            function () {
                 $('#modal-title').html(title);
                 $('#build_filter').attr('data-destination', destination);
                 $('#modal').modal('show');
@@ -74,36 +74,18 @@
     }
 
     $('#build_filter').on('click',
-        function(){
-            var destination = $('[data-filter='+$(this).attr('data-destination')+']').parent('div');
+        function () {
+            var destination = $('[data-filter=' + $(this).attr('data-destination') + ']').parent('div');
             var data = new FormData($('form#discount')[0]);
             var url = $('form#discount').attr('action');
             data.append('method', $(this).attr('href'));
             data.append('type', $(this).attr('data-destination'));
             postdata(this, url, data, destination,
-                function(){
+                function () {
                     $('#modal').modal('hide');
-                    $('span[data-rem_row]').on('click',
-                        function (event) {
-                            evRemoveFilterRow.apply(this, event);
-                        }
-                    );
-                    $('form#discount a[name=edit_filter]').on('click',
-                        function(event){
-                            event.preventDefault();
-                            evFilterAdd.apply(this, event);
-                        }
-                    );
+                    setEvToFilter();
                 }
             );
-        }
-    );
-
-
-    $('form#discount a[name=edit_filter]').on('click',
-        function(event){
-            event.preventDefault();
-            evFilterAdd.apply(this, event);
         }
     );
 
@@ -111,52 +93,67 @@
         $(this).parent('li.prod_sel_category_item').remove();
     }
 
-    $('span[data-rem_row]').on('click',
-        function (event) {
-            event.preventDefault();
-            evRemoveFilterRow.apply(this, event);
-        }
-    );
+    setEvToFilter();
 
     $('#modal').on('hidden.bs.modal',
-        function(){
+        function () {
             $(this).find('#modal_content').empty();
         }
     );
 
     $('input:radio[name=sel_fabrics]').on('change',
-        function(event, stop){
+        function (event, stop) {
             toggleDetails(stop);
             toggleFabrics(stop);
+            if ($(this).is('[data-type]')) {
+                var data = new FormData($('form#discount')[0]);
+                var url = $('form#discount').attr('action');
+                data.append('method', 'filter');
+                data.append('type', $(this).attr('data-type'));
+                postdata(this, url, data, $('[data-filter-panel-fabrics]'), setEvToFilter);
+            }
         }
     );
 
     $('select#iDscntType').on('change',
-        function(event, stop){
+        function (event, stop) {
             toggleDiscountType(stop);
         }
     );
 
     $('input#allow_multiple').on('change',
-        function(event, stop){
+        function (event, stop) {
             toggleMultiple(stop);
         }
     );
 
     $('input#generate_code').on('change',
-        function(event, stop){
+        function (event, stop) {
             toggleCouponCode(stop);
         }
     );
 
     $('input#coupon_code').on('keyup',
-        function(event, stop){
+        function (event, stop) {
             toggleCouponCode(stop);
         }
     );
 
+    function setEvToFilter() {
+        $('span[data-rem_row]').on('click',
+            function (event) {
+                evRemoveFilterRow.apply(this, event);
+            }
+        );
+        $('form#discount a[name=edit_filter]').on('click',
+            function (event) {
+                event.preventDefault();
+                evFilterAdd.apply(this, event);
+            }
+        );
+    }
+
     function toggleDiscountType(stop) {
-        debugger;
         var dtlSlct = document.getElementById('iDscntType');
         var dtlSlctSh = document.getElementById('iShippingType');
         var mlt = document.getElementById('allow_multiple');
@@ -170,14 +167,14 @@
 
             mlt.checked = true;
             fbtAll.checked = true;
-            if(!stop){
-                $(fbtAll).trigger('change',true);
+            if (!stop) {
+                $(fbtAll).trigger('change', true);
             }
 
             toggleFabrics();
         } else {
             $.when($(dtlSlctSh).parent('div').fadeOut()).done(
-                function(){
+                function () {
                     $(dtlSlct).parent('div').addClass('col-md-6');
                     $(dtlSlct).parent('div').removeClass('col-md-3');
                 }
@@ -194,10 +191,9 @@
         var chckMlt = document.getElementById('allow_multiple');
         var fbtAll = document.getElementById('sel_fabrics1');
         if ((txtCoupon.value.length > 0) || (chckCoupon.checked)) {
-            debugger;
             chckMlt.checked = true;
             fbtAll.checked = true;
-            if(!stop) {
+            if (!stop) {
                 $(fbtAll).trigger('change', true);
             }
             toggleFabrics();
@@ -209,9 +205,8 @@
         dtlSlct.disabled = disable;
     }
 
-    function toggleFabrics() {
-        var sf1 = document.getElementById('sel_fabrics1');
-        if (sf1.checked) $('[data-filter-panel-fabrics]').remove();
+    function toggleFabrics(stop) {
+        $('[data-filter-panel-fabrics]').empty();
     }
 
     function toggleDetails(stop) {
@@ -223,7 +218,7 @@
             var chckCoupon = document.getElementById('generate_code');
             $(txtCoupon).val('');
             chckCoupon.checked = false;
-            if(!stop) {
+            if (!stop) {
                 $(dtlSlct).trigger('change', true);
                 $(chckCoupon).trigger('change', true);
             }
@@ -231,16 +226,16 @@
 
     }
 
-    function toggleMultiple(stop){
+    function toggleMultiple(stop) {
         var multiple = document.getElementById("allow_multiple");
         var dtlSlct = document.getElementById('iDscntType');
-        if(!multiple.checked) {
+        if (!multiple.checked) {
             dtlSlct.selectedIndex = 1;
             var txtCoupon = document.getElementById('coupon_code');
             var chckCoupon = document.getElementById('generate_code');
             $(txtCoupon).val('');
             chckCoupon.checked = false;
-            if(!stop) {
+            if (!stop) {
                 $(dtlSlct).trigger('change', true);
                 $(chckCoupon).trigger('change', true);
             }
