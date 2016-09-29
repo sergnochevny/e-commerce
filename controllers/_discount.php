@@ -59,8 +59,7 @@ class Controller_Discount extends Controller_Controller
             $enabled = $row['enabled'];
             $sid = $row['sid'];
             $enabled = $enabled == "1" ? "YES" : "NO";
-            $opt = ['oid' => $sid];
-            $view_url = _A_::$app->router()->UrlTo('orders/info', $opt);
+
             $this->template->vars('row', $row);
             $this->template->vars('coupon_code', $row['coupon_code']);
             $this->template->vars('discount_comment1', $row['discount_comment1']);
@@ -68,8 +67,6 @@ class Controller_Discount extends Controller_Controller
             $this->template->vars('allow_multiple', $allow_multiple == "1" ? "YES" : "NO");
             $this->template->vars('date_start', gmdate("F j, Y, g:i a", $date_start));
             $this->template->vars('date_end', gmdate("F j, Y, g:i a", $date_end));
-            $this->template->vars('sid', $row['sid']);
-            $this->template->vars('view_url', $view_url);
             $this->template->view_layout('row_list');
             $data_usage_discounts = ob_get_contents();
             ob_end_clean();
