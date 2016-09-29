@@ -1,23 +1,26 @@
-<?php if(isset($filter_products)): ?>
-<div class="panel panel-default form-row prod_sel_category_panel" data-filter="<?= $destination;?>">
-    <div class="col-sm-12">
-        <div class="panel-body">
-            <ul class="prod_sel_category">
-                <?php foreach($filter_products as $key=>$name): ?>
-                <li class="prod_sel_category_item row">
-                    <div class="col-sm-11">
-                        <div class="row"><span class="prod_sel_category_item_lab"><?= $name;?></span>
-                        </div>
-                        <input name="<?= ($filter_type !== 'users')?'filter_products':'users'?>[]" type="hidden" value="<?= $key;?>">
-                    </div>
-                    <span data-rem_row class="rem_cat">×</span>
-                </li>
-                <?php endforeach;?>
-            </ul>
-        </div>
-        <div class="panel-footer">
-            <a href="<?= $filter_type; ?>" data-destination="<?= $destination;?>" data-title="<?= $title;?>" name="edit_filter" class="button alt">Add</a>
+<?php if (isset($filters)): ?>
+    <div class="panel panel-default form-row prod_sel_category_panel" data-filter="<?= $destination; ?>">
+        <div class="col-sm-12">
+            <div class="panel-body">
+                <ul class="prod_sel_category">
+                    <?php foreach ($filters as $key => $name): ?>
+                        <li class="prod_sel_category_item">
+                            <div class="col-sm-11 col-xs-11">
+                                <div class="row"><span class="prod_sel_category_item_lab"><?= $name; ?></span></div>
+                                <input name="<?= ($filter_type !== 'users') ? 'filter_products' : 'users' ?>[]"
+                                       type="hidden" value="<?= $key; ?>">
+                            </div>
+                            <div class="col-sm-1 col-xs-1 text-right">
+                                <div class="row"><span data-rem_row data-index="<?= $key ?>" class="rem_row">×</span></div>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <a href="<?= $filter_type; ?>" data-destination="<?= $destination; ?>" data-title="<?= $title; ?>"
+                   name="edit_filter" class="button alt">Add</a>
+            </div>
         </div>
     </div>
-</div>
 <?php endif; ?>
