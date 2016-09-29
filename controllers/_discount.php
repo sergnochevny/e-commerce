@@ -188,7 +188,6 @@
         try {
           $discount_id = Model_Discount::saveFabrixSpecial($discount_id, $coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end);
           Model_Discount::saveFabrixSpecialsUser($discount_id, $users_check, $users);
-          Model_Discount::deleteFabrixSpecialsProductById($discount_id);
           $filter_types = [1 => null, 2 => 1, 3 => 2, 4 => 3];
           Model_Discount::saveFabrixSpecialsProducts($discount_id, $filter_products, $filter_types[$sel_fabrics]);
           $warning = ["The data saved successfully!"];
@@ -210,8 +209,8 @@
       } else {
         Model_Discount::get_filter_selected('filter_products', $data, $id);
         Model_Discount::get_filter_selected('users', $data, $id);
-        if($data['sel_fabrics'] !== 1) $data['filter_products'] = null;
-        if($data['users_check'] !== 4) $data['users'] = null;
+        if($data['sel_fabrics'] == 1) $data['filter_products'] = null;
+        if($data['users_check'] != 4) $data['users'] = null;
       }
       if(!empty($id) && isset($id)) {
         $prms['d_id'] = $id;
