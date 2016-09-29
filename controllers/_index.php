@@ -1,36 +1,47 @@
 <?php
 
-Class Controller_Index Extends Controller_Controller
-{
+  Class Controller_Index Extends Controller_Controller {
 
-    function index()
-    {
-        $this->main->view('index');
+    /**
+     * @export
+     */
+    public function index() {
+      $this->main->view('index');
     }
 
-    function service()
-    {
-        $this->main->view('static/service');
+    /**
+     * @export
+     */
+    public function service() {
+      $this->main->view('static/service');
     }
 
-    function newsletter()
-    {
-        $this->main->view('static/newsletter');
+    /**
+     * @export
+     */
+    public function newsletter() {
+      $this->main->view('static/newsletter');
     }
 
-    function privacy()
-    {
-        $this->main->view('static/privacy');
+    /**
+     * @export
+     */
+    public function privacy() {
+      $this->main->view('static/privacy');
     }
 
-    function contact()
-    {
-        $this->main->view('static/contact');
+    /**
+     * @export
+     */
+    public function contact() {
+      $this->main->view('static/contact');
     }
 
-    function about()
-    {
-        $this->main->view('static/about');
+    /**
+     * @export
+     */
+    public function about() {
+      $this->main->view('static/about');
     }
 //////////////////////////////////////////////////////////// STATIC
 
@@ -109,20 +120,26 @@ Class Controller_Index Extends Controller_Controller
 //    }
 
 //////////////////////////////////////////////////////////// IMAGE
-    function search()
-    {
-        $search_qv = Model_Tools::validData(_A_::$app->get('s'));
-        $this->template->vars('userInfo', $search_qv);
-        $this->main->view('search');
+    /**
+     * @export
+     */
+    public function search() {
+      $search_qv = Model_Tools::validData(_A_::$app->get('s'));
+      $this->template->vars('userInfo', $search_qv);
+      $this->main->view('search');
     }
 
-    function message()
-    {
-        $this->main->message();
+    /**
+     * @export
+     */
+    public function message() {
+      $this->main->message();
     }
 
-    public function error404()
-    {
-        $this->main->error404();
+    /**
+     * @export
+     */
+    public function error404() {
+      $this->main->error404();
     }
-}
+  }
