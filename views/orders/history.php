@@ -33,7 +33,7 @@
                         <th class="text-center">Delivery date</th>
                         <th>Track code</th>
                         <th class="text-center">Status</th>
-                        <th class="text-right">Total</th>
+                        <th class="text-center">Total</th>
                         <th></th>
 
                     </tr>
