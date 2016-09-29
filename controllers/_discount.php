@@ -208,10 +208,10 @@
       if(!isset($data)) {
         $data = Model_Discount::get_discounts_data($id);
       } else {
-        $filter_types = [1 => null, 2 => 'prod', 3 => 'mnf', 4 => 'cat'];
-        $data['filter_type'] = $filter_types[$data['sel_fabrics']];
-        Model_Discount::get_filter_selected($data['filter_type'], $data, $id);
+        Model_Discount::get_filter_selected('filter_products', $data, $id);
         Model_Discount::get_filter_selected('users', $data, $id);
+        if($data['sel_fabrics'] !== 1) $data['filter_products'] = null;
+        if($data['users_check'] !== 4) $data['users'] = null;
       }
       if(!empty($id) && isset($id)) {
         $prms['d_id'] = $id;
@@ -371,12 +371,18 @@
       }
     }
 
+    /**
+     * @export
+     */
     public function discount() {
       $this->main->test_access_rights();
       $this->get_list();
       $this->main->view_admin('discounts');
     }
 
+    /**
+     * @export
+     */
     public function del() {
       $this->main->test_access_rights();
       $id = Model_Discount::validData(_A_::$app->get('id'));
@@ -386,6 +392,9 @@
       $this->get_list();
     }
 
+    /**
+     * @export
+     */
     public function usage() {
       $this->main->test_access_rights();
       $this->data_usage(_A_::$app->get('d_id'));
@@ -393,12 +402,17 @@
       $this->main->view_admin('usage');
     }
 
+    /**
+     * @export
+     */
     public function edit() {
       $this->edit_add_handling('edit', 'discount/edit');
     }
 
+    /**
+     * @export
+     */
     public function add() {
       $this->edit_add_handling('add', 'discount/add');
     }
-
   }
