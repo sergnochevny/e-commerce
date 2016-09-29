@@ -15,7 +15,7 @@
                             <td>Details</td>
                             <td class="text-center">Enabled</td>
                             <td class="text-center">Multiple</td>
-                            <td class="text-center">Coupon Code</td>
+                            <td class="text-center">Coupon</td>
                             <td class="text-center">Start Date</td>
                             <td class="text-center">End Date</td>
                             <td></td>

@@ -11,8 +11,8 @@
     <td><div class="text-center"><?= $row['enabled'];?></div></td>
     <td><div class="text-center"><?= $row['allow_multiple'];?></div></td>
     <td style="width: 120px"><div class="text-center"><?= !empty($row['coupon_code']) ? $row['coupon_code'] : 'N/A'; ?></div></td>
-    <td style="width: 175px" class="text-center"><?= $row['date_start'];?></td>
-    <td style="width: 175px"><div class="text-center"><?= $row['date_end'];?></div></td>
+    <td style="width: 185px" class="text-center"><?= $row['date_start'];?></td>
+    <td style="width: 185px"><div class="text-center"><?= $row['date_end'];?></div></td>
     <td>
         <div class="text-center">
             <a rel="nofollow" href="<?= _A_::$app->router()->UrlTo('discount/edit', $opt); ?>">
