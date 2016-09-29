@@ -316,8 +316,8 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="col-md-12">
-                            <input type="submit" value="Update" name="login" class="button"
+                        <div class="col-md-12 text-center">
+                            <button id="submit" value="Update" name="login" class="button"
                                    style="width: 150px;">
                             <div class="results" style="color: red;"></div>
                         </div>

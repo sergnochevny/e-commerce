@@ -120,7 +120,7 @@ class Controller_Discount extends Controller_Controller
     private function save_data($url)
     {
         include('include/post_edit_discounts_data.php');
-
+        $id = Model_Discount::validData(_A_::$app->get('d_id'));
         $date_end = strlen($date_end) > 0 ? strtotime($date_end) : 0;
         $start_date = strlen($start_date) > 0 ? strtotime($start_date) : 0;
 
@@ -238,6 +238,7 @@ class Controller_Discount extends Controller_Controller
     {
         $prms = null;
         if (!isset($data)) {
+
             $id = Model_Discount::validData(_A_::$app->get('d_id'));
             $data = Model_Discount::get_discounts_data($id);
             $prms['d_id'] = $id;
@@ -409,7 +410,6 @@ class Controller_Discount extends Controller_Controller
 
     public function edit()
     {
-        $id = Model_Discount::validData(_A_::$app->get('d_id'));
         $this->main->test_access_rights();
         if (_A_::$app->request_is_post()) {
             if (!is_null(_A_::$app->post('method'))) {
@@ -423,7 +423,7 @@ class Controller_Discount extends Controller_Controller
                         $resporse = [];
 
                         ob_start();
-                        $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $id);
+                        $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $discount_id);
                         $this->selected_filter($data);
                         $resporse[0] = ob_get_contents();
                         ob_end_clean();
@@ -441,7 +441,7 @@ class Controller_Discount extends Controller_Controller
                         ob_end_clean();
                         exit(json_encode($resporse));
                     } else {
-                        $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $id);
+                        $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $discount_id);
                         $this->selected_filter($data);
                     }
                 }

@@ -135,6 +135,13 @@
         }
     );
 
+    $('button#submit').on('click',
+        function(event){
+            event.preventDefault();
+            $(this).parents('form').trigger('submit');
+        }
+    );
+
     $('select#iDscntType').on('change',
         function (event, stop) {
             toggleDiscountType(stop);
