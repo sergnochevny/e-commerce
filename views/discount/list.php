@@ -10,7 +10,7 @@
                 <th>Details</th>
                 <th>Enabled</th>
                 <th>Multiple</th>
-                <th class="text-center">Coupon Code</th>
+                <th class="text-center">Coupon</th>
                 <th class="text-center">Start Date</th>
                 <th class="text-center">End Date</th>
                 <th><div class="text-center">Actions</div></th>
