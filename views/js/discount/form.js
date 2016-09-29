@@ -136,7 +136,7 @@
     );
 
     $('button#submit').on('click',
-        function(event){
+        function (event) {
             event.preventDefault();
             $(this).parents('form').trigger('submit');
         }
@@ -189,9 +189,9 @@
             }
         );
         $('li.prod_sel_category_item input').on('change',
-            function(event){
-                if(!this.checked){
-                    $('span[data-rem_row][data-index='+$(this).val()+']').trigger('click');
+            function (event) {
+                if (!this.checked) {
+                    $('span[data-rem_row][data-index=' + $(this).val() + ']').trigger('click');
                 }
             }
         );
@@ -202,7 +202,7 @@
         var destination = $('[data-filter=' + data_destination + ']').parent('div');
         var data = new FormData($('form#discount')[0]);
         var url = $('form#discount').attr('action');
-        if($(this).is('[data-move]')) data.append($(this).attr('data-move'), true);
+        if ($(this).is('[data-move]')) data.append($(this).attr('data-move'), true);
         data.append('method', $(this).attr('href'));
         data.append('type', data_destination);
         data.append('filter-type', $(this).attr('data-filter-type'));
