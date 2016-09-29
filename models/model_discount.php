@@ -393,89 +393,76 @@ Class Model_Discount extends Model_Model
         return $filter;
     }
 
-    public static function get_discounts_data($id = null)
+    public static function get_discounts_data($id = null, $data=null)
     {
         $filter_types = [1 => null, 2 => 'prod', 3 => 'mnf', 4 => 'cat'];
         if (isset($id)) {
-            $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='$id'");
-            $rowsni = mysql_fetch_array($resulthatistim);
+            if(isset($data)){
 
-            $date_start = date("m/d/Y", $rowsni['date_start']);
-            $date_endb = date("m/d/Y", $rowsni['date_end']);
 
-            $sel_fabrics = $rowsni['product_type'];
-            $filter_products = null;
-            $filter_type = $filter_types[$sel_fabrics];
-            if (in_array($filter_type, array_filter(array_values($filter_types)))) {
-                $filter_products = self::get_filter_selected_data($filter_type, $id);
+
+            } else {
+                $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='$id'");
+                $rowsni = mysql_fetch_array($resulthatistim);
+
+                $date_start = date("m/d/Y", $rowsni['date_start']);
+                $date_endb = date("m/d/Y", $rowsni['date_end']);
+
+                $sel_fabrics = $rowsni['product_type'];
+                $filter_products = null;
+                $filter_type = $filter_types[$sel_fabrics];
+                if (in_array($filter_type, array_filter(array_values($filter_types)))) {
+                    $filter_products = self::get_filter_selected_data($filter_type, $id);
+                }
+
+                $users_check = $rowsni['user_type'];
+                $users = null;
+                if ($users_check == '4') {
+                    $users = self::get_filter_selected_data('users', $id);
+                }
+                return array(
+                    'discount_comment1' => $rowsni['discount_comment1'],
+                    'discount_comment2' => $rowsni['discount_comment2'],
+                    'discount_comment3' => $rowsni['discount_comment3'],
+                    'discount_amount' => $rowsni['discount_amount'],
+                    'coupon_code' => $rowsni['coupon_code'],
+                    'allow_multiple' => $rowsni['allow_multiple'],
+                    'date_start' => $date_start,
+                    'date_end' => $date_endb,
+                    'enabled' => $rowsni['enabled'],
+                    'filter_products' => $filter_products,
+                    'filter_type' => $filter_type,
+                    'users' => $users,
+                    'countdown' => $rowsni['countdown'],
+                    'sel_fabrics' => $sel_fabrics,
+                    'users_check' => $users_check,
+                    'required_amount' => $rowsni['required_amount'],
+                    'promotion_type' => $rowsni['promotion_type'],
+                    'discount_type' => $rowsni['discount_type'],
+                    'required_type' => $rowsni['required_type'],
+                    'discount_amount_type' => $rowsni['discount_amount_type'],
+                    'iShippingType' => $rowsni['shipping_type'],
+                    'shipping_type' => $rowsni['shipping_type']
+                );
             }
-
-            $users_check = $rowsni['user_type'];
-            $users = null;
-            if ($users_check == '4') {
-                $users = self::get_filter_selected_data('users', $id);
-            }
-            return array(
-                'discount_comment1' => $rowsni['discount_comment1'],
-                'discount_comment2' => $rowsni['discount_comment2'],
-                'discount_comment3' => $rowsni['discount_comment3'],
-                'discount_amount' => $rowsni['discount_amount'],
-                'coupon_code' => $rowsni['coupon_code'],
-                'allow_multiple' => $rowsni['allow_multiple'],
-                'date_start' => $date_start,
-                'date_end' => $date_endb,
-                'enabled' => $rowsni['enabled'],
-                'filter_products' => $filter_products,
-                'filter_type' => $filter_type,
-                'users' => $users,
-                'countdown' => $rowsni['countdown'],
-                'sel_fabrics' => $sel_fabrics,
-                'users_check' => $users_check,
-                'required_amount' => $rowsni['required_amount'],
-                'promotion_type' => $rowsni['promotion_type'],
-                'discount_type' => $rowsni['discount_type'],
-                'required_type' => $rowsni['required_type'],
-                'discount_amount_type' => $rowsni['discount_amount_type'],
-                'iShippingType' => $rowsni['shipping_type'],
-                'shipping_type' => $rowsni['shipping_type']
-            );
         } else {
-            $date_start = date("m/d/Y");
-            $date_endb = date("m/d/Y");
-
-            $sel_fabrics = 1;
-//            $results = mysql_query("select * from fabrix_products order by pnumber, pname");
-            $fabric_list = '';
-//            while ($row = mysql_fetch_array($results)) {
-//                $content = $row[2] . '-' . $row[1];
-//                $content = substr($content, 0, 50);
-//                $fabric_list .= '<option value="' . $row[0] . '">' . $content . '</option>';
-//            }
-
-            $users_check = 1;
-//            $results = mysql_query("select * from fabrix_accounts order by email, bill_firstname, bill_lastname");
-            $users = '';
-//            while ($row = mysql_fetch_array($results)) {
-//
-//                $content = $row[1] . '-' . $row[3] . ' ' . $row[4];
-//                $content = substr($content, 0, 60);
-//                $users .= '<option value="' . $row[0] . '">' . $content . '</option>';
-//            }
-
-            return array('discount_comment1' => '',
+            if(isset($data)) return $data;
+            return array(
+                'discount_comment1' => '',
                 'discount_comment2' => '',
                 'discount_comment3' => '',
                 'discount_amount' => '0.00',
                 'coupon_code' => '',
                 'allow_multiple' => 0,
-                'date_start' => $date_start,
-                'date_end' => $date_endb,
+                'date_start' => date("m/d/Y"),
+                'date_end' => date("m/d/Y"),
                 'enabled' => 1,
-                'fabric_list' => $fabric_list,
-                'users_list' => $users,
+                'filter_products' => null,
+                'filter_type' => null,
+                'users' => null,
                 'countdown' => '',
-                'sel_fabrics' => $sel_fabrics,
-                'users_check' => $users_check,
+                'sel_fabrics' => 1,
+                'users_check' => 1,
                 'required_amount' => '0.00',
                 'promotion_type' => 0,
                 'discount_type' => 1,

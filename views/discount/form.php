@@ -167,19 +167,23 @@
                             <div class="col-md-12 panel panel-default"
                                  style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
                                 <label style="font-size: 12px;">
-                                    <input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" <?= $data['users_check'] == "1" ? 'checked':'';?>>
+                                    <input type="radio" id="users_check1" name="users_check" value="1"
+                                           class="input-checkbox" <?= $data['users_check'] == "1" ? 'checked' : ''; ?>>
                                     All users
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <input type="radio" id="users_check2" name="users_check" value="2" class="input-checkbox" <?= $data['users_check'] == "2" ? 'checked':'';?>>
+                                    <input type="radio" id="users_check2" name="users_check" value="2"
+                                           class="input-checkbox" <?= $data['users_check'] == "2" ? 'checked' : ''; ?>>
                                     All new users
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" <?= $data['users_check'] == "3" ? 'checked':'';?>>
+                                    <input type="radio" id="users_check3" name="users_check" value="3"
+                                           class="input-checkbox" <?= $data['users_check'] == "3" ? 'checked' : ''; ?>>
                                     All registered users
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <input type="radio" id="users_check4" data-type="users" name="users_check" value="4" class="input-checkbox" <?= $data['users_check'] == "4" ? 'checked':'';?>>
+                                    <input type="radio" id="users_check4" data-type="users" name="users_check" value="4"
+                                           class="input-checkbox" <?= $data['users_check'] == "4" ? 'checked' : ''; ?>>
                                     All selected users (i.e. use the users selected below)
                                 </label>
                                 <div data-filter-panel-users>
@@ -206,17 +210,20 @@
                                     All fabrics
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2" data-type="filter_products"
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2"
+                                           data-type="filter_products"
                                            class="input-checkbox" <?= $data['sel_fabrics'] == "2" ? 'checked' : '' ?>>
                                     All selected fabrics *
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3" data-type="filter_products"
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3"
+                                           data-type="filter_products"
                                            class="input-checkbox" <?= $data['sel_fabrics'] == "3" ? 'checked' : '' ?>>
                                     All selected categories *
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4" data-type="filter_products"
+                                    <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4"
+                                           data-type="filter_products"
                                            class="input-checkbox" <?= $data['sel_fabrics'] == "4" ? 'checked' : '' ?>>
                                     All selected manufacturers *
                                 </label>
@@ -271,7 +278,8 @@
                                                      href="#enabled"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <?= $data['enabled'] == "1" ? '<input type="checkbox"  value="1" name="enabled" checked="checked" class="input-checkbox">' : '<input type="checkbox"  value="1" name="enabled" class="input-checkbox">'; ?>
+                            <input type="checkbox" value="1" name="enabled"
+                                   <?= $data['enabled'] == "1" ? 'checked' : ''; ?>class="input-checkbox">
                         </div>
                     </div>
 
@@ -281,7 +289,9 @@
                                                                     href="#disable_sale_countdown"></i></label>
                         </div>
                         <div class="col-md-8">
-                            <?= $data['countdown'] == "1" ? '<input type="checkbox"  value="1" name="countdown" checked class="input-checkbox">' : '<input type="checkbox"  value="1" name="countdown" class="input-checkbox">'; ?>
+                            <input type="checkbox" value="1"
+                                   name="countdown" <?= $data['countdown'] == "1" ? 'checked' : '' ?>
+                                   class="input-checkbox">
                         </div>
                     </div>
 
@@ -317,8 +327,7 @@
 
                     <div class="form-row">
                         <div class="col-md-12 text-center">
-                            <button id="submit" value="Update" name="login" class="button"
-                                   style="width: 150px;">
+                            <button id="submit" class="button" style="width: 150px;">Update</button>
                             <div class="results" style="color: red;"></div>
                         </div>
                     </div>
