@@ -36,11 +36,12 @@ class Controller_Discount extends Controller_Controller
             $enabled = $enabled == "1" ? "YES" : "NO";
             $opt = ['oid' => $sid, 'back' => 'discount'];
             $view_url = _A_::$app->router()->UrlTo('orders/info', $opt);
-
+            $hide_action = true;
             $this->template->vars('row', $row);
             $this->template->vars('coupon_code', $row['coupon_code']);
             $this->template->vars('discount_comment1', $row['discount_comment1']);
             $this->template->vars('p_discount_amount', $row['discount_amount']);
+            $this->template->vars('hide_action', $hide_action);
             $this->template->vars('allow_multiple', $allow_multiple == "1" ? "YES" : "NO");
             $this->template->vars('date_start', gmdate("F j, Y, g:i a", $date_start));
             $this->template->vars('date_end', gmdate("F j, Y, g:i a", $date_end));
