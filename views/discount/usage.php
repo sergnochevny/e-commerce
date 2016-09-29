@@ -13,11 +13,11 @@
                     <table class="table table-striped table-bordered">
                         <tr>
                             <td>Details</td>
-                            <td>Enabled</td>
-                            <td>Multiple</td>
-                            <td>Coupon Code</td>
-                            <td>Start Date</td>
-                            <td>End Date</td>
+                            <td class="text-center">Enabled</td>
+                            <td class="text-center">Multiple</td>
+                            <td class="text-center">Coupon Code</td>
+                            <td class="text-center">Start Date</td>
+                            <td class="text-center">End Date</td>
                             <td></td>
                         </tr>
                         <?= $data_usage_discounts;?>
@@ -30,9 +30,9 @@
                     <table class="table table-striped table-bordered">
                         <tr>
                             <td></td>
-                            <td>Order Date</td>
-                            <td>Name</td>
-                            <td>Email</td>
+                            <td class="text-center">Order Date</td>
+                            <td class="text-center">Name</td>
+                            <td class="text-center">Email</td>
                             <td style="width:200px;"></td>
                         </tr>
                         <?= $data_usage_order_discounts;?>
