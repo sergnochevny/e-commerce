@@ -9,8 +9,8 @@
 
                 <h1 class="page-title">DISCOUNTS USAGE</h1>
 
-                <div class="CSSTableGenerator">
-                    <table>
+                <div>
+                    <table class="table table-striped table-bordered">
                         <tr>
                             <td>Details</td>
                             <td>Enabled</td>
@@ -18,6 +18,7 @@
                             <td>Coupon Code</td>
                             <td>Start Date</td>
                             <td>End Date</td>
+                            <td></td>
                         </tr>
                         <?= $data_usage_discounts;?>
                     </table>
@@ -25,8 +26,8 @@
                 <hr>
                 Discount Usage
                 <hr/>
-                <div class="CSSTableGenerator">
-                    <table>
+                <div>
+                    <table class="table table-striped table-bordered">
                         <tr>
                             <td></td>
                             <td>Order Date</td>
