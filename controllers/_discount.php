@@ -238,6 +238,7 @@ class Controller_Discount extends Controller_Controller
     {
         $prms = null;
         if (!isset($data)) {
+
             $id = Model_Discount::validData(_A_::$app->get('d_id'));
             $data = Model_Discount::get_discounts_data($id);
             $prms['d_id'] = $id;
