@@ -35,12 +35,17 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                $.when(context.html(data)).done(
-                    function () {
-                        if (callback) callback.apply(this_);
-                        $('body').waitloader('remove');
-                    }
-                );
+                if (context !== undefined && context !== null) {
+                    $.when(context.html(data)).done(
+                        function () {
+                            if (callback) callback.call(this_, data);
+                            $('body').waitloader('remove');
+                        }
+                    );
+                } else {
+                    if (callback) callback.call(this_, data);
+                    $('body').waitloader('remove');
+                }
             },
             error: function (xhr, str) {
                 alert('Error: ' + xhr.responseCode);
@@ -68,6 +73,8 @@
             function () {
                 $('#modal-title').html(title);
                 $('#build_filter').attr('data-destination', destination);
+                $('a[data-filter-search]').attr('data-destination', destination);
+                setEvToFilterSearch();
                 $('#modal').modal('show');
             }
         );
@@ -90,7 +97,7 @@
     );
 
     function evRemoveFilterRow(event) {
-        $(this).parent('li.prod_sel_category_item').remove();
+        $(this).parents('li.prod_sel_category_item').remove();
     }
 
     setEvToFilter();
@@ -111,6 +118,19 @@
                 data.append('method', 'filter');
                 data.append('type', $(this).attr('data-type'));
                 postdata(this, url, data, $('[data-filter-panel-fabrics]'), setEvToFilter);
+            }
+        }
+    );
+
+    $('input:radio[name=users_check]').on('change',
+        function (event, stop) {
+            toggleUsers(stop);
+            if ($(this).is('[data-type]')) {
+                var data = new FormData($('form#discount')[0]);
+                var url = $('form#discount').attr('action');
+                data.append('method', 'filter');
+                data.append('type', $(this).attr('data-type'));
+                postdata(this, url, data, $('[data-filter-panel-users]'), setEvToFilter);
             }
         }
     );
@@ -142,13 +162,55 @@
     function setEvToFilter() {
         $('span[data-rem_row]').on('click',
             function (event) {
-                evRemoveFilterRow.apply(this, event);
+                evRemoveFilterRow.call(this, event);
             }
         );
+
         $('form#discount a[name=edit_filter]').on('click',
             function (event) {
                 event.preventDefault();
-                evFilterAdd.apply(this, event);
+                evFilterAdd.call(this, event);
+            }
+        );
+    }
+
+    function setEvToFilterSearch() {
+        $('a[data-filter-search]').on('click',
+            function (event) {
+                event.preventDefault();
+                evFilterSearch.call(this, event);
+            }
+        );
+        $('li.prod_sel_category_item input').on('change',
+            function(event){
+                if(!this.checked){
+                    $('span[data-rem_row][data-index='+$(this).val()+']').trigger('click');
+                }
+            }
+        );
+    }
+
+    function evFilterSearch() {
+        var data_destination = $(this).attr('data-destination');
+        var destination = $('[data-filter=' + data_destination + ']').parent('div');
+        var data = new FormData($('form#discount')[0]);
+        var url = $('form#discount').attr('action');
+        if($(this).is('[data-move]')) data.append($(this).attr('data-move'), true);
+        data.append('method', $(this).attr('href'));
+        data.append('type', data_destination);
+        data.append('filter-type', $(this).attr('data-filter-type'));
+        postdata(this, url, data, null,
+            function (response) {
+                var data = JSON.parse(response);
+                $.when(
+                    $(destination).html(data[0]),
+                    $('#modal_content').html(data[1])
+                ).done(
+                    function () {
+                        setEvToFilter();
+                        setEvToFilterSearch();
+                    }
+                );
             }
         );
     }
@@ -243,9 +305,7 @@
     }
 
     function toggleUsers() {
-        var ul = document.getElementById('users');
-        var uc4 = document.getElementById('users_check4');
-        ul.disabled = !uc4.checked;
+        $('[data-filter-panel-users]').empty();
     }
 
 })(jQuery);

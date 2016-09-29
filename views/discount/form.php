@@ -167,19 +167,19 @@
                             <div class="col-md-12 panel panel-default"
                                  style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
                                 <label style="font-size: 12px;">
-                                    <?= $data['users_check'] == "1" ? '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" onclick="toggleUsers();">'; ?>
+                                    <input type="radio" id="users_check1" name="users_check" value="1" class="input-checkbox" <?= $data['users_check'] == "1" ? 'checked':'';?>>
                                     All users
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <?= $data['users_check'] == "2" ? '<input type="radio" id="users_check2" name="users_check" value="2" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check2" name="users_check" value="2" class="input-checkbox" onclick="toggleUsers();">'; ?>
+                                    <input type="radio" id="users_check2" name="users_check" value="2" class="input-checkbox" <?= $data['users_check'] == "2" ? 'checked':'';?>>
                                     All new users
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <?= $data['users_check'] == "3" ? '<input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" onclick="toggleUsers();">'; ?>
+                                    <input type="radio" id="users_check3" name="users_check" value="3" class="input-checkbox" <?= $data['users_check'] == "3" ? 'checked':'';?>>
                                     All registered users
                                 </label>
                                 <label style="font-size: 12px;">
-                                    <?= $data['users_check'] == "4" ? '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" checked="checked" onclick="toggleUsers();">' : '<input type="radio" id="users_check4" name="users_check" value="4" class="input-checkbox" onclick="toggleUsers();">'; ?>
+                                    <input type="radio" id="users_check4" data-type="users" name="users_check" value="4" class="input-checkbox" <?= $data['users_check'] == "4" ? 'checked':'';?>>
                                     All selected users (i.e. use the users selected below)
                                 </label>
                                 <div data-filter-panel-users>
@@ -334,8 +334,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 id="modal-title" class="modal-title"></h4>
                 </div>
-                <div class="modal-body">
-                    <div id="modal_content" style="max-height: 400px; overflow-y: auto;">
+                <div class="modal-body" style="padding: 0;">
+                    <div id="modal_content">
                     </div>
                 </div>
                 <div class="modal-footer">

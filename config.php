@@ -6,6 +6,7 @@ return [
         'SITE_PATH' => function () {
             return str_replace(DIRECTORY_SEPARATOR, DS, realpath(dirname(__FILE__) . DS) . DS);
         },
+        'FILTER_LIMIT' => 50,
         'DEFAULT_SHIPPING' => 3,
         'TITLE_MAX_CHARS' => 50,
         'TITLE_MIN_CHARS' => 5,

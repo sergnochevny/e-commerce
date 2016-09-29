@@ -155,18 +155,19 @@ Class Model_Discount extends Model_Model
         if ($type == 'users') {
             $users = [];
             $users_check = $data['users_check'];
-            if (isset($data['users'])) $select = implode(',', $data['users']);
+            if (isset($data['users'])  || isset($data['users_select']))
+                $select = implode(',', array_merge(isset($data['users']) ? $data['users'] : [],
+                    isset($data['users_select']) ? $data['users_select'] : []));
             else {
-                $data['users'] = self::get_filter_selected_data($type, $id);
-                $select = implode(',', isset($data['users']) ? array_keys($data['users']) : []);
+                $data['users_select'] = self::get_filter_selected_data($type, $id);
+                $select = implode(',', isset($data['users_select']) ? array_keys($data['users_select']) : []);
             }
             if ($users_check == '4') {
                 if (strlen($select > 1)) {
                     $results = mysql_query(
-                        "select a.* from fabrix_specials_users b" .
-                        " inner join fabrix_accounts a on b.aid=a.aid " .
-                        " where b.aid in($select)" .
-                        " order by email, bill_firtname, bill_lastname"
+                        "select * from fabrix_accounts" .
+                        " where aid in($select)" .
+                        " order by email, bill_firstname, bill_lastname"
                     );
                     while ($row = mysql_fetch_array($results)) {
                         $users[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
@@ -180,7 +181,9 @@ Class Model_Discount extends Model_Model
             switch ($sel_fabrics) {
                 case 2:
                     $filter_type = 'prod';
-                    if (isset($data['prod_select'])) $select = implode(',', $data['prod_select']);
+                    if (isset($data['prod_select']) || isset($data['filter_products']))
+                        $select = implode(',', array_merge(isset($data['prod_select']) ? $data['prod_select'] : [],
+                            isset($data['filter_products']) ? $data['filter_products'] : []));
                     else {
                         $data['prod_select'] = self::get_filter_selected_data($filter_type, $id);
                         $select = implode(',', isset($data['prod_select']) ? array_keys($data['prod_select']) : []);
@@ -198,7 +201,9 @@ Class Model_Discount extends Model_Model
                     break;
                 case 4:
                     $filter_type = 'mnf';
-                    if (isset($data['mnf_select'])) $select = implode(',', $data['mnf_select']);
+                    if (isset($data['mnf_select']) || isset($data['filter_products']))
+                        $select = implode(',', array_merge(isset($data['mnf_select']) ? $data['mnf_select'] : 0,
+                            isset($data['filter_products']) ? $data['filter_products'] : []));
                     else {
                         $data['mnf_select'] = self::get_filter_selected_data($filter_type, $id);
                         $select = implode(',', isset($data['mnf_select']) ? array_keys($data['mnf_select']) : []);
@@ -216,7 +221,9 @@ Class Model_Discount extends Model_Model
                     break;
                 case 3:
                     $filter_type = 'cat';
-                    if (isset($data['cat_select'])) $select = implode(',', $data['cat_select']);
+                    if (isset($data['cat_select']) || isset($data['filter_products']))
+                        $select = implode(',', array_merge(isset($data['cat_select']) ? $data['cat_select'] : 0,
+                            isset($data['filter_products']) ? $data['filter_products'] : []));
                     else {
                         $data['cat_select'] = self::get_filter_selected_data($filter_type, $id);
                         $select = implode(',', isset($data['cat_select']) ? array_keys($data['cat_select']) : []);
@@ -294,37 +301,91 @@ Class Model_Discount extends Model_Model
         return $data;
     }
 
-    public static function get_filter_data($type)
+    public static function get_filter_data($type, &$count, $start = 0, $search = null)
     {
+        $filter = null;
+        $FILTER_LIMIT = FILTER_LIMIT;
+        $start = isset($start) ? $start : 0;
+        $search = mysql_escape_string(self::validData($search));
         switch ($type) {
             case 'users':
-                $q = "select * from fabrix_accaunts order by email, bill_firstname, bill_lastname";
+                $q = "select count(aid) from fabrix_accounts";
+                if (isset($search) && (strlen($search) > 0)) {
+                    $q .= " where bill_firstname like '%$search%'";
+                    $q .= " or bill_lastname like '%$search%'";
+                    $q .= " or email like '%$search%'";
+                }
                 $results = mysql_query($q);
-                $filter = null;
+                $row = mysql_fetch_array($results);
+                $count = $row[0];
+                $q = "select * from fabrix_accounts";
+                if (isset($search) && (strlen($search) > 0)) {
+                    $q .= " where bill_firstname like '%$search%'";
+                    $q .= " or bill_lastname like '%$search%'";
+                    $q .= " or email like '%$search%'";
+                }
+                $q .= " order by email, bill_firstname, bill_lastname";
+                $q .= " limit $start, $FILTER_LIMIT";
+                $results = mysql_query($q);
                 while ($row = mysql_fetch_array($results)) {
                     $filter[] = [$row[0], $row[1] . ' - ' . $row[3] . ' ' . $row[4]];
                 }
                 break;
             case 'prod':
-                $q = "select * from fabrix_products order by pnumber, pname";
+                $q = "select count(pid) from fabrix_products";
+                if (isset($search) && (strlen($search) > 0)) {
+                    $q .= " where pnumber like '%$search%'";
+                    $q .= " or pname like '%$search%'";
+                }
                 $results = mysql_query($q);
-                $filter = null;
+                $row = mysql_fetch_array($results);
+                $count = $row[0];
+                $q = "select * from fabrix_products";
+                if (isset($search) && (strlen($search) > 0)) {
+                    $q .= " where pnumber like '%$search%'";
+                    $q .= " or pname like '%$search%'";
+                }
+                $q .= " order by pnumber, pname";
+                $q .= " limit $start, $FILTER_LIMIT";
+                $results = mysql_query($q);
                 while ($row = mysql_fetch_array($results)) {
                     $filter[] = [$row[0], $row[2] . ' - ' . $row[1]];
                 }
                 break;
             case 'mnf':
-                $q = "select * from fabrix_manufacturers order by manufacturer";
+                $q = "select count(id) from fabrix_manufacturers";
+                if (isset($search) && (strlen($search) > 0)) {
+                    $q .= " where manufacturer like '%$search%'";
+                }
                 $results = mysql_query($q);
-                $filter = null;
+                $row = mysql_fetch_array($results);
+                $count = $row[0];
+                $q = "select * from fabrix_manufacturers";
+                if (isset($search) && (strlen($search) > 0)) {
+                    $q .= " where manufacturer like '%$search%'";
+                }
+                $q .= " order by manufacturer";
+                $q .= " limit $start, $FILTER_LIMIT";
+                $results = mysql_query($q);
                 while ($row = mysql_fetch_array($results)) {
                     $filter[] = [$row[0], $row[1]];
                 }
                 break;
             case 'cat':
-                $q = "select * from fabrix_categories order by cname";
+                $q = "select count(cid) from fabrix_categories";
+                if (isset($search) && (strlen($search) > 0)) {
+                    $q .= " where cname like '%$search%'";
+                }
                 $results = mysql_query($q);
-                $filter = null;
+                $row = mysql_fetch_array($results);
+                $count = $row[0];
+                $q = "select * from fabrix_categories";
+                if (isset($search) && (strlen($search) > 0)) {
+                    $q .= " where cname like '%$search%'";
+                }
+                $q .= " order by cname";
+                $q .= " limit $start, $FILTER_LIMIT";
+                $results = mysql_query($q);
                 while ($row = mysql_fetch_array($results)) {
                     $filter[] = [$row[0], $row[1]];
                 }

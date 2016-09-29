@@ -262,7 +262,7 @@ class Controller_Discount extends Controller_Controller
         $title = "Select Products";
         if ($sel_fabrics == 3) $title = "Select Categories";
         if ($sel_fabrics == 4) $title = "Select Manufacturers";
-        $this->template->vars('filter_products', $filter_products);
+        $this->template->vars('filters', $filter_products);
         $this->template->vars('filter_type', $data['filter_type']);
         $this->template->vars('destination', 'filter_products');
         $this->template->vars('title', $title);
@@ -272,8 +272,9 @@ class Controller_Discount extends Controller_Controller
     private function generate_users_filter($data)
     {
         $users = $data['users'];
-        $this->template->vars('filter_products', $users);
+        $this->template->vars('filters', $users);
         $this->template->vars('filter_type', 'users');
+        $this->template->vars('filter_data_start', 0);
         $this->template->vars('destination', 'users');
         $this->template->vars('title', 'Select Users');
         $this->template->view_layout('filter');
@@ -413,38 +414,35 @@ class Controller_Discount extends Controller_Controller
         if (_A_::$app->request_is_post()) {
             if (!is_null(_A_::$app->post('method'))) {
                 include('include/post_edit_discounts_data.php');
-                if (_A_::$app->post('method') !== 'filter') {
-                    switch (_A_::$app->post('method')) {
-                        case 'users':
-                            $selected = isset($users)?array_values($users):[];
-
-                            break;
-                        case 'prod':
-                        case 'mnf':
-                        case 'cat':
-                            $selected = isset($filter_products)?array_values($filter_products):[];
-                            break;
-                    }
-                    $this->template->vars('type', _A_::$app->post('method') . '_select');
-                    $this->template->vars('selected', $selected);
-                    $filter = Model_Discount::get_filter_data(_A_::$app->post('method'));
-                    $this->template->vars('filter', $filter);
-                    $this->template->view_layout('select_filter');
+                $method = _A_::$app->post('method');
+                if ($method !== 'filter') {
+                    $this->select_filter($method, $users, $filter_products);
                 } else {
-                    $data = array(
-                        'users' => $users,
-                        'sel_fabrics' => $sel_fabrics,
-                        'users_check' => $users_check,
-                        'prod_select' => !is_null(_A_::$app->post('prod_select')) ? _A_::$app->post('prod_select') : null,
-                        'mnf_select' => !is_null(_A_::$app->post('mnf_select')) ? _A_::$app->post('mnf_select') : null,
-                        'cat_select' => !is_null(_A_::$app->post('cat_select')) ? _A_::$app->post('cat_select') : null,
-                    );
-                    Model_Discount::get_filter_selected(_A_::$app->post('type'), $data, $id);
+                    if (!is_null(_A_::$app->post('filter-type'))) {
+                        $method = _A_::$app->post('filter-type');
+                        $resporse = [];
 
-                    if (_A_::$app->post('type') === 'users') {
-                        $this->generate_users_filter($data);
+                        ob_start();
+                        $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $id);
+                        $this->selected_filter($data);
+                        $resporse[0] = ob_get_contents();
+                        ob_end_clean();
+
+                        ob_start();
+                        $filter_products = $data['filter_products'];
+                        $users = $data['users'];
+                        $search = _A_::$app->post('filter_select_search_' . $method);
+                        $start = _A_::$app->post('filter_start_' . $method);
+                        if (!is_null(_A_::$app->post('down'))) $start = FILTER_LIMIT + (isset($start) ? $start : 0);
+                        if (!is_null(_A_::$app->post('up'))) $start = (isset($start) ? $start : 0) - FILTER_LIMIT;
+                        if (($start < 0) || (is_null(_A_::$app->post('down')) && is_null(_A_::$app->post('up')))) $start = 0;
+                        $this->select_filter($method, array_keys($users), array_keys($filter_products), $start, $search);
+                        $resporse[1] = ob_get_contents();
+                        ob_end_clean();
+                        exit(json_encode($resporse));
                     } else {
-                        $this->generate_prod_filter($data);
+                        $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $id);
+                        $this->selected_filter($data);
                     }
                 }
                 exit;
@@ -458,6 +456,74 @@ class Controller_Discount extends Controller_Controller
         ob_end_clean();
         $this->template->vars('form', $form);
         $this->main->view_admin('edit');
+    }
+
+    /**
+     * @param $users
+     * @param $filter_products
+     */
+    private function select_filter($method, $users, $filter_products, $start = null, $search = null)
+    {
+        switch ($method) {
+            case 'users':
+                $selected = isset($users) ? array_values($users) : [];
+                break;
+            case 'prod':
+            case 'mnf':
+            case 'cat':
+                $selected = isset($filter_products) ? array_values($filter_products) : [];
+                break;
+        }
+        $filter = Model_Discount::get_filter_data($method, $count, $start, $search);
+        $this->template->vars('destination', _A_::$app->post('type'));
+        $this->template->vars('total', $count);
+        $this->template->vars('search', $search);
+        $this->template->vars('type', $method . '_select');
+        $this->template->vars('filter_type', $method);
+        $this->template->vars('filter_data_start', isset($start) ? $start : 0);
+        $this->template->vars('selected', $selected);
+        $this->template->vars('filter', $filter);
+        $this->template->view_layout('select_filter');
+    }
+
+    /**
+     * @param $users
+     * @param $sel_fabrics
+     * @param $users_check
+     * @param $id
+     * @return array
+     */
+    private function selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $id)
+    {
+        $data = array(
+            'users' => $users,
+            'sel_fabrics' => $sel_fabrics,
+            'users_check' => $users_check,
+            'filter_products' => $filter_products,
+            'users_select' => _A_::$app->post('users_select'),
+            'prod_select' => _A_::$app->post('prod_select'),
+            'mnf_select' => _A_::$app->post('mnf_select'),
+            'cat_select' => _A_::$app->post('cat_select'),
+        );
+
+        Model_Discount::get_filter_selected(_A_::$app->post('type'), $data, $id);
+        return $data;
+    }
+
+    /**
+     * @param $users
+     * @param $sel_fabrics
+     * @param $users_check
+     * @param $method
+     * @param $id
+     */
+    private function selected_filter($data)
+    {
+        if (_A_::$app->post('type') === 'users') {
+            $this->generate_users_filter($data);
+        } else {
+            $this->generate_prod_filter($data);
+        }
     }
 
 }
