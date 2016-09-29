@@ -1,10 +1,10 @@
 <form id="new_category_form" action="<?= _A_::$app->router()->UrlTo('categories/save_new') ?>" method="post">
+    <hr>
     <p class="text-center">
         <small style="color: black; font-size: 13px;">
             Use this form to update the title and details of the offer.<br/>
         </small>
     </p>
-    <hr>
     <div class="col-1">
         <p class="form-row">
             <label class="required_field"><strong>Category:</strong></label>

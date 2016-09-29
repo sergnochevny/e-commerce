@@ -85,10 +85,10 @@
                     </tbody>
                 </table>
 
-                <table cellspacing="0" class="shop_table shop_table_responsive proceed">
+                <table cellspacing="0"  class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>Product</th>
+                        <th width="600">Product</th>
                         <th></th>
                         <th>Sale Price</th>
                         <th>Quantity</th>

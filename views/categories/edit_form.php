@@ -1,10 +1,10 @@
 <form id="category_edit_form" action="<?= _A_::$app->router()->UrlTo('categories/save_data',['category_id' => _A_::$app->get('category_id')]) ?>"  method="post">
+    <hr>
     <p class="text-center">
         <small style="color: black; font-size: 13px;">
             Use this form to update the title and details of the offer.<br />
         </small>
     </p>
-    <hr>
     <div class="col-md-12">
         <div class="row">
 
