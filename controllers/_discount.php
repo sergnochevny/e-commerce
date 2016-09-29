@@ -28,56 +28,31 @@
 
     private function data_usage_order() {
       $this->main->test_access_rights();
+      $discount_id = _A_::$app->get('d_id');
       if(!empty($discount_id)) {
         $rows = Model_Discount::getFabrixSpecialsUsageById((integer)Model_Discount::validData(_A_::$app->get('discount_id')));
         ob_start();
         foreach($rows as $key => $row) {
-          $orders = Model_Discount::getFabrixOrdersById($row[2]);
+          $orders = Model_Discount::getFabrixOrdersById((integer)$row);
           $order_aid = $orders['aid'];
-          $order_date = gmdate("F j, Y, g:i a", $orders['order_date']);
+          $order_date = gmdate("M j, Y, g:i a", $orders['order_date']);
           $account = Model_Discount::getFabrixAccountByOrderId($order_aid);
           $u_email = $account['email'];
           $u_bill_firstname = $account['bill_firstname'];
           $u_bill_lastname = $account['bill_lastname'];
-    private function data_usage_order()
-    {
-        $this->main->test_access_rights();
-        $discount_id = _A_::$app->get('d_id');
-        if (!empty($discount_id)) {
-            $rows = Model_Discount::getFabrixSpecialsUsageById((integer)Model_Discount::validData(_A_::$app->get('discount_id')));
-            ob_start();
-            foreach ($rows as $key => $row) {
-                $orders = Model_Discount::getFabrixOrdersById((integer) $row);
-                $order_aid = $orders['aid'];
-                $order_date = gmdate("M j, Y, g:i a", $orders['order_date']);
-                $account = Model_Discount::getFabrixAccountByOrderId($order_aid);
-                $u_email = $account['email'];
-                $u_bill_firstname = $account['bill_firstname'];
-                $u_bill_lastname = $account['bill_lastname'];
 
           $this->template->vars('i', $key + 1);
           $this->template->vars('order_date', $order_date);
           $this->template->vars('u_bill_firstname', $u_bill_firstname);
           $this->template->vars('u_email', $u_email);
           $this->template->vars('row', $row);
-          $this->template->view_layouts('data_usage_discounts');
+          $this->template->view_layout('data_usage');
         }
         $data_usage_order_discounts = ob_get_contents();
         ob_end_clean();
+
         $this->main->template->vars('data_usage_order_discounts', $data_usage_order_discounts);
       }
-                $this->template->vars('i', $key + 1);
-                $this->template->vars('order_date', $order_date);
-                $this->template->vars('u_bill_firstname', $u_bill_firstname);
-                $this->template->vars('u_email', $u_email);
-                $this->template->vars('row', $row);
-                $this->template->view_layout('data_usage');
-            }
-            $data_usage_order_discounts = ob_get_contents();
-            ob_end_clean();
-
-            $this->main->template->vars('data_usage_order_discounts', $data_usage_order_discounts);
-        }
     }
 
     private function get_list() {
@@ -288,7 +263,29 @@
 
         $this->template->vars('error', $error);
 
-        $data = ['discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '', 'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '', 'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '', 'discount_amount' => !is_null(_A_::$app->post('discount_amount')) ? _A_::$app->post('discount_amount') : '', 'coupon_code' => $coupon_code, 'allow_multiple' => $allow_multiple, 'date_start' => !is_null(_A_::$app->post('start_date')) ? _A_::$app->post('start_date') : '', 'date_end' => !is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '', 'enabled' => !is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : '', 'users' => $users, 'filter_products' => $filter_products, 'countdown' => !is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : '', 'sel_fabrics' => $sel_fabrics, 'users_check' => $users_check, 'required_amount' => !is_null(_A_::$app->post('restrictions')) ? _A_::$app->post('restrictions') : '', 'promotion_type' => !is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '0', 'discount_type' => $iDscntType, 'required_type' => !is_null(_A_::$app->post('iReqType')) ? _A_::$app->post('iReqType') : '0', 'discount_amount_type' => !is_null(_A_::$app->post('iAmntType')) ? _A_::$app->post('iAmntType') : '0', 'shipping_type' => $shipping_type, 'generate_code' => $generate_code];
+        $data = [
+          'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
+          'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '',
+          'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '',
+          'discount_amount' => !is_null(_A_::$app->post('discount_amount')) ? _A_::$app->post('discount_amount') : '',
+          'coupon_code' => $coupon_code,
+          'allow_multiple' => $allow_multiple,
+          'date_start' => !is_null(_A_::$app->post('start_date')) ? _A_::$app->post('start_date') : '',
+          'date_end' => !is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '',
+          'enabled' => !is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : '',
+          'users' => $users,
+          'filter_products' => $filter_products,
+          'countdown' => !is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : '',
+          'sel_fabrics' => $sel_fabrics,
+          'users_check' => $users_check,
+          'required_amount' => !is_null(_A_::$app->post('restrictions')) ? _A_::$app->post('restrictions') : '',
+          'promotion_type' => !is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '0',
+          'discount_type' => $iDscntType,
+          'required_type' => !is_null(_A_::$app->post('iReqType')) ? _A_::$app->post('iReqType') : '0',
+          'discount_amount_type' => !is_null(_A_::$app->post('iAmntType')) ? _A_::$app->post('iAmntType') : '0',
+          'shipping_type' => $shipping_type,
+          'generate_code' => $generate_code
+        ];
       } else {
         if($generate_code == '1') {
           $coupon_code = Model_Discount::generateCouponCode($discount_id);
@@ -296,7 +293,29 @@
           $sel_fabrics = 1;
           $filter_products = [];
         }
-        $data = ['discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '', 'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '', 'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '', 'discount_amount' => !is_null(_A_::$app->post('discount_amount')) ? _A_::$app->post('discount_amount') : '', 'coupon_code' => $coupon_code, 'allow_multiple' => $allow_multiple, 'date_start' => !is_null(_A_::$app->post('start_date')) ? _A_::$app->post('start_date') : '', 'date_end' => !is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '', 'enabled' => !is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : '', 'users' => $users, 'filter_products' => $filter_products, 'countdown' => !is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : '', 'sel_fabrics' => $sel_fabrics, 'users_check' => $users_check, 'required_amount' => !is_null(_A_::$app->post('restrictions')) ? _A_::$app->post('restrictions') : '0.00', 'promotion_type' => !is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '0', 'discount_type' => $iDscntType, 'required_type' => !is_null(_A_::$app->post('iReqType')) ? _A_::$app->post('iReqType') : '0', 'discount_amount_type' => !is_null(_A_::$app->post('iAmntType')) ? _A_::$app->post('iAmntType') : '0', 'shipping_type' => $shipping_type, 'generate_code' => $generate_code];
+        $data = [
+          'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
+          'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '',
+          'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '',
+          'discount_amount' => !is_null(_A_::$app->post('discount_amount')) ? _A_::$app->post('discount_amount') : '',
+          'coupon_code' => $coupon_code,
+          'allow_multiple' => $allow_multiple,
+          'date_start' => !is_null(_A_::$app->post('start_date')) ? _A_::$app->post('start_date') : '',
+          'date_end' => !is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '',
+          'enabled' => !is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : '',
+          'users' => $users,
+          'filter_products' => $filter_products,
+          'countdown' => !is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : '',
+          'sel_fabrics' => $sel_fabrics,
+          'users_check' => $users_check,
+          'required_amount' => !is_null(_A_::$app->post('restrictions')) ? _A_::$app->post('restrictions') : '',
+          'promotion_type' => !is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '0',
+          'discount_type' => $iDscntType,
+          'required_type' => !is_null(_A_::$app->post('iReqType')) ? _A_::$app->post('iReqType') : '0',
+          'discount_amount_type' => !is_null(_A_::$app->post('iAmntType')) ? _A_::$app->post('iAmntType') : '0',
+          'shipping_type' => $shipping_type,
+          'generate_code' => $generate_code
+        ];
         try {
           $discount_id = Model_Discount::saveFabrixSpecial($discount_id, $coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end);
           Model_Discount::saveFabrixSpecialsUser($discount_id, $users_check, $users);
@@ -319,10 +338,9 @@
       $prms = null;
       $id = Model_Discount::validData(_A_::$app->get('d_id'));
       if(!isset($data))
-        $data = Model_Discount::get_discounts_data($id); else {
-        $filter_types = [1 => null, 2 => 'prod', 3 => 'mnf', 4 => 'cat'];
-        $data['filter_type'] = $filter_types[$data['sel_fabrics']];
-        Model_Discount::get_filter_selected($data['filter_type'], $data, $id);
+        $data = Model_Discount::get_discounts_data($id);
+      else {
+        Model_Discount::get_filter_selected('filter_products', $data, $id);
         Model_Discount::get_filter_selected('users', $data, $id);
       }
       if(isset($id)) {
@@ -341,7 +359,7 @@
       $this->main->view_layout('form');
     }
 
-    /*
+    /**
      * @export
      */
     public function discount() {
