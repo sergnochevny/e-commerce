@@ -198,7 +198,7 @@ class Controller_Orders extends Controller_Controller
                     $handling = strlen(trim($handling)) > 0 ? '$' . number_format($handling, 2) : '';
                     $end_date = $end_date ? date('F m, Y', strtotime($end_date)) : '';
                     $action = _A_::$app->router()->UrlTo('orders/info', [
-                        'oid' => urlencode(base64_encode($oid)),
+                        'oid' => $oid,
                         'page' => $page,
                         'orders_search_query' => _A_::$app->get('orders_search_query')
                     ]);
