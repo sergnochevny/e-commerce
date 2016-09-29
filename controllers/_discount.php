@@ -103,20 +103,6 @@ class Controller_Discount extends Controller_Controller
         }
     }
 
-    public function add()
-    {
-        $this->main->test_access_rights();
-        if (_A_::$app->request_is_post()) {
-            $this->save_data('discount/add');
-        }
-        ob_start();
-        $this->form('discount/add');
-        $form = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('form', $form);
-        $this->main->view_admin('add');
-    }
-
     private function save_data()
     {
         include('include/post_edit_discounts_data.php');
@@ -169,7 +155,40 @@ class Controller_Discount extends Controller_Controller
 
             $this->template->vars('error', $error);
 
-            return array(
+            $data = array(
+                'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
+                'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '',
+                'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '',
+                'discount_amount' => !is_null(_A_::$app->post('discount_amount')) ? _A_::$app->post('discount_amount') : '',
+                'coupon_code' => $coupon_code,
+                'allow_multiple' => $allow_multiple,
+                'date_start' => !is_null(_A_::$app->post('start_date')) ? _A_::$app->post('start_date') : '',
+                'date_end' => !is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '',
+                'enabled' => !is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : '',
+                'users' => $users,
+                'filter_products' => $filter_products,
+                'countdown' => !is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : '',
+                'sel_fabrics' => $sel_fabrics,
+                'users_check' => $users_check,
+                'required_amount' => !is_null(_A_::$app->post('restrictions')) ? _A_::$app->post('restrictions') : '',
+                'promotion_type' => !is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '0',
+                'discount_type' => $iDscntType,
+                'required_type' => !is_null(_A_::$app->post('iReqType')) ? _A_::$app->post('iReqType') : '0',
+                'discount_amount_type' => !is_null(_A_::$app->post('iAmntType')) ? _A_::$app->post('iAmntType') : '0',
+                'shipping_type' => $shipping_type,
+                'generate_code' => $generate_code
+            );
+
+        } else {
+
+            if ($generate_code == '1') {
+                $coupon_code = Model_Discount::generateCouponCode($discount_id);
+                $allow_multiple = 1;
+                $sel_fabrics = 1;
+                $filter_products = [];
+            }
+
+            $data =  array(
                 'discount_comment1' => !is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '',
                 'discount_comment2' => !is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '',
                 'discount_comment3' => !is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '',
@@ -193,50 +212,28 @@ class Controller_Discount extends Controller_Controller
                 'generate_code' => $generate_code
             );
 
-        } else {
-
-            if ($generate_code == '1') {
-                $coupon_code = Model_Discount::generateCouponCode($discount_id);
-                $allow_multiple = 1;
-                $sel_fabrics = 1;
-                $fabric_list = [];
-            }
-
-            $timestamp = time();
-            $result = Model_Discount::saveFabrixSpecial($coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end);
-            $error = [];
-            if ($result) {
-                $discount_id = mysql_insert_id();
-
-                $result = Model_Discount::deleteFabrixSpecialsUserById($discount_id);
-                if ($users_check == "4") {
-                    foreach ($users_list as $user_id) {
-                        Model_Discount::saveFabrixSpecialsUser($discount_id, $user_id);
-                    }
-                }
-
-                $result = Model_Discount::deleteFabrixSpecialsProductById($discount_id);
-                if ($sel_fabrics == "2") {
-                    foreach ($fabric_list as $fabric_id) {
-                        $result = Model_Discount::saveFabrixSpecialsProducts($discount_id, $fabric_id);
-                    }
-                }
-
+            try {
+                $discount_id = Model_Discount::saveFabrixSpecial($discount_id, $coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end);
+                Model_Discount::saveFabrixSpecialsUser($discount_id, $users_check, $users);
+                Model_Discount::deleteFabrixSpecialsProductById($discount_id);
+                $filter_types = [1 => null, 2 => 1, 3 => 2, 4 => 3];
+                Model_Discount::saveFabrixSpecialsProducts($discount_id, $filter_products, $filter_types[$sel_fabrics]);
                 $warning = ["The data saved successfully!"];
-
-            } else {
-                $error = [mysql_error()];
+                $data = null;
+            } catch (Exception $e) {
+                $error = [$e->getMessage()];
             }
             $this->template->vars('warning', $warning);
             $this->template->vars('error', $error);
         }
+        return $data;
     }
 
     private function form($url, $data = null)
     {
         $prms = null;
         $id = Model_Discount::validData(_A_::$app->get('d_id'));
-        if(!isset($data)) $data = Model_Discount::get_discounts_data($id);
+        if (!isset($data)) $data = Model_Discount::get_discounts_data($id);
         else {
             $filter_types = [1 => null, 2 => 'prod', 3 => 'mnf', 4 => 'cat'];
             $data['filter_type'] = $filter_types[$data['sel_fabrics']];
@@ -284,57 +281,70 @@ class Controller_Discount extends Controller_Controller
         $this->template->view_layout('filter');
     }
 
-    public function edit()
-    {
+    private function filters_handling(){
+        include('include/post_edit_discounts_data.php');
+        $method = _A_::$app->post('method');
+        if ($method !== 'filter') {
+            $this->select_filter($method, $users, $filter_products);
+        } else {
+            if (!is_null(_A_::$app->post('filter-type'))) {
+                $method = _A_::$app->post('filter-type');
+                $resporse = [];
+
+                ob_start();
+                $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $discount_id);
+                $this->selected_filter($data);
+                $resporse[0] = ob_get_contents();
+                ob_end_clean();
+
+                ob_start();
+                $filter_products = $data['filter_products'];
+                $users = $data['users'];
+                $search = _A_::$app->post('filter_select_search_' . $method);
+                $start = _A_::$app->post('filter_start_' . $method);
+                if (!is_null(_A_::$app->post('down'))) $start = FILTER_LIMIT + (isset($start) ? $start : 0);
+                if (!is_null(_A_::$app->post('up'))) $start = (isset($start) ? $start : 0) - FILTER_LIMIT;
+                if (($start < 0) || (is_null(_A_::$app->post('down')) && is_null(_A_::$app->post('up')))) $start = 0;
+                $this->select_filter($method, array_keys($users), array_keys($filter_products), $start, $search);
+                $resporse[1] = ob_get_contents();
+                ob_end_clean();
+                exit(json_encode($resporse));
+            } else {
+                $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $discount_id);
+                $this->selected_filter($data);
+            }
+        }
+    }
+
+    private function edit_add_handling($template, $url){
         $this->main->test_access_rights();
         if (_A_::$app->request_is_post()) {
             if (!is_null(_A_::$app->post('method'))) {
-                include('include/post_edit_discounts_data.php');
-                $method = _A_::$app->post('method');
-                if ($method !== 'filter') {
-                    $this->select_filter($method, $users, $filter_products);
-                } else {
-                    if (!is_null(_A_::$app->post('filter-type'))) {
-                        $method = _A_::$app->post('filter-type');
-                        $resporse = [];
-
-                        ob_start();
-                        $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $discount_id);
-                        $this->selected_filter($data);
-                        $resporse[0] = ob_get_contents();
-                        ob_end_clean();
-
-                        ob_start();
-                        $filter_products = $data['filter_products'];
-                        $users = $data['users'];
-                        $search = _A_::$app->post('filter_select_search_' . $method);
-                        $start = _A_::$app->post('filter_start_' . $method);
-                        if (!is_null(_A_::$app->post('down'))) $start = FILTER_LIMIT + (isset($start) ? $start : 0);
-                        if (!is_null(_A_::$app->post('up'))) $start = (isset($start) ? $start : 0) - FILTER_LIMIT;
-                        if (($start < 0) || (is_null(_A_::$app->post('down')) && is_null(_A_::$app->post('up')))) $start = 0;
-                        $this->select_filter($method, array_keys($users), array_keys($filter_products), $start, $search);
-                        $resporse[1] = ob_get_contents();
-                        ob_end_clean();
-                        exit(json_encode($resporse));
-                    } else {
-                        $data = $this->selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $discount_id);
-                        $this->selected_filter($data);
-                    }
-                }
-                exit;
+                $this->filters_handling();
             } else {
                 $data = $this->save_data();
-                $this->form('discount/edit', $data);
-                exit;
+                $this->form($url, $data);
             }
+            exit;
         }
         ob_start();
-        $this->form('discount/edit');
+        $this->form($url);
         $form = ob_get_contents();
         ob_end_clean();
         $this->template->vars('form', $form);
-        $this->main->view_admin('edit');
+        $this->main->view_admin($template);
     }
+
+    public function edit()
+    {
+        $this->edit_add_handling('edit','discount/edit');
+    }
+
+    public function add()
+    {
+        $this->edit_add_handling('add','discount/add');
+    }
+
 
     /**
      * @param $users
