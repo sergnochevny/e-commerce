@@ -51,28 +51,8 @@ class Model_Order extends Model_Model
 
             $query = '
                SELECT
-                `fod`.`id`,
-                `fod`.`order_id`,
-                `fod`.`product_name`,
-                `fod`.`quantity`,
-                `fod`.`sale_price`,
-                
-                `fod`.`discount`,
-                `fod`.`is_sample`,
-                `fo`.`oid`,
-                `fo`.`shipping_type`,
-                `fo`.`total_discount`,
-                
-                `fo`.`shipping_cost`,
-                `fo`.`shipping_discount`,
-                `fo`.`track_code`,
-                `fo`.`total`,
-                `fo`.`handling`,
-                
-                `fo`.`status`,
-                `fo`.`taxes`,
-                `fo`.`end_date`,
-                `fo`.`order_date`
+                `fod`.*,
+                `fo`.*
                   
                 FROM
                     `fabrix_order_details` `fod`

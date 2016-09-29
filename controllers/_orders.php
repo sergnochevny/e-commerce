@@ -265,11 +265,17 @@ class Controller_Orders extends Controller_Controller
     {
         $this->main->test_access_rights();
         $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-        $oid = !is_null(_A_::$app->get('oid')) ? urldecode(base64_decode(_A_::$app->get('oid'))) : null;
+        $oid = !is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null;
         $prms['page'] = $page;
 
         if (!is_null(_A_::$app->get('orders_search_query'))) {
             $prms['orders_search_query'] = _A_::$app->get('orders_search_query');
+        }
+        if (!is_null(_A_::$app->get('page'))) {
+            $prms['page'] = _A_::$app->get('page');
+        }
+        if (!is_null(_A_::$app->get('user_id'))) {
+            $prms['user_id'] = _A_::$app->get('user_id');
         }
         $back_url = _A_::$app->router()->UrlTo('orders/history', $prms);
 
@@ -342,6 +348,7 @@ class Controller_Orders extends Controller_Controller
         $this->main->template->vars('order_id', $order_id);
         $this->main->template->vars('status_code', $status_code);
         $this->main->template->vars('total_discount', $total_discount);
+
 
         $this->main->view_admin('info');
     }
