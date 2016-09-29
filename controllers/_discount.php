@@ -77,13 +77,14 @@ class Controller_Discount extends Controller_Controller
     private function data_usage_order()
     {
         $this->main->test_access_rights();
+        $discount_id = _A_::$app->get('d_id');
         if (!empty($discount_id)) {
             $rows = Model_Discount::getFabrixSpecialsUsageById((integer)Model_Discount::validData(_A_::$app->get('discount_id')));
             ob_start();
             foreach ($rows as $key => $row) {
-                $orders = Model_Discount::getFabrixOrdersById($row[2]);
+                $orders = Model_Discount::getFabrixOrdersById((integer) $row);
                 $order_aid = $orders['aid'];
-                $order_date = gmdate("F j, Y, g:i a", $orders['order_date']);
+                $order_date = gmdate("M j, Y, g:i a", $orders['order_date']);
                 $account = Model_Discount::getFabrixAccountByOrderId($order_aid);
                 $u_email = $account['email'];
                 $u_bill_firstname = $account['bill_firstname'];
@@ -94,7 +95,7 @@ class Controller_Discount extends Controller_Controller
                 $this->template->vars('u_bill_firstname', $u_bill_firstname);
                 $this->template->vars('u_email', $u_email);
                 $this->template->vars('row', $row);
-                $this->template->view_layouts('data_usage_discounts');
+                $this->template->view_layout('data_usage');
             }
             $data_usage_order_discounts = ob_get_contents();
             ob_end_clean();
@@ -233,14 +234,16 @@ class Controller_Discount extends Controller_Controller
     {
         $prms = null;
         $id = Model_Discount::validData(_A_::$app->get('d_id'));
-        if (!isset($data)) $data = Model_Discount::get_discounts_data($id);
+        if (!isset($data)){
+            $data = Model_Discount::get_discounts_data($id);
+        }
         else {
             $filter_types = [1 => null, 2 => 'prod', 3 => 'mnf', 4 => 'cat'];
             $data['filter_type'] = $filter_types[$data['sel_fabrics']];
             Model_Discount::get_filter_selected($data['filter_type'], $data, $id);
             Model_Discount::get_filter_selected('users', $data, $id);
         }
-        if (isset($id)) {
+        if (!empty($id) && isset($id)) {
             $prms['d_id'] = $id;
         }
         ob_start();

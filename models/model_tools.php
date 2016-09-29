@@ -82,8 +82,8 @@ Class Model_Tools extends Model_Model
             $page_KeyWords = $row['metakeywords'];
             $page_Name = $row['pname'];
         } else {
-            $resulthatistim = mysql_query("SELECT * FROM `page_title` WHERE `control` LIKE '$route_control'");
-            $row = mysql_fetch_array($resulthatistim);
+            $result = mysql_query("SELECT * FROM `page_title` WHERE `control` LIKE '$route_control'");
+            $row = mysql_fetch_array($result);
             if (!empty($row['id'])) {
                 $page_Name = $row['name_page'];
                 $page_Description = $row['m_desc'];

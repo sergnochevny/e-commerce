@@ -73,12 +73,10 @@ Class Model_Discount extends Model_Model
     public static function getFabrixOrdersById($id)
     {
         $res = null;
-        $q = mysql_query("select * from fabrix_orders WHERE oid='" . (integer)$id . "'");
+        $q = "select * from fabrix_orders WHERE oid='" . $id . "'";
         $result = mysql_query($q);
         if ($result) {
-            while ($row = mysql_fetch_assoc($result)) {
-                $res[] = $row;
-            }
+            $res = mysql_fetch_assoc($result);
         }
         return $res;
     }
@@ -86,12 +84,10 @@ Class Model_Discount extends Model_Model
     public static function getFabrixAccountByOrderId($id)
     {
         $res = null;
-        $q = mysql_query("select * from fabrix_accounts WHERE aid='" . (integer)$id . "'");
+        $q = "select * from fabrix_accounts WHERE aid='" . (integer)$id . "'";
         $result = mysql_query($q);
         if ($result) {
-            while ($row = mysql_fetch_assoc($result)) {
-                $res[] = $row;
-            }
+            $res = mysql_fetch_assoc($result);
         }
         return $res;
     }
@@ -395,47 +391,47 @@ Class Model_Discount extends Model_Model
 
 
             } else {
-                $resulthatistim = mysql_query("select * from fabrix_specials WHERE sid='$id'");
-                $rowsni = mysql_fetch_array($resulthatistim);
+                $result = mysql_query("select * from fabrix_specials WHERE sid='$id'");
+                $row = mysql_fetch_array($result);
 
-                $date_start = date("m/d/Y", $rowsni['date_start']);
-                $date_endb = date("m/d/Y", $rowsni['date_end']);
+                $date_start = date("m/d/Y", $row['date_start']);
+                $date_endb = date("m/d/Y", $row['date_end']);
 
-                $sel_fabrics = $rowsni['product_type'];
+                $sel_fabrics = $row['product_type'];
                 $filter_products = null;
                 $filter_type = $filter_types[$sel_fabrics];
                 if (in_array($filter_type, array_filter(array_values($filter_types)))) {
                     $filter_products = self::get_filter_selected_data($filter_type, $id);
                 }
 
-                $users_check = $rowsni['user_type'];
+                $users_check = $row['user_type'];
                 $users = null;
                 if ($users_check == '4') {
                     $users = self::get_filter_selected_data('users', $id);
                 }
                 return array(
-                    'discount_comment1' => $rowsni['discount_comment1'],
-                    'discount_comment2' => $rowsni['discount_comment2'],
-                    'discount_comment3' => $rowsni['discount_comment3'],
-                    'discount_amount' => $rowsni['discount_amount'],
-                    'coupon_code' => $rowsni['coupon_code'],
-                    'allow_multiple' => $rowsni['allow_multiple'],
+                    'discount_comment1' => $row['discount_comment1'],
+                    'discount_comment2' => $row['discount_comment2'],
+                    'discount_comment3' => $row['discount_comment3'],
+                    'discount_amount' => $row['discount_amount'],
+                    'coupon_code' => $row['coupon_code'],
+                    'allow_multiple' => $row['allow_multiple'],
                     'date_start' => $date_start,
                     'date_end' => $date_endb,
-                    'enabled' => $rowsni['enabled'],
+                    'enabled' => $row['enabled'],
                     'filter_products' => $filter_products,
                     'filter_type' => $filter_type,
                     'users' => $users,
-                    'countdown' => $rowsni['countdown'],
+                    'countdown' => $row['countdown'],
                     'sel_fabrics' => $sel_fabrics,
                     'users_check' => $users_check,
-                    'required_amount' => $rowsni['required_amount'],
-                    'promotion_type' => $rowsni['promotion_type'],
-                    'discount_type' => $rowsni['discount_type'],
-                    'required_type' => $rowsni['required_type'],
-                    'discount_amount_type' => $rowsni['discount_amount_type'],
-                    'iShippingType' => $rowsni['shipping_type'],
-                    'shipping_type' => $rowsni['shipping_type']
+                    'required_amount' => $row['required_amount'],
+                    'promotion_type' => $row['promotion_type'],
+                    'discount_type' => $row['discount_type'],
+                    'required_type' => $row['required_type'],
+                    'discount_amount_type' => $row['discount_amount_type'],
+                    'iShippingType' => $row['shipping_type'],
+                    'shipping_type' => $row['shipping_type']
                 );
             }
         } else {
