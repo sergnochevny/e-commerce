@@ -18,7 +18,6 @@
                             <td class="text-center">Coupon</td>
                             <td class="text-center">Start Date</td>
                             <td class="text-center">End Date</td>
-                            <td style="width:70px;"></td>
                         </tr>
                         <?= $data_usage_discounts;?>
                     </table>
@@ -35,6 +34,7 @@
                             <td class="text-center">Email</td>
                             <td style="width:190px;" class="text-center">Start Date</td>
                             <td style="width:230px;" class="text-center">End Date</td>
+                            <td></td>
                         </tr>
                         <?= $data_usage_order_discounts;?>
                     </table>

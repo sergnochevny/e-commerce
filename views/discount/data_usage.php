@@ -13,4 +13,9 @@
     <td>
         <div class="text-center"><?= $date_end;?></div>
     </td>
+    <td class="text-center">
+        <a href="<?= $view_url ;?>">
+            <i class="fa fa-eye"></i>
+        </a>
+    </td>
 </tr>
