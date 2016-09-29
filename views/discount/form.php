@@ -276,7 +276,8 @@
             </div>
             <div class="col-md-8">
               <input type="checkbox" value="1" name="enabled"
-                     <?= $data['enabled'] == "1" ? 'checked' : ''; ?>class="input-checkbox">
+                     <?= $data['enabled'] == "1" ? 'checked' : ''; ?>
+                     class="input-checkbox">
             </div>
           </div>
 
@@ -307,7 +308,7 @@
               <label for="">Comment 2 (200 char max)</label>
             </div>
             <div class="col-md-8">
-              <input type="text" name="discount_comment1"
+              <input type="text" name="discount_comment2"
                      value='<?= $data['discount_comment2'] ?>' class="input-text ">
             </div>
           </div>
@@ -317,14 +318,16 @@
               <label for="">Comment 3 (200 char max)</label>
             </div>
             <div class="col-md-8">
-              <input type="text" name="discount_comment1"
+              <input type="text" name="discount_comment3"
                      value='<?= $data['discount_comment3'] ?>' class="input-text ">
             </div>
           </div>
 
           <div class="form-row">
             <div class="col-md-12 text-center">
-              <button id="submit" class="button" style="width: 150px;">Update</button>
+              <button id="submit" class="button" style="width: 150px;">
+                <?= isset($data['id'])?'Update':'Save';?>
+              </button>
               <div class="results" style="color: red;"></div>
             </div>
           </div>
