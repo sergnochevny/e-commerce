@@ -13,17 +13,4 @@
     <td style="width: 120px"><div class="text-center"><?= !empty($row['coupon_code']) ? $row['coupon_code'] : 'N/A'; ?></div></td>
     <td style="width: 185px" class="text-center"><?= $row['date_start'];?></td>
     <td style="width: 185px"><div class="text-center"><?= $row['date_end'];?></div></td>
-    <td>
-        <div class="text-center">
-            <a rel="nofollow" href="<?= _A_::$app->router()->UrlTo('discount/edit', $opt); ?>">
-                <i class="fa fa-pencil"></i>
-            </a>
-            <a id="del_discount" rel="nofollow" href="<?= _A_::$app->router()->UrlTo('discount/del', $opt); ?>">
-                <i class=" fa fa-trash-o"></i>
-            </a>
-            <a class="text-success" rel="nofollow" href="<?= _A_::$app->router()->UrlTo('discount/usage', $opt); ?>">
-                <i class="fa fa-check-circle"></i>
-            </a>
-        </div>
-    </td>
 </tr>
