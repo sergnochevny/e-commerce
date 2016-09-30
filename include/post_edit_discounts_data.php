@@ -1,5 +1,6 @@
 <?php
   $discount_id = Model_Discount::validData(!is_null(_A_::$app->get('d_id')) ? _A_::$app->get('d_id') : null);
+  $discount_id = strlen($discount_id) ? intval($discount_id) : null;
   $iType = Model_Discount::validData(!is_null(_A_::$app->post('iType')) ? _A_::$app->post('iType') : '');
   $coupon_code = Model_Discount::validData(!is_null(_A_::$app->post('coupon_code')) ? _A_::$app->post('coupon_code') : '');
   $generate_code = Model_Discount::validData(!is_null(_A_::$app->post('generate_code')) ? _A_::$app->post('generate_code') : false);
