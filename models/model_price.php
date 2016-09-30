@@ -242,7 +242,6 @@
         }
       }
       mysql_free_result($result);
-
       #check if we need to return a string here
       if($bReturnString) {
         $sPriceDiscount = $sSingle;
@@ -251,9 +250,7 @@
         }
         $sPriceDiscount .= $sMultiple;
       }
-
       $rDiscount = $rDiscount + $rMultDiscount;
-
       $sShippingDiscount .= $sShippingDiscount1;
       if(strlen($sShippingDiscount) > 0 && strlen($sShippingDiscount2) > 0) {
         $sShippingDiscount .= DISCOUNT_STRING_JOINER;
@@ -263,14 +260,11 @@
         $sShippingDiscount .= DISCOUNT_STRING_JOINER;
       }
       $sShippingDiscount .= $sShippingDiscount3;
-
       return $rDiscount;
     }
 
     public static function checkDiscountApplies($rs, $uid, $rPrice) {
-
       $bDoDiscount = false;
-
       $iType = (int)$rs['promotion_type'];
       switch($iType) {
         case 1: #Any purchase
@@ -320,7 +314,6 @@
           break;
 
         case 5: #Account Total For Last Month
-
           if($rs['required_type'] == 1) {            #number of purchases
             $iPur = self::getTransactionDetails($uid, false, false);
             if($iPur >= $rs['required_amount']) {
@@ -334,22 +327,17 @@
           }
           break;
       }
-
       return $bDoDiscount;
     }
 
     public static function isNextPurchase($id, $iStart) {
-
       $bNext = false;
-
       $sSQL = sprintf("SELECT oid FROM fabrix_orders WHERE aid=%u AND order_date > %u ORDER BY order_date DESC;", $id, $iStart);
-
       $result = mysql_query($sSQL) or die(mysql_error());
       if(mysql_num_rows($result) == 0) {
         $bNext = true;
       }
       mysql_free_result($result);
-
       return $bNext;
     }
 
@@ -373,25 +361,42 @@
       */
 
       #check the discounts for the users
-      $sql = sprintf("SELECT DISTINCT s.discount_type, s.discount_amount, s.discount_amount_type, p.priceyard, s.sid FROM fabrix_specials s LEFT OUTER JOIN fabrix_specials_users su ON su.sid=s.sid LEFT OUTER JOIN fabrix_specials_products sp ON s.sid = sp.sid INNER JOIN fabrix_products p ON sp.pid = p.pid WHERE (s.user_type=1) AND (s.product_type = 2 AND sp.pid IN (%s)) AND (s.coupon_code='') AND (s.enabled=1) AND (s.date_start<=%u) AND (s.date_end>=%u) AND (required_type = 0) AND (promotion_type=1);", $id, $iNow, $iNow);
+      $q = "SELECT DISTINCT" .
+        " s.discount_type, s.discount_amount, s.discount_amount_type," .
+        " IF(s.product_type = 2, p.priceyard, IF(s.product_type = 3,cp.priceyard, mp.priceyard)) as price," .
+        " s.sid" . " FROM fabrix_specials s" .
+        " LEFT JOIN fabrix_specials_users su ON su.sid=s.sid" .
+        " LEFT JOIN fabrix_specials_products sp ON s.sid = sp.sid AND (s.product_type = sp.stype)" .
+        " LEFT JOIN fabrix_products p ON sp.pid = p.pid AND (s.product_type = 2)" .
+        " LEFT JOIN fabrix_product_categories c ON sp.pid = c.cid AND (s.product_type = 3)" .
+        " LEFT JOIN fabrix_products cp ON c.pid = cp.pid" .
+        " LEFT JOIN fabrix_products mp ON sp.pid = mp.manufacturerId  AND (s.product_type = 4)" .
+        " WHERE" .
+        " (s.user_type=1) AND" .
+        " (((s.product_type = 2) AND (sp.pid IN (%u))) OR ((s.product_type = 3) AND (cp.pid IN (%u))) OR ((s.product_type = 4) AND (mp.pid IN (%u)))) AND" .
+        " (s.coupon_code='') AND" .
+        " (s.enabled=1) AND" .
+        " (s.date_start<=%u) AND" .
+        " (s.date_end>=%u) AND" .
+        " (required_type = 0) AND" .
+        " (promotion_type=1)";
 
+      $sql = sprintf($q, $id, $id, $id, $iNow, $iNow);
       $result = mysql_query($sql) or die(mysql_error());
-
       if(mysql_num_rows($result) > 0) {
-
-        if($rs = mysql_fetch_assoc($result)) {
-
+        $discount = '';
+//        if($rs = mysql_fetch_assoc($result)) {
+        while($rs = mysql_fetch_assoc($result)) {
           $amt = $rs['discount_amount'];
-
           if($rs['discount_amount_type'] == 1) {
-
             $type = '$';
-            $discount = sprintf("%s%s", $type, $amt);
+            if (strlen($discount)>0) $discount .= ' -> ';
+            $discount .= sprintf("%s%s", $type, $amt);
             $tempPrice = $tempPrice - $amt;
           } else {
-
             $type = '%';
-            $discount = sprintf("%s%s", $amt, $type);
+            if (strlen($discount)>0) $discount .= ' ; ';
+            $discount .= sprintf("%s%s", $amt, $type);
             $tempPrice = $tempPrice * (1 - ($amt / 100));
           }
 
@@ -402,9 +407,7 @@
           }
         }
       }
-
       mysql_free_result($result);
-
       return $bol;
     }
 

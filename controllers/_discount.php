@@ -166,8 +166,7 @@
         try {
           $discount_id = Model_Discount::saveFabrixSpecial($discount_id, $coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end);
           Model_Discount::saveFabrixSpecialsUser($discount_id, $users_check, $users);
-          $filter_types = [1 => null, 2 => 1, 3 => 2, 4 => 3];
-          Model_Discount::saveFabrixSpecialsProducts($discount_id, $filter_products, $filter_types[$sel_fabrics]);
+          Model_Discount::saveFabrixSpecialsProducts($discount_id, $filter_products, $sel_fabrics);
           $warning = ["The data saved successfully!"];
           $data = null;
         } catch(Exception $e) {
