@@ -21,8 +21,7 @@
       $this->template->vars('list', $list);
     }
 
-    private function data_usage($discount_id = null)
-    {
+    private function data_usage($discount_id = null) {
         if (!empty($discount_id)) {
             ob_start();
             $row = Model_Discount::getFabrixSpecialsByID((integer)$discount_id);
