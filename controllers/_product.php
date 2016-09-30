@@ -2,67 +2,91 @@
 
   class Controller_Product extends Controller_Controller {
 
-    private function save_product($url, $new = false) {
+    private function form_handling() {
+      $pid = _A_::$app->get('p_id');
+      if(!is_null(_A_::$app->post('build_categories'))) {
+        $build_categories = _A_::$app->post('categories');
+        $categories = _A_::$app->post('category');
+        $data = Model_Product::getProductBuildCategories($build_categories, $categories);
+        foreach($data as $cat_id => $category) {
+          $this->template->vars('cat_id', $cat_id);
+          $this->template->vars('category', $category);
+          $this->template->view_layout('block_category');
+        }
+        exit;
+      }
+    }
+
+    private function save($new = false) {
       include('include/post_edit_db.php');
+      $data = [
+        'weight_id' => $post_weight_cat,
+        'sd_cat' => $post_categories,
+        'pvisible' => $post_vis,
+        'metadescription' => $post_desc,
+        'p_id' => $p_id,
+        'Meta_Description' => $post_desc,
+        'Meta_Keywords' => $post_mkey,
+        'Product_name' => $post_tp_name,
+        'Product_number' => $post_product_num,
+        'Width' => $post_width,
+        'Price_Yard' => $post_p_yard,
+        'Stock_number' => $post_st_nom,
+        'Dimensions' => $post_dimens,
+        'Current_inventory' => $post_curret_in,
+        'Specials' => $post_special,
+        'Weight' => $post_weight_cat,
+        'Manufacturer' => $post_manufacturer,
+        'New_Manufacturer' => $New_Manufacturer,
+        'Colours' => $p_colors,
+        'New_Colour' => $post_new_color,
+        'Pattern_Type' => $patterns,
+        'New_Pattern' => $pattern_type,
+        'Short_description' => $post_short_desk,
+        'Long_description' => $post_Long_description,
+        'visible' => $post_hide_prise,
+        'best' => $best,
+        'piece' => $piece,
+        'whole' => $whole
+      ];
+
       if(!empty(_A_::$app->get('p_id'))) {
-        $pid = _A_::$app->get('p_id');
-        if(!is_null(_A_::$app->post('build_categories'))) {
-          $build_categories = _A_::$app->post('categories');
-          $categories = _A_::$app->post('category');
-          $data = Model_Product::getProductBuildCategories($build_categories, $categories);
-          foreach($data as $cat_id => $category) {
-            $this->template->vars('cat_id', $cat_id);
-            $this->template->vars('category', $category);
-            $this->template->view_layout('block_category');
-          }
+        if(empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
+          $error = [];
+          if(empty($post_product_num{0})) $error[] = 'Identify Product Number field !';
+          if(empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
+          if(empty($post_p_yard{0})) $error[] = 'Identify Price field !';
+          $this->template->vars('error', $error);
         } else {
-          $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
-          $this->template->vars('action_url', $action_url);
+          $result = Model_Product::save($p_id, $post_categories, $patterns, $p_colors, $post_manufacturer,
+                                        $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
+                                        $post_special, $post_curret_in, $post_dimens, $post_hide_prise,
+                                        $post_st_nom, $post_p_yard, $post_width, $post_product_num, $post_vis,
+                                        $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
+                                        $post_short_desk, $best, $piece, $whole);
 
-          $data = ['weight_id' => $post_weight_cat, 'sd_cat' => $post_categories, 'pvisible' => $post_vis, 'metadescription' => $post_desc, 'p_id' => $p_id, 'Meta_Description' => $post_desc, 'Meta_Keywords' => $post_mkey, 'Product_name' => $post_tp_name, 'Product_number' => $post_product_num, 'Width' => $post_width, 'Price_Yard' => $post_p_yard, 'Stock_number' => $post_st_nom, 'Dimensions' => $post_dimens, 'Current_inventory' => $post_curret_in, 'Specials' => $post_special, 'Weight' => $post_weight_cat, 'Manufacturer' => $post_manufacturer, 'New_Manufacturer' => $New_Manufacturer, 'Colours' => $p_colors, 'New_Colour' => $post_new_color, 'Pattern_Type' => $patterns, 'New_Pattern' => $pattern_type, 'Short_description' => $post_short_desk, 'Long_description' => $post_Long_description, 'visible' => $post_hide_prise, 'best' => $best, 'piece' => $piece, 'whole' => $whole];
-
-          if(empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
-
-            $error = [];
-            if(empty($post_product_num{0}))
-              $error[] = 'Identify Product Number field !';
-            if(empty($post_tp_name{0}))
-              $error[] = 'Identify Product Name field !';
-            if(empty($post_p_yard{0}))
-              $error[] = 'Identify Price field !';
-            $this->template->vars('error', $error);
-            $this->edit_form($pid, $data);
+          if($result) {
+            $this->template->vars('warning', ["Product Data saved successfully!"]);
+            if($new) {
+              $data = null;
+              Model_Product::getNewproduct();
+            }
           } else {
-            $result = Model_Product::save($p_id, $post_categories, $patterns, $p_colors, $post_manufacturer, $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat, $post_special, $post_curret_in, $post_dimens, $post_hide_prise, $post_st_nom, $post_p_yard, $post_width, $post_product_num, $post_vis, $post_mkey, $post_desc, $post_Long_description, $post_tp_name, $post_short_desk, $best, $piece, $whole);
-
-            if($result) {
-              $this->template->vars('warning', ["Product Data saved successfully!"]);
-              if($new) {
-                Model_Product::getNewproduct();
-                $pid = _A_::$app->get('p_id');
-                $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
-                $this->template->vars('action_url', $action_url);
-                $this->edit_form($pid);
-              } else $this->edit_form($pid, $data);
-            } else {
-              $this->template->vars('error', [mysql_error()]);
-              $this->edit_form($pid, $data);
-            };
-          }
+            $this->template->vars('error', [mysql_error()]);
+          };
         }
       } else {
         $this->template->vars('error', ["Error! Not product id identity"]);
         if($new) {
+          $data = null;
           Model_Product::getNewproduct();
-          $pid = _A_::$app->get('p_id');
-          $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
-          $this->template->vars('action_url', $action_url);
-          $this->edit_form($pid);
-        } else $this->edit_form();
+        }
       }
+      return $data;
     }
 
-    private function edit_form($pid, $data = null) {
+    private function form($url, $data = null) {
+      $pid = _A_::$app->get('p_id');
       if(isset($data)) {
         $post_categories = $data['sd_cat'];
         $post_manufacturer = $data['Manufacturer'];
@@ -93,6 +117,8 @@
       $m_images = ob_get_contents();
       ob_end_clean();
 
+      $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
+      $this->template->vars('action_url', $action_url);
       $this->template->vars('modify_images', $m_images);
       $this->template->vars('data', $data);
       $this->main->view_layout('edit_form');
@@ -102,10 +128,7 @@
      * @param $url
      * @param $template
      */
-    private function product_form($url, $template) {
-      $pid = _A_::$app->get('p_id');
-      $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
-      $this->template->vars('action_url', $action_url);
+    private function edit_form($url, $template) {
       $prms = null;
       if(!empty(_A_::$app->get('page'))) {
         $prms['page'] = _A_::$app->get('page');
@@ -115,7 +138,7 @@
       }
       $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
       ob_start();
-      $this->edit_form($pid);
+      $this->form($url);
       $edit_form = ob_get_contents();
       ob_end_clean();
 
@@ -327,9 +350,11 @@
     public function edit() {
       $this->main->test_access_rights();
       if(_A_::$app->request_is_post()) {
-        $this->save_product('product/edit');
+        $this->form_handling();
+        $data = $this->save();
+        $this->form('product/edit', $data);
       } else {
-        $this->product_form('product/edit', 'edit');
+        $this->edit_form('product/edit', 'edit');
       }
     }
 
@@ -339,10 +364,12 @@
     public function add() {
       $this->main->test_access_rights();
       if(_A_::$app->request_is_post()) {
-        $this->save_product('product/add', true);
+        $this->form_handling();
+        $data = $this->save(true);
+        $this->form('product/add', $data);
       } else {
         Model_Product::getNewproduct();
-        $this->product_form('product/add', 'add');
+        $this->edit_form('product/add', 'add');
       }
     }
 
