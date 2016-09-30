@@ -161,7 +161,7 @@
       $aPrds[] = 1;        #add qty
 
       #get the shipping
-      if(!is_null(_A_::$app->session('cart')['ship'])) {
+      if(!is_null(_A_::$app->session('cart')) && isset(_A_::$app->session('cart')['ship'])) {
         $shipping = (int)_A_::$app->session('cart')['ship'];
       } else {
         $shipping = DEFAULT_SHIPPING;
@@ -170,7 +170,7 @@
         _A_::$app->setSession('cart', $_cart);
       }
 
-      if(!is_null(_A_::$app->get('cart')['ship_roll'])) {
+      if(!is_null(_A_::$app->get('cart')) && isset(_A_::$app->session('cart')['ship_roll'])) {
         $bShipRoll = (boolean)_A_::$app->session('cart')['ship_roll'];
       } else {
         $bShipRoll = false;

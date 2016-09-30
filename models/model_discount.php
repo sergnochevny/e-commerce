@@ -111,7 +111,7 @@
       if(isset($id)) {
         $res = mysql_query("UPDATE fabrix_specials SET coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check',shipping_type='$shipping_type',product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end' WHERE sid ='$id'");
       } else {
-        $res = mysql_query("INSERT INTO fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check', shipping_type='$shipping_type', product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end', date_added = 'CURRENT_TIMESTAMP'");
+        $res = mysql_query("INSERT INTO fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check', shipping_type='$shipping_type', product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end'");
         if($res) $id = mysql_insert_id();
       }
       if(!$res) throw new Exception(mysql_error());
@@ -239,7 +239,7 @@
           $results = mysql_query(
             "select a.* from fabrix_specials_products b" .
             " inner join fabrix_products a on b.pid=a.pid " .
-            " where b.sid='$id' and b.stype = 1" .
+            " where b.sid='$id' and b.stype = 2" .
             " order by a.pnumber, a.pname"
           );
           if($results)
@@ -251,7 +251,7 @@
           $results = mysql_query(
             "select a.* from fabrix_specials_products b" .
             " inner join fabrix_manufacturers a on b.pid=a.id " .
-            " where b.sid='$id' and b.stype = 3" .
+            " where b.sid='$id' and b.stype = 4" .
             " order by a.manufacturer"
           );
           if($results)
@@ -263,7 +263,7 @@
           $results = mysql_query(
             "select a.* from fabrix_specials_products b" .
             " inner join fabrix_categories a on b.pid=a.cid " .
-            " where b.sid='$id' and b.stype = 2" .
+            " where b.sid='$id' and b.stype = 3" .
             " order by a.cname"
           );
           if($results)
