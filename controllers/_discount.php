@@ -1,10 +1,8 @@
 <?php
 
-class Controller_Discount extends Controller_Controller
-{
+class Controller_Discount extends Controller_Controller {
 
-    private function get_list()
-    {
+    private function get_list() {
         $results = Model_Discount::getFabrixSpecialsIds();
         if (!is_null($results)) {
             ob_start();
@@ -23,8 +21,7 @@ class Controller_Discount extends Controller_Controller
         $this->template->vars('list', $list);
     }
 
-    private function data_usage($discount_id = null)
-    {
+    private function data_usage($discount_id = null) {
         if (!empty($discount_id)) {
             ob_start();
             $row = Model_Discount::getFabrixSpecialsByID((integer)$discount_id);
@@ -54,8 +51,7 @@ class Controller_Discount extends Controller_Controller
         }
     }
 
-    private function data_usage_order()
-    {
+    private function data_usage_order() {
         $this->main->test_access_rights();
         $discount_id = _A_::$app->get('d_id');
         if (!empty($discount_id)) {
@@ -84,8 +80,7 @@ class Controller_Discount extends Controller_Controller
         }
     }
 
-    private function save_data()
-    {
+    private function save_data() {
         include('include/post_edit_discounts_data.php');
         $date_end = strlen($date_end) > 0 ? strtotime($date_end) : 0;
         $start_date = strlen($start_date) > 0 ? strtotime($start_date) : 0;
@@ -209,8 +204,7 @@ class Controller_Discount extends Controller_Controller
         return $data;
     }
 
-    private function form($url, $data = null)
-    {
+    private function form($url, $data = null) {
         $prms = null;
         $id = Model_Discount::validData(_A_::$app->get('d_id'));
         if (!isset($data)) {
@@ -237,8 +231,7 @@ class Controller_Discount extends Controller_Controller
         $this->main->view_layout('form');
     }
 
-    private function generate_prod_filter($data)
-    {
+    private function generate_prod_filter($data) {
         $filter_products = $data['filter_products'];
         $sel_fabrics = $data['sel_fabrics'];
         $title = "Select Products";
@@ -251,8 +244,7 @@ class Controller_Discount extends Controller_Controller
         $this->template->view_layout('filter');
     }
 
-    private function generate_users_filter($data)
-    {
+    private function generate_users_filter($data) {
         $users = $data['users'];
         $this->template->vars('filters', $users);
         $this->template->vars('filter_type', 'users');
@@ -262,8 +254,7 @@ class Controller_Discount extends Controller_Controller
         $this->template->view_layout('filter');
     }
 
-    private function filters_handling()
-    {
+    private function filters_handling() {
         include('include/post_edit_discounts_data.php');
         $method = _A_::$app->post('method');
         if ($method !== 'filter') {
@@ -298,8 +289,7 @@ class Controller_Discount extends Controller_Controller
         }
     }
 
-    private function edit_add_handling($template, $url)
-    {
+    private function edit_add_handling($template, $url) {
         $this->main->test_access_rights();
         if (_A_::$app->request_is_post()) {
             if (!is_null(_A_::$app->post('method'))) {
@@ -322,8 +312,7 @@ class Controller_Discount extends Controller_Controller
      * @param $users
      * @param $filter_products
      */
-    private function select_filter($method, $users, $filter_products, $start = null, $search = null)
-    {
+    private function select_filter($method, $users, $filter_products, $start = null, $search = null) {
         switch ($method) {
             case 'users':
                 $selected = isset($users) ? array_values($users) : [];
@@ -353,8 +342,7 @@ class Controller_Discount extends Controller_Controller
      * @param $id
      * @return array
      */
-    private function selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $id)
-    {
+    private function selected_filter_data($users, $filter_products, $sel_fabrics, $users_check, $id) {
         $data = [
             'users' => $users,
             'sel_fabrics' => $sel_fabrics,
@@ -377,8 +365,7 @@ class Controller_Discount extends Controller_Controller
      * @param $method
      * @param $id
      */
-    private function selected_filter($data)
-    {
+    private function selected_filter($data) {
         if (_A_::$app->post('type') === 'users') {
             $this->generate_users_filter($data);
         } else {
@@ -389,8 +376,7 @@ class Controller_Discount extends Controller_Controller
     /**
      * @export
      */
-    public function discount()
-    {
+    public function discount() {
         $this->main->test_access_rights();
         $this->get_list();
         $this->main->view_admin('discounts');
@@ -399,8 +385,7 @@ class Controller_Discount extends Controller_Controller
     /**
      * @export
      */
-    public function del()
-    {
+    public function del() {
         $this->main->test_access_rights();
         $id = Model_Discount::validData(_A_::$app->get('id'));
         if (!empty($id)) {
@@ -412,8 +397,7 @@ class Controller_Discount extends Controller_Controller
     /**
      * @export
      */
-    public function usage()
-    {
+    public function usage() {
         $this->main->test_access_rights();
         $this->data_usage(_A_::$app->get('d_id'));
         $this->data_usage_order();
@@ -423,16 +407,14 @@ class Controller_Discount extends Controller_Controller
     /**
      * @export
      */
-    public function edit()
-    {
+    public function edit() {
         $this->edit_add_handling('edit', 'discount/edit');
     }
 
     /**
      * @export
      */
-    public function add()
-    {
+    public function add() {
         $this->edit_add_handling('add', 'discount/add');
     }
 }
