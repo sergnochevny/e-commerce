@@ -14,11 +14,7 @@
         ob_end_clean();
       }
       $this->template->vars('list', $list);
-      ob_start();
       $this->template->view_layout('list');
-      $list = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('list', $list);
     }
 
     private function data_usage($discount_id = null) {
@@ -355,7 +351,11 @@
      */
     public function discount() {
       $this->main->test_access_rights();
+      ob_start();
       $this->get_list();
+      $list = ob_get_contents();
+      ob_end_clean();
+      $this->template->vars('list', $list);
       $this->main->view_admin('discounts');
     }
 
@@ -364,7 +364,7 @@
      */
     public function del() {
       $this->main->test_access_rights();
-      $id = Model_Discount::validData(_A_::$app->get('id'));
+      $id = Model_Discount::validData(_A_::$app->get('d_id'));
       if(!empty($id)) {
         Model_Discount::del_discount($id);
       }

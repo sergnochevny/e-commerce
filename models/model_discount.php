@@ -57,7 +57,7 @@
 
     public static function getFabrixSpecialsUsageById($id) {
       $res = null;
-      $q = "select * from fabrix_specials_usage WHERE specialId='" . (integer)$id . "'";
+      $q = "select * from fabrix_specials_usage WHERE sid='" . (integer)$id . "'";
       $result = mysql_query($q);
       if($result) {
         $res = mysql_fetch_assoc($result);
@@ -119,13 +119,10 @@
     }
 
     public static function del_discount($id) {
-
-      $sSQL = sprintf("DELETE FROM fabrix_specials_products WHERE sid=%u", $id);
-      mysql_query($sSQL);
-      $sSQL = sprintf("DELETE FROM fabrix_specials_users WHERE sid=%u", $id);
-      mysql_query($sSQL);
-      $strSQL = "DELETE FROM fabrix_specials WHERE sid = $id";
-      mysql_query($strSQL);
+      mysql_query(sprintf("DELETE FROM fabrix_specials_products WHERE sid=%u", $id));
+      mysql_query(sprintf("DELETE FROM fabrix_specials_users WHERE sid=%u", $id));
+      mysql_query(sprintf("DELETE FROM fabrix_specials_usage WHERE sid=%u", $id));
+      mysql_query(sprintf("DELETE FROM fabrix_specials WHERE sid = %u",$id));
     }
 
     public static function get_filter_selected($type, &$data, $id) {

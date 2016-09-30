@@ -3,6 +3,9 @@
 class Controller_BlogCategory extends Controller_Controller
 {
 
+  /**
+   * @export
+   */
     public function admin()
     {
 
@@ -10,6 +13,9 @@ class Controller_BlogCategory extends Controller_Controller
         $this->main->view_admin('blog_categories');
     }
 
+  /**
+   * @export
+   */
     public function listof()
     {
         $rows = Model_Blog::get_blog_categories_list();
@@ -24,6 +30,9 @@ class Controller_BlogCategory extends Controller_Controller
         $this->main->template->vars('blog_categories_list', $categories);
     }
 
+  /**
+   * @export
+   */
     public function del()
     {
         $group_id = !is_null(_A_::$app->get('cat')) ? _A_::$app->get('cat') : null;
@@ -41,6 +50,9 @@ class Controller_BlogCategory extends Controller_Controller
         $this->main->view_layout('list');
     }
 
+  /**
+   * @export
+   */
     public function edit()
     {
         $group_id = Model_Blog::validData(_A_::$app->get('cat'));
@@ -104,6 +116,9 @@ class Controller_BlogCategory extends Controller_Controller
         $this->main->view_layout('form');
     }
 
+  /**
+   * @export
+   */
     public function add()
     {
         $data = [];
