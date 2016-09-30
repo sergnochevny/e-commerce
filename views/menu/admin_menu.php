@@ -12,6 +12,12 @@
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
                             <a title="Blog Categories" href="<?= _A_::$app->router()->UrlTo('categories');?>">Categories</a>
                         </li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                            <a title="Manufacturer" href="<?= _A_::$app->router()->UrlTo('categories');?>">Manufacturer</a>
+                        </li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                            <a title="Colors" href="<?= _A_::$app->router()->UrlTo('categories');?>">Colors</a>
+                        </li>
                     </ul>
                 <?php } ?>
             </li>

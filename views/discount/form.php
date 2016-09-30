@@ -134,7 +134,7 @@
             <div class="col-xs-12 col-md-8">
               <div class="row">
                 <div class="col-xs-6 col-md-4">
-                  <input type="text" name="restrictions" value="<?= $data['required_amount'] ?>"
+                  <input type="text" name="restrictions" id="restrictions" value="<?= $data['required_amount'] ?>"
                          class="input-text ">
                 </div>
                 <div class="col-xs-6 col-md-8" style="padding-left: 0">
@@ -356,4 +356,5 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </form>
+<script src="<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>"></script>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/discount/form.js'); ?>"></script>

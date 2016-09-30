@@ -92,7 +92,7 @@
 
                     <div class="form-row">
                         <label><strong>Width:</strong></label>
-                        <input type="text" name="width" value="<?= $data['Width']; ?>" class="input-text ">
+                        <input type="text" id="m_width" name="width" value="<?= $data['Width']; ?>" class="input-text ">
                     </div>
 
                     <div class="form-row">
@@ -109,8 +109,8 @@
                     </div>
 
                     <div class="form-row">
-                        <label class="required_field"><strong>Price:</strong></label>
-                        <input type="text" name="p_yard" value="<?= $data['Price_Yard']; ?>" class="input-text ">
+                        <label class="required_field" for="p_yard"><strong>Price:</strong></label>
+                        <input type="text" id="p_yard" name="p_yard" value="<?= $data['Price_Yard']; ?>" class="input-text ">
                     </div>
 
                     <div class="form-row">
@@ -138,8 +138,8 @@
                     </div>
 
                     <div class="form-row">
-                        <label><strong>Current inventory:</strong></label>
-                        <input type="text" name="curret_in" value="<?= $data['Current_inventory']; ?>" class="input-text ">
+                        <label for="current_inv"><strong>Current inventory:</strong></label>
+                        <input type="text" id="current_inv" name="curret_in" value="<?= $data['Current_inventory']; ?>" class="input-text ">
                     </div>
 
                     <div class="form-row">
@@ -310,4 +310,5 @@
 </form>
 <input type="hidden" id="product_upload_img" value="<?= _A_::$app->router()->UrlTo('product/upload_img', $opt); ?>">
 <input type="hidden" id="image_modify" value="<?= _A_::$app->router()->UrlTo('image/modify', $opt); ?>">
+<script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>' type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/product/edit_form.js'); ?>' type="text/javascript"></script>

@@ -1,4 +1,15 @@
 'use strict';
+
+// Inputmask
+(function(){
+    var discount_amount = document.getElementById('discount_amount'),
+        restrictions = document.getElementById('restrictions'),
+        float_type = '9[9].9[9]';
+
+        Inputmask({ mask: float_type, greedy: false }).mask(discount_amount).mask(restrictions);
+
+}).call(this);
+
 (function ($) {
 
     $('content').waitloader('remove');
