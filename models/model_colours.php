@@ -21,8 +21,9 @@ Class Model_Colours extends Model_Model
     }
 
     public static function create($name){
-      $query = 'INSERT INTO fabrix_colour (`name`) VALUES ('.$name.')';
-      return mysql_query($query) ? true : false;
+      $query = 'INSERT INTO fabrix_colour (colour) VALUE ("'.$name.'")';
+      $result = mysql_query($query) ? true : false;
+      return $result;
     }
 
     public static function update($id, $name){

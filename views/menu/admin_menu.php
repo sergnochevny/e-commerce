@@ -16,7 +16,7 @@
                             <a title="Manufacturer" href="<?= _A_::$app->router()->UrlTo('categories');?>">Manufacturer</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Colors" href="<?= _A_::$app->router()->UrlTo('colors');?>">Colors</a>
+                            <a title="Colors" href="<?= _A_::$app->router()->UrlTo('colours');?>">Colors</a>
                         </li>
                     </ul>
                 <?php } ?>
