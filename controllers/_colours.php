@@ -18,7 +18,7 @@
     }
 
     private function createPagination($page, $per_page, $url) {
-      $totally = Model_Colours::amount();
+      $totally = Model_Colours::amount(); 
       (new Controller_Paginator($this))->paginator($totally, $page, $url, $per_page);
     }
 
