@@ -7,13 +7,13 @@
                     <a title="Blog"  aria-haspopup="true" class="has-submenu" href="#">Shop<span class="caret"></span></a>
                     <ul role="group" class="dropdown-menu" aria-hidden="true" aria-expanded="false" style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Blog Categories" href="<?= _A_::$app->router()->UrlTo('admin/home');?>">Products</a>
+                            <a title="Products" href="<?= _A_::$app->router()->UrlTo('admin/home');?>">Products</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Blog Categories" href="<?= _A_::$app->router()->UrlTo('categories');?>">Categories</a>
+                            <a title="Categories" href="<?= _A_::$app->router()->UrlTo('categories');?>">Categories</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Manufacturer" href="<?= _A_::$app->router()->UrlTo('categories');?>">Manufacturer</a>
+                            <a title="manufacturers" href="<?= _A_::$app->router()->UrlTo('manufacturers');?>">Manufacturer</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
                             <a title="Colors" href="<?= _A_::$app->router()->UrlTo('colours');?>">Colors</a>

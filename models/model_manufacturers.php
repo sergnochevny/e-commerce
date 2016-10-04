@@ -1,11 +1,11 @@
 <?php
 
-Class Model_Colours extends Model_Model
+Class Model_Manufacturers extends Model_Model
 {
     public static function get_by_id($id)
     {
         $response = null;
-        $query = "SELECT * FROM fabrix_colour WHERE id='$id'";
+        $query = "SELECT * FROM fabrix_manufacturers WHERE id='$id'";
         $result = mysql_query($query);
         $response = mysql_fetch_assoc($result);
         return $response;
@@ -13,7 +13,7 @@ Class Model_Colours extends Model_Model
 
     public static function amount(){
       $response = null;
-      $query = "SELECT COUNT(*) FROM fabrix_colour";
+      $query = "SELECT COUNT(*) FROM fabrix_manufacturers";
       if ($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
@@ -21,12 +21,12 @@ Class Model_Colours extends Model_Model
     }
 
     public static function create($name){
-      $query = 'INSERT INTO fabrix_colour (colour) VALUE ("'.$name.'")';
+      $query = 'INSERT INTO fabrix_manufacturers (manufacturer) VALUE ("'.$name.'")';
       return mysql_query($query) ? true : false;
     }
 
     public static function update($id, $name){
-      $query = 'UPDATE fabrix_colour SET colour ="'.$name.'" WHERE id ='.$id;
+      $query = 'UPDATE fabrix_manufacturers SET manufacturer ="'.$name.'" WHERE id ='.$id;
       return mysql_query($query) ? true : false;
     }
 
@@ -34,13 +34,14 @@ Class Model_Colours extends Model_Model
     {
         $response = null;
         $query = "
-            SELECT a.id, a.colour, count(b.prodId) 
-            AS amount 
-            FROM fabrix_colour a
-            LEFT JOIN 
-              fabrix_product_colours b 
-            ON b.colourId = a.id
-            GROUP BY a.id, a.colour
+            SELECT a.id, a.manufacturer, count(b.manufacturerId)
+              AS amount
+            FROM
+              fabrix_manufacturers a
+              LEFT JOIN
+              fabrix_products b
+                ON b.manufacturerId = a.id
+            GROUP BY a.id, a.manufacturer
             LIMIT " . $start . ", " . $limit;
 
         if ($result = mysql_query($query)) {
@@ -54,7 +55,7 @@ Class Model_Colours extends Model_Model
     }
 
     public static function deleteById($id){
-      $query = "DELETE FROM fabrix_colour WHERE id = $id";
+      $query = "DELETE FROM fabrix_manufacturers WHERE id = $id";
       return mysql_query($query) ? true : false;
     }
 
