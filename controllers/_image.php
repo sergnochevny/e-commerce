@@ -2,7 +2,7 @@
 
   class Controller_Image extends Controller_Controller {
 
-    private function prepare_product($imagename) {
+    private function prepare($imagename) {
 
       $size = getimagesize("upload/upload/" . $imagename);
       $imgWidth = $size[0];
@@ -26,10 +26,7 @@
       imagedestroy($imagefrom);
     }
 
-    /**
-     * @export
-     */
-    public function del_pic() {
+    public function del() {
       $this->main->test_access_rights();
       $pid_id = Model_Product::validData(_A_::$app->get('p_id'));
       $im_id = Model_Product::validData(_A_::$app->get('idx'));
@@ -38,7 +35,7 @@
           $db_g = "image$im_id";
           $images = Model_Product::getImage($pid_id);
           $filename = $images[$db_g];
-          $data = Model_Product::dbUpdate($db_g, $pid_id);
+          $data = Model_Product::update_field($db_g, $pid_id);
           if(file_exists("upload/upload/" . $filename)) {
             unlink("upload/upload/$filename");
           }
@@ -122,10 +119,7 @@
       $this->template->view_layout('m_images');
     }
 
-    /**
-     * @export
-     */
-    public function save_link() {
+    public function save() {
       $this->main->test_access_rights();
       if(!is_null(_A_::$app->get('p_id'))) {
         if(!is_null(_A_::$app->get('idx'))) {
@@ -142,11 +136,11 @@
       $this->modify();
     }
 
-    public function upload_product() {
+    public function upload() {
       $this->main->test_access_rights();
-      if(!is_null(_A_::$app->get('pid'))) {
+      if(!is_null(_A_::$app->get('p_id'))) {
         $product_photo = !is_null(_A_::$app->get('idx')) ? _A_::$app->get('idx') : 1;
-        $p_id = Model_Product::validData(_A_::$app->get('pid'));
+        $p_id = _A_::$app->get('p_id');
         $ts = uniqid();
         $uploaddir = 'upload/upload/';
         $file = "p" . $p_id . "t" . $ts . '.jpg';
@@ -158,7 +152,7 @@
         } else {
           if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
             $db_g = "image$product_photo";
-            $this->prepare_product($file);
+            $this->prepare($file);
             // delete img;
             Model_Product::dbUpdateMainPhoto($db_g, $file, $p_id);
             echo "success";
