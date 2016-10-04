@@ -451,6 +451,9 @@
       $this->main->view_admin('admin');
     }
 
+    /**
+     * @export
+     */
     public function admin_categories() {
       $this->main->test_access_rights();
       $this->main->view_admin('admin_categories');

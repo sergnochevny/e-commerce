@@ -1,5 +1,5 @@
 <tr>
-  <td data-group="<?= $row[0] ?>" class="colour-id"><?= $row[0] ?></td>
+  <td width="50" data-group="<?= $row[0] ?>" class="colour-id text-center"><?= $row[0] ?></td>
   <td data-group="<?= $row[0] ?>" class="colour-name-container text-center">
     <span class="c-name"><?= $row[1] ?></span>
   </td>

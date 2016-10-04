@@ -15,7 +15,7 @@
           </div>
         <?php } ?>
 
-        <div class="col-xs-12 notification danger hidden">123</div>
+        <div class="col-xs-12 notification danger hidden"></div>
 
         <div id="confirm-dialog" class="overlay"></div>
         <div class="popup">
@@ -56,9 +56,9 @@
         </div><!-- /.modal -->
 
         <div class="text-center">
-          <a data-href="<?= _A_::$app->router()->UrlTo('colours/create');?>"
-             class="button colour-create">
-            ADD NEW COLOR
+          <a data-href="<?= _A_::$app->router()->UrlTo('manufacturers/create');?>"
+             class="button manufacturers-create">
+            ADD NEW MANUFACTURER
           </a><br><br><br>
         </div>
         <div>
@@ -85,4 +85,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/colours/crud.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/manufacturers/crud.js'); ?>' type="text/javascript"></script>

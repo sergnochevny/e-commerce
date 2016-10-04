@@ -8,15 +8,15 @@
 
         hidePopupConfirm = function () {
             $("#confirm-dialog").removeClass('overlay_display');
-            $('.popup .confirm, .colour-update').off()
+            $('.popup .confirm, .manufacturers-update').off()
         },
 
         loadForm = function () {
             $('#modal_content').html('\
                 <form id="color-au-form"> \
                     <div class="form-row">\
-                        <label for="colour-name">Color name</label>\
-                        <input type="text" class="input-text" name="colour-name" id="colour-name-input">\
+                        <label for="manufacturers-name">Color name</label>\
+                        <input type="text" class="input-text" name="manufacturers-name" id="manufacturers-name-input">\
                     </div>\
                 </form>');
             $('#modal').modal('show');
@@ -51,23 +51,23 @@
 
     $('#modal').on('hidden.bs.modal', function () {
         $(this).find('#modal_content').empty();
-        $('.save-data, .colour-update').off();
+        $('.save-data, .manufacturers-update').off();
     });
 
     $('.popup.close, .popup .dismiss').on('click', hidePopupConfirm);
 
-    $(document).on('click', '.colour-create', function (e) {
+    $(document).on('click', '.manufacturers-create', function (e) {
         e.preventDefault();
         var createUrl = $(this).data('href');
         loadForm();
         $('#modal .save-data').on('click',
             function () {
-                var color = $('#colour-name-input').val();
+                var color = $('#manufacturers-name-input').val();
                 ajaxSend.call(this,
                     'POST',
                     createUrl,
                     {
-                        colour_name: color
+                        manufacturers_name: color
                     },
                     function () {
                         throwNotification('Color ' + color + ' was added successfully.', 'alert-success', 6000);
@@ -78,33 +78,33 @@
         )
     });
 
-    $(document).on('click', '.colour-update', function (e) {
+    $(document).on('click', '.manufacturers-update', function (e) {
         e.preventDefault();
         var updateUrl = $(this).data('href'),
             id = $(this).data('id'),
-            name = $('.colour-name-container[data-group=' + id + '] span.c-name').text();
+            name = $('.manufacturers-name-container[data-group=' + id + '] span.c-name').text();
 
         loadForm();
-        $('#colour-name-input').val(name);
+        $('#manufacturers-name-input').val(name);
 
         $('#modal .save-data').on('click', function () {
-            var val = $('#colour-name-input').val();
+            var val = $('#manufacturers-name-input').val();
             ajaxSend.call(this,
                 'GET',
                 updateUrl, {
                     id: id,
-                    colour_name: val
+                    manufacturers_name: val
                 },
                 function () {
                     $(this).off();
-                    $('.colour-name-container[data-group=' + id + ']').children('span.c-name').text(val);
+                    $('.manufacturers-name-container[data-group=' + id + ']').children('span.c-name').text(val);
                     throwNotification('Color ' + val + ' was updated successfully.', 'alert-success', 6000);
                 }
             );
         });
     });
 
-    $(document).on('click', '.colour-delete', function (e) {
+    $(document).on('click', '.manufacturers-delete', function (e) {
         e.preventDefault();
         var id = $(this).data('id'),
             href = $(this).data('href'),

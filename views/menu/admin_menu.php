@@ -13,7 +13,7 @@
                             <a title="Categories" href="<?= _A_::$app->router()->UrlTo('categories');?>">Categories</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Manufacturer" href="<?= _A_::$app->router()->UrlTo('categories');?>">Manufacturer</a>
+                            <a title="manufacturers" href="<?= _A_::$app->router()->UrlTo('manufacturers');?>">Manufacturer</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
                             <a title="Colors" href="<?= _A_::$app->router()->UrlTo('colours');?>">Colors</a>

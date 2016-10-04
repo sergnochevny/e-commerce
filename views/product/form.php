@@ -16,8 +16,7 @@
               <?= $msg . "<br>"; ?>
             <?php } ?>
           </div>
-        <?php } ?>
-      </p>
+      <?php } ?>
     </div>
     <div class="col-md-12">
       <div class="row">

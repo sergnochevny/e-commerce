@@ -1549,10 +1549,10 @@ a.button-move:focus, a.button-move:hover{
     background-color: #b0b0b0;
 }
 
-.colour-update{
+.colour-update, .manufacturers-update, .manufacturers-delete{
     cursor: pointer;
 }
-.colour-delete-disabled{
+.colour-delete-disabled, .manufacturers-delete-disabled {
     opacity: .6;
     cursor: not-allowed;
 }
