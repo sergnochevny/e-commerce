@@ -10,11 +10,11 @@
     private function listData($model, &$list) {
       foreach($model as $row) {
         ob_start();
-        $options['id'] = $row['id'];
-        $this->template->vars('row', $row);
-        $this->template->vars('options', $options);
-        $this->template->view_layout('_list');
-        $list .= ob_get_contents();
+          $options['id'] = $row['id'];
+          $this->template->vars('row', $row);
+          $this->template->vars('options', $options);
+          $this->template->view_layout('_list');
+          $list .= ob_get_contents();
         ob_end_clean();
       }
     }
