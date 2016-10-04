@@ -22,19 +22,26 @@ Class Model_Colours extends Model_Model
 
     public static function create($name){
       $query = 'INSERT INTO fabrix_colour (colour) VALUE ("'.$name.'")';
-      $result = mysql_query($query) ? true : false;
-      return $result;
+      return mysql_query($query) ? true : false;
     }
 
     public static function update($id, $name){
-      $query = 'UPDATE fabrix_colour SET name ='.$name.' WHERE id ='.$id;
+      $query = 'UPDATE fabrix_colour SET colour ="'.$name.'" WHERE id ='.$id;
+      return mysql_query($query) ? true : false;
+    }
+
+    public static function getUsedColorsList(){
+      $query = 'SELECT * FROM fabrix_product_colours';
       return mysql_query($query) ? true : false;
     }
 
     public static function get_sectioned_list($start, $limit, &$total)
     {
         $response = null;
-        $query = "SELECT * FROM fabrix_colour LIMIT " . $start . ", " . $limit;
+        $query = "SELECT a.id, a.colour, count(b.prodId) as amount FROM fabrix_colour a".
+          " left join fabrix_product_colours b on b.colourId = a.id".
+          " group by a.id, a.colour".
+          " LIMIT " . $start . ", " . $limit;
         if ($result = mysql_query($query)) {
           $total = mysql_num_rows($result);
           while ($row = mysql_fetch_array($result)) {
