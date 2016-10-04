@@ -5,10 +5,12 @@
     var throwPopupConfirm = function () {
             $("#confirm-dialog").addClass('overlay_display');
         },
+
         hidePopupConfirm = function () {
             $("#confirm-dialog").removeClass('overlay_display');
             $('.popup .confirm, .colour-update').off()
         },
+
         loadForm = function () {
             $('#modal_content').html('\
                 <form id="color-au-form"> \
@@ -19,6 +21,7 @@
                 </form>');
             $('#modal').modal('show');
         },
+
         ajaxSend = function (method, url, data, callback) {
             var this_ = this;
             $(document.body).waitloader('show');
@@ -37,6 +40,13 @@
                     callback.call(this_);
                 }
             })
+        },
+
+        throwNotification = function (notificationContent, notificationType, notificationVisibilityTime) {
+            $('.notification').text(notificationContent).addClass(notificationType).removeClass('hidden');
+            setTimeout(function(){
+                $('.notification').text('').removeClass(notificationType).addClass('hidden')
+            }, notificationVisibilityTime);
         };
 
     $('#modal').on('hidden.bs.modal', function () {
@@ -60,6 +70,7 @@
                         colour_name: color
                     },
                     function () {
+                        throwNotification('Color ' + color + ' was added successfully.', 'alert-success', 6000);
                         $(this).off()
                     }
                 );
@@ -86,7 +97,8 @@
                 },
                 function () {
                     $(this).off();
-                    $('.colour-name-container[data-group=' + id + ']').children('span.c-name').text(val)
+                    $('.colour-name-container[data-group=' + id + ']').children('span.c-name').text(val);
+                    throwNotification('Color ' + val + ' was updated successfully.', 'alert-success', 6000);
                 }
             );
         });
@@ -108,6 +120,7 @@
                     function () {
                         $(this).off();
                         hidePopupConfirm();
+                        throwNotification('Color was removed successfully.', 'alert-success', 6000);
                     }
                 );
                 toDeleteLineObj.remove();

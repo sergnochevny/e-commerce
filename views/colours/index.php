@@ -15,6 +15,8 @@
           </div>
         <?php } ?>
 
+        <div class="col-xs-12 notification danger hidden">123</div>
+
         <div id="confirm-dialog" class="overlay"></div>
         <div class="popup">
           <div class="fcheck"></div>
@@ -63,7 +65,7 @@
           <table class="table table-striped table-bordered">
             <thead>
             <tr>
-              <th class="text-left">id</th>
+              <th width="50" class="text-center">id</th>
               <th class="text-center">Name</th>
               <th class="text-center">Products</th>
               <th></th>
