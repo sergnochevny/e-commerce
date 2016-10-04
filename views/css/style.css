@@ -1146,7 +1146,7 @@ td.product-subtotal {
 }
 
 .col-list_categories {
-    margin-top: -40px;
+    margin-top: -30px;
 }
 
 .proceed_bill {
@@ -1555,4 +1555,114 @@ a.button-move:focus, a.button-move:hover{
 .colour-delete-disabled{
     opacity: .6;
     cursor: not-allowed;
+}
+
+.footer-block {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+/*====================MEDIA====================*/
+
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+    .just-slider-wrap .just-slides .just-slide {
+        min-height: 500px;
+    }
+    .just-slider-wrap .just-slides .just-slide .just-slide-inner {
+        padding-top: 120px;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    .vc_custom_1439733758005 {
+        padding-top: 50px !important;
+    }
+    .woocommerce ul.products li.product, .woocommerce-page ul.products li.product, .woocommerce-page[class*=columns-] ul.products li.product, .woocommerce[class*=columns-] ul.products li.product {
+        margin-bottom: 1em;
+    }
+    .just-cta .just-cta-title {
+        font-size: 40px;
+    }
+    .vc_custom_1439734618195 {
+        padding-top: 50px !important;
+    }
+    .just-cta a.just-cta-button {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+    .wpb_button, .wpb_content_element, .wpb_row, ul.wpb_thumbnails-fluid>li {
+        margin-bottom: 0;
+    }
+    .widget .widget-title {
+        font-size: 180%;
+    }
+    .widget {
+        font-size: 13px;
+    }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+    .just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail a.just-slide-button {
+        font-size: 12px;
+        padding: 10px 7px;
+    }
+    .just-slider-wrap .just-slides .just-slide {
+        min-height: 455px;
+    }
+    .just-slider-wrap .just-slides .just-slide .just-slide-inner {
+        padding-top: 70px;
+    }
+    .vc_custom_1439734400036 {
+        padding-bottom: 0 !important;
+    }
+    .just-banner .just-banner-detail h3.text-big {
+        font-size: 35px !important;
+    }
+    .just-cta .just-cta-title {
+        font-size: 35px;
+        line-height: 50px;
+    }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+
+}
+
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
 }
