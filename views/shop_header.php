@@ -94,7 +94,9 @@
                             <button type="button" class="navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
                                     data-target=".site-navigation .navbar-collapse">
                                 <span class="sr-only">Toggle navigation</span>
-                                <i class="fa fa-navicon"></i>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
                             </button>
                             <a class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
                                 <div class="site-with-image">

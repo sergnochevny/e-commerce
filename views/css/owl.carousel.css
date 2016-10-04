@@ -64,8 +64,6 @@
   -ms-touch-action: pan-Y;
 }
 #just-carousel-871 .owl-stage {
-    height: 450px !important;
-    overflow: hidden !important;
     position: relative;
   -ms-touch-action: pan-Y;
 }

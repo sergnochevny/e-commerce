@@ -4,19 +4,19 @@
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
                 <?php
                 if (!is_null(_A_::$app->session('_a'))) { ?>
-                    <a title="Blog"  aria-haspopup="true" class="has-submenu" href="#">Shop<span class="caret"></span></a>
+                    <a title="Blog"  aria-haspopup="true" class="has-submenu" href="#">Products<span class="caret"></span></a>
                     <ul role="group" class="dropdown-menu" aria-hidden="true" aria-expanded="false" style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Products" href="<?= _A_::$app->router()->UrlTo('admin/home');?>">Products</a>
+                            <a title="Blog Categories" href="<?= _A_::$app->router()->UrlTo('admin/home');?>">Overview</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
                             <a title="Categories" href="<?= _A_::$app->router()->UrlTo('categories');?>">Categories</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="manufacturers" href="<?= _A_::$app->router()->UrlTo('manufacturers');?>">Manufacturer</a>
+                            <a title="manufacturers" href="<?= _A_::$app->router()->UrlTo('manufacturers');?>">Manufacturers</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Colors" href="<?= _A_::$app->router()->UrlTo('colours');?>">Colors</a>
+                            <a title="Colors" href="<?= _A_::$app->router()->UrlTo('colours');?>">Colours</a>
                         </li>
                     </ul>
                 <?php } ?>
@@ -41,7 +41,7 @@
                     <a title="Blog"  aria-haspopup="true" class="has-submenu" href="#">Blog<span class="caret"></span></a>
                     <ul role="group" class="dropdown-menu" aria-hidden="true" aria-expanded="false" style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Blog Posts" href="<?= _A_::$app->router()->UrlTo('blog/admin');?>">Overview</a>
+                            <a title="Blog Overview" href="<?= _A_::$app->router()->UrlTo('blog/admin');?>">Overview</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
                             <a title="Blog Categories" href="<?= _A_::$app->router()->UrlTo('blog/admin_categories');?>">Categories</a>

@@ -100,6 +100,10 @@
       return !is_null(_A_::$app->cookie('_r'));
     }
 
+    public static function is_logged() {
+      return !is_null(_A_::$app->session('_'));
+    }
+
     /**
      * @export
      */
@@ -108,59 +112,31 @@
         $user = $this->get_from_session();
         $user_id = $user['aid'];
         _A_::$app->get('user_id', $user_id);
-        $users = new Controller_Users();
-        $action = _A_::$app->router()->UrlTo('user/change');
+        $action = 'user/change';
         $title = 'CHANGE REGISTRATION DATA';
-        if(_A_::$app->request_is_post()) {
-          $users->_save_edit();
-          $users->main->template->vars('action', $action);
-          $users->main->template->vars('title', $title);
-          $users->_edit_form();
-        } else {
-          $users->_edit();
-          $url = '';
-          if(!is_null(_A_::$app->get('url'))) {
-            $url = _A_::$app->router()->UrlTo(base64_decode(urldecode(_A_::$app->get('url'))));
-          }
-          $users->main->template->vars('title', $title);
-          $users->main->template->vars('action', $action);
-          $users->main->template->vars('back_url', _A_::$app->router()->UrlTo(((strlen($url) > 0) ? $url : 'shop')), true);
-          $users->main->view('edit');
+        $url = '';
+        if(!is_null(_A_::$app->get('url'))) {
+          $url = _A_::$app->router()->UrlTo(base64_decode(urldecode(_A_::$app->get('url'))));
         }
+        $back_url = (strlen($url) > 0) ? $url : 'shop';
+        (new Controller_Users())->edit_add_handling($action, $back_url, $title, true);
       } else {
         $this->redirect(_A_::$app->router()->UrlTo('authorization'));
       }
-    }
-
-    public static function is_logged() {
-      return !is_null(_A_::$app->session('_'));
     }
 
     /**
      * @export
      */
     public function registration() {
-      if(_A_::$app->request_is_post()) {
-        $prms = null;
-        $users = new Controller_Users();
-        if(!$users->_save_new()) {
-          $users->main->template->vars('title', 'REGISTRATION USER');
-          $users->main->template->vars('action', _A_::$app->router()->UrlTo('user/registration'));
-          $users->_new_form('authorization');
-        } else {
-          $this->template->view_layout('thanx');
-        }
-      } else {
-        $prms = null;
-        if(!is_null(_A_::$app->get('url'))) {
-          $prms['url'] = _A_::$app->get('url');
-        }
-        $users = new Controller_Users();
-        $users->_new_user();
-        $users->template->vars('title', 'REGISTRATION USER');
-        $users->template->vars('action', _A_::$app->router()->UrlTo('user/registration'));
-        $users->template->vars('back_url', _A_::$app->router()->UrlTo('authorization', $prms), true);
-        $users->main->view('new');
+      $action = 'user/registration';
+      $title = 'REGISTRATION USER';
+      $prms = null;
+      if(!is_null(_A_::$app->get('url'))) {
+        $prms['url'] = _A_::$app->get('url');
       }
+      $back_url = _A_::$app->router()->UrlTo('authorization', $prms);
+      (new Controller_Users())->edit_add_handling($action, $back_url, $title, true, true);
+      $this->template->view_layout('thanx');
     }
   }

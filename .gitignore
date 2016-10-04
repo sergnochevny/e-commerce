@@ -36,7 +36,7 @@ fabric.properties
 /modal_windows/
 upload/upload/
 img/
-images/
+views/images/
 discount.txt
 fabrix_comments.sql
 leack.php

@@ -5,7 +5,7 @@
         <span class="topnav-label hidden-xs">My Account</span>
     </a>
     <ul class="dropdown-menu topnav-account-dropdown">
-        <li><a href="#" rel="nofollow">Change Password</a></li>
+        <li><a href="<?= _A_::$app->router()->UrlTo('admin/change');?>" rel="nofollow">Change Password</a></li>
         <li><a id="log_out" href="<?= _A_::$app->router()->UrlTo('admin/log_out');?>" rel="nofollow">Log Out</a></li>
     </ul>
 </li>

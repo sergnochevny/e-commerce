@@ -2,11 +2,9 @@
 (function($){
 
     var base_url = $('#base_url').val(),
-        danger = $('.danger'),
-        userForm = $("#edit_user_form"),
-        userFormCountry = $("#edit_user_form [name=country]");
+        danger = $('.danger');
 
-    if (danger.length>0){
+    if (danger.length){
         danger.css('display', 'block');
         $('html, body').stop().animate({scrollTop: parseInt(danger.offset().top) - 250 }, 1000);
         setTimeout(function () {
@@ -14,45 +12,57 @@
         }, 8000);
     }
 
-    userForm.on('submit',
-        function(event){
+    $("#user_form").on('submit',
+        function (event) {
             event.preventDefault();
             var url = $(this).attr('action');
+            $('#content').waitloader('show');
             $.post(
                 url,
                 $(this).serialize(),
-                function(data){
-                    $("#user_form").html(data);
+                function (data) {
+                    $("#user_form_content").html(data);
+                    $('#content').waitloader('remove');
                 }
             )
         }
     );
 
-    userFormCountry.on('change',
+    $("#user_form [name=country]").on('change',
         function (event) {
             event.preventDefault();
-            var url = base_url + 'users/get_province_list';
+            var url = $(this).parents('form').attr('action');
             var country = $(this).val();
+            $('#content').waitloader('show');
             $.get(
                 url,
-                {country: country},
+                {
+                    method : 'get_province_list',
+                    country: country
+                },
                 function (data) {
                     $('select[name=province]').html(data);
+                    $('#content').waitloader('remove');
                 }
             )
         }
     );
 
-    userFormCountry.on('change',
+    $("#user_form [name=s_country]").on('change',
         function (event) {
             event.preventDefault();
-            var url = base_url + 'users/get_province_list';
+            var url = $(this).parents('form').attr('action');
             var country = $(this).val();
+            $('#content').waitloader('show');
             $.get(
                 url,
-                {country: country},
+                {
+                    method : 'get_province_list',
+                    country: country
+                },
                 function (data) {
                     $('select[name=s_state]').html(data);
+                    $('#content').waitloader('remove');
                 }
             )
         }

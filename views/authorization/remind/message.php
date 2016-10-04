@@ -24,7 +24,7 @@
     <link charset="UTF-8" rel="stylesheet" id="just-smartmenu-css"
           href="<?= _A_::$app->router()->UrlTo('/views/css/jquery.smartmenus.bootstrap.css') ?>" type="text/css"
           media="all">
-    <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/font-awesome.min.css') ?>" type="text/css"
+    <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/font-awesome.min.scss') ?>" type="text/css"
           media="all">
     <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/js_composer.min.css') ?>" type="text/css"
           media="all">

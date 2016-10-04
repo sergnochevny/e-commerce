@@ -391,7 +391,7 @@ input[type='color']:focus{
   background-position: center center;
   background-size: cover;
   height: 220px;
-  box-shadow: 0 3px 8px -1px rgba(0,0,0,.2);
+  box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
   -webkit-transition: all .2s ease-in;
   -moz-transition: all .2s ease-in;
   -o-transition: all .2s ease-in;
@@ -1239,8 +1239,7 @@ label {
 .woocommerce ul.product_list_widget li div.coverDiv {
     background-position: center center;
     background-size: cover;
-    border: 3px solid #fff;
-    box-shadow: 0 0 2px 1px #ccc;
+    box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
     box-sizing: unset;
     float: left;
     height: 80px;

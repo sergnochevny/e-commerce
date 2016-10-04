@@ -1,8 +1,8 @@
         <div class="footer-widgets-bottom">
 			<div class="container">
 				<div class="footer-widgets-bottom-inner">
-					<div class="row">
-						<div class="col-md-3 col-sm-3 col-xs-12">
+					<div class="row footer-block">
+						<div class="col-md-3 col-xs-6">
 							<aside id="text-3" class="widget widget_text">
 								<h4 class="widget-title">Shipping</h4>
 								<div class="textwidget">
@@ -18,7 +18,7 @@
 								</div>-->
 							</aside>
 						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12">
+						<div class="col-md-3 col-xs-6">
 							<aside id="text-2" class="widget widget_text">
 								<h4 class="widget-title">Contact Information</h4>
 								<div class="textwidget">
@@ -31,7 +31,7 @@
 								</div>
 							</aside>
 						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12">
+						<div class="col-md-3 col-xs-6">
 							<aside id="nav_menu-2" class="widget widget_nav_menu">
 								<h4 class="widget-title">Customer Services</h4>
 								<div class="menu-customer-services-container">
@@ -45,7 +45,7 @@
 								</div>
 							</aside>
 						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12">
+						<div class="col-md-3 col-xs-6">
 							<aside id="nav_menu-3" class="widget widget_nav_menu">
 								<h4 class="widget-title">My Account</h4>
 								<div class="menu-my-account-container">

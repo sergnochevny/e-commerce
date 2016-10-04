@@ -10,7 +10,8 @@
             $('.just-slider-active').owlCarousel({
                 items: 1,
                 loop: true,
-                nav: false,
+                nav: true,
+                navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
                 lazyLoad: true,
                 autoplay: true,
                 autoplayHoverPause: true,
@@ -25,6 +26,7 @@
                         nav: true,
                         navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
                         autoplay: true,
+                        loop: true,
                         autoplayHoverPause: false,
                         dots: true
                     });

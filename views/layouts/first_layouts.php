@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title><?= isset($meta['page_Name']) ? $meta['page_Name'] : ''; ?></title>
@@ -12,42 +12,24 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-startup-image" charset="UTF-8"
+    <link rel="apple-touch-startup-image"
           href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-layout.css'); ?>'
-          type='text/css'
-          media='all'/>
-    <link rel='stylesheet' charset="UTF-8"
-          href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-smallscreen.css'); ?>' type='text/css'
-          media='only screen and (max-width: 768px)'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce.css'); ?>'
-          type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/bootstrap.min.css'); ?>'
-          type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" id='just-smartmenu-css'
-          href='<?= _A_::$app->router()->UrlTo('views/css/jquery.smartmenus.bootstrap.css'); ?>' type='text/css'
-          media='all'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/font-awesome.min.css'); ?>'
-          type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/js_composer.min.css'); ?>'
-          type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>'
-          type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/webfont.css'); ?>'
-          type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/style-theme.css'); ?>'
-          type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/style-woocommerce.css'); ?>'
-          type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/style-shortcodes.css'); ?>'
-          type='text/css' media='all'/>
-    <link rel='stylesheet' charset="UTF-8" href='<?= _A_::$app->router()->UrlTo('views/css/prettyPhoto.min.css'); ?>'
-          type='text/css' media='all'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-layout.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-smallscreen.css'); ?>' media='only screen and (max-width: 768px)'/>
+    <link rel='stylesheet' id='just-smartmenu-css' href='<?= _A_::$app->router()->UrlTo('views/css/jquery.smartmenus.bootstrap.css'); ?>'/>
+        <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce.css'); ?>'/>
+        <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/bootstrap.min.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/font-awesome.min.scss'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/js_composer.min.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/webfont.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/style-theme.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/style-woocommerce.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/style-shortcodes.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/prettyPhoto.min.css'); ?>'/>
 
-    <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css'); ?>'
-          type='text/css'
-          media='all'/>
-    <script type="text/javascript">
+    <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css'); ?>'/>
+    <script>
         WebFontConfig = {
             google: {families: ['Montserrat:400,700:latin', 'Playfair+Display:400,700:latin']}
         };
@@ -61,26 +43,18 @@
         })();
     </script>
 
-    <script charset="UTF-8" type='text/javascript'
-            src='<?= _A_::$app->router()->UrlTo('views/js/jquery_11_3.js'); ?>'></script>
-    <script charset="UTF-8" type='text/javascript'
-            src='<?= _A_::$app->router()->UrlTo('views/js/jquery-migrate.min.js'); ?>'></script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/jquery_11_3.js'); ?>'></script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/jquery-migrate.min.js'); ?>'></script>
 
-    <script charset="UTF-8" type='text/javascript'
-            src='<?= _A_::$app->router()->UrlTo('views/js/bootstrap.min.js'); ?>'></script>
-    <script charset="UTF-8" type='text/javascript'
-            src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.min.js'); ?>'></script>
-    <script charset="UTF-8" type='text/javascript'
-            src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.bootstrap.min.js'); ?>'></script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/bootstrap.min.js'); ?>'></script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.min.js'); ?>'></script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.bootstrap.min.js'); ?>'></script>
 
-    <script charset="UTF-8" type='text/javascript'
-            src='<?= _A_::$app->router()->UrlTo('views/js/jquery.prettyPhoto.js'); ?>'></script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/jquery.prettyPhoto.js'); ?>'></script>
 
-    <script charset="UTF-8" type='text/javascript'
-            src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
     <!--<script type='text/javascript' src='views/js/wp-embed.min.js'></script>-->
-    <script charset="UTF-8" type='text/javascript'
-            src='<?= _A_::$app->router()->UrlTo('views/js/js_composer_front.js'); ?>'></script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/js_composer_front.js'); ?>'></script>
 </head>
 
 <?php include($contentPage); ?>
