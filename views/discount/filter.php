@@ -1,12 +1,12 @@
 <?php if (isset($filters)): ?>
-    <div class="panel panel-default form-row prod_sel_category_panel" data-filter="<?= $destination; ?>">
+    <div class="panel panel-default form-row sel_panel" data-filter="<?= $destination; ?>">
         <div class="col-sm-12">
             <div class="panel-body">
-                <ul class="prod_sel_category">
+                <ul class="sel_item">
                     <?php foreach ($filters as $key => $name): ?>
-                        <li class="prod_sel_category_item">
+                        <li class="selected_item">
                             <div class="col-sm-11 col-xs-11">
-                                <div class="row"><span class="prod_sel_category_item_lab"><?= $name; ?></span></div>
+                                <div class="row"><span class="sel_item_lab"><?= $name; ?></span></div>
                                 <input name="<?= ($filter_type !== 'users') ? 'filter_products' : 'users' ?>[]"
                                        type="hidden" value="<?= $key; ?>">
                             </div>

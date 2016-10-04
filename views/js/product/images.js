@@ -3,15 +3,19 @@
     $(document).on('click', 'a.pic_del_images',
         function (event) {
             event.preventDefault();
-            var p_id = $(this).attr('href');
             var i_idx = $(this).attr('data-img_idx');
 
             $("#confirm_action").on('click.confirm_action',
                 function (event) {
                     event.preventDefault();
+                    var url = $(this).parents('form').attr('action');
+                    var data = {
+                        method: 'del_pic',
+                        idx: i_idx
+                    }
                     $.get(
-                        'del_pic?p_id=' + p_id + '&idx=' + i_idx,
-                        {},
+                        url,
+                        data,
                         function(data){
                             $('#modify_images2').html(data);
                             $("#confirm_dialog").removeClass('overlay_display');
@@ -29,12 +33,15 @@
     $(document).on('click', '.b_modify_images_pic_main_icon',
         function (event) {
             event.preventDefault();
-            var p_id = $(this).attr('data-p_id');
             var i_idx = $(this).attr('data-img_idx');
-            var url = $('#save_link').val()+"?p_id=" + p_id + "&idx=" + i_idx;
+            var data = {
+                method: 'save_link',
+                idx: i_idx
+            };
+            var url = $(this).parents('form').attr('action');
             $.get(
                 url,
-                {},
+                data,
                 function(data){
                     $('#modify_images2').html(data);
                 }
@@ -54,4 +61,5 @@
             $(".popup a.close").trigger('click');
         }
     );
+
 })(jQuery);

@@ -2,26 +2,88 @@
 
   class Controller_Product extends Controller_Controller {
 
-    private function form_handling() {
-      $pid = _A_::$app->get('p_id');
-      if(!is_null(_A_::$app->post('build_categories'))) {
-        $build_categories = _A_::$app->post('categories');
-        $categories = _A_::$app->post('category');
-        $data = Model_Product::getProductBuildCategories($build_categories, $categories);
-        foreach($data as $cat_id => $category) {
-          $this->template->vars('cat_id', $cat_id);
-          $this->template->vars('category', $category);
-          $this->template->view_layout('block_category');
+    private function select_filter($method, $filters, $start = null, $search = null) {
+      $selected = isset($filters) ? $filters : [];
+      $filter = Model_Product::get_filter_data($method, $count, $start, $search);
+      $this->template->vars('destination', $method);
+      $this->template->vars('total', $count);
+      $this->template->vars('search', $search);
+      $this->template->vars('type', $method . '_select');
+      $this->template->vars('filter_type', $method);
+      $this->template->vars('filter_data_start', isset($start) ? $start : 0);
+      $this->template->vars('selected', $selected);
+      $this->template->vars('filter', $filter);
+      $this->template->view_layout('select_filter');
+    }
+
+    private function selected_filter_data($method, $filters, $selected, $id) {
+      $data = [
+        $method => $filters,
+        $method . '_select' => $selected,
+      ];
+
+      Model_Product::get_filter_selected($method, $data, $id);
+      return $data;
+    }
+
+    private function images_handling() {
+      include('include/post_edit_product_data.php');
+      $method = _A_::$app->get('method');
+      if($method == 'save_link') {
+        (new Controller_Image())->save();
+      } elseif($method == 'upload_img') {
+        (new Controller_Image())->upload();
+      } elseif($method == 'del_pic') {
+        (new Controller_Image())->del();
+      } else {
+        (new Controller_Image())->modify();
+      }
+    }
+
+    private function filters_handling() {
+      include('include/post_edit_product_data.php');
+      $method = _A_::$app->post('method');
+      if($method !== 'filter') {
+        if(in_array($method, ['categories', 'colours', 'patterns'])) {
+          $this->select_filter($method, array_keys(${$method}));
         }
-        exit;
+      } else {
+        if(!is_null(_A_::$app->post('filter-type'))) {
+          $method = _A_::$app->post('filter-type');
+          $resporse = [];
+
+          ob_start();
+          $data = $this->selected_filter_data($method, ${$method}, ${$method . '_select'}, $p_id);
+          $filters = array_keys($data[$method]);
+          $this->generate_filter($data, $method);
+          $resporse[0] = ob_get_contents();
+          ob_end_clean();
+
+          ob_start();
+          $search = _A_::$app->post('filter_select_search_' . $method);
+          $start = _A_::$app->post('filter_start_' . $method);
+          if(!is_null(_A_::$app->post('down'))) $start = FILTER_LIMIT + (isset($start) ? $start : 0);
+          if(!is_null(_A_::$app->post('up'))) $start = (isset($start) ? $start : 0) - FILTER_LIMIT;
+          if(($start < 0) || (is_null(_A_::$app->post('down')) && is_null(_A_::$app->post('up')))) $start = 0;
+          if(in_array($method, ['colours', 'patterns', 'categories'])) {
+            $this->select_filter($method, $filters, $start, $search);
+          }
+          $resporse[1] = ob_get_contents();
+          ob_end_clean();
+          exit(json_encode($resporse));
+        } else {
+          $method = _A_::$app->post('type');
+          $data = $this->selected_filter_data($method, ${$method}, ${$method . '_select'}, $p_id);
+          $this->generate_filter($data, $method);
+        }
       }
     }
 
     private function save($new = false) {
-      include('include/post_edit_db.php');
+      include('include/post_edit_product_data.php');
       $data = [
         'weight_id' => $post_weight_cat,
-        'sd_cat' => $post_categories,
+        'categories' => $categories,
         'pvisible' => $post_vis,
         'metadescription' => $post_desc,
         'p_id' => $p_id,
@@ -36,11 +98,11 @@
         'Current_inventory' => $post_curret_in,
         'Specials' => $post_special,
         'Weight' => $post_weight_cat,
-        'Manufacturer' => $post_manufacturer,
+        'manufacturers' => $manufacturers,
         'New_Manufacturer' => $New_Manufacturer,
-        'Colours' => $p_colors,
+        'colours' => $colours,
         'New_Colour' => $post_new_color,
-        'Pattern_Type' => $patterns,
+        'patterns' => $patterns,
         'New_Pattern' => $pattern_type,
         'Short_description' => $post_short_desk,
         'Long_description' => $post_Long_description,
@@ -58,22 +120,22 @@
           if(empty($post_p_yard{0})) $error[] = 'Identify Price field !';
           $this->template->vars('error', $error);
         } else {
-          $result = Model_Product::save($p_id, $post_categories, $patterns, $p_colors, $post_manufacturer,
-                                        $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
-                                        $post_special, $post_curret_in, $post_dimens, $post_hide_prise,
-                                        $post_st_nom, $post_p_yard, $post_width, $post_product_num, $post_vis,
-                                        $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
-                                        $post_short_desk, $best, $piece, $whole);
+          try {
+            Model_Product::save($p_id, $categories, $patterns, $colours, $manufacturers,
+                                $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
+                                $post_special, $post_curret_in, $post_dimens, $post_hide_prise,
+                                $post_st_nom, $post_p_yard, $post_width, $post_product_num, $post_vis,
+                                $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
+                                $post_short_desk, $best, $piece, $whole);
 
-          if($result) {
             $this->template->vars('warning', ["Product Data saved successfully!"]);
             if($new) {
               $data = null;
               Model_Product::getNewproduct();
             }
-          } else {
-            $this->template->vars('error', [mysql_error()]);
-          };
+          } catch(Exception $e) {
+            $this->template->vars('error', [$e->getMessage()]);
+          }
         }
       } else {
         $this->template->vars('error', ["Error! Not product id identity"]);
@@ -85,31 +147,47 @@
       return $data;
     }
 
+    private function generate_filter($data, $type) {
+      $filters = $data[$type];
+      $this->template->vars('filters', $filters);
+      $this->template->vars('filter_type', $type);
+      $this->template->vars('destination', $type);
+      $this->template->vars('title', 'Select ' . ucfirst($type));
+      $this->template->view_layout('filter');
+    }
+
+    private function generate_select($data, $selected) {
+      $this->template->vars('selected', is_array($selected) ? $selected : [$selected]);
+      $this->template->vars('data', is_array($data) ? $data : [$data]);
+      $this->template->view_layout('select');
+    }
+
     private function form($url, $data = null) {
       $pid = _A_::$app->get('p_id');
       if(isset($data)) {
-        $post_categories = $data['sd_cat'];
-        $post_manufacturer = $data['Manufacturer'];
-        $p_colors = $data['Colours'];
-        $patterns = $data['Pattern_Type'];
-        $cats = Model_Product::getProductCatInfo($post_categories, $post_manufacturer, $p_colors, $patterns);
-        $data['sd_cat'] = $cats['sl_cat'];
-        $data['Manufacturer'] = $cats['sl_cat2'];
-        $data['Colours'] = $cats['sl_cat3'];
-        $data['Pattern_Type'] = $cats['sl_cat4'];
-
-        $categories = array_keys($post_categories);
-        $data['categories'] = Model_Product::getProductBuildCategories($post_categories, $categories);
-      } else $data = Model_Product::getProductInfo($pid);
-      ob_start();
-      foreach($data['categories'] as $cat_id => $category) {
-        $this->template->vars('cat_id', $cat_id);
-        $this->template->vars('category', $category);
-        $this->template->view_layout('block_category');
+        foreach(['categories', 'colours', 'patterns'] as $method) {
+          $filters = $this->selected_filter_data($method, $data[$method], null, $pid);
+          $data[$method] = $filters[$method];
+        }
+        $data['manufacturerId'] = $data['manufacturers'];
+        $data['manufacturers'] = Model_Product::get_manufacturers();
+      } else {
+        $data = Model_Product::getProductInfo($pid);
       }
-      $categories = ob_get_contents();
+
+      foreach(['categories', 'colours', 'patterns'] as $type) {
+        ob_start();
+        $this->generate_filter($data, $type);
+        $filter = ob_get_contents();
+        ob_end_clean();
+        $data[$type] = $filter;
+      }
+
+      ob_start();
+      $this->generate_select($data['manufacturers'], $data['manufacturerId']);
+      $select = ob_get_contents();
       ob_end_clean();
-      $data['categories'] = $categories;
+      $data['manufacturers'] = $select;
 
       ob_start();
       $cimage = new Controller_Image($this->main);
@@ -121,14 +199,15 @@
       $this->template->vars('action_url', $action_url);
       $this->template->vars('modify_images', $m_images);
       $this->template->vars('data', $data);
-      $this->main->view_layout('edit_form');
+      $this->main->view_layout('form');
     }
 
     /**
      * @param $url
      * @param $template
      */
-    private function edit_form($url, $template) {
+    private function edit_form($url, $type) {
+
       $prms = null;
       if(!empty(_A_::$app->get('page'))) {
         $prms['page'] = _A_::$app->get('page');
@@ -142,9 +221,10 @@
       $edit_form = ob_get_contents();
       ob_end_clean();
 
+      $this->template->vars('type', $type);
       $this->template->vars('back_url', $back_url);
       $this->main->template->vars('edit_form', $edit_form);
-      $this->main->view_admin($template);
+      $this->main->view_admin('edit');
     }
 
     private function del_image($pid) {
@@ -162,6 +242,26 @@
           if(file_exists("upload/upload/v_" . $filename)) {
             unlink("upload/upload/v_" . $filename);
           }
+        }
+      }
+    }
+
+    private function edit_add_handling($type, $url) {
+      $this->main->test_access_rights();
+      if(_A_::$app->request_is_post()) {
+        if(!is_null(_A_::$app->post('method'))) {
+          $this->filters_handling();
+        } elseif(!is_null(_A_::$app->get('method'))) {
+          $this->images_handling();
+        } else {
+          $data = $this->save();
+          $this->form($url, $data);
+        }
+      } else {
+        if(!is_null(_A_::$app->get('method'))) {
+          $this->images_handling();
+        } else {
+          $this->edit_form($url, $type);
         }
       }
     }
@@ -348,29 +448,15 @@
      * @export
      */
     public function edit() {
-      $this->main->test_access_rights();
-      if(_A_::$app->request_is_post()) {
-        $this->form_handling();
-        $data = $this->save();
-        $this->form('product/edit', $data);
-      } else {
-        $this->edit_form('product/edit', 'edit');
-      }
+      $this->edit_add_handling('edit', 'product/edit');
     }
 
     /**
      * @export
      */
     public function add() {
-      $this->main->test_access_rights();
-      if(_A_::$app->request_is_post()) {
-        $this->form_handling();
-        $data = $this->save(true);
-        $this->form('product/add', $data);
-      } else {
-        Model_Product::getNewproduct();
-        $this->edit_form('product/add', 'add');
-      }
+      Model_Product::getNewproduct();
+      $this->edit_add_handling('add', 'product/add');
     }
 
     /**

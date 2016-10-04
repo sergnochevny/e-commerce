@@ -108,7 +108,7 @@
     );
 
     function evRemoveFilterRow(event) {
-        $(this).parents('li.prod_sel_category_item').remove();
+        $(this).parents('li.selected_item').remove();
     }
 
     setEvToFilter();
@@ -199,7 +199,7 @@
                 evFilterSearch.call(this, event);
             }
         );
-        $('li.prod_sel_category_item input').on('change',
+        $('li.select_item input').on('change',
             function (event) {
                 if (!this.checked) {
                     $('span[data-rem_row][data-index=' + $(this).val() + ']').trigger('click');
