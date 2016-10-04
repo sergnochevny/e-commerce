@@ -8,8 +8,8 @@
                 <a href="<?= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
 
                 <div id="customer_details" style="padding-top: 20px; margin: auto; width: 600px;">
-                    <div id="user_form">
-                        <?php include('views/users/new_form.php')?>
+                    <div id="user_form_content">
+                        <?= $form; ?>
                     </div>
                 </div>
             </div>
