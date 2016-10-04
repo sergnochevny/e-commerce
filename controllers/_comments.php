@@ -129,6 +129,9 @@
       $this->main->template->vars('comments_list', $comments_list);
     }
 
+    /**
+     * @export
+     */
     public function delete() {
       $this->main->test_access_rights();
 
@@ -159,6 +162,9 @@
       $this->main->view_layout('admin_list');
     }
 
+    /**
+     * @export
+     */
     public function comment() {
       $this->main->test_access_rights();
       $m = new Model_Comments();

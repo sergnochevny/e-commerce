@@ -23,7 +23,9 @@
                     </table>
                 </div>
                 <hr>
-                Discount Usage
+                <div class="text-center">
+                    Discount Usage
+                </div>
                 <hr/>
                 <div>
                     <table class="table table-striped table-bordered">
@@ -32,7 +34,7 @@
                             <td style="width:220px;" class="text-center">Order Date</td>
                             <td class="text-center">Name</td>
                             <td class="text-center">Email</td>
-                            <td style="width:190px;" class="text-center">Start Date</td>
+                            <td style="width:230px;" class="text-center">Start Date</td>
                             <td style="width:230px;" class="text-center">End Date</td>
                             <td></td>
                         </tr>
