@@ -65,6 +65,7 @@
             <tr>
               <th class="text-left">id</th>
               <th class="text-center">Name</th>
+              <th class="text-center">Products</th>
               <th></th>
             </tr>
             </thead>

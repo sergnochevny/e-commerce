@@ -38,16 +38,23 @@ Class Model_Colours extends Model_Model
     public static function get_sectioned_list($start, $limit, &$total)
     {
         $response = null;
-        $query = "SELECT a.id, a.colour, count(b.prodId) as amount FROM fabrix_colour a".
-          " left join fabrix_product_colours b on b.colourId = a.id".
-          " group by a.id, a.colour".
-          " LIMIT " . $start . ", " . $limit;
+        $query = "
+            SELECT a.id, a.colour, count(b.prodId) 
+            AS amount 
+            FROM fabrix_colour a
+            LEFT JOIN 
+              fabrix_product_colours b 
+            ON b.colourId = a.id
+            GROUP BY a.id, a.colour
+            LIMIT " . $start . ", " . $limit;
+
         if ($result = mysql_query($query)) {
           $total = mysql_num_rows($result);
           while ($row = mysql_fetch_array($result)) {
             $response[] = $row;
           }
         }
+
         return $response;
     }
 
