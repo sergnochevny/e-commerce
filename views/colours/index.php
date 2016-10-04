@@ -65,8 +65,7 @@
           <table class="table table-striped table-bordered">
             <thead>
             <tr>
-              <th width="50" class="text-center">id</th>
-              <th class="text-center">Name</th>
+              <th class="text-left">Name</th>
               <th class="text-center">Products</th>
               <th></th>
             </tr>

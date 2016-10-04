@@ -1,5 +1,4 @@
 <tr>
-  <td width="50" data-group="<?= $row[0] ?>" class="manufacturers-id text-center"><?= $row[0] ?></td>
   <td data-group="<?= $row[0] ?>" class="manufacturers-name-container text-center">
     <span class="c-name"><?= $row[1] ?></span>
   </td>

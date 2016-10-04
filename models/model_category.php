@@ -17,16 +17,6 @@ Class Model_Category extends Model_Model
         $rows = null;
         if ($results) {
             while ($row = mysql_fetch_array($results)) {
-                if ($row[4] == 1) {
-                    $row[4] = "Yes";
-                } else {
-                    $row[4] = "No";
-                }
-                if ($row[5] == 1) {
-                    $row[5] = "Yes";
-                } else {
-                    $row[5] = "No";
-                }
                 $rows[] = $row;
             }
         }

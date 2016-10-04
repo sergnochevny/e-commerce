@@ -4,11 +4,8 @@
 
 <?=
     '<tr>
-        <td><div class="text-left">'. $row[1] .'</div></td>
+        <td><div class="text-center">'.$row[1].'</div></td>
         <td><div class="text-center">'.$row[2].'</div></td>
-        <td><div class="text-center">'.$row[3].'</div></td>
-        <td><div class="text-center">'.$row[4].'</div></td>
-        <td><div class="text-center">'.$row[5].'</div></td>
         <td>
             <div class="text-center">
                 <figcaption>

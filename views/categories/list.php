@@ -17,11 +17,8 @@
     <table class="table table-striped table-bordered">
 		<thead>
             <tr>
-                <th class="text-left">Category</th>
-                <th class="text-center">SEO Name</th>
+                <th class="text-center">Name</th>
                 <th class="text-center">Display Order</th>
-                <th class="text-center">List as Style</th>
-                <th class="text-center">List as New</th>
                 <th></th>
             </tr>
 		</thead>
