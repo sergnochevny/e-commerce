@@ -275,7 +275,7 @@
       $this->get_list();
     }
 
-    public function form($url, $back_url, $data = null) {
+    private function form($url, $back_url, $data = null) {
       $user_id = _A_::$app->get('user_id');
       if(!isset($data)) {
         $data = Model_User::get_user_data($user_id);
