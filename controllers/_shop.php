@@ -148,10 +148,11 @@
       if($page <= 0)
         $page = 1;
       $start = (($page - 1) * $per_page);
-      if($total < ($start + $per_page))
-        $per_page = $total - $start;
+      $limit = $per_page;
+      if($total < ($start + $per_page)) $limit = $total - $start;
+
       $res_count_rows = 0;
-      $rows = Model_Product::get_products_by_type($type, $start, $per_page, $res_count_rows);
+      $rows = Model_Product::get_products_by_type($type, $start, $limit, $res_count_rows);
       $this->template->vars('count_rows', $res_count_rows);
 
       if($rows) {
