@@ -1,6 +1,6 @@
-<form id="new_user_form" action="<?= $action;?>" method="post">
+<form id="user_form" action="<?= $action?>" method="post">
 
-    <h1 class="page-title"><?= $title ?></h1>
+    <h1 class="page-title"><?= $form_title ?></h1>
 
     <?php
     if (isset($warning)) {
@@ -28,7 +28,6 @@
         <?php
     }
     ?>
-
     <div class="col-1">
         <hr>
         LOGIN
@@ -40,13 +39,13 @@
         </p>
 
         <p class="form-row">
-            <label class="required_field"><strong>Password:</strong></label>
+            <label><strong>Password:</strong></label>
             <input type="password" name="create_password"
                    class="input-text ">
         </p>
 
         <p class="form-row">
-            <label class="required_field"><strong>Confirm Password:</strong></label>
+            <label><strong>Confirm Password:</strong></label>
             <input type="password" name="confirm_password"
                    class="input-text ">
         </p>
@@ -93,7 +92,7 @@
         <p class="form-row">
             <label><strong> Province/State:</strong></label>
             <select name="province" value="<?= $data['bill_province'] ?>" class="input-text ">
-                <option <?= (isset($data['bill_province']) && !empty($data['bill_province']{0}))?'':'selected'?>disabled>Select Province</option>
+                <option <?= (isset($data['bill_province']) && !empty($data['bill_province']{0}))?'':'selected'?> disabled>Select Province</option>
                 <?= isset($data['bill_list_province'] )?$data['bill_list_province']:''?>
             </select>
         </p>
@@ -131,13 +130,8 @@
         SHIPPING INFORMATION
         <hr/>
         <p class="form-row">
-            <label for="Same_as_billing">
-                <strong>Same as Billing:</strong>
-                <input type="checkbox"
-                       id="Same_as_billing"
-                       name="Same_as_billing" <?= (isset($data['Same_as_billing']) &&  $data['Same_as_billing'] == 1)? 'checked' : '' ?>
-                       value="1" class="input-checkbox">
-            </label>
+            <label><strong>Same as Billing:</strong></label>
+            <input type="checkbox" name="Same_as_billing" <?= isset($data['Same_as_billing']) ? 'checked':''?> value="1"  class="input-checkbox">
         </p>
 
         <p class="form-row">
@@ -154,7 +148,8 @@
 
         <p class="form-row">
             <label><strong> Organization:</strong></label>
-            <input type="text" name="s_organization" value="<?= $data['ship_organization'] ?>"
+            <input type="text" name="s_organization"
+                   value="<?= $data['ship_organization'] ?>"
                    class="input-text ">
         </p>
 
@@ -172,8 +167,8 @@
         <p class="form-row">
             <label class="required_field"><strong> Country:</strong></label>
             <select name="s_country" value="<?= $data['ship_country'] ?>" class="input-text ">
-                <option <?php echo (isset($data['ship_country']) && !empty($data['ship_country']{0}))?'':'selected'?> disabled value="0">Select Country</option>
-                <?php echo isset($data['ship_list_countries'] )?$data['ship_list_countries']:''?>
+                <option <?= (isset($data['ship_country']) && !empty($data['ship_country']{0}))?'':'selected'?> disabled>Select Country</option>
+                <?= isset($data['ship_list_countries'] )?$data['ship_list_countries']:''?>
             </select>
         </p>
 
@@ -198,7 +193,7 @@
         </p>
 
         <p class="form-row">
-            <label ><strong> Telephone:</strong></label>
+            <label><strong> Telephone:</strong></label>
             <input type="text" name="s_telephone" value="<?= $data['ship_phone'] ?>"
                    class="input-text ">
         </p>
@@ -214,19 +209,11 @@
             <input type="text" name="s_email" value="<?= $data['ship_email'] ?>"
                    class="input-text ">
         </p>
-
-        <br/>
-        <br/>
-
-        <p class="form-row">
-            <div class="col-xs-12">
-                <div class="text-center">
-                    <input type="submit" value="SAVE USER DATA" class="button"/>
-                </div>
-            </div>
-        </p>
-
+        <br><br>
+        <div class="text-center">
+            <input type="submit" value="SAVE" class="button"/>
+        </div>
     </div>
 </form>
-<input type="hidden" id="base_url" value="<?= _A_::$app->router()->urlTo('/') ?>">
-<script src='<?= _A_::$app->router()->UrlTo('views/js/users/new_form.js'); ?>' type="text/javascript"></script>
+<input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/')?>">
+<script src='<?= _A_::$app->router()->UrlTo('views/js/users/form.js'); ?>' type="text/javascript"></script>
