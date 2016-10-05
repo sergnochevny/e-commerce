@@ -429,7 +429,7 @@ input[type='color']:focus{
     -ms-transition: all 0.2s linear;
     transition: all 0.2s linear;
     position: relative;
-    display:block;
+    /*display:block;*/
     margin: 0px;
 }
 #formx{}
