@@ -1074,7 +1074,6 @@
      * @export
      */
     function add() {
-
       $base_url = _A_::$app->router()->UrlTo('/');
       if(!empty(_A_::$app->get('p_id'))) {
         $p_id = Model_Product::validData(_A_::$app->get('p_id'));

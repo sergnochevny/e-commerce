@@ -198,39 +198,31 @@
         $(this).trigger('init_spinner');
     });
 
-    $(document).on('calc_shipping_total',function () {
-        var url = base_url + 'cart/shipping_calc',
-            stotal_url = base_url + 'cart/get_subtotal_ship',
-            express_samplesObj = $('#express_samples'),
-            rollObj = $('#roll'),
-            coupon_codeObj = $('#coupon_code'),
-            ship = '',
-            roll = 0,
-            express_samples = '',
-            data = {ship: ship, roll: roll},
-            coupon = '';
-
-        if ($('#select_ship').length > 0) {
-            if (coupon_codeObj.length > 0){
-                coupon = coupon_codeObj.val();
+    $(document).on('calc_shipping_total',
+        function () {
+            var url = base_url + 'cart/shipping_calc';
+            var stotal_url = base_url + 'cart/get_subtotal_ship';
+            if ($('#select_ship').length > 0) {
+                var coupon = '';
+                if ($('#coupon_code').length > 0) coupon = $('#coupon_code').val();
+                var ship = $('#select_ship').val();
+                var roll = 0;
+                if ($('#roll').length > 0) roll = $('#roll')[0].checked ? 1 : 0;
+                var data = {ship: ship, roll: roll, coupon: coupon};
             }
-            if (rollObj.length > 0) {
-                roll = rollObj[0].checked ? 1 : 0;
+            if ($('#express_samples').length > 0) {
+                var express_samples = $('#express_samples')[0].checked ? 1 : 0;
+                var data = {express_samples: express_samples};
             }
-            if (coupon.trim().length > 0){
-                data = {ship: ship, roll: roll, coupon: coupon};
-            }
+            $.post( url, data,
+                function (data) {
+                    $('#shipping').html(data);
+                    $('#subtotal_ship').load(stotal_url);
+                    $(document).trigger('calc_total');
+                }
+            );
         }
-        if (express_samplesObj.length > 0) {
-            express_samples = express_samplesObj[0].checked ? 1 : 0;
-            data = {express_samples: express_samples};
-        }
-        $.post( url, data,function (data) {
-            $('#shipping').html(data);
-            $('#subtotal_ship').load(stotal_url);
-            $(document).trigger('calc_total');
-        });
-    });
+    );
 
     $(document).on('calc_total',function () {
         var url = base_url + 'cart/coupon_total_calc',
@@ -243,14 +235,16 @@
     $(document).on('change', '#select_ship',function (event) {
         $(document).trigger('calc_shipping_total');
     });
-
     $(document).on('change', '#roll',function (event) {
         $(document).trigger('calc_shipping_total');
-    }).on('change', '#express_samples',function (event) {
+    });
+    $(document).on('change', '#express_samples',function (event) {
         $(document).trigger('calc_shipping_total');
-    }).on('click','#apply_coupon',function(event){
+    });
+    $(document).on('click','#apply_coupon',function(event){
         $(document).trigger('calc_shipping_total');
-    }).on('click','#proceed_button', function(event) {
+    });
+    $(document).on('click','#proceed_button', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');
         $.get( url, {}, function(data) {
