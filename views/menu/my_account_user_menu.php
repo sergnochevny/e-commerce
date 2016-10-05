@@ -7,7 +7,7 @@
     </a>
     <?php if (isset($toggle) && $toggle) { ?>
         <ul class="dropdown-menu topnav-account-dropdown">
-            <li> <a id="log_out" href="<?= _A_::$app->router()->UrlTo('orders/customer_history'); ?>/" rel="nofollow">Orders History</a> <hr></li>
+            <li> <a id="log_out" href="<?= _A_::$app->router()->UrlTo('orders'); ?>/" rel="nofollow">My Orders</a> <hr></li>
             <li><a href="<?= _A_::$app->router()->UrlTo('user/change'); ?>/" rel="nofollow">Change Data</a></li>
             <li><a id="log_out" href="<?= _A_::$app->router()->UrlTo('user/log_out'); ?>" rel="nofollow">Log Out</a></li>
         </ul>

@@ -59,7 +59,7 @@
     }
 
     public function is_user_authorized($redirect_to_url = false) {
-      $user = new Controller_User($this);
+      $user = new Controller_User($this->main);
       if(!$user->is_authorized()) {
         if($redirect_to_url) {
           $redirect = strtolower(explode('/', _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://";
@@ -77,7 +77,7 @@
     }
 
     public function test_access_rights($redirect_to_url = true) {
-      $admin = new Controller_Admin($this);
+      $admin = new Controller_Admin($this->main);
       if(!$admin->is_authorized()) {
         if($redirect_to_url) {
           $redirect = strtolower(explode('/', _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://";
@@ -94,13 +94,27 @@
       }
     }
 
+    public function test_any_logged($redirect = null) {
+      if(!Controller_Admin::is_logged() && !Controller_User::is_logged()) {
+        $prms = [];
+        if(isset($redirect)) {
+          $prms = ['url' => urlencode(base64_encode(_A_::$app->router()->UrlTo($redirect)))];
+        }
+          $url = _A_::$app->router()->UrlTo('authorization', $prms);
+          $this->redirect($url);
+      } else {
+        if (Controller_Admin::is_logged()) return 'admin';
+        if (Controller_User::is_logged()) return 'user';
+      }
+    }
+
     public function message() {
       if(isset(_A_::$app->get()['msg'])) {
         $msg = _A_::$app->get()['msg'];
         if($msg == 'remind_sent') {
           $prms = null;
-          if(isset(_A_::$app->get()['url'])) {
-            $prms['url'] = _A_::$app->get()['url'];
+          if(!is_null(_A_::$app->get('url'))) {
+            $prms['url'] = _A_::$app->get('url');
           }
           $back_url = _A_::$app->router()->UrlTo('user', $prms);
           $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!!!';

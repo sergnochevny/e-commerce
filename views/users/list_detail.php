@@ -1,6 +1,6 @@
 <?php
     $opt['user_id'] = $row[0];
-    $opt['page'] = $page;
+    if ($page > 1) $opt['page'] = $page;
 ?>
 <tr>
     <td class="text-center"><?= $row[0]?></td>

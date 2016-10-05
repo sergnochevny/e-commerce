@@ -5,7 +5,9 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
+                <?php if (isset($back_url)):?>
                 <a href="<?= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
+                <?php endif;?>
                 <?= $orders; ?>
                 <br/>
             </div>

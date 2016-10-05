@@ -2,7 +2,7 @@
 
   Class Controller_User Extends Controller_Controller {
 
-    private function get_from_session() {
+    public static function get_from_session() {
       return _A_::$app->session('user');
     }
 
@@ -37,7 +37,7 @@
           $this->redirect($url);
         } else {
 
-          $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : base64_encode(_A_::$app->router()->UrlTo('shop'));
+          $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : urlencode(base64_encode(_A_::$app->router()->UrlTo('shop')));
           $prms = null;
           if(!is_null(_A_::$app->get('url'))) {
             $prms['url'] = _A_::$app->get('url');
@@ -50,7 +50,7 @@
           $this->main->view('user');
         }
       } else {
-        $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('shop');
+        $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : _A_::$app->router()->UrlTo('shop');
         $this->redirect($url);
       }
     }
@@ -109,7 +109,7 @@
      */
     public function change() {
       if(self::is_logged()) {
-        $user = $this->get_from_session();
+        $user = self::get_from_session();
         $user_id = $user['aid'];
         _A_::$app->get('user_id', $user_id);
         $action = 'user/change';
