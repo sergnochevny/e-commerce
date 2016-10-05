@@ -1,5 +1,70 @@
-<link type='text/css' href='<?= _A_::$app->router()->UrlTo('views/css/admin_content.css'); ?>' rel='stylesheet' media='screen'/>
+<style>
+    .just-posts-grid .just-post {
+        margin: 0 0 20px;
+    }
 
+    .just-posts-grid .just-post-image {
+        background-position: center center;
+        background-size: cover;
+        height: 200px;
+        margin: 0 0 20px;
+        overflow: hidden;
+    }
+
+    .just-posts-grid .just-post-image a {
+        display: block;
+        height: 200px;
+    }
+
+    .just-posts-grid .just-post-detail .post-title {
+        margin: 0;
+        font-size: 20px;
+        font-weight: lighter;
+        text-transform: uppercase;
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .just-posts-grid .just-post-detail .post-title a {
+        color: #222222;
+    }
+
+    .just-posts-grid .just-post-detail .post-date {
+        font-size: 14px !important;
+        color: #5f5f5f !important;
+        text-transform: uppercase;
+        font-weight: normal;
+        padding: 0;
+    }
+
+    .just-posts-grid .just-post-detail > p {
+        display: block;
+        font-size: 12px;
+        font-weight: normal;
+        height: 100px;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+        position: relative;
+    }
+
+    .just-posts-grid .just-post-detail > p > span.opa {
+        background-image: url("<?= _A_::$app->router()->UrlTo('views/images/bg-opa.png');?>");
+        bottom: 0;
+        display: block;
+        height: 80px;
+        position: absolute;
+        width: 100%;
+    }
+    .just-post-image-admin{text-align: center;}
+    .just-post-image-admin > a{
+        display: inline-block !important;
+        /*height: auto !important;
+        margin-top: 77px !important;*/
+    }
+</style>
 <div class="text-center">
     <a href="<?= $new_post_href; ?>"><input type="submit" value="ADD NEW POST" class="button"/></a><br><br>
 </div>

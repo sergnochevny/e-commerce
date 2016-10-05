@@ -16,8 +16,8 @@
                 function (event) {
                     event.preventDefault();
                     $.get(href, {}, function (data) {
-                        $('#content').html(data);
                         $("#confirm_dialog").removeClass('overlay_display');
+                        $('#content').html(data);
                         $("#confirm_action").off('click.confirm_action');
                         if ($('.danger').length) {
                             $('html, body').stop().animate({scrollTop: parseInt($('.danger').offset().top) - 250}, 1000);
