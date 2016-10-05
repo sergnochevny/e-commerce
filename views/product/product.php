@@ -164,7 +164,7 @@
                         </table>
                         <div class="quantity"></div>
 
-                        <b id="b_in_product">
+                        <span id="b_in_product" style="font-weight: 600;">
                             <?php
                             $pid = _A_::$app->get('p_id');
                             if ($data['inventory'] > 0) {
@@ -180,9 +180,9 @@
                                     </button>
                                 </a>
                             <?php } ?>
-                        </b>
+                        </span>
 
-                        <b id="b_in_product">
+                        <span id="b_in_product" style="font-weight: 600;">
                             <?php
                             if ($data['inventory'] > 0 && $allowed_samples) {
                                 ?>
@@ -192,9 +192,9 @@
                                     </button>
                                 </a>
                             <?php } ?>
-                        </b>
+                        </span>
 
-                        <b id="b_in_product">
+                        <span id="b_in_product" style="font-weight: 600;">
                             <?php
                             $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
                             $mhref = _A_::$app->router()->UrlTo('matches/add', ['p_id' => $pid]);
@@ -203,6 +203,8 @@
                                 <button type="button" class="single_add_to_cart_button button alt">Ask a Question
                                 </button>
                             </a>
+                        </span>
+                        <span id="b_in_product" style="font-weight: 600;">
                             <?php if ($img1_exists) { ?>
                                 <a id="add_matches"
                                    href="<?= $mhref; ?>" <?= !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
@@ -215,7 +217,7 @@
                                     </button>
                                 </a>
                             <?php } ?>
-                        </b>
+                        </span>
 
                         <div class="product_meta">
                             <h3>DETAILS</h3>

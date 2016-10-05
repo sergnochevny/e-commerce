@@ -3,13 +3,13 @@
         <span class="onsale">Best!</span>
         <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
             <a href="<?= _A_::$app->router()->UrlTo('product',$url_prms); ?> ">
-            </a>
-            <figcaption>
-                <?php if ($bProductDiscount) { ?>
-                    <span class="extra_discount">Extra Discount!</span>
-                <?php }
-                ?>
-                <?php
+
+                <figcaption>
+                    <?php if ($bProductDiscount) { ?>
+                        <span class="extra_discount">Extra Discount!</span>
+                    <?php }
+                    ?>
+                    <?php
                     if ($in_cart) {
                         include('views/cart/basket.php');
                     } else {
@@ -20,9 +20,11 @@
                         </a>
                         <?php
                     }
-                ?>
-            </figcaption>
+                    ?>
+                </figcaption>
+            </a>
         </figure>
+
         <a href="<?= _A_::$app->router()->UrlTo('product',$url_prms); ?>">
             <span class="product-category"><?= $row['pname']; ?></span>
 

@@ -2,8 +2,8 @@
     class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
 <div class="site-container">
     <?php
-        include "views/header.php";
-        $opt['p_id'] = $data['product_id'];
+    include "views/header.php";
+    $opt['p_id'] = $data['product_id'];
     ?>
     <div class="main-content main-content-shop">
         <div class="container">
@@ -16,14 +16,15 @@
                         <?php $x = 0; while ($x < $data['results_serch']) { $x++; ?>
                             <li class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
                                 <div class="product-inner">
-                                    <figure class="product-image-box">
-                                        <a href="<?= _A_::$app->router()->UrlTo('product_page', $opt); ?>">
-                                            <img width="#" height="266" src="<?= $data['filename']; ?>"
-                                                 class="attachment-shop_catalog size-shop_catalog wp-post-image"
-                                                 alt=""/>
-                                        </a>
-                                    </figure>
                                     <a href="<?= _A_::$app->router()->UrlTo('product_page', $opt); ?>">
+                                        <figure class="product-image-box">
+                                            <a href="<?= _A_::$app->router()->UrlTo('product_page', $opt); ?>">
+                                                <img width="#" height="266" src="<?= $data['filename']; ?>"
+                                                     class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                     alt=""/>
+                                            </a>
+                                        </figure>
+
                                         <span class="onsale">Sale!</span>
                                         <span
                                             class="product-category"><?= $data['product_category']; ?></span>

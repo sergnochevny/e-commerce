@@ -796,13 +796,23 @@ td.product-thumbnail img {
 .woocommerce span.extra_discount {
     background-color: #ec3d4f;
     color: #fff;
-    font-size: 12px;
-    line-height: 20px;
+    font-size: 100%;
+    line-height: 30px;
+    padding: 5px 15px;
     margin: 0;
     position: absolute;
     left: 0px;
     text-align: center;
     -webkit-font-smoothing: antialiased;
+    transition: all .5s cubic-bezier(.2,1,.25,1);
+}
+
+.woocommerce-page ul.products li.product:hover span.extra_discount {
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    transform: translateY(100%);
 }
 
 p.discount {
@@ -1413,7 +1423,8 @@ td.product-subtotal {
 .selected_item .rem_row {
     color: red;
     cursor: pointer;
-
+    font-size: 25px;
+    line-height: 39px;
 }
 
 .selected_item > input {

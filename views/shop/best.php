@@ -1,15 +1,16 @@
 <li class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
     <div class="product-inner">
         <span class="onsale">Best!</span>
-        <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
-            <?php if ($bProductDiscount) { ?>
-                <span class="extra_discount">Extra Discount!</span>
-            <?php }
-            ?>
-            <a href="<?= _A_::$app->router()->UrlTo('product',$url_prms); ?> ">
-            </a>
-            <figcaption>
-                <?php
+        <a href="<?= _A_::$app->router()->UrlTo('product',$url_prms); ?>">
+            <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
+                <?php if ($bProductDiscount) { ?>
+                    <span class="extra_discount">Extra Discount!</span>
+                <?php }
+                ?>
+                <a href="<?= _A_::$app->router()->UrlTo('product',$url_prms); ?> ">
+                </a>
+                <figcaption>
+                    <?php
                     if ($in_cart) {
                         include('views/cart/basket.php');
                     } else {
@@ -20,10 +21,10 @@
                         </a>
                         <?php
                     }
-                ?>
-            </figcaption>
-        </figure>
-        <a href="<?= _A_::$app->router()->UrlTo('product',$url_prms); ?>">
+                    ?>
+                </figcaption>
+            </figure>
+
             <span class="product-category"><?= $row['pname']; ?></span>
 
             <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>

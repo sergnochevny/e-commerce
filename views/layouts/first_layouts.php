@@ -16,13 +16,13 @@
           href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-layout.css'); ?>'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-smallscreen.css'); ?>' media='only screen and (max-width: 768px)'/>
-    <link rel='stylesheet' id='just-smartmenu-css' href='<?= _A_::$app->router()->UrlTo('views/css/jquery.smartmenus.bootstrap.css'); ?>'/>
-        <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce.css'); ?>'/>
-        <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/bootstrap.min.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce.css'); ?>'/>
+    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/bootstrap.min.css'); ?>'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/font-awesome.min.css'); ?>'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/js_composer.min.css'); ?>'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/webfont.css'); ?>'/>
+    <link rel='stylesheet' id='just-smartmenu-css' href='<?= _A_::$app->router()->UrlTo('views/css/jquery.smartmenus.bootstrap.css'); ?>'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/style-theme.css'); ?>'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/style-woocommerce.css'); ?>'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/style-shortcodes.css'); ?>'/>
