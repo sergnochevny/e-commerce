@@ -76,7 +76,7 @@
       }
     }
 
-    private function save_data() {
+    private function save() {
       include('include/post_edit_discounts_data.php');
       $date_end = strlen($date_end) > 0 ? strtotime($date_end) : 0;
       $start_date = strlen($start_date) > 0 ? strtotime($start_date) : 0;
@@ -172,9 +172,9 @@
         } catch(Exception $e) {
           $error = [$e->getMessage()];
         }
-        $this->template->vars('warning', isset($warning) ? $warning : null);
-        $this->template->vars('error', isset($error) ? $error : null);
       }
+      $this->template->vars('warning', isset($warning) ? $warning : null);
+      $this->template->vars('error', isset($error) ? $error : null);
       return $data;
     }
 
@@ -276,7 +276,7 @@
         if(!is_null(_A_::$app->post('method'))) {
           $this->filters_handling();
         } else {
-          $data = $this->save_data();
+          $data = $this->save();
           $this->form($url, $data);
         }
         exit;

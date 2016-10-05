@@ -116,7 +116,7 @@
         $title = 'CHANGE REGISTRATION DATA';
         $url = '';
         if(!is_null(_A_::$app->get('url'))) {
-          $url = _A_::$app->router()->UrlTo(base64_decode(urldecode(_A_::$app->get('url'))));
+          $url = base64_decode(urldecode(_A_::$app->get('url')));
         }
         $back_url = (strlen($url) > 0) ? $url : 'shop';
         (new Controller_Users())->edit_add_handling($action, $back_url, $title, true);

@@ -285,10 +285,10 @@
       $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);
       $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
 
-      $prms = null;
+      $prms = [];
       if(!empty(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
       $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
-      $prms = null;
+      $prms = [];
       if(!empty(_A_::$app->get('user_id'))) $prms['user_id'] = _A_::$app->get('user_id');
       $action = _A_::$app->router()->UrlTo($url, $prms);
 

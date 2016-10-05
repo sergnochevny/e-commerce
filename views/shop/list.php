@@ -1,11 +1,12 @@
 <li class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
     <div class="product-inner">
-        <?php if ($bProductDiscount) { ?>
-            <span class="extra_discount">Extra Discount!</span>
-        <?php }
-            $opt['p_id'] = $row[0];
-        ?>
+
         <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
+            <?php if ($bProductDiscount) { ?>
+                <span class="extra_discount">Extra Discount!</span>
+            <?php }
+            $opt['p_id'] = $row[0];
+            ?>
             <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt, $row['pname']); ?>">
             </a>
             <figcaption>

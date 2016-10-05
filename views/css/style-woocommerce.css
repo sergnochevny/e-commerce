@@ -1238,6 +1238,7 @@ label {
 }
 .woocommerce ul.product_list_widget li div.coverDiv {
     background-position: center center;
+    position: relative;
     background-size: cover;
     box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
     box-sizing: unset;
