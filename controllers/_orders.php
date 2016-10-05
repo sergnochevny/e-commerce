@@ -87,7 +87,7 @@
       $back_url = isset($back_url) ? _A_::$app->router()->UrlTo($back_url, $prms) : null;
       $this->get($user_id);
       $this->main->template->vars('back_url', $back_url);
-      if (Controller_Admin::is_logged()) $this->main->view_admin('orders');
+      if(Controller_Admin::is_logged()) $this->main->view_admin('orders');
       else  $this->main->view('orders');
     }
 
