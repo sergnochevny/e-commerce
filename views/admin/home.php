@@ -26,6 +26,41 @@
                         <?php } ?>
                     </select>
                 </form>
+
+                <div class="col-sm-12">
+                    <div class="row">
+                        <form action="" method="get" style="margin-bottom: 0">
+
+                            <div class="col-xs-11" style="padding-right: 0;">
+                                <div class="row">
+                                    <input type="text"
+                                           style="width: 100%; margin-bottom: 0"
+                                           value="<?= (!is_null(_A_::$app->get('orders_search_query')) ? _A_::$app->get('orders_search_query') : null) ?>"
+                                           name="orders_search_query"
+                                           class="col-lg-12"
+                                           placeholder="Search...">
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-right" style="padding-right: 0 !important;">
+                                <button title="Search"
+                                        style="height: 34px"
+                                        class="btn small"
+                                        type="submit"
+                                        name="find">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+
+                        </form>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <hr style="margin-top: 5px; margin-bottom: 10px; border-color: #ddd">
+                    </div>
+                </div>
+
                 <ul class="products">
                     <?= $list; ?>
                 </ul>

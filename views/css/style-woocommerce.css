@@ -297,7 +297,7 @@ input[type='color']:focus{
 .woocommerce .woocommerce-result-count, .woocommerce-page .woocommerce-result-count {
   text-transform: uppercase;
   color: #222;
-  margin: 0 0 30px;
+  margin: 0;
   line-height: 36px;
   border-bottom: 1px solid #ddd;
 }
@@ -316,7 +316,7 @@ input[type='color']:focus{
 /* ordering */
 .woocommerce .woocommerce-ordering {
   position: relative;
-  margin: 0 0 30px;
+  margin: 0;
 }
 .woocommerce .woocommerce-ordering select {
   border: 1px solid #222222;
