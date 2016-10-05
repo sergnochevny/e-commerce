@@ -63,33 +63,6 @@
       mail($email, $subject, $body, $headers);
     }
 
-    private function updateOrderInfo(){
-      $track_code = (string)trim(htmlspecialchars(_A_::$app->post('track_code')));
-      $status = (string)trim(htmlspecialchars(_A_::$app->post('status')));
-      $order_id = (integer)trim(htmlspecialchars(_A_::$app->post('order_id')));
-      $end_date = trim(htmlspecialchars((_A_::$app->post('end_date') != null) ? _A_::$app->get('end_date') : null));
-
-      $result = ['track_code' => $track_code, 'status' => $status, 'end_date' => $end_date, 'result' => null,];
-
-      if(Model_Order::update_order_detail_info($status, $status, $track_code, $end_date, $order_id)) {
-
-        if($result['status'] === 1) {
-
-          $user_id = Model_Order::get_user_by_order($order_id);
-          $user_data = Model_User::get_user_by_id($user_id);
-          $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
-          $subject = "Order delivery";
-          $body = 'Order №' . $order_id . ' is delivered';
-
-          $this->sendMail($user_data['email'], $subject, $body, $headers);
-        }
-        $result['result'] = 1;
-      } else {
-        $result['result'] = 0;
-      }
-      echo json_encode($result);
-    }
-
     /**
      * @export
      */
@@ -277,6 +250,37 @@
       $this->main->template->vars('order', $order);
       $this->main->template->vars('back_url', $back_url);
       $this->main->view_admin('edit');
+    }
+
+
+    /**
+     * @export
+     */
+    public function updateOrderInfo(){
+      $track_code = (string)trim(htmlspecialchars(_A_::$app->post('track_code')));
+      $status = (string)trim(htmlspecialchars(_A_::$app->post('status')));
+      $order_id = (integer)trim(htmlspecialchars(_A_::$app->post('order_id')));
+      $end_date = trim(htmlspecialchars((_A_::$app->post('end_date') != null) ? _A_::$app->post('end_date') : null));
+
+      $result = ['track_code' => $track_code, 'status' => $status, 'end_date' => $end_date, 'result' => null,];
+
+      if(Model_Order::update_order_detail_info($status, $status, $track_code, $end_date, $order_id)) {
+
+        if($result['status'] === 1) {
+
+          $user_id = Model_Order::get_user_by_order($order_id);
+          $user_data = Model_User::get_user_by_id($user_id);
+          $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
+          $subject = "Order delivery";
+          $body = 'Order №' . $order_id . ' is delivered';
+
+          $this->sendMail($user_data['email'], $subject, $body, $headers);
+        }
+        $result['result'] = 1;
+      } else {
+        $result['result'] = 0;
+      }
+      echo json_encode($result);
     }
 
   }
