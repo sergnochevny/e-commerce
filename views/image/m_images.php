@@ -28,7 +28,7 @@
     </div>
     <div class="col-sm-12 col-md-12 b_modify_images_2">
       <div class="row">
-        <div class="col-sm-12 col-md-6" style="margin-bottom: 30px">
+        <div class="col-sm-6 col-md-6" style="margin-bottom: 30px">
           <label>
 
             <input type="radio" name="images" class="images" value="2" style="display:none;"/>
@@ -51,7 +51,7 @@
           </label>
 
         </div>
-        <div class="col-sm-12 col-md-6" style="margin-bottom: 30px">
+        <div class="col-sm-6 col-md-6" style="margin-bottom: 30px">
           <label>
             <input type="radio" name="images" class="images" value="3" style="display:none;"/>
 
@@ -73,7 +73,7 @@
             </div>
           </label>
         </div>
-        <div class="col-sm-12 col-md-6"  style="margin-bottom: 30px">
+        <div class="col-sm-6 col-md-6"  style="margin-bottom: 30px">
           <label>
             <input type="radio" name="images" class="images" value="4" style="display:none;"/>
             <div class='b_modify_images_pic'
@@ -94,7 +94,7 @@
             </div>
           </label>
         </div>
-        <div class="col-sm-12 col-md-6" style="margin-bottom: 30px">
+        <div class="col-sm-6 col-md-6" style="margin-bottom: 30px">
           <label>
             <input type="radio" name="images" class="images" value="5" style="display:none;"/>
             <div class='b_modify_images_pic'

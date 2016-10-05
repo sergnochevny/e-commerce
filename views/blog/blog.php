@@ -1,15 +1,16 @@
 <body class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 <style>
     .just-posts-grid .just-post {
-        margin: 0 0 20px;
+        margin: 20px 0;
     }
 
     .just-posts-grid .just-post-image {
-        background-position: center center;
+        background-position: top center;
         background-size: cover;
         height: 200px;
         margin: 0 0 20px;
         overflow: hidden;
+        box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
     }
 
     .just-posts-grid .just-post-image a {
@@ -83,7 +84,7 @@
                                             <div class="wpb_column vc_column_container vc_col-sm-12">
                                                 <div class="wpb_wrapper">
 
-                                                    <p class="woocommerce-result-count">
+                                                    <p class="woocommerce-result-count" style="font-size: 18px;">
                                                         <?php
                                                             if (!empty(_A_::$app->get('cat'))) {
                                                                 echo 'CATEGORY: ' . $category_name . '<br/>';

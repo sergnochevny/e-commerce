@@ -78,7 +78,7 @@
                                     <div class="wpb_wrapper">
                                         <div class="just-woocommerce woocommerce columns-3 just-carousel clearfix">
 
-                                            <ul class="products owl-carousel" id="just-carousel-871">
+                                            <ul class="products owl-carousel owl-carousel owl-theme owl-loaded" id="just-carousel-871">
 
                                             </ul>
 
@@ -183,7 +183,7 @@
                                                 <div class="wpb_wrapper">
                                                     <div
                                                         class="just-woocommerce woocommerce columns-3 just-no-carousel clearfix">
-                                                        <ul class="products " id="just-carousel-560">
+                                                        <ul class="products owl-carousel owl-theme owl-loaded" id="just-carousel-560">
                                                         </ul>
                                                     </div>
                                                 </div>
