@@ -33,8 +33,8 @@
     }
 
     public function register_order($aid, $trid, $shipping_type, $shipping_cost, $on_roll,
-      $express_samples, $handling, $shipping_discount,
-      $coupon_discount, $total_discount, $taxes, $total) {
+                                   $express_samples, $handling, $shipping_discount,
+                                   $coupon_discount, $total_discount, $taxes, $total) {
       $q = "insert into fabrix_orders (" .
         "aid, trid, shipping_type, shipping_cost, on_roll," .
         " roll_cost, express_samples, on_handling, handling, shipping_discount," .
@@ -50,11 +50,11 @@
         " %01.2f)";
 
       $sSQL = sprintf($q, $aid, $trid, $shipping_type, str_replace(",", "", $shipping_cost), $on_roll, str_replace(",", "", RATE_ROLL),
-                      str_replace(",", "", $express_samples), $handling, str_replace(",", "", RATE_HANDLING), str_replace(",", "", $shipping_discount),
-                      str_replace(",", "", $coupon_discount), str_replace(",", "", $total_discount), str_replace(",", "", $taxes),
-                      str_replace(",", "", $total), time(), SAMPLES_PRICE_EXPRESS_SHIPPING, SAMPLES_PRICE_SINGLE,
-                      SAMPLES_PRICE_MULTIPLE, SAMPLES_PRICE_ADDITIONAL, SAMPLES_PRICE_WITH_PRODUCTS, SAMPLES_QTY_MULTIPLE_MIN,
-                      SAMPLES_QTY_MULTIPLE_MAX);
+        str_replace(",", "", $express_samples), $handling, str_replace(",", "", RATE_HANDLING), str_replace(",", "", $shipping_discount),
+        str_replace(",", "", $coupon_discount), str_replace(",", "", $total_discount), str_replace(",", "", $taxes),
+        str_replace(",", "", $total), time(), SAMPLES_PRICE_EXPRESS_SHIPPING, SAMPLES_PRICE_SINGLE,
+        SAMPLES_PRICE_MULTIPLE, SAMPLES_PRICE_ADDITIONAL, SAMPLES_PRICE_WITH_PRODUCTS, SAMPLES_QTY_MULTIPLE_MIN,
+        SAMPLES_QTY_MULTIPLE_MAX);
 
       $res = mysql_query($sSQL);
       if($res) return mysql_insert_id();
@@ -62,12 +62,12 @@
     }
 
     public static function insert_order_detail($order_id, $product_id, $product_number, $product_name,
-      $quantity, $price, $discount, $sale_price, $is_sample = 0) {
+                                               $quantity, $price, $discount, $sale_price, $is_sample = 0) {
       $q = "insert into  fabrix_order_details " .
         "(order_id, product_id, product_number, product_name, quantity, price, discount, sale_price, is_sample)" .
         " VALUES (%u, %u,'%s', '%s', '%s','%s', '%s', '%s', %u);";
       $sql = sprintf($q, $order_id, $product_id, $product_number, $product_name,
-                     $quantity, $price, $discount, $sale_price, $is_sample);
+        $quantity, $price, $discount, $sale_price, $is_sample);
       $res = mysql_query($sql);
       return $res;
     }
@@ -85,12 +85,11 @@
     }
 
     public static function get_order($order_id) {
-      $resulthatistim = mysql_query("select * from fabrix_orders WHERE oid='$order_id'");
-      $rowsni = mysql_fetch_array($resulthatistim);
-      return $rowsni;
+      $result = mysql_query("SELECT * FROM fabrix_orders WHERE oid = '$order_id'");
+      return mysql_fetch_array($result);
     }
 
-    public static function get_count_orders($user_id, $like=null) {
+    public static function get_count_orders($user_id, $like = null) {
 
       $q = "select";
       $q .= " COUNT(`order`.`oid`)";
@@ -98,7 +97,7 @@
       $q .= " left join `fabrix_accounts` `user` on `order`.`aid` = `user`.`aid`";
       $q .= (isset($user_id) || isset($like)) ? " where" : '';
       $q .= isset($user_id) ? " `order`.aid='$user_id'" : '';
-      if (isset($like)){
+      if(isset($like)) {
         $q .= isset($user_id) ? " and" : '';
         $q .= " (`order`.`trid` like '%$like%'";
         $q .= " or `user`.`bill_firstname` like '%$like%'";
@@ -120,7 +119,7 @@
       $q .= " left join fabrix_accounts user on o.aid = user.aid";
       $q .= (isset($user_id) || isset($like)) ? " where" : '';
       $q .= isset($user_id) ? " o.aid='$user_id'" : '';
-      if (isset($like)){
+      if(isset($like)) {
         $q .= isset($user_id) ? " and" : '';
         $q .= " (o.trid like '%$like%'";
         $q .= " or user.bill_firstname like '%$like%'";

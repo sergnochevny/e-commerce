@@ -258,10 +258,25 @@
      */
     public function edit() {
       $this->main->test_access_rights();
-      $order_id = _A_::$app->post('oid');
+      $order_id = _A_::$app->get('oid');
+      $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
       $order = Model_Order::get_order($order_id);
 
+      $prms['page'] = $page;
 
+      if(!is_null(_A_::$app->get('orders_search_query'))) {
+        $prms['orders_search_query'] = _A_::$app->get('orders_search_query');
+      }
+      if(!is_null(_A_::$app->get('page'))) {
+        $prms['page'] = _A_::$app->get('page');
+      }
+
+      $back_url = _A_::$app->router()->UrlTo('orders', $prms);
+
+
+      $this->main->template->vars('order', $order);
+      $this->main->template->vars('back_url', $back_url);
+      $this->main->view_admin('edit');
     }
 
   }
