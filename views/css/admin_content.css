@@ -3,16 +3,76 @@
 }
 
 .just-posts-grid .just-post-image {
-    background-position: center center;
-    background-size: cover;
-    height: 200px;
+    position: relative;
+    height: 220px;
     margin: 0 0 20px;
     overflow: hidden;
 }
 
+.just-post .just-post-image figure img {
+    background-position: top center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .5s ease-in-out;
+}
+
+.just-post .just-post-image {
+    transition: all .5s ease-in-out;
+    -webkit-box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
+    box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
+}
+
+.just-post:hover .just-post-image figure img {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.just-post .just-post-image figure figcaption {
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.just-post .just-post-image figure figcaption .admin-button {
+    display: inline-block;
+}
+
+.just-post:hover .just-post-image figure figcaption {
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=1)";
+    filter: alpha(opacity=1);
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.just-post:hover .just-post-image {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+
+
 .just-posts-grid .just-post-image a {
     display: block;
-    height: 200px;
+    height: 220px;
 }
 
 .just-posts-grid .just-post-detail .post-title {

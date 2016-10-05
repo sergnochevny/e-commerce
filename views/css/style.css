@@ -1452,7 +1452,7 @@ td.product-subtotal {
     -webkit-box-shadow: 0 0 5px 0 #ccc;
     -moz-box-shadow: 0 0 5px 0 #ccc;
     -o-box-shadow: 0 0 5px 0 #ccc;
-    background-size: contain !important;
+    background-size: cover !important;
 }
 
 .b_modify_images_main_pic .pic_del_images {
@@ -1573,6 +1573,7 @@ a.button-move:focus, a.button-move:hover{
     display: flex;
     flex-flow: row wrap;
 }
+
 
 /*====================MEDIA====================*/
 
