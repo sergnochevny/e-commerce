@@ -17,13 +17,12 @@
 .woocommerce-page button.button,
 .woocommerce-page input.button {
     position: relative;
-    background-color: #666;
-    border: 0 none;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    color: #fff;
-    font-size: 100%;
+    text-transform: uppercase;
+    background: #667700;
+    color: #ffffff;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px #000;
     line-height: 30px;
     padding:5px 15px;
     font-weight: 400;
@@ -36,9 +35,8 @@
 .woocommerce-page a.button:hover,
 .woocommerce-page button.button:hover,
 .woocommerce-page input.button:hover {
-    background-color: #999;
-    border-color: #999;
-    color: #fff;
+    color: #ffffff !important;
+    background: #222;
 }
 span#b_in_product {
     display: inline-block;
