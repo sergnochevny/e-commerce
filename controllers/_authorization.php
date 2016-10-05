@@ -47,11 +47,11 @@
       $prms = null;
 
       if($this->is_admin_logged()) {
-        $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin/home');
+        $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : _A_::$app->router()->UrlTo('admin/home');
         $this->redirect($url);
       }
       if($this->is_user_logged()) {
-        $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('shop');
+        $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : _A_::$app->router()->UrlTo('shop');
         $this->redirect($url);
       }
       if($this->is_set_admin_remember()) {
@@ -59,7 +59,7 @@
         if(Model_Auth::is_admin_remember($remember)) {
           $admin = Model_Auth::get_admin_data();
           _A_::$app->setSession('_a', $admin['id']);
-          $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('admin/home');
+          $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : _A_::$app->router()->UrlTo('admin/home');
           $this->redirect($url);
         }
       }
@@ -69,7 +69,7 @@
           $user = Model_Auth::get_user_data();
           _A_::$app->setSession('_', $user['aid']);
           _A_::$app->setSession('user', $user);
-          $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()->UrlTo('shop');
+          $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : _A_::$app->router()->UrlTo('shop');
           $this->redirect($url);
         }
       }

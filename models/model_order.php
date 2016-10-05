@@ -2,45 +2,6 @@
 
   class Model_Order extends Model_Model {
 
-    /**
-     * @return null|array
-     */
-    public static function getOrdersHistoryLength() {
-      $total = null;
-      $query =
-        '
-                SELECT 
-                    COUNT(`fo`.`oid`) 
-                FROM
-                    `fabrix_orders` `fo` 
-            ';
-      if($res = mysql_query($query)) {
-        $total = mysql_fetch_row($res)[0];
-      }
-      return $total;
-    }
-
-    /**
-     * @param  integer $aid
-     * @return int|null
-     */
-    public static function getOrderLength($aid) {
-      $total = null;
-      $query =
-        '
-                SELECT 
-                    COUNT(`fo`.`oid`) 
-                FROM
-                    `fabrix_orders` `fo` 
-                WHERE 
-                    `fo`.`aid` = ' . $aid . ' 
-            ';
-      if($res = mysql_query($query)) {
-        $total = mysql_fetch_row($res)[0];
-      }
-      return $total;
-    }
-
     public static function getOrderDetailInfo($arr) {
       if(isset($arr) && count($arr) === 1) {
         $result = null;
@@ -69,188 +30,6 @@
         return $result;
       }
       return false;
-    }
-
-    /**
-     * @param  array $arr
-     * @return array|null
-     */
-    public static function getUserOrdersList($arr) {
-      if(isset($arr) && count($arr) === 3) {
-
-        $data = (array)[];
-
-        $query = '
-                SELECT 
-                
-                `fo`.`oid`, 
-                `fo`.`aid`, 
-                `fo`.`trid`, 
-                `fo`.`shipping_cost`, 
-                `fo`.`handling`,
-                `fo`.`shipping_discount`,
-                
-                `fo`.`coupon_discount`, 
-                `fo`.`order_date`, 
-                `fo`.`end_date`, 
-                `fo`.`total`,
-                `fo`.`status`,
-                `fo`.`track_code`
-                
-                FROM  
-                `fabrix_orders` `fo` 
-                WHERE 
-                `fo`.`aid` = ' . $arr['aid'] . '
-                ORDER BY
-                `fo`.`order_date` DESC
-                LIMIT
-                ' . $arr['from'] . ', ' . $arr['to'] . '
-            
-            ';
-
-        if($res = mysql_query($query)) {
-          while($row = mysql_fetch_assoc($res)) {
-            $data[] = $row;
-          }
-
-          return $data;
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    }
-
-    /**
-     * @param  array $arr
-     * @return array|null
-     */
-    public static function getOrdersList($arr) {
-      if(isset($arr) && count($arr) === 2) {
-
-        $data = (array)[];
-
-        $query = '
-                SELECT
-                    `order`.`oid`,
-                    `order`.`aid`,
-                    `order`.`trid`,
-                    `order`.`order_date` AS `date`,
-                    `order`.`status`,
-                    `order`.`handling`,
-                    `order`.`track_code`,
-                    `order`.`end_date`,
-                    `order`.`total` AS `total_price`,
-                    `user`.`aid` AS `id`,
-                    CONCAT(`user`.`bill_firstname`,\' \',`user`.`bill_lastname`) AS `username`
-                
-                FROM
-                    `fabrix_orders` `order`
-                LEFT JOIN
-                    `fabrix_accounts` `user`
-                ON
-                    `order`.`aid` = `user`.`aid`
-                ORDER BY
-                    `order`.`order_date` DESC
-                LIMIT
-    
-                ' . $arr['from'] . ', ' . $arr['to'] . '
-            
-            ';
-
-        if($res = mysql_query($query)) {
-          while($row = mysql_fetch_assoc($res)) {
-            $data[] = $row;
-          }
-
-          return $data;
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    }
-
-    public static function getOrdersListLengthByQuery($like) {
-      $total = null;
-      $query =
-        '
-                SELECT 
-                     COUNT(`order`.`oid`),
-                    `order`.`aid`,
-                    `order`.`trid`,
-                    
-                     CONCAT(`user`.`bill_firstname`,\' \',`user`.`bill_lastname`)
-                FROM
-                    `fabrix_orders` `order`
-                LEFT JOIN
-                    `fabrix_accounts` `user`
-                ON
-                    `order`.`oid` = `user`.`aid`
-                WHERE
-                    (`order`.`trid` like "%' . $like . '%"
-                OR
-                    `user`.`bill_firstname` like "%' . $like . '%"
-                OR
-                    `user`.`bill_lastname` like "%' . $like . '%")
-            ';
-      if($res = mysql_query($query)) {
-        $total = mysql_fetch_row($res)[0];
-      }
-      return $total;
-    }
-
-    public static function getOrdersListByQuery($params) {
-      if(isset($params) && count($params) === 3) {
-        $data = (array)[];
-
-        $query = '
-                SELECT
-                    `order`.`oid`,
-                    `order`.`aid`,
-                    `order`.`trid`,
-                    `order`.`track_code`,
-                    `order`.`end_date`,
-                    `order`.`handling`,
-                    `order`.`order_date` AS `date`,
-                    `order`.`status`,
-                    
-                    `order`.`total` AS `total_price`,
-                    `user`.`aid` AS `id`,
-                    
-                    CONCAT(`user`.`bill_firstname`,\' \',`user`.`bill_lastname`) as username
-                    
-                    FROM
-                        `fabrix_orders` `order`
-                    LEFT JOIN
-                        `fabrix_accounts` `user`
-                    ON
-                        `order`.`aid` = `user`.`aid`
-                    WHERE
-                        (`order`.`trid` like "%' . $params['like'] . '%"
-                    OR
-                        `user`.`bill_firstname` like "%' . $params['like'] . '%"
-                    OR
-                        `user`.`bill_lastname` like "%' . $params['like'] . '%")
-                    ORDER BY
-                        `order`.`order_date` DESC
-                    LIMIT
-                        ' . $params['from'] . ', ' . $params['to'] . '
-            
-            ';
-
-        if($res = mysql_query($query)) {
-          while($row = mysql_fetch_assoc($res)) {
-            $data[] = $row;
-          }
-
-          return $data;
-        } else {
-          return null;
-        }
-      }
     }
 
     public function register_order($aid, $trid, $shipping_type, $shipping_cost, $on_roll,
@@ -308,13 +87,24 @@
     public static function get_order($order_id) {
       $resulthatistim = mysql_query("select * from fabrix_orders WHERE oid='$order_id'");
       $rowsni = mysql_fetch_array($resulthatistim);
-      $dat = gmdate("F j, Y, g:i a", $rowsni['order_date']);
-      return ['shipping_cost' => $rowsni['shipping_cost'], 'order_date' => $dat, 'handling' => $rowsni['handling'], 'shipping_discount' => $rowsni['shipping_discount'], 'coupon_discount' => $rowsni['coupon_discount'], 'total_discount' => $rowsni['total_discount'], 'taxes' => $rowsni['taxes'], 'total' => $rowsni['total']];
+      return $rowsni;
     }
 
-    public static function get_count_orders_by_user($user_id) {
+    public static function get_count_orders($user_id, $like=null) {
 
-      $result = mysql_query("SELECT COUNT(*) FROM fabrix_orders WHERE aid='$user_id'");
+      $q = "select";
+      $q .= " COUNT(`order`.`oid`)";
+      $q .= " from `fabrix_orders` `order`";
+      $q .= " left join `fabrix_accounts` `user` on `order`.`aid` = `user`.`aid`";
+      $q .= (isset($user_id) || isset($like)) ? " where" : '';
+      $q .= isset($user_id) ? " `order`.aid='$user_id'" : '';
+      if (isset($like)){
+        $q .= isset($user_id) ? " and" : '';
+        $q .= " (`order`.`trid` like '%$like%'";
+        $q .= " or `user`.`bill_firstname` like '%$like%'";
+        $q .= " or `user`.`bill_lastname`  like '%$like%')";
+      }
+      $result = mysql_query($q);
       if($result) {
         $myrow = mysql_fetch_array($result);
         return $myrow[0];
@@ -322,8 +112,23 @@
       return false;
     }
 
-    public static function get_orders_by_user($user_id, $start, $per_page, &$res_count_rows) {
-      $res = mysql_query("select * from fabrix_orders WHERE aid='$user_id' ORDER BY order_date DESC LIMIT $start,$per_page");
+    public static function get_orders($user_id, $start, $per_page, &$res_count_rows, $like = null) {
+
+      $q = "select";
+      $q .= " o.*, CONCAT(user.bill_firstname,' ',user.bill_lastname) as username";
+      $q .= " from fabrix_orders o";
+      $q .= " left join fabrix_accounts user on o.aid = user.aid";
+      $q .= (isset($user_id) || isset($like)) ? " where" : '';
+      $q .= isset($user_id) ? " o.aid='$user_id'" : '';
+      if (isset($like)){
+        $q .= isset($user_id) ? " and" : '';
+        $q .= " (o.trid like '%$like%'";
+        $q .= " or user.bill_firstname like '%$like%'";
+        $q .= " or user.bill_lastname  like '%$like%')";
+      }
+      $q .= " order by o.order_date desc limit $start,$per_page";
+
+      $res = mysql_query($q);
       if($res) {
         $rows = [];
         $res_count_rows = mysql_num_rows($res);

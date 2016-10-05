@@ -59,7 +59,7 @@
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
                 <?php
                     if (!is_null(_A_::$app->session('_a'))) {
-                        echo '<a title="" href="'._A_::$app->router()->UrlTo('orders/history').'">Orders</a>';
+                        echo '<a title="" href="'._A_::$app->router()->UrlTo('orders').'">Orders</a>';
                     }
                 ?>
             </li>

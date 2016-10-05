@@ -106,13 +106,12 @@
           if(!$this->authorize($login, $password))
             exit('Wrong Login or Password');
           $url = base64_decode(urldecode(_A_::$app->post('redirect')));
-          $url = (strlen($url) > 0) ? $url : _A_::$app->router()
-                                                      ->UrlTo('admin/home');
+          $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('admin/home');
           $this->redirect($url);
         } else {
 
-          $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : base64_encode(_A_::$app->router()
-                                                                                                       ->UrlTo('admin/home'));
+          $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') :
+            urlencode(base64_encode(_A_::$app->router()->UrlTo('admin/home')));
           $this->template->vars('redirect', $redirect);
 
           $menu = new Controller_Menu($this);
@@ -121,8 +120,8 @@
           $this->main->view_admin('admin');
         }
       } else {
-        $url = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : _A_::$app->router()
-                                                                                  ->UrlTo('admin/home');
+        $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) :
+          _A_::$app->router()->UrlTo('admin/home');
         $this->redirect($url);
       }
     }
