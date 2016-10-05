@@ -186,7 +186,7 @@
                                                         </ul>
                                                     </div>
 
-                                                    <a href="" class="just-button">More</a>
+                                                    <a href="http://iluvfabrix/shop/best" class="just-button">More</a>
                                                 </div>
                                             </div>
                                         </div>

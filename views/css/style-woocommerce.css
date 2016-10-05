@@ -16,6 +16,7 @@
 .woocommerce-page a.button,
 .woocommerce-page button.button,
 .woocommerce-page input.button {
+    position: relative;
     background-color: #666;
     border: 0 none;
     border-radius: 4px;
@@ -60,13 +61,14 @@ span#b_in_product {
     color: #fff;
 
 }
-a.back_button {
+a.back_button input.button {
+    position: relative;
     padding: 5px 10px 5px 20px !important;
 }
-a.back_button:before {
+a.back_button:after {
     content: "\0276E";
     position: absolute;
-    top: 5px;
+    top: 6px;
     left: 5px;
     font-weight: 600;
     color: #fff;

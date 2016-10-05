@@ -2,12 +2,12 @@
 echo $last ? 'last' : ''; ?> product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
     <div class="product-inner">
         <a href="<?= _A_::$app->router()->UrlTo('product',['p_id'=>$row[0]], $row['pname']); ?>">
-            <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
-                <?php if ($bProductDiscount) { ?>
-                    <span class="extra_discount">Extra Discount!</span>
-                <?php } ?>
+            <figure class="product-image-box">
+                <img src="<?= $filename; ?>" alt="">
                 <figcaption>
-
+                    <?php if ($bProductDiscount) { ?>
+                        <span class="extra_discount">Extra Discount!</span>
+                    <?php } ?>
                 </figcaption>
             </figure>
 
