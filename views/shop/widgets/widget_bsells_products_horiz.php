@@ -1,11 +1,11 @@
 <li class="<?= $first ? 'first' : '';
 echo $last ? 'last' : ''; ?> product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
     <div class="product-inner">
-        <?php if ($bProductDiscount) { ?>
-            <span class="extra_discount">Extra Discount!</span>
-        <?php } ?>
-        <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
 
+        <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
+            <?php if ($bProductDiscount) { ?>
+                <span class="extra_discount">Extra Discount!</span>
+            <?php } ?>
             <figcaption>
 
             </figcaption>
