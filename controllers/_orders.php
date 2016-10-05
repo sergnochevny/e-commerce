@@ -281,16 +281,16 @@
       if(!is_null(_A_::$app->get('user_id'))) {
         $prms['user_id'] = _A_::$app->get('user_id');
       }
-      if(!is_null(_A_::$app->get('oid'))) {
+      if(!is_null(_A_::$app->get('oid')) && !is_null(_A_::$app->get('back'))) {
         $prms['d_id'] = _A_::$app->get('oid');
         unset($prms['page']);
       }
 
       $back_url = '';
-      if(!is_null(_A_::$app->get('discount'))) {
-        $back_url = _A_::$app->router()->UrlTo('orders/history', $prms);
-      } else {
+      if(!is_null(_A_::$app->get('back')) && _A_::$app->get('back') === 'discount') {
         $back_url = _A_::$app->router()->UrlTo('discount/usage', $prms);
+      } else {
+        $back_url = _A_::$app->router()->UrlTo('orders/history', $prms);
       }
 
       $config = ['oid' => (int)$oid];
