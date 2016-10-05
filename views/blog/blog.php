@@ -7,7 +7,7 @@
     .just-posts-grid .just-post-image {
         background-position: top center;
         background-size: cover;
-        height: 200px;
+        height: 220px;
         margin: 0 0 20px;
         overflow: hidden;
         box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
@@ -15,7 +15,7 @@
 
     .just-posts-grid .just-post-image a {
         display: block;
-        height: 200px;
+        height: 220px;
     }
 
     .just-posts-grid .just-post-detail .post-title {
