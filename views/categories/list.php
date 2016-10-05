@@ -13,6 +13,8 @@
     <input type="submit" value="ADD NEW CATEGORY" class="button"/>
   </a>
 </div>
+<br/>
+<br/>
 <div>
   <table class="table table-striped table-bordered">
     <thead>
