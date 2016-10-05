@@ -758,10 +758,11 @@
         if(count($post_categories) > 0) {
           $res = mysql_query("select * from fabrix_product_categories  where pid='$p_id'");
           if($res) {
+            $result = $res;
             while($category = mysql_fetch_assoc($res)) {
-              $res = $res && mysql_query("DELETE FROM fabrix_product_categories WHERE pid = " . $category['pid'] . " and cid = " . $category['cid']);
-              $res = $res && mysql_query("update fabrix_product_categories SET display_order=display_order-1 where display_order > " . $category['display_order'] . " and cid=" . $category['cid']);
-              if(!$res) break;
+              $result = $result && mysql_query("DELETE FROM fabrix_product_categories WHERE pid = " . $category['pid'] . " and cid = " . $category['cid']);
+              $result = $result && mysql_query("update fabrix_product_categories SET display_order=display_order-1 where display_order > " . $category['display_order'] . " and cid=" . $category['cid']);
+              if(!$result) { $res = $result; break;}
             }
           }
           if($res) {
