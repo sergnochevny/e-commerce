@@ -76,13 +76,13 @@
 
     </div><!--col-2-->
     <div class="col-xs-12">
-        <p class="form-row">
+        <p class="row">
             <label class="required_field" for="editable"><strong>Content:</strong></label>
             <textarea id="editable" class="input-text" style="height: auto;" cols="12" rows="25" name="content"><?= $data['content'];?></textarea>
         </p>
     </div>
     <div class="col-xs-12">
-        <p class="form-row">
+        <p class=" row">
             <label><strong>Publish:</strong></label>
             <?= ( isset($data['status']) && $data['status'] === "publish") ? '<input id="chkML" type="checkbox" checked="checked" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>' : '<input id="chkML" type="checkbox" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>'; ?>
         </p>

@@ -1,4 +1,6 @@
 <article class="page type-page status-publish entry">
+    <br>
+    <br>
     <h1 class="entry-title">Lost Password?</h1>
 
     <div class="entry-content" style="padding-bottom: 0;">

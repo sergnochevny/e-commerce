@@ -6,7 +6,7 @@
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
 
-                <div class="col-lg-12">
+                <div class="col-sm-12">
                     <div class="row">
                         <form action="orders_history" method="get">
 

@@ -463,22 +463,25 @@
       $base_url = _A_::$app->router()->UrlTo('/');
       $items = Model_Tools::get_items_for_menu('blog_category');
       ob_start();
-      foreach($items as $item) {
-        $group_id = $item['group_id'];
-        $href = _A_::$app->router()->UrlTo('blog/admin', ['cat' => $group_id]);
-        $name = $item['name'];
+        foreach($items as $item) {
+          $group_id = $item['group_id'];
+          $href = _A_::$app->router()->UrlTo('blog/admin', ['cat' => $group_id]);
+          $name = $item['name'];
 
-        $this->template->vars('base_url', $base_url);
-        $this->template->vars('group_id', $group_id);
-        $this->template->vars('href', $href);
-        $this->template->vars('name', $name);
-        $this->template->view_layout('admin_cat_select');
-      }
-      $select_cat_option = ob_get_contents();
+          $this->template->vars('base_url', $base_url);
+          $this->template->vars('group_id', $group_id);
+          $this->template->vars('href', $href);
+          $this->template->vars('name', $name);
+          $this->template->view_layout('admin_cat_select');
+        }
+        $select_cat_option = ob_get_contents();
       ob_end_clean();
       $this->template->vars('select_cat_option', $select_cat_option);
     }
 
+    /**
+     * @export
+     */
     public function admin_posts() {
       $page = 1;
       if(!empty(_A_::$app->get('page'))) {
@@ -562,6 +565,9 @@
       }
     }
 
+    /**
+     * @export
+     */
     public function del() {
       $post_id = Model_Blog::validData(_A_::$app->get('post_id'));
       if(!empty($post_id)) {
@@ -597,9 +603,12 @@
       echo json_encode(['img' => $img, 'f_img' => $f_img]);
     }
 
+    /**
+     * @export
+     */
     public function add() {
       $this->new_prepare();
-      $this->main->view_admin('blog_new_post');
+      $this->main->view_admin('new');
     }
 
     public function get_categories($selected_categories = []) {
@@ -706,11 +715,17 @@
       return $txt;
     }
 
+    /**
+     * @export
+     */
     public function edit() {
       $this->edit_prepare();
       $this->main->view_admin('edit');
     }
 
+    /**
+     * @export
+     */
     public function save_edit() {
 
       $base_url = _A_::$app->router()->UrlTo('/');

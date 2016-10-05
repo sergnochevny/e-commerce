@@ -7,6 +7,8 @@
         <div class="row">
             <div class="col-md-12">
                 <article class="page type-page status-publish entry">
+                    <br>
+                    <br>
                     <h1 class="entry-title">Account</h1>
                     <div class="entry-content">
                         <div class="woocommerce">

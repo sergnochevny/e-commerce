@@ -18,7 +18,7 @@
 
                 <div id="customer_details" class="col2-set">
                     <div class="woocommerce">
-                        <div  id="blog_post_form"><?php include('views/blog/blog_new_post_form.php'); ?></div>
+                        <div  id="blog_post_form"><?php include('views/blog/new_form.php'); ?></div>
                     </div>
                 </div>
             </div>

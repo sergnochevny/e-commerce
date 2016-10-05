@@ -80,7 +80,7 @@ Class Model_Blog extends Model_Model
         );
     }
 
-    public function del_post($post_id)
+    public static function del_post($post_id)
     {
         $strSQL = "DELETE FROM blog_group_posts WHERE object_id = $post_id";
         mysql_query($strSQL);

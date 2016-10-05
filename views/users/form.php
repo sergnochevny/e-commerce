@@ -30,7 +30,7 @@
     ?>
     <div class="col-1">
         <hr>
-        LOGIN
+        <b>LOGIN</b>
         <hr/>
         <p class="form-row">
             <label class="required_field"><strong>Email Address:</strong></label>
@@ -50,7 +50,7 @@
                    class="input-text ">
         </p>
         <hr>
-        BILLING INFORMATION
+        <b>BILLING INFORMATION</b>
         <hr/>
         <p class="form-row">
             <label class="required_field"><strong>First Name:</strong></label>
@@ -127,11 +127,13 @@
                    class="input-text ">
         </p>
         <hr>
-        SHIPPING INFORMATION
+        <b>SHIPPING INFORMATION</b>
         <hr/>
         <p class="form-row">
-            <label><strong>Same as Billing:</strong></label>
-            <input type="checkbox" name="Same_as_billing" <?= isset($data['Same_as_billing']) ? 'checked':''?> value="1"  class="input-checkbox">
+            <label>
+                <strong>Same as Billing:</strong>
+                <input type="checkbox" name="Same_as_billing" <?= isset($data['Same_as_billing']) ? 'checked':''?> value="1"  class="input-checkbox">
+            </label>
         </p>
 
         <p class="form-row">

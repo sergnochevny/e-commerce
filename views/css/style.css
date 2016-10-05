@@ -1545,7 +1545,7 @@ input[type='text'], input[type='password'], input[type='date'], input[type='date
 .woocommerce .search_panel a.button{
     height: 36px;
     vertical-align: middle;
-    padding-top: 10px !important;
+    padding-top: 3px !important;
 }
 
 a.button-move{
