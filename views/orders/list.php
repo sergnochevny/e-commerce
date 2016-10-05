@@ -36,20 +36,25 @@
       $detail_url = _A_::$app->router()->UrlTo('orders/info', $prms);
       ?>
       <?php if($is_admin): ?>
+        <?php
+        $prms['oid'] = $row[0];
+        $edit_url = _A_::$app->router()->UrlTo('orders/edit', $prms);
+        ?>
         <tr>
           <td class="text-left" style="max-width: 360px;"><span class="cut-text-in-one-line"><?= $row['trid'] ?></span>
           </td>
           <?php if(!isset($user_id)): ?>
             <td class="text-center"><?= $row['username'] ?></td>
           <?php endif; ?>
-          <td><?= date("F m, Y", $row['order_date']) ?></td>
+          <td class="text-center"><?= date("F m, Y", $row['order_date']) ?></td>
           <td class="text-center">
             <?= $row['status'] == 0 ? '<i title="In process" class="fa fa-clock-o"></i>' : '<i title="Done" class="fa fa-check"></i>' ?>
           </td>
           <td class="text-center"><?= '$' . number_format($row['shipping_cost'],2); ?></td>
           <td class="text-center"><?= '$' . number_format($row['total_discount'],2); ?></td>
           <td class="text-center"><?= '$' . number_format($row['total'],2);?></td>
-          <td>
+          <td width="50px">
+            <a href="<?= $edit_url; ?>" title="Detail info" class="fa fa-pencil"></a>
             <a href="<?= $detail_url; ?>" title="Detail info" class="fa fa-eye"></a>
           </td>
         </tr>
