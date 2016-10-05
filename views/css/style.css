@@ -1066,7 +1066,7 @@ table.tableNoResp > tbody > tr > td {
 
 ul.products li .product-inner > a {
     display: block;
-    height: 130px;
+    height: auto;
 }
 
 .woocommerce-product-search input[type="button"]#b_search {
@@ -1653,6 +1653,23 @@ a.button-move:focus, a.button-move:hover{
     flex-flow: row wrap;
 }
 
+.just-button {
+    display: inline-block;
+    margin: 40px auto 0;
+    background: #667700;
+    padding: 14px 30px;
+    text-align: center;
+    border: none;
+    font-size: 16px;
+    font-weight: 300;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+.just-button:hover {
+    background: #222;
+    color: #ffffff !important;
+}
+
 /*====================MEDIA====================*/
 
 /*==========  Desktop First Method  ==========*/
@@ -1730,30 +1747,3 @@ a.button-move:focus, a.button-move:hover{
 
 }
 
-
-/*==========  Mobile First Method  ==========*/
-
-/* Custom, iPhone Retina */
-@media only screen and (min-width : 320px) {
-
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
-
-}
-
-/* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
-
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
-
-}

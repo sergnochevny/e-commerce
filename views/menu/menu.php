@@ -3,7 +3,7 @@
         <ul id="menu-header-menu" class="site-menu nav navbar-nav navbar-right">
 
             <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item current_page_item active">
-                <a title="" href="<?= _A_::$app->router()->UrlTo('/') ?>">Home</a>
+                <a title="Home" href="<?= _A_::$app->router()->UrlTo('/') ?>">Home</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
                 <a title="Shop" aria-haspopup="true" class="has-submenu"
@@ -22,19 +22,19 @@
                 <?= isset($blog_menu) ? $blog_menu : '';?>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="<?= _A_::$app->router()->UrlTo('newsletter') ?>">Newsletter</a>
+                <a title="Newsletter" href="<?= _A_::$app->router()->UrlTo('newsletter') ?>">Newsletter</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="<?= _A_::$app->router()->UrlTo('service') ?>">Service</a>
+                <a title="Service" href="<?= _A_::$app->router()->UrlTo('service') ?>">Service</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="<?= _A_::$app->router()->UrlTo('about') ?>">About us</a>
+                <a title="About us" href="<?= _A_::$app->router()->UrlTo('about') ?>">About us</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="<?= _A_::$app->router()->UrlTo('contact') ?>">Contact</a>
+                <a title="Contact" href="<?= _A_::$app->router()->UrlTo('contact') ?>">Contact</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a title="" href="<?= _A_::$app->router()->UrlTo('matches') ?>">Matches</a>
+                <a title="Matches" href="<?= _A_::$app->router()->UrlTo('matches') ?>">Matches</a>
             </li>
 
         </ul>

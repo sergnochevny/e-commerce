@@ -6,7 +6,8 @@ echo $last ? 'last' : ''; ?> product type-product status-publish has-post-thumbn
                 <?php if ($bProductDiscount) { ?>
                     <span class="extra_discount">Extra Discount!</span>
                 <?php } ?>
-                <figcaption></figcaption></figure>
+                <figcaption></figcaption>
+            </figure>
 
             <span class="onsale">New!</span>
             <span class="product-category"><?= $row['pname']; ?></span>
