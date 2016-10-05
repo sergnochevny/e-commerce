@@ -1574,6 +1574,11 @@ a.button-move:focus, a.button-move:hover{
     flex-flow: row wrap;
 }
 
+.woocommerce ul.products, .woocommerce-page ul.products {
+    display: flex;
+    flex-flow: row wrap;
+}
+
 .just-post .just-post-image figure {
     overflow: hidden;
     position: relative;
