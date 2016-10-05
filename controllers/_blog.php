@@ -706,6 +706,9 @@
       return $txt;
     }
 
+    /**
+     * @export
+     */
     public function edit() {
       $this->edit_prepare();
       $this->main->view_admin('edit');
