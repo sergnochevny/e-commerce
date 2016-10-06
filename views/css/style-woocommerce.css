@@ -30,6 +30,10 @@
     -moz-transition: all .3s cubic-bezier(.2,1,.25,1);
     -o-transition: all .3s cubic-bezier(.2,1,.25,1);
     transition: all .3s cubic-bezier(.2,1,.25,1);
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border: 2px solid #455600;
 }
 .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover,
 .woocommerce-page a.button:hover,
@@ -45,8 +49,8 @@ span#b_in_product {
 .woocommerce-page a.button.alt,
 .woocommerce-page button.button.alt,
 .woocommerce-page input.button.alt {
-    min-width: 170px;
-    width: 100%;
+    min-width: 187px;
+    /*width: 100%;*/
     margin-bottom: 5px;
     padding: 5px 8px;
     text-transform: uppercase;
@@ -66,7 +70,7 @@ a.back_button input.button {
 a.back_button:after {
     content: "\0276E";
     position: absolute;
-    top: 6px;
+    top: 8px;
     left: 5px;
     font-weight: 600;
     color: #fff;
@@ -81,7 +85,7 @@ a.back_button:after {
     text-transform: uppercase;
     text-align: center;
     font-size: 12px;
-    display: block;
+    display: inline-block;
     line-height: 30px;
     border-radius: 0;
     background-color: rgba(102, 119, 0, 0.8);
@@ -428,7 +432,7 @@ input[type='color']:focus{
     -o-transition: all 0.2s linear;
     -ms-transition: all 0.2s linear;
     transition: all 0.2s linear;
-    position: relative;
+    /*position: relative;*/
     /*display:block;*/
     margin: 0px;
 }
@@ -1402,4 +1406,17 @@ label {
 .big-checkbox:checked + label::after {
     font-size: 28px;
     left: 7px;
+}
+
+/*registration form*/
+
+.registration .registr-form-wrap {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.registration .registr-form-wrap .form-row {
+    width: 48%;
+    margin-right: 20px;
 }

@@ -27,11 +27,11 @@
                     </select>
                 </form>
 
-                <div class="col-sm-12">
-                    <div class="row">
-                        <hr style="margin-top: 5px; margin-bottom: 10px; border-color: #ddd">
-                    </div>
-                </div>
+<!--                <div class="col-sm-12">-->
+<!--                    <div class="row">-->
+<!--                        <hr style="margin-top: 5px; margin-bottom: 10px; border-color: #ddd">-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <ul class="products">
                     <?= $list; ?>
