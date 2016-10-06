@@ -1420,3 +1420,19 @@ label {
     width: 48%;
     margin-right: 20px;
 }
+
+@media only screen and (max-width : 992px) {
+    .registration .registr-form-wrap .form-row {
+        width: 47%;
+    }
+}
+@media only screen and (max-width : 768px) {
+    .registration .registr-form-wrap .form-row {
+        width: 45%;
+    }
+}
+@media only screen and (max-width : 480px) {
+    .registration .registr-form-wrap .form-row {
+        width: 100%;
+    }
+}
