@@ -3,8 +3,6 @@
         <div class="just-post col-xs-12" id="blog-page">
             <a href="<?= $back_url; ?>" class="button back_button">Back</a>
 
-            <br/>
-
             <h1 class="page-title"><?= $post_title; ?></h1>
 
             <?php if (isset($post_img)) { ?>

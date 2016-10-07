@@ -5,7 +5,7 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <a href="<?= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
+              <a id="back_url" href="<?= $back_url; ?>" class="button back_button">Back</a>
 
                 <div class="b_orderList_main">
                     <div class="b_orderList_date"><b>Order Date: <?php $data['order_date']; ?></b></div>

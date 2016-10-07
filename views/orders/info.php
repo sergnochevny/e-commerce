@@ -7,9 +7,7 @@
   <div class="main-content main-content-shop">
     <div class="container">
       <div id="content" class="main-content-inner" role="main">
-        <a href="<?= $back_url ?>">
-          <input type="button" value="Back" class="button">
-        </a>
+        <a href="<?= $back_url; ?>" class="button back_button">Back</a>
         <table cellspacing="0" class="shop_table shop_table_responsive proceed">
           <thead></thead>
           <tbody>

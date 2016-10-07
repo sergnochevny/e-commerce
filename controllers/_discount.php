@@ -2,21 +2,6 @@
 
   class Controller_Discount extends Controller_Controller {
 
-    private function get_list() {
-      $results = Model_Discount::getFabrixSpecialsIds();
-      if(!is_null($results)) {
-        ob_start();
-        foreach($results as $key => $row) {
-          $this->template->vars('row', $row);
-          $this->template->view_layout('row_list');
-        }
-        $list = ob_get_contents();
-        ob_end_clean();
-      }
-      $this->template->vars('list', $list);
-      $this->template->view_layout('list');
-    }
-
     private function data_usage($discount_id = null) {
       if(!empty($discount_id)) {
         ob_start();
@@ -26,9 +11,9 @@
         $date_end = $row['date_end'];
         $enabled = $row['enabled'];
         $sid = $row['sid'];
-        $enabled = $enabled == "1" ? "YES" : "NO";
-        $opt = ['oid' => $sid, 'back' => 'discount'];
-        $view_url = _A_::$app->router()->UrlTo('orders/info', $opt);
+        $enabled = (($enabled == "1") ? "YES" : "NO");
+        $prms = ['oid' => $sid, 'back' => 'discount'];
+        $view_url = _A_::$app->router()->UrlTo('orders/info', $prms);
         $hide_action = true;
         $this->template->vars('row', $row);
         $this->template->vars('coupon_code', $row['coupon_code']);
@@ -271,7 +256,6 @@
     }
 
     private function edit_add_handling($template, $url) {
-      $this->main->test_access_rights();
       if(_A_::$app->request_is_post()) {
         if(!is_null(_A_::$app->post('method'))) {
           $this->filters_handling();
@@ -348,24 +332,11 @@
     /**
      * @export
      */
-    public function discount() {
-      $this->main->test_access_rights();
-      ob_start();
-      $this->get_list();
-      $list = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('list', $list);
-      $this->main->view_admin('discounts');
-    }
-
-    /**
-     * @export
-     */
     public function del() {
       $this->main->test_access_rights();
       $id = Model_Discount::validData(_A_::$app->get('d_id'));
       if(!empty($id)) {
-        Model_Discount::del_discount($id);
+        Model_Discount::del($id);
       }
       $this->get_list();
     }
@@ -384,6 +355,7 @@
      * @export
      */
     public function edit() {
+      $this->main->test_access_rights();
       $this->edit_add_handling('edit', 'discount/edit');
     }
 
@@ -391,6 +363,7 @@
      * @export
      */
     public function add() {
+      $this->main->test_access_rights();
       $this->edit_add_handling('add', 'discount/add');
     }
   }

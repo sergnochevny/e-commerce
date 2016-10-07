@@ -217,6 +217,10 @@
       }
     }
 
+    public function request_is_ajax() {
+      return !empty($this->server('HTTP_X_REQUESTED_WITH')) && strtolower($this->server('HTTP_X_REQUESTED_WITH')) == 'xmlhttprequest';
+    }
+
     public function request_is_post() {
       return $this->server('REQUEST_METHOD') == 'POST';
     }
@@ -260,8 +264,8 @@
       return false;
     }
 
-    static public function start() {
-      spl_autoload_register([self, 'autoload']);
+    public static function start() {
+      spl_autoload_register(['self', 'autoload']);
       self::$app = new Application();
       self::$app->run();
     }

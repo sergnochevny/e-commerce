@@ -48,7 +48,7 @@
       </div>
 
       <nav role="navigation" class="paging-navigation">
-        <h4 class="sr-only">Orders history navigation</h4>
+        <h4 class="sr-only">Navigation</h4>
         <ul class='pagination'>
           <?= isset($paginator) ? $paginator : ''; ?>
         </ul>

@@ -185,12 +185,20 @@
         _A_::$app->registry()->set('action', $this->action);
 
         $controller = new $class();
-        $is_exported = boolval(preg_match('#(@export)#i', (new ReflectionClass($controller))->getMethod($this->action)->getDocComment(), $export));
-        if(!is_callable([$controller, $this->action]) || !$is_exported) {
+        $call = null;
+        $reflection = new ReflectionClass($controller);
+        if($reflection->hasMethod($this->action)){
+          if (boolval(preg_match('#(@export)#i', $reflection->getMethod($this->action)->getDocComment(), $export)))
+            if (is_callable([$controller, $this->action])) $call = $this->action;
+        } elseif(($this->controller == $this->action) && $reflection->hasMethod('index')){
+          if (boolval(preg_match('#(@export)#i', $reflection->getMethod('index')->getDocComment(), $export)))
+            if (is_callable([$controller, 'index'])) $call = 'index';
+        }
+        if(!isset($call)) {
           $main = new Controller_Main($controller);
           $main->error404();
         } else {
-          call_user_func([$controller, $this->action]);
+          call_user_func([$controller, $call]);
         }
       } catch(Exception $e) {
         (new Controller_Main())->error404($e->getMessage());

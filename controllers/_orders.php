@@ -2,45 +2,59 @@
 
   class Controller_Orders extends Controller_Controller {
 
-    private function get($user_id) {
+    protected function get_list() {
+      $any = $this->main->test_any_logged('orders');
+      $user_id = _A_::$app->get('user_id');
+      if($any == 'user') {
+        $user = Controller_User::get_from_session();
+        $user_id = $user['aid'];
+      }
+
       $is_admin = Controller_Admin::is_logged();
-      $orders_count = Model_Order::get_count_orders($user_id);
+      $total = Model_Order::get_total_count($user_id);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
       $per_page = 12;
 
-      $total = $orders_count;
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
       if($page <= 0) $page = 1;
       $start = (($page - 1) * $per_page);
-      $limit = $per_page;
-      if($total < ($start + $per_page)) $limit = $total - $start;
+
       $res_count_rows = 0;
-      $this->template->vars('user_id', $user_id);
-      if(!empty($orders_count) && ((int)$orders_count > 0)) {
-        $rows = Model_Order::get_orders($user_id, $start, $limit, $res_count_rows);
+      if(!empty($total) && ((int)$total > 0)) {
+        $rows = Model_Order::get_all($user_id, $start, $per_page, $res_count_rows);
         $this->main->template->vars('count_rows', $res_count_rows);
-        $prms = null;
+        $prms_back = $prms = null;
         if(!empty(_A_::$app->get('page'))) {
           $prms['page'] = _A_::$app->get('page');
+          $prms_back['page'] = _A_::$app->get('page');
         }
         if(!empty(_A_::$app->get('user_id'))) {
           $prms['user_id'] = _A_::$app->get('user_id');
+          $back_url = 'users';
         }
+        if(!empty(_A_::$app->get('back'))) {
+          $back_url = _A_::$app->get('back');
+        }
+        $back_url = isset($back_url) ? _A_::$app->router()->UrlTo($back_url, $prms_back) : null;
+        $this->main->template->vars('back_url', $back_url);
+
         ob_start();
+        $this->template->vars('user_id', $user_id);
         $this->template->vars('is_admin', $is_admin);
         $this->template->vars('prms', $prms);
         $this->template->vars('rows', $rows);
-        $this->template->view_layout('list');
-        $orders = ob_get_contents();
+        $this->template->view_layout('rows');
+        $list = ob_get_contents();
         ob_end_clean();
       } else {
         ob_start();
         $this->template->view_layout('not_found');
-        $orders = ob_get_contents();
+        $list = ob_get_contents();
         ob_end_clean();
       }
-      $this->main->template->vars('orders', $orders);
-      (new Controller_Paginator($this->main))->paginator($total, $page, 'orders', ($per_page != 0) ? $per_page : 1);
+      $this->main->template->vars('list', $list);
+      (new Controller_Paginator($this->main))->paginator($total, $page, 'orders', $per_page);
+      $this->template->view_layout('list');
     }
 
     private function get_details() {
@@ -94,26 +108,12 @@
      * @export
      */
     public function orders() {
-      $any = $this->main->test_any_logged('orders');
-      $user_id = _A_::$app->get('user_id');
-      if($any == 'user') {
-        $user = Controller_User::get_from_session();
-        $user_id = $user['aid'];
-      }
-      $prms = null;
-      if(!empty(_A_::$app->get('page'))) {
-        $prms['page'] = _A_::$app->get('page');
-      }
-      if(!empty(_A_::$app->get('user_id'))) {
-        $back_url = 'users';
-      }
-      if(!empty(_A_::$app->get('back'))) {
-        $back_url = $prms['back'];
-      }
-
-      $back_url = isset($back_url) ? _A_::$app->router()->UrlTo($back_url, $prms) : null;
-      $this->get($user_id);
-      $this->main->template->vars('back_url', $back_url);
+      $this->main->test_any_logged('orders');
+      ob_start();
+      $this->get_list();
+      $list = ob_get_contents();
+      ob_end_clean();
+      $this->template->vars('orders', $list);
       if(Controller_Admin::is_logged()) $this->main->view_admin('orders');
       else  $this->main->view('orders');
     }

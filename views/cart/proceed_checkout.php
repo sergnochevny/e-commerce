@@ -1,5 +1,4 @@
-<a href="<?= $back_url; ?>" class="back_button"><input type="button" value="Back" class="button"></a>
-
+<a href="<?= $back_url; ?>" class="button back_button">Back</a>
 <div class="row">
     <div class="col-md-12">
 

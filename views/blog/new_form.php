@@ -1,4 +1,4 @@
-<form method="POST" id="blog_post" action="<?= $action_url;?>" class="enquiry-form ">
+<form method="POST" id="edit_form" action="<?= $action_url;?>" class="enquiry-form ">
     <div>
         <p class="form-row">
             <?php

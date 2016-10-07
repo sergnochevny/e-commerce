@@ -10,11 +10,8 @@
   <div class="main-content main-content-shop">
     <div class="container">
       <div id="content" class="main-content-inner" role="main">
-
-        <a href="<?= $back_url; ?>" class="back_button"><input type="submit" value="Back" class="button"></a>
-
+        <a href="<?= $back_url; ?>" class="button back_button">Back</a>
         <h1 class="page-title"><?= ($type == 'add')?'ADD FABRIC':'MODIFY FABRIC'?></h1>
-
         <div id="customer_details" class="col2-set">
           <div class="woocommerce">
             <div id="form_product">
