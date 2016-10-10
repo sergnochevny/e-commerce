@@ -1374,6 +1374,7 @@ td.product-subtotal {
 
 .sel_panel .panel-footer {
     background-color: #fff;
+    text-align: center;
 }
 
 .sel_item {
@@ -1577,6 +1578,35 @@ a.button-move:focus, a.button-move:hover{
 .woocommerce ul.products, .woocommerce-page ul.products {
     display: flex;
     flex-flow: row wrap;
+}
+
+.b_modify_image_pic {
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: center;
+    justify-content: center;
+    max-height: 400px;
+    overflow: hidden;
+    -webkit-box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 15px -1px rgba(0,0,0,.2)    ;
+    box-shadow: 0 5px 15px -1px rgba(0,0,0,.2)    ;
+}
+
+.apd span {
+    display: inline-block;
+    text-transform: uppercase;
+    background: #667700;
+    color: #ffffff;
+    font-size: 13px;
+    padding: 10px 15px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px #000;
+    transition: all .3s ease-in;
+}
+
+.apd span:hover {
+    color: #ffffff !important;
+    background: #222;
 }
 
 .just-post .just-post-image figure {

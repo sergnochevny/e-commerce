@@ -454,12 +454,12 @@ a img.aligncenter {
 -------------------------------------------------------------- */
 /* top navigation */
 .header-topnav {
-    background: #222222 none repeat scroll 0 0;
-    font-size: 14px;
-    font-weight: bold;
-    height: 40px;
-    z-index: 999;
-	letter-spacing: 1px;
+  background: #222222 none repeat scroll 0 0;
+  font-size: 14px;
+  font-weight: bold;
+  height: 40px;
+  z-index: 999;
+  letter-spacing: 1px;
 }
 .header-topnav .welcome-message {
   color: #ffffff;
@@ -636,7 +636,7 @@ a img.aligncenter {
   }
 }
 .site-navigation .nav {
-   font-family: "Playfair Display",serif;
+  font-family: "Playfair Display",serif;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -854,10 +854,10 @@ a img.aligncenter {
 }
 .paging-navigation ul.pagination li .page-numbers.noclicable,
 .paging-navigation ul.pagination li .page-numbers.noclicable:hover{
-    background-color: #fff;
-    border-color: #ccc;
-    color: #ccc;
-    cursor: no-drop;
+  background-color: #fff;
+  border-color: #ccc;
+  color: #ccc;
+  cursor: no-drop;
 }
 .paging-navigation ul.pagination li .page-number-s {
   font-size: 12px;
@@ -890,7 +890,7 @@ a img.aligncenter {
   cursor: no-drop;
 }
 table.table-bordered center {    display: block;
-    min-width: 100px;}
+  min-width: 100px;}
 table.table-bordered center a{font-size: 120%;margin:0 5px;}
 /* post navigation */
 .navigation.post-navigation {
@@ -1483,8 +1483,8 @@ table.table-bordered center a{font-size: 120%;margin:0 5px;}
   background: #222222;
 }
 .footer-widgets-bottom a {
-    color: #667700;
-    text-decoration: underline;
+  color: #667700;
+  text-decoration: underline;
 }
 .footer-widgets-bottom a:hover {text-decoration: none;}
 .footer-widgets-bottom .widget .widget-title {
@@ -1504,11 +1504,11 @@ table.table-bordered center a{font-size: 120%;margin:0 5px;}
   border-bottom: none;
 }
 .footer-widgets-bottom .widget ul li a {
-    color: #999999;
-    text-decoration: none;
+  color: #999999;
+  text-decoration: none;
 }
 .footer-widgets-bottom .widget ul li a:hover {
-    color: #667700;
+  color: #667700;
 }
 .footer-widgets-bottom .widget ul ul {
   margin-top: 4px;
@@ -1684,7 +1684,7 @@ table.table-bordered center a{font-size: 120%;margin:0 5px;}
 }
 
 .contact-form {
-  padding-top: 70px;
+  padding-top: 20px;
   border-top: 1px solid #dedede;
 }
 .contact-form h2.section-title {
@@ -1701,72 +1701,104 @@ table.table-bordered center a{font-size: 120%;margin:0 5px;}
 }
 .contact-form form#contact-form .forms input[type="text"],
 .contact-form form#contact-form .forms input[type="email"],
-.contact-form form#contact-form .forms input[type="password"], 
+.contact-form form#contact-form .forms input[type="password"],
 .contact-form form#contact-form .forms select {
-    background-color: #fff;
-    border: 1px solid #b0b0b0;
-    border-radius: 4px;
-    box-shadow: 0 0 3px 1px #dbdbdb inset;
-    font-size: 12px;
-    /*height: 36px;*/
-    padding: 5px 10px;
-    width: 100%;
+  background-color: #fff;
+  border: 1px solid #b0b0b0;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 1px #dbdbdb inset;
+  font-size: 12px;
+  /*height: 36px;*/
+  padding: 5px 10px;
+  width: 100%;
 }
 .contact-form form#contact-form .forms textarea {
-    background-color: #fff;
-    border: 1px solid #b0b0b0;
-    border-radius: 4px;
-    box-shadow: 0 0 3px 1px #dbdbdb inset;
-    resize: none;
-    min-height: 100px;
-    padding: 10px;
-    font-size: 12px;
-    width: 100%;
+  background-color: #fff;
+  border: 1px solid #b0b0b0;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 1px #dbdbdb inset;
+  resize: none;
+  min-height: 100px;
+  padding: 10px;
+  font-size: 12px;
+  width: 100%;
 }
 #contactSubmit {
-    background-color: #999;
-    border: 0 none;
-    border-radius: 5px;
-    color: #fff;
-    display: block;
-    font-size: 100%;
-    height: 40px;
-    line-height: 40px;
-    margin: 0 auto;
-    width: 150px;
+  display: block;
+  height: auto;
+  margin: auto;
+  text-transform: uppercase;
+  background: #667700;
+  color: #ffffff;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 1px #000;
+  line-height: 30px;
+  padding:5px 15px;
+  font-weight: 400;
+  -webkit-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  transition: all .3s ease-in;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  border: 2px solid #455600;
 }
 #contactSubmit:hover {
-  background-color: #999;
-  border-color: #999;
+  background-color: #222;
   color: #fff;
 }
 .cart-subtotal{
-    background-color: #eeeeee;
-    border-radius: 5px 5px 0 0;
-    bottom: -2px;
-    box-shadow: 0 0 2px 0 #000;
-    display: block;
-    height: 30px;
-    padding: 0 10px;
-    position: fixed;
-    right: 25px;
-    z-index: 99;
-	/*box-shadow: 0 0 2px 0 #000;
-    -ms-transform: rotate(-90deg);
-    -webkit-transform: rotate(-90deg);
-    transform: rotate(-90deg);*/
+  background-color: #eeeeee;
+  border-radius: 5px 5px 0 0;
+  bottom: -2px;
+  box-shadow: 0 0 2px 0 #000;
+  display: block;
+  height: 30px;
+  padding: 0 10px;
+  position: fixed;
+  right: 25px;
+  z-index: 99;
+  /*box-shadow: 0 0 2px 0 #000;
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);*/
 
 }
 .productsAddBasket{
-    background-color: #667700 !important;
-    border-radius: 0 !important;
-    bottom: 0 !important;
-    height: auto !important;
-    position: absolute !important;
-    width: 100% !important;
-	left: 0 !important;
-} 
+  background-color: #667700 !important;
+  border-radius: 0 !important;
+  bottom: 0 !important;
+  height: auto !important;
+  position: absolute !important;
+  width: 100% !important;
+  left: 0 !important;
+}
 body.archive .main-content{padding-top:25px;}
+
+.left-column {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+.left-column p {
+  width: 30%;
+  margin-right: 30px;
+}
+@media only screen and (max-width : 992px) {
+  .left-column p {
+    width: 40%;
+    margin-right: 30px;
+  }
+}
+
+@media only screen and (max-width : 480px) {
+  .left-column p {
+    width: 100%;
+    margin-right: 0;
+  }
+}
 
 
 

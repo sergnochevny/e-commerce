@@ -2,14 +2,15 @@
     <div class="product-inner">
         <span class="onsale">Popular</span>
         <a href="<?= _A_::$app->router()->UrlTo('product', $url_prms); ?>">
-            <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
+            <figure class="product-image-box">
+                <img src="<?= $filename; ?>" alt="">
+                <?php if ($bProductDiscount) { ?>
+                    <span class="extra_discount">Extra Discount!</span>
+                <?php }
+                ?>
                 <a href="<?= _A_::$app->router()->UrlTo('product', $url_prms); ?>">
                 </a>
                 <figcaption>
-                    <?php if ($bProductDiscount) { ?>
-                        <span class="extra_discount">Extra Discount!</span>
-                    <?php }
-                    ?>
                     <?php
                     if ($in_cart) {
                         include('views/cart/basket.php');
