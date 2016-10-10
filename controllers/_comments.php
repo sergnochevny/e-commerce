@@ -108,7 +108,7 @@
       $this->main->view_admin('admin');
     }
 
-    public function get_list() {
+    protected function get_list() {
       $this->main->test_access_rights();
 
       $page = !empty(_A_::$app->get('page')) ? (new Model_Comments())->validData(_A_::$app->get('page')) : 1;

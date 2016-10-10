@@ -33,11 +33,31 @@
       return false;
     }
 
-    public static function getFabrixSpecialsIds() {
+    public static function get_total_count($filter = null) {
       $res = null;
-      $q = "SELECT * FROM fabrix_specials ORDER BY fabrix_specials.sid DESC";
+      $q = "SELECT COUNT(sid) FROM fabrix_specials";
+      if(isset($filter)) {
+        $q .= " WHERE";
+      }
       $result = mysql_query($q);
       if($result) {
+        $row = mysql_fetch_array($result);
+        $res = $row[0];
+      }
+      return $res;
+    }
+
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+      $res = null;
+      $q = "SELECT * FROM fabrix_specials";
+      if(isset($filter)) {
+        $q .= " WHERE";
+      }
+      $q .= " ORDER BY fabrix_specials.sid DESC";
+      $q .= " LIMIT $start, $limit";
+      $result = mysql_query($q);
+      if($result) {
+        $res_count_rows = mysql_num_rows($result);
         while($row = mysql_fetch_assoc($result)) {
           $res[] = $row;
         }
@@ -45,7 +65,8 @@
       return $res;
     }
 
-    public static function getFabrixSpecialsByID($id) {
+    public
+    static function getFabrixSpecialsByID($id) {
       $res = null;
       $q = "select * from fabrix_specials WHERE sid='" . (integer)$id . "'";
       $result = mysql_query($q);
@@ -55,7 +76,8 @@
       return $res;
     }
 
-    public static function getFabrixSpecialsUsageById($id) {
+    public
+    static function getFabrixSpecialsUsageById($id) {
       $res = null;
       $q = "select * from fabrix_specials_usage WHERE sid='" . (integer)$id . "'";
       $result = mysql_query($q);
@@ -65,7 +87,8 @@
       return $res;
     }
 
-    public static function getFabrixOrdersById($id) {
+    public
+    static function getFabrixOrdersById($id) {
       $res = null;
       $q = "select * from fabrix_orders WHERE oid='" . $id . "'";
       $result = mysql_query($q);
@@ -75,7 +98,8 @@
       return $res;
     }
 
-    public static function getFabrixAccountByOrderId($id) {
+    public
+    static function getFabrixAccountByOrderId($id) {
       $res = null;
       $q = "select * from fabrix_accounts WHERE aid='" . (integer)$id . "'";
       $result = mysql_query($q);
@@ -85,7 +109,8 @@
       return $res;
     }
 
-    public static function saveFabrixSpecialsUser($id, $users_check, $users) {
+    public
+    static function saveFabrixSpecialsUser($id, $users_check, $users) {
       $res = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='" . (integer)$id . "'");
       if($res && ($users_check == "4")) {
         foreach($users as $user_id) {
@@ -96,9 +121,10 @@
       if(!$res) throw new Exception(mysql_error());
     }
 
-    public static function saveFabrixSpecialsProducts($id, $filters, $filter_type) {
+    public
+    static function saveFabrixSpecialsProducts($id, $filters, $filter_type) {
       $res = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . (integer)$id . "'");
-      if($res && isset($filter_type)) {
+      if($res && isset($filter_type) && ($filter_type > 1)) {
         foreach($filters as $f_id) {
           $res = mysql_query("INSERT INTO  fabrix_specials_products (sid ,pid, stype)VALUES('" . (integer)$id . "',  '" . (integer)$f_id . "',  '" . (integer)$filter_type . "')");
           if(!$res) break;
@@ -107,7 +133,8 @@
       if(!$res) throw new Exception(mysql_error());
     }
 
-    public static function saveFabrixSpecial($id, $coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end) {
+    public
+    static function saveFabrixSpecial($id, $coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end) {
       if(isset($id)) {
         $res = mysql_query("UPDATE fabrix_specials SET coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check',shipping_type='$shipping_type',product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end' WHERE sid ='$id'");
       } else {
@@ -118,14 +145,16 @@
       return $res ? $id : $res;
     }
 
-    public static function del_discount($id) {
+    public
+    static function del($id) {
       mysql_query(sprintf("DELETE FROM fabrix_specials_products WHERE sid=%u", $id));
       mysql_query(sprintf("DELETE FROM fabrix_specials_users WHERE sid=%u", $id));
       mysql_query(sprintf("DELETE FROM fabrix_specials_usage WHERE sid=%u", $id));
-      mysql_query(sprintf("DELETE FROM fabrix_specials WHERE sid = %u",$id));
+      mysql_query(sprintf("DELETE FROM fabrix_specials WHERE sid = %u", $id));
     }
 
-    public static function get_filter_selected($type, &$data, $id) {
+    public
+    static function get_filter_selected($type, &$data, $id) {
       if($type == 'users') {
         $users = [];
         $users_check = $data['users_check'];
@@ -220,7 +249,8 @@
       }
     }
 
-    public static function get_filter_selected_data($type, $id) {
+    public
+    static function get_filter_selected_data($type, $id) {
       $data = [];
       switch($type) {
         case 'users':
@@ -275,7 +305,8 @@
       return $data;
     }
 
-    public static function get_filter_data($type, &$count, $start = 0, $search = null) {
+    public
+    static function get_filter_data($type, &$count, $start = 0, $search = null) {
       $filter = null;
       $FILTER_LIMIT = FILTER_LIMIT;
       $start = isset($start) ? $start : 0;
@@ -366,7 +397,8 @@
       return $filter;
     }
 
-    public static function get_discounts_data($id = null, $data = null) {
+    public
+    static function get_discounts_data($id = null, $data = null) {
       $filter_types = [1 => null, 2 => 'prod', 3 => 'cat', 4 => 'mnf'];
       if(isset($id)) {
         if(isset($data)) {

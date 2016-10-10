@@ -16,9 +16,10 @@
     $("#edit_form").on('submit', function (event) {
         event.preventDefault();
         var url = $(this).attr('action');
+        var data = new FormData(this);
         $.post(
             url,
-            $(this).serialize(),
+            data,
             function (data) {
                 $("#category_form").html(data);
             }

@@ -89,7 +89,7 @@
       return mysql_fetch_array($result);
     }
 
-    public static function get_count_orders($user_id, $like = null) {
+    public static function get_total_count($user_id, $like = null) {
 
       $q = "select";
       $q .= " COUNT(`order`.`oid`)";
@@ -111,7 +111,7 @@
       return false;
     }
 
-    public static function get_orders($user_id, $start, $per_page, &$res_count_rows, $like = null) {
+    public static function get_all($user_id, $start, $per_page, &$res_count_rows, $like = null) {
 
       $q = "select";
       $q .= " o.*, CONCAT(user.bill_firstname,' ',user.bill_lastname) as username";

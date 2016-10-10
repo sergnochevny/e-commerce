@@ -20,4 +20,4 @@
                     <a id="confirm_no"><input type="button" value="No" class="button"/></a></div>
             </div>
         </div>
-        <script src='<?= _A_::$app->router()->UrlTo('views/js/users/users.js'); ?>' type="text/javascript"></script>
+        <script src='<?= _A_::$app->router()->UrlTo('views/js/simple/simples.js'); ?>' type="text/javascript"></script>

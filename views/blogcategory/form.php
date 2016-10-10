@@ -1,5 +1,5 @@
 
-<form id="blog_category_form" action="<?= $action_url;?>"  method="post">
+<form id="edit_form" action="<?= $action_url;?>"  method="post">
     <small style="color: black; font-size: 10px;">
         Use this form to update the title and details of the offer.<br />
     </small>

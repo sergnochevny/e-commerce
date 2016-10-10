@@ -37,7 +37,7 @@
         </button>
     </div>
     <div id="blog_post_form_dialog" style="width: auto; min-height: 84px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
-        <form method="POST" id="blog_post" action="<?= $action_url; ?>" class="enquiry-form ">
+        <form method="POST" id="edit_form" action="<?= $action_url; ?>" class="enquiry-form ">
             <input type="hidden" name="title" value="">
             <input type="hidden" name="content" value="">
             <input id="img" type="hidden" name="img" value="<?= $file_img;?>"/>
