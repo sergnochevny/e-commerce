@@ -13,7 +13,8 @@
           </a>
         </div>
         <p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
-        <form class="woocommerce-ordering" method="get">
+
+        <!--form class="woocommerce-ordering" method="get">
           <?php $rows = $ProductFilterList['category_in_select']; ?>
           <select
             onChange="if(this.options[this.selectedIndex].value!=''){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}"
@@ -25,8 +26,8 @@
               </option>
             <?php } ?>
           </select>
-        </form>
-
+        </form-->
+        <?php include "views/orders/filter_form.php"; ?>
         <div class="col-sm-12">
           <div class="row">
             <hr style="margin-top: 5px; margin-bottom: 10px; border-color: #ddd">
