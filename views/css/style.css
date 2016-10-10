@@ -5,6 +5,19 @@
 
 body {
     cursor: default;
+    /*opacity: 0;*/
+    -webkit-transition: opacity .5s ease-in;
+    -moz-transition: opacity .5s ease-in;
+    -o-transition: opacity .5s ease-in;
+    transition: opacity .5s ease-in;
+}
+
+.loaded{
+    opacity: 1;
+}
+
+.leaved{
+    opacity: 0;
 }
 
 .vc_custom_1439733758005 {
