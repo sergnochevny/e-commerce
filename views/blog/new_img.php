@@ -1,5 +1,5 @@
 <div class="text-center">
-    <img src="<?= $img; ?>" width="300" height="270"/>
+    <img src="<?= $img; ?>"/>
     <input name="img" value="<?= $f_img; ?>" type="hidden"/>
 </div>
     <?php

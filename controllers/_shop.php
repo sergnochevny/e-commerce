@@ -316,7 +316,7 @@
      */
     public function last() {
       $this->template->vars('cart_enable', '_');
-      $this->show_category_list();
+      //$this->show_category_list();
       $this->product_list_by_type('last', 50);
       $this->main->template->vars('page_title', 'What\'s New');
       $this->main->view('shop');
@@ -327,7 +327,7 @@
      */
     public function specials() {
       $this->template->vars('cart_enable', '_');
-      $this->show_category_list();
+//      $this->show_category_list();
       $this->product_list_by_type('specials', 360);
       $page_title = "Limited time Specials.";
       $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates.<br>All items available on a FIRST COME, FIRST SERVED basis only.';
@@ -341,7 +341,7 @@
      */
     public function popular() {
       $this->template->vars('cart_enable', '_');
-      $this->show_category_list();
+//      $this->show_category_list();
       $this->product_list_by_type('popular', 360);
       $this->main->template->vars('page_title', 'Popular Textile');
       $this->main->view('shop');
@@ -352,7 +352,7 @@
      */
     public function best() {
       $this->template->vars('cart_enable', '_');
-      $this->show_category_list();
+//      $this->show_category_list();
       $this->product_list_by_type('best', 360);
       $this->main->template->vars('page_title', 'Best Textile');
       $this->main->view('shop');
@@ -363,7 +363,7 @@
      */
     public function bestsellers() {
       $this->template->vars('cart_enable', '_');
-      $this->show_category_list();
+//      $this->show_category_list();
       $this->product_list_by_type('bsells', 360);
       $this->main->template->vars('page_title', 'Best Sellers');
       $this->main->view('shop');
@@ -500,14 +500,14 @@
      * @export
      */
     public function widget_bsells() {
-      echo $this->widget_products('bsells', 3, 5);
+      echo $this->widget_products('bsells', 6, 5);
     }
 
     /**
      * @export
      */
     public function widget_bsells_horiz() {
-      echo $this->widget_products('bsells', 0, 3, 'widget_bsells_products_horiz');
+      echo $this->widget_products('bsells', 0, 6, 'widget_bsells_products_horiz');
     }
 
   }

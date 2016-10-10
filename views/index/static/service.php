@@ -69,30 +69,36 @@
                                 Michelle’s Fabrics. Please examine your package immediately upon receipt so as to ensure
                                 the integrity of its contents. Please contact us by email at: </p>
 
-                            <p><a href="mailto:info@iluvfabrix.com" class="copyProducts">info@iluvfabrix.com</a><br>or
+                            <p><a href="mailto:info@iluvfabrix.com" class="copyProducts">info@iluvfabrix.com</a> or
                                 phone at: <a href="tel:9155870200">(915) 587-0200</a></p>
 
-                            <h3>Contact Information</h3>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h3>Privacy Policy</h3>
 
-                            <p><strong>iluvfabrix</strong> (Division of Fabric Love LLC)<br>
-                                211 Teramar Way<br>
-                                El Paso, Texas, 79922<br>
-                                United States<br>
-                                <br>
-                                Email: <a href="mailto:info@iluvfabrix.com">info@iluvfabrix.com</a><br>
-                                Tel: <a href="tel:9155870200">(915) 587-0200</a>
-                            </p>
+                                    <p>Your personal information is never under any circumstances shared with any other
+                                        individuals or organizations.<br>
+                                        <a href="<?= _A_::$app->router()->UrlTo('privacy');?>">privacy policy</a>.
+                                    </p>
 
-                            <h3>Privacy Policy</h3>
+                                    <h3>Security Information</h3>
 
-                            <p>Your personal information is never under any circumstances shared with any other
-                                individuals or organizations.<br>
-                                <a href="<?= _A_::$app->router()->UrlTo('privacy');?>">privacy policy</a>.
-                            </p>
+                                    <p>All purchase transactions made on our site are fully and completely secured.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h3>Contact Information</h3>
 
-                            <h3>Security Information</h3>
+                                    <p><strong>iluvfabrix</strong> (Division of Fabric Love LLC)<br>
+                                        211 Teramar Way<br>
+                                        El Paso, Texas, 79922<br>
+                                        United States<br>
+                                        <br>
+                                        Email: <a href="mailto:info@iluvfabrix.com">info@iluvfabrix.com</a><br>
+                                        Tel: <a href="tel:9155870200">(915) 587-0200</a>
+                                    </p>
+                                </div>
+                            </div>
 
-                            <p>All purchase transactions made on our site are fully and completely secured.</p>
 
                             <div class="vc_row-full-width"></div>
                         </div>

@@ -430,7 +430,7 @@ input[type='color']:focus{
     -o-transition: all 0.2s linear;
     -ms-transition: all 0.2s linear;
     transition: all 0.2s linear;
-    height:100%;
+    position: relative;
     display:block;
     margin: 0px;
 }
