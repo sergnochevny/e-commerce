@@ -2,8 +2,6 @@
 
 (function ($) {
 
-    (function(){
-
         $('#formx').on('submit',
             function(event){
                 event.preventDefault();
@@ -22,7 +20,5 @@
                 });
             }
         );
-
-    }).call(this);
 
 })(jQuery);

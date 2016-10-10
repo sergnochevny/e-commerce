@@ -12,7 +12,7 @@
         }, 8000);
     }
 
-    $("#user_form").on('submit',
+    $("#edit_form").on('submit',
         function (event) {
             event.preventDefault();
             var url = $(this).attr('action');
@@ -21,14 +21,14 @@
                 url,
                 $(this).serialize(),
                 function (data) {
-                    $("#user_form_content").html(data);
+                    $("#edit_form_content").html(data);
                     $('#content').waitloader('remove');
                 }
             )
         }
     );
 
-    $("#user_form [name=country]").on('change',
+    $("#edit_form [name=country]").on('change',
         function (event) {
             event.preventDefault();
             var url = $(this).parents('form').attr('action');
@@ -48,7 +48,7 @@
         }
     );
 
-    $("#user_form [name=s_country]").on('change',
+    $("#edit_form [name=s_country]").on('change',
         function (event) {
             event.preventDefault();
             var url = $(this).parents('form').attr('action');

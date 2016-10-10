@@ -110,13 +110,12 @@
 <div class="clear"></div>
 <section class="just-posts-grid">
     <div class="just-post-row row">
-        <?= $blog_posts; ?>
-        <div class="clear"></div>
+        <?= $posts; ?>
     </div>
 </section>
 <div class="clear"></div>
 <nav role="navigation" class="paging-navigation">
-    <h4 class="sr-only">Products navigation</h4>
+    <h4 class="sr-only">Navigation</h4>
     <ul class='pagination'>
         <?= isset($paginator) ? $paginator : ''; ?>
     </ul>

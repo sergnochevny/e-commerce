@@ -5,11 +5,12 @@
     protected $main;
 
     public function __construct($main = null) {
-      if(explode('_', get_class($main))[0] == 'Controller') {
+      if( isset($main) && (explode('_', get_class($main))[0] == 'Controller')) {
         $this->main = $main;
         $this->registry = _A_::$app->registry();
         $this->template = $main->template;
       } else {
+        $this->layouts = _A_::$app->config('layouts');
         parent::__construct();
       }
     }
@@ -124,7 +125,8 @@
           $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
         }
         $this->template->vars('message', $message);
-        $this->view('message');
+        if (Controller_Admin::is_logged()) $this->view_admin('message');
+        else $this->view('message');
       }
     }
 
@@ -171,6 +173,7 @@
       header("Status: 404 Not Found");
       $this->template->controller = 'main';
 
-      $this->view('404/error');
+      if (Controller_Admin::is_logged()) $this->view_admin('404/error');
+      else $this->view('404/error');
     }
   }

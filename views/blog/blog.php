@@ -109,7 +109,7 @@
                         </div>
                     </article>
                     <nav class="paging-navigation" role="navigation">
-                        <h4 class="sr-only">Post navigation</h4>
+                        <h4 class="sr-only">Navigation</h4>
                         <ul class="pagination">
                             <?= isset($paginator) ? $paginator : ''; ?>
                         </ul>

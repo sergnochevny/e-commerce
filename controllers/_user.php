@@ -119,7 +119,7 @@
           $url = base64_decode(urldecode(_A_::$app->get('url')));
         }
         $back_url = (strlen($url) > 0) ? $url : 'shop';
-        (new Controller_Users())->edit_add_handling($action, $back_url, $title, true);
+        (new Controller_Users())->user_handling($action, $back_url, $title, true);
       } else {
         $this->redirect(_A_::$app->router()->UrlTo('authorization'));
       }
@@ -136,7 +136,7 @@
         $prms['url'] = _A_::$app->get('url');
       }
       $back_url = _A_::$app->router()->UrlTo('authorization', $prms);
-      (new Controller_Users())->edit_add_handling($action, $back_url, $title, true, true);
+      (new Controller_Users())->user_handling($action, $back_url, $title, true, true);
       $this->template->view_layout('thanx');
     }
   }

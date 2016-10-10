@@ -13,9 +13,7 @@
                 <input id="search" type="hidden" value="<?= isset($search) ? $search : '' ?>" name="s"/>
             </form>
 
-            <a id="back_url" href="<?= $back_url; ?>"
-               class="<?= isset($search) ? 'a_search' : '' ?> button back_button">Back</a><br><br>
-            <br/>
+            <a id="back_url" href="<?= $back_url; ?>" class="<?= isset($search) ? 'a_search' : '' ?> button back_button">Back</a>
 
             <div id="content" class="main-content-inner" role="main">
                 <div

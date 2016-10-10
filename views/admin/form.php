@@ -1,4 +1,4 @@
-<form id="user_form" action="<?= $action ?>" method="post">
+<form id="edit_form" action="<?= $action ?>" method="post">
 
   <h1 class="page-title"><?= $form_title ?></h1>
 

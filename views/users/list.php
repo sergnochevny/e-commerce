@@ -1,24 +1,37 @@
-<div class="text-center"><a href="<?= _A_::$app->router()->UrlTo('users/add',['page'=>$page])?>"><input type="submit" value="ADD NEW USER" class="button"/></a><br><br><br></div>
-<div class="">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th class="text-center">Id</th>
-                <th class="text-center">Email</th>
-                <th class="text-center">Name</th>
-                <th class="text-center">Date Registered</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?= $main_users_list; ?>
-        </tbody>
-    </table>
+<?php if(isset($warning)) { ?>
+  <div class="col-xs-12 alert-success danger" style="display: block;">
+    <?php
+      foreach($warning as $msg) {
+        echo $msg . "<br/>";
+      }
+    ?>
+  </div>
+<?php } ?>
+<?php if(isset($error)) { ?>
+  <div class="col-xs-12 alert-danger danger" style="display: block;">
+    <?php
+      foreach($error as $msg) {
+        echo $msg . "<br/>";
+      }
+    ?>
+  </div>
+<?php } ?>
+<?php
+  $prms = null;
+  if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
+?>
+<div class="text-center">
+  <a href="<?= _A_::$app->router()->UrlTo('users/add',$prms); ?>" data-modify class="button colour-create">
+    ADD NEW USER
+  </a>
 </div>
-<br/>
+<p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
+<div class="">
+  <?= $list; ?>
+</div>
 <nav role="navigation" class="paging-navigation">
-    <h4 class="sr-only">Products navigation</h4>
-    <ul class='pagination'>
-        <?= isset($paginator) ? $paginator : ''; ?>
-    </ul>
+  <h4 class="sr-only">Navigation</h4>
+  <ul class='pagination'>
+    <?= isset($paginator) ? $paginator : ''; ?>
+  </ul>
 </nav>

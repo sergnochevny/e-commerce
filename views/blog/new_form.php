@@ -1,4 +1,4 @@
-<form method="POST" id="blog_post" action="<?= $action_url;?>" class="enquiry-form ">
+<form method="POST" id="edit_form" action="<?= $action_url;?>" class="enquiry-form ">
     <div>
         <p class="form-row">
             <?php
@@ -69,7 +69,7 @@
             <div class="clear"></div>
         </div>
 
-        <div style="margin-top: 15px; width: 200px; height: 70px; margin-left: 125px; display: block;" class="s">
+        <div style="margin-top: 15px; width: 200px; height: 52px; display: block;" class="s">
             <div id="upload" class="apd" style="cursor: pointer;"><span>Upload file</span></div>
         </div>
         <hr/>

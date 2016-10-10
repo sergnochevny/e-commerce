@@ -1,7 +1,7 @@
 <div class="text-center">
-    <a href="<?= _A_::$app->router()->UrlTo('blogcategory/add'); ?>">
-        <input type="submit" value="ADD NEW CATEGORY" class="button"/>
-    </a><br><br><br>
+    <a href="<?= _A_::$app->router()->UrlTo('blogcategory/add'); ?>" class="button">
+        ADD NEW CATEGORY
+    </a>
 </div>
 <div class="">
     <!--col-2-->
