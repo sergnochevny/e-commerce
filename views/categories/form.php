@@ -1,24 +1,4 @@
-<?php if(isset($warning)) { ?>
-  <div class="col-xs-12 alert-success danger" style="display: none;"><?php
-      foreach($warning as $msg) {
-        echo $msg . "\r\n";
-      }
-    ?></div>
-<?php } ?>
-<?php if(isset($error)) { ?>
-  <div class="col-xs-12 alert-danger danger" style="display: none;"><?php
-      foreach($error as $msg) {
-        echo $msg . "\r\n";
-      }
-    ?></div>
-<?php } ?>
-<form id="edit_form" action="<?= $action ?>" method="post">
-  <hr>
-  <p class="text-center">
-    <small style="color: black; font-size: 13px;">
-      Use this form to add/update the title and details of the offer.<br/>
-    </small>
-  </p>
+<form id="edit_form" action="<?= $action ?>" method="post"  data-title="<?=$form_title?>">
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-10 col-xs-12">
@@ -36,10 +16,5 @@
       </div>
     </div>
   </div>
-  <br/>
-  <br/>
-  <div class="text-center"><input type="submit" value="<?= isset($cid)?'Update':'Save'?>" class="button"/>
-  </div>
-
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/simple/form.js'); ?>' type="text/javascript"></script>

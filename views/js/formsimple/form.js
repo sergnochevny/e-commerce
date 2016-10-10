@@ -17,12 +17,25 @@
         event.preventDefault();
         var url = $(this).attr('action');
         var data = new FormData(this);
-        $.post(
-            url,
-            data,
-            function (data) {
-                $("#category_form").html(data);
+        $('body').waitloader('show');
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $.when($('#form_content').html(data)).done(
+                    function () {
+                        $('body').waitloader('remove');
+                    }
+                );
+            },
+            error: function (xhr, str) {
+                alert('Error: ' + xhr.responseCode);
+                $('body').waitloader('remove');
             }
-        );
+        });
     });
 })(jQuery);

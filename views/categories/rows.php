@@ -22,8 +22,8 @@
       <td>
         <div class="text-center">
           <figcaption>
-            <a href="<?= _A_::$app->router()->UrlTo('categories/edit', $prms) ?>" class="">
-              <iclass="fa fa-pencil"></i>
+            <a data-modify href="<?= _A_::$app->router()->UrlTo('categories/edit', $prms) ?>">
+              <i class="fa fa-pencil"></i>
             </a>
             <a href="<?= _A_::$app->router()->UrlTo('categories/delete', $prms) ?>" data-delete rel="nofollow"
                class="text-danger <?= ($row[2]>0)?'disabled':''?>">
