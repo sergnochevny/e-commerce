@@ -70,21 +70,24 @@
 
     public static function save($data) {
       extract($data);
-      if(!isset($admin_id)) {
+      if(!isset($id)) {
         $q = "INSERT INTO  `fabrix_admins`" .
           "(`id` ,`login` ,`password`)" .
           "VALUES (NULL , '$login', '$password');";
       } else {
         $q = "UPDATE `fabrix_admins` SET" .
-          " `login` = '" . $login .
-          "' WHERE  `id` = $admin_id;";
+          " `login` = '" . $login;
+        if(isset($password) && (strlen($password)>0)){
+          $q .= "',`password` =  '" . $password;
+        }
+        $q .= "' WHERE  `id` = $id";
       }
       $result = mysql_query($q);
       if(!$result) throw new Exception(mysql_error());
       if(!isset($admin_id)) {
-        $admin_id = mysql_insert_id();
+        $id = mysql_insert_id();
       }
-      return $admin_id;
+      return $id;
     }
 
     public static function get_data($id) {

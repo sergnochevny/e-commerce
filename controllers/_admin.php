@@ -6,49 +6,20 @@
       return _A_::$app->session('_a');
     }
 
-    protected function load(&$data, &$error){
-
+    protected function load(&$data, &$error) {
+      $error = null;
       $data = [
         'id' => self::get_from_session(),
-        'login' => $login
+        'login' => Model_Admin::validData(!is_null(_A_::$app->post('login')) ? _A_::$app->post('login') : ''),
+        'create_password' => Model_Admin::validData(!is_null(_A_::$app->post('create_password')) ? _A_::$app->post('create_password') : ''),
+        'confirm_password' => Model_Admin::validData(!is_null(_A_::$app->post('confirm_password')) ? _A_::$app->post('confirm_password') : ''),
       ];
-      if(empty($login)) {
+      if(empty($data['login'])) {
         $error = ['Identify login field!!!'];
       } else {
-        if(Model_Admin::exist($login, $admin_id)) {
+        if(Model_Admin::exist($data['login'], $data['id'])) {
           $error[] = 'User with this login already exists!!!';
         } else {
-          if(!empty($create_password)) {
-            $salt = Model_Auth::generatestr();
-            $password = Model_Auth::hash_($create_password, $salt, 12);
-            $check = Model_Auth::check($confirm_password, $password);
-          } else $password = null;
-
-          if(is_null($password) || (isset($check) && ($password == $check))) {
-            try {
-              $admin_id = Model_admin::save($login, $password, $admin_id);
-              if(!is_null($password)) Model_User::update_password($password, $admin_id);
-              $warning = ['All data saved successfully!!!'];
-              $data = null;
-            } catch(Exception $e) {
-              $error[] = $e->getMessage();
-            }
-          } else {
-            $error = ['Password and Confirm Password must be identical!!!'];
-          }
-        }
-      }
-      if(isset($warning)) $this->template->vars('warning', $warning);
-      if(isset($error)) $this->template->vars('error', $error);
-
-      return $data;
-    }
-
-    protected function save(&$data) {
-      $error = null;
-      $result = false;
-      $error = $data = null;
-      if($this->load($data, $error)) {
           if(!empty($data['create_password'])) {
             $salt = Model_Auth::generatestr();
             $password = Model_Auth::hash_($data['create_password'], $salt, 12);
@@ -56,29 +27,19 @@
           } else $password = null;
 
           if(is_null($password) || (isset($check) && ($password == $check))) {
-            try {
-              $data['password'] = is_null($password) ? '' : $password;
-              $aid = Model_Users::save($data);
-              if(!is_null($password)) Model_User::update_password($password, $aid);
-              $warning = ['All data saved successfully!!!'];
-              $result = true;
-              $data = null;
-            } catch(Exception $e) {
-              $error[] = $e->getMessage();
-            }
+            $data['password'] = $password;
+            return true;
           } else {
-            $error[] = 'Password and Confirm Password must be identical!!!';
+            $error = ['Password and Confirm Password must be identical!!!'];
           }
+        }
       }
-      if(isset($warning)) $this->template->vars('warning', $warning);
-      if(isset($error)) $this->template->vars('error', $error);
-
-      return $result;
+      return false;
     }
 
     protected function form($url, $data = null) {
       _A_::$app->get($this->id_name, self::get_from_session());
-      parent::form();
+      parent::form($url, $data);
     }
 
     public function edit() { }

@@ -33,6 +33,16 @@
       return false;
     }
 
+    public static function get_by_id($id){
+      $res = null;
+      $q = "select * from fabrix_specials where sid = '" . $id . "'";
+      $result = mysql_query($q);
+      if($result) {
+        $res = mysql_fetch_assoc($result);
+      }
+      return $res;
+    }
+
     public static function get_total_count($filter = null) {
       $res = null;
       $q = "SELECT COUNT(sid) FROM fabrix_specials";
@@ -65,8 +75,7 @@
       return $res;
     }
 
-    public
-    static function getFabrixSpecialsByID($id) {
+    public static function getFabrixSpecialsByID($id) {
       $res = null;
       $q = "select * from fabrix_specials WHERE sid='" . (integer)$id . "'";
       $result = mysql_query($q);
@@ -76,8 +85,7 @@
       return $res;
     }
 
-    public
-    static function getFabrixSpecialsUsageById($id) {
+    public static function getFabrixSpecialsUsageById($id) {
       $res = null;
       $q = "select * from fabrix_specials_usage WHERE sid='" . (integer)$id . "'";
       $result = mysql_query($q);
@@ -87,8 +95,7 @@
       return $res;
     }
 
-    public
-    static function getFabrixOrdersById($id) {
+    public static function getFabrixOrdersById($id) {
       $res = null;
       $q = "select * from fabrix_orders WHERE oid='" . $id . "'";
       $result = mysql_query($q);
@@ -98,8 +105,7 @@
       return $res;
     }
 
-    public
-    static function getFabrixAccountByOrderId($id) {
+    public static function getFabrixAccountByOrderId($id) {
       $res = null;
       $q = "select * from fabrix_accounts WHERE aid='" . (integer)$id . "'";
       $result = mysql_query($q);
@@ -109,10 +115,9 @@
       return $res;
     }
 
-    public
-    static function saveFabrixSpecialsUser($id, $users_check, $users) {
+    public static function saveFabrixSpecialsUser($id, $user_type, $users) {
       $res = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='" . (integer)$id . "'");
-      if($res && ($users_check == "4")) {
+      if($res && ($user_type == "4")) {
         foreach($users as $user_id) {
           $res = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . (integer)$id . "',  '" . (integer)$user_id . "')");
           if(!$res) break;
@@ -121,8 +126,7 @@
       if(!$res) throw new Exception(mysql_error());
     }
 
-    public
-    static function saveFabrixSpecialsProducts($id, $filters, $filter_type) {
+    public static function saveFabrixSpecialsProducts($id, $filters, $filter_type) {
       $res = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . (integer)$id . "'");
       if($res && isset($filter_type) && ($filter_type > 1)) {
         foreach($filters as $f_id) {
@@ -133,31 +137,30 @@
       if(!$res) throw new Exception(mysql_error());
     }
 
-    public
-    static function saveFabrixSpecial($id, $coupon_code, $discount_amount, $iAmntType, $iDscntType, $users_check, $shipping_type, $sel_fabrics, $iType, $restrictions, $iReqType, $allow_multiple, $enabled, $countdown, $discount_comment1, $discount_comment2, $discount_comment3, $start_date, $date_end) {
-      if(isset($id)) {
-        $res = mysql_query("UPDATE fabrix_specials SET coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check',shipping_type='$shipping_type',product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end' WHERE sid ='$id'");
+    public static function save($data) {
+      extract($data);
+      if(isset($sid)) {
+        $res = mysql_query("UPDATE fabrix_specials SET coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$discount_type',user_type='$user_type',shipping_type='$shipping_type',product_type='$product_type',promotion_type='$iType',required_amount='$required_amount',required_type='$required_type',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$date_start', date_end='$date_end' WHERE sid ='$id'");
       } else {
-        $res = mysql_query("INSERT INTO fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$iDscntType',user_type='$users_check', shipping_type='$shipping_type', product_type='$sel_fabrics',promotion_type='$iType',required_amount='$restrictions',required_type='$iReqType',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$start_date', date_end='$date_end'");
-        if($res) $id = mysql_insert_id();
+        $res = mysql_query("INSERT INTO fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$discount_type',user_type='$user_type', shipping_type='$shipping_type', product_type='$product_type',promotion_type='$iType',required_amount='$required_amount',required_type='$required_type',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$date_start', date_end='$date_end'");
+        if($res) $sid = mysql_insert_id();
       }
       if(!$res) throw new Exception(mysql_error());
-      return $res ? $id : $res;
+      return $res ? $sid : $res;
     }
 
-    public
-    static function del($id) {
+    public static function delete($id) {
       mysql_query(sprintf("DELETE FROM fabrix_specials_products WHERE sid=%u", $id));
       mysql_query(sprintf("DELETE FROM fabrix_specials_users WHERE sid=%u", $id));
       mysql_query(sprintf("DELETE FROM fabrix_specials_usage WHERE sid=%u", $id));
       mysql_query(sprintf("DELETE FROM fabrix_specials WHERE sid = %u", $id));
     }
 
-    public
-    static function get_filter_selected($type, &$data, $id) {
+    public static function get_filter_selected($type, &$data) {
+      $id = isset($data['sid'])?$data['sid']:null;
       if($type == 'users') {
         $users = [];
-        $users_check = $data['users_check'];
+        $user_type = $data['user_type'];
         if(isset($data['users']) || isset($data['users_select']))
           $select = implode(',', array_merge(isset($data['users']) ? $data['users'] : [],
                                              isset($data['users_select']) ? $data['users_select'] : []));
@@ -165,7 +168,7 @@
           $data['users_select'] = self::get_filter_selected_data($type, $id);
           $select = implode(',', isset($data['users_select']) ? array_keys($data['users_select']) : []);
         }
-        if($users_check == '4') {
+        if($user_type == '4') {
           if(strlen($select > 1)) {
             $results = mysql_query(
               "select * from fabrix_accounts" .
@@ -179,10 +182,10 @@
         }
         $data['users'] = $users;
       } elseif($type == 'filter_products') {
-        $sel_fabrics = $data['sel_fabrics'];
+        $product_type = $data['product_type'];
         $filter_type = null;
         $filter_products = [];
-        switch($sel_fabrics) {
+        switch($product_type) {
           case 2:
             $filter_type = 'prod';
             if(isset($data['prod_select']) || isset($data['filter_products']))
@@ -249,8 +252,7 @@
       }
     }
 
-    public
-    static function get_filter_selected_data($type, $id) {
+    public static function get_filter_selected_data($type, $id) {
       $data = [];
       switch($type) {
         case 'users':
@@ -305,8 +307,7 @@
       return $data;
     }
 
-    public
-    static function get_filter_data($type, &$count, $start = 0, $search = null) {
+    public static function get_filter_data($type, &$count, $start = 0, $search = null) {
       $filter = null;
       $FILTER_LIMIT = FILTER_LIMIT;
       $start = isset($start) ? $start : 0;
@@ -397,79 +398,32 @@
       return $filter;
     }
 
-    public
-    static function get_discounts_data($id = null, $data = null) {
-      $filter_types = [1 => null, 2 => 'prod', 3 => 'cat', 4 => 'mnf'];
-      if(isset($id)) {
-        if(isset($data)) {
-        } else {
-          $result = mysql_query("select * from fabrix_specials WHERE sid='$id'");
-          $row = mysql_fetch_array($result);
-
-          $date_start = date("m/d/Y", $row['date_start']);
-          $date_endb = date("m/d/Y", $row['date_end']);
-
-          $sel_fabrics = $row['product_type'];
-          $filter_products = null;
-          $filter_type = $filter_types[$sel_fabrics];
-          if(in_array($filter_type, array_filter(array_values($filter_types)))) {
-            $filter_products = self::get_filter_selected_data($filter_type, $id);
-          }
-
-          $users_check = $row['user_type'];
-          $users = null;
-          if($users_check == '4') {
-            $users = self::get_filter_selected_data('users', $id);
-          }
-          return [
-            'discount_comment1' => $row['discount_comment1'],
-            'discount_comment2' => $row['discount_comment2'],
-            'discount_comment3' => $row['discount_comment3'],
-            'discount_amount' => $row['discount_amount'],
-            'coupon_code' => $row['coupon_code'],
-            'allow_multiple' => $row['allow_multiple'],
-            'date_start' => $date_start,
-            'date_end' => $date_endb,
-            'enabled' => $row['enabled'],
-            'filter_products' => $filter_products,
-            'filter_type' => $filter_type,
-            'users' => $users,
-            'countdown' => $row['countdown'],
-            'sel_fabrics' => $sel_fabrics,
-            'users_check' => $users_check,
-            'required_amount' => $row['required_amount'],
-            'promotion_type' => $row['promotion_type'],
-            'discount_type' => $row['discount_type'],
-            'required_type' => $row['required_type'],
-            'discount_amount_type' => $row['discount_amount_type'],
-            'iShippingType' => $row['shipping_type'],
-            'shipping_type' => $row['shipping_type']
-          ];
-        }
-      } else {
-        if(isset($data)) return $data;
-        return [
-          'discount_comment1' => '',
-          'discount_comment2' => '',
-          'discount_comment3' => '',
-          'discount_amount' => '0.00',
-          'coupon_code' => '',
-          'allow_multiple' => 0,
-          'date_start' => date("m/d/Y"),
-          'date_end' => date("m/d/Y"),
-          'enabled' => 1,
-          'filter_products' => null,
-          'filter_type' => null,
-          'users' => null,
-          'countdown' => '',
-          'sel_fabrics' => 1,
-          'users_check' => 1,
-          'required_amount' => '0.00',
-          'promotion_type' => 0,
-          'discount_type' => 1,
-          'required_type' => 0,
-          'discount_amount_type' => 0
-        ];
-      }
+    public static function get_data($id) {
+      $data = [
+        'discount_comment1' => '',
+        'discount_comment2' => '',
+        'discount_comment3' => '',
+        'discount_amount' => '0.00',
+        'coupon_code' => '',
+        'allow_multiple' => 0,
+        'date_start' => date('now'),
+        'date_end' => date('d+1'),
+        'enabled' => 1,
+        'filter_products' => null,
+        'filter_type' => null,
+        'users' => null,
+        'countdown' => '',
+        'product_type' => 1,
+        'user_type' => 1,
+        'required_amount' => '0.00',
+        'promotion_type' => 0,
+        'discount_type' => 1,
+        'required_type' => 0,
+        'discount_amount_type' => 0
+      ];
+      if(isset($id)) $data = self::get_by_id($id);
+      return $data;
     }
-  }
+
+
+}

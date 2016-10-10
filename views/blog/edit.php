@@ -82,7 +82,7 @@
                     <div class="text-center">
                         <h6>EDIT BLOG POST</h6>
                     </div>
-                    <div id="customer_details" class="col2-set">
+                    <div class="col2-set">
                         <div class="woocommerce"><div id="blog_post_form"><?php include('views/blog/edit_form.php'); ?></div></div>
                     </div>
                 </div>

@@ -2,10 +2,6 @@
 
   Class Controller_User Extends Controller_Controller {
 
-    public static function get_from_session() {
-      return _A_::$app->session('user');
-    }
-
     private function sendWelcomeEmail($email) {
       $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
       $subject = "Thank you for registering with iluvfabrix.com";
@@ -18,6 +14,10 @@
       $body .= "Once again, thank you.........and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
 
       mail($email, $subject, $body, $headers);
+    }
+
+    public static function get_from_session() {
+      return _A_::$app->session('user');
     }
 
     /**
@@ -110,8 +110,7 @@
     public function change() {
       if(self::is_logged()) {
         $user = self::get_from_session();
-        $user_id = $user['aid'];
-        _A_::$app->get('user_id', $user_id);
+        _A_::$app->get('aid', $user['aid']);
         $action = 'user/change';
         $title = 'CHANGE REGISTRATION DATA';
         $url = '';
@@ -119,7 +118,7 @@
           $url = base64_decode(urldecode(_A_::$app->get('url')));
         }
         $back_url = (strlen($url) > 0) ? $url : 'shop';
-        (new Controller_Users())->user_handling($action, $back_url, $title, true);
+        (new Controller_Users())->user_handling($data, $action, $back_url, $title, true);
       } else {
         $this->redirect(_A_::$app->router()->UrlTo('authorization'));
       }
@@ -136,7 +135,8 @@
         $prms['url'] = _A_::$app->get('url');
       }
       $back_url = _A_::$app->router()->UrlTo('authorization', $prms);
-      (new Controller_Users())->user_handling($action, $back_url, $title, true, true);
+      (new Controller_Users())->user_handling($data, $action, $back_url, $title, true, true);
       $this->template->view_layout('thanx');
+      $this->sendWelcomeEmail($data['email']);
     }
   }

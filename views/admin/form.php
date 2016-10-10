@@ -4,7 +4,7 @@
     <div class="col-xs-12 alert-success danger" style="display: none;">
       <?php
         foreach($warning as $msg) {
-          echo '<span>' . $msg . '</span>';
+          echo '<span>' . $msg . '</span><br>';
         }
       ?>
     </div>
@@ -17,7 +17,7 @@
     <div class="col-xs-12 alert-danger danger" style="display: none;">
       <?php
         foreach($error as $msg) {
-          echo $msg;
+          echo $msg.'<br>';
         }
       ?>
     </div>

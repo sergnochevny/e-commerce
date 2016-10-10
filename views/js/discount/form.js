@@ -1,16 +1,12 @@
 'use strict';
 
-// Inputmask
-(function(){
-    var discount_amount = document.getElementById('discount_amount'),
-        restrictions = document.getElementById('restrictions'),
-        float_type = '9[9].9[9]';
-
-        Inputmask({ mask: float_type, greedy: false }).mask(discount_amount).mask(restrictions);
-
-}).call(this);
-
 (function ($) {
+
+    var discount_amount = document.getElementById('discount_amount'),
+      restrictions = document.getElementById('required_amount'),
+      float_type = '9[9].9[9]';
+
+    Inputmask({ mask: float_type, greedy: false }).mask(discount_amount).mask(restrictions);
 
     $('content').waitloader('remove');
 
@@ -65,7 +61,7 @@
         });
     }
 
-    $('form#discount').on('submit',
+    $('form#edit_form').on('submit',
         function (event) {
             event.preventDefault();
             var data = new FormData(this);
@@ -75,8 +71,8 @@
     );
 
     function evFilterAdd(event) {
-        var data = new FormData($('form#discount')[0]);
-        var url = $('form#discount').attr('action');
+        var data = new FormData($('form#edit_form')[0]);
+        var url = $('form#edit_form').attr('action');
         data.append('method', $(this).attr('href'));
         var destination = $(this).attr('data-destination');
         var title = $(this).attr('data-title');
@@ -94,8 +90,8 @@
     $('#build_filter').on('click',
         function () {
             var destination = $('[data-filter=' + $(this).attr('data-destination') + ']').parent('div');
-            var data = new FormData($('form#discount')[0]);
-            var url = $('form#discount').attr('action');
+            var data = new FormData($('form#edit_form')[0]);
+            var url = $('form#edit_form').attr('action');
             data.append('method', $(this).attr('href'));
             data.append('type', $(this).attr('data-destination'));
             postdata(this, url, data, destination,
@@ -119,13 +115,13 @@
         }
     );
 
-    $('input:radio[name=sel_fabrics]').on('change',
+    $('input:radio[name=product_type]').on('change',
         function (event, stop) {
             toggleDetails(stop);
             toggleFabrics(stop);
             if ($(this).is('[data-type]')) {
-                var data = new FormData($('form#discount')[0]);
-                var url = $('form#discount').attr('action');
+                var data = new FormData($('form#edit_form')[0]);
+                var url = $('form#edit_form').attr('action');
                 data.append('method', 'filter');
                 data.append('type', $(this).attr('data-type'));
                 postdata(this, url, data, $('[data-filter-panel-fabrics]'), setEvToFilter);
@@ -133,12 +129,12 @@
         }
     );
 
-    $('input:radio[name=users_check]').on('change',
+    $('input:radio[name=user_type]').on('change',
         function (event, stop) {
             toggleUsers(stop);
             if ($(this).is('[data-type]')) {
-                var data = new FormData($('form#discount')[0]);
-                var url = $('form#discount').attr('action');
+                var data = new FormData($('form#edit_form')[0]);
+                var url = $('form#edit_form').attr('action');
                 data.append('method', 'filter');
                 data.append('type', $(this).attr('data-type'));
                 postdata(this, url, data, $('[data-filter-panel-users]'), setEvToFilter);
@@ -153,7 +149,7 @@
         }
     );
 
-    $('select#iDscntType').on('change',
+    $('select#discount_type').on('change',
         function (event, stop) {
             toggleDiscountType(stop);
         }
@@ -184,7 +180,7 @@
             }
         );
 
-        $('form#discount a[name=edit_filter]').on('click',
+        $('form#edit_form a[name=edit_filter]').on('click',
             function (event) {
                 event.preventDefault();
                 evFilterAdd.call(this, event);
@@ -211,8 +207,8 @@
     function evFilterSearch() {
         var data_destination = $(this).attr('data-destination');
         var destination = $('[data-filter=' + data_destination + ']').parent('div');
-        var data = new FormData($('form#discount')[0]);
-        var url = $('form#discount').attr('action');
+        var data = new FormData($('form#edit_form')[0]);
+        var url = $('form#edit_form').attr('action');
         if ($(this).is('[data-move]')) data.append($(this).attr('data-move'), true);
         data.append('method', $(this).attr('href'));
         data.append('type', data_destination);
@@ -234,10 +230,10 @@
     }
 
     function toggleDiscountType(stop) {
-        var dtlSlct = document.getElementById('iDscntType');
-        var dtlSlctSh = document.getElementById('iShippingType');
+        var dtlSlct = document.getElementById('discount_type');
+        var dtlSlctSh = document.getElementById('shipping_type');
         var mlt = document.getElementById('allow_multiple');
-        var fbtAll = document.getElementById('sel_fabrics1');
+        var fbtAll = document.getElementById('product_type1');
 
         if (dtlSlct.selectedIndex == 2) {
 
@@ -269,7 +265,7 @@
         var txtCoupon = document.getElementById('coupon_code');
         var chckCoupon = document.getElementById('generate_code');
         var chckMlt = document.getElementById('allow_multiple');
-        var fbtAll = document.getElementById('sel_fabrics1');
+        var fbtAll = document.getElementById('product_type1');
         if ((txtCoupon.value.length > 0) || (chckCoupon.checked)) {
             chckMlt.checked = true;
             fbtAll.checked = true;
@@ -290,8 +286,8 @@
     }
 
     function toggleDetails(stop) {
-        var fbtSlct = document.getElementById('sel_fabrics1');
-        var dtlSlct = document.getElementById('iDscntType');
+        var fbtSlct = document.getElementById('product_type1');
+        var dtlSlct = document.getElementById('discount_type');
         if (!fbtSlct.checked) {
             dtlSlct.selectedIndex = 1;
             var txtCoupon = document.getElementById('coupon_code');
@@ -308,7 +304,7 @@
 
     function toggleMultiple(stop) {
         var multiple = document.getElementById("allow_multiple");
-        var dtlSlct = document.getElementById('iDscntType');
+        var dtlSlct = document.getElementById('discount_type');
         if (!multiple.checked) {
             dtlSlct.selectedIndex = 1;
             var txtCoupon = document.getElementById('coupon_code');

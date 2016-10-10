@@ -4,22 +4,16 @@
 
     private function show_category_list() {
       $items = Model_Tools::get_items_for_menu('all');
+      $this->template->vars('items', $items, true);
       ob_start();
-      foreach($items as $item) {
-        $name = $item['cname'];
-        $href = _A_::$app->router()->UrlTo('shop', ['cat' => $item['cid']], $name);
-        $this->template->vars('href', $href, true);
-        $this->template->vars('name', $name, true);
-        $this->template->view_layout('category_item', 'menu');
-      }
-      $list_all_category = ob_get_contents();
-      $this->template->vars('list_all_category', $list_all_category, true);
+      $list = ob_get_contents();
+      $this->template->vars('list', $list, true);
       ob_end_clean();
       ob_start();
       $this->template->view_layout('categories', 'menu');
-      $list_categories = ob_get_contents();
+      $categories = ob_get_contents();
       ob_end_clean();
-      $this->main->template->vars('list_categories', $list_categories);
+      $this->main->template->vars('categories', $categories);
     }
 
     private function product_list() {

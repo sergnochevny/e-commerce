@@ -7,9 +7,9 @@
   <div class="main-content main-content-shop">
     <div class="container">
       <div id="content" class="main-content-inner" role="main">
-        <a href="<?= _A_::$app->router()->UrlTo('discount') ?>"><input type="submit" value="Back" class="button"></a>
-        <div id="customer_details">
-          <h1 class="page-title">MODIFY DISCOUNT</h1>
+        <a href="<?= $back_url; ?>" class="button back_button">Back</a>
+        <div>
+          <h1 class="page-title"><?= $form_title ?></h1>
           <div class="col-sm-12 text-center" style="margin-bottom: 25px">
             <small style="color: black; font-size: 12px;">
               Use this form to add/update discounts to the system. <br/>
@@ -21,11 +21,10 @@
               Clicking on the section title will open a help file explaining that section.
             </small>
           </div>
-          <div id="discount_form">
+          <div id="form_content">
             <?= $form; ?>
           </div>
         </div>
-        <br/>
       </div>
     </div>
   </div>

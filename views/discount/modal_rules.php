@@ -27,7 +27,7 @@
         <br /><b>NOTE: </b> All shipping discounts must be multiple discounts.
     </p>
 </div>
-<div id="restrictions" class="overlay" style="z-index: 99999999;"></div>
+<div id="required_amount" class="overlay" style="z-index: 99999999;"></div>
 <div class="popup" style="z-index: 99999999; font-size: 12px; color: black;">
     <h2>restrictions</h2>
     <p>Allows for a limit to be imposed before the promotion is applied. Generally only the Total dollar amount will be used. Purchases only applies to the Users account total, Users account total for last month promotion types, all others will only check for a number to be entered.</p>
@@ -64,12 +64,12 @@
         <br /><b>NOTE:</b> All discounts involving a coupon code are multiple discounts.
     </p>
 </div>
-<div id="start_date" class="overlay" style="z-index: 99999999;"></div>
+<div id="date_start" class="overlay" style="z-index: 99999999;"></div>
 <div class="popup" style="z-index: 99999999;">
     <h2>start date</h2>
     <p>The date the promotion takes effect (12:01 am).</p>
 </div>
-<div id="end_date" class="overlay" style="z-index: 99999999;"></div>
+<div id="date_end" class="overlay" style="z-index: 99999999;"></div>
 <div class="popup" style="z-index: 99999999;">
     <h2>end date</h2>
     <p>The date the promotion ends (11:59pm).</p>
