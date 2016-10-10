@@ -67,7 +67,7 @@
 
     public static function delete($id) {
       if(isset($id)){
-        $query = "select count(*) from fabrix_product_colours where colourId = $id";
+        $query = "SELECT COUNT(*) FROM fabrix_product_colours WHERE colourId = $id";
         $res = mysql_query($query);
         if ($res){
           $amount = mysql_fetch_array($res)[0];
