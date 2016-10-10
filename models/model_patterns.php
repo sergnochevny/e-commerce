@@ -14,14 +14,6 @@
       return $response;
     }
 
-    public static function search($condition, $range = null){
-      $response = null;
-      $query = "SELECT * FROM fabrix_patterns WHERE pattern LIKE %$condition%";
-      if(!is_null($range)){
-        $query .= " WHERE";
-      }
-    }
-
     public static function get_total_count($filter = null) {
       $response = null;
       $query = "SELECT COUNT(*) FROM fabrix_patterns";

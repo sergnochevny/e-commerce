@@ -33,6 +33,21 @@ jQuery(document).ready(function ($) {
     // });
 
 
+    $(document).on('click', '.sr-ds', function(){
+        var body = $(this).parent('.panel-heading').next('.panel-body'),
+            footer = body.next('.panel-footer');
+
+        if(!body.hasClass('hidden') && !footer.hasClass('hidden')){
+            body.addClass('hidden');
+            footer.addClass('hidden');
+            $(this).children('.fa').removeClass('fa-rotate-90');
+        }else{
+            body.removeClass('hidden');
+            footer.removeClass('hidden');
+            $(this).children('.fa').addClass('fa-rotate-90');
+        }
+    });
+
     function throwDanger(url, data, htmlData) {
         $.post(
             url,

@@ -1698,3 +1698,22 @@ input[type=reset], button[type=reset]{
     padding: 15px;
     background-color: #FFF;
 }
+
+.sr-ds{
+    font-size: .8em;
+    float: right;
+    margin-top: 5px;
+    cursor: pointer;
+    -webkit-transition: all .25s ease-in;
+    -moz-transition: all .25s ease-in;
+    -o-transition: all .25s ease-in;
+    transition: all .25s ease-in;
+}
+
+.sr-ds > .fa{
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-transition: all .125s ease;
+    -moz-transition: all .125s ease;
+    -o-transition: all .125s ease;
+    transition: all .125s ease;
+}
