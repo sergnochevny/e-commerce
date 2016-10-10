@@ -26,6 +26,46 @@
   </a>
 </div>
 <p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
+
+<div class="col-xs-12 panel panel-default search-panel">
+    <h4 class="panel-heading search-container-title"><b>Search</b></h4>
+    <form action="" class="panel-body">
+      <div class="form-row">
+        <div class="row">
+
+          <div class="col-xs-12 col-md-6">
+            <div class="row">
+              <div class="col-xs-12">
+                Pattern Name:
+              </div>
+              <div class="col-xs-12">
+                <input type="text" class="input-text" placeholder="Name like">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6">
+            <div class="row">
+              <div class="col-xs-12">
+                Contain Products:
+              </div>
+              <div class="col-xs-6">
+                <input type="text" class="input-text" placeholder="From">
+              </div>
+              <div class="col-xs-6">
+                <input type="text" class="input-text" placeholder="To">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+    <div class="panel-footer">
+      <button type="reset" class="btn">Reset</button>
+      <button type="button" class="btn pull-right">Search</button>
+    </div>
+</div>
 <div id="colours">
   <?=$list?>
 </div>
