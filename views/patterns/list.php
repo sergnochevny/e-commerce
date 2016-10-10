@@ -21,12 +21,12 @@
   if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
 ?>
 <div class="text-center">
-  <a href="<?= _A_::$app->router()->UrlTo('manufacturers/add',$prms); ?>" data-modify class="button">
-    ADD NEW MANUFACTURER
+  <a href="<?= _A_::$app->router()->UrlTo('patterns/add',$prms); ?>" data-modify class="button colour-create">
+    ADD NEW PATTERN
   </a>
 </div>
 <p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
-<div id="manufacturers">
+<div id="colours">
   <?=$list?>
 </div>
 <nav class="paging-navigation" role="navigation">

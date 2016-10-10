@@ -18,6 +18,9 @@
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
                             <a title="Colors" href="<?= _A_::$app->router()->UrlTo('colours');?>">Colours</a>
                         </li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                            <a title="Colors" href="<?= _A_::$app->router()->UrlTo('patterns');?>">Patterns</a>
+                        </li>
                     </ul>
                 <?php } ?>
             </li>

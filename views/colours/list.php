@@ -20,12 +20,12 @@
   $prms = null;
   if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
 ?>
-<p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
 <div class="text-center">
   <a href="<?= _A_::$app->router()->UrlTo('colours/add',$prms); ?>" data-modify class="button colour-create">
     ADD NEW COLOUR
   </a>
 </div>
+<p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
 <div id="colours">
   <?=$list?>
 </div>
