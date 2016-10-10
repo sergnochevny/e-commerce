@@ -3,9 +3,8 @@
 
         $('#modal .save-data').on('click',
             function(event){
-                event.preventDefault();
-                $('#edit_form').trigger('submit');
                 $('#modal .save-data').off();
+                $('#edit_form').trigger('submit');
             }
         );
 
@@ -19,7 +18,6 @@
                 $('body').waitloader('show');
                 var url = $(this).attr('action');
                 var data = new FormData(this);
-                $('#modal').modal('hide');
                 $.ajax({
                     type: 'POST',
                     url: url,
@@ -28,8 +26,11 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        $.when($('#content').html(data)).done(
+                        $.when(
+                            $('#content').html(data)
+                        ).done(
                             function () {
+                                debugger;
                                 $('body').waitloader('remove');
                             }
                         );

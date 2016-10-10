@@ -48,14 +48,9 @@
           $error[] = 'User with this login already exists!!!';
         } else {
           if(!empty($create_password)) {
-            $password = $create_password;
-            if($confirm_password == $create_password) {
-              $salt = Model_Auth::generatestr();
-              $password = Model_Auth::hash_($create_password, $salt, 12);
-              $check = Model_Auth::check($confirm_password, $password);
-            } else {
-              $error = ['Password and Confirm Password must be identical!!!'];
-            }
+            $salt = Model_Auth::generatestr();
+            $password = Model_Auth::hash_($create_password, $salt, 12);
+            $check = Model_Auth::check($confirm_password, $password);
           } else $password = null;
 
           if(is_null($password) || (isset($check) && ($password == $check))) {

@@ -132,13 +132,13 @@
             exit();
           }
           $email = _A_::$app->post('login');
-          if(!Model_User::user_exist($email)) {
+          if(!Model_User::exist($email)) {
             $error = ['Wrong Email(Login) or this Email is not registered.'];
             $this->main->template->vars('error', $error);
             $this->lost_password_form();
             exit();
           }
-          $user = Model_User::get_user_by_email($email);
+          $user = Model_User::get_by_email($email);
           $user_id = $user['aid'];
           $date = date('Y-m-d H:i:s', time());
           $remind = Model_Auth::generate_hash($date);
@@ -156,8 +156,8 @@
           $user_id = _A_::$app->get('user_id');
           $remind = _A_::$app->get('remind');
           if(isset($remind)) {
-            if(Model_User::user_exist(null, $user_id)) {
-              $user = Model_User::get_user_by_id($user_id);
+            if(Model_User::exist(null, $user_id)) {
+              $user = Model_Users::get_by_id($user_id);
               if(isset($user)) {
                 $result = true;
                 $time = strtotime($user['remind_time']);
@@ -224,7 +224,7 @@
           if(isset($remind)) {
             $remind = base64_decode(urldecode($remind));
             if(Model_User::remind_exist($remind)) {
-              $user = Model_User::get_user_by_remind($remind);
+              $user = Model_User::get_by_remind($remind);
               if(isset($user)) {
                 $user_id = $user['aid'];
                 $time = strtotime($user['remind_time']);
