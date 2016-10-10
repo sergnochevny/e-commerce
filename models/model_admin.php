@@ -2,34 +2,43 @@
 
   Class Model_Admin extends Model_Model {
 
-    public static function get_total_count() {
-      $total = 0;
-      $q_total = "SELECT COUNT(*) FROM fabrix_admins";
-
-      if($res = mysql_query($q_total)) {
-        $total = mysql_fetch_row($res)[0];
+    public static function get_total_count($filter = null) {
+      $response = 0;
+      $query = "SELECT COUNT(*) FROM fabrix_admins";
+      if(isset($filter)) {
+        $query .= " WHERE";
       }
-
-      return $total;
+      if($result = mysql_query($query)) {
+        $response = mysql_fetch_row($result)[0];
+      }
+      return $response;
     }
 
-    public static function get_list($start, $limit) {
-      $list = [];
-      $q = "SELECT * FROM fabrix_admins ORDER BY id LIMIT " . $start . ", " . $limit;
-      if($res = mysql_query($q)) {
-        while($row = mysql_fetch_array($res)) {
-          $list[] = $row;
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+      $response = null;
+      $query = "SELECT * ";
+      $query .= " FROM fabrix_admins";
+      if(isset($filter)) {
+        $query .= " WHERE";
+      }
+      $query .= " LIMIT $start, $limit";
+
+      if($result = mysql_query($query)) {
+        $res_count_rows = mysql_num_rows($result);
+        while($row = mysql_fetch_array($result)) {
+          $response[] = $row;
         }
       }
-      return $list;
+
+      return $response;
     }
 
-    public static function del($admin_id) {
-      $strSQL = "DELETE FROM fabrix_admins WHERE id = $admin_id";
+    public static function delete($id) {
+      $strSQL = "DELETE FROM fabrix_admins WHERE id = $id";
       mysql_query($strSQL);
     }
 
-    public static function is_exist($login = null, $id = null) {
+    public static function exist($login = null, $id = null) {
       if(is_null($login) && is_null($id)) {
         throw new ErrorException('Both parameters cannot be empty!');
       }
@@ -54,12 +63,13 @@
       return $user;
     }
 
-    public static function update_password($password, $admin_id) {
-      $result = mysql_query("UPDATE `fabrix_admins` SET `password` =  '$password' WHERE  `id` =$admin_id;");
+    public static function update_password($password, $id) {
+      $result = mysql_query("UPDATE `fabrix_admins` SET `password` =  '$password' WHERE  `id` =$id;");
       if(!$result) throw new Exception(mysql_error());
     }
 
-    public static function save($login, $password, $admin_id) {
+    public static function save($data) {
+      extract($data);
       if(!isset($admin_id)) {
         $q = "INSERT INTO  `fabrix_admins`" .
           "(`id` ,`login` ,`password`)" .
@@ -77,18 +87,17 @@
       return $admin_id;
     }
 
-    public static function get_admin_data($admin_id) {
-      if(isset($admin_id)) {
-        $rowsni = self::get_by_id($admin_id);
+    public static function get_data($id) {
+      $data = [
+        'login' => '',
+      ];
+      if(isset($id)) {
+        $rowsni = self::get_by_id($id);
         if(isset($rowsni)) {
           $data = [
             'login' => $rowsni['login'],
           ];
         }
-      } else {
-        $data = [
-          'login' => '',
-        ];
       }
       return $data;
     }
