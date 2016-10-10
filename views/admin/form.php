@@ -1,33 +1,33 @@
+<?php
+  if(isset($warning)) {
+    ?>
+    <div class="col-xs-12 alert-success danger" style="display: none;">
+      <?php
+        foreach($warning as $msg) {
+          echo '<span>' . $msg . '</span>';
+        }
+      ?>
+    </div>
+    <?php
+  }
+?>
+<?php
+  if(isset($error)) {
+    ?>
+    <div class="col-xs-12 alert-danger danger" style="display: none;">
+      <?php
+        foreach($error as $msg) {
+          echo $msg;
+        }
+      ?>
+    </div>
+    <?php
+  }
+?>
 <form id="edit_form" action="<?= $action ?>" method="post">
 
   <h1 class="page-title"><?= $form_title ?></h1>
 
-  <?php
-    if(isset($warning)) {
-      ?>
-      <div class="col-xs-12 alert-success danger" style="display: none;">
-        <?php
-          foreach($warning as $msg) {
-            echo '<span>' . $msg . '</span>';
-          }
-        ?>
-      </div>
-      <?php
-    }
-  ?>
-  <?php
-    if(isset($error)) {
-      ?>
-      <div class="col-xs-12 alert-danger danger" style="display: none;">
-        <?php
-          foreach($error as $msg) {
-            echo $msg;
-          }
-        ?>
-      </div>
-      <?php
-    }
-  ?>
   <div class="col-1">
     <p class="form-row">
       <label class="required_field"><strong>Login:</strong></label>
@@ -52,4 +52,4 @@
   </div>
 </form>
 <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/') ?>">
-<script src='<?= _A_::$app->router()->UrlTo('views/js/users/form.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.js'); ?>' type="text/javascript"></script>

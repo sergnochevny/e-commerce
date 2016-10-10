@@ -51,37 +51,37 @@
     <hr/>
     <p class="form-row">
       <label class="required_field"><strong>First Name:</strong></label>
-      <input type="text" name="first_name" value="<?= $data['bill_firstname'] ?>"
+      <input type="text" name="bill_firstname" value="<?= $data['bill_firstname'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong>Last Name:</strong></label>
-      <input type="text" name="last_name" value="<?= $data['bill_lastname'] ?>"
+      <input type="text" name="bill_lastname" value="<?= $data['bill_lastname'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label><strong>Organization:</strong></label>
-      <input type="text" name="organization" value="<?= $data['bill_organization'] ?>"
+      <input type="text" name="bill_organization" value="<?= $data['bill_organization'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong> Address:</strong></label>
-      <input type="text" name="address" value="<?= $data['bill_address1'] ?>"
+      <input type="text" name="bill_address1" value="<?= $data['bill_address1'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
-      <input type="text" name="address2" value="<?= $data['bill_address2'] ?>"
+      <input type="text" name="bill_address2" value="<?= $data['bill_address2'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong> Country:</strong></label>
-      <select name="country" value="<?= $data['bill_country'] ?>" class="input-text ">
-        <option <?= (isset($data['bill_country']) && !empty($data['bill_country']{0})) ? '' : 'selected' ?> disabled>
+      <select data-change-province data-destination="bill_province" name="bill_country" value="<?= $data['bill_country'] ?>" class="input-text ">
+        <option <?= (isset($data['bill_country']) && !empty($data['bill_country'])) ? '' : 'selected' ?> disabled>
           Select Country
         </option>
         <?= isset($data['bill_list_countries']) ? $data['bill_list_countries'] : '' ?>
@@ -90,7 +90,7 @@
 
     <p class="form-row">
       <label><strong> Province/State:</strong></label>
-      <select name="province" value="<?= $data['bill_province'] ?>" class="input-text ">
+      <select name="bill_province" value="<?= $data['bill_province'] ?>" class="input-text ">
         <option <?= (isset($data['bill_province']) && !empty($data['bill_province']{0})) ? '' : 'selected' ?> disabled>
           Select Province
         </option>
@@ -100,31 +100,31 @@
 
     <p class="form-row">
       <label><strong> City:</strong></label>
-      <input type="text" name="city" value="<?= $data['bill_city'] ?>"
+      <input type="text" name="bill_city" value="<?= $data['bill_city'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong> Postal/Zip Code:</strong></label>
-      <input type="text" name="zip" value="<?= $data['bill_postal'] ?>"
+      <input type="text" name="bill_postal" value="<?= $data['bill_postal'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong> Telephone:</strong></label>
-      <input type="text" name="telephone" value="<?= $data['bill_phone'] ?>"
+      <input type="text" name="bill_phone" value="<?= $data['bill_phone'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label><strong> Fax:</strong></label>
-      <input type="text" name="fax" value="<?= $data['bill_fax'] ?>"
+      <input type="text" name="bill_fax" value="<?= $data['bill_fax'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label><strong> Email:</strong></label>
-      <input type="text" name="bil_email" value="<?= $data['bill_email'] ?>"
+      <input type="text" name="bill_email" value="<?= $data['bill_email'] ?>"
              class="input-text ">
     </p>
     <hr>
@@ -133,45 +133,45 @@
     <p class="form-row">
       <label>
         <strong>Same as Billing:</strong>
-        <input type="checkbox" name="Same_as_billing" <?= isset($data['Same_as_billing']) ? 'checked' : '' ?> value="1"
+        <input type="checkbox" name="ship_as_billing" <?= isset($data['ship_as_billing']) ? 'checked' : '' ?> value="1"
                class="input-checkbox">
       </label>
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong> First Name:</strong></label>
-      <input type="text" name="s_first_name" value="<?= $data['ship_firstname'] ?>"
+      <input type="text" name="ship_firstname" value="<?= $data['ship_firstname'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong> Last Name:</strong></label>
-      <input type="text" name="s_last_name" value="<?= $data['ship_lastname'] ?>"
+      <input type="text" name="ship_lastname" value="<?= $data['ship_lastname'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label><strong> Organization:</strong></label>
-      <input type="text" name="s_organization"
+      <input type="text" name="ship_organization"
              value="<?= $data['ship_organization'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong>Address:</strong></label>
-      <input type="text" name="s_address" value="<?= $data['ship_address1'] ?>"
+      <input type="text" name="ship_address1" value="<?= $data['ship_address1'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
-      <input type="text" name="s_address2" value="<?= $data['ship_address2'] ?>"
+      <input type="text" name="ship_address2" value="<?= $data['ship_address2'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong> Country:</strong></label>
-      <select name="s_country" value="<?= $data['ship_country'] ?>" class="input-text ">
-        <option <?= (isset($data['ship_country']) && !empty($data['ship_country']{0})) ? '' : 'selected' ?> disabled>
+      <select data-change-province data-destination="ship_province" name="ship_country" value="<?= $data['ship_country'] ?>" class="input-text ">
+        <option <?= (isset($data['ship_country']) && !empty($data['ship_country'])) ? '' : 'selected' ?> disabled>
           Select Country
         </option>
         <?= isset($data['ship_list_countries']) ? $data['ship_list_countries'] : '' ?>
@@ -180,7 +180,7 @@
 
     <p class="form-row">
       <label><strong> Province/State:</strong></label>
-      <select name="s_state" value="<?= $data['ship_province'] ?>" class="input-text ">
+      <select name="ship_province" value="<?= $data['ship_province'] ?>" class="input-text ">
         <option <?= (isset($data['ship_province']) && !empty($data['ship_province']{0})) ? '' : 'selected' ?> disabled>
           Select Province
         </option>
@@ -190,31 +190,31 @@
 
     <p class="form-row">
       <label><strong> City:</strong></label>
-      <input type="text" name="s_city" value="<?= $data['ship_city'] ?>"
+      <input type="text" name="ship_city" value="<?= $data['ship_city'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label class="required_field"><strong> Postal/Zip Code:</strong></label>
-      <input type="text" name="s_zip" value="<?= $data['ship_postal'] ?>"
+      <input type="text" name="ship_postal" value="<?= $data['ship_postal'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label><strong> Telephone:</strong></label>
-      <input type="text" name="s_telephone" value="<?= $data['ship_phone'] ?>"
+      <input type="text" name="ship_phone" value="<?= $data['ship_phone'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label><strong> Fax:</strong></label>
-      <input type="text" name="s_fax" value="<?= $data['ship_fax'] ?>"
+      <input type="text" name="ship_fax" value="<?= $data['ship_fax'] ?>"
              class="input-text ">
     </p>
 
     <p class="form-row">
       <label><strong> Email:</strong></label>
-      <input type="text" name="s_email" value="<?= $data['ship_email'] ?>"
+      <input type="text" name="ship_email" value="<?= $data['ship_email'] ?>"
              class="input-text ">
     </p>
     <br><br>
@@ -224,4 +224,5 @@
   </div>
 </form>
 <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/') ?>">
+<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.js'); ?>' type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/users/form.js'); ?>' type="text/javascript"></script>

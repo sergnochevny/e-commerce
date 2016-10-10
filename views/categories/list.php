@@ -36,4 +36,5 @@
     <?= isset($paginator) ? $paginator : ''; ?>
   </ul>
 </nav>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.js'); ?>' type="text/javascript"></script>
+
+<script src='<?= _A_::$app->router()->UrlTo('views/js/simple/list.js'); ?>' type="text/javascript"></script>

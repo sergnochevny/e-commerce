@@ -1,61 +1,27 @@
 <?php
 
-  Class Controller_Admin Extends Controller_Controller {
-
-    private function form($url, $back_url, $data = null) {
-      $admin_id = self::get_from_session();
-      if(!isset($data)) {
-        $data = Model_Admin::get_admin_data($admin_id);
-      }
-      $back_url = _A_::$app->router()->UrlTo($back_url);
-      $action = _A_::$app->router()->UrlTo($url);
-      $this->template->vars('back_url', $back_url);
-      $this->template->vars('data', $data);
-      $this->template->vars('action', $action);
-      $this->template->view_layout('form');
-    }
-
-    private function edit_add_handling($url, $back_url, $title) {
-      $this->template->vars('form_title', $title);
-      if(_A_::$app->request_is_post()) {
-        $data = $this->save();
-        $this->form($url, $back_url, $data);
-        exit;
-      }
-      ob_start();
-      $this->form($url, $back_url);
-      $form = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('form', $form);
-      $this->main->view_admin('edit');
-    }
+  Class Controller_Admin Extends Controller_Formsimple {
 
     private static function get_from_session() {
       return _A_::$app->session('_a');
     }
 
-    private function save() {
-      include('include/save_edit_admin_post.php');
-      $admin_id = self::get_from_session();
+    protected function load(&$data, &$error){
+
       $data = [
+        'id' => self::get_from_session(),
         'login' => $login
       ];
-
       if(empty($login)) {
         $error = ['Identify login field!!!'];
       } else {
-        if(Model_Admin::is_exist($login, $admin_id)) {
+        if(Model_Admin::exist($login, $admin_id)) {
           $error[] = 'User with this login already exists!!!';
         } else {
           if(!empty($create_password)) {
-            $password = $create_password;
-            if($confirm_password == $create_password) {
-              $salt = Model_Auth::generatestr();
-              $password = Model_Auth::hash_($create_password, $salt, 12);
-              $check = Model_Auth::check($confirm_password, $password);
-            } else {
-              $error = ['Password and Confirm Password must be identical!!!'];
-            }
+            $salt = Model_Auth::generatestr();
+            $password = Model_Auth::hash_($create_password, $salt, 12);
+            $check = Model_Auth::check($confirm_password, $password);
           } else $password = null;
 
           if(is_null($password) || (isset($check) && ($password == $check))) {
@@ -77,6 +43,49 @@
 
       return $data;
     }
+
+    protected function save(&$data) {
+      $error = null;
+      $result = false;
+      $error = $data = null;
+      if($this->load($data, $error)) {
+          if(!empty($data['create_password'])) {
+            $salt = Model_Auth::generatestr();
+            $password = Model_Auth::hash_($data['create_password'], $salt, 12);
+            $check = Model_Auth::check($data['confirm_password'], $password);
+          } else $password = null;
+
+          if(is_null($password) || (isset($check) && ($password == $check))) {
+            try {
+              $data['password'] = is_null($password) ? '' : $password;
+              $aid = Model_Users::save($data);
+              if(!is_null($password)) Model_User::update_password($password, $aid);
+              $warning = ['All data saved successfully!!!'];
+              $result = true;
+              $data = null;
+            } catch(Exception $e) {
+              $error[] = $e->getMessage();
+            }
+          } else {
+            $error[] = 'Password and Confirm Password must be identical!!!';
+          }
+      }
+      if(isset($warning)) $this->template->vars('warning', $warning);
+      if(isset($error)) $this->template->vars('error', $error);
+
+      return $result;
+    }
+
+    protected function form($url, $data = null) {
+      _A_::$app->get($this->id_name, self::get_from_session());
+      parent::form();
+    }
+
+    public function edit() { }
+
+    public function add() { }
+
+    public function delete() { }
 
     /**
      * @export
@@ -158,8 +167,7 @@
       _A_::$app->setSession('_a', null);
       _A_::$app->setSession('user', null);
       _A_::$app->setCookie('_ar', null);
-      $this->redirect(_A_::$app->router()
-                               ->UrlTo('/'));
+      $this->redirect(_A_::$app->router()->UrlTo('/'));
     }
 
     /**

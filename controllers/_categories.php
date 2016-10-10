@@ -1,6 +1,6 @@
 <?php
 
-  class Controller_Categories extends Controller_Formsimple {
+  class Controller_Categories extends Controller_Simple {
 
     protected $id_name = 'cid';
     protected $form_title_add = 'NEW CATEGORY';
@@ -9,7 +9,7 @@
     protected function load(&$data, &$error) {
       $error = null;
       $data = [
-        'cid' => _A_::$app->get('category_id'),
+        $this->id_name => _A_::$app->get($this->id_name),
         'cname' => mysql_real_escape_string(Model_Categories::validData(_A_::$app->post('cname'))),
         'displayorder' => Model_Categories::validData(_A_::$app->post('displayorder'))
       ];

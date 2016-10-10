@@ -33,36 +33,20 @@
 
     protected function save(&$data) {
       $error = null;
-      if($this->load($data, $error)) {
-        try {
-          forward_static_call(['Model_' . ucfirst($this->controller), 'save'], $data);
-          $warning = ["The data saved successfully!"];
-        } catch(Exception $e) {
-          $error[] = $e->getMessage();
-        }
-      }
-      $this->template->vars('warning', isset($warning) ? $warning : null);
-      $this->template->vars('error', isset($error) ? $error : null);
-
       $result = false;
       $error = $data = null;
       if($this->load($data, $error)) {
         if(isset($data['aid'])) {
           if(!empty($data['create_password'])) {
-            $password = $data['create_password'];
-            if($data['confirm_password'] == $data['create_password']) {
-              $salt = Model_Auth::generatestr();
-              $password = Model_Auth::hash_($data['create_password'], $salt, 12);
-              $check = Model_Auth::check($data['confirm_password'], $password);
-            } else {
-              $error = ['Password and Confirm Password must be identical!!!'];
-            }
+            $salt = Model_Auth::generatestr();
+            $password = Model_Auth::hash_($data['create_password'], $salt, 12);
+            $check = Model_Auth::check($data['confirm_password'], $password);
           } else $password = null;
 
           if(is_null($password) || (isset($check) && ($password == $check))) {
             try {
               $data['password'] = is_null($password) ? '' : $password;
-              $aid = Model_User::save($data);
+              $aid = Model_Users::save($data);
               if(!is_null($password)) Model_User::update_password($password, $aid);
 
               if(!is_null(_A_::$app->session('_')) && ($aid == _A_::$app->session('_'))) {
@@ -78,7 +62,7 @@
               $error[] = $e->getMessage();
             }
           } else {
-            $error[] = ['Password and Confirm Password must be identical!!!'];
+            $error[] = 'Password and Confirm Password must be identical!!!';
           }
         } else {
 
@@ -88,7 +72,7 @@
           if($password == $check) {
             try {
               $data['password'] = $password;
-              $aid = Model_User::save($data);
+              $aid = Model_Users::save($data);
               _A_::$app->get('aid', $aid);
               $warning = ['Data saved successfully!!!'];
               $result = true;
@@ -176,12 +160,12 @@
       if(empty($data['email'])) {
         $error = ['Identify email field!!!'];
       } else {
-        if(Model_User::user_exist($data['email'], $data['aid'])) {
+        if(Model_User::exist($data['email'], $data['aid'])) {
           $error[] = 'User with this email already exists!!!';
         } else {
           if(
-            ((!isset($aid)) && (empty($data['create_password']) || empty($data['confirm_password']))) ||
-            ((!isset($aid)) && ($data['confirm_password'] !== $data['create_password'])) ||
+            ((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password']))) ||
+            ((!isset($data['aid'])) && ($data['confirm_password'] !== $data['create_password'])) ||
             empty($data['bill_firstname']) ||
             empty($data['bill_lastname']) ||
             (empty($data['bill_address1']) && empty($data['bill_address2'])) ||
@@ -199,9 +183,9 @@
             $error1 = [];
             $error2 = [];
 
-            if((!isset($aid)) && (empty($data['create_password']) || empty($data['confirm_password'])))
+            if((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password'])))
               $error[] = '<pre>&#9;Identify <b>Create Password</b> and <b>Confirm Password</b> field!!!</pre>';
-            if((!isset($aid)) && ($data['confirm_password'] !== $data['create_password']))
+            if((!isset($data['aid'])) && ($data['confirm_password'] !== $data['create_password']))
               $error[] = '<pre>&#9;Fields <b>Create Password</b> and <b>Confirm Password</b> must be identical!!!</pre>';
 
             if(empty($data['bill_firstname']))
@@ -294,7 +278,7 @@
 //        $count = 0;
 //        while ($page <= ceil($total / $per_page)) {
 //            $start = (($page++ - 1) * $per_page);
-//            $rows = Model_User::get_users_list($start, $per_page);
+//            $rows = Model_Users::get_list($start, $per_page);
 //            foreach ($rows as $row) {
 //                $id = $row['aid'];
 //                $current_password = $row['password'];

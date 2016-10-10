@@ -21,7 +21,7 @@
   if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
 ?>
 <div class="text-center">
-  <a href="<?= _A_::$app->router()->UrlTo('users/add',$prms); ?>" data-modify class="button colour-create">
+  <a href="<?= _A_::$app->router()->UrlTo('users/add',$prms); ?>" data-modify class="button">
     ADD NEW USER
   </a>
 </div>

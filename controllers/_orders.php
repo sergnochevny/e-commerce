@@ -269,7 +269,7 @@
         if($result['status'] === 1) {
 
           $user_id = Model_Order::get_user_by_order($order_id);
-          $user_data = Model_User::get_user_by_id($user_id);
+          $user_data = Model_Users::get_by_id($user_id);
           $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
           $subject = "Order delivery";
           $body = 'Order №' . $order_id . ' is delivered';
