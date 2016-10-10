@@ -14,6 +14,11 @@
       return $response;
     }
 
+    public static function get_by_name($name){
+      $response = null;
+      $query = "SELECT * FROM fabrix_patterns WHERE pattern LIKE %$name%";
+    }
+
     public static function get_total_count($filter = null) {
       $response = null;
       $query = "SELECT COUNT(*) FROM fabrix_patterns";
