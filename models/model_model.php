@@ -47,7 +47,7 @@
       $result = mysql_query($query);
       if($result) {
         while($row = mysql_fetch_assoc($result)) {
-          $response[$row[0]] = $row;
+          $response[$row['Field']] = $row;
         }
       }
       return $response;

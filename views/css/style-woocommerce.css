@@ -1679,8 +1679,7 @@ input[type=reset], button[type=reset]{
 
 .search-container-title {
     margin: 0;
-    padding: 7px 15px;
-    background-color: #FFF !important;
+    padding: 7px 0px;
 }
 
 .search-panel {
@@ -1716,4 +1715,9 @@ input[type=reset], button[type=reset]{
     -moz-transition: all .125s ease;
     -o-transition: all .125s ease;
     transition: all .125s ease;
+}
+
+a.reset, button.reset {
+    color: red;
+    border-color: red;
 }

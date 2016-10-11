@@ -2,7 +2,7 @@
 
   Class Model_Discount extends Model_Model {
 
-    public static function get_by_id($sid) {
+    public static function generateCouponCode($sid) {
       $sCde = "";
       $possible = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
       for($i = 0; $i < 10; $i++) {
@@ -33,6 +33,15 @@
       return false;
     }
 
+    public static function get_by_id($id) {
+      $res = null;
+      $q = "select * from fabrix_specials where sid = '" . $id . "'";
+      $result = mysql_query($q);
+      if($result) {
+        $res = mysql_fetch_assoc($result);
+      }
+      return $res;
+    }
 
     public static function get_total_count($filter = null) {
       $res = null;

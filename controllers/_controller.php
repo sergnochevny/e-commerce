@@ -31,6 +31,7 @@
         if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
         else  $search = _A_::$app->get('search');
         if(isset($search)) {
+          $search = array_filter($search);
           foreach($search as $key => $item) {
             if(preg_match($fields_pattern, $fields[$key]['Type'], $matches) !== false) {
               if(count($matches) > 1) {
