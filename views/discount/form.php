@@ -21,9 +21,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="row">
-
           <div class="form-row">
-
             <div class="col-md-4">
               <label class="required_field">
                 Promotion
@@ -152,7 +150,6 @@
               </div>
             </div>
           </div>
-
           <div class="form-row">
             <div class="col-md-4">
               <label class="required_field" for="">
@@ -190,9 +187,7 @@
               </div>
             </div>
           </div>
-
           <div class="form-row">
-
             <div class="col-md-4">
               <label class="required_field" for="">
                 Fabrics
@@ -236,7 +231,6 @@
           </div>
 
           <div class="form-row">
-
             <div class="col-md-4">
               <label for="">Allow multiple
                 <i class="fa fa-question-circle" data-promotion href="#allow_multiple"></i>
@@ -247,27 +241,28 @@
                      id="allow_multiple" <?= $data['allow_multiple'] == "1" ? 'checked' : '' ?>
                      class="input-checkbox">
             </div>
-
           </div>
 
           <div class="form-row">
-            <div class="col-md-4">
-              <label for="">
-                Start Date
-                <i class="fa fa-question-circle" data-promotionhref="#date_start"></i>
+            <div class="col-md-4 visible-md visible-lg">
+              <label for="">Date
+                <i class="fa fa-question-circle" data-promotion href="#date"></i>
               </label>
             </div>
             <div class="col-md-8">
-              <input type="text" name="date_start" id="dateFrom" value="<?= $data['date_start'] ?>" class="input-text ">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="col-md-4">
-              <label for="">End Date <i class="fa fa-question-circle" data-promotion href="#date_end"></i></label>
-            </div>
-            <div class="col-md-8">
-              <input type="text" name="date_end" value="<?= $data['date_end'] ?>" id="dateTo" class="input-text ">
+              <div class="row">
+                <div class="col-xs-6">
+                  <label for=""> Start Date
+                    <i class="fa fa-question-circle" data-promotionhref="#date_start"></i>
+                  </label>
+                  <input type="text" name="date_start" id="dateFrom" value="<?= $data['date_start'] ?>"
+                         class="input-text ">
+                </div>
+                <div class="col-xs-6">
+                  <label for="">End Date <i class="fa fa-question-circle" data-promotion href="#date_end"></i></label>
+                  <input type="text" name="date_end" value="<?= $data['date_end'] ?>" id="dateTo" class="input-text ">
+                </div>
+              </div>
             </div>
           </div>
 
@@ -278,7 +273,7 @@
             </div>
             <div class="col-md-8">
               <input type="checkbox" value="1" name="enabled"
-                     <?= $data['enabled'] == "1" ? 'checked' : ''; ?>
+                <?= $data['enabled'] == "1" ? 'checked' : ''; ?>
                      class="input-checkbox">
             </div>
           </div>
@@ -328,12 +323,11 @@
           <div class="form-row">
             <div class="col-md-12 text-center">
               <button id="submit" class="button" style="width: 150px;">
-                <?= isset($data['id'])?'Update':'Save';?>
+                <?= isset($data['id']) ? 'Update' : 'Save'; ?>
               </button>
               <div class="results" style="color: red;"></div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

@@ -66,7 +66,7 @@
             event.preventDefault();
             var data = new FormData(this);
             var url = $(this).attr('action');
-            postdata(this, url, data, $('#discount_form'));
+            postdata(this, url, data, $('#form_content'));
         }
     );
 
@@ -299,7 +299,6 @@
                 $(chckCoupon).trigger('change', true);
             }
         }
-
     }
 
     function toggleMultiple(stop) {

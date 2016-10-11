@@ -75,7 +75,7 @@
       $this->template->vars('filter_type', $data['filter_type']);
       $this->template->vars('destination', 'filter_products');
       $this->template->vars('title', $title);
-      $this->template->view_layout('filter');
+      $this->template->view_layout('filter/filter');
     }
 
     private function generate_users_filter($data) {
@@ -85,7 +85,7 @@
       $this->template->vars('filter_data_start', 0);
       $this->template->vars('destination', 'users');
       $this->template->vars('title', 'Select Users');
-      $this->template->view_layout('filter');
+      $this->template->view_layout('filter/filter');
     }
 
     private function select_filter($method, $filters, $start = null, $search = null) {
@@ -99,7 +99,7 @@
       $this->template->vars('filter_data_start', isset($start) ? $start : 0);
       $this->template->vars('selected', $selected);
       $this->template->vars('filter', $filter);
-      $this->template->view_layout('select_filter');
+      $this->template->view_layout('filter/select');
     }
 
     private function selected_filter_data($data) {

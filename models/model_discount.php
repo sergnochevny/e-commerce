@@ -33,7 +33,7 @@
       return false;
     }
 
-    public static function get_by_id($id){
+    public static function get_by_id($id) {
       $res = null;
       $q = "select * from fabrix_specials where sid = '" . $id . "'";
       $result = mysql_query($q);
@@ -115,38 +115,76 @@
       return $res;
     }
 
-    public static function saveFabrixSpecialsUser($id, $user_type, $users) {
-      $res = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='" . (integer)$id . "'");
-      if($res && ($user_type == "4")) {
-        foreach($users as $user_id) {
-          $res = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('" . (integer)$id . "',  '" . (integer)$user_id . "')");
-          if(!$res) break;
-        }
-      }
-      if(!$res) throw new Exception(mysql_error());
-    }
-
-    public static function saveFabrixSpecialsProducts($id, $filters, $filter_type) {
-      $res = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='" . (integer)$id . "'");
-      if($res && isset($filter_type) && ($filter_type > 1)) {
-        foreach($filters as $f_id) {
-          $res = mysql_query("INSERT INTO  fabrix_specials_products (sid ,pid, stype)VALUES('" . (integer)$id . "',  '" . (integer)$f_id . "',  '" . (integer)$filter_type . "')");
-          if(!$res) break;
-        }
-      }
-      if(!$res) throw new Exception(mysql_error());
-    }
-
     public static function save($data) {
       extract($data);
       if(isset($sid)) {
-        $res = mysql_query("UPDATE fabrix_specials SET coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$discount_type',user_type='$user_type',shipping_type='$shipping_type',product_type='$product_type',promotion_type='$iType',required_amount='$required_amount',required_type='$required_type',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$date_start', date_end='$date_end' WHERE sid ='$id'");
+        $q = "UPDATE fabrix_specials" .
+          " SET" .
+          " coupon_code='$coupon_code'," .
+          " discount_amount='$discount_amount'," .
+          " discount_amount_type='$discount_amount_type'," .
+          " discount_type='$discount_type'," .
+          " user_type='$user_type'," .
+          " shipping_type='$shipping_type'," .
+          " product_type='$product_type'," .
+          " promotion_type='$promotion_type'," .
+          " required_amount='$required_amount'," .
+          " required_type='$required_type'," .
+          " allow_multiple='$allow_multiple'," .
+          " enabled='$enabled'," .
+          " countdown='$countdown'," .
+          " discount_comment1='$discount_comment1'," .
+          " discount_comment2='$discount_comment2'," .
+          " discount_comment3='$discount_comment3'," .
+          " date_start='$date_start'," .
+          " date_end='$date_end'" .
+          " WHERE sid ='$sid'";
+        $res = mysql_query($q);
       } else {
-        $res = mysql_query("INSERT INTO fabrix_specials set coupon_code='$coupon_code',discount_amount='$discount_amount',discount_amount_type='$iAmntType',discount_type='$discount_type',user_type='$user_type', shipping_type='$shipping_type', product_type='$product_type',promotion_type='$iType',required_amount='$required_amount',required_type='$required_type',allow_multiple='$allow_multiple',enabled='$enabled',countdown='$countdown',discount_comment1='$discount_comment1',discount_comment2='$discount_comment2',discount_comment3='$discount_comment3',date_start='$date_start', date_end='$date_end'");
+        $q = "INSERT INTO fabrix_specials" .
+          " SET" .
+          " coupon_code='$coupon_code'," .
+          " discount_amount='$discount_amount'," .
+          " discount_amount_type='$discount_amount_type'," .
+          " discount_type='$discount_type'," .
+          " user_type='$user_type'," .
+          " shipping_type='$shipping_type'," .
+          " product_type='$product_type'," .
+          " promotion_type='$promotion_type'," .
+          " required_amount='$required_amount'," .
+          " required_type='$required_type'," .
+          " allow_multiple='$allow_multiple'," .
+          " enabled='$enabled'," .
+          " countdown='$countdown'," .
+          " discount_comment1='$discount_comment1'," .
+          " discount_comment2='$discount_comment2'," .
+          " discount_comment3='$discount_comment3'," .
+          " date_start='$date_start'," .
+          " date_end='$date_end'";
+
+        $res = mysql_query($q);
         if($res) $sid = mysql_insert_id();
       }
+      if($res) {
+        $res = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='$sid'");
+        if($res && ($user_type == 4)) {
+          foreach($users as $aid) {
+            $res = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('$sid',  '$aid')");
+            if(!$res) break;
+          }
+        }
+      }
+      if($res) {
+        $res = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='$sid'");
+        if($res && isset($product_type) && ($product_type > 1)) {
+          foreach($filter_products as $pid) {
+            $res = mysql_query("INSERT INTO  fabrix_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
+            if(!$res) break;
+          }
+        }
+      }
       if(!$res) throw new Exception(mysql_error());
-      return $res ? $sid : $res;
+      return $sid;
     }
 
     public static function delete($id) {
@@ -157,7 +195,7 @@
     }
 
     public static function get_filter_selected($type, &$data) {
-      $id = isset($data['sid'])?$data['sid']:null;
+      $id = isset($data['sid']) ? $data['sid'] : null;
       if($type == 'users') {
         $users = [];
         $user_type = $data['user_type'];
@@ -425,5 +463,4 @@
       return $data;
     }
 
-
-}
+  }
