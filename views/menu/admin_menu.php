@@ -47,7 +47,7 @@
                             <a title="Blog Overview" href="<?= _A_::$app->router()->UrlTo('blog/admin');?>">Overview</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a title="Blog Categories" href="<?= _A_::$app->router()->UrlTo('blog/admin_categories');?>">Categories</a>
+                            <a title="Blog Categories" href="<?= _A_::$app->router()->UrlTo('blogcategory');?>">Categories</a>
                         </li>
                     </ul>
                 <?php } ?>
