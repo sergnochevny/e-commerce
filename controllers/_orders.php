@@ -1,141 +1,58 @@
 <?php
 
-  class Controller_Orders extends Controller_Controller {
+  class Controller_Orders extends Controller_Simple {
 
-    protected function get_list() {
-      $any = $this->main->test_any_logged('orders');
-      $user_id = _A_::$app->get('user_id');
-      if($any == 'user') {
-        $user = Controller_User::get_from_session();
-        $user_id = $user['aid'];
-      }
+    protected $id_name = 'oid';
+    protected $form_title_edit = 'MODIFY ORDER STATUS';
 
-      $is_admin = Controller_Admin::is_logged();
-      $total = Model_Order::get_total_count($user_id);
-      $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-      $per_page = 12;
-
-      if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
-      if($page <= 0) $page = 1;
-      $start = (($page - 1) * $per_page);
-
-      $res_count_rows = 0;
-      if(!empty($total) && ((int)$total > 0)) {
-        $rows = Model_Order::get_all($user_id, $start, $per_page, $res_count_rows);
-        $this->main->template->vars('count_rows', $res_count_rows);
-        $prms_back = $prms = null;
-        if(!empty(_A_::$app->get('page'))) {
-          $prms['page'] = _A_::$app->get('page');
-          $prms_back['page'] = _A_::$app->get('page');
-        }
-        if(!empty(_A_::$app->get('user_id'))) {
-          $prms['user_id'] = _A_::$app->get('user_id');
-          $back_url = 'users';
-        }
-        if(!empty(_A_::$app->get('back'))) {
-          $back_url = _A_::$app->get('back');
-        }
-        $back_url = isset($back_url) ? _A_::$app->router()->UrlTo($back_url, $prms_back) : null;
-        $this->main->template->vars('back_url', $back_url);
-
-        ob_start();
-        $this->template->vars('user_id', $user_id);
-        $this->template->vars('is_admin', $is_admin);
-        $this->template->vars('prms', $prms);
-        $this->template->vars('rows', $rows);
-        $this->template->view_layout('rows');
-        $list = ob_get_contents();
-        ob_end_clean();
-      } else {
-        ob_start();
-        $this->template->view_layout('not_found');
-        $list = ob_get_contents();
-        ob_end_clean();
-      }
-      $this->main->template->vars('list', $list);
-      (new Controller_Paginator($this->main))->paginator($total, $page, 'orders', $per_page);
-      $this->template->view_layout('list');
-    }
-
-    private function get_details() {
-      $order_id = Model_Order::validData(_A_::$app->get('order_id'));
-      $order_details = '';
-      if(!empty($order_id)) {
-        ob_start();
-        $rows = Model_Order::get_order_details($order_id);
-        foreach($rows as $row) {
-          $this->template->vars('row', $row);
-          $this->template->view_layout('details');
-        }
-        $order_details = ob_get_contents();
-        ob_end_clean();
-      }
-      $this->main->template->vars('order_details', $order_details);
-    }
-
-    private function sendMail($email, $subject, $body, $headers) {
-      mail($email, $subject, $body, $headers);
-    }
+    public function add(){ }
 
     /**
      * @export
      */
-    public function orders() {
-      $this->main->test_any_logged('orders');
-      ob_start();
-      $this->get_list();
-      $list = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('orders', $list);
-      if(Controller_Admin::is_logged()) $this->main->view_admin('orders');
-      else  $this->main->view('orders');
-    }
+//    public function order() {
+//      $this->main->test_access_rights();
+//      $prms = null;
+//      $order_id = Model_Order::validData(_A_::$app->get('order_id'));
+//
+//      if(!is_null(_A_::$app->get('order_id'))) {
+//        $prms['order_id'] = _A_::$app->get('order_id');
+//      }
+//      if(!is_null(_A_::$app->get('user_id'))) {
+//        $prms['user_id'] = _A_::$app->get('user_id');
+//      }
+//      if(!is_null(_A_::$app->get('page'))) {
+//        $prms['page'] = _A_::$app->get('page');
+//      }
+//      $this->get_details();
+//      $userInfo = Model_Order::get_order($order_id);
+//      $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user/registration', $prms));
+//      $this->main->template->vars('userInfo', $userInfo);
+//      $this->main->view_admin('order');
+//    }
 
     /**
      * @export
      */
-    public function order() {
-      $this->main->test_access_rights();
-      $prms = null;
-      $order_id = Model_Order::validData(_A_::$app->get('order_id'));
-
-      if(!is_null(_A_::$app->get('order_id'))) {
-        $prms['order_id'] = _A_::$app->get('order_id');
-      }
-      if(!is_null(_A_::$app->get('user_id'))) {
-        $prms['user_id'] = _A_::$app->get('user_id');
-      }
-      if(!is_null(_A_::$app->get('page'))) {
-        $prms['page'] = _A_::$app->get('page');
-      }
-      $this->get_details();
-      $userInfo = Model_Order::get_order($order_id);
-      $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user/registration', $prms));
-      $this->main->template->vars('userInfo', $userInfo);
-      $this->main->view_admin('order');
-    }
+//    public function discount() {
+//      $this->main->test_access_rights();
+//      $prms = null;
+//      $order_id = Model_Order::validData(_A_::$app->get('order_id'));
+//      if(!empty(_A_::$app->get('discount_id'))) {
+//        $prms['discount_id'] = _A_::$app->get('discount_id');
+//      }
+//      $this->get_details();
+//      $userInfo = Model_Order::get_order($order_id);
+//      $this->main->template->vars('back_url', _A_::$app->router()->UrlTo(empty(_A_::$app->get('discount_id')) ? 'discount' : 'discount/usage', $prms));
+//      $this->main->template->vars('userInfo', $userInfo);
+//      $this->main->view_admin('order');
+//    }
 
     /**
      * @export
      */
-    public function discount() {
-      $this->main->test_access_rights();
-      $prms = null;
-      $order_id = Model_Order::validData(_A_::$app->get('order_id'));
-      if(!empty(_A_::$app->get('discount_id'))) {
-        $prms['discount_id'] = _A_::$app->get('discount_id');
-      }
-      $this->get_details();
-      $userInfo = Model_Order::get_order($order_id);
-      $this->main->template->vars('back_url', _A_::$app->router()->UrlTo(empty(_A_::$app->get('discount_id')) ? 'discount' : 'discount/usage', $prms));
-      $this->main->template->vars('userInfo', $userInfo);
-      $this->main->view_admin('order');
-    }
+    public function view() {
 
-    /**
-     * @export
-     */
-    public function info() {
       $this->main->test_any_logged('orders');
       $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
       $oid = !is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null;
@@ -162,9 +79,9 @@
         $back_url = _A_::$app->router()->UrlTo('orders', $prms);
       }
 
-      $config = ['oid' => (int)$oid];
+      $config = ['oid' => (int) $oid];
 
-      $customer_order = Model_Order::getOrderDetailInfo($config);
+      $customer_order = Model_Orders::getOrderDetailInfo($config);
       if(!empty($customer_order) && $customer_order > 0) {
         ob_start();
         $sub_price_count = (integer)0;
@@ -223,64 +140,15 @@
       $this->main->template->vars('status_code', $status_code);
       $this->main->template->vars('total_discount', $total_discount);
 
-      $this->main->view_admin('info');
-    }
-
-    /**
-     * @export
-     */
-    public function edit() {
-      $this->main->test_access_rights();
-      $order_id = _A_::$app->get('oid');
-      $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-      $order = Model_Order::get_order($order_id);
-
-      $prms['page'] = $page;
-
-      if(!is_null(_A_::$app->get('orders_search_query'))) {
-        $prms['orders_search_query'] = _A_::$app->get('orders_search_query');
-      }
-      if(!is_null(_A_::$app->get('page'))) {
-        $prms['page'] = _A_::$app->get('page');
-      }
-
-      $back_url = _A_::$app->router()->UrlTo('orders', $prms);
-
-
-      $this->main->template->vars('order', $order);
-      $this->main->template->vars('back_url', $back_url);
-      $this->main->view_admin('edit');
+      $this->main->view_admin('view');
     }
 
 
-    /**
-     * @export
-     */
-    public function updateOrderInfo(){
-      $track_code = (string)trim(htmlspecialchars(_A_::$app->post('track_code')));
-      $status = (string)trim(htmlspecialchars(_A_::$app->post('status')));
-      $order_id = (integer)trim(htmlspecialchars(_A_::$app->post('order_id')));
-      $end_date = trim(htmlspecialchars((_A_::$app->post('end_date') != null) ? _A_::$app->post('end_date') : null));
-
-      $result = ['track_code' => $track_code, 'status' => $status, 'end_date' => $end_date, 'result' => null,];
-
-      if(Model_Order::update_order_detail_info($status, $status, $track_code, $end_date, $order_id)) {
-
-        if($result['status'] === 1) {
-
-          $user_id = Model_Order::get_user_by_order($order_id);
-          $user_data = Model_Users::get_by_id($user_id);
-          $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
-          $subject = "Order delivery";
-          $body = 'Order №' . $order_id . ' is delivered';
-
-          $this->sendMail($user_data['email'], $subject, $body, $headers);
-        }
-        $result['result'] = 1;
-      } else {
-        $result['result'] = 0;
-      }
-      echo json_encode($result);
+    protected function load(&$data, &$error) {
+      $data['oid'] = _A_::$app->get('oid');
+      $data['track_code'] = Model_Orders::validData(_A_::$app->post('track_code'));
+      $data['status'] = Model_Orders::validData(_A_::$app->post('status'));
+      $data['end_date'] = Model_Orders::validData(_A_::$app->post('end_date'));
+      return true;
     }
-
   }

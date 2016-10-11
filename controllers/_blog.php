@@ -1,6 +1,6 @@
 <?php
 
-  class Controller_Blog extends Controller_Controller {
+  class Controller_Blog extends Controller_Simple  {
 
     private function posts() {
       $page = !empty(_A_::$app->get('page')) ? Model_Blog::validData(_A_::$app->get('page')) : 1;
@@ -463,18 +463,18 @@
       $base_url = _A_::$app->router()->UrlTo('/');
       $items = Model_Tools::get_items_for_menu('blog_category');
       ob_start();
-        foreach($items as $item) {
-          $group_id = $item['group_id'];
-          $href = _A_::$app->router()->UrlTo('blog/admin', ['cat' => $group_id]);
-          $name = $item['name'];
+      foreach($items as $item) {
+        $group_id = $item['group_id'];
+        $href = _A_::$app->router()->UrlTo('blog/admin', ['cat' => $group_id]);
+        $name = $item['name'];
 
-          $this->template->vars('base_url', $base_url);
-          $this->template->vars('group_id', $group_id);
-          $this->template->vars('href', $href);
-          $this->template->vars('name', $name);
-          $this->template->view_layout('admin_cat_select');
-        }
-        $select_cat_option = ob_get_contents();
+        $this->template->vars('base_url', $base_url);
+        $this->template->vars('group_id', $group_id);
+        $this->template->vars('href', $href);
+        $this->template->vars('name', $name);
+        $this->template->view_layout('admin_cat_select');
+      }
+      $select_cat_option = ob_get_contents();
       ob_end_clean();
       $this->template->vars('select_cat_option', $select_cat_option);
     }
@@ -823,5 +823,9 @@
           mysql_query("update blog_posts set post_content = '" . $content . "' where id = " . $id);
         }
       }
+    }
+
+    protected function load(&$data, &$error) {
+      // TODO: Implement load() method.
     }
   }
