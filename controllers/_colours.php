@@ -7,7 +7,7 @@
 
     protected function load(&$data, &$error) {
       $data['id'] = _A_::$app->get('id');
-      $data['colour'] = Model_Manufacturers::validData(_A_::$app->post('colour'));
+      $data['colour'] = Model_Colours::validData(_A_::$app->post('colour'));
       if(empty($data['colour'])) {
         $error[] = "The Colour Name is required.";
         return false;

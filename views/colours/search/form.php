@@ -7,7 +7,7 @@
         <div class="col-xs-12">
           <div class="row">
             <div class="col-xs-12">
-              Color Name:
+              Colour Name:
             </div>
             <div class="col-xs-12">
               <input type="text" class="input-text" placeholder="Name like" name="search[]">

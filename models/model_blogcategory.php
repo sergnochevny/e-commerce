@@ -18,9 +18,7 @@
     public static function get_total_count($filter = null) {
       $response = null;
       $query = "SELECT COUNT(*) FROM blog_groups";
-      if(isset($filter)) {
-        $query .= " WHERE";
-      }
+      $query .= self::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
@@ -45,9 +43,12 @@
 
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $res = null;
-      $q = "SELECT a.group_id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a " .
-        " LEFT JOIN blog_group_posts b ON a.group_id = b.group_id" .
-        " GROUP BY a.group_id, a.name LIMIT $start, $limit";
+      $q = "SELECT a.group_id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
+      $q .= " LEFT JOIN blog_group_posts b ON a.group_id = b.group_id";
+      $q .= self::build_where($filter);
+      $q .= " GROUP BY a.group_id, a.name";
+      $q .= " ORDER BY a.name";
+      $q .= " LIMIT $start, $limit";
       $result = mysql_query($q);
       if($result) {
         $res_count_rows = mysql_num_rows($result);
