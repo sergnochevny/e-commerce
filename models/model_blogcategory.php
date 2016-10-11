@@ -8,7 +8,7 @@
         'slug' => ''
       ];
       if(isset($id)) {
-        $query = "SELECT * FROM blog_group WHERE group_id='$id'";
+        $query = "SELECT * FROM blog_groups WHERE group_id = '$id'";
         $result = mysql_query($query);
         if($result) $response = mysql_fetch_assoc($result);
       }
@@ -17,7 +17,7 @@
 
     public static function get_total_count($filter = null) {
       $response = null;
-      $query = "SELECT COUNT(*) FROM blog_group";
+      $query = "SELECT COUNT(*) FROM blog_groups";
       if(isset($filter)) {
         $query .= " WHERE";
       }
@@ -29,7 +29,7 @@
 
     public static function delete($id) {
       if(isset($id)) {
-        $query = "SELECT COUNT(*) FROM blog_group WHERE group_id = $id";
+        $query = "SELECT COUNT(*) FROM blog_group_posts WHERE group_id = $id";
         $res = mysql_query($query);
         if($res) {
           $amount = mysql_fetch_array($res)[0];
@@ -37,7 +37,7 @@
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "DELETE FROM blog_group WHERE group_id = $id";
+        $query = "DELETE FROM blog_groups WHERE group_id = $id";
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       }
@@ -46,7 +46,7 @@
     public static function get_list() {
       $res = null;
       $q = "SELECT a.group_id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a " .
-        " LEFT JOIN blog_group_posts b ON a.group_id=b.group_id" .
+        " LEFT JOIN blog_group_posts b ON a.group_id = b.group_id" .
         " GROUP BY a.group_id, a.name";
       $result = mysql_query($q);
       if($result) {
