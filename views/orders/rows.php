@@ -2,7 +2,7 @@
   <table class="table table-striped table-bordered">
     <thead>
     <tr>
-      <?php if($is_admin): ?>
+      <?php if(Controller_Admin::is_logged()): ?>
         <th class="text-left">Order</th>
         <?php if(!isset($user_id)): ?>
           <th class="text-center">Customer</th>
@@ -28,9 +28,8 @@
     <?php foreach($rows as $row): ?>
       <?php
       $prms['oid'] = $row[0];
-      $detail_url = _A_::$app->router()->UrlTo('orders/info', $prms);
       ?>
-      <?php if($is_admin): ?>
+      <?php if(Controller_Admin::is_logged()): ?>
         <?php
         $prms['oid'] = $row[0];
         $edit_url = _A_::$app->router()->UrlTo('orders/edit', $prms);
@@ -49,8 +48,12 @@
           <td class="text-center"><?= '$' . number_format($row['total_discount'],2); ?></td>
           <td class="text-center"><?= '$' . number_format($row['total'],2);?></td>
           <td width="50px">
-            <a href="<?= $edit_url; ?>" title="Detail info" class="fa fa-pencil"></a>
-            <a href="<?= $detail_url; ?>" title="Detail info" class="fa fa-eye"></a>
+            <a data-modify href="<?= _A_::$app->router()->UrlTo('orders/edit', $prms) ?>">
+              <i class="fa fa-pencil"></i>
+            </a>
+            <a data-modify href="<?= _A_::$app->router()->UrlTo('orders/view', $prms) ?>">
+              <i class="fa fa-eye"></i>
+            </a>
           </td>
         </tr>
       <?php else: ?>
@@ -65,7 +68,9 @@
           <td><?= '$' . number_format($row['total_discount']); ?></td>
           <td class="text-center"><?= $row['total'] ?></td>
           <td>
-            <a href="<?= $detail_url; ?>" title="Detail info" class="fa fa-eye"></a>
+            <a data-modify href="<?= _A_::$app->router()->UrlTo('orders/view', $prms) ?>">
+              <i class="fa fa-eye"></i>
+            </a>
           </td>
         </tr>
       <?php endif; ?>

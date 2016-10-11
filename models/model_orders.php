@@ -1,6 +1,6 @@
 <?php
 
-  class Model_Order extends Model_Model {
+  class Model_Orders extends Model_Model {
 
     public static function getOrderDetailInfo($arr) {
       if(isset($arr) && count($arr) === 1) {
@@ -28,6 +28,66 @@
           }
         }
         return $result;
+      }
+      return false;
+    }
+
+    public static function get_by_id($id){
+      $response = [
+        'pattern' => ''
+      ];
+      if(isset($id)){
+        $query = "SELECT * FROM fabrix_patterns WHERE id='$id'";
+        $result = mysql_query($query);
+        if($result) $response = mysql_fetch_assoc($result);
+      }
+      return $response;
+    }
+
+    public static function get_total_count($id = null, $filter = null){
+      $q = "select";
+      $q .= " COUNT(`order`.`oid`)";
+      $q .= " from `fabrix_orders` `order`";
+      $q .= " left join `fabrix_accounts` `user` on `order`.`aid` = `user`.`aid`";
+      $q .= (isset($id) || isset($filter)) ? " where" : '';
+      $q .= isset($id) ? " `order`.aid='$id'" : '';
+      if(isset($filter)) {
+        $q .= isset($id) ? " and" : '';
+        $q .= " (`order`.`trid` like '%$filter%'";
+        $q .= " or `user`.`bill_firstname` like '%$filter%'";
+        $q .= " or `user`.`bill_lastname`  like '%$filter%')";
+      }
+      $result = mysql_query($q);
+      if($result) {
+        $myrow = mysql_fetch_array($result);
+        return $myrow[0];
+      }
+      return false;
+    }
+
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null){
+      $q = "select";
+      $q .= " o.*, CONCAT(user.bill_firstname,' ',user.bill_lastname) as username";
+      $q .= " from fabrix_orders o";
+      $q .= " left join fabrix_accounts user on o.aid = user.aid";
+      $q .= (isset($user_id) || isset($like)) ? " where" : '';
+      $q .= isset($user_id) ? " o.aid='$user_id'" : '';
+      if(isset($like)) {
+        $q .= isset($user_id) ? " and" : '';
+        $q .= " (o.trid like '%$like%'";
+        $q .= " or user.bill_firstname like '%$like%'";
+        $q .= " or user.bill_lastname  like '%$like%')";
+      }
+      $q .= " order by o.order_date desc limit $start, $limit";
+
+      $res = mysql_query($q);
+      if($res) {
+        $rows = [];
+        $res_count_rows = mysql_num_rows($res);
+        while($row = mysql_fetch_array($res)) {
+          $rows[] = $row;
+        }
+        return $rows;
       }
       return false;
     }
@@ -89,55 +149,55 @@
       return mysql_fetch_array($result);
     }
 
-    public static function get_total_count($user_id, $like = null) {
+//    public static function get_total_count($user_id, $like = null) {
+//
+//      $q = "select";
+//      $q .= " COUNT(`order`.`oid`)";
+//      $q .= " from `fabrix_orders` `order`";
+//      $q .= " left join `fabrix_accounts` `user` on `order`.`aid` = `user`.`aid`";
+//      $q .= (isset($user_id) || isset($like)) ? " where" : '';
+//      $q .= isset($user_id) ? " `order`.aid='$user_id'" : '';
+//      if(isset($like)) {
+//        $q .= isset($user_id) ? " and" : '';
+//        $q .= " (`order`.`trid` like '%$like%'";
+//        $q .= " or `user`.`bill_firstname` like '%$like%'";
+//        $q .= " or `user`.`bill_lastname`  like '%$like%')";
+//      }
+//      $result = mysql_query($q);
+//      if($result) {
+//        $myrow = mysql_fetch_array($result);
+//        return $myrow[0];
+//      }
+//      return false;
+//    }
 
-      $q = "select";
-      $q .= " COUNT(`order`.`oid`)";
-      $q .= " from `fabrix_orders` `order`";
-      $q .= " left join `fabrix_accounts` `user` on `order`.`aid` = `user`.`aid`";
-      $q .= (isset($user_id) || isset($like)) ? " where" : '';
-      $q .= isset($user_id) ? " `order`.aid='$user_id'" : '';
-      if(isset($like)) {
-        $q .= isset($user_id) ? " and" : '';
-        $q .= " (`order`.`trid` like '%$like%'";
-        $q .= " or `user`.`bill_firstname` like '%$like%'";
-        $q .= " or `user`.`bill_lastname`  like '%$like%')";
-      }
-      $result = mysql_query($q);
-      if($result) {
-        $myrow = mysql_fetch_array($result);
-        return $myrow[0];
-      }
-      return false;
-    }
-
-    public static function get_all($user_id, $start, $per_page, &$res_count_rows, $like = null) {
-
-      $q = "select";
-      $q .= " o.*, CONCAT(user.bill_firstname,' ',user.bill_lastname) as username";
-      $q .= " from fabrix_orders o";
-      $q .= " left join fabrix_accounts user on o.aid = user.aid";
-      $q .= (isset($user_id) || isset($like)) ? " where" : '';
-      $q .= isset($user_id) ? " o.aid='$user_id'" : '';
-      if(isset($like)) {
-        $q .= isset($user_id) ? " and" : '';
-        $q .= " (o.trid like '%$like%'";
-        $q .= " or user.bill_firstname like '%$like%'";
-        $q .= " or user.bill_lastname  like '%$like%')";
-      }
-      $q .= " order by o.order_date desc limit $start,$per_page";
-
-      $res = mysql_query($q);
-      if($res) {
-        $rows = [];
-        $res_count_rows = mysql_num_rows($res);
-        while($row = mysql_fetch_array($res)) {
-          $rows[] = $row;
-        }
-        return $rows;
-      }
-      return false;
-    }
+//    public static function get_all($user_id, $start, $per_page, &$res_count_rows, $like = null) {
+//
+//      $q = "select";
+//      $q .= " o.*, CONCAT(user.bill_firstname,' ',user.bill_lastname) as username";
+//      $q .= " from fabrix_orders o";
+//      $q .= " left join fabrix_accounts user on o.aid = user.aid";
+//      $q .= (isset($user_id) || isset($like)) ? " where" : '';
+//      $q .= isset($user_id) ? " o.aid='$user_id'" : '';
+//      if(isset($like)) {
+//        $q .= isset($user_id) ? " and" : '';
+//        $q .= " (o.trid like '%$like%'";
+//        $q .= " or user.bill_firstname like '%$like%'";
+//        $q .= " or user.bill_lastname  like '%$like%')";
+//      }
+//      $q .= " order by o.order_date desc limit $start,$per_page";
+//
+//      $res = mysql_query($q);
+//      if($res) {
+//        $rows = [];
+//        $res_count_rows = mysql_num_rows($res);
+//        while($row = mysql_fetch_array($res)) {
+//          $rows[] = $row;
+//        }
+//        return $rows;
+//      }
+//      return false;
+//    }
 
     public static function get_order_details($oid) {
       $results = mysql_query("select * from fabrix_order_details WHERE order_id='$oid'");
