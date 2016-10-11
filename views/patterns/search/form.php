@@ -1,6 +1,6 @@
 <div class="col-xs-12 panel panel-default search-panel">
   <h4 class="panel-heading search-container-title"><b>Search</b><b class="sr-ds"><i class="fa fa-chevron-right"></i></b></h4>
-  <form action="" class="panel-body hidden">
+  <form action="<?= $action ?>" id="search" class="panel-body hidden">
     <div class="form-row">
       <div class="row">
 
@@ -10,7 +10,7 @@
               Pattern Name:
             </div>
             <div class="col-xs-12">
-              <input type="text" class="input-text" placeholder="Name like" name="search[]">
+              <input type="text" class="input-text" placeholder="Name like" name="search[pattern]">
             </div>
           </div>
         </div>

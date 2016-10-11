@@ -48,10 +48,10 @@
           <td class="text-center"><?= '$' . number_format($row['total_discount'],2); ?></td>
           <td class="text-center"><?= '$' . number_format($row['total'],2);?></td>
           <td width="50px">
-            <a data-modify href="<?= _A_::$app->router()->UrlTo('orders/edit', $prms) ?>">
+            <a data-modify href="<?= _A_::$app->router()->UrlTo('orders/edit', $prms) ?>" class="text-success">
               <i class="fa fa-pencil"></i>
             </a>
-            <a data-modify href="<?= _A_::$app->router()->UrlTo('orders/view', $prms) ?>">
+            <a href="<?= _A_::$app->router()->UrlTo('orders/view', $prms) ?>">
               <i class="fa fa-eye"></i>
             </a>
           </td>
