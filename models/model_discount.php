@@ -46,9 +46,7 @@
     public static function get_total_count($filter = null) {
       $res = null;
       $q = "SELECT COUNT(sid) FROM fabrix_specials";
-      if(isset($filter)) {
-        $q .= " WHERE";
-      }
+      $q .= self::build_where($filter);
       $result = mysql_query($q);
       if($result) {
         $row = mysql_fetch_array($result);
@@ -60,9 +58,7 @@
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $res = null;
       $q = "SELECT * FROM fabrix_specials";
-      if(isset($filter)) {
-        $q .= " WHERE";
-      }
+      $q .= self::build_where($filter);
       $q .= " ORDER BY fabrix_specials.sid DESC";
       $q .= " LIMIT $start, $limit";
       $result = mysql_query($q);

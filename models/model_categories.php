@@ -20,9 +20,7 @@
       $query .= " FROM fabrix_categories a";
       $query .= " LEFT JOIN";
       $query .= " fabrix_product_categories b ON b.cid = a.cid";
-      if(isset($filter)) {
-        $query .= " WHERE";
-      }
+      $query .= self::build_where($filter);
       $query .= " GROUP BY a.cid, a.cname";
       $query .= " ORDER BY a.cname";
       $query .= " LIMIT $start, $limit";
