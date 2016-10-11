@@ -2,6 +2,8 @@
 
   class Model_Orders extends Model_Model {
 
+    protected static $table = 'fabrix_colour';
+
     public static function getOrderDetailInfo($arr) {
       if(isset($arr) && count($arr) === 1) {
         $result = null;
@@ -32,19 +34,41 @@
       return false;
     }
 
-    public static function get_by_id($id){
+    public static function save($data) {
+      extract($data);
+      if(isset($oid)) {
+        $query = "UPDATE " . self::$table . "
+                  SET status = '" . $status . "',
+                  track_code = '" . $track_code . "', 
+                  end_date = STR_TO_DATE('" . $end_date . "', '%m/%d/%Y') 
+                  WHERE oid = '" . $oid . "'";
+        $res = mysql_query($query);
+        if(!$res) throw new Exception(mysql_error());
+      } else {
+        $query = 'INSERT INTO ' . self::$table . '(colour) VALUE ("' . $colour . '")';
+        $res = mysql_query($query);
+        if(!$res) throw new Exception(mysql_error());
+        $oid = mysql_insert_id();
+      }
+      return $oid;
+    }
+
+    public static function get_by_id($id) {
       $response = [
-        'pattern' => ''
+        'oid' => '',
+        'track_code' => '',
+        'status' => '',
+        'end_date' => '',
       ];
-      if(isset($id)){
-        $query = "SELECT * FROM fabrix_patterns WHERE id='$id'";
+      if(isset($id)) {
+        $query = "SELECT * FROM fabrix_orders WHERE oid='$id'";
         $result = mysql_query($query);
         if($result) $response = mysql_fetch_assoc($result);
       }
       return $response;
     }
 
-    public static function get_total_count($id = null, $filter = null){
+    public static function get_total_count($id = null, $filter = null) {
       $q = "select";
       $q .= " COUNT(`order`.`oid`)";
       $q .= " from `fabrix_orders` `order`";
@@ -65,7 +89,7 @@
       return false;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null){
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $q = "select";
       $q .= " o.*, CONCAT(user.bill_firstname,' ',user.bill_lastname) as username";
       $q .= " from fabrix_orders o";

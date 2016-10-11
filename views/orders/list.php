@@ -16,6 +16,7 @@
     ?>
   </div>
 <?php } ?>
+
 <?php if(isset($back_url) || isset($user_id)): ?>
   <div class="row">
     <?php if(isset($back_url)): ?>
@@ -41,3 +42,4 @@
     <?= isset($paginator) ? $paginator : ''; ?>
   </ul>
 </nav>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/simple/list.js'); ?>' type="text/javascript"></script>

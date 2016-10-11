@@ -1,6 +1,6 @@
 <div class="col-xs-12 panel panel-default search-panel">
   <h4 class="panel-heading search-container-title"><b>Search</b><b class="sr-ds"><i class="fa fa-chevron-right"></i></b></h4>
-  <form action="" class="panel-body hidden">
+  <form action="<?= $action ?>" id="search" class="panel-body hidden">
     <div class="form-row">
       <div class="row">
 
@@ -10,7 +10,7 @@
               Track code:
             </div>
             <div class="col-xs-12">
-              <input type="text" class="input-text" placeholder="Code like">
+              <input type="text" class="input-text" placeholder="Code like" name="search[track_code]">
             </div>
           </div>
         </div>
@@ -21,7 +21,7 @@
               Customer's email:
             </div>
             <div class="col-xs-12">
-              <input type="text" class="input-text" placeholder="Starts at">
+              <input type="text" class="input-text" placeholder="Starts at" name="">
             </div>
           </div>
         </div>
@@ -75,6 +75,6 @@
   </form>
   <div class="panel-footer hidden">
     <button type="reset" class="btn">Reset</button>
-    <button type="button" class="btn pull-right">Search</button>
+    <a type="button" id="submit" class="btn pull-right">Search</a>
   </div>
 </div>
