@@ -43,13 +43,14 @@
       }
     }
 
-    public static function get_list() {
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $res = null;
       $q = "SELECT a.group_id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a " .
         " LEFT JOIN blog_group_posts b ON a.group_id = b.group_id" .
-        " GROUP BY a.group_id, a.name";
+        " GROUP BY a.group_id, a.name LIMIT $start, $limit";
       $result = mysql_query($q);
       if($result) {
+        $res_count_rows = mysql_num_rows($result);
         while($row = mysql_fetch_array($result)) {
           $res[] = $row;
         }
@@ -60,11 +61,11 @@
     public static function save($data) {
       extract($data);
       if(isset($id)) {
-        $query = 'UPDATE blog_groups SET `name` ="' . $name . '", `slug` = "' . $slug . '" WHERE `group_id` =' . $group_id;
+        $query = 'UPDATE blog_groups SET name = "' . $name . '", slug = "' . $slug . '" WHERE group_id = ' . $id;
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       } else {
-        $query = 'INSERT INTO blog_groups (`name`, `slug`) VALUE ("' . $name . '","' . $slug . '")';
+        $query = 'INSERT INTO blog_groups (`name`, `slug`) VALUE ("' . $name . '", "' . $slug . '")';
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
         $id = mysql_insert_id();

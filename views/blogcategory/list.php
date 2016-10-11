@@ -21,7 +21,7 @@
   if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
 ?>
 <div class="text-center">
-  <a href="<?= _A_::$app->router()->UrlTo('colours/add',$prms); ?>" data-modify class="button">
+  <a href="<?= _A_::$app->router()->UrlTo('blogcategory/add',$prms); ?>" data-modify class="button">
     ADD NEW CATEGORY
   </a>
 </div>
