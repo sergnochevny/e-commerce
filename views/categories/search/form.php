@@ -10,7 +10,7 @@
               Category Name:
             </div>
             <div class="col-xs-12">
-              <input type="text" class="input-text" placeholder="Name like">
+              <input type="text" class="input-text" placeholder="Name like" name="search[]">
             </div>
           </div>
         </div>

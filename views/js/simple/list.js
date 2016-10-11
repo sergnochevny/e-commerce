@@ -18,13 +18,13 @@
     $('[data-modify]').on('click',
         function (event) {
             event.preventDefault();
-            if(!$(this).is('.disabled')){
+            if (!$(this).is('.disabled')) {
                 var url = $(this).attr('href');
                 $('body').waitloader('show');
                 $.when(
                     $('#modal_content').load(url)
                 ).done(
-                    function(){
+                    function () {
                         $('body').waitloader('remove');
                     }
                 );
