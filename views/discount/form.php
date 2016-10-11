@@ -1,6 +1,3 @@
-<div class="ui-widget-overlay" id="wait_loader">
-  <i class="fa fa-spinner fa-pulse fa-4x"></i>
-</div>
 <div class="row">
   <?php if(isset($warning)) { ?>
     <div class="col-xs-12 alert-success danger" style="display: none;">
@@ -19,20 +16,20 @@
       </div>
     <?php } ?>
 </div>
-<form method="POST" id="discount" action="<?= $action; ?>" class="col-md-12">
+<form method="POST" id="edit_form" action="<?= $action; ?>" class="col-md-12">
   <div class="row">
     <div class="row">
       <div class="col-md-12">
         <div class="row">
-
           <div class="form-row">
-
             <div class="col-md-4">
-              <label class="required_field">Promotion <i class="fa fa-question-circle" data-promotion
-                                                         href="#promotion"></i></label>
+              <label class="required_field">
+                Promotion
+                <i class="fa fa-question-circle" data-promotion href="#promotion"></i>
+              </label>
             </div>
             <div class="col-md-8">
-              <select name="iType" class="input-text">
+              <select name="promotion_type" class="input-text">
                 <option value="0" <?= ($data['promotion_type'] == 0) ? 'selected' : ''; ?>>
                   Select the promotion type
                 </option>
@@ -85,7 +82,7 @@
                 </div>
                 <div class="col-xs-2 col-md-2">
                   <div class="row">
-                    <select name="iAmntType" style="padding-left: 5px">
+                    <select name="discount_amount_type" style="padding-left: 5px">
                       <option
                         value="1" <?= ($data['discount_amount_type'] == '1') ? 'selected' : '' ?>>
                         $
@@ -98,7 +95,7 @@
                   </div>
                 </div>
                 <div class="col-xs-6 col-md-6">
-                  <select name="iDscntType" id="iDscntType">
+                  <select name="discount_type" id="discount_type">
                     <option value="0" <?= ($data['discount_type'] == '0') ? 'selected' : '' ?>>
                       Select
                     </option>
@@ -114,7 +111,7 @@
                   </select>
                 </div>
                 <div class="col-md-3" style="display: none;">
-                  <select name="iShippingType" id="iShippingType">
+                  <select name="shipping_type" id="shipping_type">
                     <option value="0">Select Shipping Type</option>
                     <option value="1">Both</option>
                     <option value="2" selected>Ground</option>
@@ -126,7 +123,7 @@
           </div>
           <div class="form-row">
             <div class="col-md-4">
-              <label class="required_field" data-promotion for="restrictions">
+              <label class="required_field" data-promotion for="required_amount">
                 Restrictions
                 <i data-promotion href="#discount_details" class="fa fa-question-circle"></i>
               </label>
@@ -134,11 +131,11 @@
             <div class="col-xs-12 col-md-8">
               <div class="row">
                 <div class="col-xs-6 col-md-4">
-                  <input type="text" name="restrictions" id="restrictions" value="<?= $data['required_amount'] ?>"
+                  <input type="text" name="required_amount" id="required_amount" value="<?= $data['required_amount'] ?>"
                          class="input-text ">
                 </div>
                 <div class="col-xs-6 col-md-8" style="padding-left: 0">
-                  <select name="iReqType">
+                  <select name="required_type">
                     <option value="0" <?= ($data['required_type'] == '0') ? 'selected' : '' ?>>
                       Select
                     </option>
@@ -153,7 +150,6 @@
               </div>
             </div>
           </div>
-
           <div class="form-row">
             <div class="col-md-4">
               <label class="required_field" for="">
@@ -164,23 +160,23 @@
               <div class="col-md-12 panel panel-default"
                    style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
                 <label style="font-size: 12px;">
-                  <input type="radio" id="users_check1" name="users_check" value="1"
-                         class="input-checkbox" <?= $data['users_check'] == "1" ? 'checked' : ''; ?>>
+                  <input type="radio" id="user_type1" name="user_type" value="1"
+                         class="input-checkbox" <?= $data['user_type'] == "1" ? 'checked' : ''; ?>>
                   All users
                 </label>
                 <label style="font-size: 12px;">
-                  <input type="radio" id="users_check2" name="users_check" value="2"
-                         class="input-checkbox" <?= $data['users_check'] == "2" ? 'checked' : ''; ?>>
+                  <input type="radio" id="user_type2" name="user_type" value="2"
+                         class="input-checkbox" <?= $data['user_type'] == "2" ? 'checked' : ''; ?>>
                   All new users
                 </label>
                 <label style="font-size: 12px;">
-                  <input type="radio" id="users_check3" name="users_check" value="3"
-                         class="input-checkbox" <?= $data['users_check'] == "3" ? 'checked' : ''; ?>>
+                  <input type="radio" id="user_type3" name="user_type" value="3"
+                         class="input-checkbox" <?= $data['user_type'] == "3" ? 'checked' : ''; ?>>
                   All registered users
                 </label>
                 <label style="font-size: 12px;">
-                  <input type="radio" id="users_check4" data-type="users" name="users_check" value="4"
-                         class="input-checkbox" <?= $data['users_check'] == "4" ? 'checked' : ''; ?>>
+                  <input type="radio" id="user_type4" data-type="users" name="user_type" value="4"
+                         class="input-checkbox" <?= $data['user_type'] == "4" ? 'checked' : ''; ?>>
                   All selected users (i.e. use the users selected below)
                 </label>
                 <div data-filter-panel-users>
@@ -191,37 +187,37 @@
               </div>
             </div>
           </div>
-
           <div class="form-row">
-
             <div class="col-md-4">
-              <label class="required_field" for="">Fabrics <i class="fa fa-question-circle" data-promotion
-                                                              href="#fabrics"></i></label>
+              <label class="required_field" for="">
+                Fabrics
+                <i class="fa fa-question-circle" data-promotion href="#fabrics"></i>
+              </label>
             </div>
             <div class="col-md-8">
               <div class="col-md-12 panel panel-default"
                    style="padding-top: 10px; padding-bottom: 10px; box-shadow: inset 0 0 3px #b4b4b4;     border-color: #999;">
                 <label style="font-size: 12px;">
-                  <input type="radio" name="sel_fabrics" id="sel_fabrics1" value="1"
-                         class="input-checkbox" <?= $data['sel_fabrics'] == "1" ? 'checked' : '' ?>>
+                  <input type="radio" name="product_type" id="product_type1" value="1"
+                         class="input-checkbox" <?= $data['product_type'] == "1" ? 'checked' : '' ?>>
                   All fabrics
                 </label>
                 <label style="font-size: 12px;">
-                  <input type="radio" name="sel_fabrics" id="sel_fabrics2" value="2"
+                  <input type="radio" name="product_type" id="product_type2" value="2"
                          data-type="filter_products"
-                         class="input-checkbox" <?= $data['sel_fabrics'] == "2" ? 'checked' : '' ?>>
+                         class="input-checkbox" <?= $data['product_type'] == "2" ? 'checked' : '' ?>>
                   All selected fabrics *
                 </label>
                 <label style="font-size: 12px;">
-                  <input type="radio" name="sel_fabrics" id="sel_fabrics3" value="3"
+                  <input type="radio" name="product_type" id="product_type3" value="3"
                          data-type="filter_products"
-                         class="input-checkbox" <?= $data['sel_fabrics'] == "3" ? 'checked' : '' ?>>
+                         class="input-checkbox" <?= $data['product_type'] == "3" ? 'checked' : '' ?>>
                   All selected categories *
                 </label>
                 <label style="font-size: 12px;">
-                  <input type="radio" name="sel_fabrics" id="sel_fabrics4" value="4"
+                  <input type="radio" name="product_type" id="product_type4" value="4"
                          data-type="filter_products"
-                         class="input-checkbox" <?= $data['sel_fabrics'] == "4" ? 'checked' : '' ?>>
+                         class="input-checkbox" <?= $data['product_type'] == "4" ? 'checked' : '' ?>>
                   All selected manufacturers *
                 </label>
                 <label style="font-size: 12px;">* - i.e. use the item selected below</label>
@@ -235,37 +231,38 @@
           </div>
 
           <div class="form-row">
-
             <div class="col-md-4">
-              <label for="">Allow multiple <i class="fa fa-question-circle" data-promotion
-                                              href="#allow_multiple"></i></label>
+              <label for="">Allow multiple
+                <i class="fa fa-question-circle" data-promotion href="#allow_multiple"></i>
+              </label>
             </div>
             <div class="col-md-8">
               <input type="checkbox" value="1" name="allow_multiple"
                      id="allow_multiple" <?= $data['allow_multiple'] == "1" ? 'checked' : '' ?>
                      class="input-checkbox">
             </div>
-
           </div>
 
           <div class="form-row">
-            <div class="col-md-4">
-              <label for="">Start Date <i class="fa fa-question-circle" data-promotion
-                                          href="#start_date"></i></label>
+            <div class="col-md-4 visible-md visible-lg">
+              <label for="">Date
+                <i class="fa fa-question-circle" data-promotion href="#date"></i>
+              </label>
             </div>
             <div class="col-md-8">
-              <input type="text" name="start_date" id="dateFrom" value="<?= $data['date_start'] ?>"
-                     class="input-text ">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="col-md-4">
-              <label for="">End Date <i class="fa fa-question-circle" data-promotion href="#end_date"></i></label>
-            </div>
-            <div class="col-md-8">
-              <input type="text" name="date_end" value="<?= $data['date_end'] ?>"
-                     id="dateTo" class="input-text ">
+              <div class="row">
+                <div class="col-xs-6">
+                  <label for=""> Start Date
+                    <i class="fa fa-question-circle" data-promotionhref="#date_start"></i>
+                  </label>
+                  <input type="text" name="date_start" id="dateFrom" value="<?= $data['date_start'] ?>"
+                         class="input-text ">
+                </div>
+                <div class="col-xs-6">
+                  <label for="">End Date <i class="fa fa-question-circle" data-promotion href="#date_end"></i></label>
+                  <input type="text" name="date_end" value="<?= $data['date_end'] ?>" id="dateTo" class="input-text ">
+                </div>
+              </div>
             </div>
           </div>
 
@@ -276,7 +273,7 @@
             </div>
             <div class="col-md-8">
               <input type="checkbox" value="1" name="enabled"
-                     <?= $data['enabled'] == "1" ? 'checked' : ''; ?>
+                <?= $data['enabled'] == "1" ? 'checked' : ''; ?>
                      class="input-checkbox">
             </div>
           </div>
@@ -326,16 +323,16 @@
           <div class="form-row">
             <div class="col-md-12 text-center">
               <button id="submit" class="button" style="width: 150px;">
-                <?= isset($data['id'])?'Update':'Save';?>
+                <?= isset($data['id']) ? 'Update' : 'Save'; ?>
               </button>
               <div class="results" style="color: red;"></div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
   </div>
+
   <div id="modal" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -355,6 +352,8 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+
 </form>
+
 <script src="<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>"></script>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/discount/form.js'); ?>"></script>

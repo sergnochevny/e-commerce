@@ -6,7 +6,7 @@
     <div class="container">
       <div id="content" class="main-content-inner" role="main">
         <a href="<?= $back_url; ?>" class="button back_button">Back</a>
-        <div id="customer_details" style="padding-top: 20px; margin: auto; width: 600px;">
+        <div style="padding-top: 20px; margin: auto; width: 600px;">
           <h1 class="page-title"><?= $form_title ?></h1>
           <div id="form_content">
             <?= $form; ?>

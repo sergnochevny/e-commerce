@@ -12,7 +12,7 @@
       <div id="content" class="main-content-inner" role="main">
         <a href="<?= $back_url; ?>" class="button back_button">Back</a>
         <h1 class="page-title"><?= ($type == 'add')?'ADD FABRIC':'MODIFY FABRIC'?></h1>
-        <div id="customer_details" class="col2-set">
+        <div class="col2-set">
           <div class="woocommerce">
             <div id="form_product">
               <?= $edit_form; ?>

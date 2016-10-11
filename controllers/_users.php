@@ -7,109 +7,65 @@
     protected $form_title_edit = 'MODIFY USER';
 
     private function list_countries($select = null) {
-      $list = '';
       $countries = Model_Address::get_countries_all();
+      $this->template->vars('items', $countries);
+      $this->template->vars('select', $select);
       ob_start();
-      foreach($countries as $country) {
-        $this->template->vars('value', $country['id']);
-        $this->template->vars('title', $country['name']);
-        $this->template->vars('selected', isset($select) && ($select == $country['id']));
-        $this->template->view_layout('address/select_countries_options');
-      }
+      $this->template->view_layout('address/select_countries_options');
       $list = ob_get_contents();
       ob_end_clean();
       return $list;
     }
 
     private function get_province_list() {
-      $list = '';
-      if(!is_null(_A_::$app->get('country'))) {
-        $country = _A_::$app->get('country');
-        $list = $this->list_province($country);
-      }
-      echo '<option selected disabled>Select Province</option>';
-      echo $list;
-    }
-
-    protected function save(&$data) {
-      $error = null;
-      $result = false;
-      $error = $data = null;
-      if($this->load($data, $error)) {
-        if(isset($data['aid'])) {
-          if(!empty($data['create_password'])) {
-            $salt = Model_Auth::generatestr();
-            $password = Model_Auth::hash_($data['create_password'], $salt, 12);
-            $check = Model_Auth::check($data['confirm_password'], $password);
-          } else $password = null;
-
-          if(is_null($password) || (isset($check) && ($password == $check))) {
-            try {
-              $data['password'] = is_null($password) ? '' : $password;
-              $aid = Model_Users::save($data);
-              if(!is_null($password)) Model_User::update_password($password, $aid);
-
-              if(!is_null(_A_::$app->session('_')) && ($aid == _A_::$app->session('_'))) {
-                $user = Model_Users::get_by_id($aid);
-                if(isset($user)) {
-                  _A_::$app->setSession('user', $user);
-                }
-              }
-              $warning = ['All data saved successfully!!!'];
-              $result = true;
-              $data = null;
-            } catch(Exception $e) {
-              $error[] = $e->getMessage();
-            }
-          } else {
-            $error[] = 'Password and Confirm Password must be identical!!!';
-          }
-        } else {
-
-          $salt = Model_Auth::generatestr();
-          $password = Model_Auth::hash_($data['create_password'], $salt, 12);
-          $check = Model_Auth::check($data['confirm_password'], $password);
-          if($password == $check) {
-            try {
-              $data['password'] = $password;
-              $aid = Model_Users::save($data);
-              _A_::$app->get('aid', $aid);
-              $warning = ['Data saved successfully!!!'];
-              $result = true;
-            } catch(Exception $e) {
-              $error[] = $e->getMessage();
-            }
-          } else {
-            $error[] = 'Password and Confirm Password must be identical!!!';
-          }
-        }
-      }
-      if(isset($warning)) $this->template->vars('warning', $warning);
-      if(isset($error)) $this->template->vars('error', $error);
-
-      return $result;
+      echo $this->list_province(_A_::$app->get('country'));
     }
 
     private function list_province($country, $select = null) {
       $list = '';
       if(isset($country) && !empty($country)) {
         $provincies = Model_Address::get_country_province($country);
+        $this->template->vars('items', $provincies);
+        $this->template->vars('select', $select);
         ob_start();
-        foreach($provincies as $province) {
-          $this->template->vars('value', $province['id']);
-          $this->template->vars('title', $province['name']);
-          $this->template->vars('selected', isset($select) && ($select == $province['id']));
-          $this->template->view_layout('address/select_countries_options');
-        }
+        $this->template->view_layout('address/select_countries_options');
         $list = ob_get_contents();
         ob_end_clean();
       }
       return $list;
     }
 
+    protected function save(&$data) {
+      $result = false;
+      $error = $data = null;
+      if($this->load($data, $error)) {
+        try {
+          $aid = Model_Users::save($data);
+          if(isset($data['aid'])) {
+            if(!is_null(_A_::$app->session('_')) && ($aid == _A_::$app->session('_'))) {
+              $user = Model_Users::get_by_id($aid);
+              if(isset($user)) _A_::$app->setSession('user', $user);
+            }
+          } else {
+            _A_::$app->get('aid', $aid);
+            $data = null;
+          }
+          $warning = ['All data saved successfully!!!'];
+          $result = true;
+        } catch(Exception $e) {
+          $error[] = $e->getMessage();
+        }
+      }
+
+      if(isset($warning)) $this->template->vars('warning', $warning);
+      if(isset($error)) $this->template->vars('error', $error);
+
+      return $result;
+    }
+
     protected function load(&$data, &$error) {
 
-      $ship_as_billing = Model_User::validData(!is_null(_A_::$app->post('Same_as_billing')) ? _A_::$app->post('ship_as_billing') : 0);
+      $ship_as_billing = _A_::$app->post('ship_as_billing');
       $data = [
         'aid' => _A_::$app->get('aid'),
         'email' => mysql_real_escape_string(Model_User::validData(_A_::$app->post('email'))),
@@ -165,14 +121,13 @@
         } else {
           if(
             ((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password']))) ||
-            ((!isset($data['aid'])) && ($data['confirm_password'] !== $data['create_password'])) ||
             empty($data['bill_firstname']) ||
             empty($data['bill_lastname']) ||
             (empty($data['bill_address1']) && empty($data['bill_address2'])) ||
             empty($data['bill_country']) ||
             empty($data['bill_postal']) ||
             empty($data['bill_phone']) ||
-            (($ship_as_billing == 0) &&
+            ((is_null($ship_as_billing)) &&
               (empty($data['ship_firstname']) ||
                 empty($data['ship_lastname']) ||
                 (empty($data['ship_address1']) && empty($data['ship_address2'])) ||
@@ -185,9 +140,6 @@
 
             if((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password'])))
               $error[] = '<pre>&#9;Identify <b>Create Password</b> and <b>Confirm Password</b> field!!!</pre>';
-            if((!isset($data['aid'])) && ($data['confirm_password'] !== $data['create_password']))
-              $error[] = '<pre>&#9;Fields <b>Create Password</b> and <b>Confirm Password</b> must be identical!!!</pre>';
-
             if(empty($data['bill_firstname']))
               $error1[] = '<pre>&#9;Identify <b>First Name</b> field!!!</pre>';
             if(empty($data['bill_lastname']))
@@ -201,12 +153,11 @@
             if(empty($data['bill_phone']))
               $error1[] = '<pre>&#9;Identify <b>Telephone</b> field!!!</pre>';
             if(count($error1) > 0) {
-              if(count($error) > 0)
-                $error[] = '';
+              if(count($error) > 0) $error[] = '<br>';
               $error[] = 'BILLING INFORMATION:';
               $error = array_merge($error, $error1);
             }
-            if($ship_as_billing == 0) {
+            if(is_null($ship_as_billing)) {
 
               if(empty($data['ship_firstname']))
                 $error2[] = '<pre>&#9;Identify <b>First Name</b> field!!!</pre>';
@@ -226,7 +177,20 @@
                 $error = array_merge($error, $error2);
               }
             }
-          } else return true;
+          } else {
+            if(!empty($data['create_password'])) {
+              $salt = Model_Auth::generatestr();
+              $password = Model_Auth::hash_($data['create_password'], $salt, 12);
+              $check = Model_Auth::check($data['confirm_password'], $password);
+            } else $password = null;
+
+            if(is_null($password) || (isset($check) && ($password == $check))) {
+              $data['password'] = $password;
+              return true;
+            } else {
+              $error[] = 'Password and Confirm Password must be identical!!!';
+            }
+          }
         }
       }
       return false;
@@ -239,6 +203,7 @@
           exit($this->get_province_list());
         }
       }
+      return true;
     }
 
     protected function form_after_get_data(&$data = null) {
@@ -248,14 +213,13 @@
       $data['ship_list_province'] = $this->list_province($data['ship_country'], $data['ship_province']);
     }
 
-    public function user_handling($url, $back_url, $title, $is_user = false, $outer_control = false) {
+    public function user_handling(&$data, $url, $back_url, $title, $is_user = false, $outer_control = false) {
       $this->template->vars('form_title', $title);
-      if(_A_::$app->request_is_post()) {
+      if($this->form_handling() && _A_::$app->request_is_post()) {
         $result = $this->save($data);
         if($outer_control && $result) return $result;
         exit($this->form($url, $data));
       }
-      $this->form_handling();
       ob_start();
       $this->form($url);
       $form = ob_get_contents();
@@ -268,7 +232,6 @@
       if($is_user) $this->main->view('edit');
       else $this->main->view_admin('edit');
     }
-
 
 //    public function modify_accounts_password()
 //    {

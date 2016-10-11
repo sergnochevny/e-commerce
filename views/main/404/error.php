@@ -5,7 +5,7 @@
     <div class="main-content main-content-shop">
         <div class="container">
             <div id="content" class="main-content-inner" role="main">
-                <div id="customer_details" style="padding-top: 20px; margin: auto; width: 600px;">
+                <div style="padding-top: 20px; margin: auto; width: 600px;">
                     <div class="error404" id="message404">
                         <p>
                             <span class="title404">

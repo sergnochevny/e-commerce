@@ -119,7 +119,7 @@
           "',`bill_firstname` =  '" . $bill_firstname .
           "',`bill_lastname` =  '" . $bill_lastname .
           "',`bill_organization` =  '" . $bill_organization .
-          "',`bill_address1` =  '" . $bill_address1.
+          "',`bill_address1` =  '" . $bill_address1 .
           "',`bill_address2` =  '" . $bill_address2 .
           "',`bill_province` =  '" . $bill_province .
           "',`bill_city` =  '" . $bill_city .
@@ -139,13 +139,16 @@
           "',`ship_postal` =  '" . $ship_postal .
           "',`ship_phone` =  '" . $ship_phone .
           "',`ship_fax` =  '" . $ship_fax .
-          "',`ship_email` =  '" . $ship_email .
-          "'WHERE  `aid` = $aid;";
+          "',`ship_email` =  '" . $ship_email;
+        if(isset($password) && (strlen($password) > 0)) {
+          $q .= "',`password` =  '" . $password;
+        }
+        $q .= "' WHERE  `aid` = $aid;";
       }
       $result = mysql_query($q);
       if(!$result) throw new Exception(mysql_error());
       if(!isset($aid)) {
-        $id = mysql_insert_id();
+        $aid = mysql_insert_id();
       }
       return $aid;
     }

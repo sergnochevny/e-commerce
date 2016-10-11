@@ -26,7 +26,7 @@
   </a>
 </div>
 <p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
-<?php include "views/manufacturers/filter_form.php"; ?>
+<?= isset($search_form) ? $search_form : '' ?>
 <div id="manufacturers">
   <?= $list ?>
 </div>

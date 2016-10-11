@@ -8,7 +8,7 @@
 
     protected abstract function load(&$data, &$error);
 
-    protected function form_handling(&$data = null) { }
+    protected function form_handling(&$data = null) { return true; }
 
     protected function form_after_get_data(&$data = null) { }
 
@@ -28,12 +28,11 @@
 
     protected function edit_add_handling($url, $back_url, $title) {
       $this->template->vars('form_title', $title);
-      if(_A_::$app->request_is_post()) {
+      if( $this->form_handling($data) && _A_::$app->request_is_post()) {
         $data = null;
         $this->save($data);
         exit($this->form($url, $data));
       }
-      $this->form_handling();
       ob_start();
       $this->form($url);
       $form = ob_get_contents();
@@ -47,17 +46,21 @@
     }
 
     protected function save(&$data) {
-      $error = null;
+      $result = false;
+      $error = $data = null;
       if($this->load($data, $error)) {
         try {
           forward_static_call(['Model_' . ucfirst($this->controller), 'save'], $data);
-          $warning = ["The data saved successfully!"];
+          $warning = ["All Data saved successfully!"];
+          $result = true;
         } catch(Exception $e) {
           $error[] = $e->getMessage();
         }
       }
-      $this->template->vars('warning', isset($warning) ? $warning : null);
-      $this->template->vars('error', isset($error) ? $error : null);
+      if(isset($warning)) $this->template->vars('warning', $warning);
+      if(isset($error)) $this->template->vars('error', $error);
+
+      return $result;
     }
 
     /**
