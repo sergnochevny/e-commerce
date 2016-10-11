@@ -18,9 +18,7 @@
       $response = null;
       $query = "SELECT * ";
       $query .= " FROM fabrix_admins";
-      if(isset($filter)) {
-        $query .= " WHERE";
-      }
+      $query .= self::build_where($filter);
       $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {

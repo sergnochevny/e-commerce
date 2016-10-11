@@ -17,9 +17,7 @@
     public static function get_total_count($filter = null) {
       $response = null;
       $query = "SELECT COUNT(*) FROM fabrix_manufacturers";
-      if(isset($filter)) {
-        $query .= " WHERE";
-      }
+      $query .= self::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
@@ -47,9 +45,7 @@
       $query .= " FROM fabrix_manufacturers a";
       $query .= " LEFT JOIN";
       $query .= " fabrix_products b ON b.manufacturerId = a.id";
-      if(isset($filter)) {
-        $query .= " WHERE";
-      }
+      $query .= self::build_where($filter);
       $query .= " GROUP BY a.id, a.manufacturer";
       $query .= " ORDER BY a.manufacturer";
       $query .= " LIMIT $start, $limit";

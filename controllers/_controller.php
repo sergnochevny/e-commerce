@@ -14,16 +14,47 @@
       }
     }
 
+    protected function build_search_filter(&$filter) {
+      $fields_type = [
+        'int' => ['=', 'between'],
+        'timestamp' => ['=', 'between'],
+        'decimal' => ['=', 'between'],
+        'text' => ['like', 'like'],
+        'varchar' => ['like', 'like'],
+        'string' => ['like', 'like']
+      ];
+      $fields_pattern = '#\b[^:space:]*(int|varchar|string|text|decimal|timestamp)[^:space:]*\b#';
+
+      $filter = null;
+      $fields = forward_static_call([$this->model_name, 'get_fields']);
+      if(isset($fields)) {
+        if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
+        else  $search = _A_::$app->get('search');
+        if(isset($search)) {
+          foreach($search as $key => $item) {
+            if(preg_match($fields_pattern, $fields[$key]['Type'], $matches) !== false) {
+              if(count($matches) > 1) {
+                if(is_array($item)){
+                  $filter[$key] = [$fields_type[$matches[1]][1], $item];
+                }
+                $filter[$key] = [$fields_type[$matches[1]][0], $item];
+              }
+            }
+          }
+        }
+      }
+    }
+
     protected function get_list() {
+      $this->build_search_filter($filter);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
       $per_page = 12;
-      $model_name = 'Model_' . ucfirst($this->controller);
-      $total = forward_static_call([$model_name, 'get_total_count']);
+      $total = forward_static_call([$this->model_name, 'get_total_count'], $filter);
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
       if($page <= 0) $page = 1;
       $start = (($page - 1) * $per_page);
       $res_count_rows = 0;
-      $rows = forward_static_call_array([$model_name, 'get_list'], [$start, $per_page, &$res_count_rows]);
+      $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, $filter]);
 
       $this->template->vars('rows', $rows);
       ob_start();
@@ -48,7 +79,6 @@
       $this->template->vars('list', $list);
       if(Controller_Admin::is_logged()) $this->main->view_admin($this->controller);
       else  $this->main->view($this->controller);
-
     }
 
   }

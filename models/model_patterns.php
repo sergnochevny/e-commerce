@@ -53,9 +53,7 @@
       $query .= " FROM fabrix_patterns a";
       $query .= " LEFT JOIN";
       $query .= " fabrix_product_patterns b ON b.patternId = a.id";
-      if(isset($filter)){
-        $query .= " WHERE";
-      }
+      $query .= self::build_where($filter);
       $query .= " GROUP BY a.id, a.pattern";
       $query .= " ORDER BY a.pattern";
       $query .= " LIMIT $start, $limit";
