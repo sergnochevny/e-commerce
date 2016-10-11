@@ -106,7 +106,7 @@
     }
   );
 
-  $('button#submit').on('click',
+  $('a#submit').on('click',
     function (event) {
       event.preventDefault();
       $(this).parents('form').trigger('submit', true);

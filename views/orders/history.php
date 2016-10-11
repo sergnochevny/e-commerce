@@ -18,10 +18,10 @@
                 </div>
               </div>
               <div class="col-xs-1 text-right" style="padding-right: 0 !important;">
-                <button title="Search" style="height: 34px" class="btn small" type="submit" name="find"><i
-                    class="fa fa-search"></i></button>
+                <a title="Search" style="height: 34px" class="btn small" type="submit" name="find">
+                  <iclass="fa fa-search"></i>
+                </a>
               </div>
-
             </form>
             <br>
           </div>

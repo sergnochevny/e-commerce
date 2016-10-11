@@ -204,7 +204,7 @@
             <small style="color:#999;"><b>NOTE</b>: Select a place, and then click "Upload file" to set the image there.
             </small>
             <div class="col-md-12 text-center" style="margin-top: 15px">
-              <button id="upload" class="button alt" style="cursor: pointer;">Upload file</button>
+              <a id="upload" class="button alt" style="cursor: pointer;">Upload file</a>
             </div>
             <div class="col-md-12 text-center">
               <div class="row">
@@ -269,11 +269,7 @@
 
     <div class="col-xs-12">
       <div class="text-center">
-        <br/>
-        <button id="submit" type="button" class="button" style="width: 150px;">
-          Save
-        </button>
-        <br/>
+        <a id="submit" type="button" class="button" style="width: 150px;">Save</a>
       </div>
     </div>
 
@@ -289,9 +285,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button id="build_filter" href="filter" type="button" class="btn-primary" data-dismiss="modal">Ok
-            </button>
-            <button type="button" class="btn-default" data-dismiss="modal">Close</button>
+            <a id="build_filter" href="filter" type="button" class="btn-primary" data-dismiss="modal">Ok</a>
+            <a type="button" class="btn-default" data-dismiss="modal">Close</a>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

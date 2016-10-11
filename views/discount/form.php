@@ -322,9 +322,9 @@
 
           <div class="form-row">
             <div class="col-md-12 text-center">
-              <button id="submit" class="button" style="width: 150px;">
+              <a id="submit" class="button" style="width: 150px;">
                 <?= isset($data['id']) ? 'Update' : 'Save'; ?>
-              </button>
+              </a>
               <div class="results" style="color: red;"></div>
             </div>
           </div>
@@ -345,9 +345,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button id="build_filter" href="filter" type="button" class="btn-primary" data-dismiss="modal">Ok
-          </button>
-          <button type="button" class="btn-default" data-dismiss="modal">Close</button>
+          <a id="build_filter" href="filter" type="button" class="btn-primary" data-dismiss="modal">Ok</a>
+          <a type="button" class="btn-default" data-dismiss="modal">Close</a>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

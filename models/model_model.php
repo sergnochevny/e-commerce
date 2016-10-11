@@ -43,12 +43,12 @@
 
     public static function get_fields() {
       $response = null;
-      $query = "DESCRIBE " . self::$table;
+      $query = "DESCRIBE " . static::$table;
       $result = mysql_query($query);
       if($result) {
-        $keys = mysql_fetch_field($result, 'Field');
-        $response = mysql_fetch_assoc($result);
-        $response = array_combine($keys, $response);
+        while($row = mysql_fetch_assoc($result)) {
+          $response[$row[0]] = $row;
+        }
       }
       return $response;
     }

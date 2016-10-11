@@ -12,8 +12,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-startup-image"
-          href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
+    <link rel="apple-touch-startup-image" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-layout.css'); ?>'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-smallscreen.css'); ?>' media='only screen and (max-width: 768px)'/>
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce.css'); ?>'/>
@@ -53,6 +52,7 @@
     <script src='<?= _A_::$app->router()->UrlTo('views/js/jquery.prettyPhoto.js'); ?>'></script>
 
     <script src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
+    <script src='<?= _A_::$app->router()->UrlTo('views/js/search/search.js'); ?>'></script>
     <!--<script type='text/javascript' src='views/js/wp-embed.min.js'></script>-->
     <script src='<?= _A_::$app->router()->UrlTo('views/js/js_composer_front.js'); ?>'></script>
 </head>

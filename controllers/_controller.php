@@ -24,7 +24,7 @@
         'string' => ['like', 'like']
       ];
       $fields_pattern = '#\b[^:space:]*(int|varchar|string|text|decimal|timestamp)[^:space:]*\b#';
-
+      $search_form = null;
       $filter = null;
       $fields = forward_static_call([$this->model_name, 'get_fields']);
       if(isset($fields)) {
@@ -39,10 +39,21 @@
                 }
                 $filter[$key] = [$fields_type[$matches[1]][0], $item];
               }
+              $search_form[$key] = $item;
             }
           }
         }
       }
+      $this->template->vars('search',$search_form);
+      $this->template->vars('action',_A_::$app->router()->UrlTo($this->controller));
+      $search_form = null;
+      ob_start();
+      try{
+        $this->main->view_layout('search/form');
+        $search_form = ob_get_contents();
+      } catch(Exception $e){}
+      ob_end_clean();
+      $this->template->vars('search_form',$search_form);
     }
 
     protected function get_list() {
@@ -76,6 +87,7 @@
       $this->get_list();
       $list = ob_get_contents();
       ob_end_clean();
+      if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
       if(Controller_Admin::is_logged()) $this->main->view_admin($this->controller);
       else  $this->main->view($this->controller);
