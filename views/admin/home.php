@@ -13,21 +13,7 @@
           </a>
         </div>
         <p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
-
-        <!--form class="woocommerce-ordering" method="get">
-          <?php $rows = $ProductFilterList['category_in_select']; ?>
-          <select
-            onChange="if(this.options[this.selectedIndex].value!=''){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}"
-            class="orderby" style="min-width: 210px">
-            <option value="<?= _A_::$app->router()->UrlTo('admin/home') ?>">--FILTER BY CATEGORY--</option>
-            <?php foreach($rows as $row) { ?>
-              <option value="<?= _A_::$app->router()->UrlTo('admin/home', ['cat' => $row[0]]) ?>"
-                <?= (!is_null(_A_::$app->get('cat')) && ($row[0] == _A_::$app->get('cat'))) ? 'selected' : ''; ?>><?= $row[1]; ?>
-              </option>
-            <?php } ?>
-          </select>
-        </form-->
-        <?php include "views/orders/filter_form.php"; ?>
+        <?= isset($search_form) ? $search_form : '' ?>
         <div class="col-sm-12">
           <div class="row">
             <hr style="margin-top: 5px; margin-bottom: 10px; border-color: #ddd">
