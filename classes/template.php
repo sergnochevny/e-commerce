@@ -30,7 +30,6 @@
         $contentPage = SITE_PATH . 'views' . DS . $name . '.php';
       if(file_exists($pathLayout) == false) {
         trigger_error('Layout `' . $this->layouts . '` does not exist.', E_USER_NOTICE);
-        return false;
       }
       if(file_exists($contentPage) == false) {
         trigger_error('Template `' . $name . '` does not exist.', E_USER_NOTICE);
@@ -46,10 +45,7 @@
       if(!isset($controller) || (is_string($controller) && (strlen($controller) > 0)))
         $contentPage = SITE_PATH . 'views' . DS . $controller . DS . $name . '.php'; else
         $contentPage = SITE_PATH . 'views' . DS . $name . '.php';
-      if(file_exists($contentPage) == false) {
-        trigger_error('Template `' . $name . '` does not exist.', E_USER_NOTICE);
-        return false;
-      }
+      if(file_exists($contentPage) == false) throw new Exception('Template `' . $name . '` does not exist.');
       extract($this->vars);
       include($contentPage);
     }
