@@ -37,9 +37,6 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12">
-      <hr style="margin-top: 0">
-    </div>
     <div class="row">
       <div class="col-md-12 data-list-view-body">
         <?= $list; ?>

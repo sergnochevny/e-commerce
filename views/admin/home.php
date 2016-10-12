@@ -1,13 +1,9 @@
 <div class="container">
   <div id="content" class="main-content-inner" role="main">
     <div class="text-center header-to-action">
-      <a href="<?= $add_product_href; ?>">
-        <input type="submit" value="ADD NEW PRODUCT" class="button"/>
-      </a>
+      <a href="<?= $add_product_href; ?>" class="button">ADD NEW PRODUCT</a>
     </div>
     <p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
-
-    <?php include "views/orders/filter_form.php"; ?>
 
     <div class="col-sm-12">
       <div class="row">

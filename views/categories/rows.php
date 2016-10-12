@@ -1,10 +1,10 @@
 <div class="col-sm-12">
   <div class="col-xs-12 headline-tab">
     <div class="row">
-      <div class="col-xs-7 col-sm-4 xs-text-center">
+      <div class="col-xs-7 col-sm-6 xs-text-center">
         <b>Category name</b>
       </div>
-      <div class="col-xs-5 col-sm-6 xs-text-center">
+      <div class="col-xs-5 col-sm-4 xs-text-center">
         <b>Display order</b>
       </div>
     </div>
@@ -14,11 +14,11 @@
   <div class="col-sm-12">
     <div class="col-xs-12 data-list-view-item-container">
       <div class="row">
-        <div class="col-xs-7 col-sm-4 xs-text-center">
+        <div class="col-xs-7 col-sm-6 xs-text-center">
 <!--          <small class="data-hint">Category name</small>-->
           <div class="cut-text-in-one-line"><?= $row[1] ?></div>
         </div>
-        <div class="col-xs-5 col-sm-6 xs-text-center">
+        <div class="col-xs-5 col-sm-4 xs-text-center">
 <!--          <small class="data-hint">Display order</small>-->
           <div class="cut-text-in-one-line"><?= $row[2] ?></div>
         </div>

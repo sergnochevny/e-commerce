@@ -32,7 +32,7 @@
     transition: all .3s cubic-bezier(.2, 1, .25, 1);
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
-    border-radius: 0;
+    border-radius: 2px;
     border: 2px solid #455600;
 }
 
@@ -41,7 +41,7 @@
 .woocommerce-page button.button:hover,
 .woocommerce-page input.button:hover {
     color: #ffffff !important;
-    background: #222;
+    background: #222222;
 }
 
 span#b_in_product {
@@ -1684,9 +1684,9 @@ input[type=reset], button[type=reset]{
 
 .search-panel {
     padding: 0;
-    -webkit-box-shadow: 0 6px 15px #DDD;
-    -moz-box-shadow: 0 6px 15px #DDD;
-    box-shadow: 0 6px 15px #DDD;
+    -webkit-box-shadow: 0 2px 10px #DDD;
+    -moz-box-shadow: 0 2px 10px #DDD;
+    box-shadow: 0 2px 10px #DDD;
 }
 
 .search-panel > .panel-body {
