@@ -1,6 +1,3 @@
-<body
-  class="page page-id-1707 page-template-default woocommerce-cart woocommerce-page header-large ltr sticky-header-yes wpb-js-composer js-comp-ver-4.11.1 vc_responsive small-sticky">
-
 
 <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css'
       media='all'/>

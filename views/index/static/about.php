@@ -1,5 +1,3 @@
-<body
-    class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 <?php
     include "views/header.php";
     include('views/index/main_gallery.php');

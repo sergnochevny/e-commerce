@@ -1,5 +1,3 @@
-<body
-    class="single single-product woocommerce woocommerce-page header-large ltr sticky-header-yes wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3 small-sticky">
 <div class="site-container">
     <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css' media='all'/>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>

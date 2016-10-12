@@ -1,6 +1,3 @@
-<body
-    class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
-
     <script defer src="<?= _A_::$app->router()->UrlTo('upload/js/ajaxupload.3.5.js') ?>" type="text/javascript"></script>
     <script defer src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
     <script defer src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit.js'); ?>' type="text/javascript"></script>
