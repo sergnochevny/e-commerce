@@ -19,7 +19,7 @@
     private function product_in($p_id, &$item, $template = 'product_in') {
       $base_url = _A_::$app->router()->UrlTo('/');
 
-      $product = Model_Cart::get_product_params($p_id);
+      $product = Model_Product::get_by_id($p_id);
       $filename = 'upload/upload/' . $item['image1'];
       if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
         $filename = "upload/upload/not_image.jpg";

@@ -165,17 +165,17 @@
       if(in_array('ID', $arrayAllFields)) {
         try {
           $db = $this->db;
-          $result = $db->exec("DELETE FROM $this->table WHERE `id` = $this->id");
+          $result = $db->exec("DELETE FROM $this->table WHERE id = $this->id");
           foreach($arrayAllFields as $one) {
             unset($this->$one);
           }
         } catch(PDOException $e) {
           echo 'Error : ' . $e->getMessage();
-          echo '<br/>Error sql : ' . "'DELETE FROM $this->table WHERE `id` = $this->id'";
+          echo '<br/>Error sql : ' . "'DELETE FROM $this->table WHERE id = $this->id'";
           exit();
         }
       } else {
-        echo "ID table `$this->table` not found!";
+        echo "ID table $this->table not found!";
         exit;
       }
       return $result;
@@ -194,11 +194,11 @@
         }
       }
       if(!isset($arrayForSet) OR empty($arrayForSet)) {
-        echo "Array data table `$this->table` empty!";
+        echo "Array data table $this->table empty!";
         exit;
       }
       if(!isset($whereID) OR empty($whereID)) {
-        echo "ID table `$this->table` not found!";
+        echo "ID table $this->table not found!";
         exit;
       }
 
@@ -206,11 +206,11 @@
 
       try {
         $db = $this->db;
-        $stmt = $db->prepare("UPDATE $this->table SET $strForSet WHERE `id` = $whereID");
+        $stmt = $db->prepare("UPDATE $this->table SET $strForSet WHERE id = $whereID");
         $result = $stmt->execute();
       } catch(PDOException $e) {
         echo 'Error : ' . $e->getMessage();
-        echo '<br/>Error sql : ' . "'UPDATE $this->table SET $strForSet WHERE `id` = $whereID'";
+        echo '<br/>Error sql : ' . "'UPDATE $this->table SET $strForSet WHERE id = $whereID'";
         exit();
       }
       return $result;

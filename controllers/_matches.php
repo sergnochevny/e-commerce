@@ -128,7 +128,7 @@
                 }
               }
               if(!$item_added) {
-                $product = Model_Cart::get_product_params($product_id);
+                $product = Model_Product::get_by_id($product_id);
 
                 ////////////
                 $pid = $product_id;

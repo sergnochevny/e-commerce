@@ -2,6 +2,8 @@
 
   Class Model_Discount extends Model_Model {
 
+    protected static $table = 'fabrix_specials';
+
     public static function generateCouponCode($sid) {
       $sCde = "";
       $possible = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -18,7 +20,7 @@
     public static function checkCouponCode($sid, $cde) {
       if(!isset($sid)) $sid = 0;
       $iCnt = 0;
-      $sSQL = sprintf("SELECT sid FROM fabrix_specials WHERE coupon_code='%s';", $cde);
+      $sSQL = sprintf("SELECT sid FROM" . static::$table . "WHERE coupon_code='%s';", $cde);
       $result = mysql_query($sSQL) or die(mysql_error());
       $iCnt = mysql_num_rows($result);
       if($iCnt == 1) { #verify that it is not this record with the same coupon code
@@ -34,17 +36,41 @@
     }
 
     public static function get_by_id($id) {
-      $res = null;
-      $q = "select * from fabrix_specials where sid = '" . $id . "'";
-      $result = mysql_query($q);
-      if($result) {
-        $res = mysql_fetch_assoc($result);
+      $data = [
+        'sid' => $id,
+        'discount_comment1' => '',
+        'discount_comment2' => '',
+        'discount_comment3' => '',
+        'discount_amount' => '0.00',
+        'coupon_code' => '',
+        'allow_multiple' => 0,
+        'date_start' => date('now'),
+        'date_end' => date('d+1'),
+        'enabled' => 1,
+        'filter_products' => null,
+        'filter_type' => null,
+        'users' => null,
+        'countdown' => '',
+        'product_type' => 1,
+        'user_type' => 1,
+        'required_amount' => '0.00',
+        'promotion_type' => 0,
+        'discount_type' => 1,
+        'required_type' => 0,
+        'discount_amount_type' => 0
+      ];
+      if(isset($id)) {
+        $q = "select * from" . static::$table . "where sid = '" . $id . "'";
+        $result = mysql_query($q);
+        if($result) {
+          $data = mysql_fetch_assoc($result);
+        }
       }
-      return $res;
+      return $data;
     }
 
     public static function get_total_count($filter = null) {
-      $res = null;
+      $res = 0;
       $q = "SELECT COUNT(sid) FROM fabrix_specials";
       $q .= self::build_where($filter);
       $result = mysql_query($q);
@@ -73,7 +99,7 @@
 
     public static function getFabrixSpecialsByID($id) {
       $res = null;
-      $q = "select * from fabrix_specials WHERE sid='" . (integer)$id . "'";
+      $q = "select * from" . static::$table . "WHERE sid='" . (integer)$id . "'";
       $result = mysql_query($q);
       if($result) {
         $res = mysql_fetch_assoc($result);
@@ -165,13 +191,13 @@
         $res = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='$sid'");
         if($res && ($user_type == 4)) {
           foreach($users as $aid) {
-            $res = mysql_query("INSERT INTO  `fabrix_specials_users` (`sid` ,`aid`)VALUES('$sid',  '$aid')");
+            $res = mysql_query("INSERT INTO  fabrix_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
             if(!$res) break;
           }
         }
       }
       if($res) {
-        $res = mysql_query("DELETE FROM `fabrix_specials_products` WHERE `sid`='$sid'");
+        $res = mysql_query("DELETE FROM fabrix_specials_products WHERE sid='$sid'");
         if($res && isset($product_type) && ($product_type > 1)) {
           foreach($filter_products as $pid) {
             $res = mysql_query("INSERT INTO  fabrix_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
@@ -187,7 +213,7 @@
       mysql_query(sprintf("DELETE FROM fabrix_specials_products WHERE sid=%u", $id));
       mysql_query(sprintf("DELETE FROM fabrix_specials_users WHERE sid=%u", $id));
       mysql_query(sprintf("DELETE FROM fabrix_specials_usage WHERE sid=%u", $id));
-      mysql_query(sprintf("DELETE FROM fabrix_specials WHERE sid = %u", $id));
+      mysql_query(sprintf("DELETE FROM" . static::$table . "WHERE sid = %u", $id));
     }
 
     public static function get_filter_selected($type, &$data) {
@@ -430,33 +456,6 @@
           }
       }
       return $filter;
-    }
-
-    public static function get_data($id) {
-      $data = [
-        'discount_comment1' => '',
-        'discount_comment2' => '',
-        'discount_comment3' => '',
-        'discount_amount' => '0.00',
-        'coupon_code' => '',
-        'allow_multiple' => 0,
-        'date_start' => date('now'),
-        'date_end' => date('d+1'),
-        'enabled' => 1,
-        'filter_products' => null,
-        'filter_type' => null,
-        'users' => null,
-        'countdown' => '',
-        'product_type' => 1,
-        'user_type' => 1,
-        'required_amount' => '0.00',
-        'promotion_type' => 0,
-        'discount_type' => 1,
-        'required_type' => 0,
-        'discount_amount_type' => 0
-      ];
-      if(isset($id)) $data = self::get_by_id($id);
-      return $data;
     }
 
   }

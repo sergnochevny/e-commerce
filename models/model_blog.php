@@ -13,11 +13,9 @@
     }
 
     public static function get_total_count($filter = null) {
-      $response = null;
-      $query = "SELECT COUNT(*) FROM blog_group_posts";
-      if(isset($filter)){
-        $query .= " WHERE";
-      }
+      $response = 0;
+      $query = "SELECT COUNT(*) FROM blog_posts";
+      $query .= self::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
@@ -25,7 +23,7 @@
     }
 
 
-    public static function DELETE($id) {
+    public static function delete($id) {
       if(isset($id)){
         $query = "DELETE FROM blog_group_posts WHERE object_id = $id";
         mysql_query($query);
@@ -40,7 +38,7 @@
       }
     }
 
-    public static function get_post_categories_by_post_id($post_id) {
+    public static function get_categories($post_id) {
       $result = [];
       $q = "SELECT group_id FROM blog_group_posts WHERE object_id = '$post_id'";
       $res = mysql_query($q);
@@ -50,28 +48,6 @@
         }
       }
       return $result;
-    }
-
-    public static function get_blog_category($group_id) {
-      $result = mysql_query("SELECT * FROM blog_groups WHERE group_id='$group_id'");
-      $row = mysql_fetch_array($result);
-
-      return array(
-        'id' => $row['name'],
-        'name' => $row['pnumber'],
-        'slug' => $row['group_id']
-      );
-    }
-
-    public static function del_post($post_id) {
-      $strSQL = "DELETE FROM blog_group_posts WHERE object_id = $post_id";
-      mysql_query($strSQL);
-      $strSQL = "DELETE FROM blog_post_img WHERE post_id = $post_id";
-      mysql_query($strSQL);
-      $strSQL = "DELETE FROM blog_post_keys_descriptions WHERE post_id = $post_id";
-      mysql_query($strSQL);
-      $strSQL = "DELETE FROM blog_posts WHERE id = $post_id";
-      mysql_query($strSQL);
     }
 
     public static function getPostImg($post_id) {
@@ -167,35 +143,13 @@
       return $res;
     }
 
-    public static function insert_blog_category($post_category_name, $slug) {
-      return mysql_query("INSERT INTO blog_groups SET NAME='$post_category_name', slug='$slug'");
-    }
-
-    public static function update_blog_category($post_category_name, $group_id) {
-      return mysql_query("update blog_groups SET NAME = '$post_category_name' WHERE group_id ='$group_id'");
-    }
-
-    public static function get_blog_categories_list() {
-      $q = "SELECT a.group_id, a.name, count(b.group_id) AS amount FROM blog_groups a " .
-        " LEFT JOIN blog_group_posts b ON a.group_id=b.group_id" .
-        " GROUP BY a.group_id, a.name";
-      $results = mysql_query($q);
-      $categories = [];
-      if($results) {
-        while($row = mysql_fetch_assoc($results)) {
-          $categories[] = $row;
-        }
-      }
-      return $categories;
-    }
-
     public static function get_count_publish_posts($cid = null) {
       if(!is_null($cid)) {
-        $q_total = "SELECT COUNT(*) FROM `blog_posts` a" .
+        $q_total = "SELECT COUNT(*) FROM blog_posts a" .
           " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
           " WHERE a.post_status = 'publish' and b.group_id='$cid'";
       } else {
-        $q_total = "SELECT COUNT(*) FROM `blog_posts` WHERE  post_status = 'publish'";
+        $q_total = "SELECT COUNT(*) FROM blog_posts WHERE  post_status = 'publish'";
       }
       $res = mysql_query($q_total);
       $total = mysql_fetch_row($res);
@@ -204,11 +158,11 @@
 
     public static function get_publish_post_list($cat_id, $start, $per_page, &$res_count_rows) {
       if(!is_null($cat_id)) {
-        $q = "SELECT a.* FROM `blog_posts` a" .
+        $q = "SELECT a.* FROM blog_posts a" .
           " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
           " WHERE a.post_status = 'publish' AND b.group_id='$cat_id' ORDER BY a.post_date DESC, a.ID DESC LIMIT $start,$per_page";
       } else {
-        $q = "SELECT * FROM `blog_posts` WHERE post_status = 'publish' ORDER BY post_date DESC, ID DESC LIMIT $start,$per_page";
+        $q = "SELECT * FROM blog_posts WHERE post_status = 'publish' ORDER BY post_date DESC, ID DESC LIMIT $start,$per_page";
       }
       $res = mysql_query($q);
       if($res) {
@@ -224,11 +178,11 @@
 
     public static function get_count_posts($cid = null) {
       if(!is_null($cid)) {
-        $q_total = "SELECT COUNT(*) FROM `blog_posts` a" .
+        $q_total = "SELECT COUNT(*) FROM blog_posts a" .
           " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
           " WHERE post_type = 'post' AND b.group_id='$cid'";
       } else {
-        $q_total = "SELECT COUNT(*) FROM `blog_posts` WHERE post_type = 'post'";
+        $q_total = "SELECT COUNT(*) FROM blog_posts WHERE post_type = 'post'";
       }
       $res = mysql_query($q_total);
       return mysql_fetch_row($res)[0];
@@ -236,11 +190,11 @@
 
     public static function get_post_list($cat_id, $start, $per_page, &$res_count_rows) {
       if(!is_null($cat_id)) {
-        $q = "SELECT a.* FROM `blog_posts` a" .
+        $q = "SELECT a.* FROM blog_posts a" .
           " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
           " WHERE post_type = 'post' AND b.group_id='$cat_id' ORDER BY a.post_date DESC, a.ID DESC LIMIT $start,$per_page";
       } else {
-        $q = "SELECT * FROM `blog_posts` WHERE post_type = 'post' ORDER BY post_date DESC, ID DESC LIMIT $start,$per_page";
+        $q = "SELECT * FROM blog_posts WHERE post_type = 'post' ORDER BY post_date DESC, ID DESC LIMIT $start,$per_page";
       }
       $res = mysql_query($q);
       if($res) {

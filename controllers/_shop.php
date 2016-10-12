@@ -146,7 +146,7 @@
       if($total < ($start + $per_page)) $limit = $total - $start;
 
       $res_count_rows = 0;
-      $rows = Model_Product::get_products_by_type($type, $start, $limit, $res_count_rows);
+      $rows = Model_Product::get_list_by_type($type, $start, $limit, $res_count_rows);
       $this->template->vars('count_rows', $res_count_rows);
 
       if($rows) {
@@ -244,7 +244,7 @@
         $cat_id = Model_Product::validData(_A_::$app->get('cat'));
       }
       $res_count_rows = 0;
-      $rows = Model_Product::get_products_by_type('all', $start, $per_page, $res_count_rows);
+      $rows = Model_Product::get_list_by_type('all', $start, $per_page, $res_count_rows);
 
       ob_start();
       foreach($rows as $row) {
@@ -372,7 +372,7 @@
       $count = 0;
       while($page <= ceil($total / $per_page)) {
         $start = (($page++ - 1) * $per_page);
-        $rows = Model_Product::get_products_list($start, $per_page);
+        $rows = Model_Product::get_list($start, $per_page);
         foreach($rows as $row) {
           for($i = 1; $i < 5; $i++) {
             $fimage = $row['image' . $i];
@@ -401,7 +401,7 @@
     }
 
     public function widget_products($type, $start, $limit, $layout = 'widget_products') {
-      $rows = Model_Product::get_prod_list_by_type($type, $start, $limit, $row_count, $image_suffix);
+      $rows = Model_Product::get_widget_list_by_type($type, $start, $limit, $row_count, $image_suffix);
       if($rows) {
         $sys_hide_price = Model_Price::sysHideAllRegularPrices();
         $this->template->vars('sys_hide_price', $sys_hide_price);

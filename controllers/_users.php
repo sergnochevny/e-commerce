@@ -24,7 +24,7 @@
     private function list_province($country, $select = null) {
       $list = '';
       if(isset($country) && !empty($country)) {
-        $provincies = Model_Address::get_country_province($country);
+        $provincies = Model_Address::get_country_state($country);
         $this->template->vars('items', $provincies);
         $this->template->vars('select', $select);
         ob_start();

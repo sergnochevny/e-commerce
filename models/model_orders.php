@@ -2,7 +2,7 @@
 
   class Model_Orders extends Model_Model {
 
-    protected static $table = 'fabrix_colour';
+    protected static $table = 'fabrix_orders';
 
     public static function getOrderDetailInfo($arr) {
       if(isset($arr) && count($arr) === 1) {
@@ -10,17 +10,17 @@
 
         $query = '
                SELECT
-                `fod`.*,
-                `fo`.*
+                fod.*,
+                fo.*
                   
                 FROM
-                    `fabrix_order_details` `fod`
+                    fabrix_order_details fod
                 LEFT JOIN
-                    `fabrix_orders` `fo`
+                    fabrix_orders fo
                 ON
-                    `fod`.`order_id` = `fo`.`oid`
+                    fod.order_id = fo.oid
                 WHERE
-                    `fo`.`oid` = ' . $arr['oid'] . '
+                    fo.oid = ' . $arr['oid'] . '
             ';
 
         $res = mysql_query($query);
@@ -37,31 +37,26 @@
     public static function save($data) {
       extract($data);
       if(isset($oid)) {
-        $query = "UPDATE " . self::$table . "
-                  SET status = '" . $status . "',
-                  track_code = '" . $track_code . "', 
-                  end_date = STR_TO_DATE('" . $end_date . "', '%m/%d/%Y') 
-                  WHERE oid = '" . $oid . "'";
+        $query = "UPDATE " . self::$table .
+          " SET status = '" . $status . "'," .
+          " track_code = '" . $track_code . "'," .
+          " end_date = STR_TO_DATE('" . $end_date . "', '%m/%d/%Y')" .
+          " WHERE oid = '" . $oid . "'";
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
-      } else {
-        $query = 'INSERT INTO ' . self::$table . '(colour) VALUE ("' . $colour . '")';
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
-        $oid = mysql_insert_id();
       }
       return $oid;
     }
 
     public static function get_by_id($id) {
       $response = [
-        'oid' => '',
+        'oid' => $id,
         'track_code' => '',
         'status' => '',
         'end_date' => '',
       ];
       if(isset($id)) {
-        $query = "SELECT * FROM fabrix_orders WHERE oid='$id'";
+        $query = "SELECT * FROM " . self::$table . " WHERE oid='$id'";
         $result = mysql_query($query);
         if($result) $response = mysql_fetch_assoc($result);
       }
@@ -70,16 +65,16 @@
 
     public static function get_total_count($id = null, $filter = null) {
       $q = "select";
-      $q .= " COUNT(`order`.`oid`)";
-      $q .= " from `fabrix_orders` `order`";
-      $q .= " left join `fabrix_accounts` `user` on `order`.`aid` = `user`.`aid`";
+      $q .= " COUNT(order.oid)";
+      $q .= " from fabrix_orders order";
+      $q .= " left join fabrix_accounts user on order.aid = user.aid";
       $q .= (isset($id) || isset($filter)) ? " where" : '';
-      $q .= isset($id) ? " `order`.aid='$id'" : '';
+      $q .= isset($id) ? " order.aid='$id'" : '';
       if(isset($filter)) {
         $q .= isset($id) ? " and" : '';
-        $q .= " (`order`.`trid` like '%$filter%'";
-        $q .= " or `user`.`bill_firstname` like '%$filter%'";
-        $q .= " or `user`.`bill_lastname`  like '%$filter%')";
+        $q .= " (order.trid like '%$filter%'";
+        $q .= " or user.bill_firstname like '%$filter%'";
+        $q .= " or user.bill_lastname  like '%$filter%')";
       }
       $result = mysql_query($q);
       if($result) {
@@ -117,8 +112,8 @@
     }
 
     public function register_order($aid, $trid, $shipping_type, $shipping_cost, $on_roll,
-                                   $express_samples, $handling, $shipping_discount,
-                                   $coupon_discount, $total_discount, $taxes, $total) {
+      $express_samples, $handling, $shipping_discount,
+      $coupon_discount, $total_discount, $taxes, $total) {
       $q = "insert into fabrix_orders (" .
         "aid, trid, shipping_type, shipping_cost, on_roll," .
         " roll_cost, express_samples, on_handling, handling, shipping_discount," .
@@ -134,11 +129,11 @@
         " %01.2f)";
 
       $sSQL = sprintf($q, $aid, $trid, $shipping_type, str_replace(",", "", $shipping_cost), $on_roll, str_replace(",", "", RATE_ROLL),
-        str_replace(",", "", $express_samples), $handling, str_replace(",", "", RATE_HANDLING), str_replace(",", "", $shipping_discount),
-        str_replace(",", "", $coupon_discount), str_replace(",", "", $total_discount), str_replace(",", "", $taxes),
-        str_replace(",", "", $total), time(), SAMPLES_PRICE_EXPRESS_SHIPPING, SAMPLES_PRICE_SINGLE,
-        SAMPLES_PRICE_MULTIPLE, SAMPLES_PRICE_ADDITIONAL, SAMPLES_PRICE_WITH_PRODUCTS, SAMPLES_QTY_MULTIPLE_MIN,
-        SAMPLES_QTY_MULTIPLE_MAX);
+                      str_replace(",", "", $express_samples), $handling, str_replace(",", "", RATE_HANDLING), str_replace(",", "", $shipping_discount),
+                      str_replace(",", "", $coupon_discount), str_replace(",", "", $total_discount), str_replace(",", "", $taxes),
+                      str_replace(",", "", $total), time(), SAMPLES_PRICE_EXPRESS_SHIPPING, SAMPLES_PRICE_SINGLE,
+                      SAMPLES_PRICE_MULTIPLE, SAMPLES_PRICE_ADDITIONAL, SAMPLES_PRICE_WITH_PRODUCTS, SAMPLES_QTY_MULTIPLE_MIN,
+                      SAMPLES_QTY_MULTIPLE_MAX);
 
       $res = mysql_query($sSQL);
       if($res) return mysql_insert_id();
@@ -146,12 +141,12 @@
     }
 
     public static function insert_order_detail($order_id, $product_id, $product_number, $product_name,
-                                               $quantity, $price, $discount, $sale_price, $is_sample = 0) {
+      $quantity, $price, $discount, $sale_price, $is_sample = 0) {
       $q = "insert into  fabrix_order_details " .
         "(order_id, product_id, product_number, product_name, quantity, price, discount, sale_price, is_sample)" .
         " VALUES (%u, %u,'%s', '%s', '%s','%s', '%s', '%s', %u);";
       $sql = sprintf($q, $order_id, $product_id, $product_number, $product_name,
-        $quantity, $price, $discount, $sale_price, $is_sample);
+                     $quantity, $price, $discount, $sale_price, $is_sample);
       $res = mysql_query($sql);
       return $res;
     }
@@ -168,24 +163,20 @@
       }
     }
 
-    public static function get_order($order_id) {
-      $result = mysql_query("SELECT * FROM fabrix_orders WHERE oid = '$order_id'");
-      return mysql_fetch_array($result);
-    }
 
 //    public static function get_total_count($user_id, $like = null) {
 //
 //      $q = "select";
-//      $q .= " COUNT(`order`.`oid`)";
-//      $q .= " from `fabrix_orders` `order`";
-//      $q .= " left join `fabrix_accounts` `user` on `order`.`aid` = `user`.`aid`";
+//      $q .= " COUNT(order.oid)";
+//      $q .= " from fabrix_orders order";
+//      $q .= " left join fabrix_accounts user on order.aid = user.aid";
 //      $q .= (isset($user_id) || isset($like)) ? " where" : '';
-//      $q .= isset($user_id) ? " `order`.aid='$user_id'" : '';
+//      $q .= isset($user_id) ? " order.aid='$user_id'" : '';
 //      if(isset($like)) {
 //        $q .= isset($user_id) ? " and" : '';
-//        $q .= " (`order`.`trid` like '%$like%'";
-//        $q .= " or `user`.`bill_firstname` like '%$like%'";
-//        $q .= " or `user`.`bill_lastname`  like '%$like%')";
+//        $q .= " (order.trid like '%$like%'";
+//        $q .= " or user.bill_firstname like '%$like%'";
+//        $q .= " or user.bill_lastname  like '%$like%')";
 //      }
 //      $result = mysql_query($q);
 //      if($result) {

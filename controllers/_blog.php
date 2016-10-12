@@ -336,7 +336,7 @@
 
       $row = Model_Blog::get_blog_post_by_post_id($post_id);
       if(isset($row)) {
-        $categories = Model_Blog::get_post_categories_by_post_id($post_id);
+        $categories = Model_Blog::get_categories($post_id);
         $post_categories = $this->get_categories($categories);
         $post_k_d = Model_Blog::getPostDescKeys($post_id);
         $post_description = stripslashes($post_k_d['description']);
@@ -568,10 +568,10 @@
     /**
      * @export
      */
-    public function del() {
+    public function delete() {
       $post_id = Model_Blog::validData(_A_::$app->get('post_id'));
       if(!empty($post_id)) {
-        Model_Blog::del_post($post_id);
+        Model_Blog::delete($post_id);
         $warning = ['Article removed successfully!!!'];
         $this->template->vars('warning', $warning);
       } else {

@@ -2,12 +2,15 @@
 
   Class Model_Manufacturers extends Model_Model {
 
+    protected static $table = 'fabrix_manufacturers';
+
     public static function get_by_id($id) {
       $response = [
+        'id' => $id,
         'manufacturer' => ''
       ];
       if(isset($id)) {
-        $query = "SELECT * FROM fabrix_manufacturers WHERE id='$id'";
+        $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
         $result = mysql_query($query);
         if($result) $response = mysql_fetch_assoc($result);
       }
@@ -15,8 +18,8 @@
     }
 
     public static function get_total_count($filter = null) {
-      $response = null;
-      $query = "SELECT COUNT(*) FROM fabrix_manufacturers";
+      $response = 0;
+      $query = "SELECT COUNT(*) FROM " . static::$table;
       $query .= self::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
@@ -24,27 +27,11 @@
       return $response;
     }
 
-    public static function save($data) {
-      extract($data);
-      if(isset($id)) {
-        $query = 'UPDATE fabrix_manufacturers SET manufacturer ="' . $manufacturer . '" WHERE id =' . $id;
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
-      } else {
-        $query = 'INSERT INTO fabrix_manufacturers (manufacturer) VALUE ("' . $manufacturer . '")';
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
-        $id = mysql_insert_id();
-      }
-      return $id;
-    }
-
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $response = null;
       $query = "SELECT a.id, a.manufacturer, count(b.pid) AS amount";
-      $query .= " FROM fabrix_manufacturers a";
-      $query .= " LEFT JOIN";
-      $query .= " fabrix_products b ON b.manufacturerId = a.id";
+      $query .= " FROM " . static::$table . " a";
+      $query .= " LEFT JOIN fabrix_products b ON b.manufacturerId = a.id";
       $query .= self::build_where($filter);
       $query .= " GROUP BY a.id, a.manufacturer";
       $query .= " ORDER BY a.manufacturer";
@@ -60,6 +47,21 @@
       return $response;
     }
 
+    public static function save($data) {
+      extract($data);
+      if(isset($id)) {
+        $query = "UPDATE " . static::$table . " SET manufacturer ='" . $manufacturer . "' WHERE id =" . $id;
+        $res = mysql_query($query);
+        if(!$res) throw new Exception(mysql_error());
+      } else {
+        $query = "INSERT INTO " . static::$table . " (manufacturer) VALUE ('" . $manufacturer . "')";
+        $res = mysql_query($query);
+        if(!$res) throw new Exception(mysql_error());
+        $id = mysql_insert_id();
+      }
+      return $id;
+    }
+
     public static function delete($id) {
       if(isset($id)) {
         $query = "select count(*) from fabrix_products where manufacturerId = $id";
@@ -70,7 +72,7 @@
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "DELETE FROM fabrix_manufacturers WHERE id = $id";
+        $query = "DELETE FROM " . static::$table . " WHERE id = $id";
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       }

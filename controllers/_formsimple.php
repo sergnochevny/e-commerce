@@ -14,7 +14,7 @@
 
     protected function form($url, $data = null) {
       $id = _A_::$app->get($this->id_name);
-      if(!isset($data)) $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_data'], $id);
+      if(!isset($data)) $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
       $this->form_after_get_data($data);
       $prms = null;
       if(isset($id)) $prms[$this->id_name] = $id;

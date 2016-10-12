@@ -2,12 +2,12 @@
 
   Class Model_Categories extends Model_Model {
 
+    protected static $table = 'fabrix_categories';
+
     public static function get_total_count($filter = null) {
-      $response = null;
+      $response = 0;
       $query = "SELECT COUNT(*) FROM fabrix_categories";
-      if(isset($filter)) {
-        $query .= " WHERE";
-      }
+      $query .= self::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
@@ -36,14 +36,8 @@
     }
 
     public static function get_by_id($id) {
-      $row = null;
-      $result = mysql_query("select * from fabrix_categories WHERE cid='$id'");
-      if($result) $row = mysql_fetch_array($result);
-      return $row;
-    }
-
-    public static function get_data($id) {
       $data = [
+        'cid' => $id,
         'cname' => '',
         'displayorder' => ''
       ];
@@ -89,9 +83,9 @@
       if(isset($id)) {
         $query = "select count(*) from fabrix_product_categories where cid = $id";
         $res = mysql_query($query);
-        if ($res){
+        if($res) {
           $amount = mysql_fetch_array($res)[0];
-          if(isset($amount) && ($amount > 0 )){
+          if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }

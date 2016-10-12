@@ -6,10 +6,11 @@
 
     public static function get_by_id($id) {
       $response = [
+        'id' => $id,
         'colour' => ''
       ];
       if(isset($id)) {
-        $query = "SELECT * FROM " . self::$table . " WHERE id='$id'";
+        $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
         $result = mysql_query($query);
         if($result) $response = mysql_fetch_assoc($result);
       }
@@ -17,9 +18,9 @@
     }
 
     public static function get_total_count($filter = null) {
-      $response = null;
-      $query = "SELECT COUNT(*) FROM " . self::$table;
-      $query .= self::build_where($filter);
+      $response = 0;
+      $query = "SELECT COUNT(*) FROM " . static::$table;
+      $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
@@ -29,10 +30,9 @@
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $response = null;
       $query = "SELECT a.id, a.colour, count(b.prodId) AS amount";
-      $query .= " FROM " . self::$table . " a";
-      $query .= " LEFT JOIN";
-      $query .= " fabrix_product_colours b ON b.colourId = a.id";
-      $query .= self::build_where($filter);
+      $query .= " FROM " . static::$table . " a";
+      $query .= " LEFT JOIN fabrix_product_colours b ON b.colourId = a.id";
+      $query .= static::build_where($filter);
       $query .= " GROUP BY a.id, a.colour";
       $query .= " ORDER BY a.colour";
       $query .= " LIMIT $start, $limit";
@@ -50,11 +50,11 @@
     public static function save($data) {
       extract($data);
       if(isset($id)) {
-        $query = 'UPDATE ' . self::$table . ' SET colour ="' . $colour . '" WHERE id =' . $id;
+        $query = 'UPDATE ' . static::$table . ' SET colour ="' . $colour . '" WHERE id =' . $id;
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       } else {
-        $query = 'INSERT INTO ' . self::$table . '(colour) VALUE ("' . $colour . '")';
+        $query = 'INSERT INTO ' . static::$table . '(colour) VALUE ("' . $colour . '")';
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
         $id = mysql_insert_id();
@@ -72,7 +72,7 @@
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "DELETE FROM " . self::$table . " WHERE id = $id";
+        $query = "DELETE FROM " . static::$table . " WHERE id = $id";
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       }

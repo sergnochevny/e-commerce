@@ -4,6 +4,7 @@
 
     public static function get_by_id($id) {
       $response = [
+
         'name' => '',
         'slug' => ''
       ];
@@ -16,7 +17,7 @@
     }
 
     public static function get_total_count($filter = null) {
-      $response = null;
+      $response = 0;
       $query = "SELECT COUNT(*) FROM blog_groups";
       $query .= self::build_where($filter);
       if($result = mysql_query($query)) {
@@ -66,7 +67,7 @@
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       } else {
-        $query = 'INSERT INTO blog_groups (`name`, `slug`) VALUE ("' . $name . '", "' . $slug . '")';
+        $query = 'INSERT INTO blog_groups (name, slug) VALUE ("' . $name . '", "' . $slug . '")';
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
         $id = mysql_insert_id();

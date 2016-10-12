@@ -2,57 +2,36 @@
 
   Class Model_Patterns extends Model_Model {
 
+    protected static $table = 'fabrix_patterns';
+
     public static function get_by_id($id) {
       $response = [
+        'id' => $id,
         'pattern' => ''
       ];
-      if(isset($id)){
-        $query = "SELECT * FROM fabrix_patterns WHERE id='$id'";
+      if(isset($id)) {
+        $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
         $result = mysql_query($query);
         if($result) $response = mysql_fetch_assoc($result);
       }
       return $response;
     }
 
-    public static function get_by_name($name){
-      $response = null;
-      $query = "SELECT * FROM fabrix_patterns WHERE pattern LIKE %$name%";
-    }
-
     public static function get_total_count($filter = null) {
-      $response = null;
-      $query = "SELECT COUNT(*) FROM fabrix_patterns";
-      if(isset($filter)){
-        $query .= " WHERE";
-      }
+      $response = 0;
+      $query = "SELECT COUNT(*) FROM " . static::$table;
+      $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
       return $response;
     }
 
-    public static function save($data) {
-      extract($data);
-      if(isset($id)){
-        $query = 'UPDATE fabrix_patterns SET pattern ="' . $pattern . '" WHERE id =' . $id;
-        $res = mysql_query($query);
-        if (!$res) throw new Exception(mysql_error());
-
-      } else {
-        $query = 'INSERT INTO fabrix_patterns (pattern) VALUE ("' . $pattern . '")';
-        $res = mysql_query($query);
-        if (!$res) throw new Exception(mysql_error());
-        $id = mysql_insert_id();
-      }
-      return $id;
-    }
-
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $response = null;
       $query = "SELECT a.id, a.pattern, count(b.prodId) AS amount";
-      $query .= " FROM fabrix_patterns a";
-      $query .= " LEFT JOIN";
-      $query .= " fabrix_product_patterns b ON b.patternId = a.id";
+      $query .= " FROM " . static::$table . " a";
+      $query .= " LEFT JOIN fabrix_product_patterns b ON b.patternId = a.id";
       $query .= self::build_where($filter);
       $query .= " GROUP BY a.id, a.pattern";
       $query .= " ORDER BY a.pattern";
@@ -68,17 +47,32 @@
       return $response;
     }
 
+    public static function save($data) {
+      extract($data);
+      if(isset($id)) {
+        $query = "UPDATE " . static::$table . " SET pattern ='" . $pattern . "' WHERE id =" . $id;
+        $res = mysql_query($query);
+        if(!$res) throw new Exception(mysql_error());
+      } else {
+        $query = "INSERT INTO " . static::$table . " (pattern) VALUE ('" . $pattern . "')";
+        $res = mysql_query($query);
+        if(!$res) throw new Exception(mysql_error());
+        $id = mysql_insert_id();
+      }
+      return $id;
+    }
+
     public static function delete($id) {
-      if(isset($id)){
+      if(isset($id)) {
         $query = "select count(*) from fabrix_product_patterns where patternId = $id";
         $res = mysql_query($query);
-        if ($res){
+        if($res) {
           $amount = mysql_fetch_array($res)[0];
-          if(isset($amount) && ($amount > 0 )){
+          if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "DELETE FROM fabrix_patterns WHERE id = $id";
+        $query = "DELETE FROM  " . static::$table . " WHERE id = $id";
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       }

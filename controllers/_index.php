@@ -48,13 +48,13 @@
 //    function show_break_img_count()
 //    {
 //        set_time_limit(14400);
-//        $q_total = "SELECT COUNT(*) FROM `fabrix_products` a" .
+//        $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
 //            " WHERE  a.pnumber is not null and a.pvisible = '1'";
 //        $res = mysql_query($q_total);
 //        $total = mysql_fetch_row($res);
 //        $total = $total[0];
 //
-//        $q = "SELECT pid FROM `fabrix_products` a" .
+//        $q = "SELECT pid FROM fabrix_products a" .
 //            " WHERE  a.pnumber is not null and a.pvisible = '1'";
 //        $res = mysql_query($q);
 //        $model = new Model_Users();
