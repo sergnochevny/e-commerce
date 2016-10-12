@@ -32,19 +32,6 @@
   <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css'
         media='all'/>
   <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css'); ?>'/>
-  <script>
-    WebFontConfig = {
-      google: {families: ['Montserrat:400,700:latin', 'Playfair+Display:400,700:latin']}
-    };
-    (function () {
-      var wf = document.createElement('script');
-      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-      wf.type = 'text/javascript';
-      wf.async = 'true';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(wf, s);
-    })();
-  </script>
 
   <script src='<?= _A_::$app->router()->UrlTo('views/js/jquery_11_3.js'); ?>'></script>
   <script src='<?= _A_::$app->router()->UrlTo('views/js/jquery-migrate.min.js'); ?>'></script>
@@ -59,8 +46,7 @@
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
 
 </head>
-<body
-  class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
+<body <body class="woocommerce woocommerce-page">
 <div class="site-container">
   <div class="main-content main-content-shop">
     <?php include "views/header.php"; ?>
@@ -102,5 +88,5 @@
   </script>
 <?php } ?>
 
-</body>
+    </body>
 </html>

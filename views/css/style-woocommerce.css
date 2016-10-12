@@ -1262,7 +1262,7 @@ input[type=reset], button[type=reset]{
 -------------------------------------------------------------- */
 @media (min-width: 992px) {
     .woocommerce-cart .entry .entry-content {
-        padding: 0 0 20px;
+        /*padding: 0 0 20px;*/
     }
 }
 
@@ -1334,7 +1334,7 @@ input[type=reset], button[type=reset]{
 -------------------------------------------------------------- */
 @media (min-width: 992px) {
     .woocommerce-checkout .entry .entry-content {
-        padding: 0 0 20px;
+        /*padding: 0 0 20px;*/
     }
 }
 
@@ -1710,6 +1710,9 @@ input[type=reset], button[type=reset]{
 }
 
 .sr-ds > .fa{
+    right: 15px;
+    top: 21px;
+    position: absolute;
     text-shadow: 0 1px 1px rgba(0,0,0,.3);
     -webkit-transition: all .125s ease;
     -moz-transition: all .125s ease;

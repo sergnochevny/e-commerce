@@ -1801,10 +1801,115 @@ form[data-search]{
     width: 100%;
     float: left;
 }
-form[data-search] > .panel > .panel-heading{
+form[data-search] > .row > .panel > .panel-heading{
     cursor: pointer;
 }
 
 .btn-primary{
     margin-bottom: 0;
+}
+@media only screen and (max-width : 768px) {
+    .xs-text-center{
+        text-align: center;
+    }
+    .data-list-view-header{
+        padding-bottom: 15px;
+    }
+    .data-list-view-item-container{
+        border-bottom: 1px solid #DDD;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    .xs-buttons-container{
+        font-size: 1.3em !important;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    .data-list-view-body > .row > .data-list-view-item-container.col-sm-6:nth-child(2n-1){
+        border-right: 0 !important;
+    }
+    .data-list-view-header .woocommerce-result-count{
+        text-align: center !important;
+        display: block !important;
+        width: 100%;
+        padding-top: 20px !important;
+    }
+}
+
+.data-list-view{
+    padding: 0;
+}
+.data-list-view .button{
+    line-height: normal !important;
+    padding: .618em 1em !important;
+}
+
+.data-list-view-header{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.data-list-view-header .woocommerce-result-count{
+    margin-bottom: 0;
+    border-bottom: 0;
+    color: #999;
+    font-size: 12px;
+    line-height: normal !important;
+    padding-top: 21px;
+    display: block;
+    text-align: right;
+    width: 100%;
+}
+.data-list-view-item-container{
+    background-color: #EEE;
+    margin-bottom: 7px;
+}
+.data-list-view-item-container{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    -webkit-transition: all .1s cubic-bezier(.19,1,.22,1);
+    -moz-transition: all .1s cubic-bezier(.19,1,.22,1);
+    -o-transition: all .1s cubic-bezier(.19,1,.22,1);
+    transition: all .1s cubic-bezier(.19,1,.22,1);
+}
+.panel-footer .paging-navigation{
+    margin: 0;
+}
+.data-list-view-body .buttons-container{
+    font-size: 1.1em;
+}
+.data-list-view-body > .row > .data-list-view-item-container.col-sm-6:nth-child(14n-1){
+    border-bottom: 0;
+}
+.data-list-view-body > .row > .data-list-view-item-container.col-sm-6:nth-child(2n-1){
+    border-right: 1px solid #DDD;
+}
+.data-list-view-body > .row > .data-list-view-item-container:last-child{
+    border-bottom: 0;
+}
+.data-list-view-body small.data-hint{
+    color: #aaaaaa;
+    font-size: 1rem;
+}
+.data-list-view-body {
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.data-list-view .panel-footer{
+    background-color: #FFF;
+    padding-left: 0;
+    padding-right: 0;
+}
+.relative{
+    position: relative;
+}
+.headline-tab{
+    background-color: #DDD;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 7px;
+    color: #333;
+}
+.headline-tab b{
+    cursor: pointer;
 }
