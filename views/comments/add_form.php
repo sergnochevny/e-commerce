@@ -1,5 +1,4 @@
 <script src='<?= _A_::$app->router()->UrlTo('views/js/comments/add_form.js'); ?>' type="text/javascript"></script>
-<body class="archive">
     <div class="site-container">
         <?php include "views/header.php"; ?>
         <div class="main-content main-content-shop">
