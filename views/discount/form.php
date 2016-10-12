@@ -345,8 +345,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <a id="build_filter" href="filter" type="button" class="btn-primary" data-dismiss="modal">Ok</a>
-          <a type="button" class="btn-default" data-dismiss="modal">Close</a>
+          <a id="build_filter" href="filter" class="btn btn-primary" data-dismiss="modal">Ok</a>
+          <a class="btn btn-default" data-dismiss="modal">Close</a>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

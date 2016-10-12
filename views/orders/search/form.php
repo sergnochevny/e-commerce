@@ -75,6 +75,6 @@
   </form>
   <div class="panel-footer hidden">
     <button type="reset" class="btn">Reset</button>
-    <a type="button" id="submit" class="btn pull-right">Search</a>
+    <a id="submit" class="btn pull-right">Search</a>
   </div>
 </div>

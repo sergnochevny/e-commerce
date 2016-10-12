@@ -1795,3 +1795,16 @@ a.button-move:focus, a.button-move:hover{
         display: inline-block !important;
     }
 }
+
+form[data-search]{
+    position: relative;
+    width: 100%;
+    float: left;
+}
+form[data-search] > .panel > .panel-heading{
+    cursor: pointer;
+}
+
+.btn-primary{
+    margin-bottom: 0;
+}

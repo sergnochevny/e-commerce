@@ -36,8 +36,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <a type="button" class="btn-primary save-data" data-dismiss="modal">Save</a>
-            <a type="button" class="btn-default" data-dismiss="modal">Cancel</a>
+            <a class="btn btn-primary save-data" data-dismiss="modal">Save</a>
+            <a class="btn btn-default" data-dismiss="modal">Cancel</a>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
