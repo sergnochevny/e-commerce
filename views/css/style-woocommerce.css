@@ -1262,7 +1262,7 @@ input[type=reset], button[type=reset]{
 -------------------------------------------------------------- */
 @media (min-width: 992px) {
     .woocommerce-cart .entry .entry-content {
-        padding: 0 0 20px;
+        /*padding: 0 0 20px;*/
     }
 }
 
@@ -1334,7 +1334,7 @@ input[type=reset], button[type=reset]{
 -------------------------------------------------------------- */
 @media (min-width: 992px) {
     .woocommerce-checkout .entry .entry-content {
-        padding: 0 0 20px;
+        /*padding: 0 0 20px;*/
     }
 }
 

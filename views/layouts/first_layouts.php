@@ -56,8 +56,7 @@
         <!--<script type='text/javascript' src='views/js/wp-embed.min.js'></script>-->
         <script src='<?= _A_::$app->router()->UrlTo('views/js/js_composer_front.js'); ?>'></script>
     </head>
-    <body
-      class="archive paged post-type-archive post-type-archive-product paged-2 post-type-paged-2 woocommerce woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive columns-3">
+    <body class="woocommerce woocommerce-page">
 
         <?php include($contentPage); ?>
 
