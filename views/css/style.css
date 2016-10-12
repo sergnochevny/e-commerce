@@ -1801,10 +1801,100 @@ form[data-search]{
     width: 100%;
     float: left;
 }
-form[data-search] > .panel > .panel-heading{
+form[data-search] > .row > .panel > .panel-heading{
     cursor: pointer;
 }
 
 .btn-primary{
     margin-bottom: 0;
+}
+@media only screen and (max-width : 480px) {
+    .xs-text-center{
+        text-align: center;
+    }
+    .data-list-view-header{
+        padding-bottom: 15px;
+    }
+    .data-list-view-item-container{
+        border-bottom: 1px solid #DDD;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    .xs-buttons-container{
+        font-size: 1.3em !important;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    .data-list-view-body > .row > .data-list-view-item-container.col-sm-6:nth-child(2n-1){
+        border-right: 0 !important;
+    }
+}
+
+.data-list-view{
+    padding: 0;
+}
+.data-list-view-header{
+    padding-top: 15px;
+    border-bottom: 1px solid #DDD;
+}
+.data-list-view-header .woocommerce-result-count{
+    margin-top: -1px;
+    margin-bottom: 10px;
+    border-bottom: 0;
+}
+.data-list-view-item-container{
+    border-bottom: 1px solid #DDD;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.data-list-view-item-container{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    -webkit-transition: all .1s cubic-bezier(.19,1,.22,1);
+    -moz-transition: all .1s cubic-bezier(.19,1,.22,1);
+    -o-transition: all .1s cubic-bezier(.19,1,.22,1);
+    transition: all .1s cubic-bezier(.19,1,.22,1);
+}
+.panel-footer .paging-navigation{
+    margin: 0;
+}
+.data-list-view-body .buttons-container{
+    font-size: 1.1em;
+}
+.data-list-view-body > .row > .data-list-view-item-container.col-sm-6:nth-child(12n-1){
+    border-bottom: 0;
+}
+.data-list-view-body > .row > .data-list-view-item-container.col-sm-6:nth-child(2n-1){
+    border-right: 1px solid #DDD;
+}
+.data-list-view-body > .row > .data-list-view-item-container:last-child{
+    border-bottom: 0;
+}
+.data-list-view-body small.data-hint{
+    color: #999;
+    font-weight: 300 !important;
+}
+.data-list-view-body {
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.data-list-view-body .data-list-view-item-container:hover{
+    -webkit-transform: scale(1.025);
+    -ms-transform: scale(1.025);
+    transform: scale(1.025);
+    background-color: #FFF;
+    cursor: pointer;
+    border-bottom-color: #EEE;
+    z-index: 999;
+    box-shadow: 0 0 15px -3px #999;
+    border-right: 0 !important;
+}
+.data-list-view .panel-footer{
+    background-color: #FFF;
+    padding-left: 0;
+    padding-right: 0;
+}
+.relative{
+    position: relative;
 }
