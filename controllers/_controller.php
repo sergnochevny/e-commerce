@@ -18,12 +18,14 @@
       $fields_type = [
         'int' => ['=', 'between'],
         'timestamp' => ['=', 'between'],
+        'double' => ['=', 'between'],
+        'float' => ['=', 'between'],
         'decimal' => ['=', 'between'],
         'text' => ['like', 'like'],
-        'varchar' => ['like', 'like'],
+        'char' => ['like', 'like'],
         'string' => ['like', 'like']
       ];
-      $fields_pattern = '#\b[^:space:]*(int|varchar|string|text|decimal|timestamp)[^:space:]*\b#';
+      $fields_pattern = '#\b[\S]*(int|string|text|char|float|double|decimal|timestamp)[\S]*\b#';
       $search_form = null;
       $filter = null;
       $fields = forward_static_call([$this->model_name, 'get_fields']);

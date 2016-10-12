@@ -88,5 +88,5 @@
   </script>
 <?php } ?>
 
-    </body>
+</body>
 </html>

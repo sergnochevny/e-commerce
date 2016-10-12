@@ -32,7 +32,7 @@
       $query = "SELECT a.id, a.pattern, count(b.prodId) AS amount";
       $query .= " FROM " . static::$table . " a";
       $query .= " LEFT JOIN fabrix_product_patterns b ON b.patternId = a.id";
-      $query .= self::build_where($filter);
+      $query .= static::build_where($filter);
       $query .= " GROUP BY a.id, a.pattern";
       $query .= " ORDER BY a.pattern";
       $query .= " LIMIT $start, $limit";

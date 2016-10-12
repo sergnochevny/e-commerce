@@ -37,7 +37,7 @@
     public static function save($data) {
       extract($data);
       if(isset($oid)) {
-        $query = "UPDATE " . self::$table .
+        $query = "UPDATE " . static::$table .
           " SET status = '" . $status . "'," .
           " track_code = '" . $track_code . "'," .
           " end_date = STR_TO_DATE('" . $end_date . "', '%m/%d/%Y')" .
@@ -56,7 +56,7 @@
         'end_date' => '',
       ];
       if(isset($id)) {
-        $query = "SELECT * FROM " . self::$table . " WHERE oid='$id'";
+        $query = "SELECT * FROM " . static::$table . " WHERE oid='$id'";
         $result = mysql_query($query);
         if($result) $response = mysql_fetch_assoc($result);
       }

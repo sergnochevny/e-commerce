@@ -7,7 +7,7 @@
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(*) FROM fabrix_categories";
-      $query .= self::build_where($filter);
+      $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
@@ -20,7 +20,7 @@
       $query .= " FROM fabrix_categories a";
       $query .= " LEFT JOIN";
       $query .= " fabrix_product_categories b ON b.cid = a.cid";
-      $query .= self::build_where($filter);
+      $query .= static::build_where($filter);
       $query .= " GROUP BY a.cid, a.cname";
       $query .= " ORDER BY a.cname";
       $query .= " LIMIT $start, $limit";

@@ -49,5 +49,6 @@
       </article>
     </div>
   </div>
-  <script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.js'); ?>'
-          type="text/javascript"></script>
+</div>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.js'); ?>'
+        type="text/javascript"></script>

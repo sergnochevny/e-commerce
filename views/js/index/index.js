@@ -7,19 +7,6 @@
 
             $('#just-carousel-560').load($('#slider_url').val());
 
-            $('.just-slider-active').owlCarousel({
-                items: 1,
-                loop: true,
-                nav: false,
-                navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
-                lazyLoad: true,
-                autoplay: true,
-                autoplayHoverPause: true,
-                dots: true,
-                stopOnHover: true,
-                animateOut: 'fadeOut'
-            });
-
             $.get( $('#get_url').val(), {}, function (data) {
                     $('#just-carousel-871').html(data).owlCarousel({
                         responsive: {0: {items: 1}, 461: {items: 2}, 992: {items: 3}},
