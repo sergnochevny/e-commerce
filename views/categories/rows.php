@@ -2,15 +2,15 @@
 <?php foreach($rows as $row): $prms['cid'] = $row[0]; if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
   <div class="col-xs-12 col-sm-6 data-list-view-item-container">
     <div class="row">
-        <div class="col-xs-7 col-sm-6 xs-text-center">
+        <div class="col-xs-7 col-sm-5 xs-text-center">
             <small class="data-hint">Category name</small><br>
-            <?= $row[1] ?>
+            <div class="cut-text-in-one-line"><?= $row[1] ?></div>
           </div>
           <div class="col-xs-5 col-sm-5 xs-text-center">
             <small class="data-hint">Display order</small><br>
             <?= $row[2] ?>
           </div>
-          <div class="col-xs-12 col-sm-1 xs-text-center xs-buttons-container buttons-container text-right">
+          <div class="col-xs-12 col-sm-2 xs-text-center xs-buttons-container buttons-container text-right">
             <a data-modify href="<?= _A_::$app->router()->UrlTo('categories/edit', $prms) ?>">
               <i class="fa fa-pencil"></i>
             </a>
