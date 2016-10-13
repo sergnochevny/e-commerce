@@ -1,48 +1,108 @@
-<div>
-  <table class="table table-striped table-bordered">
-    <thead>
-      <tr>
-        <th class="text-left">Order</th>
-        <?php if(Controller_Admin::is_logged()): ?>
-          <th class="text-center">Customer</th>
-        <?php endif; ?>
-        <th class="text-center">Date</th>
-        <th class="text-center">Status</th>
-        <th class="text-center">Shipping</th>
-        <th class="text-center">Discount</th>
-        <th class="text-center">Total</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach($rows as $row): ?>
-        <?php
-        $prms['oid'] = $row[0];
-        if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
-        $edit_url = _A_::$app->router()->UrlTo('orders/edit', $prms);
-        $view_url = _A_::$app->router()->UrlTo('orders/view', $prms);
-        ?>
-        <tr>
-          <td class="text-left" style="max-width: 300px;"><span class="cut-text-in-one-line"><?= $row['trid'] ?></span>
-          </td>
-          <?php if(!isset($user_id)): ?>
-            <td class="text-center"><?= $row['username'] ?></td>
-          <?php endif; ?>
-          <td class="text-center"><?= date("F m, Y", $row['order_date']) ?></td>
-          <td class="text-center">
-            <?= $row['status'] == 0 ? '<i title="In process" class="fa fa-clock-o"></i>' : '<i title="Done" class="fa fa-check"></i>' ?>
-          </td>
-          <td class="text-center"><?= '$' . number_format($row['shipping_cost'], 2); ?></td>
-          <td class="text-center"><?= '$' . number_format($row['total_discount'], 2); ?></td>
-          <td class="text-center"><?= '$' . number_format($row['total'], 2); ?></td>
-          <td width="50px">
-            <?php if(Controller_Admin::is_logged()): ?>
-              <a class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-pencil"></i></a>
-            <?php endif; ?>
-            <a href="<?= $view_url ?>"><i class="fa fa-eye"></i></a>
-          </td>
-        </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
+<div class="col-xs-12 table-list-header hidden-xs">
+  <div class="row">
+    <div class="col-sm-2 col">
+      Order <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+    </div>
+    <?php if(Controller_Admin::is_logged()): ?>
+      <div class="col-sm-2 col">
+        Customer <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+      </div>
+    <?php endif; ?>
+    <div class="col-sm-2 col">
+      Date
+    </div>
+    <div class="col-sm-1 col">
+      Status
+    </div>
+    <div class="col-sm-1 col">
+      Shipping
+    </div>
+    <div class="col-sm-1 col">
+      Discount
+    </div>
+    <div class="col-sm-2 col">
+      Total
+    </div>
+  </div>
 </div>
+<?php foreach($rows as $row): ?>
+  <?php
+  $prms['oid'] = $row[0];
+  if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
+  $edit_url = _A_::$app->router()->UrlTo('orders/edit', $prms);
+  $view_url = _A_::$app->router()->UrlTo('orders/view', $prms);
+  ?>
+  <div class="col-xs-12 table-list-row">
+    <div class="row">
+      <div class="col-xs-12 col-sm-2 table-list-row-item">
+        <div class="col-xs-4 visible-xs helper-row">
+          <div class="row">Id</div>
+        </div>
+        <div class="col-xs-8 col-sm-12">
+          <div class="row cut-text-in-one-line"><?= $row['trid'] ?></div>
+        </div>
+      </div>
+      <?php if(!isset($user_id)): ?>
+        <div class="col-xs-12 col-sm-2 table-list-row-item">
+          <div class="col-xs-4 visible-xs helper-row">
+            <div class="row">Id</div>
+          </div>
+          <div class="col-xs-8 col-sm-12">
+            <div class="row cut-text-in-one-line"><?= $row['username']; ?></div>
+          </div>
+        </div>
+      <?php endif; ?>
+      <div class="col-xs-12 col-sm-2 table-list-row-item">
+        <div class="col-xs-4 visible-xs helper-row">
+          <div class="row">Email</div>
+        </div>
+        <div class="col-xs-8 col-sm-12">
+          <div class="row"><?= date("F m, Y", $row['order_date']) ?></div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-1 table-list-row-item">
+        <div class="col-xs-4 visible-xs helper-row">
+          <div class="row">Name</div>
+        </div>
+        <div class="col-xs-8 col-sm-12">
+          <div class="row">
+            <?= $row['status'] == 0 ? '<i title="In process" class="fa fa-clock-o"></i>' : '<i title="Done" class="fa fa-check"></i>' ?>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-1 table-list-row-item">
+        <div class="col-xs-4 visible-xs helper-row">
+          <div class="row">Date Registered</div>
+        </div>
+        <div class="col-xs-8 col-sm-12">
+          <div class="row"><?= '$' . number_format($row['shipping_cost'], 2); ?></div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-1 table-list-row-item">
+        <div class="col-xs-4 visible-xs helper-row">
+          <div class="row">Date Registered</div>
+        </div>
+        <div class="col-xs-8 col-sm-12">
+          <div class="row"><?= '$' . number_format($row['shipping_cost'], 2); ?></div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-1 table-list-row-item">
+        <div class="col-xs-4 visible-xs helper-row">
+          <div class="row">Date Registered</div>
+        </div>
+        <div class="col-xs-8 col-sm-12">
+          <div class="row"><?= '$' . number_format($row['total'], 2); ?></div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-1 text-right action-buttons">
+        <?php if(Controller_Admin::is_logged()): ?>
+          <a class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-pencil"></i></a>
+        <?php endif; ?>
+        <a href="<?= $view_url ?>"><i class="fa fa-eye"></i></a>
+      </div>
+    </div>
+  </div>
+<?php endforeach; ?>

@@ -1,80 +1,36 @@
-<div class="col-xs-12 panel panel-default search-panel">
-  <h4 class="panel-heading search-container-title"><b>Search</b><b class="sr-ds"><i class="fa fa-chevron-right"></i></b></h4>
-  <form action="<?= $action ?>" id="search" class="panel-body hidden">
-    <div class="form-row">
-      <div class="row">
-
-        <div class="col-xs-6">
+<form action="<?= $action ?>" method="post" data-search class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-12 panel panel-default search-panel">
+      <div class="panel-heading">
+        <div class="h4 search-container-title">
           <div class="row">
-            <div class="col-xs-12">
-              Track code:
+            <div class="col-xs-1 col-sm-2"><i class="fa fa-search"></i></div>
+            <div class="col-xs-9 comment-text">
+              <?= isset($search['pname']) ? '<span>Like: </span><b>' . $search['pname'] . '</b>' : '' ?>
             </div>
-            <div class="col-xs-12">
-              <input type="text" class="input-text" placeholder="Code like" name="search[track_code]">
-            </div>
+            <b class="sr-ds">
+              <i class="fa fa-chevron-right"></i>
+            </b>
           </div>
         </div>
-
-        <div class="col-xs-6">
-          <div class="row">
-            <div class="col-xs-12">
-              Customer's email:
-            </div>
-            <div class="col-xs-12">
-              <input type="text" class="input-text" placeholder="Starts at" name="">
-            </div>
-          </div>
-        </div>
-
       </div>
-      <div class="row">
 
-        <div class="col-xs-4">
-          <div class="row">
-            <div class="col-xs-12">
-              Status:
-            </div>
-            <div class="col-xs-12">
-              <select name="" id="">
-                <option value="">Please, select status</option>
-              </select>
+      <div class="panel-body hidden">
+        <div class="col-xs-12">
+          <div class="form-row">
+            <div class="row">
+              <label>User Name:</label>
+              <input type="text" class="input-text" placeholder="Like ..." name="search[pname]"
+                     value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-xs-4">
-          <div class="row">
-            <div class="col-xs-12">
-              Dates range:
-            </div>
-            <div class="col-xs-6">
-              <input type="text" class="input-text" placeholder="From">
-            </div>
-            <div class="col-xs-6">
-              <input type="text" class="input-text" placeholder="To">
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-4">
-          <div class="row">
-            <div class="col-xs-12">
-              Total price range:
-            </div>
-            <div class="col-xs-6">
-              <input type="text" class="input-text" placeholder="From">
-            </div>
-            <div class="col-xs-6">
-              <input type="text" class="input-text" placeholder="To">
-            </div>
-          </div>
-        </div>
-
+      <div class="panel-footer hidden">
+        <a data-search_submit class="btn submit pull-right">Search</a>
+        <a data-search_reset class="btn reset">Reset</a>
       </div>
     </div>
-  </form>
-  <div class="panel-footer hidden">
-    <button type="reset" class="btn">Reset</button>
-    <a id="submit" class="btn pull-right">Search</a>
   </div>
-</div>
+</form>
