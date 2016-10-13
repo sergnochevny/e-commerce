@@ -1,144 +1,122 @@
 <div class="container">
-  <div id="content" class="main-content-inner" role="main">
-    <a href="<?= $back_url; ?>" class="button back_button">Back</a>
-    <br>
-    <br>
-    <table cellspacing="0" class="shop_table shop_table_responsive proceed">
-      <thead></thead>
-      <tbody>
-      <tr class="subtotal">
-        <td class="product-name"><b>Track Code</b></td>
-        <td data-title="Shipping Discount" style="text-align:right;">
-              <span class="track_code">
-                  <?= ($track_code == 0) ? 'Missing' : $track_code ?>
-              </span>
-        </td>
-        <td style="border-left: 1px solid rgba(0,0,0,.1)">
-          Delivery date
-        </td>
-        <td class="text-right">
-              <span class="end_date">
-                <?= ($end_date == 0) ? 'Not specified' : $end_date ?>
-              </span>
-        </td>
-        <td class="product-name" style="border-left: 1px solid rgba(0,0,0,.1)"><b>Order status</b></td>
-        <td data-title="Shipping Discount" style="text-align:right;">
-              <span class="status">
-                  <?= $status ?>
-              </span>
-        </td>
-      </tr>
-      <tr class="subtotal">
-        <td colspan="6"></td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="col-md-12">
 
-    <table cellspacing="0" class="table table-striped table-bordered">
-      <thead>
-      <tr>
-        <th width="600">Product</th>
-        <th></th>
-        <th>Sale Price</th>
-        <th>Quantity</th>
-        <th class="text-right">Total</th>
-      </tr>
-      </thead>
-      <tbody>
+    <div class="row">
+      <div class="col-md-12"><div class="row"><a href="<?= $back_url; ?>" class="button back_button">Back</a></div></div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-4">
+        <div class="row text-center">
+          <div class="col-xs-4 col-md-6"><div class="row"><b>Track Code:</b></div></div>
+          <div class="col-xs-8 col-md-6"><div class="row"><?= ($track_code == 0) ? 'Not set yet' : $track_code ?></div></div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-md-4">
+        <div class="row text-center">
+          <div class="col-xs-4 col-md-6"><div class="row"><b>Delivery date:</b></div></div>
+          <div class="col-xs-8 col-md-6"><div class="row"><?= ($end_date == 0) ? 'Not specified' : $end_date ?></div></div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-md-4">
+        <div class="row text-center">
+          <div class="col-xs-4 col-md-6"><div class="row"><b>Order status:</b></div></div>
+          <div class="col-xs-8 col-md-6"><div class="row"><?= $status ?></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-xs-12 table-list-header hidden-xs">
+    <div class="row">
+      <div class="col-sm-4 col">
+        Product <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+      </div>
+      <div class="col-sm-2 col-sm-offset-4 col">
+        Sale Price <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+      </div>
+      <div class="col-sm-2 col">
+        Quantity <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 table-list-row">
+    <div class="row">
 
       <?= $detail_info; ?>
 
       <?php if($is_sample) { ?>
-        <tr>
-          <td></td>
-          <td>Samples cost</td>
-          <td>
-            <?= $sample_cost ?>
-          </td>
-          <td></td>
-          <td class="text-right">
-            <?= $sample_cost ?>
-          </td>
-        </tr>
+        <div class="col-xs-12 col-sm-4 col-sm-offset-8 table-list-row-item">
+          <div class="col-xs-4 helper-row">
+            <div class="row">Samples cost</div>
+          </div>
+          <div class="col-xs-8">
+            <div class="row cut-text-in-one-line">
+              <?= $sample_cost ?>
+            </div>
+          </div>
+        </div>
       <?php } ?>
       <?php if(!empty($shipping_cost)) { ?>
-        <tr>
-          <td></td>
-          <td><?= ($shipping_type == 3 ? 'Ground ship' : 'Express post') ?></td>
-          <td>
-            <?= $shipping_cost; ?>
-          </td>
-          <td>N/A</td>
-          <td class="text-right">
-            <?= $shipping_cost ?>
-          </td>
-        </tr>
+        <div class="col-xs-12 col-sm-4 col-sm-offset-8 table-list-row-item">
+          <div class="col-xs-4 helper-row">
+            <div class="row"><?= ($shipping_type == 3 ? 'Ground ship' : 'Express post') ?></div>
+          </div>
+          <div class="col-xs-8">
+            <div class="row cut-text-in-one-line">
+              <?= $shipping_cost ?>
+            </div>
+          </div>
+        </div>
       <?php } ?>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><b>Sub Total:</b></td>
-        <td class="text-right">
-          <b><?= $sub_price; ?></b>
-        </td>
-      </tr>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-12 table-list-row-item">
+    <div class="row text-right">
+      <b>Sub Total:</b>
+      <?= $sub_price; ?>
+    </div>
+  </div>
 
-      </tbody>
-    </table>
-    <div class="proceed_totals">
-      <div id="div_subtotal_table">
-        <table id="subtotal_table" cellspacing="0" class="shop_table shop_table_responsive cart">
-          <tbody>
-          <?php if(!empty($handling)) { ?>
-            <tr class="subtotal">
-              <td class="product-name">Handling</td>
-              <td data-title="Handling" style="text-align:right;">
-                                            <span class="amount">
-                                                <?= $handling; ?>
-                                            </span>
-              </td>
-            </tr>
-          <?php } ?>
-          <?php if(!empty($shipping_discount)) { ?>
-            <tr class="subtotal">
-              <td class="product-name">Shipping Discount</td>
-              <td data-title="Shipping Discount" style="text-align:right;">
-                                            <span class="amount">
-                                                <?= $shipping_discount ?>
-                                            </span>
-              </td>
-            </tr>
-          <?php } ?>
-          <?php if(!empty($taxes)) { ?>
-            <tr class="subtotal">
-              <td class="product-name">Taxes</td>
-              <td data-title="Shipping Discount" style="text-align:right;">
-                                            <span class="amount">
-                                                <?= $taxes ?>
-                                            </span>
-              </td>
-            </tr>
-          <?php } ?>
-          <tr class="subtotal">
-            <td class="product-name"><b>TOTAL</b></td>
-            <td data-title="Total" style="text-align:right;">
-                                        <span class="amount">
-                                            <b><?= $total ?></b>
-                                        </span>
-            </td>
-          </tr>
-          <?php if(!empty($total_discount)) { ?>
-            <tr style="color: red">
-              <td>Total discount</td>
-              <td class="text-right">
-                <b><?= $total_discount; ?></b>
-              </td>
-            </tr>
-          <?php } ?>
-          </tbody>
-        </table>
+    <?php if(!empty($handling)) { ?>
+      <div class="col-xs-12 col-sm-12 table-list-row-item">
+        <div class="row text-right">
+          <b>Handling:</b>
+          <?= $handling; ?>
+        </div>
+      </div>
+    <?php } ?>
+    <?php if(!empty($shipping_discount)) { ?>
+      <div class="col-xs-12 col-sm-12 table-list-row-item">
+        <div class="row text-right">
+          <b>Shipping Discount:</b>
+          <?= $shipping_discount; ?>
+        </div>
+      </div>
+    <?php } ?>
+    <?php if(!empty($taxes)) { ?>
+      <div class="col-xs-12 col-sm-12 table-list-row-item">
+        <div class="row text-right">
+          <b>Taxes:</b>
+          <?= $taxes; ?>
+        </div>
+      </div>
+    <?php } ?>
+    <div class="col-xs-12 col-sm-12 table-list-row-item">
+      <div class="row text-right">
+        <b>Total:</b>
+        <?= $total; ?>
       </div>
     </div>
+    <div class="col-xs-12 col-sm-12 table-list-row-item">
+      <div class="row text-right">
+        <b>Total discount:</b>
+        <?= $total_discount; ?>
+      </div>
+    </div>
+
   </div>
 </div>

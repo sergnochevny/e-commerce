@@ -78,7 +78,7 @@ a.back_button input.button {
 a.back_button:after {
     content: "\0276E";
     position: absolute;
-    top: 5px;
+    top: 10px;
     left: 7px;
     font-weight: 600;
     color: #fff;
