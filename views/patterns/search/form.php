@@ -1,36 +1,37 @@
-<form action="<?= $action ?>" method="post" data-search>
-  <div class="col-xs-12 panel panel-default search-panel">
-    <div class="panel-heading">
-      <div class="h4 search-container-title">
-        <div class="row">
-          <div class="col-xs-2">Search</div>
-          <div class="col-xs-9 comment-text">
-            <?=isset($search['pattern'])?'<span class="red">Patterns like </span><b>'.$search['pattern'].'</b>':''?>
-          </div>
-          <div class="col-xs-1">
+<form action="<?= $action ?>" method="post" data-search class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-12 panel panel-default search-panel">
+      <div class="panel-heading">
+        <div class="h4 search-container-title">
+          <div class="row">
+            <div class="col-xs-1 col-sm-2"><i class="fa fa-search"></i></div>
+            <div class="col-xs-9 comment-text">
+              <?=isset($search['pattern'])?'<span>Like: </span><b>'.$search['pattern'].'</b>':''?>
+            </div>
             <b class="sr-ds">
               <i class="fa fa-chevron-right"></i>
             </b>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="panel-body hidden">
-      <div class="col-xs-12">
-        <div class="form-row">
-          <div class="row">
-            <label>Pattern Name:</label>
-            <input type="text" class="input-text" placeholder="Like ..." name="search[pattern]"
-                   value="<?= isset($search['pattern']) ? $search['pattern'] : '' ?>">
+
+      <div class="panel-body hidden">
+        <div class="col-xs-12">
+          <div class="form-row">
+            <div class="row">
+              <label>Pattern Name:</label>
+              <input type="text" class="input-text" placeholder="Like ..." name="search[pattern]"
+                     value="<?= isset($search['pattern']) ? $search['pattern'] : '' ?>">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="panel-footer hidden">
-      <a data-search_submit class="button pull-right">Search</a>
-      <a data-search_reset class="btn reset">Reset</a>
+      <div class="panel-footer hidden">
+        <a data-search_submit class="btn submit pull-right">Search</a>
+        <a data-search_reset class="btn reset">Reset</a>
+      </div>
     </div>
   </div>
 </form>

@@ -1,35 +1,43 @@
-<table class="table table-striped table-bordered">
-  <thead>
-  <tr>
-    <th class="text-left">Name</th>
-    <th class="text-center">Products</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <?php foreach($rows as $row): ?>
-    <?php
-    $prms = ['id' => $row[0]];
-    if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
-    ?>
-    <tr>
-      <td data-group="<?= $row[0] ?>" class="colour-name-container text-left">
-        <span class="c-name"><?= $row[1] ?></span>
-      </td>
-      <td class="text-center">
-        <span class="amount"><?= $row[2] ?></span>
-      </td>
-      <td width="45" class="text-center">
-        <a class="update"
-           data-modify href="<?= _A_::$app->router()->UrlTo('patterns/edit', $prms); ?>">
+<div class="col-xs-12 table-list-header hidden-xs">
+  <div class="row">
+    <div class="col-sm-8 col">
+      Name <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+    </div>
+    <div class="col-sm-3 col">
+      Products <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+    </div>
+  </div>
+</div>
+<?php foreach($rows as $row): ?>
+  <?php $prms['cid'] = $row[0]; if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
+  <div class="col-xs-12 table-list-row">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 table-list-row-item">
+        <div class="col-xs-4 visible-xs helper-row">
+          <div class="row">Name</div>
+        </div>
+        <div class="col-xs-8 col-sm-12">
+          <div class="row"><?= $row[1] ?></div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-3 table-list-row-item">
+        <div class="col-xs-4 visible-xs helper-row">
+          <div class="row">Products</div>
+        </div>
+        <div class="col-xs-8 col-sm-12">
+          <div class="row"><?= $row[2] ?></div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
+        <a data-modify href="<?= _A_::$app->router()->UrlTo('patterns/edit', $prms) ?>">
           <i class="fa fa-pencil"></i>
         </a>
-        <a class="text-danger <?= $row[2] > 0 ? 'disabled' : 'delete'; ?>"
-           data-delete href="<?= _A_::$app->router()->UrlTo('patterns/delete', $prms); ?>">
-          <i class="fa fa-trash"></i>
+        <a href="<?= _A_::$app->router()->UrlTo('patterns/delete', $prms) ?>" data-delete rel="nofollow"
+           class="text-danger <?= ($row[2]>0)?'disabled':''?>">
+          <i class=" fa fa-trash-o"></i>
         </a>
-      </td>
-    </tr>
-  <?php endforeach; ?>
-  </tbody>
-</table>
+      </div>
+    </div>
+  </div>
+<?php endforeach; ?>
+
