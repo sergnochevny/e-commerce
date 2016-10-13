@@ -1915,8 +1915,14 @@ form[data-search] > .row > .panel > .panel-heading{
         border-top: 1px solid #DDD;
         padding-top: 7px;
     }
+    .action-buttons{
+        text-align: center;
+    }
     .action-buttons > a:first-child{
         float: left;
+    }
+    .action-buttons > a:last-child{
+        float: right;
     }
     .table-list-row-item{
         padding-bottom: 15px;
