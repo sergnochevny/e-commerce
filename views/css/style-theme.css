@@ -23,7 +23,7 @@ body {
     color: #222222;
     font-size: 14px;
     font-weight: normal;
-    line-height: 2;
+    line-height: normal;
     font-family: "Montserrat", sans-serif;
     font-smoothing: antialiased;
     -webkit-font-smoothing: antialiased;
@@ -71,7 +71,7 @@ h5,
 h6,
 table,
 form {
-    line-height: 2;
+    line-height: normal;
 }
 
 h1,
@@ -647,7 +647,7 @@ a img.aligncenter {
 
 .site-navigation .navbar-header .navbar-icon:hover,
 .site-navigation .navbar-header .navbar-icon:focus {
-    background: none !important;
+    background: #DDD !important;
 }
 
 .site-navigation .navbar-header a.navbar-brand {

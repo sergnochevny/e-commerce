@@ -23,8 +23,7 @@
     font-size: 13px;
     letter-spacing: 1px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
-    line-height: 30px;
-    padding: 5px 15px;
+    padding: 10px 15px;
     font-weight: 400;
     -webkit-transition: all .3s cubic-bezier(.2, 1, .25, 1);
     -moz-transition: all .3s cubic-bezier(.2, 1, .25, 1);

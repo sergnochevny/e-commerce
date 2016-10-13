@@ -4,9 +4,9 @@
       <div class="panel-heading">
         <div class="h4 search-container-title">
           <div class="row">
-            <div class="col-xs-6 col-sm-2">Search</div>
-            <div class="col-xs-6 comment-text">
-              <?=isset($search['cname'])?'<span class="red">Categories like </span><b>'.$search['cname'].'</b>':''?>
+            <div class="col-xs-1 col-sm-2"><i class="fa fa-search"></i></div>
+            <div class="col-xs-9 comment-text">
+              <?=isset($search['cname'])?'<span>Like: </span><b>'.$search['cname'].'</b>':''?>
             </div>
             <b class="sr-ds">
               <i class="fa fa-chevron-right"></i>
