@@ -25,7 +25,7 @@
   }
 ?>
 <form id="edit_form" action="<?= $action ?>" method="post">
-  <div class="col-1">
+  <div class="col-xs-12">
     <hr>
     <b>LOGIN</b>
     <hr/>

@@ -221,8 +221,8 @@
         exit($this->form($url, $data));
       }
       ob_start();
-      $this->form($url);
-      $form = ob_get_contents();
+        $this->form($url);
+        $form = ob_get_contents();
       ob_end_clean();
       $prms = null;
       if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');

@@ -11,26 +11,28 @@ function addClass(elements, className) {
   }
 }
 
-// function welcome() {
-//     var el = document.getElementsByTagName('body');
-//     addClass([el[0]], 'loaded');
-// }
-// document.addEventListener("DOMContentLoaded", welcome);
-//
+function welcome() {
+    var el = document.getElementsByTagName('body');
+    addClass([el[0]], 'loaded');
+}
+document.addEventListener("DOMContentLoaded", welcome);
+
 
 jQuery(document).ready(function ($) {
 
 
-  // $(document).on("click", "a", function (e) {
-  //     e.preventDefault();
-  //     var linkClicked = e.target;
-  //     document.addEventListener("unload", $('body').removeClass('loaded').addClass('leaved'));
-  //     window.setTimeout(function () {
-  //         window.location = linkClicked.href;
-  //     }, 500);
-  //
-  //     return false;
-  // });
+  $(document).on("click", "a", function (e) {
+    if($(this).data('link')){
+      e.preventDefault();
+      var linkClicked = e.target;
+      document.addEventListener("unload", $('body').removeClass('loaded').addClass('leaved'));
+      window.setTimeout(function () {
+          window.location = linkClicked.href;
+      }, 1250);
+
+      return false;
+    }
+  });
 
 
   $(document).on('click', '[data-search] .panel-heading', function () {

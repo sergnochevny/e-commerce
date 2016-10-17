@@ -89,14 +89,20 @@
 
 body {
     cursor: default;
-    /*opacity: 0;*/
-    -webkit-transition: opacity .5s ease-in;
-    -moz-transition: opacity .5s ease-in;
-    -o-transition: opacity .5s ease-in;
-    transition: opacity .5s ease-in;
+    opacity: 0;
+    -webkit-transition: opacity 1.25s ease-in;
+    -moz-transition: opacity 1.25s ease-in;
+    -o-transition: opacity 1.25s ease-in;
+    transition: opacity 1.25s ease-in;
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
 }
+
+.scroll{
+    max-height: none;
+    height: 100%;
+}
+
 *{
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;

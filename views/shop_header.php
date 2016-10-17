@@ -98,7 +98,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
+                            <a data-link class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
                                 <div class="site-with-image">
                                     <img class="site-logo"
                                          src="<?= _A_::$app->router()->UrlTo('views/images/logo.png'); ?>"

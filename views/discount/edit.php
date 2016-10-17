@@ -3,7 +3,6 @@
 
     <div class="row">
       <div class="col-sm-12">
-
         <div class="row afterhead-row">
           <div class="col-xs-12 col-sm-2 back_button_container">
             <a href="<?= $back_url; ?>" class="button back_button">Back</a>
@@ -15,8 +14,10 @@
           </div>
 
         </div>
-
       </div>
+    </div>
+
+    <div class="row">
       <div class="col-sm-12 text-center" style="margin-bottom: 15px">
         <small style="color: black; font-size: 12px;">
           Use this form to add/update discounts to the system. <br/>
@@ -28,6 +29,10 @@
           Clicking on the section title will open a help file explaining that section.
         </small>
       </div>
+      </div>
+    </div>
+
+    <div class="row">
       <?= $form; ?>
     </div>
 

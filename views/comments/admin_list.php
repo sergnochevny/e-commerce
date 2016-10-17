@@ -11,6 +11,7 @@
         </div>
     </div>
 </div>
+
 <?= $comments_list; ?>
 
 <nav role="navigation" class="paging-navigation">

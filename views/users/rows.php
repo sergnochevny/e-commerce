@@ -4,13 +4,13 @@
       Id <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
     <div class="col-sm-4 col">
-      Email
+      Email <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
     <div class="col-sm-3 col">
-      Name
+      Name <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
     <div class="col-sm-2 col">
-      Date Registered <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+      Registered <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
   </div>
 </div>
@@ -46,7 +46,7 @@
           <div class="row">Date Registered</div>
         </div>
         <div class="col-xs-8 col-sm-12">
-          <div class="row"><?= date('F j Y', $row[30]) ?></div>
+          <div class="row"><?= date("m/j/y, g:i a", $row[30]) ?></div>
         </div>
       </div>
 
