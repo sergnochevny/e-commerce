@@ -24,8 +24,8 @@
   <?php
   $prms['sid'] = $row['sid'];
   if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
-  $row['date_start'] = gmdate("m/j/y, g:i a", $row['date_start']);
-  $row['date_end'] = gmdate("m/j/y, g:i a", $row['date_end']);
+  $row['date_start'] = gmdate("m/j/y", $row['date_start']);
+  $row['date_end'] = gmdate("m/j/y", $row['date_end']);
   $row['enabled'] = $row['enabled'] == "1" ? "YES" : "NO";
   $row['allow_multiple'] = $row['allow_multiple'] == "1" ? "YES" : "NO";
   ?>

@@ -46,7 +46,7 @@
           <div class="row">Date Registered</div>
         </div>
         <div class="col-xs-8 col-sm-12">
-          <div class="row"><?= date("m/j/y, g:i a", $row[30]) ?></div>
+          <div class="row"><?= date("m/j/y", $row[30]) ?></div>
         </div>
       </div>
 

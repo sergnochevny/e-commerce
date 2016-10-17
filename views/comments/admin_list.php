@@ -1,13 +1,13 @@
 <div class="col-xs-12 table-list-header hidden-xs">
     <div class="row">
-        <div class="col-sm-3 col">
-            Email
+        <div class="col-sm-4 col">
+            Email <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
         </div>
         <div class="col-sm-3 col">
-            Title
+            Title <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
         </div>
         <div class="col-sm-3 col">
-            Date
+            Date <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
         </div>
     </div>
 </div>
