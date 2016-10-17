@@ -1,21 +1,18 @@
-<div class="admin-comments-table">
-    <table class="table table-striped table-bordered text-center">
-        <thead>
-            <tr>
-                <th class="text-center">ID</th>
-                <th class="text-center">Email</th>
-                <th class="text-center">Title</th>
-                <th class="text-center">Date</th>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?= $comments_list; ?>
-        </tbody>
-    </table>
+<div class="col-xs-12 table-list-header hidden-xs">
+    <div class="row">
+        <div class="col-sm-3 col">
+            Email
+        </div>
+        <div class="col-sm-3 col">
+            Title
+        </div>
+        <div class="col-sm-3 col">
+            Date
+        </div>
+    </div>
 </div>
-<br/>
+<?= $comments_list; ?>
+
 <nav role="navigation" class="paging-navigation">
     <h4 class="sr-only">Navigation</h4>
     <ul class='pagination'>

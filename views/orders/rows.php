@@ -1,6 +1,6 @@
 <div class="col-xs-12 table-list-header hidden-xs">
   <div class="row">
-    <div class="col-sm-2 col">
+    <div class="col-sm-4 col">
       Order <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
     <?php if(Controller_Admin::is_logged()): ?>
@@ -14,12 +14,12 @@
     <div class="col-sm-1 col">
       Status
     </div>
-    <div class="col-sm-1 col">
-      Shipping
-    </div>
-    <div class="col-sm-1 col">
-      Discount
-    </div>
+<!--    <div class="col-sm-1 col">-->
+<!--      Shipping-->
+<!--    </div>-->
+<!--    <div class="col-sm-1 col">-->
+<!--      Discount-->
+<!--    </div>-->
     <div class="col-sm-2 col">
       Total
     </div>
@@ -34,7 +34,7 @@
   ?>
   <div class="col-xs-12 table-list-row">
     <div class="row">
-      <div class="col-xs-12 col-sm-2 table-list-row-item">
+      <div class="col-xs-12 col-sm-4 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Order</div>
         </div>
@@ -70,12 +70,12 @@
           </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-1 table-list-row-item">
+      <!--div class="col-xs-12 col-sm-1 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Shipping</div>
         </div>
         <div class="col-xs-8 col-sm-12">
-          <div class="row"><?= '$' . number_format($row['shipping_cost'], 2); ?></div>
+          <div class="row"><? //'$' . number_format($row['shipping_cost'], 2); ?></div>
         </div>
       </div>
 
@@ -84,11 +84,11 @@
           <div class="row">Discount</div>
         </div>
         <div class="col-xs-8 col-sm-12">
-          <div class="row"><?= '$' . number_format($row['shipping_cost'], 2); ?></div>
+          <div class="row"><? //'$' . number_format($row['shipping_cost'], 2); ?></div>
         </div>
-      </div>
+      </div-->
 
-      <div class="col-xs-12 col-sm-1 table-list-row-item">
+      <div class="col-xs-12 col-sm-2 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Total</div>
         </div>
