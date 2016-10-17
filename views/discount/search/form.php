@@ -16,15 +16,70 @@
       </div>
 
       <div class="panel-body hidden">
-        <div class="col-xs-12">
-          <div class="form-row">
-            <div class="row">
-              <label>Colour Name:</label>
-              <input type="text" class="input-text" placeholder="Like ..." name="search[colour]"
-                     value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-row">
+                <label>Colour Name:</label>
+                <input type="text" class="input-text" placeholder="Like ..." name="search[]"
+                       value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
             </div>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-xs-6 col-sm-4">
+            <div class="form-row">
+                <label for="discount_on">
+                  <input type="checkbox" id="discount_on" name="search[]"
+                    value="<?= isset($search['']) ? $search[''] : '' ?>">
+                  Status on/off
+                </label>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-4">
+            <div class="form-row">
+                <label for="discount_on">
+                  <input type="checkbox" id="discount_on" name="search[]"
+                    value="<?= isset($search['']) ? $search[''] : '' ?>">
+                  Multiple
+                </label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-row">
+                <label for="discount_on">
+                  <select name="" id="">
+                    <option>Coupon Type</option>
+                    <option value="">Coupon 1</option>
+                    <option value="">Coupon 2</option>
+                  </select>
+                </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="form-row">
+                <label for="discount_on">
+                  Starts at:
+                  <input type="text" id="discount_starts" class="input-text" name="search[]"
+                    value="<?= isset($search['']) ? $search[''] : '' ?>">
+                </label>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="form-row">
+                <label for="discount_on">
+                  Ends at:
+                  <input type="text" id="discount_ends" class="input-text" name="search[]"
+                         value="<?= isset($search['']) ? $search[''] : '' ?>">
+                </label>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="panel-footer hidden">
@@ -34,3 +89,4 @@
     </div>
   </div>
 </form>
+<script src="<?= _A_::$app->router()->UrlTo('views/js/discount/search.js'); ?>"></script>
