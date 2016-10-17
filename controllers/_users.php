@@ -17,10 +17,6 @@
       return $list;
     }
 
-    private function get_province_list() {
-      echo $this->list_province(_A_::$app->get('country'));
-    }
-
     private function list_province($country, $select = null) {
       $list = '';
       if(isset($country) && !empty($country)) {
@@ -199,9 +195,7 @@
     protected function form_handling(&$data = null) {
       if(!is_null(_A_::$app->get('method'))) {
         $method = _A_::$app->get('method');
-        if($method == 'get_province_list') {
-          exit($this->get_province_list());
-        }
+        if($method == 'get_province_list') exit($this->list_province(_A_::$app->get('country')));
       }
       return true;
     }

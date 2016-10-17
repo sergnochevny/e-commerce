@@ -217,6 +217,75 @@
       }
     }
 
+    private function widget_products($type, $start, $limit, $layout = 'widget_products') {
+      $rows = Model_Product::get_widget_list_by_type($type, $start, $limit, $row_count, $image_suffix);
+      if($rows) {
+        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
+        $this->template->vars('sys_hide_price', $sys_hide_price);
+
+        ob_start();
+        $first = true;
+        $last = false;
+        $i = 1;
+        foreach($rows as $row) {
+          $cat_name = Model_Product::getCatName($row[20]);
+          $row[8] = substr($row[8], 0, 100);
+
+          $filename = 'upload/upload/' . $image_suffix . $row[14];
+          if(!(file_exists($filename) && is_file($filename))) {
+            $filename = 'upload/upload/not_image.jpg';
+          }
+          $filename = _A_::$app->router()->UrlTo($filename);
+
+          $pid = $row[0];
+          $price = $row[5];
+          $inventory = $row[6];
+          $piece = $row[34];
+          $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
+
+          $discountIds = [];
+          $saleprice = $row[5];
+          $sDiscount = 0;
+          $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
+          $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
+          $format_sale_price = '';
+          $saleprice = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
+
+          $hide_price = $row['makePriceVis'];
+          $this->template->vars('hide_price', $hide_price);
+
+          $last = $i++ == $row_count;
+
+          $this->template->vars('last', $last);
+          $this->template->vars('first', $first);
+          $this->template->vars('saleprice', $saleprice);
+          $this->template->vars('price', $price);
+          $this->template->vars('format_sale_price', $format_sale_price);
+          $this->template->vars('bProductDiscount', $bProductDiscount);
+          $this->template->vars('sDiscount', $sDiscount);
+          $this->template->vars('piece', $piece);
+          $this->template->vars('inventory', $inventory);
+          $this->template->vars('discountIds', $discountIds);
+          $this->template->vars('pid', $pid);
+          $this->template->vars('cat_name', $cat_name);
+          $this->template->vars('filename', $filename);
+          $this->template->vars('format_price', $format_price);
+          $this->template->vars('row', $row);
+          $this->template->vars('hide_price', $hide_price);
+          $this->template->vars('sys_hide_price', $sys_hide_price);
+
+          $this->template->view_layout('widgets/' . $layout);
+          $first = false;
+        }
+
+        $list = ob_get_contents();
+        ob_end_clean();
+      } else {
+        $list = "No Result!!!";
+      }
+      return $list;
+    }
+
     public function all_products() {
       $this->main->test_access_rights();
       $image_suffix = 'b_';
@@ -398,75 +467,6 @@
      */
     public function widget_popular() {
       echo $this->widget_products('popular', 0, 5);
-    }
-
-    public function widget_products($type, $start, $limit, $layout = 'widget_products') {
-      $rows = Model_Product::get_widget_list_by_type($type, $start, $limit, $row_count, $image_suffix);
-      if($rows) {
-        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
-        $this->template->vars('sys_hide_price', $sys_hide_price);
-
-        ob_start();
-        $first = true;
-        $last = false;
-        $i = 1;
-        foreach($rows as $row) {
-          $cat_name = Model_Product::getCatName($row[20]);
-          $row[8] = substr($row[8], 0, 100);
-
-          $filename = 'upload/upload/' . $image_suffix . $row[14];
-          if(!(file_exists($filename) && is_file($filename))) {
-            $filename = 'upload/upload/not_image.jpg';
-          }
-          $filename = _A_::$app->router()->UrlTo($filename);
-
-          $pid = $row[0];
-          $price = $row[5];
-          $inventory = $row[6];
-          $piece = $row[34];
-          $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
-
-          $discountIds = [];
-          $saleprice = $row[5];
-          $sDiscount = 0;
-          $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
-          $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
-          $format_sale_price = '';
-          $saleprice = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
-
-          $hide_price = $row['makePriceVis'];
-          $this->template->vars('hide_price', $hide_price);
-
-          $last = $i++ == $row_count;
-
-          $this->template->vars('last', $last);
-          $this->template->vars('first', $first);
-          $this->template->vars('saleprice', $saleprice);
-          $this->template->vars('price', $price);
-          $this->template->vars('format_sale_price', $format_sale_price);
-          $this->template->vars('bProductDiscount', $bProductDiscount);
-          $this->template->vars('sDiscount', $sDiscount);
-          $this->template->vars('piece', $piece);
-          $this->template->vars('inventory', $inventory);
-          $this->template->vars('discountIds', $discountIds);
-          $this->template->vars('pid', $pid);
-          $this->template->vars('cat_name', $cat_name);
-          $this->template->vars('filename', $filename);
-          $this->template->vars('format_price', $format_price);
-          $this->template->vars('row', $row);
-          $this->template->vars('hide_price', $hide_price);
-          $this->template->vars('sys_hide_price', $sys_hide_price);
-
-          $this->template->view_layout('widgets/' . $layout);
-          $first = false;
-        }
-
-        $list = ob_get_contents();
-        ob_end_clean();
-      } else {
-        $list = "No Result!!!";
-      }
-      return $list;
     }
 
     /**
