@@ -110,7 +110,7 @@
 <div class="clear"></div>
 <section class="just-posts-grid">
     <div class="just-post-row row">
-        <?= $posts; ?>
+        <?= $blog_posts; ?>
     </div>
 </section>
 <div class="clear"></div>
