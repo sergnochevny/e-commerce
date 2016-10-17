@@ -365,10 +365,8 @@ input[type='color']:focus {
 .main-content-shop .page-title {
     margin: 0 0 50px;
     color: #222222;
-    font-size: 31px;
-    line-height: 40px;
+    line-height: normal;
     text-transform: uppercase;
-    text-align: center;
 }
 
 .main-content-shop .term-description {

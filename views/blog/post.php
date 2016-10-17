@@ -12,7 +12,7 @@
         .just-posts-grid .just-post-image {
             background-position: center center;
             background-size: cover;
-            height: 200px;
+            height: 300px;
             margin: 0 0 20px;
             overflow: hidden;
         }

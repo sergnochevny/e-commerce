@@ -1,6 +1,10 @@
 <?php
 
-  class Controller_Blog extends Controller_Simple  {
+  class Controller_Blog extends Controller_FormSimple  {
+
+    protected $id_name = 'post_id';
+    protected $form_title_add = 'WRITE NEW POST';
+    protected $form_title_edit = 'EDIT POST';
 
     private function posts() {
       $page = !empty(_A_::$app->get('page')) ? Model_Blog::validData(_A_::$app->get('page')) : 1;
@@ -334,7 +338,7 @@
 
       $post_id = _A_::$app->get('post_id');
 
-      $row = Model_Blog::get_blog_post_by_post_id($post_id);
+      $row = Model_Blog::get_by_id($post_id);
       if(isset($row)) {
         $categories = Model_Blog::get_categories($post_id);
         $post_categories = $this->get_categories($categories);
@@ -608,12 +612,13 @@
      */
     public function add() {
       $this->new_prepare();
+      $this->template->vars('form_title', $this->form_title_add);
       $this->main->view_admin('new');
     }
 
     public function get_categories($selected_categories = []) {
       $res = '';
-      $categories = Model_Blog::get_blog_categories();
+      $categories = Model_Blogcategory::get_all();
       ob_start();
       $this->template->vars('categories', $categories);
       $this->template->view_layout('categories_select_options');
@@ -720,6 +725,7 @@
      */
     public function edit() {
       $this->edit_prepare();
+      $this->template->vars('form_title', $this->form_title_edit);
       $this->main->view_admin('edit');
     }
 
@@ -826,6 +832,8 @@
     }
 
     protected function load(&$data, &$error) {
-      // TODO: Implement load() method.
+
+      $this->load_form_data($data);
+
     }
   }

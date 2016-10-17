@@ -28,7 +28,7 @@ jQuery(document).ready(function ($) {
       document.addEventListener("unload", $('body').removeClass('loaded').addClass('leaved'));
       window.setTimeout(function () {
           window.location = linkClicked.href;
-      }, 1250);
+      }, 1500);
 
       return false;
     }

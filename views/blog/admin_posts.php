@@ -20,6 +20,6 @@
                 <span class="post-date"><?= $post_date; ?></span>
             </div>
         </div>
-        <p><span class="opa"></span><?= $post_content; ?></p>
+        <p class="text-justify"><span class="opa"></span><?= $post_content; ?></p>
     </div>
 </div>

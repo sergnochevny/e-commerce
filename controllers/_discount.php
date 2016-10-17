@@ -216,7 +216,7 @@
       if($data['product_type'] == 1) $data['filter_products'] = null;
       if($data['user_type'] != 4) $data['users'] = null;
       $data['date_start'] = date("m/d/Y", $data['date_start']);
-      $data['date_end'] = 123;//date("m/d/Y", $data['date_end']);
+      $data['date_end'] = date("m/d/Y", $data['date_end']);
       ob_start();
       $this->generate_prod_filter($data);
       $data['filter_products'] = ob_get_contents();

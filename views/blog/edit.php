@@ -13,11 +13,12 @@
         }
 
         .just-posts-grid .just-post-image {
-            background-position: center center;
+            background-position: center;
             background-size: cover;
-            height: 200px;
+            height: 300px;
             margin: 0 0 20px;
             overflow: hidden;
+            box-shadow: 0 0 3px #DDD;
         }
 
         .just-posts-grid .just-post-image a {
@@ -27,7 +28,6 @@
 
         .just-posts-grid .just-post-detail .post-title {
             margin: 0;
-            font-size: 20px;
             font-weight: lighter;
             text-transform: uppercase;
             padding: 0;
@@ -70,18 +70,26 @@
 
     </style>
 
-    <div class="site-container">
-        <?php include "views/header.php"; ?>
-        <div class="main-content main-content-shop">
-            <div class="container">
-                <div id="content" class="main-content-inner" role="main">
-                    <a href="<?= $back_url;?>" class="button back_button">Back</a>
-                    <div class="text-center">
-                        <h6>EDIT BLOG POST</h6>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row afterhead-row">
+                    <div class="col-xs-12 col-sm-2 back_button_container">
+                        <a href="<?= $back_url; ?>" class="button back_button">Back</a>
                     </div>
-                    <div class="col2-set">
-                        <div class="woocommerce"><div id="blog_post_form"><?php include('views/blog/edit_form.php'); ?></div></div>
+                    <div class="col-xs-12 col-sm-8 text-center">
+                        <div class="row">
+                            <h3 class="page-title"><?= $form_title ?></h3>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-8 col-md-offset-2">
+                <div class="woocommerce"><div id="blog_post_form"><?php include('views/blog/edit_form.php'); ?></div></div>
+            </div>
+        </div>
+    </div>

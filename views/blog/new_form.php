@@ -70,7 +70,7 @@
         </div>
 
         <div style="margin-top: 15px; width: 200px; height: 52px; display: block;" class="s">
-            <div id="upload" class="apd" style="cursor: pointer;"><span>Upload file</span></div>
+            <div id="upload" class="btn" style="cursor: pointer;"><span>Upload file</span></div>
         </div>
         <hr/>
 
@@ -84,7 +84,7 @@
     <div class="col-xs-12">
         <p class=" row">
             <label><strong>Publish:</strong></label>
-            <?= ( isset($data['status']) && $data['status'] === "publish") ? '<input id="chkML" type="checkbox" checked="checked" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>' : '<input id="chkML" type="checkbox" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>'; ?>
+            <?= ( isset($data['status']) && $data['status'] === "publish") ? '<input id="chkML" type="checkbox" checked="checked" name="status" value="publish"><label for="chkML"></label>' : '<input id="chkML" type="checkbox" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>'; ?>
         </p>
     </div>
     <div class="col-xs-12">

@@ -359,7 +359,13 @@ body {
 
     background-color: #222222;
 }
-
+.punct{
+    vertical-align: 2px;
+}
+.hang-punct{
+    margin-left: -13px;
+    vertical-align: 2px;
+}
 .CSSTableGenerator tr:first-child td:first-child {
     border-width: 0px 0px 1px 0px;
 }

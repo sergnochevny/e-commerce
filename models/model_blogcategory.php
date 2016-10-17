@@ -16,6 +16,22 @@
       return $response;
     }
 
+
+    public static function get_all(){
+      $res = null;
+      $q = "SELECT a.group_id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
+      $q .= " LEFT JOIN blog_group_posts b ON a.group_id = b.group_id";
+      $q .= " GROUP BY a.group_id, a.name";
+      $q .= " ORDER BY a.name";
+      $result = mysql_query($q);
+      if($result) {
+        while($row = mysql_fetch_array($result)) {
+          $res[] = $row;
+        }
+      }
+      return $res;
+    }
+
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(*) FROM blog_groups";
