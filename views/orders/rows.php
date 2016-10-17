@@ -36,7 +36,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-2 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">
-          <div class="row">Id</div>
+          <div class="row">Order</div>
         </div>
         <div class="col-xs-8 col-sm-12">
           <div class="row cut-text-in-one-line"><?= $row['trid'] ?></div>
@@ -45,7 +45,7 @@
       <?php if(!isset($user_id)): ?>
         <div class="col-xs-12 col-sm-2 table-list-row-item">
           <div class="col-xs-4 visible-xs helper-row">
-            <div class="row">Id</div>
+            <div class="row">Customer</div>
           </div>
           <div class="col-xs-8 col-sm-12">
             <div class="row cut-text-in-one-line"><?= $row['username']; ?></div>
@@ -54,15 +54,15 @@
       <?php endif; ?>
       <div class="col-xs-12 col-sm-2 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">
-          <div class="row">Email</div>
+          <div class="row">Date</div>
         </div>
         <div class="col-xs-8 col-sm-12">
-          <div class="row"><?= date("F m, Y", $row['order_date']) ?></div>
+          <div class="row"><?=  gmdate("m/j/y, g:i a", $row['order_date']) ?></div>
         </div>
       </div>
       <div class="col-xs-12 col-sm-1 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">
-          <div class="row">Name</div>
+          <div class="row">Status</div>
         </div>
         <div class="col-xs-8 col-sm-12">
           <div class="row">
@@ -72,7 +72,7 @@
       </div>
       <div class="col-xs-12 col-sm-1 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">
-          <div class="row">Date Registered</div>
+          <div class="row">Shipping</div>
         </div>
         <div class="col-xs-8 col-sm-12">
           <div class="row"><?= '$' . number_format($row['shipping_cost'], 2); ?></div>
@@ -81,7 +81,7 @@
 
       <div class="col-xs-12 col-sm-1 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">
-          <div class="row">Date Registered</div>
+          <div class="row">Discount</div>
         </div>
         <div class="col-xs-8 col-sm-12">
           <div class="row"><?= '$' . number_format($row['shipping_cost'], 2); ?></div>
@@ -90,7 +90,7 @@
 
       <div class="col-xs-12 col-sm-1 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">
-          <div class="row">Date Registered</div>
+          <div class="row">Total</div>
         </div>
         <div class="col-xs-8 col-sm-12">
           <div class="row"><?= '$' . number_format($row['total'], 2); ?></div>
