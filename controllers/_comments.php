@@ -1,6 +1,6 @@
 <?php
 
-  class Controller_Comments extends Controller_Controller {
+  class Controller_Comments extends Controller_Simple  {
 
     /**
      * @export
@@ -239,4 +239,7 @@
       $this->main->view_layout('admin_list');
     }
 
+    protected function load(&$data, &$error) {
+      // TODO: Implement load() method.
+    }
   }

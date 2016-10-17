@@ -1,5 +1,4 @@
 <div class="site-container">
-    <?php include "views/header.php"; ?>
 
     <div class="main-content main-content-shop">
         <div class="container">

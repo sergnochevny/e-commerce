@@ -1,10 +1,30 @@
 <div class="container">
-  <div class="text-center"><h1>COMMENTS</h1></div>
-  <div class="container">
-    <div id="content" class="main-content-inner" role="main">
+
+
+  <div class="col-xs-12 text-center">
+    <h2>Comments</h2>
+  </div>
+
+  <?= isset($search_form) ? $search_form : '' ?>
+
+  <div class="row">
+    <div class="col-xs-12 search-result-header">
+
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-6 search-result-container text-right">
+          <span class="search-result">Showing <?= 321//$count_rows; ?> results</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 data-view">
       <?php include('views/comments/admin_list.php') ?>
     </div>
   </div>
+
   <div id="confirm_dialog" class="overlay"></div>
   <div class="popup">
     <div class="fcheck"></div>
