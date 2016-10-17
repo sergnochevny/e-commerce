@@ -29,7 +29,7 @@
       </div>
 
       <div class="panel-footer hidden">
-        <a data-search_submit class="btn submit pull-right">Search</a>
+        <a data-search_submit class="btn button pull-right">Search</a>
         <a data-search_reset class="btn reset">Reset</a>
       </div>
     </div>

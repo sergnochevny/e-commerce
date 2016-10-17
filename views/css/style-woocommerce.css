@@ -72,7 +72,7 @@ a.back_button input.button {
 }
 
 .back_button {
-    padding-left: 20px !important;
+    padding-left: 22px !important;
 }
 
 a.back_button:after {
@@ -166,6 +166,8 @@ a.back_button:after {
     background-color: #fff;
     border: 1px solid #DDD;
     border-radius: 2px !important;
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
     box-shadow: 0 0 0 #DDD !important;
     font-size: 12px;
     height: 36px;
@@ -179,12 +181,20 @@ a.back_button:after {
 .woocommerce form .form-row input.input-text:focus {
     box-shadow: 0 1px 7px #ddd !important;
 }
-
+.panel{
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+.panel-default{
+    border: 1px solid #DDD !important;
+}
 .woocommerce form .form-row select {
     background-color: #fff;
-    border: 1px solid #b0b0b0;
-    border-radius: 4px;
-    box-shadow: 0 0 3px 1px #dbdbdb inset;
+    border: 1px solid #DDD;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
     font-size: 12px;
     height: 36px;
     padding: 0 10px;
@@ -193,9 +203,10 @@ a.back_button:after {
 
 .woocommerce form .form-row textarea {
     background-color: #fff;
-    border: 1px solid #b0b0b0;
-    border-radius: 4px;
-    box-shadow: 0 0 3px 1px #dbdbdb inset;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
     resize: none;
     min-height: 100px;
     padding: 10px;
@@ -239,8 +250,8 @@ input[type='tel']:focus,
 input[type='time']:focus,
 input[type='url']:focus,
 input[type='color']:focus {
-    border-color: #e1e1e1 !important;
-    box-shadow: none !important;
+    border-color: #999 !important;
+    box-shadow: 0 1px 7px #ddd !important;
 }
 
 .woocommerce form .form-row .select2-container .select2-choice {
@@ -260,6 +271,24 @@ input[type='color']:focus {
     margin: 0;
     padding: 0;
     vertical-align: middle;
+}
+
+.afterhead-row{
+    margin-top: 40px;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .back_button_container{
+        margin-bottom: 40px;
+    }
+    .afterhead-row{
+        text-align: center;
+    }
+    h1.page-title{
+        font-size: 2em !important;
+        font-weight: bold;
+    }
 }
 
 .woocommerce #payment #place_order {
@@ -1720,6 +1749,15 @@ input[type=reset], button[type=reset]{
 }
 
 a.reset, button.reset {
-    color: red;
-    border-color: red;
+    color: white;
+    background-color: red;
+    border-color: #b40000;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+a.reset:hover, button.reset:hover {
+    background-color: black;
+    border-color: #b40000;
 }

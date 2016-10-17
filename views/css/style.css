@@ -487,6 +487,12 @@ body {
     margin: 5px 0 5px 15px;
 }
 
+.popup{
+    border-radius: 2px !important;
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    z-index: 999;
+}
 .popup embed,
 .popup iframe {
     top: 0;
@@ -695,7 +701,7 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 998;
     display: none;
     background-color: rgba(0, 0, 0, 0.65);
     position: fixed;
@@ -813,14 +819,16 @@ body {
 
 .popup h2 {
     margin: 0;
-    color: #008000;
-    padding: 5px 0px 10px;
-    text-align: left;
-    text-shadow: 1px 1px 3px #adadad;
-    font-weight: 500;
+    padding: 5px 0 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-shadow: none;
     font-size: 1.4em;
+    color: #222;
+    text-align: center;
     font-family: 'Tahoma', Arial, sans-serif;
     line-height: 1.3;
+    border-bottom: 1px solid #DDD;
 }
 
 .popup p {
@@ -1938,7 +1946,9 @@ form[data-search] > .row > .panel > .panel-heading{
 
 .search-result{
     color: #999;
-    vertical-align: -17px;
+    vertical-align: -16px;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #D0D0D0;
 }
 
 .table-list-header{

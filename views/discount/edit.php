@@ -1,9 +1,23 @@
 <div class="container">
-  <div id="content" class="main-content-inner" role="main">
-    <a href="<?= $back_url; ?>" class="button back_button">Back</a>
-    <div>
-      <h1 class="page-title"><?= $form_title ?></h1>
-      <div class="col-sm-12 text-center" style="margin-bottom: 25px">
+  <div class="col-xs-12">
+
+    <div class="row">
+      <div class="col-sm-12">
+
+        <div class="row afterhead-row">
+          <div class="col-xs-12 col-sm-2 back_button_container">
+            <a href="<?= $back_url; ?>" class="button back_button">Back</a>
+          </div>
+          <div class="col-xs-12 col-sm-8">
+            <div class="row">
+              <h1 class="page-title"><?= $form_title ?></h1>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-sm-12 text-center" style="margin-bottom: 15px">
         <small style="color: black; font-size: 12px;">
           Use this form to add/update discounts to the system. <br/>
         </small>
@@ -14,13 +28,12 @@
           Clicking on the section title will open a help file explaining that section.
         </small>
       </div>
-      <div id="form_content">
-        <?= $form; ?>
-      </div>
+      <?= $form; ?>
     </div>
+
   </div>
 </div>
-<div id="promotion" class="overlay" style="z-index: 99999999;"></div>
+<div id="promotion" class="overlay"></div>
 <div class="popup" style="z-index: 99999999; font-size: 12px; color: black; max-width: 700px;">
   <h2>promotion</h2>
   <b>Any purchase</b>
@@ -36,7 +49,7 @@
   <p>uses the restrictions number field, if the total of all the items purchased (before shipping and handling) is
     greater then the number entered in to the restrictions number field then they will receive the discount.</p>
 </div>
-<div id="coupon_code" class="overlay" style="z-index: 99999999;"></div>
+<div id="coupon_code" class="overlay"></div>
 <div class="popup" style="z-index: 99999999; font-size: 12px; color: black;">
   <h2>coupon code</h2>
   <p>
@@ -47,7 +60,7 @@
     <br/><b>NOTE: </b> coupon code discounts must apply to all products.
   </p>
 </div>
-<div id="discount_details" class="overlay" style="z-index: 99999999;"></div>
+<div id="discount_details" class="overlay"></div>
 <div class="popup" style="z-index: 99999999; font-size: 12px; color: black;">
   <h2>discount details</h2>
   <p>
@@ -56,23 +69,23 @@
     <br/><b>NOTE: </b> All shipping discounts must be multiple discounts.
   </p>
 </div>
-<div id="required_amount" class="overlay" style="z-index: 99999999;"></div>
+<div id="required_amount" class="overlay"></div>
 <div class="popup" style="z-index: 99999999; font-size: 12px; color: black;">
   <h2>restrictions</h2>
   <p>Allows for a limit to be imposed before the promotion is applied. Generally only the Total dollar amount will be
     used. Purchases only applies to the Users account total, Users account total for last month promotion types, all
     others will only check for a number to be entered.</p>
 </div>
-<div id="users" class="overlay" style="z-index: 99999999;"></div>
-<div class="popup" style="z-index: 99999999;">
+<div id="users" class="overlay"></div>
+<div class="popup">
   <h2>users</h2>
   <p><b>All users </b>No restriction on the users that the promotion applies to.</p>
   <p><b>All new users </b>The promotion applies to only the users who have not made a purchase.</p>
   <p><b>All registered users </b>The promotion applies to only the users who have previously made a purchase.</p>
   <p><b>All selected users </b>Allows the admin to select one or more users from the list of all users.</p>
 </div>
-<div id="fabrics" class="overlay" style="z-index: 99999999;"></div>
-<div class="popup" style="z-index: 99999999;">
+<div id="fabrics" class="overlay"></div>
+<div class="popup">
   <h2>fabrics</h2>
   <p>
     <b>All fabrics</b><br/>
@@ -87,9 +100,9 @@
     <br/><b>NOTE:</b> coupon code discounts must apply to all products.
   </p>
 </div>
-<div id="allow_multiple" class="overlay" style="z-index: 99999999;"></div>
-<div class="popup" style="z-index: 99999999;">
-  <h2>allow multiple</h2>
+<div id="allow_multiple" class="overlay"></div>
+<div class="popup">
+  <h2 class="text-center">Allow multiple</h2>
   <p>
     Checking this allows this discount to be used in conjunction with another discount. The sum of all applicable
     discounts will be added to the total amount of discount given by all applicable non-multiple discounts.
@@ -97,30 +110,24 @@
     <br/><b>NOTE:</b> All discounts involving a coupon code are multiple discounts.
   </p>
 </div>
-<div id="date" class="overlay" style="z-index: 99999999;"></div>
-<div class="popup" style="z-index: 99999999;">
-  <h2>date</h2>
-  <p>The start date the promotion takes effect (12:01 am).</p>
-  <p>The end date the promotion ends (11:59pm).</p>
-</div>
-<div id="date_start" class="overlay" style="z-index: 99999999;"></div>
-<div class="popup" style="z-index: 99999999;">
-  <h2>start date</h2>
+<div id="date_start" class="overlay"></div>
+<div class="popup">
+  <h2 class="text-center">Start date</h2>
   <p>The date the promotion takes effect (12:01 am).</p>
 </div>
-<div id="date_end" class="overlay" style="z-index: 99999999;"></div>
-<div class="popup" style="z-index: 99999999;">
-  <h2>end date</h2>
+<div id="date_end" class="overlay"></div>
+<div class="popup">
+  <h2 class="text-center">End date</h2>
   <p>The date the promotion ends (11:59pm).</p>
 </div>
-<div id="enabled" class="overlay" style="z-index: 99999999;"></div>
-<div class="popup" style="z-index: 99999999;">
-  <h2>enabled</h2>
+<div id="enabled" class="overlay"></div>
+<div class="popup">
+  <h2 class="text-center">Enabled</h2>
   <p>Overrides all date settings, unchecking enabled will prevent anyone from receiving the promotion.</p>
 </div>
-<div id="disable_sale_countdown" class="overlay" style="z-index: 99999999;"></div>
-<div class="popup" style="z-index: 99999999;">
-  <h2>disable sale countdown</h2>
+<div id="disable_sale_countdown" class="overlay"></div>
+<div class="popup">
+  <h2 class="text-center">Disable sale countdown</h2>
   <p>Checking this will not include it in the sale countdown on the product list, and product details page.</p>
 </div>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/discount/modal_rules.js'); ?>"></script>

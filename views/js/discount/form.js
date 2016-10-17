@@ -2,6 +2,24 @@
 
 (function ($) {
 
+  $(function() {
+    $('#discount_comment1').charCounter({
+      charsLimit: 255,
+      charsLimitOutputBlock: '#discount_comment1_counter_output',
+      outputNotificationBlock: '#discount_comment1_counter_notification'
+    });
+    $('#discount_comment2').charCounter({
+      charsLimit: 255,
+      charsLimitOutputBlock: '#discount_comment2_counter_output',
+      outputNotificationBlock: '#discount_comment2_counter_notification'
+    });
+    $('#discount_comment3').charCounter({
+      charsLimit: 255,
+      charsLimitOutputBlock: '#discount_comment3_counter_output',
+      outputNotificationBlock: '#discount_comment3_counter_notification'
+    });
+  });
+
   var discount_amount = document.getElementById('discount_amount'),
     restrictions = document.getElementById('required_amount'),
     float_type = '9[9].9[9]';
