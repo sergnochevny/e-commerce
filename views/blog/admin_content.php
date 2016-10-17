@@ -65,9 +65,6 @@
         margin-top: 77px !important;*/
     }
 </style>
-<div class="text-center">
-    <a href="<?= $new_post_href; ?>"><input type="submit" value="ADD NEW POST" class="button"/></a><br><br>
-</div>
 
 <!--col-2-->
 <?php if (isset($warning)) { ?>
@@ -96,27 +93,47 @@
     </div>
 <?php } ?>
 
-<p class="woocommerce-result-count">Showing <?= $count_rows; ?> results</p>
 
-<form class="woocommerce-ordering" method="get">
-    <select
-        onChange="if( this.options[this.selectedIndex].value!='' ){window.location=this.options[this.selectedIndex].value}else{this.options[selectedIndex=0];}"
-        class="orderby">
-        <option value="<?= _A_::$app->router()->UrlTo('admin_blog'); ?>">--FILTER BY CATEGORY--</option>
-        <?= $select_cat_option; ?>
+<div class="col-xs-12 text-center">
+    <h2>Posts</h2>
+</div>
 
-    </select>
-</form>
-<div class="clear"></div>
-<section class="just-posts-grid">
-    <div class="just-post-row row">
+
+<?= isset($search_form) ? $search_form : '' ?>
+
+<div class="row">
+    <div class="col-xs-12 search-result-header">
+
+        <div class="row">
+            <div class="col-sm-6 action-button-add">
+                <a href="<?= $new_post_href; ?>"><input type="submit" value="ADD NEW POST" class="button"/></a><br><br>
+            </div>
+            <div class="col-sm-6 search-result-container text-right">
+                <span class="search-result">Showing <?= $count_rows; ?> results</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<section class="just-post-row row">
+    <div class="just-posts-grid">
         <?= $blog_posts; ?>
     </div>
 </section>
+
 <div class="clear"></div>
-<nav role="navigation" class="paging-navigation">
-    <h4 class="sr-only">Navigation</h4>
-    <ul class='pagination'>
-        <?= isset($paginator) ? $paginator : ''; ?>
-    </ul>
-</nav>
+
+
+<div class="row">
+    <div class="col-xs-12">
+
+        <nav class="paging-navigation" role="navigation">
+            <h4 class="sr-only">Navigation</h4>
+            <ul class="pagination">
+                <?= isset($paginator) ? $paginator : ''; ?>
+            </ul>
+        </nav>
+
+    </div>
+</div>
