@@ -12,6 +12,8 @@
 
     protected function form_after_get_data(&$data = null) { }
 
+    protected function after_delete($id = null) { }
+
     protected function form($url, $data = null) {
       $id = _A_::$app->get($this->id_name);
       if(!isset($data)) $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
@@ -87,6 +89,7 @@
       if(_A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_name))) {
         try {
           forward_static_call(['Model_' . ucfirst($this->controller), 'delete'], $id);
+          $this->after_delete($id);
         } catch(Exception $e) {
           $error[] = $e->getMessage();
           $this->template->vars('error', $error);

@@ -71,7 +71,7 @@
 
     public static function get_total_count($filter = null) {
       $res = 0;
-      $q = "SELECT COUNT(sid) FROM fabrix_specials";
+      $q = "SELECT COUNT(sid) FROM ". static::$table ;
       $q .= self::build_where($filter);
       $result = mysql_query($q);
       if($result) {
@@ -83,9 +83,9 @@
 
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $res = null;
-      $q = "SELECT * FROM fabrix_specials";
+      $q = "SELECT * FROM ". static::$table ;
       $q .= self::build_where($filter);
-      $q .= " ORDER BY fabrix_specials.sid DESC";
+      $q .= " ORDER BY sid DESC";
       $q .= " LIMIT $start, $limit";
       $result = mysql_query($q);
       if($result) {
@@ -140,7 +140,7 @@
     public static function save($data) {
       extract($data);
       if(isset($sid)) {
-        $q = "UPDATE fabrix_specials" .
+        $q = "UPDATE " . static::$table .
           " SET" .
           " coupon_code='$coupon_code'," .
           " discount_amount='$discount_amount'," .
@@ -163,7 +163,7 @@
           " WHERE sid ='$sid'";
         $res = mysql_query($q);
       } else {
-        $q = "INSERT INTO fabrix_specials" .
+        $q = "INSERT INTO " . static::$table .
           " SET" .
           " coupon_code='$coupon_code'," .
           " discount_amount='$discount_amount'," .

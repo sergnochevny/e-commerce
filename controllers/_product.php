@@ -1,6 +1,10 @@
 <?php
 
-  class Controller_Product extends Controller_Controller {
+  class Controller_Product extends Controller_Formsimple {
+
+    protected $id_name = 'pid';
+    protected $form_title_add = 'NEW PRODUCT';
+    protected $form_title_edit = 'MODIFY PRODUCT';
 
     private function select_filter($method, $filters, $start = null, $search = null) {
       $selected = isset($filters) ? $filters : [];
@@ -13,35 +17,23 @@
       $this->template->vars('filter_data_start', isset($start) ? $start : 0);
       $this->template->vars('selected', $selected);
       $this->template->vars('filter', $filter);
-      $this->template->view_layout('select_filter');
+      $this->template->view_layout('filter/select');
     }
 
-    private function selected_filter_data($method, $filters, $selected, $id) {
-      $data = [
-        $method => $filters,
-        $method . '_select' => $selected,
-      ];
-
-      Model_Product::get_filter_selected($method, $data, $id);
-      return $data;
-    }
-
-    private function images_handling() {
-      include('include/post_edit_product_data.php');
+    private function images_handling($data = null) {
       $method = _A_::$app->get('method');
       if($method == 'save_link') {
         (new Controller_Image())->save();
       } elseif($method == 'upload_img') {
         (new Controller_Image())->upload();
       } elseif($method == 'del_pic') {
-        (new Controller_Image())->del();
+        (new Controller_Image())->delete();
       } else {
         (new Controller_Image())->modify();
       }
     }
 
-    private function filters_handling() {
-      include('include/post_edit_product_data.php');
+    private function filters_handling($data = null) {
       $method = _A_::$app->post('method');
       if($method !== 'filter') {
         if(in_array($method, ['categories', 'colours', 'patterns'])) {
@@ -53,7 +45,7 @@
           $resporse = [];
 
           ob_start();
-          $data = $this->selected_filter_data($method, ${$method}, ${$method . '_select'}, $p_id);
+          Model_Product::get_filter_selected($method, $data);
           $filters = array_keys($data[$method]);
           $this->generate_filter($data, $method);
           $resporse[0] = ob_get_contents();
@@ -73,13 +65,13 @@
           exit(json_encode($resporse));
         } else {
           $method = _A_::$app->post('type');
-          $data = $this->selected_filter_data($method, ${$method}, ${$method . '_select'}, $p_id);
+          Model_Product::get_filter_selected($method, $data);
           $this->generate_filter($data, $method);
         }
       }
     }
 
-    private function save($new = false) {
+    protected function load(&$data, &$error) {
       include('include/post_edit_product_data.php');
       $data = [
         'weight_id' => $post_weight_cat,
@@ -153,7 +145,7 @@
       $this->template->vars('filter_type', $type);
       $this->template->vars('destination', $type);
       $this->template->vars('title', 'Select ' . ucfirst($type));
-      $this->template->view_layout('filter');
+      $this->template->view_layout('filter/filter');
     }
 
     private function generate_select($data, $selected) {
@@ -162,73 +154,20 @@
       $this->template->view_layout('select');
     }
 
-    private function form($url, $data = null) {
-      $pid = _A_::$app->get('p_id');
-      if(isset($data)) {
-        foreach(['categories', 'colours', 'patterns'] as $method) {
-          $filters = $this->selected_filter_data($method, $data[$method], null, $pid);
-          $data[$method] = $filters[$method];
+    protected function form_handling(&$data=null) {
+      if(_A_::$app->request_is_post()) {
+        if(!is_null(_A_::$app->post('method'))) {
+          exit($this->filters_handling($data));
+        } elseif(!is_null(_A_::$app->get('method'))) {
+          exit($this->images_handling($data));
         }
-        $data['manufacturerId'] = $data['manufacturers'];
-        $data['manufacturers'] = Model_Product::get_manufacturers();
       } else {
-        $data = Model_Product::getProductInfo($pid);
+        if(!is_null(_A_::$app->get('method'))) exit($this->images_handling($data));
       }
-
-      foreach(['categories', 'colours', 'patterns'] as $type) {
-        ob_start();
-        $this->generate_filter($data, $type);
-        $filter = ob_get_contents();
-        ob_end_clean();
-        $data[$type] = $filter;
-      }
-
-      ob_start();
-      $this->generate_select($data['manufacturers'], $data['manufacturerId']);
-      $select = ob_get_contents();
-      ob_end_clean();
-      $data['manufacturers'] = $select;
-
-      ob_start();
-      $cimage = new Controller_Image($this->main);
-      $cimage->modify();
-      $m_images = ob_get_contents();
-      ob_end_clean();
-
-      $action_url = _A_::$app->router()->UrlTo($url, ['p_id' => $pid]);
-      $this->template->vars('action_url', $action_url);
-      $this->template->vars('modify_images', $m_images);
-      $this->template->vars('data', $data);
-      $this->main->view_layout('form');
     }
 
-    /**
-     * @param $url
-     * @param $template
-     */
-    private function edit_form($url, $type) {
-
-      $prms = null;
-      if(!empty(_A_::$app->get('page'))) {
-        $prms['page'] = _A_::$app->get('page');
-      }
-      if(!empty(_A_::$app->get('cat'))) {
-        $prms['cat'] = _A_::$app->get('cat');
-      }
-      $back_url = _A_::$app->router()->UrlTo('admin/home', $prms);
-      ob_start();
-      $this->form($url);
-      $edit_form = ob_get_contents();
-      ob_end_clean();
-
-      $this->template->vars('type', $type);
-      $this->template->vars('back_url', $back_url);
-      $this->main->template->vars('edit_form', $edit_form);
-      $this->main->view_admin('edit');
-    }
-
-    private function del_image($pid) {
-      $images = Model_Product::getImage($pid);
+    protected function after_delete($id = null) {
+      $images = Model_Product::getImage($id);
       $fields_idx = [1, 2, 3, 4, 5];
       foreach($fields_idx as $idx) {
         $filename = $images['image' . $idx];
@@ -246,31 +185,40 @@
       }
     }
 
-    private function edit_add_handling($type, $url) {
-      $this->main->test_access_rights();
-      if(_A_::$app->request_is_post()) {
-        if(!is_null(_A_::$app->post('method'))) {
-          $this->filters_handling();
-        } elseif(!is_null(_A_::$app->get('method'))) {
-          $this->images_handling();
-        } else {
-          $data = $this->save();
-          $this->form($url, $data);
-        }
-      } else {
-        if(!is_null(_A_::$app->get('method'))) {
-          $this->images_handling();
-        } else {
-          $this->edit_form($url, $type);
-        }
+    protected function form_after_get_data(&$data = null) {
+
+      if(isset($data['manufacturers'])) $data['manufacturerId'] = $data['manufacturers'];
+//      Model_Product::get_info($data);
+      $data['manufacturers'] = Model_Product::get_manufacturers();
+
+      foreach(['categories', 'colours', 'patterns'] as $type) {
+        ob_start();
+        Model_Product::get_filter_selected($type, $data);
+        $this->generate_filter($data, $type);
+        $filter = ob_get_contents();
+        ob_end_clean();
+        $data[$type] = $filter;
       }
+
+      ob_start();
+      $this->generate_select($data['manufacturers'], $data['manufacturerId']);
+      $select = ob_get_contents();
+      ob_end_clean();
+      $data['manufacturers'] = $select;
+
+      ob_start();
+      $cimage = new Controller_Image($this->main);
+      $cimage->modify();
+      $images = ob_get_contents();
+      ob_end_clean();
+      $this->template->vars('images', $images);
     }
 
     /**
      * @export
      */
-    public function product() {
-      $pid = Model_Product::validData(_A_::$app->get('p_id'));
+    public function view() {
+      $pid = _A_::$app->get('pid');
       $data = Model_Product::getPrName($pid);
 
       $matches = new Controller_Matches($this->main);
@@ -441,44 +389,7 @@
       $this->template->vars('allowed_samples', $allowed_samples);
       $this->template->vars('cart_enable', '_');
       $this->template->vars('back_url', $back_url);
-      $this->main->view('product');
+      $this->main->view('view');
     }
 
-    /**
-     * @export
-     */
-    public function edit() {
-      $this->edit_add_handling('edit', 'product/edit');
-    }
-
-    /**
-     * @export
-     */
-    public function add() {
-      Model_Product::getNewproduct();
-      $this->edit_add_handling('add', 'product/add');
-    }
-
-    /**
-     * @export
-     */
-    public function del() {
-      $this->main->test_access_rights();
-      $del_p_id = Model_Product::validData(_A_::$app->get('p_id'));
-      if(!empty($del_p_id)) {
-
-        $this->del_image($del_p_id);
-        Model_Product::del_product($del_p_id);
-
-        $prms = null;
-        if(!is_null(_A_::$app->get('page'))) {
-          $prms['page'] = _A_::$app->get('page');
-        }
-        if(!is_null(_A_::$app->get('cat'))) {
-          $prms['cat'] = _A_::$app->get('cat');
-        }
-        $href = _A_::$app->router()->UrlTo('admin/home', $prms);
-        exit ("<script>window.location.href='" . $href . "';</script>");
-      }
-    }
   }

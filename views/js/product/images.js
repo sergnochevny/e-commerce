@@ -17,7 +17,7 @@
                         url,
                         data,
                         function(data){
-                            $('#modify_images2').html(data);
+                            $('#images').html(data);
                             $("#confirm_dialog").removeClass('overlay_display');
                             $("#confirm_action").off('click.confirm_action');
                         }
@@ -43,7 +43,7 @@
                 url,
                 data,
                 function(data){
-                    $('#modify_images2').html(data);
+                    $('#images').html(data);
                 }
             )
         }

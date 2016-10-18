@@ -95,7 +95,7 @@
           $this->template->vars('format_sale_price', $format_sale_price);
           $this->template->vars('format_price', $format_price);
           $this->template->vars('in_cart', in_array($row[0], $cart));
-          $hide_price = $row['makePriceVis'];
+          $hide_price = $row['hideprice'];
           $this->template->vars('hide_price', $hide_price);
           $this->main->template->vars('hide_price', $hide_price);
           $this->template->vars('hide_price', $hide_price);
@@ -134,7 +134,7 @@
         $this->template->vars('cat_id', $cat_id);
       }
 
-      $total = Model_Product::get_count_products_by_type($type);
+      $total = Model_Product::get_count_by_type($type);
       if($total > $max_count_items)
         $total = $max_count_items;
       if($page > ceil($total / $per_page))
@@ -200,7 +200,7 @@
           $this->template->vars('bProductDiscount', $bProductDiscount);
           $this->template->vars('sDiscount', $sDiscount);
           $this->template->vars('in_cart', in_array($row[0], $cart));
-          $this->template->vars('hide_price', $row['makePriceVis']);
+          $this->template->vars('hide_price', $row['hideprice']);
           $this->template->view_layout($type);
         }
 
@@ -251,7 +251,7 @@
           $format_sale_price = '';
           $saleprice = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
 
-          $hide_price = $row['makePriceVis'];
+          $hide_price = $row['hideprice'];
           $this->template->vars('hide_price', $hide_price);
 
           $last = $i++ == $row_count;
@@ -302,7 +302,7 @@
       Model_Product::cleanTempProducts();
       $per_page = 12;
 
-      $total = Model_Product::get_count_products_by_type('all');
+      $total = Model_Product::get_count_by_type('all');
       if($page > ceil($total / $per_page))
         $page = ceil($total / $per_page);
       if($page <= 0)
@@ -354,14 +354,14 @@
         $this->template->vars('price', $price);
         $this->template->vars('inventory', $inventory);
         $this->template->vars('format_price', $format_price);
-        $this->template->vars('hide_price', $row['makePriceVis']);
+        $this->template->vars('hide_price', $row['hideprice']);
         $this->template->view_layout('inner');
       }
       $list = ob_get_contents();
       ob_end_clean();
       $this->main->template->vars('count_rows', $res_count_rows);
       $this->main->template->vars('list', $list);
-      (new Controller_Paginator($this->main))->paginator($total, $page, 'admin/home', $per_page);
+      (new Controller_Paginator($this->main))->paginator($total, $page, 'product', $per_page);
     }
 
     /**
@@ -404,7 +404,6 @@
      */
     public function popular() {
       $this->template->vars('cart_enable', '_');
-//      $this->show_category_list();
       $this->product_list_by_type('popular', 360);
       $this->main->template->vars('page_title', 'Popular Textile');
       $this->main->view('shop');
@@ -432,28 +431,28 @@
       $this->main->view('shop');
     }
 
-    public function modify_products_images() {
-      $c_image = new Controller_Image();
-      $per_page = 12;
-      $page = 1;
-
-      $total = Model_Product::get_total_count();
-      $count = 0;
-      while($page <= ceil($total / $per_page)) {
-        $start = (($page++ - 1) * $per_page);
-        $rows = Model_Product::get_list($start, $per_page);
-        foreach($rows as $row) {
-          for($i = 1; $i < 5; $i++) {
-            $fimage = $row['image' . $i];
-            if(isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
-              $c_image->modify_products($fimage);
-            }
-          }
-        }
-        $count += count($rows);
-        echo $count;
-      }
-    }
+//    public function modify_products_images() {
+//      $c_image = new Controller_Image();
+//      $per_page = 12;
+//      $page = 1;
+//
+//      $total = Model_Product::get_total_count();
+//      $count = 0;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Product::get_list($start, $per_page);
+//        foreach($rows as $row) {
+//          for($i = 1; $i < 5; $i++) {
+//            $fimage = $row['image' . $i];
+//            if(isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
+//              $c_image->modify_products($fimage);
+//            }
+//          }
+//        }
+//        $count += count($rows);
+//        echo $count;
+//      }
+//    }
 
     /**
      * @export
