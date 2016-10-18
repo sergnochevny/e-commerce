@@ -188,7 +188,6 @@
     protected function form_after_get_data(&$data = null) {
 
       if(isset($data['manufacturers'])) $data['manufacturerId'] = $data['manufacturers'];
-//      Model_Product::get_info($data);
       $data['manufacturers'] = Model_Product::get_manufacturers();
 
       foreach(['categories', 'colours', 'patterns'] as $type) {
