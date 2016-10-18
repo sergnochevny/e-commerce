@@ -18,42 +18,28 @@
       <div class="panel-body hidden">
 
         <div class="row">
-          <div class="col-xs-12">
-            <div class="form-row">
-                <label>Colour Name:</label>
-                <input type="text" class="input-text" placeholder="Like ..." name="search[]"
-                       value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
           <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-                <label for="discount_on">
-                  <input type="checkbox" id="discount_on" name="search[]"
-                    value="<?= isset($search['']) ? $search[''] : '' ?>">
-                  Status on/off
-                </label>
+              <select name="" id="">
+                <option>Select Coupon Status</option>
+                <option value="">Enabled</option>
+                <option value="">Disabled</option>
+              </select>
             </div>
           </div>
           <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-                <label for="discount_on">
-                  <input type="checkbox" id="discount_on" name="search[]"
-                    value="<?= isset($search['']) ? $search[''] : '' ?>">
-                  Multiple
-                </label>
+              <select name="" id="">
+                <option>Multiple</option>
+                <option value="">Yes</option>
+                <option value="">No</option>
+              </select>
             </div>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="form-row">
                 <label for="discount_on">
-                  <select name="" id="">
-                    <option>Coupon Type</option>
-                    <option value="">Coupon 1</option>
-                    <option value="">Coupon 2</option>
-                  </select>
+                  <input type="text" class="input-text" placeholder="Coupon details">
                 </label>
             </div>
           </div>
@@ -64,7 +50,7 @@
             <div class="form-row">
                 <label for="discount_on">
                   Starts at:
-                  <input type="text" id="discount_starts" class="input-text" name="search[]"
+                  <input type="text" id="discount_starts" class="input-text" name="search[]" placeholder="Chose start date"
                     value="<?= isset($search['']) ? $search[''] : '' ?>">
                 </label>
             </div>
@@ -73,7 +59,7 @@
             <div class="form-row">
                 <label for="discount_on">
                   Ends at:
-                  <input type="text" id="discount_ends" class="input-text" name="search[]"
+                  <input type="text" id="discount_ends" class="input-text" name="search[]" placeholder="Chose end date"
                          value="<?= isset($search['']) ? $search[''] : '' ?>">
                 </label>
             </div>
