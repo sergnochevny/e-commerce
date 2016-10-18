@@ -118,4 +118,3 @@
         </div>
     </div>
     <script src='<?= _A_::$app->router()->UrlTo('views/js/blog/blog.js'); ?>' type="text/javascript"></script>
-    <?php include('views/product/block_footer.php'); ?>
