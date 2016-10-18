@@ -46,7 +46,7 @@
             _A_::$app->get('aid', $aid);
             $data = null;
           }
-          $warning = ['All data saved successfully!!!'];
+          $warning = ['All was data saved successfully!!!'];
           $result = true;
         } catch(Exception $e) {
           $error[] = $e->getMessage();

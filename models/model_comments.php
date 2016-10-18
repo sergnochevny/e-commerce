@@ -46,6 +46,22 @@
       return $response;
     }
 
+
+    public static function save($data) {
+      extract($data);
+      if(isset($id)) {
+        $query = 'UPDATE ' . static::$table . ' SET `title` = "' . $title . '", `data` = "' . $data . '",`moderated` = "' . $moderated . '" WHERE id =' . $id;
+        $res = mysql_query($query);
+        if(!$res) throw new Exception(mysql_error());
+      } else {
+        $query = 'INSERT INTO ' . static::$table . '(title, data, moderated) VALUE ("' . $title . '","' . $data . '","' . $moderated . '")';
+        $res = mysql_query($query);
+        if(!$res) throw new Exception(mysql_error());
+        $id = mysql_insert_id();
+      }
+      return $id;
+    }
+
     public static function delete($id) {
       if(isset($id)) {
         $query = "DELETE FROM " . static::$table . " WHERE id = $id";

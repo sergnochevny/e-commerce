@@ -762,6 +762,12 @@ a img.aligncenter {
     padding: 0px;
 }
 
+#content > .col-xs-12.danger{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
 .entry .entry-header {
     margin-bottom: 50px;
 }

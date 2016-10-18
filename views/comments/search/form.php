@@ -17,18 +17,27 @@
 
       <div class="panel-body hidden">
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-4">
             <div class="form-row">
               <label>User:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[colour]"
                      value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-4">
             <div class="form-row">
               <label>Title:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[colour]"
                      value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="form-row">
+              <label>Status:</label>
+              <select name="" id="">
+                <option value="">Moderated</option>
+                <option value="">Hidden</option>
+              </select>
             </div>
           </div>
           <div class="col-xs-6">
