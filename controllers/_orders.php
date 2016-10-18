@@ -5,7 +5,7 @@
     protected $id_name = 'oid';
     protected $form_title_edit = 'MODIFY ORDER STATUS';
 
-    public function add() { }
+    public function add(){ }
 
     /**
      * @export
@@ -144,7 +144,8 @@
       $this->main->view_admin('view');
     }
 
-    protected function load(&$data, &$error) {
+
+    protected function validate(&$data, &$error) {
       $data['oid'] = _A_::$app->get('oid');
       $data['track_code'] = Model_Orders::validData(_A_::$app->post('track_code'));
       $data['status'] = Model_Orders::validData(_A_::$app->post('status'));

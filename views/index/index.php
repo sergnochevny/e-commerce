@@ -132,5 +132,5 @@
 <input type="hidden" id="get_url" value="<?= _A_::$app->router()->UrlTo('shop/widget_new_carousel'); ?>">
 <input type="hidden" id="slider_url" value="<?= _A_::$app->router()->UrlTo('shop/widget_bsells_horiz'); ?>">
 <script src='<?= _A_::$app->router()->UrlTo('views/js/index/index.js'); ?>' type="text/javascript"></script>
-<?php include('views/product/block_footer.php'); ?>
+<?php include('views/index/block_footer.php'); ?>
 

@@ -1,6 +1,6 @@
 <?php
 
-  class Controller_Product extends Controller_Formsimple {
+  class Controller_Product extends Controller_FormSimple {
 
     protected $id_name = 'pid';
     protected $form_title_add = 'NEW PRODUCT';
@@ -20,24 +20,43 @@
       $this->template->view_layout('filter/select');
     }
 
-    private function images_handling($data = null) {
-      $method = _A_::$app->get('method');
-      if($method == 'save_link') {
-        (new Controller_Image())->save();
-      } elseif($method == 'upload_img') {
-        (new Controller_Image())->upload();
-      } elseif($method == 'del_pic') {
-        (new Controller_Image())->delete();
-      } else {
-        (new Controller_Image())->modify();
-      }
+    private function images($data) {
+      $not_image = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
+      $data['u_image1'] = empty($data['image1']) || !is_file('upload/upload/' . $data['image1']) ? '' : _A_::$app->router()->UrlTo('upload/upload/v_' . $data['image1']);
+      $data['u_image2'] = empty($data['image2']) || !is_file('upload/upload/' . $data['image2']) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $data['image2']);
+      $data['u_image3'] = empty($data['image3']) || !is_file('upload/upload/' . $data['image3']) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $data['image3']);
+      $data['u_image4'] = empty($data['image4']) || !is_file('upload/upload/' . $data['image4']) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $data['image4']);
+      $data['u_image5'] = empty($data['image5']) || !is_file('upload/upload/' . $data['image5']) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $data['image5']);
+      $this->template->vars('not_image', $not_image);
+      $this->template->vars('data', $data);
+      $this->template->view_layout('images');
     }
 
-    private function filters_handling($data = null) {
+
+    private function images_handling(&$data = null) {
+      $method = _A_::$app->post('method');
+      if($method == 'images.main') {
+        if(!is_null(_A_::$app->post('idx'))) {
+          $idx = _A_::$app->post('idx');
+          $image = $data['image' . $idx];
+          $data['image' . $idx] = $data['image1'];
+          $data['image1'] = $image;
+        }
+
+      } elseif($method == 'images.upload') {
+        (new Controller_Image())->upload($data);
+      } elseif($method == 'images.delete') {
+        $idx = _A_::$app->post('idx');
+        $data['image' . $idx] = '';
+      }
+      $this->images($data);
+    }
+
+    private function filters_handling(&$data = null) {
       $method = _A_::$app->post('method');
       if($method !== 'filter') {
         if(in_array($method, ['categories', 'colours', 'patterns'])) {
-          $this->select_filter($method, array_keys(${$method}));
+          $this->select_filter($method, array_keys($data[$method]));
         }
       } else {
         if(!is_null(_A_::$app->post('filter-type'))) {
@@ -71,74 +90,6 @@
       }
     }
 
-    protected function load(&$data, &$error) {
-      include('include/post_edit_product_data.php');
-      $data = [
-        'weight_id' => $post_weight_cat,
-        'categories' => $categories,
-        'pvisible' => $post_vis,
-        'metadescription' => $post_desc,
-        'p_id' => $p_id,
-        'Meta_Description' => $post_desc,
-        'Meta_Keywords' => $post_mkey,
-        'Product_name' => $post_tp_name,
-        'Product_number' => $post_product_num,
-        'Width' => $post_width,
-        'Price_Yard' => $post_p_yard,
-        'Stock_number' => $post_st_nom,
-        'Dimensions' => $post_dimens,
-        'Current_inventory' => $post_curret_in,
-        'Specials' => $post_special,
-        'Weight' => $post_weight_cat,
-        'manufacturers' => $manufacturers,
-        'New_Manufacturer' => $New_Manufacturer,
-        'colours' => $colours,
-        'New_Colour' => $post_new_color,
-        'patterns' => $patterns,
-        'New_Pattern' => $pattern_type,
-        'Short_description' => $post_short_desk,
-        'Long_description' => $post_Long_description,
-        'visible' => $post_hide_prise,
-        'best' => $best,
-        'piece' => $piece,
-        'whole' => $whole
-      ];
-
-      if(!empty(_A_::$app->get('p_id'))) {
-        if(empty($post_product_num{0}) || empty($post_tp_name{0}) || empty($post_p_yard{0})) {
-          $error = [];
-          if(empty($post_product_num{0})) $error[] = 'Identify Product Number field !';
-          if(empty($post_tp_name{0})) $error[] = 'Identify Product Name field !';
-          if(empty($post_p_yard{0})) $error[] = 'Identify Price field !';
-          $this->template->vars('error', $error);
-        } else {
-          try {
-            Model_Product::save($p_id, $categories, $patterns, $colours, $manufacturers,
-                                $New_Manufacturer, $post_new_color, $pattern_type, $post_weight_cat,
-                                $post_special, $post_curret_in, $post_dimens, $post_hide_prise,
-                                $post_st_nom, $post_p_yard, $post_width, $post_product_num, $post_vis,
-                                $post_mkey, $post_desc, $post_Long_description, $post_tp_name,
-                                $post_short_desk, $best, $piece, $whole);
-
-            $this->template->vars('warning', ["Product Data saved successfully!"]);
-            if($new) {
-              $data = null;
-              Model_Product::getNewproduct();
-            }
-          } catch(Exception $e) {
-            $this->template->vars('error', [$e->getMessage()]);
-          }
-        }
-      } else {
-        $this->template->vars('error', ["Error! Not product id identity"]);
-        if($new) {
-          $data = null;
-          Model_Product::getNewproduct();
-        }
-      }
-      return $data;
-    }
-
     private function generate_filter($data, $type) {
       $filters = $data[$type];
       $this->template->vars('filters', $filters);
@@ -154,20 +105,71 @@
       $this->template->view_layout('select');
     }
 
-    protected function form_handling(&$data=null) {
+    protected function load(&$data) {
+      $data['pid'] = _A_::$app->get('pid');
+      $data['metadescription'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('metadescription')) ? _A_::$app->post('metadescription') : '');
+      $data['metakeywords'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('metakeywords')) ? _A_::$app->post('metakeywords') : '');
+      $data['metatitle'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('metatitle')) ? _A_::$app->post('metatitle') : '');
+      $data['pname'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('pname')) ? _A_::$app->post('pname') : '');
+      $data['pnumber'] = Model_Product::validData(_A_::$app->post('pnumber')) ? _A_::$app->post('pnumber') : '';
+      $data['width'] = Model_Product::validData(_A_::$app->post('width')) ? _A_::$app->post('width') : '';
+      $data['priceyard'] = Model_Product::validData(_A_::$app->post('priceyard')) ? _A_::$app->post('priceyard') : '';
+      $data['hideprice'] = Model_Product::validData(!is_null(_A_::$app->post('hideprice'))) ? _A_::$app->post('hideprice') : '';
+      $data['dimensions'] = Model_Product::validData(_A_::$app->post('dimensions')) ? _A_::$app->post('dimensions') : '';
+      $data['weight'] = Model_Product::validData(!is_null(_A_::$app->post('weight'))) ? _A_::$app->post('weight') : '';
+      $data['manufacturers'] = Model_Product::validData(_A_::$app->post('manufacturers')) ? _A_::$app->post('manufacturers') : '';
+      $data['sdesc'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('sdesc')) ? _A_::$app->post('sdesc') : '');
+      $data['ldesc'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('ldesc')) ? _A_::$app->post('ldesc') : '');;
+      $data['weight_id'] = Model_Product::validData(_A_::$app->post('weight_id')) ? _A_::$app->post('weight_id') : '';
+      $data['colours'] = !is_null(_A_::$app->post('colours')) ? _A_::$app->post('colours') : [];
+      $data['colours_select'] = !is_null(_A_::$app->post('colours_select')) ? _A_::$app->post('colours_select') : [];
+      $data['categories'] = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
+      $data['categories_select'] = !is_null(_A_::$app->post('categories_select')) ? _A_::$app->post('categories_select') : [];
+      $data['patterns'] = !is_null(_A_::$app->post('patterns')) ? _A_::$app->post('patterns') : [];
+      $data['patterns_select'] = !is_null(_A_::$app->post('patterns_select')) ? _A_::$app->post('patterns_select') : [];
+      $data['specials'] = Model_Product::validData(!is_null(_A_::$app->post('specials'))) ? _A_::$app->post('specials') : 0;
+      $data['pvisible'] = Model_Product::validData(_A_::$app->post('pvisible')) ? _A_::$app->post('pvisible') : 0;
+      $data['best'] = Model_Product::validData(!is_null(_A_::$app->post('best'))) ? _A_::$app->post('best') : 0;
+      $data['piece'] = !is_null(_A_::$app->post('piece')) ? _A_::$app->post('piece') : 0;
+      $data['whole'] = !is_null(_A_::$app->post('whole')) ? _A_::$app->post('whole') : 0;
+      $data['stock_number'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('stock_number')) ? _A_::$app->post('stock_number') : '');
+      $data['image1'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image1')) ? _A_::$app->post('image1') : '');
+      $data['image2'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image2')) ? _A_::$app->post('image2') : '');
+      $data['image3'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image3')) ? _A_::$app->post('image3') : '');
+      $data['image4'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image4')) ? _A_::$app->post('image4') : '');
+      $data['image5'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image5')) ? _A_::$app->post('image5') : '');
+      $data['inventory'] = !is_null(_A_::$app->post('inventory')) ? _A_::$app->post('inventory') : 0;
+    }
+
+    protected function validate(&$data, &$error) {
+
+      if(
+        empty($data['pnumber']) || empty($data['pname']) || empty($data['priceyard']) ||
+        empty($data['image1'])
+      ) {
+        $error = [];
+        if(empty($data['pnumber'])) $error[] = 'Identify Product Number field !';
+        if(empty($data['pname'])) $error[] = 'Identify Product Name field !';
+        if(empty($data['priceyard'])) $error[] = 'Identify Price field !';
+        if(empty($data['image1'])) $error[] = 'Identify Main Image!';
+        $this->template->vars('error', $error);
+        return false;
+      }
+      return true;
+    }
+
+    protected function form_handling(&$data = null) {
       if(_A_::$app->request_is_post()) {
         if(!is_null(_A_::$app->post('method'))) {
+          if(explode('.',_A_::$app->post('method'))[0] == 'images') exit($this->images_handling($data));
           exit($this->filters_handling($data));
-        } elseif(!is_null(_A_::$app->get('method'))) {
-          exit($this->images_handling($data));
         }
-      } else {
-        if(!is_null(_A_::$app->get('method'))) exit($this->images_handling($data));
       }
+      return true;
     }
 
     protected function after_delete($id = null) {
-      $images = Model_Product::getImage($id);
+      $images = Model_Product::images($id);
       $fields_idx = [1, 2, 3, 4, 5];
       foreach($fields_idx as $idx) {
         $filename = $images['image' . $idx];
@@ -206,8 +208,7 @@
       $data['manufacturers'] = $select;
 
       ob_start();
-      $cimage = new Controller_Image($this->main);
-      $cimage->modify();
+      $this->images($data);
       $images = ob_get_contents();
       ob_end_clean();
       $this->template->vars('images', $images);

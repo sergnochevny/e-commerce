@@ -5,7 +5,7 @@
     protected $form_title_add = 'NEW COLOUR';
     protected $form_title_edit = 'MODIFY COLOUR';
 
-    protected function load(&$data, &$error) {
+    protected function validate(&$data, &$error) {
       $data['id'] = _A_::$app->get('id');
       $data['colour'] = Model_Colours::validData(_A_::$app->post('colour'));
       if(empty($data['colour'])) {

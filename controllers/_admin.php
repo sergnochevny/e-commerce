@@ -1,19 +1,22 @@
 <?php
 
-  Class Controller_Admin Extends Controller_Formsimple {
+  Class Controller_Admin Extends Controller_FormSimple {
 
     private static function get_from_session() {
       return _A_::$app->session('_a');
     }
 
-    protected function load(&$data, &$error) {
-      $error = null;
+    protected function load(&$data) {
       $data = [
         'id' => self::get_from_session(),
         'login' => Model_Admin::validData(!is_null(_A_::$app->post('login')) ? _A_::$app->post('login') : ''),
         'create_password' => Model_Admin::validData(!is_null(_A_::$app->post('create_password')) ? _A_::$app->post('create_password') : ''),
         'confirm_password' => Model_Admin::validData(!is_null(_A_::$app->post('confirm_password')) ? _A_::$app->post('confirm_password') : ''),
       ];
+    }
+
+    protected function validate(&$data, &$error) {
+      $error = null;
       if(empty($data['login'])) {
         $error = ['Identify login field!!!'];
       } else {

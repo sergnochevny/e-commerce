@@ -6,7 +6,7 @@
     protected $form_title_add = 'ADD NEW CATEGORY';
     protected $form_title_edit = 'EDIT CATEGORY';
 
-    protected function load(&$data, &$error) {
+    protected function validate(&$data, &$error) {
       $error = null;
       $data = [
         $this->id_name => _A_::$app->get($this->id_name),

@@ -209,7 +209,7 @@
 
     <div class="col-xs-12">
       <div class="text-center">
-        <a id="submit" type="button" class="button" style="width: 150px;">Save</a>
+        <a id="submit" class="button" style="width: 150px;">Save</a>
       </div>
     </div>
 
