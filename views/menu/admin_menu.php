@@ -7,7 +7,7 @@
                     <a title="Products"  aria-haspopup="true" class="has-submenu" href="#">Products<span class="caret"></span></a>
                     <ul role="group" class="dropdown-menu" aria-hidden="true" aria-expanded="false" style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                            <a data-link title="Overview" href="<?= _A_::$app->router()->UrlTo('admin/home');?>">Overview</a>
+                            <a data-link title="Overview" href="<?= _A_::$app->router()->UrlTo('product');?>">Overview</a>
                         </li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-product">
                             <a data-link title="Categories" href="<?= _A_::$app->router()->UrlTo('categories');?>">Categories</a>

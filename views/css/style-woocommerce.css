@@ -577,6 +577,7 @@ input[type='color']:focus {
     height: 50px;
     top: 30%;
     border: none;
+    min-width: 53px;
 }
 
 .woocommerce ul.products li.product .product-image-box figcaption a.button.add_to_cart_button:hover,

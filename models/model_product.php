@@ -4,7 +4,8 @@
 
     protected static $table = 'fabrix_products';
 
-    public static function get_filter_selected($type, &$data, $id) {
+    public static function get_filter_selected($type, &$data) {
+      $id = $data['pid'];
       $filters = [];
       switch($type) {
         case 'colours':
@@ -207,104 +208,112 @@
       return $data;
     }
 
-    public static function getProductInfo($pid) {
-      $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$pid'");
-      $rowsni = mysql_fetch_array($resulthatistim);
+    public static function get_info(&$data = null) {
+      if(isset($data)) {
+        $pid = $data['pid'];
+        if(isset($pid)) {
+          $manufacturerId = $data['manufacturerId'];
+          if(empty($manufacturerId)) {
+            $manufacturerId = "0";
+          }
+          $data['manufacturers'] = self::get_manufacturers();
+          $categories = isset($data['categories'])?$data['categories']:[];
 
-      $manufacturerId = $rowsni['manufacturerId'];
-      if(empty($manufacturerId)) {
-        $manufacturerId = "0";
-      }
-      $manufacturers = self::get_manufacturers();
-      $patterns = self::get_filter_selected_data('patterns', $pid);
-      $colours = self::get_filter_selected_data('colours', $pid);
-      $categories = self::get_filter_selected_data('categories', $pid);
-
-      if(count($categories) < 1) {
-        $result = mysql_query(
-          "select a.cname, max(b.display_order)+1" .
-          " from fabrix_categories a" .
-          " left join fabrix_product_categories b on a.cid = b.cid" .
-          " WHERE a.cid=1"
-        );
-        $row = mysql_fetch_array($result, MYSQL_NUM);
-        $categories['1'] = [$row[0], $row[1]];
-      }
-
-      return [
-        'weight_id' => $rowsni['weight_id'],
-        'pvisible' => $rowsni['pvisible'],
-        'metadescription' => $rowsni['metadescription'],
-        'p_id' => $pid,
-        'Title' => $rowsni['pname'],
-        'Meta_Description' => $rowsni['metadescription'],
-        'Meta_Keywords' => $rowsni['metakeywords'],
-        'categories' => $categories,
-        'Product_name' => $rowsni['pname'],
-        'Product_number' => $rowsni['pnumber'],
-        'Width' => $rowsni['width'],
-        'Price_Yard' => $rowsni['priceyard'],
-        'Stock_number' => $rowsni['stock_number'],
-        'Dimensions' => $rowsni['dimensions'],
-        'Current_inventory' => $rowsni['inventory'],
-        'Specials' => $rowsni['specials'],
-        'manufacturers' => $manufacturers,
-        'manufacturerId' => $manufacturerId,
-        'colours' => $colours,
-        'patterns' => $patterns,
-        'Short_description' => $rowsni['sdesc'],
-        'Long_description' => $rowsni['ldesc'],
-        'Related_fabric_1' => $rowsni['rpnumber1'],
-        'Related_fabric_2' => $rowsni['rpnumber2'],
-        'Related_fabric_3' => $rowsni['rpnumber3'],
-        'Related_fabric_4' => $rowsni['rpnumber4'],
-        'Related_fabric_5' => $rowsni['rpnumber5'],
-        'Main_images' => $rowsni['image1'],
-        'visible' => $rowsni['makePriceVis'],
-        'd_image2' => $rowsni['image2'],
-        'd_image3' => $rowsni['image3'],
-        'd_image4' => $rowsni['image4'],
-        'd_image5' => $rowsni['image5'],
-        'best' => $rowsni['best'],
-        'piece' => $rowsni['piece'],
-        'whole' => $rowsni['whole']
-      ];
-    }
-
-    public static function get_total_count($where = null) {
-      $total = 0;
-      $q_total = "SELECT COUNT(*) FROM fabrix_products";
-      if(isset($where)) {
-        $q_total = $q_total . ' ' . $where;
-      }
-
-      if($res = mysql_query($q_total)) {
-        $total = mysql_fetch_row($res)[0];
-      }
-
-      return $total;
-    }
-
-    public static function get_list($start, $limit, $filter = null) {
-      $list = [];
-      $q = "SELECT * FROM fabrix_products ORDER BY pid LIMIT " . $start . ", " . $limit;
-      if($res = mysql_query($q)) {
-        while($row = mysql_fetch_array($res)) {
-          $list[] = $row;
+          if(count($categories) < 1) {
+            $result = mysql_query(
+              "select a.cname, max(b.display_order)+1" .
+              " from fabrix_categories a" .
+              " left join fabrix_product_categories b on a.cid = b.cid" .
+              " WHERE a.cid=1"
+            );
+            $row = mysql_fetch_array($result, MYSQL_NUM);
+            $categories['1'] = [$row[0], $row[1]];
+          }
+          $data['categories'] = $categories;
         }
       }
+    }
 
-      return $list;
+    public static function get_total_count($filter = null) {
+      $response = 0;
+      $query = "SELECT COUNT(*) FROM " . static::$table;
+      $query .= static::build_where($filter);
+      if($result = mysql_query($query)) {
+        $response = mysql_fetch_row($result)[0];
+      }
+      return $response;
+    }
+
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+      self::clean_temp();
+      $response = null;
+      $query = "SELECT * ";
+      $query .= " FROM " . static::$table;
+      $query .= static::build_where($filter);
+      $query .= " ORDER BY pid DESC";
+      $query .= " LIMIT $start, $limit";
+
+      if($result = mysql_query($query)) {
+        $res_count_rows = mysql_num_rows($result);
+        while($row = mysql_fetch_array($result)) {
+          $filename = 'upload/upload/b_' . $row[14];
+          if(!(file_exists($filename) && is_file($filename))) {
+            $filename = 'upload/upload/not_image.jpg';
+          }
+          $row['filename'] = _A_::$app->router()->UrlTo($filename);
+
+          $price = $row[5];
+          $inventory = $row[6];
+          $piece = $row[34];
+          if($piece == 1 && $inventory > 0) {
+            $price = $price * $inventory;
+            $row['price'] = "$" . number_format($price, 2);
+            $row['format_price'] = sprintf('%s / piece', $price);
+          } else {
+            $row['price'] = "$" . number_format($price, 2);
+            $row['format_price'] = sprintf('%s / yard', $price);
+          }
+          $response[] = $row;
+        }
+      }
+      return $response;
     }
 
     public static function get_by_id($id) {
-      $product = null;
-      $strSQL = "select * from fabrix_products where id = '" . mysql_real_escape_string($id) . "'";
-      $result = mysql_query($strSQL);
-      if($result) {
-        $product = mysql_fetch_assoc($result);
+      if(!isset($id)) {
+        self::clean_temp();
+        $result = mysql_query("INSERT INTO fabrix_products (pid, pname, pnumber, width, yardage, priceyard, inventory, sdesc, ldesc, image1, image2, image3, image4, image5, display_order, cid, pvisible, dimensions, specials, weight_id, stock_number, manufacturerId, metatitle, metadescription, metakeywords, hideprice) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', NULL)");
+        if($result) {
+          $id = mysql_insert_id();
+          if(isset($id) && $id > 0) {
+            $result = mysql_query("INSERT INTO fabrix_temp_product set productId = '$id', sid='" . session_id() . "'");
+            if($result) _A_::$app->get('pid', $id);
+          }
+        }
+        if(!$result) throw new Exception(mysql_error());
       }
-      return $product;
+      if(isset($id)) {
+        $q = "select * from " . static::$table . " where pid = '" . $id . "'";
+        $result = mysql_query($q);
+        if($result) {
+          $data = mysql_fetch_assoc($result);
+          $categories = isset($data['categories'])?$data['categories']:[];
+
+          if(count($categories) < 1) {
+            $result = mysql_query(
+              "select a.cname, max(b.display_order)+1" .
+              " from fabrix_categories a" .
+              " left join fabrix_product_categories b on a.cid = b.cid" .
+              " WHERE a.cid=1"
+            );
+            $row = mysql_fetch_array($result, MYSQL_NUM);
+            $categories['1'] = $row[1];
+          }
+          $data['categories'] = $categories;
+
+        }
+      }
+      return $data;
     }
 
     public static function product_filter_list() {
@@ -341,20 +350,9 @@
       return $result;
     }
 
-    public static function getNewproduct() {
-      self::cleanTempProducts();
-
-      $result = mysql_query("INSERT INTO fabrix_products (pid, pname, pnumber, width, yardage, priceyard, inventory, sdesc, ldesc, rpnumber1, rpnumber2, rpnumber3, rpnumber4, rpnumber5, image1, image2, image3, image4, image5, display_order, cid, pvisible, dimensions, specials, weight_id, stock_number, manufacturerId, metatitle, metadescription, metakeywords, makePriceVis) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', NULL)");
-      $product_id = mysql_insert_id();
-      if(isset($product_id) && $product_id > 0) {
-        $result = mysql_query("INSERT INTO fabrix_temp_product set productId = '$product_id', sid='" . session_id() . "'");
-        _A_::$app->get('p_id', $product_id);
-      }
-    }
-
-    public static function cleanTempProducts() {
-      $result = mysql_query("DELETE FROM fabrix_products WHERE pid in ( select productId from fabrix_temp_product where sid='" . session_id() . "')");
-      $result = mysql_query("DELETE FROM fabrix_temp_product WHERE sid='" . session_id() . "'");
+    public static function clean_temp() {
+      mysql_query("DELETE FROM fabrix_products WHERE pid in ( select productId from fabrix_temp_product where sid='" . session_id() . "')");
+      mysql_query("DELETE FROM fabrix_temp_product WHERE sid='" . session_id() . "'");
     }
 
     public static function set_product_inventory($pid, $inventory = 0) {
@@ -415,8 +413,6 @@
       $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
       $rowsni = mysql_fetch_array($resulthatistim);
 
-      setlocale(LC_MONETARY, 'en_US');
-
       $price = $rowsni[5];
       $inventory = $rowsni[6];
       $piece = $rowsni[34];
@@ -437,7 +433,7 @@
         'inventory' => $rowsni[6],
         'piece' => $rowsni[34],
         'dimensions' => $rowsni['dimensions'],
-        'vis_price' => $rowsni['makePriceVis']
+        'vis_price' => $rowsni['hideprice']
         //
       ];
     }
@@ -653,7 +649,7 @@
       return $rows;
     }
 
-    public static function get_count_products_by_type($type) {
+    public static function get_count_by_type($type) {
       switch($type) {
         case 'all':
           if(!empty(_A_::$app->get('cat'))) {
@@ -748,7 +744,7 @@
         if($result) $patterns[] = mysql_insert_id();
       }
 
-      $sql = "update fabrix_products set manufacturerId='$post_manufacturer', weight_id='$post_weight_cat', specials='$post_special', inventory='$post_curret_in', dimensions='$post_dimens', makePriceVis='$post_hide_prise', stock_number='$post_st_nom', priceyard='$post_p_yard', width='$post_width', pnumber='$post_product_num', pvisible='$post_vis', metakeywords='$post_mkey', metadescription='$post_desc', ldesc='$post_Long_description', pname='$post_tp_name', sdesc='$post_short_desk', best = '$best', piece='$piece', whole = '$whole'  WHERE pid ='$p_id'";
+      $sql = "update fabrix_products set manufacturerId='$post_manufacturer', weight_id='$post_weight_cat', specials='$post_special', inventory='$post_curret_in', dimensions='$post_dimens', hideprice='$post_hide_prise', stock_number='$post_st_nom', priceyard='$post_p_yard', width='$post_width', pnumber='$post_product_num', pvisible='$post_vis', metakeywords='$post_mkey', metadescription='$post_desc', ldesc='$post_Long_description', pname='$post_tp_name', sdesc='$post_short_desk', best = '$best', piece='$piece', whole = '$whole'  WHERE pid ='$p_id'";
 
       $result = mysql_query($sql);
 
@@ -901,4 +897,21 @@
 
       return $res;
     }
+
+    public static function delete($id) {
+      if(isset($id)) {
+        $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
+        $res = mysql_query($query);
+        $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
+        if($res) $res = mysql_query($query);
+        $query = "DELETE FROM fabrix_product_colours WHERE prodId = $id";
+        if($res) $res = mysql_query($query);
+        $query = "DELETE FROM fabrix_product_patterns WHERE prodId = $id";
+        if($res) $res = mysql_query($query);
+        $query = "DELETE FROM fabrix_specials_products WHERE pid = $id";
+        if($res) $res = mysql_query($query);
+        if(!$res) throw new Exception(mysql_error());
+      }
+    }
+
   }

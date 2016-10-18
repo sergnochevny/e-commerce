@@ -40,7 +40,7 @@
     },
     onComplete: function (file, response) {
       var url = $('form#product').attr('action') + "&method=modify";
-      if (response === "success") $('#modify_images2').load(url);
+      if (response === "success") $('#images').load(url);
     }
   });
 
