@@ -86,7 +86,7 @@
           $redirect .= (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT'));
           $redirect .= _A_::$app->server('REQUEST_URI');
           if(empty(_A_::$app->server('REQUEST_URI'))) {
-            $redirect = _A_::$app->router()->UrlTo('admin/home');
+            $redirect = _A_::$app->router()->UrlTo('product');
           }
         } else
           $redirect = _A_::$app->server('HTTP_REFERER');

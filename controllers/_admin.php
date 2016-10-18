@@ -59,7 +59,7 @@
       if(!is_null(_A_::$app->get('url'))) {
         $url = base64_decode(urldecode(_A_::$app->get('url')));
       }
-      $back_url = (strlen($url) > 0) ? $url : 'admin/home';
+      $back_url = (strlen($url) > 0) ? $url : 'product';
       $this->edit_add_handling($action, $back_url, $title, true);
     }
 
@@ -76,12 +76,12 @@
           if(!$this->authorize($login, $password))
             exit('Wrong Login or Password');
           $url = base64_decode(urldecode(_A_::$app->post('redirect')));
-          $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('admin/home');
+          $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('product');
           $this->redirect($url);
         } else {
 
           $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') :
-            urlencode(base64_encode(_A_::$app->router()->UrlTo('admin/home')));
+            urlencode(base64_encode(_A_::$app->router()->UrlTo('product')));
           $this->template->vars('redirect', $redirect);
 
           $menu = new Controller_Menu($this);
@@ -91,7 +91,7 @@
         }
       } else {
         $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) :
-          _A_::$app->router()->UrlTo('admin/home');
+          _A_::$app->router()->UrlTo('product');
         $this->redirect($url);
       }
     }
@@ -108,17 +108,6 @@
         }
       }
       return false;
-    }
-
-    /**
-     * @export
-     */
-    public function home() {
-      $this->main->test_access_rights();
-      $shop = new Controller_Shop($this->main);
-      $shop->all_products();
-      $shop->product_filter_list();
-      $shop->main->view_admin('home');
     }
 
     /**
