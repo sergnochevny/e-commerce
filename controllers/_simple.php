@@ -5,6 +5,7 @@
     protected $id_name = 'id';
     protected $form_title_add;
     protected $form_title_edit;
+    protected $view_title;
 
     protected function form($url) {
       $id = _A_::$app->get($this->id_name);
@@ -35,7 +36,7 @@
       if($this->load($data, $error)) {
         try {
           forward_static_call(['Model_' . ucfirst($this->controller), 'save'], $data);
-          $warning = ["All was data saved successfully!"];
+          $warning = ["All data was saved successfully!"];
         } catch(Exception $e) {
           $error[] = $e->getMessage();
         }
@@ -50,6 +51,17 @@
     public function add() {
       $this->main->test_access_rights();
       $this->edit_add_handling($this->controller . '/add', $this->form_title_add);
+    }
+
+    /**
+     * @export
+     */
+    public function view(){
+      $id = _A_::$app->get($this->id_name);
+      $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
+      $this->template->vars('view_title', $this->view_title);
+      $this->template->vars('data', $data);
+      $this->main->view_layout('view');
     }
 
     /**

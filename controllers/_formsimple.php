@@ -53,7 +53,7 @@
       if($this->load($data, $error)) {
         try {
           forward_static_call(['Model_' . ucfirst($this->controller), 'save'], $data);
-          $warning = ["All was data saved successfully!"];
+          $warning = ["All data was saved successfully!"];
           $result = true;
         } catch(Exception $e) {
           $error[] = $e->getMessage();

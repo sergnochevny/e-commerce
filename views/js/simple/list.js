@@ -31,4 +31,18 @@
             }
         }
     );
+
+    $('[data-view]').on('click', function (event) {
+        event.preventDefault();
+
+        $('body').waitloader('show');
+        var url = $(this).attr('href');
+
+        $.when(
+            $('#modal_content').load(url)
+        ).done(function () {
+            $('body').waitloader('remove');
+        });
+    });
+
 })(jQuery);

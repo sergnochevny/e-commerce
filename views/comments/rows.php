@@ -51,15 +51,14 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-2 text-right action-buttons">
-      <a data-modify class="edit-comment"
+      <a data-modify
          href="<?= _A_::$app->router()->UrlTo('comments/edit', $prms) ?>"
          title="Edit comment"><i class="fa fa-pencil"></i>
       </a>
       <a data-view class="text-success view-comment"
-         href="<?= _A_::$app->router()->UrlTo('comments/comment', $prms) ?>"
+         href="<?= _A_::$app->router()->UrlTo('comments/view', $prms) ?>"
          title="View comment"><i class="fa fa-eye"></i>
       </a>
-
       <a data-delete class="text-danger del_user"
          href="<?= _A_::$app->router()->UrlTo('comments/delete', $prms); ?>"
          title="Delete comment"><i class=" fa fa-trash-o"></i>

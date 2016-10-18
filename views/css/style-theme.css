@@ -759,7 +759,7 @@ a img.aligncenter {
 }
 
 #content {
-    padding: 0px;
+    padding: 0;
 }
 
 #content > .col-xs-12.danger{

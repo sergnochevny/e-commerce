@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
       switch (action) {
         case 'show':
           if ($('#wait_loader').length == 0) {
-            $(wait_loader_fa).appendTo(this).css('z-index', '100000000');
+            $(wait_loader_fa).appendTo(this).css('z-index', '9999');
           }
           break;
         case 'remove':
@@ -136,10 +136,8 @@ jQuery(document).ready(function ($) {
     });
   });
 
-  $(document).on('click', '[data-waitloader]',
-    function (event) {
-      $('body').waitloader('show');
-    }
-  );
+  $(document).on('click', '[data-waitloader]',function (event) {
+    $('body').waitloader('show');
+  });
 
 })(jQuery);

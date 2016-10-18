@@ -3,6 +3,7 @@
   class Controller_Comments extends Controller_Simple  {
 
     protected $form_title_edit = 'MODIFY COMMENT';
+    protected $view_title = 'COMMENT VIEW';
 
     protected function load(&$data, &$error) {
       $data['id'] = _A_::$app->get('id');
