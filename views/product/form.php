@@ -4,7 +4,7 @@
     <div class="col-xs-12 alert-success danger" style="display: none;">
       <?php
         foreach($warning as $msg) {
-          echo '<span>' . $msg . '</span>';
+          echo '<span>' . $msg . '</span><br>';
         }
       ?>
     </div>
@@ -17,7 +17,7 @@
     <div class="col-xs-12 alert-danger danger" style="display: none;">
       <?php
         foreach($error as $msg) {
-          echo $msg;
+          echo $msg .'<br>';
         }
       ?>
     </div>
@@ -232,6 +232,7 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <input type="file" id="uploadfile" name="uploadfile" style="position: absolute; margin: -5px 0px 0px -175px; padding: 0px; width: 220px; height: 30px; font-size: 14px; opacity: 0; cursor: pointer; display: block; z-index: 2147483583; top: 3165px; left: 380px;">
 </form>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
         type="text/javascript"></script>

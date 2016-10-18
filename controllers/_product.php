@@ -42,7 +42,6 @@
           $data['image' . $idx] = $data['image1'];
           $data['image1'] = $image;
         }
-
       } elseif($method == 'images.upload') {
         (new Controller_Image())->upload($data);
       } elseif($method == 'images.delete') {
@@ -150,7 +149,7 @@
         $error = [];
         if(empty($data['pnumber'])) $error[] = 'Identify Product Number field !';
         if(empty($data['pname'])) $error[] = 'Identify Product Name field !';
-        if(empty($data['priceyard'])) $error[] = 'Identify Price field !';
+        if(empty($data['priceyard']) || ($data['priceyard'] == 0)) $error[] = 'Identify Price field !';
         if(empty($data['image1'])) $error[] = 'Identify Main Image!';
         $this->template->vars('error', $error);
         return false;

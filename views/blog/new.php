@@ -1,5 +1,4 @@
 <script src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js')?>"></script>
-<script type="text/javascript" src="<?= _A_::$app->router()->UrlTo('upload/js/ajaxupload.3.5.js')?>"></script>
 <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css')?>' type='text/css' media='all'/>
 <link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('upload/styles.css')?>">
 

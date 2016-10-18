@@ -221,7 +221,7 @@ Ajax_upload = AjaxUpload = function(button, options){
 		// File upload name
 		name: 'userfile',
 		// Additional data to send
-		data: {},
+		data:  function(){return {}},
 		// Submit file as soon as it's selected
 		autoSubmit: true,
 		// The type of data that you're expecting back from the server.
@@ -534,13 +534,18 @@ AjaxUpload.prototype = {
 		} else {
 			_action = self._settings.action.call(this);						
 		}
+		if ( settings.data ){
+			_data = settings.data.call(this);
+		} else {
+			_data = self._settings.data.call(this);
+		}
 
 		form.action = _action;
 		form.target = iframe.name;
 		d.body.appendChild(form);
 		
 		// Create hidden input element for each data key
-		for (var prop in settings.data){
+		for (var prop in _data){
 			var el = d.createElement("input");
 			el.type = 'hidden';
 			el.name = prop;
