@@ -6,7 +6,7 @@
                placeholder="Type for search ..." value="<?= isset($search) ? $search : ''; ?>">
       </div>
       <div class="col-md-2 col-xs-2 text-right">
-        <a href="" data-filter-type="<?= $filter_type; ?>" data-filter-search class="button"
+        <a href="filter" data-filter-type="<?= $filter_type; ?>" data-filter-search class="button"
            data-destination="<?= $destination; ?>">
           <i class="fa fa-search" aria-hidden="true"></i>
         </a>
@@ -20,7 +20,7 @@
           <li class="select_item">
             <div class="col-xs-12 col-sm-12 col-md-12">
               <div class="row text-center">
-                <a href="" data-filter-type="<?= $filter_type; ?>" data-move="up"
+                <a href="filter" data-filter-type="<?= $filter_type; ?>" data-move="up"
                    data-filter-search class="button-move"
                    title="back..."
                    data-destination="<?= $destination; ?>">
@@ -48,7 +48,7 @@
             <li class="select_item">
               <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="row text-center">
-                  <a href="" data-filter-type="<?= $filter_type; ?>" data-move="down"
+                  <a href="filter" data-filter-type="<?= $filter_type; ?>" data-move="down"
                      data-filter-search class="button-move"
                      title="more..."
                      data-destination="<?= $destination; ?>">

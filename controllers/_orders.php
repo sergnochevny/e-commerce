@@ -144,7 +144,7 @@
     }
 
 
-    protected function load(&$data, &$error) {
+    protected function validate(&$data, &$error) {
       $data['oid'] = _A_::$app->get('oid');
       $data['track_code'] = Model_Orders::validData(_A_::$app->post('track_code'));
       $data['status'] = Model_Orders::validData(_A_::$app->post('status'));

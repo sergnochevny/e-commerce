@@ -78,4 +78,4 @@
 </div>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/matches/matches.js'); ?>' type="text/javascript"></script>
 
-<?php include('views/product/block_footer.php'); ?>
+<?php include('views/index/block_footer.php'); ?>

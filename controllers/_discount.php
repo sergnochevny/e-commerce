@@ -121,7 +121,7 @@
       }
     }
 
-    private function load_form_data(&$data) {
+    protected function load(&$data) {
       $data[$this->id_name] = _A_::$app->get($this->id_name);
       $data['promotion_type'] = Model_Discount::validData(!is_null(_A_::$app->post('promotion_type')) ? _A_::$app->post('promotion_type') : '');
       $data['coupon_code'] = Model_Discount::validData(!is_null(_A_::$app->post('coupon_code')) ? _A_::$app->post('coupon_code') : '');
@@ -169,8 +169,7 @@
       }
     }
 
-    protected function load(&$data, &$error) {
-      $this->load_form_data($data);
+    protected function validate(&$data, &$error) {
       if(
         ($data['discount_type'] == 2 && $data['shipping_type'] == 0) ||
         (($data['generate_code'] == 0) && (strlen($data['coupon_code']) > 0) &&
@@ -231,7 +230,6 @@
         $method = _A_::$app->post('method');
         if($method !== 'filter') {
           if(in_array($method, ['users', 'prod', 'cat', 'mnf'])) {
-            $this->load_form_data($data);
             $filters = ($method == 'users') ? $data['users'] : $data['filter_products'];
             exit($this->select_filter($method, $filters));
           }
@@ -240,7 +238,6 @@
             $method = _A_::$app->post('filter-type');
             $resporse = [];
 
-            $this->load_form_data($data);
             ob_start();
             $data = $this->selected_filter_data($data);
             $this->selected_filter($data);
@@ -261,7 +258,6 @@
             ob_end_clean();
             exit(json_encode($resporse));
           } else {
-            $this->load_form_data($data);
             $data = $this->selected_filter_data($data);
             exit($this->selected_filter($data));
           }

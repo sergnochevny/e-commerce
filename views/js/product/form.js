@@ -28,7 +28,7 @@
     action: function () {
       var images = $('input[name=images]:checked');
       var idx = (!images.val()) ? 1 : images.val();
-      var url = $('form#product').attr('action');
+      var url = $('form#edit_form').attr('action');
       return url + "&method=upload_img&idx=" + idx;
     },
     name: 'uploadfile',
@@ -39,7 +39,7 @@
       }
     },
     onComplete: function (file, response) {
-      var url = $('form#product').attr('action') + "&method=modify";
+      var url = $('form#edit_form').attr('action') + "&method=modify";
       if (response === "success") $('#images').load(url);
     }
   });
@@ -73,13 +73,13 @@
     });
   }
 
-  $('form#product').on('submit',
+  $('form#edit_form').on('submit',
     function (event, submit) {
       event.preventDefault();
       if (submit) {
         var data = new FormData(this);
         var url = $(this).attr('action');
-        postdata(this, url, data, $('#form_product'));
+        postdata(this, url, data, $('#form_content'));
       }
     }
   );
@@ -87,8 +87,8 @@
   $('#build_filter').on('click',
     function () {
       var destination = $('[data-filter=' + $(this).attr('data-destination') + ']').parent('div');
-      var data = new FormData($('form#product')[0]);
-      var url = $('form#product').attr('action');
+      var data = new FormData($('form#edit_form')[0]);
+      var url = $('form#edit_form').attr('action');
       data.append('method', $(this).attr('href'));
       data.append('type', $(this).attr('data-destination'));
       postdata(this, url, data, destination,
@@ -124,7 +124,7 @@
       }
     );
 
-    $('form#product a[name=edit_filter]').on('click',
+    $('form#edit_form a[name=edit_filter]').on('click',
       function (event) {
         event.preventDefault();
         evFilterAdd.call(this, event);
@@ -133,8 +133,8 @@
   }
 
   function evFilterAdd(event) {
-    var data = new FormData($('form#product')[0]);
-    var url = $('form#product').attr('action');
+    var data = new FormData($('form#edit_form')[0]);
+    var url = $('form#edit_form').attr('action');
     data.append('method', $(this).attr('href'));
     var destination = $(this).attr('data-destination');
     var title = $(this).attr('data-title');
@@ -178,8 +178,8 @@
   function evFilterSearch() {
     var data_destination = $(this).attr('data-destination');
     var destination = $('[data-filter=' + data_destination + ']').parent('div');
-    var data = new FormData($('form#product')[0]);
-    var url = $('form#product').attr('action');
+    var data = new FormData($('form#edit_form')[0]);
+    var url = $('form#edit_form').attr('action');
     if ($(this).is('[data-move]')) data.append($(this).attr('data-move'), true);
     data.append('method', $(this).attr('href'));
     data.append('type', data_destination);

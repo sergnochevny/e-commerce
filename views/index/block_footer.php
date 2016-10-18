@@ -40,4 +40,4 @@
 <input type="hidden" id="hidden_popular_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_popular')?>">
 <input type="hidden" id="hidden_new_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_new')?>/">
 <input type="hidden" id="hidden_best_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_best')?>">
-<script src='<?= _A_::$app->router()->UrlTo('views/js/product/block_footer.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/index/block_footer.js'); ?>' type="text/javascript"></script>

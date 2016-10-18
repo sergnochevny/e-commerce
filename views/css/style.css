@@ -1983,3 +1983,13 @@ form[data-search] > .row > .panel > .panel-heading{
     font-size: 1.15rem;
     color: #999;
 }
+
+input[type='radio'].images:checked + div.b_modify_images_pic {
+    border: 1px dotted;
+    margin: 5px;
+}
+
+input[type='radio'].images:checked + div.b_modify_images_main_pic {
+    border: 1px dotted;
+    margin: 5px;
+}
