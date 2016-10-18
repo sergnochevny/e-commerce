@@ -171,6 +171,9 @@
 
     protected function load(&$data, &$error) {
 
+      $data['discount_comment1'] = 1;
+      $data['discount_comment2'] = 1;
+
       $this->load_form_data($data);
       if(
         ($data['discount_type'] == 2 && $data['shipping_type'] == 0) ||
