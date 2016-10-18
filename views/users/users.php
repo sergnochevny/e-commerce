@@ -1,6 +1,8 @@
 <div class="container">
   <div id="content" class="main-content-inner" role="main">
+
     <?= $list; ?>
+
   </div>
 </div>
 <div id="confirm_dialog" class="overlay"></div>

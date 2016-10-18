@@ -14,7 +14,7 @@
           <td class="text-center">Start Date</td>
           <td class="text-center">End Date</td>
         </tr>
-        <?= $data_usage_discounts; ?>
+        <?= $list; ?>
       </table>
     </div>
     <hr>
@@ -33,7 +33,7 @@
           <td style="width:230px;" class="text-center">End Date</td>
           <td></td>
         </tr>
-        <?= $data_usage_order_discounts; ?>
+        <?= $discounts_usage; ?>
       </table>
     </div>
     <br/><br/>

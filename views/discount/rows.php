@@ -84,7 +84,7 @@
           <i class="fa fa-pencil"></i>
         </a>
         <a data-waitloader class="text-success" rel="nofollow"
-           href="<?= _A_::$app->router()->UrlTo('discount/usage', $prms); ?>">
+           href="<?= _A_::$app->router()->UrlTo('discount/view', $prms); ?>">
           <i class="fa fa-check-circle"></i>
         </a>
         <a data-delete class="text-danger" rel="nofollow" href="<?= _A_::$app->router()->UrlTo('discount/del', $prms); ?>">

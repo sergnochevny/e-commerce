@@ -144,11 +144,14 @@
     }
 
 
-    protected function validate(&$data, &$error) {
+    protected function load(&$data) {
       $data['oid'] = _A_::$app->get('oid');
       $data['track_code'] = Model_Orders::validData(_A_::$app->post('track_code'));
       $data['status'] = Model_Orders::validData(_A_::$app->post('status'));
       $data['end_date'] = Model_Orders::validData(_A_::$app->post('end_date'));
+    }
+
+    protected function validate(&$data, &$error) {
       return true;
     }
   }

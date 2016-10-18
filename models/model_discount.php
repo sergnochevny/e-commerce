@@ -44,8 +44,8 @@
         'discount_amount' => '0.00',
         'coupon_code' => '',
         'allow_multiple' => 0,
-        'date_start' => mktime(0,0,0,date('m'),date('d'),date('y')),
-        'date_end' => mktime(0,0,0,date('m'),date('d')+1,date('y')),
+        'date_start' => mktime(0, 0, 0, date('m'), date('d'), date('y')),
+        'date_end' => mktime(0, 0, 0, date('m'), date('d') + 1, date('y')),
         'enabled' => 1,
         'filter_products' => null,
         'filter_type' => null,
@@ -69,9 +69,10 @@
       return $data;
     }
 
+
     public static function get_total_count($filter = null) {
       $res = 0;
-      $q = "SELECT COUNT(sid) FROM ". static::$table ;
+      $q = "SELECT COUNT(sid) FROM " . static::$table;
       $q .= self::build_where($filter);
       $result = mysql_query($q);
       if($result) {
@@ -83,7 +84,7 @@
 
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $res = null;
-      $q = "SELECT * FROM ". static::$table ;
+      $q = "SELECT * FROM " . static::$table;
       $q .= self::build_where($filter);
       $q .= " ORDER BY sid DESC";
       $q .= " LIMIT $start, $limit";
@@ -223,7 +224,7 @@
         $user_type = $data['user_type'];
         if(isset($data['users']) || isset($data['users_select']))
           $select = implode(',', array_merge(isset($data['users']) ? $data['users'] : [],
-                                             isset($data['users_select']) ? $data['users_select'] : []));
+            isset($data['users_select']) ? $data['users_select'] : []));
         else {
           $data['users_select'] = self::get_filter_selected_data($type, $id);
           $select = implode(',', isset($data['users_select']) ? array_keys($data['users_select']) : []);
@@ -250,7 +251,7 @@
             $filter_type = 'prod';
             if(isset($data['prod_select']) || isset($data['filter_products']))
               $select = implode(',', array_merge(isset($data['prod_select']) ? $data['prod_select'] : [],
-                                                 isset($data['filter_products']) ? $data['filter_products'] : []));
+                isset($data['filter_products']) ? $data['filter_products'] : []));
             else {
               $data['prod_select'] = self::get_filter_selected_data($filter_type, $id);
               $select = implode(',', isset($data['prod_select']) ? array_keys($data['prod_select']) : []);
@@ -270,7 +271,7 @@
             $filter_type = 'mnf';
             if(isset($data['mnf_select']) || isset($data['filter_products']))
               $select = implode(',', array_merge(isset($data['mnf_select']) ? $data['mnf_select'] : [],
-                                                 isset($data['filter_products']) ? $data['filter_products'] : []));
+                isset($data['filter_products']) ? $data['filter_products'] : []));
             else {
               $data['mnf_select'] = self::get_filter_selected_data($filter_type, $id);
               $select = implode(',', isset($data['mnf_select']) ? array_keys($data['mnf_select']) : []);
@@ -290,7 +291,7 @@
             $filter_type = 'cat';
             if(isset($data['cat_select']) || isset($data['filter_products']))
               $select = implode(',', array_merge(isset($data['cat_select']) ? $data['cat_select'] : [],
-                                                 isset($data['filter_products']) ? $data['filter_products'] : []));
+                isset($data['filter_products']) ? $data['filter_products'] : []));
             else {
               $data['cat_select'] = self::get_filter_selected_data($filter_type, $id);
               $select = implode(',', isset($data['cat_select']) ? array_keys($data['cat_select']) : []);

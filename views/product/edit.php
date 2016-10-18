@@ -9,7 +9,7 @@
         </div>
         <div class="col-xs-12 text-center">
           <div class="row">
-            <h1 class="page-title"><?= $form_title ?></h1>
+            <h3 class="page-title"><?= $form_title ?></h3>
           </div>
         </div>
 

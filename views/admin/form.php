@@ -26,7 +26,7 @@
 ?>
 <form id="edit_form" action="<?= $action ?>" method="post">
 
-  <h1 class="page-title"><?= $form_title ?></h1>
+  <h3 class="page-title"><?= $form_title ?></h3>
 
   <div class="col-1">
     <p class="form-row">

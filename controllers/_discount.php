@@ -6,65 +6,6 @@
     protected $form_title_add = 'NEW DISCOUNT';
     protected $form_title_edit = 'MODIFY DISCOUNT';
 
-    private function data_usage($id = null) {
-      if(!empty($id)) {
-        ob_start();
-        $row = Model_Discount::get_by_id((integer)$id);
-        $allow_multiple = $row['allow_multiple'];
-        $date_start = $row['date_start'];
-        $date_end = $row['date_end'];
-        $enabled = $row['enabled'];
-        $sid = $row['sid'];
-        $enabled = (($enabled == "1") ? "YES" : "NO");
-        $prms = ['oid' => $sid, 'back' => 'discount'];
-        $view_url = _A_::$app->router()->UrlTo('orders/info', $prms);
-        $hide_action = true;
-        $this->template->vars('row', $row);
-        $this->template->vars('coupon_code', $row['coupon_code']);
-        $this->template->vars('discount_comment1', $row['discount_comment1']);
-        $this->template->vars('p_discount_amount', $row['discount_amount']);
-        $this->template->vars('hide_action', $hide_action);
-        $this->template->vars('allow_multiple', $allow_multiple == "1" ? "YES" : "NO");
-        $this->template->vars('date_start', date("F j, Y, g:i a", $date_start));
-        $this->template->vars('date_end', date("F j, Y, g:i a", $date_end));
-        $this->template->vars('sid', $row['sid']);
-        $this->template->vars('view_url', $view_url);
-        $this->template->view_layout('row_list');
-        $data_usage_discounts = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('data_usage_discounts', $data_usage_discounts);
-      }
-    }
-
-    private function data_usage_order() {
-      $this->main->test_access_rights();
-      $discount_id = _A_::$app->get('d_id');
-      if(!empty($discount_id)) {
-        $rows = Model_Discount::getFabrixSpecialsUsageById((integer)Model_Discount::validData(_A_::$app->get('discount_id')));
-        ob_start();
-        foreach($rows as $key => $row) {
-          $orders = Model_Discount::getFabrixOrdersById((integer)$row);
-          $order_aid = $orders['aid'];
-          $order_date = gmdate("M j, Y, g:i a", $orders['order_date']);
-          $account = Model_Discount::getFabrixAccountByOrderId($order_aid);
-          $u_email = $account['email'];
-          $u_bill_firstname = $account['bill_firstname'];
-          $u_bill_lastname = $account['bill_lastname'];
-
-          $this->template->vars('i', $key + 1);
-          $this->template->vars('order_date', $order_date);
-          $this->template->vars('u_bill_firstname', $u_bill_firstname);
-          $this->template->vars('u_email', $u_email);
-          $this->template->vars('row', $row);
-          $this->template->view_layout('data_usage');
-        }
-        $data_usage_order_discounts = ob_get_contents();
-        ob_end_clean();
-
-        $this->main->template->vars('data_usage_order_discounts', $data_usage_order_discounts);
-      }
-    }
-
     private function generate_prod_filter($data) {
       $filter_products = $data['filter_products'];
       $product_type = $data['product_type'];
@@ -266,14 +207,34 @@
       return true;
     }
 
+
+    protected function detailed($back_url){
+      $id = _A_::$app->get($this->id_name);
+
+      $discount = null;
+      $orders = null;
+
+      if(!isset($data)) {
+        $discount = Model_Discount::get_by_id($id);
+        $orders = Model_Orders::get_list_by_discount_id($id);
+      }
+      $prms = null;
+      if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
+      $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
+      $this->template->vars('back_url', $back_url);
+
+      $this->template->vars($this->id_name, $id);
+      $this->template->vars('discount', $discount);
+      $this->template->vars('orders', $orders);
+      $this->main->view_admin('view');
+    }
+
     /**
      * @export
      */
-    public function usage() {
+    public function view() {
       $this->main->test_access_rights();
-      $this->data_usage(_A_::$app->get('sid'));
-      $this->data_usage_order();
-      $this->main->view_admin('usage');
+      $this->detailed($this->controller);
     }
 
   }
