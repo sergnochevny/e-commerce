@@ -244,7 +244,7 @@
   </div>
 </div>
 <input type="hidden" id="back_url" value="<?= $back_url; ?>">
-<script src='<?= _A_::$app->router()->UrlTo('views/js/product/product.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/shop/product.js'); ?>' type="text/javascript"></script>
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-  class Controller_Users extends Controller_Formsimple {
+  class Controller_Users extends Controller_FormSimple {
 
     protected $id_name = 'aid';
     protected $form_title_add = 'NEW USER';
@@ -31,35 +31,19 @@
       return $list;
     }
 
-    protected function save(&$data) {
-      $result = false;
-      $error = $data = null;
-      if($this->load($data, $error)) {
-        try {
-          $aid = Model_Users::save($data);
-          if(isset($data['aid'])) {
-            if(!is_null(_A_::$app->session('_')) && ($aid == _A_::$app->session('_'))) {
-              $user = Model_Users::get_by_id($aid);
-              if(isset($user)) _A_::$app->setSession('user', $user);
-            }
-          } else {
-            _A_::$app->get('aid', $aid);
-            $data = null;
-          }
-          $warning = ['All data saved successfully!!!'];
-          $result = true;
-        } catch(Exception $e) {
-          $error[] = $e->getMessage();
+    protected function after_save($id, &$data) {
+      if(isset($data['aid'])) {
+        if(!is_null(_A_::$app->session('_')) && ($id == _A_::$app->session('_'))) {
+          $user = Model_Users::get_by_id($id);
+          if(isset($user)) _A_::$app->setSession('user', $user);
         }
+      } else {
+        _A_::$app->get('aid', $id);
+        $data = null;
       }
-
-      if(isset($warning)) $this->template->vars('warning', $warning);
-      if(isset($error)) $this->template->vars('error', $error);
-
-      return $result;
     }
 
-    protected function load(&$data, &$error) {
+    protected function load(&$data) {
 
       $ship_as_billing = _A_::$app->post('ship_as_billing');
       $data = [
@@ -108,6 +92,9 @@
         $data['ship_fax'] = $data['bill_fax'];
         $data['ship_email'] = $data['bill_email'];
       }
+    }
+
+    protected function validate(&$data, &$error) {
 
       if(empty($data['email'])) {
         $error = ['Identify email field!!!'];
@@ -123,7 +110,7 @@
             empty($data['bill_country']) ||
             empty($data['bill_postal']) ||
             empty($data['bill_phone']) ||
-            ((is_null($ship_as_billing)) &&
+            ((isset($data['ship_as_billing'])) &&
               (empty($data['ship_firstname']) ||
                 empty($data['ship_lastname']) ||
                 (empty($data['ship_address1']) && empty($data['ship_address2'])) ||
@@ -153,7 +140,7 @@
               $error[] = 'BILLING INFORMATION:';
               $error = array_merge($error, $error1);
             }
-            if(is_null($ship_as_billing)) {
+            if(isset($data['ship_as_billing'])) {
 
               if(empty($data['ship_firstname']))
                 $error2[] = '<pre>&#9;Identify <b>First Name</b> field!!!</pre>';
@@ -209,7 +196,8 @@
 
     public function user_handling(&$data, $url, $back_url, $title, $is_user = false, $outer_control = false) {
       $this->template->vars('form_title', $title);
-      if($this->form_handling() && _A_::$app->request_is_post()) {
+      $this->load($data);
+      if($this->form_handling($data) && _A_::$app->request_is_post()) {
         $result = $this->save($data);
         if($outer_control && $result) return $result;
         exit($this->form($url, $data));

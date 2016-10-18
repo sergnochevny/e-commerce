@@ -5,7 +5,7 @@
     protected $form_title_add = 'NEW PATTERN';
     protected $form_title_edit = 'MODIFY PATTERN';
 
-    protected function load(&$data, &$error) {
+    protected function validate(&$data, &$error) {
       $data['id'] = _A_::$app->get('id');
       $data['pattern'] = Model_Patterns::validData(_A_::$app->post('pattern'));
       if(empty($data['pattern'])) {

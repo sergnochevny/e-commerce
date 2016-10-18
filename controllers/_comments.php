@@ -239,7 +239,7 @@
       $this->main->view_layout('admin_list');
     }
 
-    protected function load(&$data, &$error) {
+    protected function validate(&$data, &$error) {
       // TODO: Implement load() method.
     }
   }

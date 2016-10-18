@@ -59,17 +59,16 @@
               $categories[$key] = $val[1];
             }
           }
-          if(strlen($select) > 0) {
-            $results = mysql_query(
-              "select a.cid, a.cname, (max(b.display_order)+1) as pos from fabrix_categories a" .
-              " left join fabrix_product_categories b on b.cid = a.cid" .
-              " where a.cid in ($select)" .
-              " group by a.cid, a.cname" .
-              " order by a.cname"
-            );
-            while($row = mysql_fetch_array($results)) {
-              $filters[$row[0]] = [$row[1], isset($categories[$row[0]]) ? $categories[$row[0]] : $row[2]];
-            }
+          if(strlen($select) <= 0) $select = '1';
+          $results = mysql_query(
+            "select a.cid, a.cname, (max(b.display_order)+1) as pos from fabrix_categories a" .
+            " left join fabrix_product_categories b on b.cid = a.cid" .
+            " where a.cid in ($select)" .
+            " group by a.cid, a.cname" .
+            " order by a.cname"
+          );
+          while($row = mysql_fetch_array($results)) {
+            $filters[$row[0]] = [$row[1], isset($categories[$row[0]]) ? $categories[$row[0]] : $row[2]];
           }
           break;
       }
@@ -217,7 +216,7 @@
             $manufacturerId = "0";
           }
           $data['manufacturers'] = self::get_manufacturers();
-          $categories = isset($data['categories'])?$data['categories']:[];
+          $categories = isset($data['categories']) ? $data['categories'] : [];
 
           if(count($categories) < 1) {
             $result = mysql_query(
@@ -245,7 +244,6 @@
     }
 
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
-      self::clean_temp();
       $response = null;
       $query = "SELECT * ";
       $query .= " FROM " . static::$table;
@@ -280,37 +278,40 @@
     }
 
     public static function get_by_id($id) {
-      if(!isset($id)) {
-        self::clean_temp();
-        $result = mysql_query("INSERT INTO fabrix_products (pid, pname, pnumber, width, yardage, priceyard, inventory, sdesc, ldesc, image1, image2, image3, image4, image5, display_order, cid, pvisible, dimensions, specials, weight_id, stock_number, manufacturerId, metatitle, metadescription, metakeywords, hideprice) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', NULL)");
-        if($result) {
-          $id = mysql_insert_id();
-          if(isset($id) && $id > 0) {
-            $result = mysql_query("INSERT INTO fabrix_temp_product set productId = '$id', sid='" . session_id() . "'");
-            if($result) _A_::$app->get('pid', $id);
-          }
-        }
-        if(!$result) throw new Exception(mysql_error());
-      }
+      $data = [
+        'pid' => null,
+        'metadescription' => '',
+        'metakeywords' => '',
+        'metatitle' => '',
+        'pname' => '',
+        'pnumber' => '',
+        'width' => '',
+        'inventory' => '0.00',
+        'priceyard' => '0.00',
+        'hideprice' => 0,
+        'dimensions' => '',
+        'weight' => 0,
+        'manufacturerId' => '',
+        'sdesc' => '',
+        'ldesc' => '',
+        'weight_id' => '',
+        'specials' => 0,
+        'pvisible' => 0,
+        'best' => 0,
+        'piece' => 0,
+        'whole' => 0,
+        'stock_number' => '',
+        'image1' => '',
+        'image2' => '',
+        'image3' => '',
+        'image4' => '',
+        'image5' => ''
+      ];
       if(isset($id)) {
         $q = "select * from " . static::$table . " where pid = '" . $id . "'";
         $result = mysql_query($q);
         if($result) {
           $data = mysql_fetch_assoc($result);
-          $categories = isset($data['categories'])?$data['categories']:[];
-
-          if(count($categories) < 1) {
-            $result = mysql_query(
-              "select a.cname, max(b.display_order)+1" .
-              " from fabrix_categories a" .
-              " left join fabrix_product_categories b on a.cid = b.cid" .
-              " WHERE a.cid=1"
-            );
-            $row = mysql_fetch_array($result, MYSQL_NUM);
-            $categories['1'] = $row[1];
-          }
-          $data['categories'] = $categories;
-
         }
       }
       return $data;
@@ -344,56 +345,37 @@
       mysql_query($strSQL);
     }
 
-    public static function ConfirmProductInsert($pid) {
-      $q = "DELETE FROM fabrix_temp_product WHERE productId=" . $pid . " and sid='" . session_id() . "'";
-      $result = mysql_query($q);
-      return $result;
-    }
-
-    public static function clean_temp() {
-      mysql_query("DELETE FROM fabrix_products WHERE pid in ( select productId from fabrix_temp_product where sid='" . session_id() . "')");
-      mysql_query("DELETE FROM fabrix_temp_product WHERE sid='" . session_id() . "'");
-    }
-
-    public static function set_product_inventory($pid, $inventory = 0) {
+    public static function set_inventory($pid, $inventory = 0) {
       $q = "update fabrix_products set inventory=" . $inventory;
       $q .= ($inventory == 0) ? ", pvisible = 0" : "";
       $q .= " where pid=" . $pid;
       $res = mysql_query($q);
     }
 
-    public static function get_product_params($p_id) {
+    public static function get_product_params($pid) {
 
-      $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
-      $rowsni = mysql_fetch_array($resulthatistim);
-      $p_pname = $rowsni['pname'];
-      $pnumber = $rowsni['pnumber'];
-      $price = $rowsni['priceyard'];
-      $Stock_number = $rowsni['stock_number'];
-      $inventory = $rowsni['inventory'];
-      $piece = $rowsni['piece'];
-      $whole = $rowsni['whole'];
-      $quatity = ($inventory > 1) ? 1 : $inventory;
-      if($piece == 1) $quatity = 1;
+      $data = self::get_by_id($pid);
+      $quatity = ($data['inventory'] > 1) ? 1 : $data['inventory'];
+      if($data['piece'] == 1) $quatity = 1;
 
       return [
-        'p_id' => $p_id,
-        'Product_name' => $p_pname,
-        'Product_number' => $pnumber,
-        'Price' => $price,
-        'Stock_number' => $Stock_number,
+        'pid' => $data['pid'],
+        'Product_name' => $data['pname'],
+        'Product_number' => $data['pnumber'],
+        'Price' => $data['priceyard'],
+        'Stock_number' => $data['stock_number'],
         'quantity' => $quatity,
-        'inventory' => $inventory,
-        'piece' => $piece,
-        'whole' => $whole,
-        'image1' => $rowsni['image1']
+        'inventory' => $data['inventory'],
+        'piece' => $data['piece'],
+        'whole' => $data['whole'],
+        'image1' => $data['image1']
       ];
     }
 
-    public static function getImage($p_id) {
-      $resulthatistim = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
-      $rowsni = mysql_fetch_assoc($resulthatistim);
-      return ['image1' => $rowsni['image1'], 'image2' => $rowsni['image2'], 'image3' => $rowsni['image3'], 'image4' => $rowsni['image4'], 'image5' => $rowsni['image5']];
+    public static function images($pid) {
+      $res = mysql_query("select * from fabrix_products WHERE pid='$pid'");
+      $data = mysql_fetch_assoc($res);
+      return ['image1' => $data['image1'], 'image2' => $data['image2'], 'image3' => $data['image3'], 'image4' => $data['image4'], 'image5' => $data['image5']];
     }
 
     public static function update_field($bd_g, $pid) {

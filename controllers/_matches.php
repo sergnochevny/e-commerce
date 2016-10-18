@@ -50,7 +50,7 @@
 
         if(!$item_added) {
           $suffix_img = 'b_';
-          $images = Model_Product::getImage($p_id);
+          $images = Model_Product::images($p_id);
 
           if(isset($images['image1'])) {
             $file_img = 'upload/upload/' . $images['image1'];
