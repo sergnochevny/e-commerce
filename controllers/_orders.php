@@ -5,7 +5,7 @@
     protected $id_name = 'oid';
     protected $form_title_edit = 'MODIFY ORDER STATUS';
 
-    public function add(){ }
+    public function add() { }
 
     /**
      * @export
@@ -74,7 +74,8 @@
 
       $back_url = '';
       if(!is_null(_A_::$app->get('discount'))) {
-        $back_url = _A_::$app->router()->UrlTo('discount/usage', $prms);
+        $prms['sid'] = _A_::$app->get('sid');
+        $back_url = _A_::$app->router()->UrlTo('discount/view', $prms);
       } else {
         $back_url = _A_::$app->router()->UrlTo('orders', $prms);
       }
@@ -142,7 +143,6 @@
 
       $this->main->view_admin('view');
     }
-
 
     protected function load(&$data, &$error) {
       $data['oid'] = _A_::$app->get('oid');

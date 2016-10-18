@@ -14,12 +14,6 @@
     <div class="col-sm-1 col">
       Status
     </div>
-<!--    <div class="col-sm-1 col">-->
-<!--      Shipping-->
-<!--    </div>-->
-<!--    <div class="col-sm-1 col">-->
-<!--      Discount-->
-<!--    </div>-->
     <div class="col-sm-2 col">
       Total
     </div>
@@ -70,23 +64,6 @@
           </div>
         </div>
       </div>
-      <!--div class="col-xs-12 col-sm-1 table-list-row-item">
-        <div class="col-xs-4 visible-xs helper-row">
-          <div class="row">Shipping</div>
-        </div>
-        <div class="col-xs-8 col-sm-12">
-          <div class="row"><? //'$' . number_format($row['shipping_cost'], 2); ?></div>
-        </div>
-      </div>
-
-      <div class="col-xs-12 col-sm-1 table-list-row-item">
-        <div class="col-xs-4 visible-xs helper-row">
-          <div class="row">Discount</div>
-        </div>
-        <div class="col-xs-8 col-sm-12">
-          <div class="row"><? //'$' . number_format($row['shipping_cost'], 2); ?></div>
-        </div>
-      </div-->
 
       <div class="col-xs-12 col-sm-2 table-list-row-item">
         <div class="col-xs-4 visible-xs helper-row">

@@ -63,11 +63,30 @@
       return $response;
     }
 
+    public static function get_list_by_discount_id($id) {
+      if(isset($id)) {
+        $query =   "SELECT orders.*, CONCAT(users.bill_firstname,' ',users.bill_lastname) AS username FROM fabrix_specials_usage spec_usage ";
+        $query .=  "LEFT JOIN fabrix_orders orders ";
+        $query .=  "ON spec_usage.oid = orders.oid ";
+        $query .=  "LEFT JOIN fabrix_accounts users ";
+        $query .=  "ON orders.aid = users.aid ";
+        $query .=  "WHERE spec_usage.sid = '$id'";
+        if($result = mysql_query($query)) {
+          $rows = [];
+          while($row = mysql_fetch_array($result)) {
+            $rows[] = $row;
+          }
+          return $rows;
+        }
+      }
+      return null;
+    }
+
     public static function get_total_count($id = null, $filter = null) {
       $q = "select";
       $q .= " COUNT(order.oid)";
-      $q .= " from fabrix_orders order";
-      $q .= " left join fabrix_accounts user on order.aid = user.aid";
+      $q .= " FROM fabrix_orders order";
+      $q .= " LEFT JOIN fabrix_accounts user on order.aid = user.aid";
       $q .= (isset($id) || isset($filter)) ? " where" : '';
       $q .= isset($id) ? " order.aid='$id'" : '';
       if(isset($filter)) {
