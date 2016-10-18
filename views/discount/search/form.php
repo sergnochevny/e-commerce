@@ -49,7 +49,7 @@
           <div class="col-xs-6">
             <div class="form-row">
                 <label for="discount_on">
-                  Starts at:
+                  Date ranges from:
                   <input type="text" id="discount_starts" class="input-text" name="search[]" placeholder="Chose start date"
                     value="<?= isset($search['']) ? $search[''] : '' ?>">
                 </label>
@@ -58,7 +58,7 @@
           <div class="col-xs-6">
             <div class="form-row">
                 <label for="discount_on">
-                  Ends at:
+                  Date ranges to:
                   <input type="text" id="discount_ends" class="input-text" name="search[]" placeholder="Chose end date"
                          value="<?= isset($search['']) ? $search[''] : '' ?>">
                 </label>

@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", welcome);
 
 jQuery(document).ready(function ($) {
 
-  $('.scroll').slimScroll({
-    height: $(window).height()
-  });
+  // $('.scroll').slimScroll({
+  //   height: $(window).height()
+  // });
 
   $(document).on("click", "a", function (e) {
     if($(this).data('link')){
