@@ -66,6 +66,19 @@ span#b_in_product {
 
 }
 
+.cart-subtotal{
+    padding-top: 5px !important;
+}
+
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce input.button.alt:hover,
+.woocommerce-page a.button.alt:hover,
+.woocommerce-page button.button.alt:hover,
+.woocommerce-page input.button.alt:hover{
+    color: #222 !important;
+}
+
 a.back_button input.button {
     position: relative;
     padding: 5px 10px 5px 20px !important;
