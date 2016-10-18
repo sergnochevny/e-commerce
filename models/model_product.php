@@ -256,15 +256,15 @@
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);
         while($row = mysql_fetch_array($result)) {
-          $filename = 'upload/upload/b_' . $row[14];
+          $filename = 'upload/upload/b_' . $row['image1'];
           if(!(file_exists($filename) && is_file($filename))) {
             $filename = 'upload/upload/not_image.jpg';
           }
           $row['filename'] = _A_::$app->router()->UrlTo($filename);
 
-          $price = $row[5];
-          $inventory = $row[6];
-          $piece = $row[34];
+          $price = $row['priceyard'];
+          $inventory = $row['inventory'];
+          $piece = $row['piece'];
           if($piece == 1 && $inventory > 0) {
             $price = $price * $inventory;
             $row['price'] = "$" . number_format($price, 2);

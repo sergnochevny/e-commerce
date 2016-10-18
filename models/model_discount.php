@@ -20,7 +20,7 @@
     public static function checkCouponCode($sid, $cde) {
       if(!isset($sid)) $sid = 0;
       $iCnt = 0;
-      $sSQL = sprintf("SELECT sid FROM" . static::$table . "WHERE coupon_code='%s';", $cde);
+      $sSQL = sprintf("SELECT sid FROM " . static::$table . " WHERE coupon_code='%s';", $cde);
       $result = mysql_query($sSQL) or die(mysql_error());
       $iCnt = mysql_num_rows($result);
       if($iCnt == 1) { #verify that it is not this record with the same coupon code
@@ -60,7 +60,7 @@
         'discount_amount_type' => 0
       ];
       if(isset($id)) {
-        $q = "select * from" . static::$table . "where sid = '" . $id . "'";
+        $q = "select * from " . static::$table . " where sid = '" . $id . "'";
         $result = mysql_query($q);
         if($result) {
           $data = mysql_fetch_assoc($result);
@@ -99,7 +99,7 @@
 
     public static function getFabrixSpecialsByID($id) {
       $res = null;
-      $q = "select * from" . static::$table . "WHERE sid='" . (integer)$id . "'";
+      $q = "select * from " . static::$table . " WHERE sid='" . (integer)$id . "'";
       $result = mysql_query($q);
       if($result) {
         $res = mysql_fetch_assoc($result);
