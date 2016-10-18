@@ -41,10 +41,11 @@
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.min.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.bootstrap.min.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.prettyPhoto.js'); ?>'></script>
-    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/search/search.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/js_composer_front.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
+    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jQuery-slimScroll-1.3.8/jquery.slimscroll.min.js'); ?>'></script>
+    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
 
   </head>
   <body class="woocommerce woocommerce-page">
