@@ -4,10 +4,10 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="row afterhead-row">
-          <div class="col-xs-12 col-sm-2 back_button_container">
+          <div class="col-xs-12 col-sm-4 back_button_container">
             <a href="<?= $back_url; ?>" class="button back_button">Back</a>
           </div>
-          <div class="col-xs-12 col-sm-8">
+          <div class="col-xs-12 col-sm-6">
             <div class="row">
               <h1 class="page-title"><?= $form_title ?></h1>
             </div>
@@ -29,14 +29,14 @@
           Clicking on the section title will open a help file explaining that section.
         </small>
       </div>
-      </div>
     </div>
-
-    <div class="row">
-      <?= $form; ?>
-    </div>
-
   </div>
+
+  <div class="row">
+    <?= $form; ?>
+  </div>
+
+</div>
 </div>
 <div id="promotion" class="overlay"></div>
 <div class="popup" style="z-index: 99999999; font-size: 12px; color: black; max-width: 700px;">
