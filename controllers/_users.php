@@ -211,8 +211,8 @@
       $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
       $this->template->vars('back_url', $back_url);
       $this->template->vars('form', $form);
-      if($is_user) $this->main->view('edit');
-      else $this->main->view_admin('edit');
+      if($is_user) exit($this->main->view('edit'));
+      else exit($this->main->view_admin('edit'));
     }
 
 //    public function modify_accounts_password()
