@@ -30,30 +30,31 @@
         <div class="row">
           <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-                <label for="discount_on">
-                  <input type="checkbox" id="discount_on" name="search[]"
-                    value="<?= isset($search['']) ? $search[''] : '' ?>">
-                  Status on/off
-                </label>
+              <label for="">
+                Select the status
+                <select name="" id="">
+                  <option value="">Enabled</option>
+                  <option value="">Disabled</option>
+                </select>
+              </label>
             </div>
           </div>
           <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-                <label for="discount_on">
-                  <input type="checkbox" id="discount_on" name="search[]"
-                    value="<?= isset($search['']) ? $search[''] : '' ?>">
-                  Multiple
-                </label>
+              <label for="">
+                Multiple
+                <select name="" id="">
+                  <option value="">Yes</option>
+                  <option value="">No</option>
+                </select>
+              </label>
             </div>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="form-row">
                 <label for="discount_on">
-                  <select name="" id="">
-                    <option>Coupon Type</option>
-                    <option value="">Coupon 1</option>
-                    <option value="">Coupon 2</option>
-                  </select>
+                  Coupon Type
+                  <input type="text" class="input-text">
                 </label>
             </div>
           </div>

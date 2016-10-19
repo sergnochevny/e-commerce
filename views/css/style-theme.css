@@ -494,7 +494,6 @@ a img.aligncenter {
     font-weight: bold;
     height: 40px;
     z-index: 999;
-    letter-spacing: 1px;
 }
 
 .header-topnav .welcome-message {
@@ -584,7 +583,6 @@ a img.aligncenter {
     line-height: 20px !important;
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .header-topnav .navbar-nav .dropdown-menu > li > a i {
@@ -708,13 +706,11 @@ a img.aligncenter {
 .site-navigation .nav {
     font-family: "Playfair Display", serif;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .site-navigation .nav .dropdown-menu {
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .site-navigation .nav a, .site-navigation .nav a:visited {
@@ -780,7 +776,6 @@ a img.aligncenter {
 .entry .entry-title {
     color: #222222;
     font-size: 35px;
-    letter-spacing: 1px;
     font-weight: normal;
     text-transform: uppercase;
     line-height: 40px;
@@ -1361,7 +1356,6 @@ table.table-bordered center a {
 .format-quote .entry-meta-time a {
     color: #222;
     font-weight: normal;
-    letter-spacing: 2px;
 }
 
 .format-link .entry-content,
@@ -1383,7 +1377,6 @@ table.table-bordered center a {
 .entry.format-aside .entry-meta-time a {
     color: #222;
     font-weight: normal;
-    letter-spacing: 2px;
 }
 
 /* twitter */
@@ -1708,7 +1701,6 @@ table.table-bordered center a {
     font-family: "Montserrat", sans-serif;
     font-size: 14px;
     font-weight: bold;
-    letter-spacing: 1px;
     text-transform: uppercase;
     color: #4e4e4e;
 }
@@ -1797,7 +1789,6 @@ table.table-bordered center a {
     font-family: "Montserrat", sans-serif;
     font-size: 200%;
     font-weight: normal;
-    letter-spacing: 1px;
     text-transform: uppercase;
     margin: 0 0 20px 0;
     /*text-shadow: 1px 1px 0 #000*/;
@@ -1827,10 +1818,8 @@ table.table-bordered center a {
     display: inline-block;
     margin-right: 10px;
     margin-bottom: 10px;
-    border: 1px solid #cccccc;
     color: white;
     font-size: 12px !important;
-    letter-spacing: 2px;
     text-transform: uppercase;
     background: #00afd8;
     padding: 5px 10px;
@@ -1984,7 +1973,6 @@ table.table-bordered center a {
     background: #667700;
     color: #ffffff;
     font-size: 13px;
-    letter-spacing: 1px;
     text-shadow: 1px 1px 1px #000;
     line-height: 30px;
     padding: 5px 15px;

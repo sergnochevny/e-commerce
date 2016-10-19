@@ -21,7 +21,6 @@
     background: #667700;
     color: #ffffff;
     font-size: 13px;
-    letter-spacing: 1px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
     padding: 10px 15px;
     font-weight: 400;
@@ -497,7 +496,6 @@ input[type='color']:focus {
     background-position: center center;
     background-size: cover;
     height: 220px;
-    box-shadow: 0 5px 15px -1px rgba(0, 0, 0, .2);
     -webkit-transition: all .2s ease-in;
     -moz-transition: all .2s ease-in;
     -o-transition: all .2s ease-in;
@@ -506,7 +504,6 @@ input[type='color']:focus {
 
 .woocommerce ul.products li.product .product-image-box:hover,
 .woocommerce-page ul.products li.product .product-image-box:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, .3);
     cursor: pointer;
 }
 
@@ -1106,7 +1103,6 @@ input[type=reset], button[type=reset]{
     text-decoration: none;
     text-transform: uppercase;
     font-size: 11px;
-    letter-spacing: 1px;
     font-weight: normal !important;
 }
 
@@ -1767,6 +1763,7 @@ a.reset, button.reset {
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    letter-spacing: 1px;
 }
 
 a.reset:hover, button.reset:hover {

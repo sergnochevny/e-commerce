@@ -1550,13 +1550,15 @@ td.product-subtotal {
     display: inline-block;
 }
 
+button[data-filter-search]{
+
+}
 a.button.alt{
     position: relative;
     text-transform: uppercase;
     background: #667700;
     color: #ffffff;
     font-size: 12px !important;
-    letter-spacing: 1px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
     padding: 8px 10px !important;
     font-weight: 400;
@@ -1659,11 +1661,53 @@ input[type='text'], input[type='password'], input[type='date'], input[type='date
 }
 .filter_select_panel .search_panel{
     position: relative;
-    height: 46px;
-    padding: 5px 15px;
-    border-bottom: 1px solid #e5e5e5;
+    height: 50px;
+    padding: 7px 15px;
+    border-bottom: 1px solid #EEE;
+}
+.search_panel .input-group{
+    height: 36px;
+}
+.search_panel input{
+    margin-bottom: 0;
+}
+#modal_content .filter_select_panel .search_panel > .input-group > input{
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border: 2px solid #455600;
+    border-right: 0 !important;
+    -webkit-transition: all .25s;
+    -moz-transition: all .25s;
+    -ms-transition: all .25s;
+    -o-transition: all .25s;
+    transition: all .25s;
 }
 
+#modal_content .filter_select_panel .search_panel > .input-group > input:focus{
+    border-color: #98af00 !important;
+    box-shadow: none !important;
+    border-right: 0 !important;
+}
+#modal_content .filter_select_panel .search_panel > .input-group > input:focus + .input-group-btn a.button{
+    border-color: #a5bd00 !important;
+}
+
+.search_panel .input-group a.button{
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -webkit-transition: all .25s;
+    -moz-transition: all .25s;
+    -ms-transition: all .25s;
+    -o-transition: all .25s;
+    transition: all .25s;
+}
+.modal-content{
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border: 0;
+}
 .filter_select_panel .select_panel{
     position: relative;
     height: 400px;
@@ -1699,8 +1743,6 @@ input[type='text'], input[type='password'], input[type='date'], input[type='date
 
 .woocommerce .search_panel a.button{
     height: 36px;
-    vertical-align: middle;
-    padding-top: 3px !important;
 }
 
 a.button-move{
@@ -1708,9 +1750,10 @@ a.button-move{
     border: 0 none;
     color: #fff;
     font-size: 100%;
-    height: 15px;
+    height: 35px;
     display: block;
     width: 100%;
+    padding-top: 9px;
 }
 a.button-move:focus, a.button-move:hover{
     background-color: #b0b0b0;
@@ -1754,7 +1797,6 @@ a.button-move:focus, a.button-move:hover{
     color: #ffffff;
     font-size: 13px;
     padding: 10px 15px;
-    letter-spacing: 1px;
     text-shadow: 1px 1px 1px #000;
     transition: all .3s ease-in;
 }

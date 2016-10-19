@@ -1,17 +1,15 @@
 <div class="filter_select_panel form-row">
   <div class="col-md-12 col-xs-12 search_panel">
-    <div class="row">
-      <div class="col-md-10 col-xs-10">
-        <input type="text" data-input_filter_search class="input-text" name="filter_select_search_<?= $filter_type; ?>"
-               placeholder="Type for search ..." value="<?= isset($search) ? $search : ''; ?>">
-      </div>
-      <div class="col-md-2 col-xs-2 text-right">
+    <div class="input-group">
+      <input type="text" data-input_filter_search class="input-text" name="filter_select_search_<?= $filter_type; ?>"
+             placeholder="Type for search ..." value="<?= isset($search) ? $search : ''; ?>">
+      <span class="input-group-btn">
         <a href="filter" data-filter-type="<?= $filter_type; ?>" data-filter-search class="button"
            data-destination="<?= $destination; ?>">
           <i class="fa fa-search" aria-hidden="true"></i>
         </a>
-      </div>
-    </div>
+      </span>
+    </div><!-- /input-group -->
   </div>
   <div class="col-md-12 select_panel">
     <?php if(isset($filter)): ?>
