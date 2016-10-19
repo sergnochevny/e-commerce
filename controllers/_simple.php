@@ -53,7 +53,7 @@
       if($this->validate($data, $error)) {
         try {
           $this->before_save($data);
-          $id = forward_static_call(['Model_' . ucfirst($this->controller), 'save'], $data);
+          $id = forward_static_call_array(['Model_' . ucfirst($this->controller), 'save'], [&$data]);
           $this->after_save($id, $data);
           $warning = ["All Data saved successfully!"];
           $result = true;
