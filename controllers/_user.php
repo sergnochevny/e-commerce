@@ -11,7 +11,7 @@
       $body .= "\n";
       $body .= "We will, from time to time, inform you by email of various time limited specials on the iluvfabrix site.  If you wish not to receive these emails, please respond to this email with the word Unsubscribe in the subject line.\n";
       $body .= "\n";
-      $body .= "Once again, thank you.........and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
+      $body .= "Once again, thank you, and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
 
       mail($email, $subject, $body, $headers);
     }

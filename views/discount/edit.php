@@ -5,9 +5,7 @@
       <div class="col-sm-12">
         <div class="row afterhead-row">
           <div class="col-xs-12 col-sm-12 back_button_container">
-            <div class="row">
-              <a href="<?= $back_url; ?>" class="button back_button">Back</a>
-            </div>
+            <a href="<?= $back_url; ?>" class="button back_button">Back</a>
           </div>
           <div class="col-xs-12 col-sm-12 text-center">
             <div class="row">
