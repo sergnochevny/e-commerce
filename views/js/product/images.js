@@ -1,6 +1,16 @@
 'use strict';
 (function ($) {
 
+  var status = $('#status');
+
+  function fileFromPath(file) {
+    return file.replace(/.*(\/|\\)/, "");
+  }
+
+  function getExt(file) {
+    return (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';
+  }
+
   function postdata(this_, url, data, context, callback) {
     $('body').waitloader('show');
     $.ajax({
@@ -74,6 +84,32 @@
           }
         );
         $("#confirm_dialog").addClass('overlay_display');
+      }
+    }
+  );
+
+  $(document).on('click', '#upload',
+    function (event) {
+      event.preventDefault();
+      $('#uploadfile').trigger('click');
+    }
+  );
+
+  $(document).on('change', '#uploadfile',
+    function (event) {
+      event.preventDefault();
+
+      var file = fileFromPath(this.value);
+      var ext = getExt(file);
+
+      if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
+        status.text('Error format');
+      } else {
+        var data = new FormData($('form#edit_form')[0]);
+        var url = $('form#edit_form').attr('action');
+        data.append('method', 'images.upload');
+        data.append('idx', (!$('input[name=images]:checked').val()) ? 1 : $('input[name=images]:checked').val());
+        postdata(this, url, data, $('#images'));
       }
     }
   );

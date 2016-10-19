@@ -157,7 +157,7 @@
                   $product['format_discount'] = $format_discount;
                   $product['format_price'] = $format_price;
                   $product['format_sale_price'] = $format_sale_price;
-                  $cart_items[$product['p_id']] = $product;
+                  $cart_items[$product['pid']] = $product;
                   $message .= 'The product ' . $product['Product_name'] . ' have been added to your Basket.<br>';
                 } else {
                   $message .= 'The product ' . $product['Product_name'] . ' is unavailable. The product was not added.<br>';
@@ -190,7 +190,7 @@
       $this->main->view_layout('msg_add');
     }
 
-    public function product_in($p_id) {
+    public function product_in($pid) {
       if(isset(_A_::$app->session('matches')['items'])) {
         $matches_items = _A_::$app->session('matches')['items'];
       } else {
@@ -199,7 +199,7 @@
 
       $item_added = false;
       foreach($matches_items as $key => $item) {
-        if($item['p_id'] == $p_id) {
+        if($item['pid'] == $pid) {
           $item_added = true;
           break;
         }

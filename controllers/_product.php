@@ -23,10 +23,10 @@
     private function images($data) {
       $not_image = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
       $data['u_image1'] = empty($data['image1']) || !is_file('upload/upload/' . $data['image1']) ? '' : _A_::$app->router()->UrlTo('upload/upload/v_' . $data['image1']);
-      $data['u_image2'] = empty($data['image2']) || !is_file('upload/upload/' . $data['image2']) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $data['image2']);
-      $data['u_image3'] = empty($data['image3']) || !is_file('upload/upload/' . $data['image3']) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $data['image3']);
-      $data['u_image4'] = empty($data['image4']) || !is_file('upload/upload/' . $data['image4']) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $data['image4']);
-      $data['u_image5'] = empty($data['image5']) || !is_file('upload/upload/' . $data['image5']) ? '' : _A_::$app->router()->UrlTo('upload/upload/' . $data['image5']);
+      $data['u_image2'] = empty($data['image2']) || !is_file('upload/upload/' . $data['image2']) ? '' : _A_::$app->router()->UrlTo('upload/upload/b_' . $data['image2']);
+      $data['u_image3'] = empty($data['image3']) || !is_file('upload/upload/' . $data['image3']) ? '' : _A_::$app->router()->UrlTo('upload/upload/b_' . $data['image3']);
+      $data['u_image4'] = empty($data['image4']) || !is_file('upload/upload/' . $data['image4']) ? '' : _A_::$app->router()->UrlTo('upload/upload/b_' . $data['image4']);
+      $data['u_image5'] = empty($data['image5']) || !is_file('upload/upload/' . $data['image5']) ? '' : _A_::$app->router()->UrlTo('upload/upload/b_' . $data['image5']);
       $this->template->vars('not_image', $not_image);
       $this->template->vars('data', $data);
       $this->template->view_layout('images');
@@ -43,7 +43,22 @@
           $data['image1'] = $image;
         }
       } elseif($method == 'images.upload') {
-        (new Controller_Image())->upload($data);
+          $idx = !is_null(_A_::$app->post('idx')) ? _A_::$app->post('idx') : 1;
+          $uploaddir = 'upload/upload/';
+          $file = 't' . uniqid() . '.jpg';
+          $ext = strtolower(substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1));
+          $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.jpeg'];
+
+          if(!in_array($ext, $filetypes)) {
+            $this->template->vars('error','Error format');
+          } else {
+            if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
+              $data['image'.$idx] = $file;
+              Model_Product::convert_image($uploaddir, $file);
+            } else {
+              $this->template->vars('error','Upload error');
+            }
+          }
       } elseif($method == 'images.delete') {
         $idx = _A_::$app->post('idx');
         $data['image' . $idx] = '';
@@ -168,7 +183,7 @@
     }
 
     protected function after_delete($id = null) {
-      $images = Model_Product::images($id);
+      $images = Model_Product::get_by_id($id);
       $fields_idx = [1, 2, 3, 4, 5];
       foreach($fields_idx as $idx) {
         $filename = $images['image' . $idx];

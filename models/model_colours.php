@@ -1,6 +1,6 @@
 <?php
 
-  Class Model_Colours extends Model_Model {
+  Class Model_Colours extends Model_Base {
 
     protected static $table = 'fabrix_colour';
 

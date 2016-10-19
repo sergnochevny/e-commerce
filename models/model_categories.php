@@ -1,6 +1,6 @@
 <?php
 
-  Class Model_Categories extends Model_Model {
+  Class Model_Categories extends Model_Base {
 
     protected static $table = 'fabrix_categories';
 

@@ -5,9 +5,13 @@
     protected $form_title_add = 'NEW PATTERN';
     protected $form_title_edit = 'MODIFY PATTERN';
 
-    protected function validate(&$data, &$error) {
+    protected function load(&$data) {
       $data['id'] = _A_::$app->get('id');
       $data['pattern'] = Model_Patterns::validData(_A_::$app->post('pattern'));
+    }
+
+    protected function validate(&$data, &$error) {
+      $error = null;
       if(empty($data['pattern'])) {
         $error[] = "Pattern Name is required.";
         return false;

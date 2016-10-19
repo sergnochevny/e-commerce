@@ -1,6 +1,6 @@
 <?php
 
-  Class Model_Blogcategory extends Model_Model {
+  Class Model_Blogcategory extends Model_Base {
 
     public static function get_by_id($id) {
       $response = [

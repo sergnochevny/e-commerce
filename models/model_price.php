@@ -1,6 +1,6 @@
 <?php
 
-  Class Model_Price extends Model_Model {
+  Class Model_Price extends Model_Base {
 
     public static function sysHideAllRegularPrices() {
       $hideAllRegularPrices = false;

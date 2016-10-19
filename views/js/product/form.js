@@ -1,8 +1,6 @@
 (function ($) {
-  var status = $('#status');
+
   var danger = $('.danger');
-
-
   var p_yard = document.getElementById('p_yard'),
     m_width = document.getElementById('m_width'),
     current_inv = document.getElementById('current_inv'),
@@ -22,14 +20,6 @@
   }
 
   setEvToFilter();
-
-  function fileFromPath(file) {
-    return file.replace(/.*(\/|\\)/, "");
-  }
-
-  function getExt(file) {
-    return (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';
-  }
 
   function postdata(this_, url, data, context, callback) {
     $('body').waitloader('show');
@@ -186,31 +176,4 @@
       }
     );
   }
-
-  $('#upload').on('click',
-    function (event) {
-      event.preventDefault();
-      $('#uploadfile').trigger('click');
-    }
-  );
-
-  $('#uploadfile').on('change',
-    function (event) {
-      event.preventDefault();
-      debugger;
-      var file = fileFromPath(this.value);
-      var ext = getExt(file);
-
-      if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
-        status.text('Error format');
-      } else {
-        var data = new FormData($('form#edit_form')[0]);
-        var url = $('form#edit_form').attr('action');
-        data.append('method', 'images.upload');
-        data.append('idx', (!$('input[name=images]:checked').val()) ? 1 : $('input[name=images]:checked').val());
-        postdata(this, url, data, $('#images'));
-      }
-    }
-  );
-
 })(jQuery);
