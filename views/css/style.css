@@ -1993,3 +1993,32 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     border: 1px dotted;
     margin: 5px;
 }
+.order-details{
+    margin-top: 15px;
+}
+.order-details > .panel{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.orders-details{
+    margin-bottom: 15px;
+}
+.orders-details  .table-list-row-item:not(:last-child){
+    width: 100%;
+    display: inline-block;
+    padding-bottom: 15px;
+}
+.orders-details  .table-list-row-item .helper-row{
+    margin-top: 2px;
+}
+.table-total{
+    background-color: #EEE;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.table-total > .table-list-row-item{
+    width: 100%;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
