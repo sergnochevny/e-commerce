@@ -1,6 +1,6 @@
 <?php
 
-  Class Model_Auth extends Model_Model {
+  Class Model_Auth extends Model_Base {
 
     private static $user = null;
     private static $admin = null;

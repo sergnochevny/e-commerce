@@ -1,6 +1,6 @@
 <?php
 
-  Class Model_User extends Model_Model {
+  Class Model_User extends Model_Base {
 
     protected static $table = 'fabrix_accounts';
 

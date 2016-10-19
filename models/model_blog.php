@@ -1,6 +1,6 @@
 <?php
 
-  Class Model_Blog extends Model_Model {
+  Class Model_Blog extends Model_Base {
 
     public static function get_by_id($post_id) {
       $result = null;

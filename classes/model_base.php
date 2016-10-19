@@ -1,6 +1,6 @@
 <?php
 
-  abstract class Model_Model {
+  abstract class Model_Base {
 
     protected static $table;
 
@@ -60,3 +60,4 @@
       return $data;
     }
   }
+?>

@@ -1,16 +1,13 @@
 (function ($) {
-  var btnUpload = $('#upload'),
-    status = $('#status'),
-    danger = $('.danger');
 
-
+  var danger = $('.danger');
   var p_yard = document.getElementById('p_yard'),
     m_width = document.getElementById('m_width'),
     current_inv = document.getElementById('current_inv'),
     float_type = '9[9].9[9]',
     long_float_type = '9[9{2}].9[9]';
 
-  Inputmask({alias: 'currency', rightAlign: false}).mask(p_yard);
+  Inputmask({alias: 'currency', prefix: "", rightAlign: false}).mask(p_yard);
   Inputmask({mask: float_type, greedy: false}).mask(m_width);
   Inputmask({mask: long_float_type, greedy: false}).mask(current_inv);
 
@@ -23,26 +20,6 @@
   }
 
   setEvToFilter();
-
-  new AjaxUpload(btnUpload, {
-    action: function () {
-      var images = $('input[name=images]:checked');
-      var idx = (!images.val()) ? 1 : images.val();
-      var url = $('form#edit_form').attr('action');
-      return url + "&method=upload_img&idx=" + idx;
-    },
-    name: 'uploadfile',
-    onSubmit: function (file, ext) {
-      if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
-        status.text('Error format');
-        return false;
-      }
-    },
-    onComplete: function (file, response) {
-      var url = $('form#edit_form').attr('action') + "&method=modify";
-      if (response === "success") $('#images').load(url);
-    }
-  });
 
   function postdata(this_, url, data, context, callback) {
     $('body').waitloader('show');
@@ -199,5 +176,4 @@
       }
     );
   }
-
 })(jQuery);

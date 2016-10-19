@@ -1,6 +1,6 @@
 <?php
 
-  class Model_Comments extends Model_Model {
+  class Model_Comments extends Model_Base {
 
     protected static $table = 'fabrix_comments';
 

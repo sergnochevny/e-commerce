@@ -1,6 +1,6 @@
 <?php
 
-Class Model_Samples extends Model_Model
+Class Model_Samples extends Model_Base
 {
 
     public static function calculateSamplesPrice($products, $samples){
