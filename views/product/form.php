@@ -155,7 +155,9 @@
             <label><strong>Main images:</strong></label>
             <div class="text-center">
               <div id="images" class="col-sm-12 col-md-12">
-                <?= $images; ?>
+                <div class="row">
+                  <?= $images; ?>
+                </div>
               </div>
             </div>
             <div class="clear"></div>
@@ -203,6 +205,9 @@
       </div>
     </div><!--col-2-->
 
+    <div class="col-xs-12">
+      <hr>
+    </div>
     <div class="col-xs-12">
       <div class="text-center">
         <a id="submit" class="button" style="width: 150px;">Save</a>
