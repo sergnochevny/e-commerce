@@ -3,19 +3,19 @@
     <div class="col-sm-2 col">
       Details <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
-    <div class="col-sm-1 col">
+    <div class="col-sm-1 col text-center">
       On
     </div>
-    <div class="col-sm-2 col">
+    <div class="col-sm-2 col text-center">
       Multiple
     </div>
-    <div class="col-sm-2 col">
+    <div class="col-sm-2 col text-center">
       Coupon <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
-    <div class="col-sm-2 col">
+    <div class="col-sm-2 col text-center">
       Starts <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
-    <div class="col-sm-2 col">
+    <div class="col-sm-2 col text-center">
       Ends <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
   </div>
@@ -43,7 +43,7 @@
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">On</div>
         </div>
-        <div class="col-xs-8 col-sm-12">
+        <div class="col-xs-8 col-sm-12 text-center xs-text-left">
           <div class="row"><?= $row['enabled'] ?></div>
         </div>
       </div>
@@ -51,7 +51,7 @@
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Multiple</div>
         </div>
-        <div class="col-xs-8 col-sm-12">
+        <div class="col-xs-8 col-sm-12 text-center xs-text-left">
           <div class="row"><?= $row['allow_multiple'] ?></div>
         </div>
       </div>
@@ -59,7 +59,7 @@
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Coupon</div>
         </div>
-        <div class="col-xs-8 col-sm-12">
+        <div class="col-xs-8 col-sm-12 text-center xs-text-left">
           <div class="row"><?= !empty($row['coupon_code']) ? $row['coupon_code'] : 'N/A'; ?></div>
         </div>
       </div>
@@ -67,7 +67,7 @@
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Starts</div>
         </div>
-        <div class="col-xs-8 col-sm-12">
+        <div class="col-xs-8 col-sm-12 text-center xs-text-left">
           <div class="row"><?= $row['date_start']; ?></div>
         </div>
       </div>
@@ -75,7 +75,7 @@
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Starts</div>
         </div>
-        <div class="col-xs-8 col-sm-12">
+        <div class="col-xs-8 col-sm-12 text-center xs-text-left">
           <div class="row"><?= $row['date_end']; ?></div>
         </div>
       </div>

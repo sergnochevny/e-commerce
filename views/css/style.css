@@ -1950,6 +1950,9 @@ form[data-search] > .row > .panel > .panel-heading{
     .search-result{
         vertical-align: 0 !important;
     }
+    .xs-text-left{
+        text-align: left !important;
+    }
 }
 
 .search-result-header{

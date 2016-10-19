@@ -3,13 +3,13 @@
     <div class="col-sm-1 col">
       Id <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
-    <div class="col-sm-4 col">
+    <div class="col-sm-4 col text-center">
       Email <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
-    <div class="col-sm-3 col">
+    <div class="col-sm-3 col text-center">
       Name <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
-    <div class="col-sm-2 col">
+    <div class="col-sm-2 col text-center">
       Registered <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
     </div>
   </div>
@@ -29,7 +29,7 @@
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Email</div>
         </div>
-        <div class="col-xs-8 col-sm-12">
+        <div class="col-xs-8 col-sm-12 text-center xs-text-left">
           <div class="row"><?= $row[1] ?></div>
         </div>
       </div>
@@ -37,7 +37,7 @@
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Name</div>
         </div>
-        <div class="col-xs-8 col-sm-12">
+        <div class="col-xs-8 col-sm-12 text-center xs-text-left">
           <div class="row"><?= $row[3] . ' ' . $row[4] ?></div>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <div class="col-xs-4 visible-xs helper-row">
           <div class="row">Date Registered</div>
         </div>
-        <div class="col-xs-8 col-sm-12">
+        <div class="col-xs-8 col-sm-12 text-center xs-text-left">
           <div class="row"><?= date("m/j/y", $row[30]) ?></div>
         </div>
       </div>
