@@ -9,9 +9,9 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-3">
+    <div class="col-xs-12 col-sm-2">
         <div class="col-xs-4 visible-xs helper-row">
-            <div class="row"></div>
+            <div class="row">Item price</div>
         </div>
         <div class="col-xs-8 col-sm-12">
             <div class="row cut-text-in-one-line"><?= $item_price ?></div>

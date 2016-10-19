@@ -70,6 +70,7 @@
           $this->template->vars('product_name', $product_name);
           $this->template->vars('sale_price', $sale_price);
           $this->template->vars('quantity', $quantity);
+          $this->main->template->vars('item_price', $item_price);
           $this->template->view_layout('detail_info');
         }
         $end_date = $end_date ? date('d/m/Y', strtotime($end_date)) : '';
@@ -99,7 +100,6 @@
       $this->main->template->vars('end_date', $end_date);
       $this->main->template->vars('order_id', $order_id);
       $this->main->template->vars('status_code', $status_code);
-      $this->main->template->vars('item_price', $item_price);
       $this->main->template->vars('total_discount', $total_discount);
 
       $this->main->view_admin('view');
