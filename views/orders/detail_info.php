@@ -14,7 +14,7 @@
             <div class="row"></div>
         </div>
         <div class="col-xs-8 col-sm-12">
-            <div class="row cut-text-in-one-line"><?= $sale_price ?></div>
+            <div class="row cut-text-in-one-line"><?= $item_price ?></div>
         </div>
     </div>
     <div class="col-xs-12 col-sm-3">
