@@ -32,7 +32,6 @@
       $this->template->view_layout('images');
     }
 
-
     private function images_handling(&$data = null) {
       $method = _A_::$app->post('method');
       if($method == 'images.main') {
@@ -43,22 +42,23 @@
           $data['image1'] = $image;
         }
       } elseif($method == 'images.upload') {
-          $idx = !is_null(_A_::$app->post('idx')) ? _A_::$app->post('idx') : 1;
-          $uploaddir = 'upload/upload/';
-          $file = 't' . uniqid() . '.jpg';
-          $ext = strtolower(substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1));
-          $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.jpeg'];
+        $idx = !is_null(_A_::$app->post('idx')) ? _A_::$app->post('idx') : 1;
+        $uploaddir = 'upload/upload/';
+        $file = 't' . uniqid() . '.jpg';
+        $ext = strtolower(substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1));
+        $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.jpeg'];
 
-          if(!in_array($ext, $filetypes)) {
-            $this->template->vars('error','Error format');
+        if(!in_array($ext, $filetypes)) {
+          $this->template->vars('error', 'Error format');
+        } else {
+          if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
+            if(substr($data['image' . $idx], 0, 1) == 't') Model_Product::delete_img($data['image' . $idx]);
+            $data['image' . $idx] = $file;
+            Model_Product::convert_image($uploaddir, $file);
           } else {
-            if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
-              $data['image'.$idx] = $file;
-              Model_Product::convert_image($uploaddir, $file);
-            } else {
-              $this->template->vars('error','Upload error');
-            }
+            $this->template->vars('error', 'Upload error');
           }
+        }
       } elseif($method == 'images.delete') {
         $idx = _A_::$app->post('idx');
         $data['image' . $idx] = '';
@@ -131,7 +131,7 @@
       $data['hideprice'] = Model_Product::validData(!is_null(_A_::$app->post('hideprice'))) ? _A_::$app->post('hideprice') : '';
       $data['dimensions'] = Model_Product::validData(_A_::$app->post('dimensions')) ? _A_::$app->post('dimensions') : '';
       $data['weight'] = Model_Product::validData(!is_null(_A_::$app->post('weight'))) ? _A_::$app->post('weight') : '';
-      $data['manufacturers'] = Model_Product::validData(_A_::$app->post('manufacturers')) ? _A_::$app->post('manufacturers') : '';
+      $data['manufacturerId'] = Model_Product::validData(_A_::$app->post('manufacturerId')) ? _A_::$app->post('manufacturerId') : '';
       $data['sdesc'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('sdesc')) ? _A_::$app->post('sdesc') : '');
       $data['ldesc'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('ldesc')) ? _A_::$app->post('ldesc') : '');;
       $data['weight_id'] = Model_Product::validData(_A_::$app->post('weight_id')) ? _A_::$app->post('weight_id') : '';
@@ -175,7 +175,7 @@
     protected function form_handling(&$data = null) {
       if(_A_::$app->request_is_post()) {
         if(!is_null(_A_::$app->post('method'))) {
-          if(explode('.',_A_::$app->post('method'))[0] == 'images') exit($this->images_handling($data));
+          if(explode('.', _A_::$app->post('method'))[0] == 'images') exit($this->images_handling($data));
           exit($this->filters_handling($data));
         }
       }
@@ -203,9 +203,7 @@
 
     protected function form_after_get_data(&$data = null) {
 
-      if(isset($data['manufacturers'])) $data['manufacturerId'] = $data['manufacturers'];
       $data['manufacturers'] = Model_Product::get_manufacturers();
-
       foreach(['categories', 'colours', 'patterns'] as $type) {
         ob_start();
         Model_Product::get_filter_selected($type, $data);

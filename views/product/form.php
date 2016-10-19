@@ -17,7 +17,7 @@
     <div class="col-xs-12 alert-danger danger" style="display: none;">
       <?php
         foreach($error as $msg) {
-          echo $msg .'<br>';
+          echo $msg . '<br>';
         }
       ?>
     </div>
@@ -125,7 +125,7 @@
           <hr/>
           <div class="form-row">
             <label><strong>Manufacturer:</strong></label>
-            <select name="manufacturers">
+            <select name="manufacturerId">
               <?= $data['manufacturers']; ?>
             </select>
           </div>
@@ -155,11 +155,7 @@
             <label><strong>Main images:</strong></label>
             <div class="text-center">
               <div id="images" class="col-sm-12 col-md-12">
-                <div class="row">
-                  <div class="row">
-                    <?= $images; ?>
-                  </div>
-                </div>
+                <?= $images; ?>
               </div>
             </div>
             <div class="clear"></div>

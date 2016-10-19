@@ -4,6 +4,20 @@
 
     protected static $table = 'fabrix_products';
 
+    public static function delete_img($filename) {
+      if(!empty($filename)) {
+        if(file_exists("upload/upload/" . $filename)) {
+          unlink("upload/upload/" . $filename);
+        }
+        if(file_exists("upload/upload/b_" . $filename)) {
+          unlink("upload/upload/b_" . $filename);
+        }
+        if(file_exists("upload/upload/v_" . $filename)) {
+          unlink("upload/upload/v_" . $filename);
+        }
+      }
+    }
+
     public static function get_filter_selected($type, &$data) {
       $id = $data['pid'];
       $filters = [];
@@ -316,17 +330,19 @@
     }
 
     public static function update_images($pid, &$data) {
+      $images = static::get_by_id($pid);
       $fields_idx = [1, 2, 3, 4, 5];
       foreach($fields_idx as $idx) {
         $filename = $data['image' . $idx];
         if(!empty($filename)) {
           if(substr($filename, 0, strlen($pid) + 1) !== 'p' . $pid) {
+            static::delete_img($images['image' . $idx]);
             $filename = 'p' . $pid . $filename;
             if(file_exists("upload/upload/" . $data['image' . $idx])) {
               rename("upload/upload/" . $data['image' . $idx], "upload/upload/$filename");
             }
             if(file_exists("upload/upload/b_" . $data['image' . $idx])) {
-              rename("upload/upload/b_" . $filename, "upload/upload/b_" . $filename);
+              rename("upload/upload/b_" . $data['image' . $idx], "upload/upload/b_" . $filename);
             }
             if(file_exists("upload/upload/v_" . $data['image' . $idx])) {
               rename("upload/upload/v_" . $data['image' . $idx], "upload/upload/v_" . $filename);
@@ -336,31 +352,42 @@
         }
       }
       extract($data);
-      $q = "update ".static::$table." set image1='$image1', image2='$image2', image3='$image3', image4='$image4',image5='$image5'";
+      $q = "update " . static::$table . " set".
+        " image1='$image1', image2='$image2', image3='$image3',".
+        " image4='$image4', image5='$image5' where pid = '$pid'";
       return mysql_query($q);
     }
 
-    public static function save($data) {
+    public static function delete_images(&$data) {
+      $fields_idx = [1, 2, 3, 4, 5];
+      foreach($fields_idx as $idx) {
+        self::delete_img($data['image' . $idx]);
+      }
+    }
+
+    public static function save(&$data) {
       extract($data);
       if(isset($pid)) {
-        $sql = "update " . static::$table . " set" .
-          " manufacturerId='$manufacturerId', weight_id='$weight_id', specials='$specials', inventory='$inventory'," .
-          " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard'," .
-          " width='$width', pnumber='$pnumber', pvisible='$pvisible', metakeywords='$metakeywords'," .
-          " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best'," .
-          " piece='$piece', whole = '$whole'  WHERE pid ='$pid'";
+        $sql = "update " . static::$table . " set";
+        if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
+        $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
+        $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
+        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metakeywords='$metakeywords',";
+        $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
+        $sql .= " piece='$piece', whole = '$whole'  WHERE pid ='$pid'";
         $result = mysql_query($sql);
       } else {
-        $sql = "insert into " . static::$table . " set" .
-          " manufacturerId='$manufacturerId', weight_id='$weight_id', specials='$specials', inventory='$inventory'," .
-          " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard'," .
-          " width='$width', pnumber='$pnumber', pvisible='$pvisible', metakeywords='$metakeywords'," .
-          " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best'," .
-          " piece='$piece', whole = '$whole'";
+        $sql = "insert into " . static::$table . " set";
+        if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
+        $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
+        $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
+        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metakeywords='$metakeywords',";
+        $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
+        $sql .= " piece='$piece', whole = '$whole'";
         $result = mysql_query($sql);
         if($result) $pid = mysql_insert_id();
       }
-
+      if($result) $result = static::update_images($pid, $data);
       if($result) {
         if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
           $categories = ['1' => null];
@@ -403,13 +430,15 @@
             if(!$res) break;
           }
         }
+        $result = $result && $res;
       }
-      $result = $result && $res;
       if(!$result) throw new Exception(mysql_error());
+      return $pid;
     }
 
     public static function delete($id) {
       if(isset($id)) {
+        $data = static::get_by_id($id);
         $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
         $res = mysql_query($query);
         $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
@@ -421,6 +450,7 @@
         $query = "DELETE FROM fabrix_specials_products WHERE pid = $id";
         if($res) $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
+        static::delete_images($data);
       }
     }
 
