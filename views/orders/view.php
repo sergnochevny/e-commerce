@@ -26,34 +26,34 @@
         <div class="row">
 
           <div class="col-xs-12 col-md-4">
-            <div class="row text-center">
-              <div class="col-xs-4 col-md-6">
-                <div class="row"><b>Track Code:</b></div>
+            <div class="text-center xs-text-left">
+              <div class="col-xs-12 col-md-6">
+                <b>Track Code:</b>
               </div>
-              <div class="col-xs-8 col-md-6">
-                <div class="row"><?= ($track_code == 0) ? 'Not specified yet' : $track_code ?></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-xs-12 col-md-4">
-            <div class="row text-center">
-              <div class="col-xs-4 col-md-6">
-                <div class="row"><b>Delivery date:</b></div>
-              </div>
-              <div class="col-xs-8 col-md-6">
-                <div class="row"><?= ($end_date == 0) ? 'Not specified yet' : $end_date ?></div>
+              <div class="col-xs-12 col-md-6">
+                <?= ($track_code == 0) ? 'Not specified yet' : $track_code ?>
               </div>
             </div>
           </div>
 
           <div class="col-xs-12 col-md-4">
-            <div class="row text-center">
-              <div class="col-xs-4 col-md-6">
-                <div class="row"><b>Order status:</b></div>
+            <div class="text-center xs-text-left">
+              <div class="col-xs-12 col-md-6">
+                <b>Delivery date:</b>
               </div>
-              <div class="col-xs-8 col-md-6">
-                <div class="row"><?= $status ?></div>
+              <div class="col-xs-12 col-md-6">
+                <?= ($end_date == 0) ? 'Not specified yet' : $end_date ?>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-4">
+            <div class="text-center xs-text-left">
+              <div class="col-xs-12 col-md-6">
+                <b>Order status:</b>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <?= $status ?>
               </div>
             </div>
           </div>
@@ -71,7 +71,12 @@
           <small><i class="fa fa-chevron-down"></i></small>
         </a>
       </div>
-      <div class="col-sm-2 col-sm-offset-4 col">
+      <div class="col-sm-2 col">
+        Item Price <a href="#">
+          <small><i class="fa fa-chevron-down"></i></small>
+        </a>
+      </div>
+      <div class="col-sm-3 col">
         Sale Price <a href="#">
           <small><i class="fa fa-chevron-down"></i></small>
         </a>
@@ -88,20 +93,20 @@
       <?= $detail_info; ?>
       <?php if($is_sample) { ?>
         <div class="table-list-row-item">
-          <div class="col-xs-8 helper-row text-right">
+          <div class="col-xs-6 helper-row text-right">
             Samples cost
           </div>
-          <div class="col-xs-4 text-left">
+          <div class="col-xs-6 text-left">
               <?= $sample_cost ?>
           </div>
         </div>
       <?php } ?>
       <?php if(!empty($shipping_cost)) { ?>
         <div class="table-list-row-item">
-          <div class="col-xs-8 helper-row text-right">
+          <div class="col-xs-6 helper-row text-right">
             <?= ($shipping_type == 3 ? 'Ground ship' : 'Express post') ?>
           </div>
-          <div class="col-xs-4 text-left">
+          <div class="col-xs-6 text-left">
               <?= $shipping_cost ?>
           </div>
         </div>

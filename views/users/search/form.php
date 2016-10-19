@@ -16,11 +16,34 @@
       </div>
 
       <div class="panel-body hidden">
-        <div class="col-xs-12">
-          <div class="form-row">
-            <div class="row">
-              <label>User Name:</label>
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="form-row">
+              <label>User Email:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[pname]"
+                     value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
+            </div>
+          </div>
+          <div class="col-xs-8">
+            <div class="form-row">
+              <label>User First and/or Last Name:</label>
+              <input type="text" class="input-text" placeholder="Like ..." name="search[pname]"
+                     value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="form-row">
+              <label>Registration date ranges from:</label>
+              <input type="text" class="input-text" placeholder="**/**/**" name="search[pname]"
+                     value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="form-row">
+              <label>Registration date ranges to:</label>
+              <input type="text" class="input-text" placeholder="**/**/**" name="search[pname]"
                      value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
             </div>
           </div>

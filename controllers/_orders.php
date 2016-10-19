@@ -53,6 +53,7 @@
           $handling = strlen(trim($handling)) > 0 ? '$' . number_format((double)$handling, 2) : '';
           $shipping_discount = strlen(trim($shipping_discount)) > 0 ? '$' . number_format((double)$shipping_discount, 2) : '';
           $shipping_cost = strlen(trim($shipping_cost)) > 0 ? '$' . number_format((double)$shipping_cost, 2) : '';
+          $item_price = strlen(trim($price)) > 0 ? '$' . number_format((double) $price, 2) : '';
           $taxes = strlen(trim($taxes)) > 0 ? '$' . number_format((double)$taxes, 2) : '';
           $status_code = $status;
           $status = ($status == 0 ? 'In process' : 'Completed');
@@ -69,6 +70,7 @@
           $this->template->vars('product_name', $product_name);
           $this->template->vars('sale_price', $sale_price);
           $this->template->vars('quantity', $quantity);
+          $this->main->template->vars('item_price', $item_price);
           $this->template->view_layout('detail_info');
         }
         $end_date = $end_date ? date('d/m/Y', strtotime($end_date)) : '';
