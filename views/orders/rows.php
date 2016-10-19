@@ -51,7 +51,7 @@
           <div class="row">Date</div>
         </div>
         <div class="col-xs-8 col-sm-12">
-          <div class="row"><?=  gmdate("m/j/y, g:i a", $row['order_date']) ?></div>
+          <div class="row"><?=  gmdate("m/j/y", $row['order_date']) ?></div>
         </div>
       </div>
       <div class="col-xs-12 col-sm-1 table-list-row-item">

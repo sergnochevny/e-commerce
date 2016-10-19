@@ -10,47 +10,6 @@
     /**
      * @export
      */
-//    public function order() {
-//      $this->main->test_access_rights();
-//      $prms = null;
-//      $order_id = Model_Order::validData(_A_::$app->get('order_id'));
-//
-//      if(!is_null(_A_::$app->get('order_id'))) {
-//        $prms['order_id'] = _A_::$app->get('order_id');
-//      }
-//      if(!is_null(_A_::$app->get('user_id'))) {
-//        $prms['user_id'] = _A_::$app->get('user_id');
-//      }
-//      if(!is_null(_A_::$app->get('page'))) {
-//        $prms['page'] = _A_::$app->get('page');
-//      }
-//      $this->get_details();
-//      $userInfo = Model_Order::get_order($order_id);
-//      $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('user/registration', $prms));
-//      $this->main->template->vars('userInfo', $userInfo);
-//      $this->main->view_admin('order');
-//    }
-
-    /**
-     * @export
-     */
-//    public function discount() {
-//      $this->main->test_access_rights();
-//      $prms = null;
-//      $order_id = Model_Order::validData(_A_::$app->get('order_id'));
-//      if(!empty(_A_::$app->get('discount_id'))) {
-//        $prms['discount_id'] = _A_::$app->get('discount_id');
-//      }
-//      $this->get_details();
-//      $userInfo = Model_Order::get_order($order_id);
-//      $this->main->template->vars('back_url', _A_::$app->router()->UrlTo(empty(_A_::$app->get('discount_id')) ? 'discount' : 'discount/usage', $prms));
-//      $this->main->template->vars('userInfo', $userInfo);
-//      $this->main->view_admin('order');
-//    }
-
-    /**
-     * @export
-     */
     public function view() {
 
       $this->main->test_any_logged('orders');
