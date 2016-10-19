@@ -1,6 +1,6 @@
 <?php
 
-Class Model_Router extends Model_Model
+Class Model_Router extends Model_Base
 {
 
     public static function set_sef_url($sef_url, $url)

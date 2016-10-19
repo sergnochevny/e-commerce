@@ -1,6 +1,6 @@
 <?php
 
-Class Model_Tools extends Model_Model
+Class Model_Tools extends Model_Base
 {
 
     public static function get_items_for_menu($type)

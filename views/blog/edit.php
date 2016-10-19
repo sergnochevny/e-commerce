@@ -1,4 +1,3 @@
-    <script defer src="<?= _A_::$app->router()->UrlTo('upload/js/ajaxupload.3.5.js') ?>" type="text/javascript"></script>
     <script defer src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
     <script defer src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit.js'); ?>' type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.css') ?>" media="all"/>

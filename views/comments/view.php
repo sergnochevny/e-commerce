@@ -21,10 +21,4 @@
     </div>
   </div>
 </div>
-
-<script>
-  (function($){
-    $('#modal-title').html($('.modal-view').attr('data-title'));
-    $('#modal').modal('show').find('.modal-footer').stop().hide();
-  })(jQuery)
-</script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/comments/view.js'); ?>' type="text/javascript"></script>

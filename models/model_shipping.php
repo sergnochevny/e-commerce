@@ -1,6 +1,6 @@
 <?php
 
-Class Model_Shipping extends Model_Model
+Class Model_Shipping extends Model_Base
 {
 
 #define the rates that are used outside the calculate shipping funciton

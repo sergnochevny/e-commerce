@@ -1,6 +1,6 @@
 <?php
 
-  Class Model_Address extends Model_Model {
+  Class Model_Address extends Model_Base {
 
     public static function get_countries_all() {
       $list = [];
