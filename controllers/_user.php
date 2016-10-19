@@ -134,15 +134,19 @@
      * @export
      */
     public function registration() {
-      $action = 'user/registration';
-      $title = 'REGISTRATION USER';
-      $prms = null;
-      if(!is_null(_A_::$app->get('url'))) {
-        $prms['url'] = _A_::$app->get('url');
+      if(self::is_logged()) {
+        $this->redirect(_A_::$app->router()->UrlTo('/'));
+      } else {
+        $action = 'user/registration';
+        $title = 'REGISTRATION USER';
+        $prms = null;
+        if(!is_null(_A_::$app->get('url'))) {
+          $prms['url'] = _A_::$app->get('url');
+        }
+        $back_url = _A_::$app->router()->UrlTo('authorization', $prms);
+        (new Controller_Users())->user_handling($data, $action, $back_url, $title, true, true);
+        $this->template->view_layout('thanx');
+        $this->sendWelcomeEmail($data['email']);
       }
-      $back_url = _A_::$app->router()->UrlTo('authorization', $prms);
-      (new Controller_Users())->user_handling($data, $action, $back_url, $title, true, true);
-      $this->template->view_layout('thanx');
-      $this->sendWelcomeEmail($data['email']);
     }
   }
