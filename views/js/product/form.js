@@ -7,7 +7,7 @@
     float_type = '9[9].9[9]',
     long_float_type = '9[9{2}].9[9]';
 
-  Inputmask({alias: 'currency', prefix: "$", rightAlign: false}).mask(p_yard);
+  Inputmask({alias: 'currency', prefix: "", rightAlign: false}).mask(p_yard);
   Inputmask({mask: float_type, greedy: false}).mask(m_width);
   Inputmask({mask: long_float_type, greedy: false}).mask(current_inv);
 
