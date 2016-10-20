@@ -1,28 +1,23 @@
 
 <section class="just-posts-grid">
     <div class="just-post-row row">
-        <div class="just-post col-xs-6" id="blog-page">
-            <h3 id="editable_title" class="page-title">
-                <span class="hang-punct">&laquo;</span><?= $post_title; ?><span class="punct">&raquo;</span>
-            </h3>
-        </div>
-        <div class="col-xs-6">
+        <div class="just-post col-xs-12" id="blog-page">
+            <h1 id="editable_title" class="page-title"><?= $post_title; ?></h1>
+
             <?php if (isset($post_img)) { ?>
                 <div id="post_img" class="just-post-image"
                      style="background-image: url('<?= $post_img; ?>');">
                 </div>
             <?php } ?>
-        </div>
-        <div class="col-xs-12">
             <div class="just-post-detail">
                 <div
-                  class="just-divider text-center line-yes icon-hide">
+                    class="just-divider text-center line-yes icon-hide">
                     <div class="divider-inner"
                          style="background-color: #fff">
                         <span class="post-date"><?= $post_date;?></span>
                     </div>
                 </div>
-                <div id="editable_content" class="text-justify"><?= $post_content;?></div>
+                <div id="editable_content"><?= $post_content;?></div>
             </div>
 
         </div>
@@ -42,7 +37,7 @@
         </button>
     </div>
     <div id="blog_post_form_dialog" style="width: auto; min-height: 84px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
-        <form method="POST" id="edit_form" action="<?= $action_url; ?>" class="enquiry-form ">
+        <form method="POST" id="blog_post" action="<?= $action_url; ?>" class="enquiry-form ">
             <input type="hidden" name="title" value="">
             <input type="hidden" name="content" value="">
             <input id="img" type="hidden" name="img" value="<?= $file_img;?>"/>

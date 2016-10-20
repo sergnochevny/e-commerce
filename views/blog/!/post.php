@@ -1,3 +1,4 @@
+<body class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive woocommerce">
 <div class="site-container">
     <?php
         include "views/shop_header.php";
@@ -12,7 +13,7 @@
         .just-posts-grid .just-post-image {
             background-position: center center;
             background-size: cover;
-            height: 300px;
+            height: 200px;
             margin: 0 0 20px;
             overflow: hidden;
         }

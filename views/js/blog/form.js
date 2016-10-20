@@ -209,6 +209,7 @@
 
   $("#save").on('click', function (event) {
     event.preventDefault();
+    $('#dialog').dialog('hide');
     $('#edit_form').trigger('submit');
   });
 
