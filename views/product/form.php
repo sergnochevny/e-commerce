@@ -31,24 +31,25 @@
         <div class="col-md-6">
           <div class="form-row">
             <label class="required_field"><strong>Product name:</strong></label>
-            <input type="text" name="pname" value="<?= $data['pname']; ?>" class="input-text ">
+            <input type="text" name="pname" value="<?= $data['pname']; ?>" class="input-text" placeholder="e.g. Stunning Patterned Tapestry In Blue">
           </div>
 
           <div class="form-row">
             <label class="required_field"><strong>Product number:</strong></label>
-            <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text ">
+            <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text" placeholder="e.g. abc888999">
           </div>
 
           <div class="form-row">
             <label><strong>Meta Description:</strong></label>
             <input type="text" name="metadescription"
               <?= !empty($data['metadescription']) ? 'value="' . $data['metadescription'] . '"' : ''; ?>
-                   class="input-text ">
+                   class="input-text" placeholder="e.g. Lovely patterned woven fabric, with stunning color combo">
           </div>
 
           <div class="form-row">
             <label><strong>Meta Keywords:</strong></label>
-            <input type="text" name="metakeywords" value="<?= $data['metakeywords']; ?>" class="input-text ">
+            <input type="text" name="metakeywords" value="<?= $data['metakeywords']; ?>" class="input-text"
+                   placeholder="Just a few words, separated by coma">
           </div>
 
           <div class="form-row">
