@@ -14,6 +14,8 @@
       }
     }
 
+    protected function after_get_list(&$rows) { }
+
     protected function build_search_filter(&$filter) {
       $fields_type = [
         'int' => ['=', 'between'],
@@ -37,7 +39,7 @@
           foreach($search as $key => $item) {
             if(preg_match($fields_pattern, $fields[$key]['Type'], $matches) !== false) {
               if(count($matches) > 1) {
-                if(is_array($item)){
+                if(is_array($item)) {
                   $filter[$key] = [$fields_type[$matches[1]][1], $item];
                 }
                 $filter[$key] = [$fields_type[$matches[1]][0], $item];
@@ -47,16 +49,17 @@
           }
         }
       }
-      $this->template->vars('search',$search_form);
-      $this->template->vars('action',_A_::$app->router()->UrlTo($this->controller));
+      $this->template->vars('search', $search_form);
+      $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller));
       $search_form = null;
       ob_start();
-      try{
+      try {
         $this->main->view_layout('search/form');
         $search_form = ob_get_contents();
-      } catch(Exception $e){}
+      } catch(Exception $e) {
+      }
       ob_end_clean();
-      $this->template->vars('search_form',$search_form);
+      $this->template->vars('search_form', $search_form);
     }
 
     protected function get_list() {
@@ -69,7 +72,7 @@
       $start = (($page - 1) * $per_page);
       $res_count_rows = 0;
       $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, $filter]);
-
+      $this->after_get_list($rows);
       $this->template->vars('rows', $rows);
       ob_start();
       $this->template->view_layout('rows');

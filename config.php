@@ -79,5 +79,5 @@ return [
             ]
         ]
     ],
-    'layouts' => "first_layouts",
+    'layouts' => "main_layout",
 ];

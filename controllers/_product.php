@@ -182,25 +182,6 @@
       return true;
     }
 
-    protected function after_delete($id = null) {
-      $images = Model_Product::get_by_id($id);
-      $fields_idx = [1, 2, 3, 4, 5];
-      foreach($fields_idx as $idx) {
-        $filename = $images['image' . $idx];
-        if(!empty($filename)) {
-          if(file_exists("upload/upload/" . $filename)) {
-            unlink("upload/upload/$filename");
-          }
-          if(file_exists("upload/upload/b_" . $filename)) {
-            unlink("upload/upload/b_" . $filename);
-          }
-          if(file_exists("upload/upload/v_" . $filename)) {
-            unlink("upload/upload/v_" . $filename);
-          }
-        }
-      }
-    }
-
     protected function form_after_get_data(&$data = null) {
 
       $data['manufacturers'] = Model_Product::get_manufacturers();

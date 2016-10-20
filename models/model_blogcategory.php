@@ -2,6 +2,8 @@
 
   Class Model_Blogcategory extends Model_Base {
 
+    protected static $table = 'blog_groups';
+
     public static function get_by_id($id) {
       $response = [
 
@@ -9,7 +11,7 @@
         'slug' => ''
       ];
       if(isset($id)) {
-        $query = "SELECT * FROM blog_groups WHERE group_id = '$id'";
+        $query = "SELECT * FROM blog_groups WHERE id = '$id'";
         $result = mysql_query($query);
         if($result) $response = mysql_fetch_assoc($result);
       }
@@ -19,9 +21,9 @@
 
     public static function get_all(){
       $res = null;
-      $q = "SELECT a.group_id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
-      $q .= " LEFT JOIN blog_group_posts b ON a.group_id = b.group_id";
-      $q .= " GROUP BY a.group_id, a.name";
+      $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
+      $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
+      $q .= " GROUP BY a.id, a.name";
       $q .= " ORDER BY a.name";
       $result = mysql_query($q);
       if($result) {
@@ -44,7 +46,7 @@
 
     public static function delete($id) {
       if(isset($id)) {
-        $query = "SELECT COUNT(*) FROM blog_group_posts WHERE group_id = $id";
+        $query = "SELECT COUNT(*) FROM blog_group_posts WHERE id = $id";
         $res = mysql_query($query);
         if($res) {
           $amount = mysql_fetch_array($res)[0];
@@ -52,7 +54,7 @@
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "DELETE FROM blog_groups WHERE group_id = $id";
+        $query = "DELETE FROM blog_groups WHERE id = $id";
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       }
@@ -60,10 +62,10 @@
 
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $res = null;
-      $q = "SELECT a.group_id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
-      $q .= " LEFT JOIN blog_group_posts b ON a.group_id = b.group_id";
+      $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
+      $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
       $q .= static::build_where($filter);
-      $q .= " GROUP BY a.group_id, a.name";
+      $q .= " GROUP BY a.id, a.name";
       $q .= " ORDER BY a.name";
       $q .= " LIMIT $start, $limit";
       $result = mysql_query($q);
@@ -79,11 +81,11 @@
     public static function save($data) {
       extract($data);
       if(isset($id)) {
-        $query = 'UPDATE blog_groups SET name = "' . $name . '", slug = "' . $slug . '" WHERE group_id = ' . $id;
+        $query = 'UPDATE blog_groups SET name = "' . $name . '" WHERE id = ' . $id;
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       } else {
-        $query = 'INSERT INTO blog_groups (name, slug) VALUE ("' . $name . '", "' . $slug . '")';
+        $query = 'INSERT INTO blog_groups (name) VALUE ("' . $name . '")';
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
         $id = mysql_insert_id();
