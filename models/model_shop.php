@@ -284,7 +284,7 @@
         case 'blog_category':
           $q = "SELECT distinct a.*" .
             " FROM blog_groups a" .
-            " LEFT JOIN blog_group_posts c on a.group_id = c.group_id" .
+            " LEFT JOIN blog_group_posts c on a.id = c.group_id" .
             " LEFT JOIN blog_posts b ON b.ID = c.object_id" .
             " WHERE b.post_status = 'publish'";
           break;

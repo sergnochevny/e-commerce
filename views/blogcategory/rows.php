@@ -2,7 +2,7 @@
   <thead>
   <tr>
     <th class="text-left">Name</th>
-    <th class="text-center">Slug</th>
+    <th></th>
     <th></th>
   </tr>
   </thead>
@@ -19,7 +19,7 @@
       <td class="text-center">
         <span class="amount">
         <?php if($row[2] > 0) { ?>
-          <a href="<?= _A_::$app->router()->UrlTo('blog/admin', ['cat' => $row['group_id']]); ?>"
+          <a href="<?= _A_::$app->router()->UrlTo('blog', ['cat' => $row['group_id']]); ?>"
              class="" rel="nofollow"> <?= $row['amount']; ?> <i class="fa fa-chevron-circle-right"></i>
                 </a>
         <?php } else { ?>
