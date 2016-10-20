@@ -1193,7 +1193,6 @@ ul.products li .product-inner > a {
 
 .woocommerce-product-search input[type="button"]#b_search {
     margin-bottom: 5px;
-    padding: 0 20px;
     text-transform: uppercase;
     text-align: center;
     font-size: 12px;
@@ -1202,7 +1201,6 @@ ul.products li .product-inner > a {
     border-radius: 0;
     background: none;
     border: 1px solid #222222;
-    color: #222222;
     box-sizing: border-box;
     background: #222222;
     color: #fff;
