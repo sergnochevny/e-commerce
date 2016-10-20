@@ -137,7 +137,6 @@
   }
 
   function evFilterAdd(event) {
-    debugger;
     var data = new FormData($('form#edit_form')[0]);
     var url = $('form#edit_form').attr('action');
     data.append('method', $(this).attr('href'));
@@ -181,7 +180,6 @@
   }
 
   function evFilterSearch() {
-    debugger;
     var data_destination = $(this).attr('data-destination');
     var destination = $('[data-filter=' + data_destination + ']').parent('div');
     var data = new FormData($('form#edit_form')[0]);
@@ -195,7 +193,6 @@
     data.append('filter-type', $(this).attr('data-filter-type'));
     postdata(this, url, data, null,
       function (response) {
-      debugger;
         var data = JSON.parse(response);
         $.when(
           $(destination).html(data[0]),
@@ -211,7 +208,6 @@
   }
 
   $("#save").on('click', function (event) {
-    debugger;
     event.preventDefault();
     $('#edit_form').trigger('submit');
   });
