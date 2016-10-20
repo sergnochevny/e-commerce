@@ -90,7 +90,9 @@
   </div>
   <div class="col-xs-12 table-list-row orders-details">
     <div class="row">
+
       <?= $detail_info; ?>
+
       <?php if($is_sample) { ?>
         <div class="table-list-row-item">
           <div class="col-xs-6 helper-row text-right">

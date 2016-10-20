@@ -341,7 +341,7 @@
       return $bNext;
     }
 
-    function checkProductDiscount($id, &$discount, &$price, &$discountIds) {
+    public static function checkProductDiscount($id, &$discount, &$price, &$discountIds) {
 
       if((int)$id == 0) {
         return false;

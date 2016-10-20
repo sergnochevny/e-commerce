@@ -146,7 +146,7 @@
             $remind_url = _A_::$app->router()->UrlTo('authorization/lost_password', ['remind' => urlencode(base64_encode($remind))]);
             if($this->send_remind($email, $remind_url)) {
 
-              $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!!!';
+              $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!';
               $this->main->template->vars('message', $message);
               $this->main->view_layout('msg_span');
             }
@@ -172,17 +172,17 @@
                         $hash = Model_Auth::generate_hash($password);
                         Model_User::update_password($hash, $user_id);
                         Model_User::clean_remind($user_id);
-                        $message = 'Congratulattions. Your Password has been changed succesfully!!!<br>';
+                        $message = 'Congratulattions. Your Password has been changed succesfully!<br>';
                         $message .= 'Now you can go to the <a href="' . _A_::$app->router()->UrlTo('authorization') . '">login form</a> and use it.';
                         $this->main->template->vars('message', $message);
                         $this->main->view_layout('msg_span');
                         exit();
                       } else {
-                        $error = ['Password and Confirm Password must be identical!!!'];
+                        $error = ['Password and Confirm Password must be identical!'];
                         $this->main->template->vars('error', $error);
                       }
                     } else {
-                      $error = ['Identity Password and Confirm Password!!!'];
+                      $error = ['Identity Password and Confirm Password!'];
                       $this->main->template->vars('error', $error);
                     }
                     $action = _A_::$app->router()->UrlTo('authorization/lost_password', ['user_id' => $user_id]);

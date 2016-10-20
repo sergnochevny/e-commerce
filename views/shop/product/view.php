@@ -172,41 +172,34 @@
                         </span>
 
         <span id="b_in_product" style="font-weight: 600;">
-                            <?php
-                              if($data['inventory'] > 0 && $allowed_samples) {
-                                ?>
-                                <a id="add_samples_cart"
-                                   href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['p_id' => $pid]) ?>" <?= !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
-                                    <button type="button" class="single_add_to_cart_button button alt">Add Samples
-                                    </button>
-                                </a>
-                              <?php } ?>
-                        </span>
+          <?php if($data['inventory'] > 0 && $allowed_samples) { ?>
+            <a id="add_samples_cart"
+               href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['p_id' => $pid]) ?>" <?= !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
+                <button type="button" class="single_add_to_cart_button button alt">Add Samples</button>
+            </a>
+          <?php } ?>
+        </span>
 
         <span id="b_in_product" style="font-weight: 600;">
-                            <?php
-                              $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
-                              $mhref = _A_::$app->router()->UrlTo('matches/add', ['p_id' => $pid]);
-                            ?>
+          <?php
+            $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
+            $mhref = _A_::$app->router()->UrlTo('matches/add', ['p_id' => $pid]);
+          ?>
           <a href="<?= $ahref; ?>">
-                                <button type="button" class="single_add_to_cart_button button alt">Ask a Question
-                                </button>
-                            </a>
-                        </span>
+            <button type="button" class="single_add_to_cart_button button alt">Ask a Question</button>
+          </a>
+        </span>
         <span id="b_in_product" style="font-weight: 600;">
-                            <?php if($img1_exists) { ?>
-                              <a id="add_matches"
-                                 href="<?= $mhref; ?>" <?= !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
-                                    <button type="button" class="single_add_to_cart_button button alt">Added to Matches
-                                    </button>
-                                </a>
-                              <a id="view_matches"
-                                 href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= isset($in_matches) ? '' : 'style="display: none;"'; ?>>
-                                    <button type="button" class="single_add_to_cart_button button alt">View Matches
-                                    </button>
-                                </a>
-                            <?php } ?>
-                        </span>
+          <?php if($img1_exists) { ?>
+            <a id="add_matches" href="<?= $mhref; ?>" <?= !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
+                  <button type="button" class="single_add_to_cart_button button alt">Added to Matches</button>
+              </a>
+            <a id="view_matches"
+               href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= isset($in_matches) ? '' : 'style="display: none;"'; ?>>
+                <button type="button" class="single_add_to_cart_button button alt">View Matches</button>
+            </a>
+          <?php } ?>
+        </span>
 
         <div class="product_meta">
           <h3>DETAILS</h3>

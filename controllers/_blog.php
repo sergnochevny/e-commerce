@@ -88,7 +88,7 @@
         (new Controller_Paginator($this->main))->paginator($total, $page, 'blog', $per_page);
       } else {
         $this->main->template->vars('count_rows', 0);
-        $list = "No Result!!!";
+        $list = "No Result!";
         $this->main->template->vars('blog_posts', $list);
       }
     }
@@ -123,7 +123,7 @@
         if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $file)) {
           $img = $file;
         } else {
-          $error = ['Error at saving the file!!!'];
+          $error = ['Error at saving the file!'];
           $this->template->vars('error', $error);
         }
       }
@@ -564,7 +564,7 @@
         (new Controller_Paginator($this->main))->paginator($total, $page, 'blog/admin', $per_page);
       } else {
         $this->template->vars('count_rows', 0);
-        $list = "No Result!!!";
+        $list = "No Result!";
         $this->template->vars('blog_posts', $list);
       }
     }
@@ -576,10 +576,10 @@
       $post_id = Model_Blog::validData(_A_::$app->get('post_id'));
       if(!empty($post_id)) {
         Model_Blog::delete($post_id);
-        $warning = ['Article removed successfully!!!'];
+        $warning = ['Article removed successfully!'];
         $this->template->vars('warning', $warning);
       } else {
-        $error = ['The article failed to remove!!!'];
+        $error = ['An error occurred while article removing!'];
         $this->template->vars('error', $error);
       }
       $this->admin_content();
@@ -649,13 +649,13 @@
 
         $error = [];
         if(empty($title{0})) {
-          $error[] = 'Identity Title Field!!';
+          $error[] = 'Identity Title has Field!';
         }
         if(empty($description{0})) {
-          $error[] = 'Identity Description Field!!';
+          $error[] = 'Identity Description Field!';
         }
         if(count($categories) == 0) {
-          $error[] = 'Select at least one category!!!';
+          $error[] = 'Select at least one category!';
         }
         if(!isset($img)) {
           $error[] = 'Identity Image!!';
@@ -689,7 +689,7 @@
         Model_Blog::save_new_post($title, $keywords, $description, $name, $img, $content, $status, $categories);
 
         $this->new_post_prepare();
-        $warning = ['Article saved successfully!!!'];
+        $warning = ['Article saved successfully!'];
         $this->template->vars('warning', $warning);
       }
       $this->main->view_layout('new_form');
@@ -770,19 +770,19 @@
 
         $error = [];
         if(empty($title{0})) {
-          $error[] = 'Identity Title Field!!';
+          $error[] = 'Identity Title Field!';
         }
         if(empty($description{0})) {
-          $error[] = 'Identity Description Field!!';
+          $error[] = 'Identity Description Field!';
         }
         if(count($categories) == 0) {
-          $error[] = 'Select at least one category!!!';
+          $error[] = 'Select at least one category!';
         }
         if(!isset($img)) {
-          $error[] = 'Identity Image!!';
+          $error[] = 'Identity Image!';
         }
         if(empty($content{0})) {
-          $error[] = 'Identity Content Field!!';
+          $error[] = 'Identity Content Field!';
         }
 
         $this->template->vars('error', $error);
@@ -813,7 +813,7 @@
         Model_Blog::save_edit_post($post_id, $title, $keywords, $description, $name, $img, $content, $status, $categories);
 
         $this->edit_post_prepare();
-        $warning = ['Article saved successfully!!!'];
+        $warning = ['Article saved successfully!'];
         $this->template->vars('warning', $warning);
       }
       $this->main->view_layout('edit_alert');

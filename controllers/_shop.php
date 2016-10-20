@@ -26,37 +26,37 @@
         $this->main->template->vars('search', _A_::$app->post('s'));
       }
 
-      $page = !empty(_A_::$app->get('page')) ? Model_Product::validData(_A_::$app->get('page')) : 1;
+      $page = !empty(_A_::$app->get('page')) ? Model_Shop::validData(_A_::$app->get('page')) : 1;
       $per_page = 12;
-      $total = Model_Product::get_total($search);
+      $total = Model_Shop::get_total($search);
       if($page > ceil($total / $per_page))
         $page = ceil($total / $per_page);
       if($page <= 0)
         $page = 1;
       $start = (($page - 1) * $per_page);
       if(!empty(_A_::$app->get('cat'))) {
-        $cat_id = Model_Product::validData(_A_::$app->get('cat'));
-        $category_name = Model_Product::getCatName($cat_id);
+        $cat_id = Model_Shop::validData(_A_::$app->get('cat'));
+        $category_name = Model_Shop::getCatName($cat_id);
       } else {
         if(!empty(_A_::$app->get('ptrn'))) {
-          $ptrn_name = Model_Product::getPtrnName(_A_::$app->get('ptrn'));
+          $ptrn_name = Model_Shop::getPtrnName(_A_::$app->get('ptrn'));
           $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
         } else {
           if(!empty(_A_::$app->get('mnf'))) {
             $mnf_id = Model_Product::validData(_A_::$app->get('mnf'));
-            $mnf_name = Model_Product::getMnfName($mnf_id);
+            $mnf_name = Model_Shop::getMnfName($mnf_id);
             $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
           }
         }
       }
-      $rows = Model_Product::get_products($start, $per_page, $count_rows, $search);
+      $rows = Model_Shop::get_products($start, $per_page, $count_rows, $search);
       if($rows) {
         $this->main->template->vars('count_rows', $count_rows);
         $sys_hide_price = Model_Price::sysHideAllRegularPrices();
         $this->main->template->vars('sys_hide_price', $sys_hide_price);
         ob_start();
         foreach($rows as $row) {
-          $cat_name = Model_Product::getCatName($row[20]);
+          $cat_name = Model_Shop::getCatName($row[20]);
           $row[8] = substr($row[8], 0, 100);
           $filename = 'upload/upload/' . $image_suffix . $row[14];
           if(!(file_exists($filename) && is_file($filename))) {
@@ -117,7 +117,7 @@
         $paginator->paginator($total, $page, 'shop', $per_page);
       } else {
         $this->main->template->vars('count_rows', 0);
-        $list = "No Result!!!";
+        $list = "No Result!";
         $this->main->template->vars('list', $list);
       }
     }
@@ -134,7 +134,7 @@
         $this->template->vars('cat_id', $cat_id);
       }
 
-      $total = Model_Product::get_count_by_type($type);
+      $total = Model_Shop::get_count_by_type($type);
       if($total > $max_count_items)
         $total = $max_count_items;
       if($page > ceil($total / $per_page))
@@ -146,7 +146,7 @@
       if($total < ($start + $per_page)) $limit = $total - $start;
 
       $res_count_rows = 0;
-      $rows = Model_Product::get_list_by_type($type, $start, $limit, $res_count_rows);
+      $rows = Model_Shop::get_list_by_type($type, $start, $limit, $res_count_rows);
       $this->template->vars('count_rows', $res_count_rows);
 
       if($rows) {
@@ -155,7 +155,7 @@
 
         ob_start();
         foreach($rows as $row) {
-          $cat_name = Model_Product::getCatName($row[20]);
+          $cat_name = Model_Shop::getCatName($row[20]);
           $row[8] = substr($row[8], 0, 100);
           $filename = 'upload/upload/' . $image_suffix . $row[14];
           if(!(file_exists($filename) && is_file($filename))) {
@@ -174,7 +174,7 @@
           $pid = $row[0];
           $price = $row[5];
           $inventory = $row[6];
-          $piece = $row[34];
+          $piece = 123;//$row[34];
           $format_price = '';
           $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
@@ -212,7 +212,7 @@
         (new Controller_Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, $per_page);
       } else {
         $this->main->template->vars('count_rows', 0);
-        $list = "No Result!!!";
+        $list = "No Result!";
         $this->main->template->vars('list', $list);
       }
     }
@@ -281,7 +281,7 @@
         $list = ob_get_contents();
         ob_end_clean();
       } else {
-        $list = "No Result!!!";
+        $list = "No Result!";
       }
       return $list;
     }

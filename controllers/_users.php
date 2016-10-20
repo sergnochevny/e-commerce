@@ -97,10 +97,10 @@
     protected function validate(&$data, &$error) {
 
       if(empty($data['email'])) {
-        $error = ['Identify email field!!!'];
+        $error = ['Data can\'t be blank!'];
       } else {
         if(Model_User::exist($data['email'], $data['aid'])) {
-          $error[] = 'User with this email already exists!!!';
+          $error[] = 'User with such email already exists!';
         } else {
           if(
             ((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password']))) ||
@@ -122,19 +122,19 @@
             $error2 = [];
 
             if((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password'])))
-              $error[] = '<pre>&#9;Identify <b>Create Password</b> and <b>Confirm Password</b> field!!!</pre>';
+              $error[] = '<pre>&#9;Identify <b>Create Password</b> and <b>Confirm Password</b> field!</pre>';
             if(empty($data['bill_firstname']))
-              $error1[] = '<pre>&#9;Identify <b>First Name</b> field!!!</pre>';
+              $error1[] = '<pre>&#9;Identify <b>First Name</b> field!</pre>';
             if(empty($data['bill_lastname']))
-              $error1[] = '<pre>&#9;Identify <b>Last Name</b> field!!!</pre>';
+              $error1[] = '<pre>&#9;Identify <b>Last Name</b> field!</pre>';
             if((empty($data['bill_address1']) && empty($data['bill_address2'])))
-              $error1[] = '<pre>&#9;Identify <b>Address</b> field!!!</pre>';
+              $error1[] = '<pre>&#9;Identify <b>Address</b> field!</pre>';
             if(empty($data['bill_country']{0}))
-              $error1[] = '<pre>&#9;Identify <b>Country</b> field!!!</pre>';
+              $error1[] = '<pre>&#9;Identify <b>Country</b> field!</pre>';
             if(empty($data['bill_postal']))
-              $error1[] = '<pre>&#9;Identify <b>Postal/Zip Code</b> field!!!</pre>';
+              $error1[] = '<pre>&#9;Identify <b>Postal/Zip Code</b> field!</pre>';
             if(empty($data['bill_phone']))
-              $error1[] = '<pre>&#9;Identify <b>Telephone</b> field!!!</pre>';
+              $error1[] = '<pre>&#9;Identify <b>Telephone</b> field!</pre>';
             if(count($error1) > 0) {
               if(count($error) > 0) $error[] = '<br>';
               $error[] = 'BILLING INFORMATION:';
@@ -143,15 +143,15 @@
             if(isset($data['ship_as_billing'])) {
 
               if(empty($data['ship_firstname']))
-                $error2[] = '<pre>&#9;Identify <b>First Name</b> field!!!</pre>';
+                $error2[] = '<pre>&#9;Identify <b>First Name</b> field!</pre>';
               if(empty($data['ship_lastname']))
-                $error2[] = '<pre>&#9;Identify <b>Last Name</b> field!!!</pre>';
+                $error2[] = '<pre>&#9;Identify <b>Last Name</b> field!</pre>';
               if((empty($data['ship_address1']) && empty($data['ship_address2'])))
-                $error2[] = '<pre>&#9;Identify <b>Address</b> field!!!</pre>';
+                $error2[] = '<pre>&#9;Identify <b>Address</b> field!</pre>';
               if(empty($data['ship_country']{0}))
-                $error2[] = '<pre>&#9;Identify <b>Country</b> field!!!</pre>';
+                $error2[] = '<pre>&#9;Identify <b>Country</b> field!</pre>';
               if(empty($data['ship_postal']))
-                $error2[] = '<pre>&#9;Identify <b>Postal/Zip Code</b> field!!!</pre>';
+                $error2[] = '<pre>&#9;Identify <b>Postal/Zip Code</b> field!</pre>';
 
               if(count($error2) > 0) {
                 if(count($error) > 0)
@@ -171,7 +171,7 @@
               $data['password'] = $password;
               return true;
             } else {
-              $error[] = 'Password and Confirm Password must be identical!!!';
+              $error[] = 'Confirm password doesn\'t match';
             }
           }
         }

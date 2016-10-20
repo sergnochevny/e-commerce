@@ -18,10 +18,10 @@
     protected function validate(&$data, &$error) {
       $error = null;
       if(empty($data['login'])) {
-        $error = ['Identify login field!!!'];
+        $error = ['An error occurred while login!'];
       } else {
         if(Model_Admin::exist($data['login'], $data['id'])) {
-          $error[] = 'User with this login already exists!!!';
+          $error[] = 'User with this login already exists!';
         } else {
           if(!empty($data['create_password'])) {
             $salt = Model_Auth::generatestr();
@@ -33,7 +33,7 @@
             $data['password'] = $password;
             return true;
           } else {
-            $error = ['Password and Confirm Password must be identical!!!'];
+            $error = ['Confirm Password confirm password does not match!'];
           }
         }
       }

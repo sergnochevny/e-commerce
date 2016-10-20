@@ -118,7 +118,7 @@
             $prms['url'] = _A_::$app->get('url');
           }
           $back_url = _A_::$app->router()->UrlTo('user', $prms);
-          $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!!!';
+          $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!';
         } elseif($msg == 'remind_expired') {
 
           $back_url = _A_::$app->router()->UrlTo('/');
