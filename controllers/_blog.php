@@ -831,9 +831,13 @@
       }
     }
 
-    protected function load(&$data, &$error) {
+    protected function load(&$data) {
 
       $this->load_form_data($data);
 
+    }
+
+    protected function validate(&$data, &$error) {
+      // TODO: Implement validate() method.
     }
   }
