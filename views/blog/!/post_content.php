@@ -3,7 +3,9 @@
         <div class="just-post col-xs-12" id="blog-page">
             <a href="<?= $back_url; ?>" class="button back_button">Back</a>
 
-            <h3 class="page-title"><?= $post_title; ?></h3>
+            <br/>
+
+            <h1 class="page-title"><?= $post_title; ?></h1>
 
             <?php if (isset($post_img)) { ?>
                 <div class="just-post-image" style="background-image: url('<?= $post_img; ?>');"></div>

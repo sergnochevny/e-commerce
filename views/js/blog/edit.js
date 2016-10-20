@@ -37,9 +37,9 @@
   $(document).ready(
     function () {
       $(document).trigger('tiny_init');
-      $(document).on('mouseenter', 'input[name=uploadfile]', function (event) {
+      $(document).on('mouseenter', '#post_img', function (event) {
         $('#post_img').css('border', 'dotted');
-      }).on('mouseleave', 'input[name=uploadfile]', function (event) {
+      }).on('mouseleave', '#post_img', function (event) {
         $('#post_img').css('border', '');
       });
     }

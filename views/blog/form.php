@@ -38,6 +38,7 @@
         <div id="post_img" class="just-post-image"
              style="background-image: url('<?= $data['img']; ?>');">
         </div>
+        <input type="file" id="uploadfile" name="uploadfile" style="position: absolute; margin: -5px 0px 0px -175px; padding: 0px; width: 220px; height: 30px; font-size: 14px; opacity: 0; cursor: pointer; display: none; z-index: 2147483583; top: 401px; left: 759px;">
       <?php } ?>
     </div>
     <div class="col-xs-12">

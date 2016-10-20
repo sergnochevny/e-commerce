@@ -1,3 +1,4 @@
+<body class="home page page-template page-template-page_visual_composer page-template-page_visual_composer-php header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
 <style>
     .just-posts-grid .just-post {
         margin: 20px 0;
@@ -108,7 +109,7 @@
                         </div>
                     </article>
                     <nav class="paging-navigation" role="navigation">
-                        <h4 class="sr-only">Navigation</h4>
+                        <h4 class="sr-only">Post navigation</h4>
                         <ul class="pagination">
                             <?= isset($paginator) ? $paginator : ''; ?>
                         </ul>
@@ -118,3 +119,4 @@
         </div>
     </div>
     <script src='<?= _A_::$app->router()->UrlTo('views/js/blog/blog.js'); ?>' type="text/javascript"></script>
+    <?php include('views/product/block_footer.php'); ?>

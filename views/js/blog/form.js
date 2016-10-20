@@ -213,6 +213,7 @@
   $("#save").on('click', function (event) {
     debugger;
     event.preventDefault();
+    $('#dialog').dialog('hide');
     $('#edit_form').trigger('submit');
   });
 

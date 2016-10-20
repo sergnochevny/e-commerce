@@ -1,4 +1,4 @@
-<form method="POST" id="edit_form" action="<?= $action_url;?>" class="enquiry-form ">
+<form method="POST" id="blog_post" action="<?= $action_url;?>" class="enquiry-form ">
     <div>
         <p class="form-row">
             <?php
@@ -69,8 +69,8 @@
             <div class="clear"></div>
         </div>
 
-        <div style="margin-top: 15px; width: 200px; height: 52px; display: block;" class="s">
-            <div id="upload" class="btn" style="cursor: pointer;"><span>Upload file</span></div>
+        <div style="margin-top: 15px; width: 200px; height: 70px; margin-left: 125px; display: block;" class="s">
+            <div id="upload" class="apd" style="cursor: pointer;"><span>Upload file</span></div>
         </div>
         <hr/>
 
@@ -84,7 +84,7 @@
     <div class="col-xs-12">
         <p class=" row">
             <label><strong>Publish:</strong></label>
-            <?= ( isset($data['status']) && $data['status'] === "publish") ? '<input id="chkML" type="checkbox" checked="checked" name="status" value="publish"><label for="chkML"></label>' : '<input id="chkML" type="checkbox" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>'; ?>
+            <?= ( isset($data['status']) && $data['status'] === "publish") ? '<input id="chkML" type="checkbox" checked="checked" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>' : '<input id="chkML" type="checkbox" name="status" value="publish" class="input-checkbox regular-checkbox big-checkbox"><label for="chkML"></label>'; ?>
         </p>
     </div>
     <div class="col-xs-12">
