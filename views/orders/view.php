@@ -6,11 +6,13 @@
         <div class="row afterhead-row">
 
           <div class="col-xs-12 back_button_container">
-            <a href="<?= $back_url; ?>" class="button back_button">Back</a>
+            <div class="row">
+              <a href="<?= $back_url; ?>" class="button back_button">Back</a>
+            </div>
           </div>
           <div class="col-xs-12 text-center">
             <div class="row">
-              <h3 class="page-title"><?= isset($user_id) && !$is_admin ? $rows[0]['username'] : 'My' ?> Order details</h3>
+              <h3 class="page-title"><?= isset($user_id) && !$is_admin ? $rows[0]['username'] : '' ?> Order details</h3>
             </div>
           </div>
 
