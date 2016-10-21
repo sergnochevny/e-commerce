@@ -187,7 +187,7 @@
       return true;
     }
 
-    protected function form_after_get_data(&$data = null) {
+    protected function before_form_layout(&$data = null) {
       $data['bill_list_countries'] = $this->list_countries($data['bill_country']);
       $data['ship_list_countries'] = $this->list_countries($data['ship_country']);
       $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);

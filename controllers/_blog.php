@@ -114,15 +114,6 @@
       return $pee;
     }
 
-    protected function before_save(&$data) {
-      if(!isset($data[$this->id_name])) $data['post_author'] = Controller_Admin::get_from_session();
-      $data['post_title'] = addslashes(trim(html_entity_decode(($data['post_title']))));
-      $data['keywords'] = addslashes(trim(html_entity_decode(($data['keywords']))));
-      $data['description'] = addslashes(trim(html_entity_decode(($data['description']))));
-      $data['post_content'] = addslashes(html_entity_decode($this->convertation(($data['post_content']))));
-
-    }
-
     private function replace_in_html_tags($haystack, $replace_pairs) {
       // Find all elements.
       $textarr = $this->html_split($haystack);
@@ -238,31 +229,52 @@
       $this->template->view_layout('filter/select');
     }
 
+    private function image($data) {
+      $file_img = trim(str_replace('{base_url}', '', $data['img']), '/\\');
+      if(basename($file_img) == $file_img){
+        if(file_exists('img/blog/'.$file_img) && is_file('img/blog/'.$file_img) && is_readable('img/blog/'.$file_img)) {
+          $data['img'] = _A_::$app->router()->UrlTo('img/blog/'.$file_img);
+          $data['file_img'] = $file_img;
+        } else {
+          $data['img'] = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
+          $data['file_img'] = '';
+        }
+      } else {
+        if(file_exists($file_img) && is_file($file_img) && is_readable($file_img)) {
+          $data['img'] = _A_::$app->router()->UrlTo($file_img);
+          $data['file_img'] = $file_img;
+        } else {
+          $data['img'] = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
+          $data['file_img'] = '';
+        }
+      }
+      $this->template->vars('data', $data);
+      $this->template->view_layout('image');
+    }
+
     private function image_handling(&$data = null) {
       $method = _A_::$app->post('method');
-      if($method == 'images.upload') {
-        $idx = !is_null(_A_::$app->post('idx')) ? _A_::$app->post('idx') : 1;
-        $uploaddir = 'upload/upload/';
-        $file = 't' . uniqid() . '.jpg';
-        $ext = strtolower(substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1));
-        $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.jpeg'];
+      if($method == 'image.upload') {
+        $uploaddir = 'img/blog/';
+        $file = 't' . uniqid();
+        $ext = substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1);
+        $file .= $ext;
+        $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.JPG', '.BMP', '.GIF', '.PNG', '.jpeg', '.JPEG'];
 
         if(!in_array($ext, $filetypes)) {
-          $this->template->vars('error', 'Error format');
+          $error = ['Error format'];
+          $this->template->vars('error', $error);
         } else {
           if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
-            if(substr($data['image' . $idx], 0, 1) == 't') Model_Product::delete_img($data['image' . $idx]);
-            $data['image' . $idx] = $file;
-            Model_Product::convert_image($uploaddir, $file);
+            if(substr($data['img'], 0, 1) == 't') Model_Blog::delete_img($data['img']);
+            $data['img'] = $file;
           } else {
-            $this->template->vars('error', 'Upload error');
+            $error = ['Error at saving the file!!!'];
+            $this->template->vars('error', $error);
           }
         }
-      } elseif($method == 'images.delete') {
-        $idx = _A_::$app->post('idx');
-        $data['image' . $idx] = '';
       }
-      $this->images($data);
+      $this->image($data);
     }
 
     private function filters_handling(&$data = null) {
@@ -306,6 +318,14 @@
       $this->template->view_layout('filter/filter');
     }
 
+    protected function before_save(&$data) {
+      if(!isset($data[$this->id_name])) $data['post_author'] = Controller_Admin::get_from_session();
+      $data['post_title'] = addslashes(trim(html_entity_decode(($data['post_title']))));
+      $data['keywords'] = addslashes(trim(html_entity_decode(($data['keywords']))));
+      $data['description'] = addslashes(trim(html_entity_decode(($data['description']))));
+      $data['post_content'] = addslashes(html_entity_decode($this->convertation(($data['post_content']))));
+    }
+
     protected function form_handling(&$data = null) {
       if(_A_::$app->request_is_post()) {
         if(!is_null(_A_::$app->post('method'))) {
@@ -317,30 +337,31 @@
     }
 
     protected function form_after_get_data(&$data = null) {
-
       $desckeys = Model_Blog::get_desc_keys($data[$this->id_name]);
-      $data['description'] = stripslashes($desckeys['description']);
-      $data['keywords'] = stripslashes($desckeys['keywords']);
+      $data['description'] = $desckeys['description'];
+      $data['keywords'] = $desckeys['keywords'];
+      $data['img'] = Model_Blog::get_img($data[$this->id_name]);
+    }
+
+    protected function before_form_layout(&$data = null) {
+      $data['description'] = stripslashes($data['description']);
+      $data['keywords'] = stripslashes($data['keywords']);
       $data['post_content'] = stripslashes($data['post_content']);
       $data['post_content'] = str_replace('{base_url}', _A_::$app->router()->UrlTo('/'), $data['post_content']);
       $data['post_content'] = preg_replace('#(style="[^>]*")#U', '', $data['post_content']);
       $data['post_title'] = stripslashes($data['post_title']);
       $data['post_date'] = date('F jS, Y', strtotime($data['post_date']));
-      $post_img = Model_Blog::get_img($data[$this->id_name]);
-      $file_img = trim(str_replace('{base_url}', '', $post_img), '/\\');
-      if(file_exists($file_img) && is_file($file_img) && is_readable($file_img)) {
-        $data['img'] = _A_::$app->router()->UrlTo($post_img);
-        $data['file_img'] = $file_img;
-      } else {
-        $data['img'] = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
-        $data['file_img'] = '';
-      }
 
       ob_start();
       Model_Blog::get_filter_selected($data);
       $this->generate_filter($data);
       $data['categories'] = ob_get_contents();
       ob_end_clean();
+      ob_start();
+      $this->image($data);
+      $image = ob_get_contents();
+      ob_end_clean();
+      $this->template->vars('image', $image);
     }
 
     protected function after_get_list(&$rows) {
@@ -403,18 +424,6 @@
         return false;
       }
       return true;
-    }
-
-    public function edit_post_imgs($img = null) {
-      $base_url = _A_::$app->router()->UrlTo('/');
-      if(isset($img) && file_exists($img) && is_file($img)) {
-        $f_img = $img;
-        $img = _A_::$app->router()->UrlTo($img);
-      } else {
-        $img = _A_::$app->router()->UrlTo('upload/upload/error_format.png');
-        $f_img = '';
-      }
-      echo json_encode(['img' => $img, 'f_img' => $f_img]);
     }
 
   }

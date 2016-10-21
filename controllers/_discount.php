@@ -145,7 +145,7 @@
       return false;
     }
 
-    protected function form_after_get_data(&$data = null) {
+    protected function before_form_layout(&$data = null) {
       Model_Discount::get_filter_selected('filter_products', $data);
       Model_Discount::get_filter_selected('users', $data);
       if($data['product_type'] == 1) $data['filter_products'] = null;

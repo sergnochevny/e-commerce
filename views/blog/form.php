@@ -34,14 +34,8 @@
           <b><span class="hang-punct">&laquo;</span><?= $data['post_title']; ?><span class="punct">&raquo;</span></b>
         </h3>
       </div>
-      <div class="col-sm-12 col-md-10 col-md-offset-1">
-        <?php if(isset($data['img'])) { ?>
-          <div id="post_img" class="just-post-image"
-               style="background-image: url('<?= $data['img']; ?>');">
-          </div>
-          <input type="file" id="uploadfile" name="uploadfile"
-                 style="position: absolute; margin: -5px 0px 0px -175px; padding: 0px; width: 220px; height: 30px; font-size: 14px; opacity: 0; cursor: pointer; display: none; z-index: 2147483583; top: 401px; left: 759px;">
-        <?php } ?>
+      <div id="image" class="col-sm-12 col-md-10 col-md-offset-1">
+        <?=$image;?>
       </div>
       <div class="col-xs-12 col-md-10 col-md-offset-1">
         <div class="just-post-detail">
@@ -68,30 +62,9 @@
     <input type="hidden" name="post_title" value="">
     <input type="hidden" name="post_content" value="">
     <input type="hidden" name="post_author" value="<?= $data['post_author']; ?>">
-    <input id="img" type="hidden" name="img" value="<?= $data['file_img']; ?>"/>
     <input type="hidden" name="post_date" value="<?= $data['post_date']; ?>">
     <div class="col-md-12 col-xs-12">
       <div class="row">
-        <div id="alert" class="form-row">
-          <?php
-            if(isset($warning)) {
-              echo '<div class="col-xs-12 alert-success danger" style="display: none;">';
-              foreach($warning as $msg) {
-                echo $msg . "<br>";
-              }
-              echo '</div>';
-            }
-
-            if(isset($error)) {
-              echo '<div class="col-xs-12 alert-danger danger" style="display: none;">';
-              foreach($error as $msg) {
-                echo $msg . "<br>";
-              }
-              echo '</div>';
-            }
-          ?>
-        </div>
-
         <div class="form-row">
           <label class="required_field"><strong>Post Categories:</strong></label>
           <div>

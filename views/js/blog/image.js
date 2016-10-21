@@ -59,8 +59,8 @@
       } else {
         var data = new FormData($('form#edit_form')[0]);
         var url = $('form#edit_form').attr('action');
-        data.append('method', 'images.upload');
-        postdata(this, url, data, $('#images'));
+        data.append('method', 'image.upload');
+        postdata(this, url, data, $('#image'));
       }
     }
   );
