@@ -20,8 +20,8 @@
           <div class="col-xs-4">
             <div class="form-row">
               <label>User Email:</label>
-              <input type="text" class="input-text" placeholder="Like ..." name="search[pname]"
-                     value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
+              <input type="text" class="input-text" placeholder="Like ..." name="search[email]"
+                     value="<?= isset($search['email']) ? $search['email'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-8">

@@ -18,55 +18,33 @@
       <div class="panel-body hidden">
 
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-sm-6">
             <div class="form-row">
                 <label>Product Name:</label>
-                <input type="text" class="input-text" placeholder="Like ..." name="search[]"
-                       value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
+                <input type="text" class="input-text" placeholder="Like ..." name="search[pname]"
+                       value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
             </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-6 col-sm-4">
+          <div class="col-sm-6">
             <div class="form-row">
               <label for="">
                 Select the status
-                <select name="" id="">
-                  <option value="">Enabled</option>
-                  <option value="">Disabled</option>
+                <select name="search[pvisible]" id="">
+                  <option value selected>Any status</option>
+                  <option value="0" <?= isset($search['pvisible']) && $search['pvisible'] == 0 ? 'selected' : '' ?>>Hidden</option>
+                  <option value="1" <?= isset($search['pvisible']) && $search['pvisible'] == 1 ? 'selected' : '' ?>>Visible</option>
                 </select>
               </label>
-            </div>
-          </div>
-          <div class="col-xs-6 col-sm-4">
-            <div class="form-row">
-              <label for="">
-                Multiple
-                <select name="" id="">
-                  <option value="">Yes</option>
-                  <option value="">No</option>
-                </select>
-              </label>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-4">
-            <div class="form-row">
-                <label for="discount_on">
-                  Coupon Type
-                  <input type="text" class="input-text">
-                </label>
             </div>
           </div>
         </div>
-
         <div class="row">
           <div class="col-xs-6">
             <div class="form-row">
                 <label for="discount_on">
                   Starts at:
-                  <input placeholder="Chose start date" type="text" id="discount_starts" class="input-text" name="search[]"
-                    value="<?= isset($search['']) ? $search[''] : '' ?>">
+                  <input placeholder="Chose start date" type="text" id="discount_starts" class="input-text" name="search[dt]"
+                    value="<?= isset($search['dt']) ? $search['dt'] : '' ?>">
                 </label>
             </div>
           </div>
@@ -74,8 +52,8 @@
             <div class="form-row">
                 <label for="discount_on">
                   Ends at:
-                  <input placeholder="Chose end date" type="text" id="discount_ends" class="input-text" name="search[]"
-                         value="<?= isset($search['']) ? $search[''] : '' ?>">
+                  <input placeholder="Chose end date" type="text" id="discount_ends" class="input-text" name="search[dt]"
+                         value="<?= isset($search['dt']) ? $search['dt'] : '' ?>">
                 </label>
             </div>
           </div>

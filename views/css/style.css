@@ -2209,14 +2209,3 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
 .offset-top{
     padding-top: 15px;
 }
-.woocommerce ul.products li.product .product-image-box, .woocommerce-page ul.products li.product .product-image-box,
-.woocommerce ul.products li.product .product-image-box, .woocommerce-page ul.products li.product .product-image-box:hover,
-.just-post .just-post-image figure,
-.just-post .just-post-image figure:hover,
-.just-post .just-post-image figure img,
-.just-post .just-post-image figure img:hover,
-.just-post .just-post-image figure figcaption,
-.just-post .just-post-image figure figcaption:hover,
-.just-post-image{
-    border-radius: 4px !important;
-}

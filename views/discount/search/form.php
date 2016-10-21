@@ -20,26 +20,26 @@
         <div class="row">
           <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-              <select name="" id="">
+              <select name="search[enabled]" id="">
                 <option>Select Coupon Status</option>
-                <option value="">Enabled</option>
-                <option value="">Disabled</option>
+                <option value="1" <?= isset($search['enabled']) && $search['enabled'] == 1 ? 'selected' : '' ?>>Enabled</option>
+                <option value="0" <?= isset($search['enabled']) && $search['enabled'] == 0 ? 'selected' : '' ?>>Disabled</option>
               </select>
             </div>
           </div>
           <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-              <select name="" id="">
-                <option>Multiple</option>
-                <option value="">Yes</option>
-                <option value="">No</option>
+              <select name="search[allow_multiple]" id="">
+                <option>Allow multiple</option>
+                <option value="1" <?= isset($search['allow_multiple']) && $search['allow_multiple'] == 1 ? 'selected' : '' ?>>Yes</option>
+                <option value="0" <?= isset($search['allow_multiple']) && $search['allow_multiple'] == 0 ? 'selected' : '' ?>>No</option>
               </select>
             </div>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="form-row">
                 <label for="discount_on">
-                  <input type="text" class="input-text" placeholder="Coupon details">
+                  <input type="text" name="search[coupon_code]" class="input-text" placeholder="Coupon details">
                 </label>
             </div>
           </div>
@@ -50,8 +50,8 @@
             <div class="form-row">
                 <label for="discount_on">
                   Date ranges from:
-                  <input type="text" id="discount_starts" class="input-text" name="search[]" placeholder="Chose start date"
-                    value="<?= isset($search['']) ? $search[''] : '' ?>">
+                  <input type="text" id="discount_starts" class="input-text" name="search[date_start]" placeholder="Chose start date"
+                    value="<?= isset($search['date_end']) ? $search['date_end'] : '' ?>">
                 </label>
             </div>
           </div>
@@ -59,8 +59,8 @@
             <div class="form-row">
                 <label for="discount_on">
                   Date ranges to:
-                  <input type="text" id="discount_ends" class="input-text" name="search[]" placeholder="Chose end date"
-                         value="<?= isset($search['']) ? $search[''] : '' ?>">
+                  <input type="text" id="discount_ends" class="input-text" name="search[date_end]" placeholder="Chose end date"
+                         value="<?= isset($search['date_end']) ? $search['date_end'] : '' ?>">
                 </label>
             </div>
           </div>
