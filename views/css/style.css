@@ -359,12 +359,8 @@ body {
 
     background-color: #222222;
 }
-.punct{
-    vertical-align: 2px;
-}
 .hang-punct{
-    margin-left: -16px;
-    vertical-align: 2px;
+    margin-left: -14px;
 }
 .CSSTableGenerator tr:first-child td:first-child {
     border-width: 0px 0px 1px 0px;
@@ -1961,6 +1957,9 @@ a.button-move:focus, a.button-move:hover{
     .b_modify_images_pic{
         margin-bottom: 15px;
     }
+    .hang-punct{
+        margin-left: 0;
+    }
 }
 
 /* Extra Small Devices, Phones */
@@ -2116,7 +2115,7 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
 }
 
 .just-posts-grid .just-post-image {
-    background-position: center;
+    background-position: top center;
     background-size: cover;
     height: 220px;
     margin: 0 0 30px;

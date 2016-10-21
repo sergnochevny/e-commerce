@@ -88,7 +88,7 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-12 table-list-row orders-details">
+  <div class="col-xs-12 table-list-row orders-details" style="border-radius: 0 0 0 4px">
     <div class="row">
 
       <?= $detail_info; ?>
@@ -115,7 +115,7 @@
       <?php } ?>
     </div>
   </div>
-  <div class="col-xs-4 col-sm-offset-8 table-total">
+  <div class="col-xs-4 col-sm-offset-8 table-total" style="border-radius: 0 0 4px 4px">
     <div class="table-list-row-item">
       <div class="col-xs-12 col-sm-12">
         <div class="row text-right">
