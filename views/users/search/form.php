@@ -27,8 +27,8 @@
           <div class="col-xs-8">
             <div class="form-row">
               <label>User First and/or Last Name:</label>
-              <input type="text" class="input-text" placeholder="Like ..." name="search[pname]"
-                     value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
+              <input type="text" class="input-text" placeholder="Like ..." name="search[full_name]"
+                     value="<?= isset($search['full_name']) ? $search['full_name'] : '' ?>">
             </div>
           </div>
         </div>
@@ -36,15 +36,15 @@
           <div class="col-xs-6">
             <div class="form-row">
               <label>Registration date ranges from:</label>
-              <input type="text" class="input-text" placeholder="Chose start date" name="search[pname]"
-                     value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
+              <input type="text" class="input-text" placeholder="Chose start date" name="search[date_registered][starts]"
+                     value="<?= isset($search['pname']['starts']) ? $search['pname']['starts'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-6">
             <div class="form-row">
               <label>Registration date ranges to:</label>
-              <input type="text" class="input-text" placeholder="Chose end date" name="search[pname]"
-                     value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
+              <input type="text" class="input-text" placeholder="Chose end date" name="search[pname][ends]"
+                     value="<?= isset($search['pname']['ends']) ? $search['pname']['ends'] : '' ?>">
             </div>
           </div>
         </div>

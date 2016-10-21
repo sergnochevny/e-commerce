@@ -39,7 +39,7 @@
           <div class="col-xs-12 col-sm-4">
             <div class="form-row">
                 <label for="discount_on">
-                  <input type="text" name="search[coupon_code]" class="input-text" placeholder="Coupon details">
+                  <input type="text" name="search[coupon_code]" class="input-text" value="<?= isset($search['coupon_code']) ?>" placeholder="Coupon details">
                 </label>
             </div>
           </div>
@@ -51,7 +51,7 @@
                 <label for="discount_on">
                   Date ranges from:
                   <input type="text" id="discount_starts" class="input-text" name="search[date_start]" placeholder="Chose start date"
-                    value="<?= isset($search['date_end']) ? $search['date_end'] : '' ?>">
+                    value="<?= isset($search['date_start']) ? $search['date_start'] : '' ?>">
                 </label>
             </div>
           </div>
