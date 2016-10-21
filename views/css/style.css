@@ -2201,6 +2201,12 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     width: 100%;
 }
 
+.just-post{
+    min-height: 405px;
+    max-height: 405px;
+    margin-bottom: 15px;
+}
+
 .woocommerce ul.products li.product .product-image-box, .woocommerce-page ul.products li.product .product-image-box,
 .woocommerce ul.products li.product .product-image-box, .woocommerce-page ul.products li.product .product-image-box:hover,
 .just-post .just-post-image figure,

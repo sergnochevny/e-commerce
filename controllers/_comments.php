@@ -32,7 +32,6 @@
      * @export
      */
     public function moderate(){
-
       if($id = _A_::$app->get('id')){
         $action = _A_::$app->get('action');
         if(Model_Comments::moderate($id, $action)){
