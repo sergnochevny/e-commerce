@@ -18,67 +18,49 @@
       <div class="panel-body hidden">
 
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-xs-6">
             <div class="form-row">
-                <label>Colour Name:</label>
+                <label>Title Name:</label>
                 <input type="text" class="input-text" placeholder="Like ..." name="search[]"
                        value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
             </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-6 col-sm-4">
+          <div class="col-xs-6">
             <div class="form-row">
-                <label for="discount_on">
-                  <input type="checkbox" id="discount_on" name="search[]"
-                    value="<?= isset($search['']) ? $search[''] : '' ?>">
-                  Status on/off
-                </label>
-            </div>
-          </div>
-          <div class="col-xs-6 col-sm-4">
-            <div class="form-row">
-                <label for="discount_on">
-                  <input type="checkbox" id="discount_on" name="search[]"
-                    value="<?= isset($search['']) ? $search[''] : '' ?>">
-                  Multiple
-                </label>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-4">
-            <div class="form-row">
-                <label for="discount_on">
-                  <select name="" id="">
-                    <option>Coupon Type</option>
-                    <option value="">Coupon 1</option>
-                    <option value="">Coupon 2</option>
-                  </select>
-                </label>
+                <label>Chose Category Name:</label>
+                <select name="" id="">
+                  <?php
+                    // TODO REFACTOR THIS CODE!!! FOR DEMO ONLY
+                    $categories = Model_Blogcategory::get_all();
+                    foreach($categories as $category):
+                  ?>
+                  <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                  <?php endforeach; ?>
+                </select>
             </div>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-xs-6">
-            <div class="form-row">
-                <label for="discount_on">
-                  Starts at:
-                  <input type="text" id="discount_starts" class="input-text" name="search[]"
-                    value="<?= isset($search['']) ? $search[''] : '' ?>">
-                </label>
+
+            <div class="col-xs-6">
+              <div class="form-row">
+                  <label for="discount_on">
+                    Date ranges from:
+                    <input type="text" id="discount_starts" placeholder="Chose start date" class="input-text" name="search[]"
+                      value="<?= isset($search['']) ? $search[''] : '' ?>">
+                  </label>
+              </div>
             </div>
-          </div>
-          <div class="col-xs-6">
-            <div class="form-row">
-                <label for="discount_on">
-                  Ends at:
-                  <input type="text" id="discount_ends" class="input-text" name="search[]"
-                         value="<?= isset($search['']) ? $search[''] : '' ?>">
-                </label>
+            <div class="col-xs-6">
+              <div class="form-row">
+                  <label for="discount_on">
+                    Date ranges to:
+                    <input type="text" id="discount_ends" placeholder="Chose end date" class="input-text" name="search[]"
+                           value="<?= isset($search['']) ? $search[''] : '' ?>">
+                  </label>
+              </div>
             </div>
-          </div>
-        </div>
 
       </div>
 

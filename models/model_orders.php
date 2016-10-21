@@ -83,17 +83,17 @@
     }
 
     public static function get_total_count($id = null, $filter = null) {
-      $q = "select";
-      $q .= " COUNT(order.oid)";
-      $q .= " FROM fabrix_orders order";
-      $q .= " LEFT JOIN fabrix_accounts user on order.aid = user.aid";
-      $q .= (isset($id) || isset($filter)) ? " where" : '';
-      $q .= isset($id) ? " order.aid='$id'" : '';
+      $q = "SELECT";
+      $q .= " COUNT(ord.oid)";
+      $q .= " FROM fabrix_orders ord";
+      $q .= " LEFT JOIN fabrix_accounts user ON ord.aid = user.aid";
+      $q .= (isset($id) || isset($filter)) ? " WHERE" : '';
+      $q .= isset($id) ? " ord.aid = '$id'" : '';
       if(isset($filter)) {
-        $q .= isset($id) ? " and" : '';
-        $q .= " (order.trid like '%$filter%'";
-        $q .= " or user.bill_firstname like '%$filter%'";
-        $q .= " or user.bill_lastname  like '%$filter%')";
+        $q .= isset($id) ? " AND" : '';
+        $q .= " (ord.trid LIKE '%$filter%'";
+        $q .= " OR user.bill_firstname LIKE '%$filter%'";
+        $q .= " OR user.bill_lastname  LIKE '%$filter%')";
       }
       $result = mysql_query($q);
       if($result) {

@@ -43,14 +43,14 @@
           <div class="col-xs-6">
             <div class="form-row">
               <label>Date ranges from:</label>
-              <input type="text" class="input-text" placeholder="Like ..." name="search[colour]"
+              <input type="text" class="input-text" placeholder="Chose start date" name="search[colour]"
                      value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-6">
             <div class="form-row">
               <label>Date ranges to:</label>
-              <input type="text" class="input-text" placeholder="Like ..." name="search[colour]"
+              <input type="text" class="input-text" placeholder="Chose end date" name="search[colour]"
                      value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
             </div>
           </div>

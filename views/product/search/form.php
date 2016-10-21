@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="form-row">
-                <label>Colour Name:</label>
+                <label>Product Name:</label>
                 <input type="text" class="input-text" placeholder="Like ..." name="search[]"
                        value="<?= isset($search['colour']) ? $search['colour'] : '' ?>">
             </div>
@@ -65,7 +65,7 @@
             <div class="form-row">
                 <label for="discount_on">
                   Starts at:
-                  <input type="text" id="discount_starts" class="input-text" name="search[]"
+                  <input placeholder="Chose start date" type="text" id="discount_starts" class="input-text" name="search[]"
                     value="<?= isset($search['']) ? $search[''] : '' ?>">
                 </label>
             </div>
@@ -74,7 +74,7 @@
             <div class="form-row">
                 <label for="discount_on">
                   Ends at:
-                  <input type="text" id="discount_ends" class="input-text" name="search[]"
+                  <input placeholder="Chose end date" type="text" id="discount_ends" class="input-text" name="search[]"
                          value="<?= isset($search['']) ? $search[''] : '' ?>">
                 </label>
             </div>
