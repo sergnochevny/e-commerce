@@ -2123,7 +2123,7 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
 .just-posts-grid .just-post-image {
     background-position: top center;
     background-size: cover;
-    height: 200px;
+    height: 220px;
     margin: 0 0 30px;
     overflow: hidden;
     box-shadow: 0 0 3px #DDD;
@@ -2194,6 +2194,11 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     display: inline-block !important;
     margin: auto;
     text-align: center;
+}
+
+.just-post .just-post-image figure img{
+    min-height: 220px;
+    width: 100%;
 }
 
 .woocommerce ul.products li.product .product-image-box, .woocommerce-page ul.products li.product .product-image-box,
