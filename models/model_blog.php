@@ -123,6 +123,7 @@
     public static function delete_img($filename) {
       $filename = trim(str_replace('{base_url}', '', $filename), '/\\');
       if(!empty($filename)) {
+        if($filename == basename($filename)) $filename = 'img/blog/'.$filename;
         if(file_exists($filename)) unlink($filename);
       }
     }
