@@ -182,7 +182,7 @@
       return true;
     }
 
-    protected function form_after_get_data(&$data = null) {
+    protected function before_form_layout(&$data = null) {
 
       $data['manufacturers'] = Model_Product::get_manufacturers();
       foreach(['categories', 'colours', 'patterns'] as $type) {

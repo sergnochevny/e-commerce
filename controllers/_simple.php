@@ -15,6 +15,8 @@
 
     protected function form_after_get_data(&$data = null) { }
 
+    protected function before_form_layout(&$data = null) { }
+
     protected function after_delete($id = null) { }
 
     protected function after_save($id, &$data) { }
@@ -23,8 +25,11 @@
 
     protected function form($url, $data = null) {
       $id = _A_::$app->get($this->id_name);
-      if(!isset($data)) $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
-      $this->form_after_get_data($data);
+      if(!isset($data)) {
+        $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
+        $this->form_after_get_data($data);
+      }
+      $this->before_form_layout($data);
       $prms = null;
       if(isset($id)) $prms[$this->id_name] = $id;
       if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
@@ -78,7 +83,7 @@
     /**
      * @export
      */
-    public function view(){
+    public function view() {
       $id = _A_::$app->get($this->id_name);
       $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
       $this->template->vars('view_title', $this->view_title);
