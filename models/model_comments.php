@@ -62,6 +62,11 @@
       return $id;
     }
 
+    public static function moderate($id, $action){
+      $query = 'UPDATE ' . static::$table . ' SET `moderated` = "' . $action . '" WHERE id =' . $id;
+      return mysql_query($query) ? true : false;
+    }
+
     public static function delete($id) {
       if(isset($id)) {
         $query = "DELETE FROM " . static::$table . " WHERE id = $id";

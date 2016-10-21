@@ -7,9 +7,9 @@
 
     protected function load(&$data) {
       $data['id'] = _A_::$app->get('id');
-      $data['title'] = Model_Colours::validData(_A_::$app->post('title'));
-      $data['data'] = Model_Colours::validData(_A_::$app->post('data'));
-      $data['moderated'] = Model_Colours::validData(_A_::$app->post('moderated'));
+      $data['title'] = Model_Comments::validData(_A_::$app->post('title'));
+      $data['data'] = Model_Comments::validData(_A_::$app->post('data'));
+      $data['moderated'] = Model_Comments::validData(_A_::$app->post('moderated'));
     }
 
     protected function validate(&$data, &$error) {
@@ -26,5 +26,19 @@
         return false;
       }
       return true;
+    }
+
+    /**
+     * @export
+     */
+    public function moderate(){
+
+      if($id = _A_::$app->get('id')){
+        $action = _A_::$app->get('action');
+        if(Model_Comments::moderate($id, $action)){
+          $this->index();
+        }
+      }
+      return false;
     }
   }

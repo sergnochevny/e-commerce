@@ -13,7 +13,13 @@
 </div>
 
 <?php foreach($rows as $row): ?>
-<?php $prms['id'] = $row[0]; if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
+<?php
+  $prms['id'] = (int) $row['id'];
+  $prms['action'] = $row['moderated'] == '1' ? '0' : '1';
+  if(!is_null(_A_::$app->get('page'))) {
+    $prms['page'] = _A_::$app->get('page');
+  }
+  ?>
 <div class="col-xs-12 table-list-row">
   <div class="row">
     <div class="col-xs-12 col-sm-3 table-list-row-item">
@@ -40,17 +46,22 @@
         <div class="row"><?= date("m/d/Y", strtotime($row['dt'])) ?></div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-2 table-list-row-item">
+    <div class="col-xs-12 col-sm-3 table-list-row-item">
       <div class="col-xs-4 visible-xs helper-row">
         <div class="row">Visibility</div>
       </div>
-      <div class="col-xs-8 col-sm-12 text-right xs-text-left">
+      <div class="col-xs-8 col-sm-12 text-center xs-text-left">
         <div class="row">
-          <i title="<?= $row['moderated'] == '0' ? 'Hidden' : 'Visible'; ?>" class="fa <?= $row['moderated'] == '0' ? 'fa-eye-slash' : 'fa-eye'; ?>"></i>
+          <a class="comment-moderated-action <?= $row['moderated'] == '0' ? '' : 'text-danger'; ?>"
+             data-status="<?= $row['moderated'] == '1' ? '0' : '1' ?>"
+             data-id="<?= $row['id'] ?>"
+             href="<?= _A_::$app->router()->UrlTo('comments/moderate', $prms) ?>">
+            <?= $row['moderated'] == '0' ? 'Hide' : 'Publish'; ?>
+          </a>
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-2 text-right action-buttons">
+    <div class="col-xs-12 col-sm-1 text-right action-buttons">
       <a data-modify
          href="<?= _A_::$app->router()->UrlTo('comments/edit', $prms) ?>"
          title="Edit comment"><i class="fa fa-pencil"></i>
