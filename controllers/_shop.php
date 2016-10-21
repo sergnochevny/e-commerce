@@ -22,7 +22,7 @@
       $cart = array_keys($cart_items);
       $search = null;
       if(!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
-        $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->post('s')))));
+        $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
         $this->main->template->vars('search', _A_::$app->post('s'));
       }
 

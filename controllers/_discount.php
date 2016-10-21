@@ -82,13 +82,9 @@
       $data['date_end'] = Model_Discount::validData(!is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '');
       $data['enabled'] = Model_Discount::validData(!is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : 0);
       $data['countdown'] = Model_Discount::validData(!is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : 0);
-      $tmp = Model_Discount::validData(!is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '');
-      $data['discount_comment1'] = mysql_real_escape_string($tmp);
-      $tmp = Model_Discount::validData(!is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '');
-      $data['discount_comment2'] = mysql_real_escape_string($tmp);
-      $tmp = Model_Discount::validData(!is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '');
-      $data['discount_comment3'] = mysql_real_escape_string($tmp);
-
+      $data['discount_comment1'] =  Model_Discount::validData(!is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '');
+      $data['discount_comment2'] = Model_Discount::validData(!is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '');
+      $data['discount_comment3'] = Model_Discount::validData(!is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '');
       $data['date_end'] = strlen($data['date_end']) > 0 ? strtotime($data['date_end']) : 0;
       $data['date_start'] = strlen($data['date_start']) > 0 ? strtotime($data['date_start']) : 0;
 

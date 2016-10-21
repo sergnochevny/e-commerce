@@ -9,7 +9,7 @@
     protected function load(&$data) {
       $data = [
         $this->id_name => _A_::$app->get($this->id_name),
-        'cname' => mysql_real_escape_string(Model_Categories::validData(_A_::$app->post('cname'))),
+        'cname' => Model_Categories::validData(_A_::$app->post('cname')),
         'displayorder' => Model_Categories::validData(_A_::$app->post('displayorder'))
       ];
     }

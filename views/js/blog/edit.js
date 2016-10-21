@@ -45,12 +45,20 @@
     }
   );
 
-  $(document).on('click', '#pre_save',
+  $(document).on('click', 'a#pre_save',
     function (event) {
       event.preventDefault();
       $('#dialog').removeClass('hidden');
       $('.blog-post-edit-in').addClass('hidden');
       $('html, body').stop().animate({scrollTop: parseInt($('#dialog').offset().top) - 100}, 100);
+    }
+  );
+  $(document).on('click', 'a#cancel',
+    function (event) {
+      event.preventDefault();
+      $('.blog-post-edit-in').removeClass('hidden');
+      $('#dialog').addClass('hidden');
+      $('html, body').stop().animate({scrollTop: parseInt($('.blog-post-edit-in').offset().top) - 100}, 100);
     }
   );
 })(jQuery);

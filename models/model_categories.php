@@ -58,6 +58,7 @@
 
     public static function save($data) {
       extract($data);
+      $cname = mysql_real_escape_string($cname);
       if(!empty($cid)) {
         $res = mysql_query("select * from fabrix_categories WHERE cid='$cid'");
         if($res) {

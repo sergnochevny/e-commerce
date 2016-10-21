@@ -14,24 +14,24 @@
             case 'like':
               if(is_array($val[1])) {
                 foreach($val[1] as $like) {
-                  $where .= $key . " " . $val[0] . " '%" . mysql_escape_string(static::validData($like)) . "%'";
+                  $where .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::validData($like)) . "%'";
                 }
               } else {
-                $where .= $key . " " . $val[0] . " '%" . mysql_escape_string(static::validData($val[1])) . "%'";
+                $where .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::validData($val[1])) . "%'";
               }
               break;
             case '=':
               if(is_array($val[1])) {
                 foreach($val[1] as $like) {
-                  $where .= $key . " " . $val[0] . " '" . mysql_escape_string(static::validData($like)) . "'";
+                  $where .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($like)) . "'";
                 }
               } else {
-                $where .= $key . " " . $val[0] . " '" . mysql_escape_string(static::validData($val[1])) . "'";
+                $where .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($val[1])) . "'";
               }
               break;
             case 'between':
-              $where .= $key . " " . $val[0] . " '" . mysql_escape_string(static::validData($val[1][0])) . "'";
-              $where .= " and '" . mysql_escape_string(static::validData($val[1][0])) . "'";
+              $where .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($val[1][0])) . "'";
+              $where .= " and '" . mysql_real_escape_string(static::validData($val[1][0])) . "'";
               break;
           }
           $where .= ")";

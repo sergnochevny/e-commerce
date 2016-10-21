@@ -60,6 +60,8 @@
     }
 
     public static function user_authorize($mail, $password) {
+      $mail = mysql_real_escape_string($mail);
+      $password = mysql_real_escape_string($password);
       $q = "select * from fabrix_accounts where email='$mail'";
       $res = mysql_query($q);
       if($res) {
@@ -110,6 +112,8 @@
     }
 
     public static function admin_authorize($login, $password) {
+      $login = mysql_real_escape_string($login);
+      $password = mysql_real_escape_string($password);
       $q = "select * from fabrix_admins where login='$login'";
       $res = mysql_query($q);
       if($res) {

@@ -2,10 +2,6 @@
 
   Class Controller_Admin Extends Controller_FormSimple {
 
-    private static function get_from_session() {
-      return _A_::$app->session('_a');
-    }
-
     protected function load(&$data) {
       $data = [
         'id' => self::get_from_session(),
@@ -43,6 +39,10 @@
     protected function form($url, $data = null) {
       _A_::$app->get($this->id_name, self::get_from_session());
       parent::form($url, $data);
+    }
+
+    public static function get_from_session() {
+      return _A_::$app->session('_a');
     }
 
     public function edit() { }
@@ -127,8 +127,8 @@
      * @export
      */
     public function authorize($login, $password) {
-      $login = mysql_real_escape_string(stripslashes(strip_tags(trim($login))));
-      $password = mysql_real_escape_string(stripslashes(strip_tags(trim($password))));
+      $login = stripslashes(strip_tags(trim($login)));
+      $password = stripslashes(strip_tags(trim($password)));
       $res = Model_Auth::admin_authorize($login, $password);
       if($res) {
         $admin = Model_Auth::get_admin_data();

@@ -155,6 +155,12 @@
 
     public static function save(&$data) {
       extract($data);
+
+      $post_title = mysql_real_escape_string($post_title);
+      $keywords = mysql_real_escape_string($keywords);
+      $description = mysql_real_escape_string($description);
+      $post_content = mysql_real_escape_string($post_content);
+
       if(!isset($id)) {
         $date['post_date'] = $post_date = time();
         $q = "INSERT INTO " . static::$table . " (post_author, post_date, post_content, post_title, post_status)" .
@@ -171,7 +177,7 @@
       if($result) $result = mysql_query("DELETE FROM blog_group_posts WHERE post_id = '$id'");
       if($result) {
         foreach($categories as $group) {
-          if($result) $result = mysql_query("INSERT INTO blog_group_posts(object_id, group_id) values ('$id', '$group')");
+          if($result) $result = mysql_query("INSERT INTO blog_group_posts(post_id, group_id) values ('$id', '$group')");
           if(!$result) break;
         }
       }

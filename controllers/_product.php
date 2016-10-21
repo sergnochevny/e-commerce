@@ -121,10 +121,10 @@
 
     protected function load(&$data) {
       $data['pid'] = _A_::$app->get('pid');
-      $data['metadescription'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('metadescription')) ? _A_::$app->post('metadescription') : '');
-      $data['metakeywords'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('metakeywords')) ? _A_::$app->post('metakeywords') : '');
-      $data['metatitle'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('metatitle')) ? _A_::$app->post('metatitle') : '');
-      $data['pname'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('pname')) ? _A_::$app->post('pname') : '');
+      $data['metadescription'] = Model_Product::validData(_A_::$app->post('metadescription') ? _A_::$app->post('metadescription') : '');
+      $data['metakeywords'] = Model_Product::validData(_A_::$app->post('metakeywords') ? _A_::$app->post('metakeywords') : '');
+      $data['metatitle'] = Model_Product::validData(_A_::$app->post('metatitle') ? _A_::$app->post('metatitle') : '');
+      $data['pname'] = Model_Product::validData(_A_::$app->post('pname') ? _A_::$app->post('pname') : '');
       $data['pnumber'] = Model_Product::validData(_A_::$app->post('pnumber')) ? _A_::$app->post('pnumber') : '';
       $data['width'] = Model_Product::validData(_A_::$app->post('width')) ? _A_::$app->post('width') : '';
       $data['priceyard'] = Model_Product::validData(_A_::$app->post('priceyard')) ? _A_::$app->post('priceyard') : '';
@@ -132,26 +132,26 @@
       $data['dimensions'] = Model_Product::validData(_A_::$app->post('dimensions')) ? _A_::$app->post('dimensions') : '';
       $data['weight'] = Model_Product::validData(!is_null(_A_::$app->post('weight'))) ? _A_::$app->post('weight') : '';
       $data['manufacturerId'] = Model_Product::validData(_A_::$app->post('manufacturerId')) ? _A_::$app->post('manufacturerId') : '';
-      $data['sdesc'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('sdesc')) ? _A_::$app->post('sdesc') : '');
-      $data['ldesc'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('ldesc')) ? _A_::$app->post('ldesc') : '');;
-      $data['weight_id'] = Model_Product::validData(_A_::$app->post('weight_id')) ? _A_::$app->post('weight_id') : '';
+      $data['sdesc'] = Model_Product::validData(_A_::$app->post('sdesc') ? _A_::$app->post('sdesc') : '');
+      $data['ldesc'] = Model_Product::validData(_A_::$app->post('ldesc') ? _A_::$app->post('ldesc') : '');;
+      $data['weight_id'] = Model_Product::validData(_A_::$app->post('weight_id') ? _A_::$app->post('weight_id') : '');
       $data['colours'] = !is_null(_A_::$app->post('colours')) ? _A_::$app->post('colours') : [];
       $data['colours_select'] = !is_null(_A_::$app->post('colours_select')) ? _A_::$app->post('colours_select') : [];
       $data['categories'] = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
       $data['categories_select'] = !is_null(_A_::$app->post('categories_select')) ? _A_::$app->post('categories_select') : [];
       $data['patterns'] = !is_null(_A_::$app->post('patterns')) ? _A_::$app->post('patterns') : [];
       $data['patterns_select'] = !is_null(_A_::$app->post('patterns_select')) ? _A_::$app->post('patterns_select') : [];
-      $data['specials'] = Model_Product::validData(!is_null(_A_::$app->post('specials'))) ? _A_::$app->post('specials') : 0;
-      $data['pvisible'] = Model_Product::validData(_A_::$app->post('pvisible')) ? _A_::$app->post('pvisible') : 0;
-      $data['best'] = Model_Product::validData(!is_null(_A_::$app->post('best'))) ? _A_::$app->post('best') : 0;
+      $data['specials'] = Model_Product::validData(!is_null(_A_::$app->post('specials')) ? _A_::$app->post('specials') : 0);
+      $data['pvisible'] = Model_Product::validData(_A_::$app->post('pvisible') ? _A_::$app->post('pvisible') : 0);
+      $data['best'] = Model_Product::validData(!is_null(_A_::$app->post('best')) ? _A_::$app->post('best') : 0);
       $data['piece'] = !is_null(_A_::$app->post('piece')) ? _A_::$app->post('piece') : 0;
       $data['whole'] = !is_null(_A_::$app->post('whole')) ? _A_::$app->post('whole') : 0;
-      $data['stock_number'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('stock_number')) ? _A_::$app->post('stock_number') : '');
-      $data['image1'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image1')) ? _A_::$app->post('image1') : '');
-      $data['image2'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image2')) ? _A_::$app->post('image2') : '');
-      $data['image3'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image3')) ? _A_::$app->post('image3') : '');
-      $data['image4'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image4')) ? _A_::$app->post('image4') : '');
-      $data['image5'] = mysql_real_escape_string(Model_Product::validData(_A_::$app->post('image5')) ? _A_::$app->post('image5') : '');
+      $data['stock_number'] = Model_Product::validData(_A_::$app->post('stock_number') ? _A_::$app->post('stock_number') : '');
+      $data['image1'] = Model_Product::validData(_A_::$app->post('image1') ? _A_::$app->post('image1') : '');
+      $data['image2'] = Model_Product::validData(_A_::$app->post('image2') ? _A_::$app->post('image2') : '');
+      $data['image3'] = Model_Product::validData(_A_::$app->post('image3') ? _A_::$app->post('image3') : '');
+      $data['image4'] = Model_Product::validData(_A_::$app->post('image4') ? _A_::$app->post('image4') : '');
+      $data['image5'] = Model_Product::validData(_A_::$app->post('image5') ? _A_::$app->post('image5') : '');
       $data['inventory'] = !is_null(_A_::$app->post('inventory')) ? _A_::$app->post('inventory') : 0;
     }
 
@@ -374,7 +374,7 @@
       }
 
       if(!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
-        $search = mysql_real_escape_string(strtolower(htmlspecialchars(trim(_A_::$app->post('s')))));
+        $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
         $this->main->template->vars('search', _A_::$app->post('s'));
       }
 

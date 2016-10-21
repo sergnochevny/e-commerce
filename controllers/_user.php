@@ -74,8 +74,8 @@
      * @export
      */
     public function authorize($email, $password) {
-      $email = mysql_real_escape_string(stripslashes(strip_tags(trim($email))));
-      $password = mysql_real_escape_string(stripslashes(strip_tags(trim($password))));
+      $email = stripslashes(strip_tags(trim($email)));
+      $password = stripslashes(strip_tags(trim($password)));
       $res = Model_Auth::user_authorize($email, $password);
       if($res) {
         $user = Model_Auth::get_user_data();

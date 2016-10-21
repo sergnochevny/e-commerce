@@ -92,6 +92,33 @@
 
     public static function save($data) {
       extract($data);
+
+      $email = mysql_real_escape_string($email);
+      $bill_firstname = mysql_real_escape_string($bill_firstname);
+      $bill_lastname = mysql_real_escape_string($bill_lastname);
+      $bill_organization = mysql_real_escape_string($bill_organization);
+      $bill_address1 = mysql_real_escape_string($bill_address1);
+      $bill_address2 = mysql_real_escape_string($bill_address2);
+      $bill_province = mysql_real_escape_string($bill_province);
+      $bill_city = mysql_real_escape_string($bill_city);
+      $bill_country = mysql_real_escape_string($bill_country);
+      $bill_postal = mysql_real_escape_string($bill_postal);
+      $bill_phone = mysql_real_escape_string($bill_phone);
+      $bill_fax = mysql_real_escape_string($bill_fax);
+      $bill_email = mysql_real_escape_string($bill_email);
+      $ship_firstname = mysql_real_escape_string($ship_firstname);
+      $ship_lastname = mysql_real_escape_string($ship_lastname);
+      $ship_organization = mysql_real_escape_string($ship_organization);
+      $ship_address1 = mysql_real_escape_string($ship_address1);
+      $ship_address2 = mysql_real_escape_string($ship_address2);
+      $ship_city = mysql_real_escape_string($ship_city);
+      $ship_province = mysql_real_escape_string($ship_province);
+      $ship_country = mysql_real_escape_string($ship_country);
+      $ship_postal = mysql_real_escape_string($ship_postal);
+      $ship_phone = mysql_real_escape_string($ship_phone);
+      $ship_fax = mysql_real_escape_string($ship_fax);
+      $ship_email = mysql_real_escape_string($ship_email);
+
       $timestamp = time();
       if(!isset($aid)) {
         $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname ," .

@@ -26,104 +26,101 @@
 ?>
 
 
-<section class="just-posts-grid blog-post-edit-in">
-  <div class="just-post-row">
-    <div class="just-post col-sm-12 col-md-10 col-md-offset-1" id="blog-page">
-      <h3 id="editable_title">
-        <b><span class="hang-punct">&laquo;</span><?= $data['post_title']; ?><span class="punct">&raquo;</span></b>
-      </h3>
-    </div>
-    <div class="col-sm-12 col-md-10 col-md-offset-1">
-      <?php if(isset($data['img'])) { ?>
-        <div id="post_img" class="just-post-image"
-             style="background-image: url('<?= $data['img']; ?>');">
-        </div>
-        <input type="file" id="uploadfile" name="uploadfile" style="position: absolute; margin: -5px 0px 0px -175px; padding: 0px; width: 220px; height: 30px; font-size: 14px; opacity: 0; cursor: pointer; display: none; z-index: 2147483583; top: 401px; left: 759px;">
-      <?php } ?>
-    </div>
-    <div class="col-xs-12 col-md-10 col-md-offset-1">
-      <div class="just-post-detail">
-        <div
-          class="just-divider text-center line-yes icon-hide">
-          <div class="divider-inner"
-               style="background-color: #fff">
-            <span class="post-date"><?= $data['post_date']; ?></span>
+<form method="POST" id="edit_form" action="<?= $action; ?>" class="enquiry-form ">
+  <section class="just-posts-grid blog-post-edit-in">
+    <div class="just-post-row">
+      <div class="just-post col-sm-12 col-md-10 col-md-offset-1" id="blog-page">
+        <h3 id="editable_title">
+          <b><span class="hang-punct">&laquo;</span><?= $data['post_title']; ?><span class="punct">&raquo;</span></b>
+        </h3>
+      </div>
+      <div class="col-sm-12 col-md-10 col-md-offset-1">
+        <?php if(isset($data['img'])) { ?>
+          <div id="post_img" class="just-post-image"
+               style="background-image: url('<?= $data['img']; ?>');">
           </div>
+          <input type="file" id="uploadfile" name="uploadfile"
+                 style="position: absolute; margin: -5px 0px 0px -175px; padding: 0px; width: 220px; height: 30px; font-size: 14px; opacity: 0; cursor: pointer; display: none; z-index: 2147483583; top: 401px; left: 759px;">
+        <?php } ?>
+      </div>
+      <div class="col-xs-12 col-md-10 col-md-offset-1">
+        <div class="just-post-detail">
+          <div
+            class="just-divider text-center line-yes icon-hide">
+            <div class="divider-inner"
+                 style="background-color: #fff">
+              <span class="post-date"><?= $data['post_date']; ?></span>
+            </div>
+          </div>
+          <div id="editable_content" class="text-justify"><?= $data['post_content']; ?></div>
         </div>
-        <div id="editable_content" class="text-justify"><?= $data['post_content']; ?></div>
+      </div>
+      <div class="col-xs-12">
+        <div class="text-center">
+          <br/>
+          <a id="pre_save" class="button" style="width: 150px;">Save</a>
+        </div>
       </div>
     </div>
-    <div class="col-xs-12">
-      <div class="text-center">
-        <br/>
-        <input id="pre_save" type="button" value="Save" class="button" style="width: 150px;">
-        <br/>
+  </section>
+
+  <div id="dialog" class="col-md-10 col-md-offset-1 hidden">
+    <input type="hidden" name="post_title" value="">
+    <input type="hidden" name="post_content" value="">
+    <input type="hidden" name="post_author" value="<?= $data['post_author']; ?>">
+    <input id="img" type="hidden" name="img" value="<?= $data['file_img']; ?>"/>
+    <input type="hidden" name="post_date" value="<?= $data['post_date']; ?>">
+    <div class="col-md-12 col-xs-12">
+      <div class="row">
+        <div id="alert" class="form-row">
+          <?php
+            if(isset($warning)) {
+              echo '<div class="col-xs-12 alert-success danger" style="display: none;">';
+              foreach($warning as $msg) {
+                echo $msg . "<br>";
+              }
+              echo '</div>';
+            }
+
+            if(isset($error)) {
+              echo '<div class="col-xs-12 alert-danger danger" style="display: none;">';
+              foreach($error as $msg) {
+                echo $msg . "<br>";
+              }
+              echo '</div>';
+            }
+          ?>
+        </div>
+
+        <div class="form-row">
+          <label class="required_field"><strong>Post Categories:</strong></label>
+          <div>
+            <?= $data['categories']; ?>
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="required_field" for="ed_f_desc"><strong>Description:</strong></label>
+          <textarea class="input-text" id="ed_f_desc" cols="5" rows="2"
+                    name="description"><?= $data['description']; ?></textarea>
+        </div>
+        <div class="form-row">
+          <label class="required_field" for="ed_f_keyw"><strong>Keywords:</strong></label>
+          <input type="text" name="keywords" id="ed_f_keyw" value="<?= $data['keywords']; ?>" class="input-text">
+        </div>
+        <div class="form-row">
+          <label><strong>Publish:</strong></label>
+          <input type="checkbox" <?= (isset($data['post_status']) && ($data['post_status'] == "publish")) ? 'checked' : ''; ?> name="post_status" value="publish" class="input-checkbox">
+        </div>
+        <div class="col-xs-12">
+          <div class="text-center">
+            <br/>
+            <a id="save" data-modify class="button" style="width: 150px;">Save</a>
+            <a id="cancel" data-modify class="button" style="width: 150px;">Cancel</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</section>
-
-<div id="dialog" class="col-md-10 col-md-offset-1 hidden">
-  <form method="POST" id="edit_form" action="<?= $action; ?>" class="enquiry-form ">
-    <input type="hidden" name="post_title" value="">
-    <input type="hidden" name="post_content" value="">
-    <input id="img" type="hidden" name="img" value="<?= $data['file_img']; ?>"/>
-    <input type="hidden" name="date" value="<?= $data['post_date']; ?>">
-      <div class="col-md-12 col-xs-12">
-        <div class="row">
-          <div id="alert" class="form-row">
-            <?php
-              if(isset($warning)) {
-                echo '<div class="col-xs-12 alert-success danger" style="display: none;">';
-                foreach($warning as $msg) {
-                  echo $msg . "<br>";
-                }
-                echo '</div>';
-              }
-
-              if(isset($error)) {
-                echo '<div class="col-xs-12 alert-danger danger" style="display: none;">';
-                foreach($error as $msg) {
-                  echo $msg . "<br>";
-                }
-                echo '</div>';
-              }
-            ?>
-          </div>
-
-          <div class="form-row">
-            <label class="required_field"><strong>Post Categories:</strong></label>
-            <div>
-              <?= $data['categories']; ?>
-            </div>
-          </div>
-          <div class="form-row">
-            <label class="required_field" for="ed_f_desc"><strong>Description:</strong></label>
-            <textarea class="input-text" id="ed_f_desc" cols="5" rows="2"
-                      name="description"><?= $data['description']; ?></textarea>
-          </div>
-          <div class="form-row">
-            <label class="required_field" for="ed_f_keyw"><strong>Keywords:</strong></label>
-            <input type="text" name="keywords" id="ed_f_keyw" value="<?= $data['keywords']; ?>" class="input-text">
-          </div>
-          <div class="form-row">
-            <label><strong>Publish:</strong></label>
-            <?= (isset($data['post_status']) && ($data['post_status'] == "publish")) ? '<input type="checkbox" checked="checked" name="status" value="publish" class="input-checkbox">' : '<input type="checkbox" name="status" value="publish" class="input-checkbox">'; ?>
-          </div>
-          <div class="col-xs-12">
-            <div class="text-center">
-              <br/>
-              <input id="save" type="button" value="Save" class="button" style="width: 150px;">
-              <br/>
-            </div>
-          </div>
-        </div>
-      </div>
-  </form>
-</div>
-<!--</div>-->
-<!--<div data-id="blog_post_form_dialog" class="ui-widget-overlay ui-front" style="display:none; z-index: 100;"></div>-->
-<form id="categories">
   <div id="modal" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">

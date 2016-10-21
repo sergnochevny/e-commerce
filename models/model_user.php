@@ -5,8 +5,9 @@
     protected static $table = 'fabrix_accounts';
 
     public static function get_by_email($email) {
+      $email = mysql_real_escape_string($email);
       $user = null;
-      $strSQL = "select * from " . static::$table . " where email = '" . mysql_real_escape_string($email) . "'";
+      $strSQL = "select * from " . static::$table . " where email = '" . $email . "'";
       $result = mysql_query($strSQL);
       if($result) {
         $user = mysql_fetch_assoc($result);
@@ -15,7 +16,8 @@
     }
 
     public static function set_remind_for_change_pass($remind, $date, $user_id) {
-      $q = "update " . static::$table . " set remind = '" . mysql_real_escape_string($remind) . "', remind_time = '" . $date . "' where aid = " . $user_id;
+      $remind = mysql_real_escape_string($remind);
+      $q = "update " . static::$table . " set remind = '" . $remind . "', remind_time = '" . $date . "' where aid = " . $user_id;
       $res = mysql_query($q);
       return ($res && mysql_affected_rows());
     }

@@ -46,9 +46,14 @@
     function (event, submit) {
       event.preventDefault();
       if (submit) {
+        debugger;
+        $('[name=post_title]').val(tinyMCE.get('editable_title').getContent());
+        $('[name=post_content]').val(tinyMCE.get('editable_content').getContent());
         var data = new FormData(this);
         var url = $(this).attr('action');
-        postdata(this, url, data, $('#form_content'));
+        postdata(this, url, data, $('#form_content'), function (data) {
+          $(document).trigger('tiny_init');
+        });
       }
     }
   );
@@ -97,9 +102,6 @@
       var destination = $('[data-filter=' + $(this).attr('data-destination') + ']').parent('div');
       var data = new FormData($('form#edit_form')[0]);
       var url = $('form#edit_form').attr('action');
-      for(var pair of (new FormData($('form#categories')[0])).entries()){
-        data.append(pair[0],pair[1]);
-      }
       data.append('method', $(this).attr('href'));
       data.append('type', $(this).attr('data-destination'));
       postdata(this, url, data, destination,
@@ -183,9 +185,6 @@
     var data_destination = $(this).attr('data-destination');
     var destination = $('[data-filter=' + data_destination + ']').parent('div');
     var data = new FormData($('form#edit_form')[0]);
-    for(var pair of (new FormData($('form#categories')[0])).entries()){
-      data.append(pair[0],pair[1]);
-    }
     var url = $('form#edit_form').attr('action');
     if ($(this).is('[data-move]')) data.append($(this).attr('data-move'), true);
     data.append('method', $(this).attr('href'));
@@ -207,14 +206,9 @@
     );
   }
 
-  $("#save").on('click', function (event) {
+  $("a#save").on('click', function (event) {
     event.preventDefault();
-    $('#dialog').dialog('hide');
-    $('#edit_form').trigger('submit');
-  });
-
-  $("#close").on('click', function (event) {
-    // $('[data-id=blog_post_form_dialog]').each(function () { $(this).hide(); });
+    $('#edit_form').trigger('submit', true);
   });
 
 })(jQuery);

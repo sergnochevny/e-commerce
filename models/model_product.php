@@ -144,6 +144,7 @@
     }
 
     public static function get_filter_data($type, &$count, $start = 0, $search = null) {
+      $search = mysql_real_escape_string($search);
       $filter = null;
       $FILTER_LIMIT = FILTER_LIMIT;
       $start = isset($start) ? $start : 0;
@@ -367,6 +368,14 @@
 
     public static function save(&$data) {
       extract($data);
+
+      $metadescription = mysql_real_escape_string($metadescription);
+      $metakeywords = mysql_real_escape_string($metakeywords);
+      $pname = mysql_real_escape_string($pname);
+      $sdesc = mysql_real_escape_string($sdesc);
+      $ldesc = mysql_real_escape_string($ldesc);;
+      $stock_number = mysql_real_escape_string($stock_number);
+
       if(isset($pid)) {
         $sql = "update " . static::$table . " set";
         if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";

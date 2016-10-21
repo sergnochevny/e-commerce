@@ -140,6 +140,9 @@
 
     public static function save($data) {
       extract($data);
+      $discount_comment1 = mysql_real_escape_string($discount_comment1);
+      $discount_comment2 = mysql_real_escape_string($discount_comment2);
+      $discount_comment3 = mysql_real_escape_string($discount_comment3);
       if(isset($sid)) {
         $q = "UPDATE " . static::$table .
           " SET" .

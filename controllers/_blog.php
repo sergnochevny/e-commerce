@@ -60,6 +60,7 @@
       $pee = preg_replace('|<br\s*/?>\s*<br\s*/?>|', "\n\n", $pee);
 
       $allblocks = '(?:table|thead|tfoot|caption|col|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|form|map|area|blockquote|address|math|style|p|h[1-6]|hr|fieldset|legend|section|article|aside|hgroup|header|footer|nav|figure|figcaption|details|menu|summary)';
+      $unaryblocks = '(?:img)';
       $pee = preg_replace('!(<' . $allblocks . '[\s/>])!', "\n$1", $pee);
       $pee = preg_replace('!(</' . $allblocks . '>)!', "$1\n\n", $pee);
       $pee = str_replace(["\r\n", "\r"], "\n", $pee);
@@ -79,6 +80,7 @@
         $pee = preg_replace('%\s*(<(?:source|track)[^>]*>)\s*%', '$1', $pee);
       }
       $pee = preg_replace("/\n\n+/", "\n\n", $pee);
+//      $pee = preg_replace('|<p>\s*</p>|', '', $pee);
       $pees = preg_split('/\n\s*\n/', $pee, -1, PREG_SPLIT_NO_EMPTY);
       $pee = '';
       foreach($pees as $tinkle) {
@@ -92,6 +94,8 @@
       $pee = str_replace('</blockquote></p>', '</p></blockquote>', $pee);
       $pee = preg_replace('!<p>\s*(</?' . $allblocks . '[^>]*>)!', "$1", $pee);
       $pee = preg_replace('!(</?' . $allblocks . '[^>]*>)\s*</p>!', "$1", $pee);
+      $pee = preg_replace('!<p>\s*(<' . $unaryblocks . '[^>]*/>)!', "$1", $pee);
+      $pee = preg_replace('!(<' . $unaryblocks . '[^>]*/>)\s*</p>!', "$1", $pee);
       if($br) {
         $pee = preg_replace_callback('/<(script|style).*?<\/\\1>/s', [$this, '_autop_newline_preservation_helper'], $pee);
         $pee = str_replace(['<br>', '<br/>'], '<br />', $pee);
@@ -108,6 +112,15 @@
       }
 
       return $pee;
+    }
+
+    protected function before_save(&$data) {
+      if(!isset($data[$this->id_name])) $data['post_author'] = Controller_Admin::get_from_session();
+      $data['post_title'] = addslashes(trim(html_entity_decode(($data['post_title']))));
+      $data['keywords'] = addslashes(trim(html_entity_decode(($data['keywords']))));
+      $data['description'] = addslashes(trim(html_entity_decode(($data['description']))));
+      $data['post_content'] = addslashes(html_entity_decode($this->convertation(($data['post_content']))));
+
     }
 
     private function replace_in_html_tags($haystack, $replace_pairs) {
@@ -357,18 +370,19 @@
       $data['id'] = _A_::$app->get($this->id_name);
       $data['categories'] = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
       $data['keywords'] = !is_null(_A_::$app->post('keywords')) ? _A_::$app->post('keywords') : '';
-      $data['title'] = !is_null(_A_::$app->post('title')) ? _A_::$app->post('title') : '';
+      $data['post_title'] = !is_null(_A_::$app->post('post_title')) ? _A_::$app->post('post_title') : '';
       $data['description'] = !is_null(_A_::$app->post('description')) ? _A_::$app->post('description') : '';
       $data['img'] = !is_null(_A_::$app->post('img')) ? _A_::$app->post('img') : null;
-      $data['content'] = !is_null(_A_::$app->post('content')) ? _A_::$app->post('content') : '';
-      $data['status'] = !is_null(_A_::$app->post('status')) ? _A_::$app->post('status') : 'unpublish';
-      $data['date'] = !is_null(_A_::$app->post('date')) ? _A_::$app->post('date') : date('F jS, Y');
+      $data['post_content'] = !is_null(_A_::$app->post('post_content')) ? _A_::$app->post('post_content') : '';
+      $data['post_status'] = !is_null(_A_::$app->post('post_status')) ? _A_::$app->post('post_status') : 'unpublish';
+      $data['post_author'] = !is_null(_A_::$app->post('post_author')) ? _A_::$app->post('post_author') : 1;
+      $data['post_date'] = !is_null(_A_::$app->post('post_date')) ? _A_::$app->post('post_date') : date('F jS, Y');
       $data['categories_select'] = !is_null(_A_::$app->post('categories_select')) ? _A_::$app->post('categories_select') : [];
     }
 
     protected function validate(&$data, &$error) {
       if(empty($data['post_title']) || empty($data['description']) ||
-        empty($data['img']) || empty($data['content']) || (count($data['categories']) == 0)
+        empty($data['img']) || empty($data['post_content']) || (count($data['categories']) == 0)
       ) {
         $error = [];
         if(empty($data['post_title'])) {
@@ -383,7 +397,7 @@
         if(!isset($data['img'])) {
           $error[] = 'Identity Image!!';
         }
-        if(empty($data['content']{0})) {
+        if(empty($data['postcontent'])) {
           $error[] = 'Identity Content Field!!';
         }
         return false;
