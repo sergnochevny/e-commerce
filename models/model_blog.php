@@ -53,23 +53,23 @@
       $FILTER_LIMIT = FILTER_LIMIT;
       $start = isset($start) ? $start : 0;
       $search = mysql_escape_string(static::validData($search));
-          $q = "select count(id) from blog_groups";
-          if(isset($search) && (strlen($search) > 0)) {
-            $q .= " where name like '%$search%'";
-          }
-          $results = mysql_query($q);
-          $row = mysql_fetch_array($results);
-          $count = $row[0];
-          $q = "select * from blog_groups";
-          if(isset($search) && (strlen($search) > 0)) {
-            $q .= " where name like '%$search%'";
-          }
-          $q .= " order by name";
-          $q .= " limit $start, $FILTER_LIMIT";
-          $results = mysql_query($q);
-          while($row = mysql_fetch_array($results)) {
-            $filter[] = [$row[0], $row[1]];
-          }
+      $q = "select count(id) from blog_groups";
+      if(isset($search) && (strlen($search) > 0)) {
+        $q .= " where name like '%$search%'";
+      }
+      $results = mysql_query($q);
+      $row = mysql_fetch_array($results);
+      $count = $row[0];
+      $q = "select * from blog_groups";
+      if(isset($search) && (strlen($search) > 0)) {
+        $q .= " where name like '%$search%'";
+      }
+      $q .= " order by name";
+      $q .= " limit $start, $FILTER_LIMIT";
+      $results = mysql_query($q);
+      while($row = mysql_fetch_array($results)) {
+        $filter[] = [$row[0], $row[1]];
+      }
       return $filter;
     }
 
@@ -121,11 +121,10 @@
     }
 
     public static function delete_img($filename) {
-      $filename = str_replace('{base_url}', '', $filename);
+      $filename = trim(str_replace('{base_url}', '', $filename), '/\\');
       if(!empty($filename)) {
-        if(file_exists($filename)) {
-          unlink($filename);
-        }
+        if($filename == basename($filename)) $filename = 'img/blog/'.$filename;
+        if(file_exists($filename)) unlink($filename);
       }
     }
 
@@ -140,6 +139,25 @@
         }
       }
       return $filename;
+    }
+
+    public static function update_image($id, &$data) {
+      $img = trim(str_replace('{base_url}', '', static::get_img($id)), '/\\');
+      $filename = basename($data['img']);
+      if(!empty($filename) && ($filename != basename($img))) {
+        if(substr($filename, 0, 1) == 't') {
+          static::delete_img($img);
+          $filename = 'p' . $id . $filename;
+          if(file_exists("img/blog/" . basename($data['img']))) {
+            rename("img/blog/" . basename($data['img']), "img/blog/" . $filename);
+          }
+          $data['img'] = $filename;
+          $result = mysql_query("DELETE FROM blog_post_img WHERE post_id = '$id'");
+          if($result) $result = mysql_query("INSERT INTO blog_post_img(post_id, img) values('$id', '$filename')");
+          return $result;
+        }
+      }
+      return true;
     }
 
     public static function delete($id) {
@@ -183,9 +201,7 @@
       }
       if($result) $result = mysql_query("DELETE FROM blog_post_keys_descriptions WHERE post_id = '$id'");
       if($result) $result = mysql_query("INSERT INTO blog_post_keys_descriptions(post_id, keywords, description) values('$id', '$keywords', '$description')");
-      if($result) $result = mysql_query("DELETE FROM blog_post_img WHERE post_id = '$id'");
-      if($result) $result = mysql_query("INSERT INTO blog_post_img(post_id, img) values('$id', '$img')");
-
+      if($result) $result = static::update_image($id, $data);
       if(!$result) throw new Exception(mysql_error());
       if(!isset($id)) $id = mysql_insert_id();
       return $id;
