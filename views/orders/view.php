@@ -26,34 +26,34 @@
             <div class="panel panel-default ">
                 <div class="row">
 
-                    <div class="col-xs-12 col-md-4">
-                        <div class="text-center xs-text-left">
-                            <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="text-center">
+                            <div class="col-xs-6 col-md-6 order-detail-item">
                                 <b>Track Code:</b>
                             </div>
-                            <div class="col-xs-12 col-md-6">
+                            <div class="col-xs-6 col-md-6 order-detail-item">
                                 <?= ($track_code == 0) ? 'Not specified yet' : $track_code ?>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-xs-12 col-md-4">
-                        <div class="text-center xs-text-left">
-                            <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="text-center">
+                            <div class="col-xs-6 col-md-6 order-detail-item">
                                 <b>Delivery date:</b>
                             </div>
-                            <div class="col-xs-12 col-md-6">
+                            <div class="col-xs-6 col-md-6 order-detail-item">
                                 <?= ($end_date == 0) ? 'Not specified yet' : $end_date ?>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-xs-12 col-md-4">
-                        <div class="text-center xs-text-left">
-                            <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="text-center">
+                            <div class="col-xs-6 col-md-6 order-detail-item">
                                 <b>Order status:</b>
                             </div>
-                            <div class="col-xs-12 col-md-6">
+                            <div class="col-xs-6 col-md-6 order-detail-item">
                                 <?= $status ?>
                             </div>
                         </div>
@@ -93,30 +93,38 @@
         <div class="row">
 
             <?= $detail_info; ?>
-
+            <div class="col-xs-12 table-list-row-item">
+                <div class="row">
+                    <hr style="border-color: #D0D0D0; margin: 1px 0">
+                </div>
+            </div>
             <?php if ($is_sample) { ?>
-                <div class="table-list-row-item">
-                    <div class="col-xs-6 helper-row text-right">
-                        Samples cost
-                    </div>
-                    <div class="col-xs-6 text-left">
-                        <?= $sample_cost ?>
+                <div class="col-xs-12 table-list-row-item">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 helper-row text-left">
+                            Samples cost
+                        </div>
+                        <div class="col-xs-6 col-sm-8 text-left">
+                            <?= $sample_cost ?>
+                        </div>
                     </div>
                 </div>
             <?php } ?>
             <?php if (!empty($shipping_cost)) { ?>
-                <div class="table-list-row-item">
-                    <div class="col-xs-6 helper-row text-right">
-                        <?= ($shipping_type == 3 ? 'Ground ship' : 'Express post') ?>
-                    </div>
-                    <div class="col-xs-6 text-left">
-                        <?= $shipping_cost ?>
+                <div class="col-xs-12 table-list-row-item">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 helper-row text-left">
+                            <?= ($shipping_type == 3 ? 'Ground ship' : 'Express post') ?>
+                        </div>
+                        <div class="col-xs-6 col-sm-8 text-left">
+                            <?= $shipping_cost ?>
+                        </div>
                     </div>
                 </div>
             <?php } ?>
         </div>
     </div>
-    <div class="col-xs-4 col-sm-offset-8 table-total" style="border-radius: 0 0 4px 4px">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-8 table-total" style="border-radius: 0 0 4px 4px">
         <div class="table-list-row-item">
             <div class="col-xs-12 col-sm-12">
                 <div class="row text-right">
@@ -158,8 +166,10 @@
         <div class="table-list-row-item">
             <div class="col-xs-12 col-sm-12">
                 <div class="row text-right">
-                    <b>Total:</b>
-                    <?= $total; ?>
+                    <h5 class="text-danger">
+                        Total:
+                        <?= $total; ?>
+                    </h5>
                 </div>
             </div>
         </div>

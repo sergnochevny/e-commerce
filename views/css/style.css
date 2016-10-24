@@ -1280,7 +1280,6 @@ td.product-subtotal {
     margin-top: 30px;
     margin-bottom: 35px !important;
 }
-
 .proceed_bill {
     width: 50%;
     float: left;
@@ -1996,6 +1995,10 @@ a.button-move:focus, a.button-move:hover{
     #post_img{
         height: 240px !important;
     }
+    .order-detail-item{
+        margin-bottom: 7px;
+        text-align: left;
+    }
 }
 
 form[data-search]{
@@ -2039,6 +2042,9 @@ form[data-search] > .row > .panel > .panel-heading{
     }
     .table-list-row-item{
         padding-bottom: 15px;
+    }
+    .table-list-row-item > div{
+        margin-bottom: 7px;
     }
     .search-result{
         vertical-align: 0 !important;
