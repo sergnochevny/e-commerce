@@ -1,21 +1,4 @@
-<div class="row">
-  <?php if(isset($warning)) { ?>
-    <div class="col-xs-12 alert-success danger" style="display: none;">
-      <?php
-        foreach($warning as $msg) {
-          echo $msg . '<br/>';
-        }
-      ?>
-    </div>
-  <?php }
-    if(isset($error)) { ?>
-      <div class="col-xs-12 alert-danger danger" style="display: none;">
-        <?php foreach($error as $msg) {
-          echo $msg . '<br/>';
-        } ?>
-      </div>
-    <?php } ?>
-</div>
+<?php include_once 'views/messages/alert-boxes.php'; ?>
 <form method="POST" id="edit_form" action="<?= $action; ?>" class="col-md-8 col-md-offset-2">
   
   <div class="row">

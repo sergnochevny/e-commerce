@@ -1,4 +1,11 @@
-<div class="col-xs-12 text-center">
+<?php
+  $prms = null;
+  if (!is_null(_A_::$app->get('page'))) {
+    $prms['page'] = _A_::$app->get('page');
+  }
+?>
+
+<div class="col-xs-12 text-center content-header">
   <h2>Comments</h2>
 </div>
 
@@ -16,23 +23,7 @@
   </div>
 </div>
 
-<?php if(isset($warning)) { ?>
-  <div class="col-xs-12 alert-success danger">
-    <?php foreach($warning as $msg) {
-      echo $msg . "<br/>";
-    } ?>
-  </div>
-<?php }
-  if(isset($error)) { ?>
-    <div class="col-xs-12 alert-danger danger">
-      <?php foreach($error as $msg) {
-        echo $msg . "<br/>";
-      } ?>
-    </div>
-  <?php }
-  $prms = null;
-  if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
-?>
+<?php include_once 'views/messages/alert-boxes.php'; ?>
 
 <div class="row">
   <div class="col-xs-12 data-view">

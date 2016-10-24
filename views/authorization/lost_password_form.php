@@ -14,28 +14,7 @@
         <span style="color: red;">Be careful, the link is relevant only one hour.</span>
     </div>
 
-    <?php if (isset($warning) || isset($error)) { ?>
-        <div class="entry-content danger"  style="padding-bottom: 20px;">
-            <?php if (isset($warning)) {?>
-                <div class="col-xs-12 entry-content alert-success danger">
-                    <?php
-                        foreach ($warning as $msg) {
-                            echo '<span>' . $msg . '</span>';
-                        }
-                    ?>
-                </div>
-            <?php } ?>
-            <?php if (isset($error)) { ?>
-                <div class="col-xs-12 alert-danger danger">
-                    <?php
-                        foreach ($error as $msg) {
-                            echo '<span>' . $msg . '</span><br/>';
-                        }
-                    ?>
-                </div>
-            <?php } ?>
-        </div>
-    <?php } ?>
+    <?php include_once 'views/messages/alert-boxes.php'; ?>
 
     <div class="entry-content">
         <div class="woocommerce">
