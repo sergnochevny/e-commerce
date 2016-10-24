@@ -14,41 +14,7 @@
       }
     }
 
-    protected function after_get_list(&$rows) { }
-
-    protected function build_search_filter(&$filter) {
-      $fields_type = [
-        'int' => ['=', 'between'],
-        'timestamp' => ['=', 'between'],
-        'double' => ['=', 'between'],
-        'float' => ['=', 'between'],
-        'decimal' => ['=', 'between'],
-        'text' => ['like', 'like'],
-        'char' => ['like', 'like'],
-        'string' => ['like', 'like']
-      ];
-      $fields_pattern = '#\b[\S]*(int|string|text|char|float|double|decimal|timestamp)[\S]*\b#';
-      $search_form = null;
-      $filter = null;
-      $fields = forward_static_call([$this->model_name, 'get_fields']);
-      if(isset($fields)) {
-        if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
-        else  $search = _A_::$app->get('search');
-        if(isset($search)) {
-          $search = array_filter($search);
-          foreach($search as $key => $item) {
-            if(preg_match($fields_pattern, $fields[$key]['Type'], $matches) !== false) {
-              if(count($matches) > 1) {
-                if(is_array($item)) {
-                  $filter[$key] = [$fields_type[$matches[1]][1], $item];
-                }
-                $filter[$key] = [$fields_type[$matches[1]][0], $item];
-              }
-              $search_form[$key] = $item;
-            }
-          }
-        }
-      }
+    protected function search_form($search_form){
       $this->template->vars('search', $search_form);
       $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller));
       $search_form = null;
@@ -60,6 +26,61 @@
       }
       ob_end_clean();
       $this->template->vars('search_form', $search_form);
+    }
+
+    protected function after_get_list(&$rows) { }
+
+    protected function search_fields() {
+      return null;
+    }
+
+    protected function build_search_filter(&$filter) {
+      $search_form = null;
+      $filter = null;
+      $fields = $this->search_fields();
+      if(isset($fields)) {
+        if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
+        else  $search = _A_::$app->get('search');
+        if(isset($search)) {
+          $search_form = array_filter($search);
+          foreach($fields as $key) {
+            if(isset($search_form[$key])) $filter[$key] = $search_form[$key];
+          }
+        }
+      } else {
+        $fields_type = [
+          'int' => ['=', 'between'],
+          'timestamp' => ['=', 'between'],
+          'double' => ['=', 'between'],
+          'float' => ['=', 'between'],
+          'decimal' => ['=', 'between'],
+          'text' => ['like', 'like'],
+          'char' => ['like', 'like'],
+          'string' => ['like', 'like']
+        ];
+        $fields_pattern = '#\b[\S]*(int|string|text|char|float|double|decimal|timestamp)[\S]*\b#';
+        $fields = forward_static_call([$this->model_name, 'get_fields']);
+        if(isset($fields)) {
+          if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
+          else  $search = _A_::$app->get('search');
+          if(isset($search)) {
+            $search = array_filter($search);
+            foreach($search as $key => $item) {
+              if(preg_match($fields_pattern, $fields[$key]['Type'], $matches) !== false) {
+                if(count($matches) > 1) {
+                  if(is_array($item)) {
+                    $filter[$key] = [$fields_type[$matches[1]][1], $item];
+                  }
+                  $filter[$key] = [$fields_type[$matches[1]][0], $item];
+                }
+                $search_form[$key] = $item;
+              }
+            }
+          }
+        }
+      }
+
+      $this->search_form($search_form);
     }
 
     protected function get_list() {

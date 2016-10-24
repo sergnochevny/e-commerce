@@ -75,8 +75,8 @@ Class Model_Tools extends Model_Base
                 }
             }
         } elseif ($route_control == "product") {
-            $p_id = _A_::$app->get('pid');
-            $result = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
+            $pid = _A_::$app->get('pid');
+            $result = mysql_query("select * from fabrix_products WHERE pid='$pid'");
             $row = mysql_fetch_array($result);
             $page_Description = $row['metadescription'];
             $page_KeyWords = $row['metakeywords'];

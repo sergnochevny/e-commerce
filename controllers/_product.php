@@ -6,6 +6,10 @@
     protected $form_title_add = 'NEW PRODUCT';
     protected $form_title_edit = 'MODIFY PRODUCT';
 
+    protected function search_fields() {
+      return ['a.pname', 'a.visible', 'a.dt'];
+    }
+
     private function select_filter($method, $filters, $start = null, $search = null) {
       $selected = isset($filters) ? $filters : [];
       $filter = Model_Product::get_filter_data($method, $count, $start, $search);

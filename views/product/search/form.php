@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-xs-1 col-sm-2"><i class="fa fa-search"></i></div>
             <div class="col-xs-9 comment-text">
-              <?=isset($search['colour'])?'<span>Like: </span><b>'.$search['colour'].'</b>':''?>
+              <?=isset($search['a.pname'])?'<span>Like: </span><b>'.$search['a.pname'].'</b>':''?>
             </div>
             <b class="sr-ds">
               <i class="fa fa-chevron-right"></i>
@@ -21,18 +21,18 @@
           <div class="col-sm-6">
             <div class="form-row">
                 <label>Product Name:</label>
-                <input type="text" class="input-text" placeholder="Like ..." name="search[pname]"
-                       value="<?= isset($search['pname']) ? $search['pname'] : '' ?>">
+                <input type="text" class="input-text" placeholder="Like ..." name="search[a.pname]"
+                       value="<?= isset($search['a.pname']) ? $search['a.pname'] : '' ?>">
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-row">
               <label for="">
                 Select the status
-                <select name="search[pvisible]" id="">
+                <select name="search[a.pvisible]" id="">
                   <option value selected>Any status</option>
-                  <option value="0" <?= isset($search['pvisible']) && $search['pvisible'] == 0 ? 'selected' : '' ?>>Hidden</option>
-                  <option value="1" <?= isset($search['pvisible']) && $search['pvisible'] == 1 ? 'selected' : '' ?>>Visible</option>
+                  <option value="0" <?= isset($search['a.pvisible']) && $search['a.pvisible'] == 0 ? 'selected' : '' ?>>Hidden</option>
+                  <option value="1" <?= isset($search['a.pvisible']) && $search['a.pvisible'] == 1 ? 'selected' : '' ?>>Visible</option>
                 </select>
               </label>
             </div>
@@ -43,8 +43,8 @@
             <div class="form-row">
                 <label for="discount_on">
                   Starts at:
-                  <input placeholder="Chose start date" type="text" id="discount_starts" class="input-text" name="search[dt][starts]"
-                    value="<?= isset($search['dt']['starts']) ? $search['dt']['starts'] : '' ?>">
+                  <input placeholder="Chose start date" type="text" id="date-from" class="input-text" name="search[a.dt][from]"
+                    value="<?= isset($search['a.dt']['from']) ? $search['a.dt']['from'] : '' ?>">
                 </label>
             </div>
           </div>
@@ -52,8 +52,8 @@
             <div class="form-row">
                 <label for="discount_on">
                   Ends at:
-                  <input placeholder="Chose end date" type="text" id="discount_ends" class="input-text" name="search[dt][ends]"
-                         value="<?= isset($search['dt']['ends']) ? $search['dt']['ends'] : '' ?>">
+                  <input placeholder="Chose end date" type="text" id="date-to" class="input-text" name="search[a.dt][to]"
+                         value="<?= isset($search['a.dt']['to']) ? $search['a.dt']['to'] : '' ?>">
                 </label>
             </div>
           </div>
@@ -68,4 +68,4 @@
     </div>
   </div>
 </form>
-<script src="<?= _A_::$app->router()->UrlTo('views/js/discount/search.js'); ?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('views/js/search.js'); ?>"></script>
