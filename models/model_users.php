@@ -12,7 +12,7 @@
       foreach($sort as $key => $val) {
         if(strlen($order) > 0) $order .= ',';
         if($key == 'name') {
-          $order .= ' bill_fistname ' . $val;
+          $order .= ' bill_firstname ' . $val;
           $order .= ', bill_lastname ' . $val;
         } else {
           $order .= ' ' . $key . ' ' . $val;

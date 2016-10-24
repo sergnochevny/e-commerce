@@ -1,10 +1,8 @@
 'use strict';
 (function ($) {
 
-  function postdata(url, senddata) {
+  function postdata(url, data) {
     $('body').waitloader('show');
-    var data = {};
-    if (senddata != false) data = new FormData(this);
     $.ajax({
       type: 'POST',
       url: url,
@@ -28,26 +26,40 @@
     });
   }
 
-  $(document).on('submit.search_action', "form[data-search]", function (event, senddata) {
+  $(document).on('submit.search_action', "form[data-search]", function (event, reset) {
     event.preventDefault();
-    postdata.call(this, $(this).attr('action'), senddata);
+    if (reset) {
+      data = {};
+    } else {
+      var data = new FormData(this);
+      if ($('form[data-sort]').length) {
+        (new FormData($('form[data-sort]')[0])).forEach(function (value, key) {
+          data.append(key, value);
+        });
+      }
+    }
+    postdata.call(this, $(this).attr('action'), data);
   });
 
   $(document).on('click.search_action', "form[data-search] [data-search_reset]", function () {
-    $('form[data-search]').trigger('submit', false);
+    $('form[data-search]').trigger('submit', true);
   });
 
   $(document).on('click.search_action', "form[data-search] [data-search_submit]", function () {
-    $('form[data-search]').trigger('submit', true);
+    $('form[data-search]').trigger('submit');
   });
 
   $(document).on('click.search_action', "[data-to_page]", function (event) {
     event.preventDefault();
     if ($('form[data-search]').length) {
       $('form[data-search]').attr('action', $(this).attr('href'));
-      $('form[data-search]').trigger('submit', true);
+      $('form[data-search]').trigger('submit');
     } else {
-      postdata($(this).attr('href'), false);
+      var data = {};
+      if ($('form[data-sort]').length) {
+        data = new FormData($('form[data-sort]')[0]);
+      }
+      postdata($(this).attr('href'), data);
     }
   });
 
@@ -55,9 +67,9 @@
     event.preventDefault();
     if ($('form[data-search]').length) {
       $('form[data-search]').attr('action', $(this).attr('href'));
-      $('form[data-search]').trigger('submit', true);
+      $('form[data-search]').trigger('submit');
     } else {
-      postdata($(this).attr('href'), false);
+      postdata($(this).attr('href'), {});
     }
   });
 
