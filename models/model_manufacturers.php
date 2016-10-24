@@ -4,6 +4,19 @@
 
     protected static $table = 'fabrix_manufacturers';
 
+    private static function build_order(&$sort) {
+      $order = '';
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.manufacturer' => 'asc'];
+      }
+      foreach($sort as $key => $val) {
+        if(strlen($order) > 0) $order .= ',';
+        $order .= ' ' . $key . ' ' . $val;
+      }
+      $order = ' ORDER BY ' . $order;
+      return $order;
+    }
+
     public static function get_by_id($id) {
       $response = [
         'id' => $id,
@@ -27,14 +40,14 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT a.id, a.manufacturer, count(b.pid) AS amount";
       $query .= " FROM " . static::$table . " a";
       $query .= " LEFT JOIN fabrix_products b ON b.manufacturerId = a.id";
       $query .= static::build_where($filter);
       $query .= " GROUP BY a.id, a.manufacturer";
-      $query .= " ORDER BY a.manufacturer";
+      $query .= static::build_order($sort);
       $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {

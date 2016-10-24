@@ -4,6 +4,19 @@
 
     protected static $table = 'blog_posts';
 
+    private static function build_order(&$sort) {
+      $order = '';
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['post_date' => 'desc'];
+      }
+      foreach($sort as $key => $val) {
+        if(strlen($order) > 0) $order .= ',';
+        $order .= ' ' . $key . ' ' . $val;
+      }
+      $order = ' ORDER BY ' . $order;
+      return $order;
+    }
+
     public static function get_filter_selected(&$data) {
       $id = $data['id'];
       $filters = [];
@@ -83,12 +96,12 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT * ";
       $query .= " FROM " . static::$table;
       $query .= static::build_where($filter);
-      $query .= " ORDER BY post_date DESC";
+      $query .= static::build_order($sort);
       $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
@@ -123,7 +136,7 @@
     public static function delete_img($filename) {
       $filename = trim(str_replace('{base_url}', '', $filename), '/\\');
       if(!empty($filename)) {
-        if($filename == basename($filename)) $filename = 'img/blog/'.$filename;
+        if($filename == basename($filename)) $filename = 'img/blog/' . $filename;
         if(file_exists($filename)) unlink($filename);
       }
     }

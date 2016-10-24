@@ -36,15 +36,15 @@
           <div class="col-xs-6">
             <div class="form-row">
               <label>Registration date ranges from:</label>
-              <input type="text" class="input-text" placeholder="Chose start date" name="search[date_registered][starts]"
-                     value="<?= isset($search['pname']['starts']) ? $search['pname']['starts'] : '' ?>">
+              <input type="text" class="input-text" placeholder="Chose start date" name="search[date_registered][from]"
+                     value="<?= isset($search['date_registered']['from']) ? $search['date_registered']['from'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-6">
             <div class="form-row">
               <label>Registration date ranges to:</label>
-              <input type="text" class="input-text" placeholder="Chose end date" name="search[pname][ends]"
-                     value="<?= isset($search['pname']['ends']) ? $search['pname']['ends'] : '' ?>">
+              <input type="text" class="input-text" placeholder="Chose end date" name="search[date_registered][to]"
+                     value="<?= isset($search['date_registered']['to']) ? $search['date_registered']['to'] : '' ?>">
             </div>
           </div>
         </div>

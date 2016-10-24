@@ -4,6 +4,19 @@
 
     protected static $table = 'blog_groups';
 
+    private static function build_order(&$sort) {
+      $order = '';
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.name' => 'desc'];
+      }
+      foreach($sort as $key => $val) {
+        if(strlen($order) > 0) $order .= ',';
+        $order .= ' ' . $key . ' ' . $val;
+      }
+      $order = ' ORDER BY ' . $order;
+      return $order;
+    }
+
     public static function get_by_id($id) {
       $response = [
 
@@ -18,8 +31,7 @@
       return $response;
     }
 
-
-    public static function get_all(){
+    public static function get_all() {
       $res = null;
       $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
       $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
@@ -60,13 +72,13 @@
       }
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
       $res = null;
       $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
       $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
       $q .= static::build_where($filter);
       $q .= " GROUP BY a.id, a.name";
-      $q .= " ORDER BY a.name";
+      $q .= static::build_order($sort);
       $q .= " LIMIT $start, $limit";
       $result = mysql_query($q);
       if($result) {
