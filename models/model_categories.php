@@ -35,6 +35,25 @@
       return $response;
     }
 
+    public static function get_total_list() {
+      $response = null;
+      $query = "SELECT a.*, count(b.pid) AS amount";
+      $query .= " FROM fabrix_categories a";
+      $query .= " LEFT JOIN";
+      $query .= " fabrix_product_categories b ON b.cid = a.cid";
+      $query .= " GROUP BY a.cid, a.cname";
+      $query .= " ORDER BY a.cname";
+
+      if($result = mysql_query($query)) {
+        $res_count_rows = mysql_num_rows($result);
+        while($row = mysql_fetch_array($result)) {
+          $response[] = $row;
+        }
+      }
+
+      return $response;
+    }
+
     public static function get_by_id($id) {
       $data = [
         'cid' => $id,

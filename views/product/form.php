@@ -5,88 +5,88 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-row">
-            <label class="required_field"><strong>Product name:</strong></label>
+            <label class="required_field"><b>Product name:</b></label>
             <input type="text" name="pname" value="<?= $data['pname']; ?>" class="input-text" placeholder="e.g. Stunning Patterned Tapestry In Blue">
           </div>
 
           <div class="form-row">
-            <label class="required_field"><strong>Product number:</strong></label>
+            <label class="required_field"><b>Product number:</b></label>
             <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text" placeholder="e.g. abc888999">
           </div>
 
           <div class="form-row">
-            <label><strong>Meta Description:</strong></label>
+            <label><b>Meta Description:</b></label>
             <input type="text" name="metadescription"
               <?= !empty($data['metadescription']) ? 'value="' . $data['metadescription'] . '"' : ''; ?>
                    class="input-text" placeholder="e.g. Lovely patterned woven fabric, with stunning color combo">
           </div>
 
           <div class="form-row">
-            <label><strong>Meta Keywords:</strong></label>
+            <label><b>Meta Keywords:</b></label>
             <input type="text" name="metakeywords" value="<?= $data['metakeywords']; ?>" class="input-text"
                    placeholder="Just a few words, separated by coma">
           </div>
 
           <div class="form-row">
-            <label><strong>Categories:</strong></label>
+            <label><b>Categories:</b></label>
             <div>
               <?= $data['categories']; ?>
             </div>
           </div>
 
           <div class="form-row">
-            <label><strong>Width:</strong></label>
+            <label><b>Width:</b></label>
             <input type="text" id="m_width" name="width" value="<?= $data['width']; ?>" class="input-text ">
           </div>
 
           <div class="form-row">
             <label>
-              <strong>Piece:</strong>
+              <b>Piece:</b>
               <input type="checkbox" <?= (isset($data['piece']) && ($data['piece'] == "1")) ? 'checked' : '' ?>
                      value="1" name="piece" class="input-checkbox">
             </label>
           </div>
 
           <div class="form-row">
-            <label class="required_field" for="p_yard"><strong>Price:</strong></label>
+            <label class="required_field" for="p_yard"><b>Price:</b></label>
             <input type="text" id="p_yard" name="priceyard" value="<?= $data['priceyard']; ?>" class="input-text ">
           </div>
 
           <div class="form-row">
             <label>
-              <strong>Hide regular price:</strong>
+              <b>Hide regular price:</b>
               <input type="checkbox" <?= (isset($data['hideprice']) && ($data['hideprice'] == "1")) ? 'checked' : '' ?>
                      value="1" name="hideprice" class="input-checkbox">
             </label>
           </div>
 
           <div class="form-row">
-            <label><strong>Mfg. & Stock number:</strong></label>
+            <label><b>Mfg. & Stock number:</b></label>
             <input type="text" name="stock_number" value="<?= $data['stock_number']; ?>" class="input-text ">
           </div>
 
           <hr/>
           <div class="form-row">
-            <label><strong>Dimensions:</strong></label>
+            <label><b>Dimensions:</b></label>
             <input type="text" name="dimensions" value="<?= $data['dimensions']; ?>" class="input-text ">
           </div>
 
           <div class="form-row">
-            <label for="current_inv"><strong>Current inventory:</strong></label>
+            <label for="current_inv"><b>Current inventory:</b></label>
             <input type="text" id="current_inv" name="inventory" value="<?= $data['inventory']; ?>"
                    class="input-text ">
           </div>
 
           <div class="form-row">
             <label>
-              <strong>Whole:</strong>
+              <b>Whole:</b>
               <input type="checkbox" <?= (isset($data['whole']) && ($data['whole'] == "1")) ? 'checked' : '' ?>
                      name="whole" value="1" class="input-checkbox">
             </label>
           </div>
 
           <div class="form-row">
-            <label><strong>Weight:</strong></label>
+            <label><b>Weight:</b></label>
             <select name="weight_id">
               <option value="0" <?= ($data['weight_id'] == "0") ? 'selected' : ''; ?>>Use Category Weight</option>
               <option value="1" <?= ($data['weight_id'] == "1") ? 'selected' : ''; ?>>Light</option>
@@ -94,20 +94,20 @@
               <option value="3" <?= ($data['weight_id'] == "3") ? 'selected' : ''; ?>>Heavy</option>
             </select>
             <small style="color:#999;">
-              <strong>NOTE:</strong> choosing any of Light, Medium, Heavy overrides the default weight
+              <b>NOTE:</b> choosing any of Light, Medium, Heavy overrides the default weight
               for the category.
             </small>
           </div>
           <hr/>
           <div class="form-row">
-            <label><strong>Manufacturer:</strong></label>
+            <label><b>Manufacturer:</b></label>
             <select name="manufacturerId">
               <?= $data['manufacturers']; ?>
             </select>
           </div>
 
           <div class="form-row">
-            <label><strong>Colours: </strong></label>
+            <label><b>Colours: </b></label>
             <div>
               <?= $data['colours']; ?>
             </div>
@@ -116,19 +116,19 @@
         </div>
         <div class="col-md-6">
           <div class="form-row">
-            <label><strong>Short description:</strong></label>
+            <label><b>Short description:</b></label>
             <input type="text" value="<?= $data['sdesc']; ?>" name="sdesc" class="input-text ">
           </div>
 
           <div class="form-row">
-            <label><strong>Long description:</strong></label>
+            <label><b>Long description:</b></label>
             <textarea class="input-text " style="height: 117px"
                       name="ldesc"><?= trim($data['ldesc']); ?></textarea>
           </div>
           <hr/>
 
           <div class="form-row">
-            <label><strong>Main images:</strong></label>
+            <label><b>Main images:</b></label>
             <div class="text-center">
               <div id="images" class="col-sm-12 col-md-12">
                 <div class="row">
@@ -151,7 +151,7 @@
           </div>
           <div class="form-row">
             <label>
-              <strong>Pattern Types:</strong>
+              <b>Pattern Types:</b>
             </label>
             <div>
               <?= $data['patterns']; ?>
@@ -161,18 +161,18 @@
           <hr/>
           <p>
             <label>
-              <strong style="vertical-align: 3px">Best Textile:</strong>
+              <b style="vertical-align: 3px">Best Textile:</b>
               <input type="checkbox" name="best"
                      value="1" <?= (isset($data['best']) && ($data['best'] == "1")) ? 'checked' : '' ?>
                      class="input-checkbox">
             </label><br>
             <label>
-              <strong style="vertical-align: 3px">Specials:</strong>
+              <b style="vertical-align: 3px">Specials:</b>
               <input type="checkbox" <?= (isset($data['specials']) && ($data['specials'] == "1")) ? 'checked' : '' ?>
                      name="specials" value="1" class="input-checkbox">
             </label><br>
             <label>
-              <strong style="vertical-align: 3px">Visible:</strong>
+              <b style="vertical-align: 3px">Visible:</b>
               <input type="checkbox" <?= (isset($data['pvisible']) && ($data['pvisible'] == "1")) ? 'checked' : '' ?>
                      name="pvisible" value="1" class="input-checkbox">
             </label>
