@@ -67,13 +67,10 @@
         <div class="row">
           <div class="col-md-2 col-lg-2">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
-                      data-target=".site-navigation .navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+              <div class="navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
+                   data-target=".site-navigation .navbar-collapse" id="menu-button">
+                <div class="hamburger"><div class="inner"></div></div>
+              </div>
               <a data-link class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
                 <div class="site-with-image">
                   <img class="site-logo"

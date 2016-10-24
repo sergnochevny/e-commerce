@@ -63,20 +63,16 @@
     </div>
   </div>
   <!-- top header -->
-  <nav class="site-navigation navbar navbar-default " role="navigation" itemscope="itemscope"
-       itemtype="http://schema.org/SiteNavigationElement">
+  <nav class="site-navigation navbar navbar-default " role="navigation" itemscope="itemscope">
     <div class="container">
       <div class="header-block">
         <div class="row">
           <div class="col-md-2 col-lg-2">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
-                      data-target=".site-navigation .navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+              <div class="navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
+                      data-target=".site-navigation .navbar-collapse" id="menu-button">
+                <div class="hamburger"><div class="inner"></div></div>
+              </div>
               <a class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
                 <div class="site-with-image">
                   <img class="site-logo" src="<?= _A_::$app->router()->UrlTo('views/images/logo.png'); ?>" alt=""/>

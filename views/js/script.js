@@ -1,39 +1,10 @@
 'use strict';
-//
-// function addClass(elements, className) {
-//   for (var i = 0; i < elements.length; i++) {
-//     var element = elements[i];
-//     if (element.classList) {
-//       element.classList.add(className);
-//     } else {
-//       element.className += ' ' + className;
-//     }
-//   }
-// }
-//
-// function welcome() {
-//     var el = document.getElementsByTagName('body');
-//     addClass([el[0]], 'loaded');
-// }
-// document.addEventListener("DOMContentLoaded", welcome);
-//
 
 jQuery(document).ready(function ($) {
 
-
-  // $(document).on("click", "a", function (e) {
-  //   if($(this).data('link')){
-  //     e.preventDefault();
-  //     var linkClicked = e.target;
-  //     document.addEventListener("unload", $('body').removeClass('loaded').addClass('leaved'));
-  //     window.setTimeout(function () {
-  //         window.location = linkClicked.href;
-  //     }, 1500);
-  //
-  //     return false;
-  //   }
-  // });
-
+  $('#menu-button').on('click', function() {
+    $(document.body).toggleClass('menu-open');
+  });
 
   $(document).on('click', '[data-search] .panel-heading', function () {
     var body = $(this).next('.panel-body');
