@@ -22,19 +22,19 @@
     });
 
     $(document).on('dblclick', "img#product_img_holder",function (event) {
-        var p_id = $(this).attr('data-id');
-        window.location = base_url + 'product?p_id=' + p_id;
+        var pid = $(this).attr('data-id');
+        window.location = base_url + 'shop/product?pid=' + pid;
     });
 
     $('.deleteDragImg').droppable({
         hoverClass: "ui-state-hover",
         drop: function (event, ui) {
-            var p_id = $(ui.draggable).attr('data-id'),
+            var pid = $(ui.draggable).attr('data-id'),
                 url = base_url + 'matches/del';
             $('#content').waitloader('show');
             $.post(
                 url,
-                {p_id: p_id},
+                {pid: pid},
                 function (data) {
                     $(ui.draggable).remove();
                     $('#content').waitloader('remove');
@@ -47,8 +47,8 @@
         hoverClass: "ui-state-hover",
         drop: function (event, ui) {
             $('#matches-page').waitloader('show');
-            var p_id = $(ui.draggable).attr('data-id');
-            window.location = base_url + 'product?p_id=' + p_id+'&back=matches';
+            var pid = $(ui.draggable).attr('data-id');
+            window.location = base_url + 'shop/product?pid=' + pid+'&back=matches';
         }
     });
 

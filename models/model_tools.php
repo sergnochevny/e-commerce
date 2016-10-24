@@ -41,7 +41,7 @@ Class Model_Tools extends Model_Base
                 $q = "SELECT distinct a.*" .
                     " FROM blog_groups a" .
                     " LEFT JOIN blog_group_posts c on a.id = c.group_id" .
-                    " LEFT JOIN blog_posts b ON b.ID = c.object_id" .
+                    " LEFT JOIN blog_posts b ON b.id = c.post_id" .
                     " WHERE b.post_status = 'publish'";
                 break;
         }
@@ -62,7 +62,7 @@ Class Model_Tools extends Model_Base
         if (_A_::$app->router()->controller == 'blog' && _A_::$app->router()->action=='post') {
             $post_id = !is_null(_A_::$app->get('post_id')) ? _A_::$app->get('post_id') : null;
             if (isset($post_id)) {
-                $result = mysql_query("select post_title from blog_posts WHERE ID='$post_id'");
+                $result = mysql_query("select post_title from blog_posts WHERE id='$post_id'");
                 if ($result && mysql_num_rows($result) > 0) {
                     $row = mysql_fetch_assoc($result);
                     $page_Name = $row['post_title'];
@@ -75,7 +75,7 @@ Class Model_Tools extends Model_Base
                 }
             }
         } elseif ($route_control == "product") {
-            $p_id = _A_::$app->get('p_id');
+            $p_id = _A_::$app->get('pid');
             $result = mysql_query("select * from fabrix_products WHERE pid='$p_id'");
             $row = mysql_fetch_array($result);
             $page_Description = $row['metadescription'];

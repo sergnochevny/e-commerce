@@ -62,7 +62,7 @@
 
       $this->template->vars('img_url', $img_url);
       $this->template->vars('item', $item);
-      $this->template->vars('p_id', $p_id);
+      $this->template->vars('pid', $p_id);
       $this->template->vars('t_pr', $t_pr);
       $this->template->view_layout($template);
     }
@@ -90,7 +90,7 @@
       }
       $img_url = _A_::$app->router()->UrlTo($filename);
       $this->template->vars('item', $item);
-      $this->template->vars('p_id', $p_id);
+      $this->template->vars('pid', $p_id);
       $this->template->view_layout($template);
     }
 
@@ -1075,8 +1075,8 @@
      */
     function add() {
       $base_url = _A_::$app->router()->UrlTo('/');
-      if(!empty(_A_::$app->get('p_id'))) {
-        $p_id = Model_Product::validData(_A_::$app->get('p_id'));
+      if(!empty(_A_::$app->get('pid'))) {
+        $p_id = Model_Product::validData(_A_::$app->get('pid'));
         $product = Model_Product::get_product_params($p_id);
         $_cart = _A_::$app->session('cart');
         $cart_items = isset($_cart['items']) ? $_cart['items'] : [];
@@ -1085,7 +1085,7 @@
           $item_added = false;
           if(count($cart_items) > 0) {
             foreach($cart_items as $key => $item) {
-              if($item['p_id'] == $p_id) {
+              if($item['pid'] == $p_id) {
                 $cart_items[$key]['quantity'] += 1;
                 $item_added = true;
               }
@@ -1123,7 +1123,7 @@
             $t_pr = "$" . number_format($t_pr, 2);
             $product['format_subtotal'] = $t_pr;
 
-            $cart_items[$product['p_id']] = $product;
+            $cart_items[$product['pid']] = $product;
           }
 
           $_cart['items'] = $cart_items;
@@ -1178,8 +1178,8 @@
      */
     function add_samples() {
       $base_url = _A_::$app->router()->UrlTo('/');
-      if(!empty(_A_::$app->get('p_id'))) {
-        $p_id = Model_Product::validData(_A_::$app->get('p_id'));
+      if(!empty(_A_::$app->get('pid'))) {
+        $p_id = Model_Product::validData(_A_::$app->get('pid'));
         $product = Model_Product::get_product_params($p_id);
         $cart = _A_::$app->session('cart');
         $cart_items = isset($cart['items']) ? $cart['items'] : [];
@@ -1193,7 +1193,7 @@
 
           if(!$item_added) {
 
-            $cart_samples_items[$product['p_id']] = $product;
+            $cart_samples_items[$product['pid']] = $product;
             $cart_samples_sum = round(Model_Samples::calculateSamplesPrice($cart_items, $cart_samples_items), 2);
 
             $format_samples_sum = '';
@@ -1264,7 +1264,7 @@
      * @export
      */
     public function change_product() {
-      $pid = _A_::$app->get('p_id');
+      $pid = _A_::$app->get('pid');
       $quantity = _A_::$app->get('qnt');
       $response = [];
       $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
@@ -1331,9 +1331,9 @@
      * @export
      */
     public function del_product() {
-      if(!is_null(_A_::$app->get('p_id'))) {
+      if(!is_null(_A_::$app->get('pid'))) {
 
-        $pid = _A_::$app->get('p_id');
+        $pid = _A_::$app->get('pid');
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         if(isset($cart_items[$pid])) {
           unset($cart_items[$pid]);
@@ -1351,8 +1351,8 @@
      * @export
      */
     public function del_sample() {
-      if(!is_null(_A_::$app->get('p_id'))) {
-        $pid = _A_::$app->session('p_id');
+      if(!is_null(_A_::$app->get('pid'))) {
+        $pid = _A_::$app->session('pid');
         $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
         if(isset($cart_samples_items[$pid])) {
           unset($cart_samples_items[$pid]);

@@ -1,51 +1,53 @@
-<li class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
-    <div class="product-inner">
+<div class="block-search">
+  <form id="f_search_1" role="search" method="post" class="woocommerce-product-search"
+        action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
+    <!--<label class="screen-reader-text" for="s">Search for:</label>-->
+    <input id="search" type="search" class="search-field"
+           placeholder="Search Products&hellip;" value="<?= isset($search) ? $search : '' ?>"
+           name="s"
+           title="Search for:"/>
+    <input id="b_search_1" class="button-search" type="button" value="Search"/>
+  </form>
 
-        <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
-            <?php if ($bProductDiscount) { ?>
-                <span class="extra_discount">Extra Discount!</span>
-            <?php }
-            $opt['p_id'] = $row[0];
-            ?>
-            <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt, $row['pname']); ?>">
-            </a>
-            <figcaption>
-                <?php
-                    if ($in_cart) {
-                        include('views/cart/basket.php');
-                    } else {
-//                        include('views/basket/main_product_addtobasket.php');
-                        ?>
-                        <a class="button productsAddBasket <?= isset($search)?'a_search':''?>" href="<?= _A_::$app->router()->UrlTo('product', $opt, $row['pname']); ?>">
-                            View Details
-                        </a>                
-                        <?php
-                    }
-                ?>
-            </figcaption>
-        </figure>
-        <a <?= isset($search)?'class="a_search"':''?> href="<?= _A_::$app->router()->UrlTo('product', $opt, $row['pname']); ?>">
-            <span class="product-category"><?= $row['pname']; ?></span>
+</div>
+<?php
+  if(isset($page_title)) {
+    ?>
+    <p class="woocommerce-page-title">
+    <h3 class="just-section-title">
+      <?= $page_title; ?>
+    </h3>
+    </p>
+    <?php
+  }
+?>
+<?= isset($search) ? '<p class="">Search query: <b>' . $search . '</b></p>' : '' ?>
+<p class="woocommerce-result-count">
+  <?php
+    if(!empty(_A_::$app->get('cat'))) {
+      echo 'CATEGORY: ' . $category_name . '<br/>';
+    }
+    if(!empty(_A_::$app->get('mnf'))) {
+      echo 'MANUFACTURER: ' . $mnf_name . '<br/>';
+    }
+    if(!empty(_A_::$app->get('ptrn'))) {
+      echo 'PATTERN: ' . $ptrn_name . '<br/>';
+    }
+    echo isset($count_rows) ? "Showing " . $count_rows . " results" : "Showing ... results";
+  ?>
 
-            <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>
-
-            <div class="product-price-box clearfix">
-                <?php if ($sys_hide_price == 0 && $hide_price == 0) { ?>
-                    <span class="price">
-                        <ins>
-                            <span class="amount"><?= $format_price; ?></span>
-                        </ins>
-                    </span>
-                <?php } ?>
-                <?php if (isset($saleprice) && ($price != $saleprice)) { ?>
-                    <span class="price salePrice" style="float:right;color: red;">
-                    Sale:
-                    <ins>
-                        <span class="amount_wd"><?= $format_sale_price; ?></span>
-                    </ins>
-                </span>
-                <?php } ?>
-            </div>
-        </a>
-    </div>
-</li>
+</p>
+<?php
+  echo isset($annotation) ? '<p class="annotation">' . $annotation . '</p>' : '';
+?>
+<ul class="products">
+  <?=$rows;?>
+</ul>
+<nav role="navigation" class="paging-navigation">
+  <h4 class="sr-only">Navigation</h4>
+  <ul class='pagination'>
+    <?php
+      echo isset($paginator) ? $paginator : '';
+    ?>
+  </ul>
+</nav>

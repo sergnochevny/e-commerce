@@ -14,7 +14,7 @@
           $left = 2;
           $top = 2;
           foreach($matches_items as $key => $item) {
-            $this->template->vars('product_id', $item['p_id']);
+            $this->template->vars('product_id', $item['pid']);
             $this->template->vars('img', _A_::$app->router()->UrlTo('upload/upload/' . $item['img']));
             $this->template->vars('top', $top);
             $this->template->vars('left', $left);
@@ -36,13 +36,13 @@
     public function add() {
       $added = 0;
 
-      if(!is_null(_A_::$app->get('p_id')) && !empty(_A_::$app->get('p_id'))) {
-        $p_id = _A_::$app->get('p_id');
+      if(!is_null(_A_::$app->get('pid')) && !empty(_A_::$app->get('pid'))) {
+        $p_id = _A_::$app->get('pid');
         $matches_items = isset(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
         $item_added = false;
         if(count($matches_items) > 0) {
           foreach($matches_items as $key => $item) {
-            if($item['p_id'] == $p_id) {
+            if($item['pid'] == $p_id) {
               $item_added = true;
             }
           }
@@ -56,7 +56,7 @@
             $file_img = 'upload/upload/' . $images['image1'];
             if(file_exists($file_img) && is_file($file_img)) {
               $images['image1'] = $suffix_img . $images['image1'];
-              $matches_items[] = ['p_id' => $p_id, 'img' => $images['image1']];
+              $matches_items[] = ['pid' => $p_id, 'img' => $images['image1']];
             }
             $message = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
             $added = 1;
@@ -82,12 +82,12 @@
      * @export
      */
     public function del() {
-      if(!is_null(_A_::$app->post('p_id')) && !empty(_A_::$app->post('p_id'))) {
-        $p_id = _A_::$app->post('p_id');
+      if(!is_null(_A_::$app->post('pid')) && !empty(_A_::$app->post('pid'))) {
+        $p_id = _A_::$app->post('pid');
         $matches_items = isset(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
         if(count($matches_items) > 0) {
           foreach($matches_items as $key => $item) {
-            if($item['p_id'] == $p_id) {
+            if($item['pid'] == $p_id) {
               unset($matches_items[$key]);
             }
           }
@@ -122,7 +122,7 @@
               $item_added = false;
 
               foreach($cart_items as $key => $item) {
-                if($item['p_id'] == $product_id) {
+                if($item['pid'] == $product_id) {
                   // $cart_items[$key]['quantity'] += 1;
                   $item_added = true;
                 }

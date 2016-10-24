@@ -8,13 +8,13 @@
         var v = $(this).val(),
             input = this,
             url = base_url + 'cart/change_product',
-            p_id = $(this).parents('tr.cart_item').attr('data-pid'),
+            pid = $(this).parents('tr.cart_item').attr('data-pid'),
             parent = $(this).parents('tr.cart_item');
 
         $('body').waitloader('show');
 
         $.get(url,
-            {p_id: p_id, qnt: v},
+            {pid: pid, qnt: v},
             function (answer) {
                 var data = JSON.parse(answer);
                 if (data.product) {
@@ -70,7 +70,7 @@
             event.preventDefault();
 
             var url = $(this).attr('href'),
-                p_id = $(this).parents('tr.cart_item').attr('data-pid'),
+                pid = $(this).parents('tr.cart_item').attr('data-pid'),
                 parent = $(this).parents('tr.cart_item'),
                 spinner = $(parent).find('input[data-role=quantity]');
 
@@ -78,7 +78,7 @@
                 function (event) {
                     event.preventDefault();
                     $.get(url,
-                        {p_id: p_id},
+                        {pid: pid},
                         function (data) {
                             $.when($(document).trigger('destroy_spinner')).done(
                                 function () {
@@ -121,12 +121,12 @@
         function (event) {
             event.preventDefault();
             var url = $(this).attr('href'),
-                p_id = $(this).parents('tr.sample_item').attr('data-pid'),
+                pid = $(this).parents('tr.sample_item').attr('data-pid'),
                 parent = $(this).parents('tr.sample_item');
 
             $("#confirm_action").on('click.confirm_action', function (event) {
                     event.preventDefault();
-                    $.get(url, {p_id: p_id}, function (data) {
+                    $.get(url, {pid: pid}, function (data) {
                     $.when($(parent).remove()).done(function () {
                         if ($('[data-row=samples]').length > 0) {
                             $('#subtotal_samples_items').load(base_url + 'cart/samples_amount');

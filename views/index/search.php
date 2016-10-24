@@ -1,7 +1,7 @@
 <div class="site-container">
     <?php
     include "views/header.php";
-    $opt['p_id'] = $data['product_id'];
+    $opt['pid'] = $data['product_id'];
     ?>
     <div class="main-content main-content-shop">
         <div class="container">
