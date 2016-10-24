@@ -15,9 +15,7 @@
     </div>
   </div>
 
-  <div class="row">
-    <div id="form_content" class="col-sm-8 col-md-offset-2">
-      <?= $form; ?>
-    </div>
+  <div id="form_content" class="row">
+    <?= $form; ?>
   </div>
 </div>

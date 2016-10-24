@@ -4,6 +4,21 @@
 
     protected static $table = 'fabrix_products';
 
+    protected static function build_where($filter) {
+      $result = "";
+      if(!empty($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pname"])) . "%'";
+      if(!empty($filter["a.pvisible"])) $result[] = "a.pvisible = " . mysql_real_escape_string(static::validData($filter["a.pname"]));
+      if(!empty($filter["a.dt"])) {
+        $result[] = "(" . (!empty($filter["a.dt"]['from']) ? "a.dt => '" . mysql_real_escape_string(static::validData($filter["a.dt"]["from"])) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["to"])) . "'" : "") . ")";
+      }
+      if(!empty($result) && (count($result) > 0)) {
+        $result = implode(" AND ", $result);
+        $result = " WHERE " . $result;
+      }
+      return $result;
+    }
+
     public static function delete_img($filename) {
       if(!empty($filename)) {
         if(file_exists("upload/upload/" . $filename)) {
@@ -224,7 +239,14 @@
 
     public static function get_total_count($filter = null) {
       $response = 0;
-      $query = "SELECT COUNT(*) FROM " . static::$table;
+      $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
+      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+      $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
+      $query .= " LEFT JOIN fabrix_colour c ON fabrix_product_colours.colourId = c.id";
+      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
@@ -234,10 +256,17 @@
 
     public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
       $response = null;
-      $query = "SELECT * ";
-      $query .= " FROM " . static::$table;
+      $query = "SELECT DISTINCT a.* ";
+      $query .= " FROM " . static::$table . " a";
+      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+      $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
+      $query .= " LEFT JOIN fabrix_colour c ON fabrix_product_colours.colourId = c.id";
+      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      $query .= " ORDER BY pid DESC";
+      $query .= " ORDER BY a.pid DESC";
       $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
@@ -353,8 +382,8 @@
         }
       }
       extract($data);
-      $q = "update " . static::$table . " set".
-        " image1='$image1', image2='$image2', image3='$image3',".
+      $q = "update " . static::$table . " set" .
+        " image1='$image1', image2='$image2', image3='$image3'," .
         " image4='$image4', image5='$image5' where pid = '$pid'";
       return mysql_query($q);
     }
@@ -398,11 +427,8 @@
       }
       if($result) $result = static::update_images($pid, $data);
       if($result) {
-        if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
-          $categories = ['1' => null];
-        }
         $res = true;
-        if(count($categories) > 0) {
+        if($res && (count($categories) > 0)) {
           $res = mysql_query("select * from fabrix_product_categories  where pid='$pid'");
           if($res) {
             $result = $res;
@@ -415,25 +441,37 @@
               }
             }
           }
-          if($res) {
-            foreach($categories as $cid => $category) {
-              $res = $res && mysql_query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
-              $res = $res && mysql_query("REPLACE INTO fabrix_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
-              if(!$res) break;
+        } elseif($res) {
+          if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
+            mysql_query("DELETE FROM fabrix_product_categories WHERE pid = $pid");
+            $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" .
+              " from fabrix_categories a" .
+              " left join fabrix_product_categories b on a.cid = b.cid" .
+              " where a.cid = 1";
+            $res = mysql_query($q);
+            if($res) {
+              $row = mysql_fetch_array($res, MYSQL_NUM);
+              $categories = [$row[0] => $row[1]];
+              $data['categories'] = $categories;
             }
           }
         }
-
+        if($res) {
+          foreach($categories as $cid => $category) {
+            $res = $res && mysql_query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
+            $res = $res && mysql_query("REPLACE INTO fabrix_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
+            if(!$res) break;
+          }
+        }
+        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_colours WHERE prodID='$pid'");
         if($res && (count($colours) > 0)) {
-          $res = $res && mysql_query("DELETE FROM fabrix_product_colours WHERE prodID='$pid'");
           foreach($colours as $colourId) {
             $res = $res && mysql_query("REPLACE INTO fabrix_product_colours SET prodID='$pid', colourId='$colourId'");
             if(!$res) break;
           }
         }
-
+        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_patterns WHERE prodID='$pid'");
         if($res && (count($patterns) > 0)) {
-          $res = $res && mysql_query("DELETE FROM fabrix_product_patterns WHERE prodID='$pid'");
           foreach($patterns as $patternId) {
             $res = $res && mysql_query("REPLACE INTO fabrix_product_patterns SET prodID='$pid', patternId='$patternId'");
             if(!$res) break;

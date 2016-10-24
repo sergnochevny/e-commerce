@@ -30,8 +30,8 @@
               }
               break;
             case 'between':
-              $where .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($val[1][0])) . "'";
-              $where .= " and '" . mysql_real_escape_string(static::validData($val[1][0])) . "'";
+              $where .= "(". $key . " >= '" . mysql_real_escape_string(static::validData($val[1]['from'])) . "'";
+              $where .= " and ". $key ." <= '" . mysql_real_escape_string(static::validData($val[1]['to'])) . "')";
               break;
           }
           $where .= ")";

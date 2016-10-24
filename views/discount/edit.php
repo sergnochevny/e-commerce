@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div id="form_content" class="row">
     <?= $form; ?>
   </div>
 
