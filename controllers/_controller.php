@@ -19,6 +19,10 @@
       if(isset($sort)) {
         $order = is_null(_A_::$app->get('order')) ? 'DESC' : _A_::$app->get('order');
         $sort = [$sort => $order];
+      } elseif(!is_null(_A_::$app->post('sort'))){
+        $sort = _A_::$app->post('sort');
+        $order = is_null(_A_::$app->post('order')) ? 'DESC' : _A_::$app->post('order');
+        $sort = [$sort => $order];
       }
     }
 

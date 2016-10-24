@@ -5,7 +5,6 @@
   <div class="col-xs-12 table-list-header hidden-xs">
     <div class="row">
       <div class="col-sm-1 col">
-        Id
         <?php
           if(isset($sort['aid'])) {
             $order['sort'] = 'aid';
@@ -16,14 +15,16 @@
           }
           $sort_url = _A_::$app->router()->UrlTo('users', $order);
         ?>
-        <a data-sort href="<?=$sort_url?>">
-          <small>
-            <i class="fa <?= ($order['order'] == 'desc')?'fa-chevron-down':'fa-chevron-up'?>"></i>
-          </small>
+        <a data-sort href="<?= $sort_url ?>">
+          Id
+          <?php if(isset($sort['aid'])) : ?>
+            <small>
+              <i class="fa <?= ($sort['aid'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-4 col text-center">
-        Email
         <?php
           if(isset($sort['email'])) {
             $order['sort'] = 'email';
@@ -34,14 +35,16 @@
           }
           $sort_url = _A_::$app->router()->UrlTo('users', $order);
         ?>
-        <a data-sort href="<?=$sort_url?>">
-          <small>
-            <i class="fa <?= ($order['order'] == 'desc')?'fa-chevron-down':'fa-chevron-up'?>"></i>
-          </small>
+        <a data-sort href="<?= $sort_url ?>">
+          Email
+          <?php if(isset($sort['email'])) : ?>
+            <small>
+              <i class="fa <?= ($sort['email'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-3 col text-center">
-        Name
         <?php
           if(isset($sort['name'])) {
             $order['sort'] = 'name';
@@ -52,31 +55,40 @@
           }
           $sort_url = _A_::$app->router()->UrlTo('users', $order);
         ?>
-        <a data-sort href="<?=$sort_url?>">
-          <small>
-            <i class="fa <?= ($order['order'] == 'desc')?'fa-chevron-down':'fa-chevron-up'?>"></i>
-          </small>
+        <a data-sort href="<?= $sort_url ?>">
+          Name
+          <?php if(isset($sort['name'])): ?>
+            <small>
+              <i class="fa <?= ($sort['name'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-2 col text-center">
-        Registered
         <?php
           if(isset($sort['date_registered'])) {
             $order['sort'] = 'date_registered';
-            $order['order'] = ($sort['aid'] == 'date_registered' ? 'asc' : 'desc');
+            $order['order'] = ($sort['date_registered'] == 'desc' ? 'asc' : 'desc');
           } else {
             $order['sort'] = 'date_registered';
             $order['order'] = 'desc';
           }
           $sort_url = _A_::$app->router()->UrlTo('users', $order);
         ?>
-        <a data-sort href="<?=$sort_url?>">
-          <small>
-            <i class="fa <?= ($order['order'] == 'desc')?'fa-chevron-down':'fa-chevron-up'?>"></i>
-          </small>
+        <a data-sort href="<?= $sort_url ?>">
+          Registered
+          <?php if(isset($sort['date_registered'])) : ?>
+            <small>
+              <i class="fa <?= ($sort['date_registered'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
     </div>
+    <form data-sort>
+      <input type="hidden" name="sort" value="<?=array_keys($sort)[0]?>">
+      <input type="hidden" name="order" value="<?=array_values($sort)[0]?>">
+    </form>
   </div>
   <?php foreach($rows as $row): ?><?php $prms['aid'] = $row[0];
     if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
