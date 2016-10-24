@@ -170,7 +170,7 @@
           }
 
           $pid = $row['pid'];
-          $price = $row['price'];
+          $price = $row['priceyard'];
           $inventory = $row['inventory'];
           $piece = $row['piece'];
           $format_price = '';

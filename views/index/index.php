@@ -111,12 +111,12 @@
                 </div>
                 <div class="vc_row wpb_row vc_inner vc_row-fluid">
                   <div class="wpb_column vc_column_container vc_col-sm-12">
-                    <div class="wpb_wrapper">
+                    <div class="wpb_wrapper text-center">
                       <div class="just-woocommerce woocommerce columns-3 just-no-carousel clearfix">
                         <ul class="products owl-carousel owl-theme owl-loaded" id="just-carousel-560">
                         </ul>
                       </div>
-                      <a href="<?= _A_::$app->router()->UrlTo('shop/bestsellers'); ?>" class="just-button">More</a>
+                      <a href="<?= _A_::$app->router()->UrlTo('shop/bestsellers'); ?>" class="just-button button">More</a>
                     </div>
                   </div>
                 </div>

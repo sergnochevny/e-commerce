@@ -38,7 +38,7 @@ Class Model_Tools extends Model_Base
                     " WHERE b.pvisible = '1'";
                 break;
             case 'blog_category':
-                $q = "SELECT distinct a.*" .
+                $q = "SELECT distinct a.*, c.group_id" .
                     " FROM blog_groups a" .
                     " LEFT JOIN blog_group_posts c on a.id = c.group_id" .
                     " LEFT JOIN blog_posts b ON b.id = c.post_id" .
