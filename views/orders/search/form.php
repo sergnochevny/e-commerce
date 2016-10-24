@@ -28,7 +28,7 @@
                         <div class="form-row">
                             <label>Customer:</label>
                             <input type="text" class="input-text" placeholder="Like ..." name="search[full_name]"
-                                   value="<?= isset($search['full_name']) ? $search['full_name'] : '' ?>">
+                                   value="<?= isset($search['name']) ? $search['name'] : '' ?>">
                         </div>
                     </div>
                 </div>

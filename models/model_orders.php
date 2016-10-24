@@ -86,15 +86,10 @@
       $q = "SELECT";
       $q .= " COUNT(ord.oid)";
       $q .= " FROM fabrix_orders ord";
-      $q .= " LEFT JOIN fabrix_accounts user ON ord.aid = user.aid";
+      $q .= " LEFT JOIN fabrix_accounts user ON ord.oid = user.aid";
       $q .= (isset($id) || isset($filter)) ? " WHERE" : '';
-      $q .= isset($id) ? " ord.aid = '$id'" : '';
-      if(isset($filter)) {
-        $q .= isset($id) ? " AND" : '';
-        $q .= " (ord.trid LIKE '%$filter%'";
-        $q .= " OR user.bill_firstname LIKE '%$filter%'";
-        $q .= " OR user.bill_lastname  LIKE '%$filter%')";
-      }
+      $q .= isset($id) ? " ord.oid = '$id'" : '';
+      $q .= static::build_where($filter);
       $result = mysql_query($q);
       if($result) {
         $myrow = mysql_fetch_array($result);
@@ -110,12 +105,7 @@
       $q .= " left join fabrix_accounts user on o.aid = user.aid";
       $q .= (isset($user_id) || isset($like)) ? " where" : '';
       $q .= isset($user_id) ? " o.aid='$user_id'" : '';
-      if(isset($like)) {
-        $q .= isset($user_id) ? " and" : '';
-        $q .= " (o.trid like '%$like%'";
-        $q .= " or user.bill_firstname like '%$like%'";
-        $q .= " or user.bill_lastname  like '%$like%')";
-      }
+      $q .= static::build_where($filter);
       $q .= " order by o.order_date desc limit $start, $limit";
 
       $res = mysql_query($q);
