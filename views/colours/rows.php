@@ -2,10 +2,36 @@
   <div class="col-xs-12 table-list-header hidden-xs">
     <div class="row">
       <div class="col-sm-8 col">
-        Name <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+        <?php
+          if (isset($sort['colour'])) {
+            $order['sort'] = 'colour';
+            $order['order'] = ($sort['colour'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'colour';
+            $order['order'] = 'desc';
+          }
+          $sort_url = _A_::$app->router()->UrlTo('colours', $order);
+        ?>
+        <a data-sort href="<?= $sort_url ?>">
+          Name
+          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+        </a>
       </div>
       <div class="col-sm-3 col">
-        Products <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+        <?php
+          if (isset($sort['products'])) {
+            $order['sort'] = 'products';
+            $order['order'] = ($sort['products'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'products';
+            $order['order'] = 'desc';
+          }
+          $sort_url = _A_::$app->router()->UrlTo('colours', $order);
+        ?>
+        <a data-sort href="<?= $sort_url ?>">
+          Products
+          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+        </a>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
-<div class="col-xs-12 danger">
+<div class="col-xs-12">
   <?php if (isset($warning)) { ?>
-    <div class="col-xs-12 alert-success">
+    <div class="col-xs-12 alert-success danger">
       <?php foreach ($warning as $msg) {
         echo $msg . "<br/>";
       } ?>
