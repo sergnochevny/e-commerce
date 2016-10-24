@@ -14,7 +14,15 @@
       }
     }
 
-    protected function search_form($search_form){
+    protected function build_order(&$sort) {
+      $sort = _A_::$app->get('sort');
+      if(isset($sort)) {
+        $order = is_null(_A_::$app->get('order')) ? 'DESC' : _A_::$app->get('order');
+        $sort = [$sort => $order];
+      }
+    }
+
+    protected function search_form($search_form) {
       $this->template->vars('search', $search_form);
       $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller));
       $search_form = null;
@@ -70,8 +78,7 @@
                 if(count($matches) > 1) {
                   if(is_array($item)) {
                     $filter[$key] = [$fields_type[$matches[1]][1], $item];
-                  }
-                  $filter[$key] = [$fields_type[$matches[1]][0], $item];
+                  } else  $filter[$key] = [$fields_type[$matches[1]][0], $item];
                 }
                 $search_form[$key] = $item;
               }
@@ -85,6 +92,7 @@
 
     protected function get_list() {
       $this->build_search_filter($filter);
+      $this->build_order($sort);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
       $per_page = 12;
       $total = forward_static_call([$this->model_name, 'get_total_count'], $filter);
@@ -92,9 +100,10 @@
       if($page <= 0) $page = 1;
       $start = (($page - 1) * $per_page);
       $res_count_rows = 0;
-      $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, $filter]);
+      $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, $filter, &$sort]);
       $this->after_get_list($rows);
       $this->template->vars('rows', $rows);
+      $this->template->vars('sort', $sort);
       ob_start();
       $this->template->view_layout('rows');
       $rows = ob_get_contents();

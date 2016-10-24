@@ -4,6 +4,19 @@
 
     protected static $table = 'fabrix_categories';
 
+    private static function build_order(&$sort) {
+      $order = '';
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.cname' => 'asc'];
+      }
+      foreach($sort as $key => $val) {
+        if(strlen($order) > 0) $order .= ',';
+        $order .= ' ' . $key . ' ' . $val;
+      }
+      $order = ' ORDER BY ' . $order;
+      return $order;
+    }
+
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(*) FROM fabrix_categories";
@@ -14,7 +27,7 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT a.*, count(b.pid) AS amount";
       $query .= " FROM fabrix_categories a";
@@ -22,7 +35,7 @@
       $query .= " fabrix_product_categories b ON b.cid = a.cid";
       $query .= static::build_where($filter);
       $query .= " GROUP BY a.cid, a.cname";
-      $query .= " ORDER BY a.cname";
+      $query .= static::build_order($sort);
       $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {

@@ -4,6 +4,19 @@
 
     protected static $table = 'fabrix_orders';
 
+    private static function build_order(&$sort) {
+      $order = '';
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['o.order_date' => 'desc'];
+      }
+      foreach($sort as $key => $val) {
+        if(strlen($order) > 0) $order .= ',';
+        $order .= ' ' . $key . ' ' . $val;
+      }
+      $order = ' ORDER BY ' . $order;
+      return $order;
+    }
+
     public static function getOrderDetailInfo($arr) {
       if(isset($arr) && count($arr) === 1) {
         $result = null;
@@ -65,12 +78,12 @@
 
     public static function get_list_by_discount_id($id) {
       if(isset($id)) {
-        $query =   "SELECT orders.*, CONCAT(users.bill_firstname,' ',users.bill_lastname) AS username FROM fabrix_specials_usage spec_usage ";
-        $query .=  "LEFT JOIN fabrix_orders orders ";
-        $query .=  "ON spec_usage.oid = orders.oid ";
-        $query .=  "LEFT JOIN fabrix_accounts users ";
-        $query .=  "ON orders.aid = users.aid ";
-        $query .=  "WHERE spec_usage.sid = '$id'";
+        $query = "SELECT orders.*, CONCAT(users.bill_firstname,' ',users.bill_lastname) AS username FROM fabrix_specials_usage spec_usage ";
+        $query .= "LEFT JOIN fabrix_orders orders ";
+        $query .= "ON spec_usage.oid = orders.oid ";
+        $query .= "LEFT JOIN fabrix_accounts users ";
+        $query .= "ON orders.aid = users.aid ";
+        $query .= "WHERE spec_usage.sid = '$id'";
         if($result = mysql_query($query)) {
           $rows = [];
           while($row = mysql_fetch_array($result)) {
@@ -98,7 +111,7 @@
       return false;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
       $q = "select";
       $q .= " o.*, CONCAT(user.bill_firstname,' ',user.bill_lastname) as username";
       $q .= " from fabrix_orders o";
@@ -106,7 +119,8 @@
       $q .= (isset($user_id) || isset($like)) ? " where" : '';
       $q .= isset($user_id) ? " o.aid='$user_id'" : '';
       $q .= static::build_where($filter);
-      $q .= " order by o.order_date desc limit $start, $limit";
+      $q .= static::build_order($sort);
+      $q .= " limit $start, $limit";
 
       $res = mysql_query($q);
       if($res) {

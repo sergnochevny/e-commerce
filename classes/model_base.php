@@ -9,34 +9,40 @@
       if(isset($filter)) {
         $where = "";
         foreach($filter as $key => $val) {
-          $where .= ((strlen($where) > 0) ? " and (" : " (");
+          $where1 = "";
           switch($val[0]) {
             case 'like':
               if(is_array($val[1])) {
                 foreach($val[1] as $like) {
-                  $where .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::validData($like)) . "%'";
+                  $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::validData($like)) . "%'";
                 }
               } else {
-                $where .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::validData($val[1])) . "%'";
+                $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::validData($val[1])) . "%'";
               }
               break;
             case '=':
               if(is_array($val[1])) {
                 foreach($val[1] as $like) {
-                  $where .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($like)) . "'";
+                  $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($like)) . "'";
                 }
               } else {
-                $where .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($val[1])) . "'";
+                $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($val[1])) . "'";
               }
               break;
             case 'between':
-              $where .= "(". $key . " >= '" . mysql_real_escape_string(static::validData($val[1]['from'])) . "'";
-              $where .= " and ". $key ." <= '" . mysql_real_escape_string(static::validData($val[1]['to'])) . "')";
+              if(!empty($val[1]['from'])){
+                $where1 = $key . " >= '" . mysql_real_escape_string(static::validData($val[1]['from'])) . "'";
+              }
+              if(!empty($val[1]['to'])){
+                if(strlen($where1) > 0) $where1 .= " and ";
+                $where1 .= $key ." <= '" . mysql_real_escape_string(static::validData($val[1]['to'])) . "'";
+              }
               break;
           }
-          $where .= ")";
+
+          $where .= ((strlen($where1) > 0) ? ((strlen($where) > 0) ? " and (" : " (").$where1.")":'');
         }
-        $query = " WHERE " . $where;
+        if(strlen($where)>0) $query = " WHERE " . $where;
       }
       return $query;
     }

@@ -4,6 +4,19 @@
 
     protected static $table = 'fabrix_products';
 
+    private static function build_order(&$sort) {
+      $order = '';
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.pid'=>'desc'];
+      }
+      foreach($sort as $key => $val) {
+        if(strlen($order) > 0) $order .= ',';
+        $order .= ' ' . $key . ' ' . $val;
+      }
+      $order = ' ORDER BY ' . $order;
+      return $order;
+    }
+
     protected static function build_where($filter) {
       $result = "";
       if(!empty($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pname"])) . "%'";
@@ -254,7 +267,7 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT DISTINCT a.* ";
       $query .= " FROM " . static::$table . " a";
@@ -266,7 +279,7 @@
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      $query .= " ORDER BY a.pid DESC";
+      $query .= static::build_order($sort);
       $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {

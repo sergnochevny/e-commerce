@@ -4,6 +4,24 @@
 
     protected static $table = 'fabrix_accounts';
 
+    private static function build_order(&$sort) {
+      $order = '';
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['aid' => 'desc'];
+      }
+      foreach($sort as $key => $val) {
+        if(strlen($order) > 0) $order .= ',';
+        if($key == 'name') {
+          $order .= ' bill_fistname ' . $val;
+          $order .= ', bill_lastname ' . $val;
+        } else {
+          $order .= ' ' . $key . ' ' . $val;
+        }
+      }
+      $order = ' ORDER BY ' . $order;
+      return $order;
+    }
+
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(*) FROM " . static::$table;
@@ -14,12 +32,12 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT * ";
       $query .= " FROM " . static::$table;
       $query .= static::build_where($filter);
-      $query .= " ORDER BY aid";
+      $query .= static::build_order($sort);
       $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {

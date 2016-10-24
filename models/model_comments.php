@@ -4,6 +4,19 @@
 
     protected static $table = 'fabrix_comments';
 
+    private static function build_order(&$sort) {
+      $order = '';
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.dt' => 'desc'];
+      }
+      foreach($sort as $key => $val) {
+        if(strlen($order) > 0) $order .= ',';
+        $order .= ' ' . $key . ' ' . $val;
+      }
+      $order = ' ORDER BY ' . $order;
+      return $order;
+    }
+
     public static function get_by_id($id) {
       $response = [
         'id' => $id,
@@ -27,13 +40,13 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null) {
+    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT a.*, b.aid, b.email ";
       $query .= " FROM " . static::$table . " a";
       $query .= " LEFT JOIN fabrix_accounts b ON b.aid = a.userid";
       $query .= static::build_where($filter);
-      $query .= " ORDER BY a.dt";
+      $query .= static::build_order($sort);
       $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
@@ -45,7 +58,6 @@
 
       return $response;
     }
-
 
     public static function save($data) {
       extract($data);
@@ -62,7 +74,7 @@
       return $id;
     }
 
-    public static function moderate($id, $action){
+    public static function moderate($id, $action) {
       $query = 'UPDATE ' . static::$table . ' SET `moderated` = "' . $action . '" WHERE id =' . $id;
       return mysql_query($query) ? true : false;
     }
