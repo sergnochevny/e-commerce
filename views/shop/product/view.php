@@ -136,12 +136,12 @@
           <p><?= $data['ldesc']; ?></p>
         </div>
         <div class="product_title_price">
-          <?php if($sys_hide_price == 0 && $hide_price == 0) { ?>
+          <?php if($sys_hide_price == 0 && $data['hideprice'] == 0) { ?>
             <p class="price">Price:
               <ins>
-                                    <span class="amount">
-                                    <?= $format_price; ?>
-                                    </span>
+                <span class="amount">
+                <?= $format_price; ?>
+                </span>
               </ins>
             </p>
           <?php } ?>
@@ -154,27 +154,27 @@
         <div class="quantity"></div>
 
         <span id="b_in_product" style="font-weight: 600;">
-                            <?php
-                              $pid = _A_::$app->get('p_id');
-                              if($data['inventory'] > 0) {
-                                ?>
-                                <a id="add_cart"
-                                   href="<?= _A_::$app->router()->UrlTo('cart/add', ['p_id' => $pid]) ?>" <?= !isset($in_cart) ? '' : 'style="display: none;"'; ?>>
-                                    <button type="button" class="single_add_to_cart_button button alt">Add to cart
-                                    </button>
-                                </a>
-                                <a id="view_cart"
-                                   href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= isset($in_cart) ? '' : 'style="display: none;"'; ?>>
-                                    <button type="button" class="single_add_to_cart_button button alt">Basket
-                                    </button>
-                                </a>
-                              <?php } ?>
-                        </span>
+          <?php
+            $pid = _A_::$app->get('pid');
+            if($data['inventory'] > 0) {
+              ?>
+              <a id="add_cart"
+                 href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= !isset($in_cart) ? '' : 'style="display: none;"'; ?>>
+                  <button type="button" class="single_add_to_cart_button button alt">Add to cart
+                  </button>
+              </a>
+              <a id="view_cart"
+                 href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= isset($in_cart) ? '' : 'style="display: none;"'; ?>>
+                  <button type="button" class="single_add_to_cart_button button alt">Basket
+                  </button>
+              </a>
+            <?php } ?>
+        </span>
 
         <span id="b_in_product" style="font-weight: 600;">
           <?php if($data['inventory'] > 0 && $allowed_samples) { ?>
             <a id="add_samples_cart"
-               href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['p_id' => $pid]) ?>" <?= !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
+               href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
                 <button type="button" class="single_add_to_cart_button button alt">Add Samples</button>
             </a>
           <?php } ?>
@@ -183,7 +183,7 @@
         <span id="b_in_product" style="font-weight: 600;">
           <?php
             $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
-            $mhref = _A_::$app->router()->UrlTo('matches/add', ['p_id' => $pid]);
+            $mhref = _A_::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
           ?>
           <a href="<?= $ahref; ?>">
             <button type="button" class="single_add_to_cart_button button alt">Ask a Question</button>

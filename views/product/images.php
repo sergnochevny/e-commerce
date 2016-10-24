@@ -32,7 +32,7 @@
                     </a>
                   </div>
                   <div class='b_modify_images_pic_make_main'>
-                    <div data-p_id='<?= $data['pid'] ?>' data-img_idx='2'
+                    <div data-pid='<?= $data['pid'] ?>' data-img_idx='2'
                          class='b_modify_images_pic_main_icon'>
                       <i class="fa fa-desktop" title="Set as main image"></i>
                     </div>
@@ -56,7 +56,7 @@
                     </a>
                   </div>
                   <div class='b_modify_images_pic_make_main'>
-                    <div data-p_id='<?= $data['pid'] ?>' data-img_idx='3'
+                    <div data-pid='<?= $data['pid'] ?>' data-img_idx='3'
                          class='b_modify_images_pic_main_icon'>
                       <i class="fa fa-desktop" title="Set as main image"></i>
                     </div>
@@ -78,7 +78,7 @@
                     </a>
                   </div>
                   <div class='b_modify_images_pic_make_main'>
-                    <div data-p_id='<?= $data['pid'] ?>' data-img_idx='4'
+                    <div data-pid='<?= $data['pid'] ?>' data-img_idx='4'
                          class='b_modify_images_pic_main_icon'>
                       <i class="fa fa-desktop" title="Set as main image"></i>
                     </div>
@@ -100,7 +100,7 @@
                     </a>
                   </div>
                   <div class='b_modify_images_pic_make_main'>
-                    <div data-p_id='<?= $data['pid'] ?>' data-img_idx='5'
+                    <div data-pid='<?= $data['pid'] ?>' data-img_idx='5'
                          class='b_modify_images_pic_main_icon'>
                       <i class="fa fa-desktop" title="Set as main image"></i>
                     </div>
