@@ -1,4 +1,10 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php
+  $prms = null;
+  if (!is_null(_A_::$app->get('page'))) {
+    $prms['page'] = _A_::$app->get('page');
+  }
+  include_once 'views/messages/alert-boxes.php';
+?>
 
   <div class="col-xs-12 text-center">
     <h2>Patterns</h2>
