@@ -493,7 +493,7 @@ input[type='color']:focus {
     position: relative;
     width: 100%;
     display: inline-block;
-    background-position: center center;
+    background-position: top center;
     background-size: cover;
     height: 220px;
     -webkit-transition: all .2s ease-in;
