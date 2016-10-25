@@ -5,8 +5,38 @@
         <div class="h4 search-container-title">
           <div class="row">
             <div class="col-xs-1 col-sm-2"><i class="fa fa-search"></i></div>
-            <div class="col-xs-9 comment-text">
-              <?= isset($search['a.pname']) ? '<span>Like: </span><b>' . $search['a.pname'] . '</b>' : '' ?>
+            <div class="col-xs-10 comment-text">
+              <?php if(isset($search['a.pname'])): ?>
+                <div class="row">
+                  <div class="col-xs-12">Product name like: <?= $search['a.pname'] ?></div>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['a.pnumber'])): ?>
+                <div class="row">
+                  <div class="col-xs-12">Product number like: <?= $search['a.pnumber'] ?></div>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['b.cid'])): ?>
+                <div class="row">
+                  <div class="col-xs-12">Category: <?= $search['categories'][$search['b.cid']] ?></div>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['a.pvisible'])): ?>
+                <div class="row">
+                  <div class="col-xs-12">Visibile: <?= isset($search['a.pvisible']) && $search['a.pvisible'] == 0 ? 'YES' : 'NO' ?></div>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['a.pvisible'])): ?>
+                <div class="row">
+                  <div class="col-xs-12">Best textile: <?= isset($search['a.best']) && $search['a.best'] == 0 ? 'YES' : 'NO' ?></div>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['a.specials'])): ?>
+                <div class="row">
+                  <div class="col-xs-12">Specials: <?= isset($search['a.specials']) && $search['a.specials'] == 0 ? 'YES' : 'NO' ?></div>
+                </div>
+              <?php endif; ?>
+              <?= isset($search['active']) ? '<a data-search_reset class="button reset">&times;</a>' : '' ?>
             </div>
             <b class="sr-ds">
               <i class="fa fa-chevron-right"></i>
@@ -131,6 +161,36 @@
         <div class="row">
           <div class="col-xs-6">
             <div class="form-row">
+              <label>Piece
+                <select name="search[a.best]" id="best">
+                  <option value=""  <?= isset($search['a.piece']) ? '' : 'selected' ?>>Any</option>
+                  <option value="1" <?= isset($search['a.piece']) && $search['a.piece'] == 1 ? 'selected' : '' ?>>Yes</option>
+                  <option value="0" <?= isset($search['a.piece']) && $search['a.piece'] == 0 ? 'selected' : '' ?>>No</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="form-row">
+              <label>Specific manufacture
+                <select name="search[c.id]" id="best">
+                  <option value="" <?= isset($search['m.id']) ? '' : 'selected' ?>>Any</option>
+                  <?php if(isset($search['manufacturers'])):
+                    foreach($search['manufacturers'] as $manufacturer):?>
+                      <option
+                        value="<?= $manufacturer['id'] ?>" <?= (isset($manufacturer['m.id']) && ($manufacturer['id'] == $search['m.id'])) ? 'selected' : '' ?>>
+                        <?= $manufacturer['manufacturer'] ?>
+                      </option>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="form-row">
               <label for="discount_on">
                 Starts at:
                 <input placeholder="Chose start date" type="text" id="date-from" class="input-text"
@@ -154,7 +214,6 @@
 
       <div class="panel-footer hidden">
         <a data-search_submit class="btn button pull-right">Search</a>
-        <a data-search_reset class="btn reset">Reset</a>
       </div>
     </div>
   </div>
