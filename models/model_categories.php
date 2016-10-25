@@ -31,12 +31,11 @@
       $response = null;
       $query = "SELECT a.*, count(b.pid) AS amount";
       $query .= " FROM fabrix_categories a";
-      $query .= " LEFT JOIN";
-      $query .= " fabrix_product_categories b ON b.cid = a.cid";
+      $query .= " LEFT JOIN fabrix_product_categories b ON b.cid = a.cid";
       $query .= static::build_where($filter);
       $query .= " GROUP BY a.cid, a.cname";
       $query .= static::build_order($sort);
-      $query .= " LIMIT $start, $limit";
+      if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);
@@ -48,7 +47,7 @@
       return $response;
     }
 
-    public static function get_total_list() {
+    public static function get_used_list() {
       $response = null;
       $query = "SELECT a.*, count(b.pid) AS amount";
       $query .= " FROM fabrix_categories a";

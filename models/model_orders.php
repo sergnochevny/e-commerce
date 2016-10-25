@@ -120,7 +120,7 @@
       $q .= isset($user_id) ? " o.aid='$user_id'" : '';
       $q .= static::build_where($filter);
       $q .= static::build_order($sort);
-      $q .= " LIMIT $start, $limit";
+      if ( $limit != 0 ) $q .= " LIMIT $start, $limit";
 
       $res = mysql_query($q);
       if($res) {
