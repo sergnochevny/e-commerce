@@ -154,8 +154,9 @@
 
         ob_start();
         foreach($rows as $row) {
-          $row[8] = substr($row[8], 0, 100);
-          $filename = 'upload/upload/' . $image_suffix . $row[14];
+          $row['sdesc'] = substr($row['sdesc'], 0, 100);
+          $row['ldesc'] = substr($row['ldesc'], 0, 100);
+          $filename = 'upload/upload/' . $image_suffix . $row['image1'];
           if(!(file_exists($filename) && is_file($filename))) {
             $filename = 'upload/upload/not_image.jpg';
           }
@@ -226,14 +227,13 @@
         $last = false;
         $i = 1;
         foreach($rows as $row) {
-          $row[8] = substr($row[8], 0, 100);
-
-          $filename = 'upload/upload/' . $image_suffix . $row[14];
+          $row['sdesc'] = substr($row['sdesc'], 0, 100);
+          $row['ldesc'] = substr($row['ldesc'], 0, 100);
+          $filename = 'upload/upload/' . $image_suffix . $row['image1'];
           if(!(file_exists($filename) && is_file($filename))) {
             $filename = 'upload/upload/not_image.jpg';
           }
           $filename = _A_::$app->router()->UrlTo($filename);
-
           $pid = $row['pid'];
           $price = $row['priceyard'];
           $inventory = $row['inventory'];
