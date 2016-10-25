@@ -1,53 +1,61 @@
-<div class="block-search">
-  <form id="f_search_1" role="search" method="post" class="woocommerce-product-search"
-        action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
-    <!--<label class="screen-reader-text" for="s">Search for:</label>-->
-    <input id="search" type="search" class="search-field"
-           placeholder="Search Products&hellip;" value="<?= isset($search) ? $search : '' ?>"
-           name="s"
-           title="Search for:"/>
-    <input id="b_search_1" class="button-search" type="button" value="Search"/>
-  </form>
+<?php if (isset($page_title)) { ?>
+  <div class="col-xs-12 text-center">
+    <h2><?= $page_title; ?></h2>
+  </div>
+<?php } ?>
 
+<div class="row">
+  <div class="col-xs-12 search-result-header">
+
+    <div class="row">
+      <div class="col-sm-6">
+        <?= isset($search) ? '<p class="">Search query: <b>' . $search . '</b></p>' : '' ?>
+      </div>
+      <div class="col-sm-6 search-result-container text-right">
+        <span class="search-result">Showing <?= $count_rows; ?> results</span>
+      </div>
+    </div>
+
+  </div>
 </div>
-<?php
-  if(isset($page_title)) {
-    ?>
-    <p class="woocommerce-page-title">
-    <h3 class="just-section-title">
-      <?= $page_title; ?>
-    </h3>
-    </p>
-    <?php
-  }
-?>
-<?= isset($search) ? '<p class="">Search query: <b>' . $search . '</b></p>' : '' ?>
+
+
 <p class="woocommerce-result-count">
   <?php
-    if(!empty(_A_::$app->get('cat'))) {
+    if (!empty(_A_::$app->get('cat'))) {
       echo 'CATEGORY: ' . $category_name . '<br/>';
     }
-    if(!empty(_A_::$app->get('mnf'))) {
+    if (!empty(_A_::$app->get('mnf'))) {
       echo 'MANUFACTURER: ' . $mnf_name . '<br/>';
     }
-    if(!empty(_A_::$app->get('ptrn'))) {
+    if (!empty(_A_::$app->get('ptrn'))) {
       echo 'PATTERN: ' . $ptrn_name . '<br/>';
     }
-    echo isset($count_rows) ? "Showing " . $count_rows . " results" : "Showing ... results";
   ?>
 
 </p>
-<?php
-  echo isset($annotation) ? '<p class="annotation">' . $annotation . '</p>' : '';
-?>
-<ul class="products">
-  <?=$rows;?>
-</ul>
-<nav role="navigation" class="paging-navigation">
-  <h4 class="sr-only">Navigation</h4>
-  <ul class='pagination'>
-    <?php
-      echo isset($paginator) ? $paginator : '';
-    ?>
-  </ul>
-</nav>
+<div class="row">
+  <div class="col-xs-12">
+    <?= isset($annotation) ? '<p class="annotation">' . $annotation . '</p>' : '';?>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row products">
+        <?= $rows; ?>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+
+    <nav class="paging-navigation" role="navigation">
+      <h4 class="sr-only">Navigation</h4>
+      <ul class="pagination">
+        <?= isset($paginator) ? $paginator : ''; ?>
+      </ul>
+    </nav>
+
+  </div>
+</div>

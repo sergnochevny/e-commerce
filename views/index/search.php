@@ -23,7 +23,7 @@
                                             </a>
                                         </figure>
 
-                                        <span class="onsale">Sale!</span>
+                                        <span class="on-sale">Sale!</span>
                                         <span
                                             class="product-category"><?= $data['product_category']; ?></span>
                                         <h3><?= $data['product_description']; ?></h3>
