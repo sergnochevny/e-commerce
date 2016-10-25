@@ -2,22 +2,100 @@
   <div class="col-xs-12 table-list-header hidden-xs">
     <div class="row">
       <div class="col-sm-2 col">
-        Details <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+        <?php
+          if (isset($sort['cname'])) {
+            $order['sort'] = 'cname';
+            $order['order'] = ($sort['cname'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'cname';
+            $order['order'] = 'desc';
+          }
+          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+        ?>
+        <a href="#">
+          Details
+          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+        </a>
       </div>
       <div class="col-sm-1 col text-center">
-        On
+        <?php
+          if (isset($sort['enabled'])) {
+            $order['sort'] = 'enabled';
+            $order['order'] = ($sort['enabled'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'enabled';
+            $order['order'] = 'desc';
+          }
+          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+        ?>
+        <a href="#">
+          On
+          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+        </a>
       </div>
       <div class="col-sm-2 col text-center">
-        Multiple
+        <?php
+          if (isset($sort['allow_multiple'])) {
+            $order['sort'] = 'allow_multiple';
+            $order['order'] = ($sort['allow_multiple'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'allow_multiple';
+            $order['order'] = 'desc';
+          }
+          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+        ?>
+        <a href="#">
+          Multiple
+          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+        </a>
       </div>
       <div class="col-sm-2 col text-center">
-        Coupon <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+        <?php
+          if (isset($sort['coupon_code'])) {
+            $order['sort'] = 'coupon_code';
+            $order['order'] = ($sort['coupon_code'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'coupon_code';
+            $order['order'] = 'desc';
+          }
+          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+        ?>
+        <a href="#">
+          Coupon
+          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+        </a>
       </div>
       <div class="col-sm-2 col text-center">
-        Starts <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+        <?php
+          if (isset($sort['date_start'])) {
+            $order['sort'] = 'date_start';
+            $order['order'] = ($sort['date_start'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'date_start';
+            $order['order'] = 'desc';
+          }
+          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+        ?>
+        <a href="#">
+          Starts
+          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+        </a>
       </div>
       <div class="col-sm-2 col text-center">
-        Ends <a href="#"><small><i class="fa fa-chevron-down"></i></small></a>
+        <?php
+          if (isset($sort['date_end'])) {
+            $order['sort'] = 'date_end';
+            $order['order'] = ($sort['date_end'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'date_end';
+            $order['order'] = 'desc';
+          }
+          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+        ?>
+        <a href="#">
+          Ends
+          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+        </a>
       </div>
     </div>
   </div>
