@@ -10,7 +10,7 @@
         <figcaption></figcaption>
       </figure>
 
-      <span class="onsale">New!</span>
+      <span class="on-sale">New!</span>
       <span class="product-category"><?= $row['pname']; ?></span>
       <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>
       <div class="product-price-box clearfix">

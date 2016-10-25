@@ -1,7 +1,6 @@
-<li
-  class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
+<div class="col-xs-12 col-sm-6 col-md-4 product-item">
   <div class="product-inner">
-    <span class="onsale">Popular</span>
+    <span class="on-sale">Popular</span>
     <a href="<?= _A_::$app->router()->UrlTo('shop/product', $url_prms); ?>">
       <figure class="product-image-box">
         <img src="<?= $filename; ?>" alt="">
@@ -18,7 +17,7 @@
             } else {
 //                        include('views/basket/main_product_addtobasket.php');
               ?>
-              <a class="button productsAddBasket" href="<?= _A_::$app->router()->UrlTo('shop/product', $url_prms); ?>">
+              <a class="button add-to-basket" href="<?= _A_::$app->router()->UrlTo('shop/product', $url_prms); ?>">
                 View Details
               </a>
               <?php
@@ -50,4 +49,4 @@
       </div>
     </a>
   </div>
-</li>
+</div>
