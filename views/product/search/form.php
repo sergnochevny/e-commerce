@@ -21,6 +21,16 @@
                   <div class="col-xs-12">Category: <?= $search['categories'][$search['b.cid']] ?></div>
                 </div>
               <?php endif; ?>
+              <?php if(isset($search['c.id'])): ?>
+                <div class="row">
+                  <div class="col-xs-12">Colour: <?= $search['colours'][$search['c.id']] ?></div>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['m.id'])): ?>
+                <div class="row">
+                  <div class="col-xs-12">Manufacturer: <?= $search['manufacturer'][$search['m.id']] ?></div>
+                </div>
+              <?php endif; ?>
               <?php if(isset($search['a.pvisible'])): ?>
                 <div class="row">
                   <div class="col-xs-12">Visibile: <?= isset($search['a.pvisible']) && $search['a.pvisible'] == 0 ? 'YES' : 'NO' ?></div>
@@ -125,7 +135,7 @@
           </div>
           <div class="col-xs-4">
             <div class="form-row">
-              <label>In specific color
+              <label>In specific colour
                 <select name="search[c.id]" id="best">
                   <option value=""  <?= isset($search['c.id']) ? '' : 'selected' ?>>Any</option>
                   <?php if(isset($search['colours'])):
@@ -172,7 +182,7 @@
           </div>
           <div class="col-xs-6">
             <div class="form-row">
-              <label>Specific manufacture
+              <label>Specific manufacturer
                 <select name="search[c.id]" id="best">
                   <option value="" <?= isset($search['m.id']) ? '' : 'selected' ?>>Any</option>
                   <?php if(isset($search['manufacturers'])):
