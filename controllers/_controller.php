@@ -14,15 +14,22 @@
       }
     }
 
+    protected function before_search_form_layout(&$search_data) { }
+
     protected function build_order(&$sort) {
       $sort = _A_::$app->get('sort');
       if(isset($sort)) {
         $order = is_null(_A_::$app->get('order')) ? 'DESC' : _A_::$app->get('order');
         $sort = [$sort => $order];
+      } elseif(!is_null(_A_::$app->post('sort'))) {
+        $sort = _A_::$app->post('sort');
+        $order = is_null(_A_::$app->post('order')) ? 'DESC' : _A_::$app->post('order');
+        $sort = [$sort => $order];
       }
     }
 
     protected function search_form($search_form) {
+      $this->before_search_form_layout($search_form);
       $this->template->vars('search', $search_form);
       $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller));
       $search_form = null;
@@ -50,7 +57,10 @@
         if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
         else  $search = _A_::$app->get('search');
         if(isset($search)) {
-          $search_form = array_filter($search);
+          $search_form = array_filter($search, function($val){
+            if (is_array($val)) return true;
+            return (strlen(trim($val))>0);
+          });
           foreach($fields as $key) {
             if(isset($search_form[$key])) $filter[$key] = $search_form[$key];
           }

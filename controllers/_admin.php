@@ -63,7 +63,7 @@
         $url = base64_decode(urldecode(_A_::$app->get('url')));
       }
       $back_url = (strlen($url) > 0) ? $url : 'product';
-      $this->edit_add_handling($action, $back_url, $title, true);
+      $this->edit_add_handling($action, $title, $back_url);
     }
 
     /**

@@ -102,7 +102,7 @@
       $query .= " FROM " . static::$table;
       $query .= static::build_where($filter);
       $query .= static::build_order($sort);
-      $query .= " LIMIT $start, $limit";
+      if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);

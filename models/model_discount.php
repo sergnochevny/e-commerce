@@ -99,7 +99,7 @@
       $q = "SELECT * FROM " . static::$table;
       $q .= self::build_where($filter);
       $q .= static::build_order($sort);
-      $q .= " LIMIT $start, $limit";
+      if ( $limit != 0 ) $q .= " LIMIT $start, $limit";
       $result = mysql_query($q);
       if($result) {
         $res_count_rows = mysql_num_rows($result);

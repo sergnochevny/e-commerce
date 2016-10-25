@@ -30,7 +30,7 @@
               <label for="">
                 Select the status
                 <select name="search[a.pvisible]" id="">
-                  <option value selected>Any status</option>
+                  <option value="" <?= isset($search['a.pvisible']) ? '' : 'selected' ?>>Any</option>
                   <option value="0" <?= isset($search['a.pvisible']) && $search['a.pvisible'] == 0 ? 'selected' : '' ?>>
                     Hidden
                   </option>
@@ -46,7 +46,8 @@
           <div class="col-xs-4">
             <div class="form-row">
               <label>Product number:
-                <input type="text" name="search[pnumber]" value="<?= $search['pnumber']; ?>" class="input-text"
+                <input type="text" name="search[a.pnumber]"
+                       value="<?= isset($search['a.pnumber']) ? $search['a.pnumber'] : ''; ?>" class="input-text"
                        placeholder="e.g. abc888999">
               </label>
             </div>
@@ -54,10 +55,10 @@
           <div class="col-xs-4">
             <div class="form-row">
               <label>Best textile:
-                <select name="search[best]" id="best">
-                  <option value="0">Any</option>
-                  <option value="1">Yes</option>
-                  <option value="2">No</option>
+                <select name="search[a.best]" id="best">
+                  <option value=""  <?= isset($search['a.best']) ? '' : 'selected' ?>>Any</option>
+                  <option value="1" <?= isset($search['a.best']) && $search['a.best'] == 1 ? 'selected' : '' ?>>Yes</option>
+                  <option value="0" <?= isset($search['a.best']) && $search['a.best'] == 0 ? 'selected' : '' ?>>No</option>
                 </select>
               </label>
             </div>
@@ -65,10 +66,10 @@
           <div class="col-xs-4">
             <div class="form-row">
               <label>Specials:
-                <select name="search[specials]" id="">
-                  <option value="0">Any</option>
-                  <option value="1">Yes</option>
-                  <option value="2">No</option>
+                <select name="search[a.specials]" id="">
+                  <option value=""  <?= isset($search['a.specials']) ? '' : 'selected' ?>>Any</option>
+                  <option value="1" <?= isset($search['a.specials']) && $search['a.specials'] == 1 ? 'selected' : '' ?>>Yes</option>
+                  <option value="0" <?= isset($search['a.specials']) && $search['a.specials'] == 0 ? 'selected' : '' ?>>No</option>
                 </select>
               </label>
             </div>
@@ -78,14 +79,16 @@
           <div class="col-xs-4">
             <div class="form-row">
               <label>Specific category
-                <select name="search[best]" id="best">
-                  <option value="0" selected>Any</option>
-                  <?php
-                    $categories = Model_Categories::get_total_list();
-                    foreach ($categories as $category):
-                      ?>
-                      <option value="<?= $category['cid'] ?>"><?= $category['cname'] ?></option>
+                <select name="search[b.cid]" id="best">
+                  <option value=""  <?= isset($search['b.cid']) ? '' : 'selected' ?>>Any</option>
+                  <?php if(isset($search['categories'])):
+                    foreach($search['categories'] as $category): ?>
+                      <option
+                        value="<?= $category['cid'] ?>" <?= (isset($search['b.cid']) && ($category['cid'] == $search['b.cid'])) ? 'selected' : '' ?>>
+                        <?= $category['cname'] ?>
+                      </option>
                     <?php endforeach; ?>
+                  <?php endif; ?>
                 </select>
               </label>
             </div>
@@ -93,14 +96,16 @@
           <div class="col-xs-4">
             <div class="form-row">
               <label>In specific color
-                <select name="search[best]" id="best">
-                  <option value="0" selected>Any</option>
-                  <?php
-                    $colors = Model_Colours::get_total_list();
-                    foreach ($colors as $color):
-                      ?>
-                      <option value="<?= $color['id'] ?>"><?= $color['colour'] ?></option>
+                <select name="search[c.id]" id="best">
+                  <option value=""  <?= isset($search['c.id']) ? '' : 'selected' ?>>Any</option>
+                  <?php if(isset($search['colours'])):
+                    foreach($search['colours'] as $colour):?>
+                      <option
+                        value="<?= $colour['id'] ?>" <?= (isset($search['c.id']) && ($colour['id'] == $search['c.id'])) ? 'selected' : '' ?>>
+                        <?= $colour['colour'] ?>
+                      </option>
                     <?php endforeach; ?>
+                  <?php endif; ?>
                 </select>
               </label>
             </div>
@@ -108,14 +113,16 @@
           <div class="col-xs-4">
             <div class="form-row">
               <label>With specific pattern
-                <select name="search[best]" id="best">
-                  <option value="0" selected>Any</option>
-                  <?php
-                    $patterns = Model_Patterns::get_total_list();
-                    foreach ($patterns as $pattern):
-                      ?>
-                      <option value="<?= $pattern['id'] ?>"><?= $pattern['pattern'] ?></option>
+                <select name="search[d.id]" id="best">
+                  <option value="" <?= isset($search['d.id']) ? '' : 'selected' ?>>Any</option>
+                  <?php if(isset($search['patterns'])):
+                    foreach($search['patterns'] as $pattern):?>
+                      <option
+                        value="<?= $pattern['id'] ?>" <?= (isset($search['d.id']) && ($pattern['id'] == $search['d.id'])) ? 'selected' : '' ?>>
+                        <?= $pattern['pattern'] ?>
+                      </option>
                     <?php endforeach; ?>
+                  <?php endif; ?>
                 </select>
               </label>
             </div>

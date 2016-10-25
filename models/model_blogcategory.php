@@ -79,7 +79,7 @@
       $q .= static::build_where($filter);
       $q .= " GROUP BY a.id, a.name";
       $q .= static::build_order($sort);
-      $q .= " LIMIT $start, $limit";
+      if ( $limit != 0 ) $q .= " LIMIT $start, $limit";
       $result = mysql_query($q);
       if($result) {
         $res_count_rows = mysql_num_rows($result);
