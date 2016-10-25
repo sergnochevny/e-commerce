@@ -11,7 +11,7 @@
                     <div class="just-divider text-left line-no icon-hide">
                       <div class="divider-inner" style="background-color: #fff">
                         <h3 class="just-section-title">About Us</h3>
-                        <p class="paragraf">25 Years Selling Designer Fabrics</p>
+                        <p class="paragraph">25 Years Selling Designer Fabrics</p>
                       </div>
                     </div>
                   </div>

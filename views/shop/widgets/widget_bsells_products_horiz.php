@@ -1,5 +1,4 @@
-<li class="<?= $first ? 'first' : '';
-  echo $last ? 'last' : ''; ?> product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
+<div class="col-xs-12 col-sm-6 col-md-4 product-item">
   <div class="product-inner">
     <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $row[0]], $row['pname']); ?>">
       <figure class="product-image-box">
@@ -35,4 +34,4 @@
     </a>
 
   </div>
-</li>
+</div>

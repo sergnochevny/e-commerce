@@ -13,7 +13,7 @@
                       <div class="divider-inner" style="background-color: #fff">
                         <h3 class="just-section-title">Customer service</h3>
 
-                        <p class="paragraf">Please feel free to contact us with your questions
+                        <p class="paragraph">Please feel free to contact us with your questions
                           or comments. Simply fill out the form below and one of our
                           representatives will contact you shortly. </p>
                       </div>

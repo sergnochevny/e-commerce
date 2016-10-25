@@ -1,10 +1,6 @@
 <div class="container">
   <div class="col-md-12">
 
-    <!--    <form id="f_search_1" role="search" method="post" class="woocommerce-product-search" action="#">-->
-    <!--      <input id="search" type="hidden" value="--><?php //= isset($search) ? $search : '' ?><!--" name="s"/>-->
-    <!--    </form>-->
-
     <div class="row">
       <div class="col-xs-12">
         <div class="row afterhead-row">

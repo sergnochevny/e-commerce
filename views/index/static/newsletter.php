@@ -12,7 +12,7 @@
                       <div class="divider-inner" style="background-color: #fff">
                         <h3 class="just-section-title">Newsletter</h3>
 
-                        <p class="paragraf">DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</p>
+                        <p class="paragraph">DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</p>
                       </div>
                     </div>
                   </div>

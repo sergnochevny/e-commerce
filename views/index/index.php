@@ -7,12 +7,12 @@
 
           <div data-vc-full-width="true" data-vc-full-width-init="false"
                class="vc_row wpb_row vc_row-fluid vc_custom_1439733758005">
-            <div class="wpb_column vc_column_container vc_col-sm-12">
+            <div class="wpb_column vc_column_container col-xs-12">
               <div class="wpb_wrapper">
                 <div class="just-divider text-left line-no icon-hide">
                   <div class="divider-inner" style="background-color: #fff">
                     <h3 class="just-section-title">Special For You</h3>
-                    <p class="paragraf">Best item collections in we have in store</p>
+                    <p class="paragraph">Best item collections in we have in store</p>
                   </div>
                 </div>
               </div>
@@ -20,7 +20,7 @@
           </div>
           <div class="vc_row-full-width"></div>
           <div class="vc_row wpb_row vc_row-fluid vc_custom_1439734400036">
-            <div class="wpb_column vc_column_container vc_col-sm-12">
+            <div class="wpb_column vc_column_container col-xs-12">
               <div class="wpb_wrapper">
                 <div class="just-woocommerce woocommerce columns-3 just-carousel clearfix">
 
@@ -34,20 +34,20 @@
           </div>
           <div data-vc-full-width="true" data-vc-full-width-init="false"
                class="vc_row wpb_row vc_row-fluid vc_custom_1439734569149">
-            <div class="wpb_column vc_column_container vc_col-sm-12 vc_custom_1439734046393">
+            <div class="wpb_column vc_column_container col-xs-12 vc_custom_1439734046393">
               <div class="wpb_wrapper">
                 <div class="vc_row wpb_row vc_inner vc_row-fluid vc_custom_1439734506557">
                   <div
-                    class="wpb_column vc_column_container vc_col-sm-12 vc_custom_1439734514225">
+                    class="wpb_column vc_column_container col-xs-12 vc_custom_1439734514225">
                     <div class="wpb_wrapper">
                       <div class="just-banner just-banner-left"
                            style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/temp/textile.png'); ?>)">
                         <a href="<?= _A_::$app->router()->UrlTo('shop/last'); ?>">
                           <div class="just-banner-detail">
-                            <p class="paragraf1">Brand new life, Brand new
+                            <p class="paragraph1">Brand new life, Brand new
                               textile</p>
                             <h3 class="text-big">What's New</h3>
-                            <p class="paragraf2">Shop</p>
+                            <p class="paragraph2">Shop</p>
                           </div>
                         </a>
                       </div>
@@ -62,9 +62,9 @@
                            style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/temp/textile1.png'); ?>)">
                         <a href="<?= _A_::$app->router()->UrlTo('shop/best'); ?>">
                           <div class="just-banner-detail">
-                            <p class="paragraf1">New Collection</p>
+                            <p class="paragraph1">New Collection</p>
                             <h3 class="text-medium">Best textile</h3>
-                            <p class="paragraf2">Shop</p>
+                            <p class="paragraph2">Shop</p>
                           </div>
                         </a>
                       </div>
@@ -77,9 +77,9 @@
                            style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/temp/textile2.png'); ?>)">
                         <a href="<?= _A_::$app->router()->UrlTo('shop/popular'); ?>">
                           <div class="just-banner-detail">
-                            <p class="paragraf1">New collection</p>
+                            <p class="paragraph1">New collection</p>
                             <h3 class="text-medium">Popular textile</h3>
-                            <p class="paragraf2">Shop</p>
+                            <p class="paragraph2">Shop</p>
                           </div>
                         </a>
                       </div>
@@ -101,7 +101,7 @@
                       <div class="just-divider text-left line-no icon-hide">
                         <div class="divider-inner" style="background-color: #fff">
                           <h3 class="just-section-title">Best Sellers</h3>
-                          <p class="paragraf">
+                          <p class="paragraph">
                             Best item collection we have in store
                           </p>
                         </div>

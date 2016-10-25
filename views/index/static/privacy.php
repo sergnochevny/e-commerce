@@ -13,7 +13,7 @@
                       <div class="divider-inner" style="background-color: #fff">
                         <h3 class="just-section-title">Privacy Policy</h3>
 
-                        <p class="paragraf">We are committed to providing our visitors with a
+                        <p class="paragraph">We are committed to providing our visitors with a
                           web site that respects their privacy. This page summarizes the
                           privacy policy and practices on iluvfabrix.com.</p>
 
