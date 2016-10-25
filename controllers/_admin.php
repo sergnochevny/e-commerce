@@ -90,7 +90,7 @@
           $menu = new Controller_Menu($this);
           $menu->show_menu();
 
-          $this->main->view_admin('admin');
+          $this->main->view('admin');
         }
       } else {
         $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) :

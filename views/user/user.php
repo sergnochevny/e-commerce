@@ -27,8 +27,6 @@
             <div class="form-row">
               <div class="col-xs-6">
                 <div class="row">
-                  <input type="hidden" id="_wpnonce" name="_wpnonce" value="c0312ae7bb"/>
-                  <input type="hidden" name="_wp_http_referer" value="#"/>
                   <input id="blogin" type="button" class="default-button button" name="login"
                          data-action="<?= _A_::$app->router()->UrlTo('user'); ?>" value="Login"/>
                 </div>
