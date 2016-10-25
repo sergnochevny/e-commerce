@@ -7,7 +7,7 @@
     private static function build_order(&$sort) {
       $order = '';
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['a.pid'=>'desc'];
+        $sort = ['a.pid' => 'desc'];
       }
       foreach($sort as $key => $val) {
         if(strlen($order) > 0) $order .= ',';
@@ -19,15 +19,23 @@
 
     protected static function build_where($filter) {
       $result = "";
-      if(!empty($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pname"])) . "%'";
-      if(!empty($filter["a.pvisible"])) $result[] = "a.pvisible = " . mysql_real_escape_string(static::validData($filter["a.pname"]));
-      if(!empty($filter["a.dt"])) {
-        $result[] = "(" . (!empty($filter["a.dt"]['from']) ? "a.dt => '" . mysql_real_escape_string(static::validData($filter["a.dt"]["from"])) . "'" : "") .
-          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["to"])) . "'" : "") . ")";
+      if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pname"])) . "%'";
+      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::validData($filter["a.pvisible"]))."'";
+      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::validData($filter["a.piece"]))."'";
+      if(isset($filter["a.dt"])) {
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt => '" . mysql_real_escape_string(static::validData($filter["a.dt"]["from"])) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["to"])) . "'" : "");
+        if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pnumber"])) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::validData($filter["a.best"])) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::validData($filter["a.specials"])) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::validData($filter["b.cid"])) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::validData($filter["c.id"])) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::validData($filter["d.id"])) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
-        $result = " WHERE " . $result;
+        if(strlen(trim($result)) > 0) $result = " WHERE " . $result;
       }
       return $result;
     }
@@ -280,7 +288,7 @@
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
       $query .= static::build_order($sort);
-      $query .= " LIMIT $start, $limit";
+      if($limit != 0) $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);

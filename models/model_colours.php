@@ -48,25 +48,7 @@
       $query .= static::build_where($filter);
       $query .= " GROUP BY a.id, a.colour";
       $query .= static::build_order($sort);
-      $query .= " LIMIT $start, $limit";
-
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_array($result)) {
-          $response[] = $row;
-        }
-      }
-
-      return $response;
-    }
-
-    public static function get_total_list() {
-      $response = null;
-      $query = "SELECT a.id, a.colour, count(b.prodId) AS amount";
-      $query .= " FROM " . static::$table . " a";
-      $query .= " LEFT JOIN fabrix_product_colours b ON b.colourId = a.id";
-      $query .= " GROUP BY a.id, a.colour";
-      $query .= " ORDER BY a.colour";
+      if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);

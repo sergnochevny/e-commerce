@@ -6,10 +6,6 @@
     protected $form_title_add = 'NEW PRODUCT';
     protected $form_title_edit = 'MODIFY PRODUCT';
 
-    protected function search_fields() {
-      return ['a.pname', 'a.visible', 'a.dt'];
-    }
-
     private function select_filter($method, $filters, $start = null, $search = null) {
       $selected = isset($filters) ? $filters : [];
       $filter = Model_Product::get_filter_data($method, $count, $start, $search);
@@ -123,6 +119,10 @@
       $this->template->view_layout('select');
     }
 
+    protected function search_fields() {
+      return ['a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece', 'a.best', 'a.specials', 'b.cid', 'c.id', 'd.id'];
+    }
+
     protected function load(&$data) {
       $data['pid'] = _A_::$app->get('pid');
       $data['metadescription'] = Model_Product::validData(_A_::$app->post('metadescription') ? _A_::$app->post('metadescription') : '');
@@ -211,4 +211,9 @@
       $this->template->vars('images', $images);
     }
 
+    protected function before_search_form_layout(&$search_data) {
+      $search_data['categories'] = Model_Categories::get_list(0, 0, $res_count);
+      $search_data['patterns'] = Model_Patterns::get_list(0, 0, $res_count);
+      $search_data['colours'] = Model_Colours::get_list(0, 0, $res_count);
+    }
   }
