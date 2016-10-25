@@ -193,12 +193,7 @@ a.back_button:after {
 .woocommerce form .form-row input.input-text:focus {
     box-shadow: 0 1px 7px #ddd !important;
 }
-.panel{
-    border-radius: 2px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-}
-.panel-default{
+.woocommerce .panel-default{
     border: 1px solid #DDD !important;
 }
 .woocommerce form .form-row select {
