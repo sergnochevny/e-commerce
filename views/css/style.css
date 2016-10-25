@@ -97,15 +97,15 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-.panel-default{
+.panel-default-vertical-sizing{
     padding-top: 25px;
     padding-bottom: 15px;
 }
 
 .button{
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
 }
 
 .button.default-button{

@@ -1,4 +1,4 @@
-<li class="col-xs-12 product-item">
+<div class="col-xs-12 product-item">
   <div class="product-inner">
     <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $row[0]], $row['pname']); ?>">
       <figure class="product-image-box">
@@ -24,4 +24,4 @@
     </a>
 
   </div>
-</li>
+</div>

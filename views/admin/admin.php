@@ -6,7 +6,7 @@
         <h2>Login</h2>
       </div>
       
-      <div class="col-xs-12 col-sm-8 col-sm-push-2 panel panel-default">
+      <div class="col-xs-12 col-sm-8 col-sm-push-2 panel panel-default panel-default-vertical-sizing">
         <div class="col-xs-12">
           
             <form method="POST" id="formx" action="<?= _A_::$app->router()->UrlTo('admin'); ?>"

@@ -1,10 +1,8 @@
 <?php if(sizeof($rows) > 0): ?>
-  <ul class="products">
     <?php foreach($rows as $row): ?>
       <?php $prms['pid'] = $row[0];
       if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
-      <li
-        class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
+      <div class="col-xs-12 col-sm-6 col-md-4 product-item">
         <div class="product-inner">
           <a href="<?= _A_::$app->router()->UrlTo('product/edit', $prms); ?>">
             <figure class="product-image-box">
@@ -31,9 +29,8 @@
             </div>
           </a>
         </div>
-      </li>
+      </div>
     <?php endforeach; ?>
-  </ul>
 <?php else: ?>
   <div class="col-sm-12 text-center offset-top">
     <h2 class="offset-top">No results found</h2>

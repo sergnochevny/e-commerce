@@ -1,4 +1,4 @@
-<li class="col-xs-12">
+<div class="col-xs-12">
   <div style="position: relative;">
     <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $row[0]], $row['pname']); ?>"
        title="<?= $row['pname']; ?>">
@@ -15,4 +15,4 @@
             class="amount_wd"><?= $format_sale_price; ?></span></ins></span>
     <?php } ?>
   </div>
-</li>
+</div>
