@@ -1656,7 +1656,8 @@ ul.product_list_widget li dl dd p {
 
 .search-container-title {
     margin: 0;
-    padding: 7px 0px;
+    padding: 7px 0;
+    min-height: 37px;
 }
 
 .search-panel {

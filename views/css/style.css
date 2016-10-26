@@ -2076,14 +2076,36 @@ form[data-search] > .row > .panel > .panel-heading{
 .search-result-header{
     margin-bottom: 20px;
 }
-
+.search-result-list .reset{
+    padding: 0;
+    position: absolute;
+    right: -20px;
+    top: 2px;
+    color: red;
+    border: 0;
+    background-color: transparent;
+    font-size: 1.52em;
+}
+.search-result-list .reset:hover{
+    color: darkred !important;
+}
 .search-result{
     color: #999;
     vertical-align: -16px;
     padding-bottom: 1px;
     border-bottom: 1px solid #D0D0D0;
 }
-
+.search-result-list{
+    margin-top: -5px;
+}
+.label-search-info {
+    background-color: #ddd;
+    margin-top: 5px;
+    padding-top: .45em;
+    display: inline-block;
+    color: #666;
+    font-weight: normal;
+}
 .table-list-header{
     background-color: #DDD;
     padding-top: 10px;

@@ -41,7 +41,9 @@
     postdata.call(this, $(this).attr('action'), data);
   });
 
-  $(document).on('click.search_action', "form[data-search] [data-search_reset]", function () {
+  $(document).on('click.search_action', "form[data-search] [data-search_reset]", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
     $('form[data-search]').trigger('submit', true);
   });
 
