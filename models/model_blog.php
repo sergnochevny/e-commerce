@@ -88,7 +88,8 @@
 
     public static function get_total_count($filter = null) {
       $response = 0;
-      $query = "SELECT COUNT(*) FROM " . static::$table;
+      $query = "SELECT COUNT(a.id) FROM " . static::$table . " a";
+      $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
@@ -96,10 +97,11 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
+    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT * ";
-      $query .= " FROM " . static::$table;
+      $query .= " FROM " . static::$table . " a";
+      $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
       $query .= static::build_where($filter);
       $query .= static::build_order($sort);
       if ( $limit != 0 ) $query .= " LIMIT $start, $limit";

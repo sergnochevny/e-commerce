@@ -25,7 +25,6 @@
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
       </div>
     </div>
-
   </div>
 </div>
 

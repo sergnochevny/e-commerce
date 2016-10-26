@@ -119,7 +119,7 @@
       $this->template->view_layout('select');
     }
 
-    protected function search_fields() {
+    protected function search_fields($view = false) {
       return [
         'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
         'a.piece', 'a.best', 'a.specials', 'b.cid',
@@ -215,11 +215,11 @@
       $this->template->vars('images', $images);
     }
 
-    protected function before_search_form_layout(&$search_data) {
+    protected function before_search_form_layout(&$search_data, $view = false) {
       $categories = [];
       $rows = Model_Categories::get_list(0, 0, $res_count);
       foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
-      $patterns =[];
+      $patterns = [];
       $rows = Model_Patterns::get_list(0, 0, $res_count);
       foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
       $colours = [];

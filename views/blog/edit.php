@@ -11,7 +11,6 @@
             <h3 class="page-title"><?= $form_title ?></h3>
           </div>
         </div>
-
       </div>
     </div>
   </div>

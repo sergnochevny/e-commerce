@@ -111,7 +111,7 @@
       return false;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
+    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $q = "select";
       $q .= " o.*, CONCAT(user.bill_firstname,' ',user.bill_lastname) as username";
       $q .= " from fabrix_orders o";
