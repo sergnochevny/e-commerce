@@ -14,7 +14,11 @@
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Name
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['pattern'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-3 col">
@@ -30,7 +34,11 @@
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Products
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['products'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
     </div>
