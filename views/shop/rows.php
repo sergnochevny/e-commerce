@@ -6,8 +6,9 @@
         <span class="extra_discount">Extra Discount!</span>
       <?php }
         $opt['pid'] = $row[0];
+        $href = _A_::$app->router()->UrlTo('shop/product', $opt, $row['pname'], ['cat', 'mnf', 'ptrn']);
       ?>
-      <a <?= isset($search) ? 'class="a_search"' : '' ?> href="<?= _A_::$app->router()->UrlTo('shop/product', $opt, $row['pname']); ?>"></a>
+      <a <?= isset($search) ? 'class="a_search"' : '' ?> href="<?= $href; ?>"></a>
       <figcaption>
         <?php
           if($in_cart) {
@@ -15,7 +16,7 @@
           } else {
             ?>
             <a class="button add-to-basket <?= isset($search) ? 'a_search' : '' ?>"
-               href="<?= _A_::$app->router()->UrlTo('shop/product', $opt, $row['pname']); ?>">
+               href="<?= $href; ?>">
               View Details
             </a>
             <?php
@@ -25,7 +26,7 @@
     </figure>
       <span class="product-category"><?= $row['pname']; ?></span>
       <h3>
-        <a <?= isset($search) ? 'class="a_search"' : '' ?> href="<?= _A_::$app->router()->UrlTo('shop/product', $opt, $row['pname']); ?>">
+        <a <?= isset($search) ? 'class="a_search"' : '' ?> href="<?= $href; ?>">
           <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
         </a>
       </h3>

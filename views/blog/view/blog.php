@@ -12,4 +12,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/blog.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/view.js'); ?>' type="text/javascript"></script>

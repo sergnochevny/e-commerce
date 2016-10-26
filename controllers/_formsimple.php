@@ -22,4 +22,18 @@
       $this->main->view_admin('edit');
     }
 
+    /**
+     * @export
+     */
+    public function view() {
+      if(!is_null(_A_::$app->get($this->id_name))) {
+        $id = _A_::$app->get($this->id_name);
+        $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
+        $this->after_get_data_item_view($data);
+        $this->template->vars('view_title', $this->view_title);
+        $this->template->vars('data', $data);
+        $this->main->view('view/detail');
+      } else Controller_Controller::view();
+    }
+
   }

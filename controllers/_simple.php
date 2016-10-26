@@ -92,7 +92,7 @@
         $this->after_get_data_item_view($data);
         $this->template->vars('view_title', $this->view_title);
         $this->template->vars('data', $data);
-        $this->main->view_layout('view/view');
+        $this->main->view_layout('view');
       } else parent::view();
     }
 

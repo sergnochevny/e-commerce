@@ -366,7 +366,7 @@
         $rows[$key]['post_date'] = date('F jS, Y', strtotime($row['post_date']));
 
         $data = Model_Blog::get_desc_keys($row['id']);
-        if(isset($post_content) && is_array($post_content)) {
+        if(isset($row['post_content']) && is_array($row['post_content'])) {
           $data = stripslashes($data['description']);
         } else {
           $data = stripslashes($row['post_content']);
@@ -435,6 +435,24 @@
       foreach($rows as $row) $categories[$row['id']] = $row['name'];
 
       $search_data['categories'] = $categories;
+    }
+
+    protected function after_get_data_item_view(&$data) {
+      $prms=null;
+      if(!empty(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
+      if((!empty(_A_::$app->get('cat')))) $prms['cat'] = _A_::$app->get('cat');
+      $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('blog/view', $prms));
+      if(isset($data)) {
+        ob_start();
+        $data['post_content'] = stripslashes($data['post_content']);
+        $data['post_title'] = stripslashes($data['post_title']);
+        $data['post_date'] = date('F jS, Y', strtotime($data['post_date']));
+        $data['post_content'] = str_replace('{base_url}', _A_::$app->router()->UrlTo('/'), $data['post_content']);
+        $data['post_content'] = preg_replace('#(style="[^>]*")#U', '', $data['post_content']);
+        $img = str_replace('{base_url}/', '', Model_Blog::get_img($data['id']));
+        if(!(file_exists($img) && is_file($img))) $img = 'upload/upload/not_image.jpg';
+        $data['img'] = _A_::$app->router()->UrlTo($img);
+      }
     }
 
   }
