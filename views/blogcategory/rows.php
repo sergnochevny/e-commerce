@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-sm-11 col">
                 <?php
-                    if (isset($sort['name'])) {
-                        $order['sort'] = 'name';
-                        $order['order'] = ($sort['name'] == 'desc' ? 'asc' : 'desc');
+                    if (isset($sort['a.name'])) {
+                        $order['sort'] = 'a.name';
+                        $order['order'] = ($sort['a.name'] == 'desc' ? 'asc' : 'desc');
                     } else {
-                        $order['sort'] = 'name';
+                        $order['sort'] = 'a.name';
                         $order['order'] = 'desc';
                     }
                     $sort_url = _A_::$app->router()->UrlTo('blogcategory', $order);
@@ -15,7 +15,7 @@
                 <a data-sort href="<?= $sort_url ?>">
                     Name
                     <small>
-                        <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                        <i class="fa <?= ($sort['a.name'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
                     </small>
                 </a>
             </div>

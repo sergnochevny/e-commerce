@@ -1,34 +1,29 @@
 <div class="product-item">
   <div class="product-inner">
     <span class="on-sale">Best!</span>
-    <a href="<?= _A_::$app->router()->UrlTo('shop/product', $url_prms); ?>">
+    <?php
+      $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
+    ?>
+    <a href="<?= $href; ?>">
       <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
         <?php if($bProductDiscount) { ?>
           <span class="extra_discount">Extra Discount!</span>
         <?php }
         ?>
-        <a href="<?= _A_::$app->router()->UrlTo('shop/product', $url_prms); ?> ">
-        </a>
+        <a href="<?= $href; ?> "> </a>
         <figcaption>
           <?php
             if($in_cart) {
               include('views/cart/basket.php');
-            } else {
-//                        include('views/basket/main_product_addtobasket.php');
-              ?>
-              <a class="button add-to-basket" href="<?= _A_::$app->router()->UrlTo('shop/product', $url_prms); ?>">
+            } else { ?>
+              <a class="button add-to-basket" href="<?= $href; ?>">
                 View Details
               </a>
-              <?php
-            }
-          ?>
+            <?php } ?>
         </figcaption>
       </figure>
-
       <span class="product-category"><?= $row['pname']; ?></span>
-
       <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>
-
       <div class="product-price-box clearfix">
         <?php if($sys_hide_price == 0 && $hide_price == 0) { ?>
           <span class="price">

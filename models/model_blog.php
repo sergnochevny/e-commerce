@@ -17,6 +17,26 @@
       return $order;
     }
 
+    protected static function build_where(&$filter) {
+      $result = "";
+      if(isset($filter["a.post_title"])) $result[] = "a.post_title LIKE '%" . mysql_real_escape_string(static::validData($filter["a.post_title"])) . "%'";
+      if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . mysql_real_escape_string(static::validData($filter["a.post_status"])) . "'";
+      if(isset($filter["a.post_date"])) {
+        $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date => '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["from"])) . "'" : "") .
+          (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["to"])) . "'" : "");
+        if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
+      }
+      if(isset($filter["b.group_id"])) $result[] = "b.group_id = '" . mysql_real_escape_string(static::validData($filter["b.group_id"])) . "'";
+      if(!empty($result) && (count($result) > 0)) {
+        $result = implode(" AND ", $result);
+        if(strlen(trim($result)) > 0) {
+          $result = " WHERE " . $result;
+          $filter['active'] = true;
+        }
+      }
+      return $result;
+    }
+
     public static function get_filter_selected(&$data) {
       $id = $data['id'];
       $filters = [];
@@ -88,34 +108,13 @@
 
     public static function get_total_count($filter = null) {
       $response = 0;
-      $query = "SELECT COUNT(a.id) FROM " . static::$table . " a";
+      $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
       $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
       return $response;
-    }
-
-
-    protected static function build_where(&$filter) {
-      $result = "";
-      if(isset($filter["a.post_title"])) $result[] = "a.post_title LIKE '%" . mysql_real_escape_string(static::validData($filter["a.post_title"])) . "%'";
-      if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . mysql_real_escape_string(static::validData($filter["a.post_status"]))."'";
-      if(isset($filter["a.post_date"])) {
-        $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date => '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["from"])) . "'" : "") .
-          (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["to"])) . "'" : "");
-        if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
-      }
-      if(isset($filter["b.group_id"])) $result[] = "b.group_id = '" . mysql_real_escape_string(static::validData($filter["b.group_id"])) . "'";
-      if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        if(strlen(trim($result)) > 0){
-          $result = " WHERE " . $result;
-          $filter['active'] = true;
-        }
-      }
-      return $result;
     }
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
@@ -125,7 +124,7 @@
       $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
       $query .= static::build_where($filter);
       $query .= static::build_order($sort);
-      if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
+      if($limit != 0) $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);
@@ -250,68 +249,4 @@
       return $data;
     }
 
-    public static function get_count_publish_posts($cid = null) {
-      if(!is_null($cid)) {
-        $q_total = "SELECT COUNT(*) FROM blog_posts a" .
-          " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
-          " WHERE a.post_status = 'publish' and b.group_id='$cid'";
-      } else {
-        $q_total = "SELECT COUNT(*) FROM blog_posts WHERE  post_status = 'publish'";
-      }
-      $res = mysql_query($q_total);
-      $total = mysql_fetch_row($res);
-      return $total[0];
-    }
-
-    public static function get_publish_post_list($cat_id, $start, $per_page, &$res_count_rows) {
-      if(!is_null($cat_id)) {
-        $q = "SELECT a.* FROM blog_posts a" .
-          " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
-          " WHERE a.post_status = 'publish' AND b.group_id='$cat_id' ORDER BY a.post_date DESC, a.ID DESC LIMIT $start,$per_page";
-      } else {
-        $q = "SELECT * FROM blog_posts WHERE post_status = 'publish' ORDER BY post_date DESC, ID DESC LIMIT $start,$per_page";
-      }
-      $res = mysql_query($q);
-      if($res) {
-        $res_count_rows = mysql_num_rows($res);
-        $rows = [];
-        while($row = mysql_fetch_assoc($res)) {
-          $rows[] = $row;
-        }
-        return $rows;
-      }
-      return false;
-    }
-
-    public static function get_count_posts($cid = null) {
-      if(!is_null($cid)) {
-        $q_total = "SELECT COUNT(*) FROM blog_posts a" .
-          " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
-          " WHERE post_type = 'post' AND b.group_id='$cid'";
-      } else {
-        $q_total = "SELECT COUNT(*) FROM blog_posts WHERE post_type = 'post'";
-      }
-      $res = mysql_query($q_total);
-      return mysql_fetch_row($res)[0];
-    }
-
-    public static function get_post_list($cat_id, $start, $per_page, &$res_count_rows) {
-      if(!is_null($cat_id)) {
-        $q = "SELECT a.* FROM blog_posts a" .
-          " LEFT JOIN blog_group_posts b ON a.ID = b.object_id " .
-          " WHERE post_type = 'post' AND b.group_id='$cat_id' ORDER BY a.post_date DESC, a.ID DESC LIMIT $start,$per_page";
-      } else {
-        $q = "SELECT * FROM blog_posts WHERE post_type = 'post' ORDER BY post_date DESC, ID DESC LIMIT $start,$per_page";
-      }
-      $res = mysql_query($q);
-      if($res) {
-        $res_count_rows = mysql_num_rows($res);
-        $rows = [];
-        while($row = mysql_fetch_assoc($res)) {
-          $rows[] = $row;
-        }
-        return $rows;
-      }
-      return false;
-    }
   }

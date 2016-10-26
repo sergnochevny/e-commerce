@@ -32,7 +32,8 @@
 
     public static function get_total_count($filter = null) {
       $response = 0;
-      $query = "SELECT COUNT(*) FROM " . static::$table;
+      $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table;
+      $query .= " LEFT JOIN fabrix_product_colours b ON b.colourId = a.id";
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];

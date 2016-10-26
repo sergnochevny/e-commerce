@@ -19,9 +19,8 @@
 
     public static function get_by_id($id) {
       $response = [
-
+        'id' => '',
         'name' => '',
-        'slug' => ''
       ];
       if(isset($id)) {
         $query = "SELECT * FROM blog_groups WHERE id = '$id'";
@@ -31,29 +30,34 @@
       return $response;
     }
 
-    public static function get_all() {
-      $res = null;
-      $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
-      $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
-      $q .= " GROUP BY a.id, a.name";
-      $q .= " ORDER BY a.name";
-      $result = mysql_query($q);
-      if($result) {
-        while($row = mysql_fetch_array($result)) {
-          $res[] = $row;
-        }
-      }
-      return $res;
-    }
-
     public static function get_total_count($filter = null) {
       $response = 0;
-      $query = "SELECT COUNT(*) FROM blog_groups";
+      $query = "SELECT COUNT(DISTINCT a.id) FROM " . self::$table . " a";
+      $query .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
       return $response;
+    }
+
+    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
+      $res = null;
+      $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount ";
+      $q .= " FROM " . self::$table . " a";
+      $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
+      $q .= static::build_where($filter);
+      $q .= " GROUP BY a.id, a.name";
+      $q .= static::build_order($sort);
+      if($limit != 0) $q .= " LIMIT $start, $limit";
+      $result = mysql_query($q);
+      if($result) {
+        $res_count_rows = mysql_num_rows($result);
+        while($row = mysql_fetch_array($result)) {
+          $res[] = $row;
+        }
+      }
+      return $res;
     }
 
     public static function delete($id) {
@@ -70,24 +74,6 @@
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       }
-    }
-
-    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
-      $res = null;
-      $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
-      $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
-      $q .= static::build_where($filter);
-      $q .= " GROUP BY a.id, a.name";
-      $q .= static::build_order($sort);
-      if ( $limit != 0 ) $q .= " LIMIT $start, $limit";
-      $result = mysql_query($q);
-      if($result) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_array($result)) {
-          $res[] = $row;
-        }
-      }
-      return $res;
     }
 
     public static function save($data) {

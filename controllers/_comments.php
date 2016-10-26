@@ -28,6 +28,12 @@
       return true;
     }
 
+    protected function search_fields($view = false) {
+      return [
+        'a.dt', 'a.title', 'b.email', 'a.moderated'
+      ];
+    }
+
     /**
      * @export
      */

@@ -19,7 +19,8 @@
 
     public static function get_total_count($filter = null) {
       $response = 0;
-      $query = "SELECT COUNT(*) FROM fabrix_categories";
+      $query = "SELECT COUNT(DISTINCT a.cid) FROM " . self::$table . " a";
+      $query .= " LEFT JOIN fabrix_product_categories b ON b.cid = a.cid";
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
@@ -35,7 +36,7 @@
       $query .= static::build_where($filter);
       $query .= " GROUP BY a.cid, a.cname";
       $query .= static::build_order($sort);
-      if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
+      if($limit != 0) $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);

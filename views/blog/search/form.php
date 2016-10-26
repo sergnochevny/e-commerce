@@ -1,14 +1,12 @@
 <form action="<?= $action ?>" method="post" data-search class="col-xs-12">
   <div class="row">
     <div class="col-xs-12 panel panel-default search-panel">
-
-
       <div class="panel-heading">
         <div class="h4 search-container-title">
           <div class="row">
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
-              <?= isset($search['a.post_title']) ? '<div class="label label-search-info">Post Name Like: ' . $search['post_title'] . '</div>' : '' ?>
+              <?= isset($search['a.post_title']) ? '<div class="label label-search-info">Post Name Like: ' . $search['a.post_title'] . '</div>' : '' ?>
               <?= isset($search['b.group_id']) ? '<div class="label label-search-info">Category: ' . $search['categories'][$search['b.group_id']] . '</div>' : '' ?>
               <?= !empty($search['a.post_date']['from']) ? '<div class="label label-search-info">Date from: ' . $search['a.post_date']['from'] . '</div>' : '' ?>
               <?= !empty($search['a.post_date']['to']) ? '<div class="label label-search-info">Date to: ' . $search['a.post_date']['to'] . '</div>' : '' ?>
@@ -34,7 +32,7 @@
             <div class="form-row">
               <label>Post title:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[post_title]"
-                     value="<?= isset($search['post_title']) ? $search['post_title'] : '' ?>">
+                     value="<?= isset($search['a.post_title']) ? $search['a.post_title'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-4">
@@ -55,7 +53,7 @@
               <label>Date ranges from:</label>
               <input type="text" class="input-text" id="date-from" placeholder="Chose start date"
                      name="search[order_date][starts]"
-                     value="<?= isset($search['post_date']['from']) ? $search['post_date']['from'] : '' ?>">
+                     value="<?= isset($search['a.post_date']['from']) ? $search['a.post_date']['from'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-4">
@@ -63,20 +61,20 @@
               <label>Date ranges to:</label>
               <input type="text" class="input-text" id="date-to" placeholder="Chose end date"
                      name="search[order_date][ends]"
-                     value="<?= isset($search['post_date']['to']) ? $search['post_date']['to'] : '' ?>">
+                     value="<?= isset($search['a.post_date']['to']) ? $search['a.post_date']['to'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-4">
             <div class="form-row">
               <label>Status:</label>
               <select name="search[post_status]" id="">
-                <option value selected>Any</option>
+                <option value <?= !isset($search['a.post_status'])?'selected':''?>>Any</option>
                 <option
-                  value="0" <?= isset($search['post_status']) && $search['post_status'] == 0 ? 'selected' : '' ?>>
+                  value="0" <?= isset($search['a.post_status']) && $search['a.post_status'] == 0 ? 'selected' : '' ?>>
                   In process
                 </option>
                 <option
-                  value="1" <?= isset($search['post_status']) && $search['post_status'] == 1 ? 'selected' : '' ?>>
+                  value="1" <?= isset($search['a.post_status']) && $search['a.post_status'] == 1 ? 'selected' : '' ?>>
                   Completed
                 </option>
               </select>

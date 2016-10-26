@@ -3,40 +3,40 @@
     <div class="row">
       <div class="col-sm-8 col">
         <?php
-          if (isset($sort['cname'])) {
-            $order['sort'] = 'cname';
-            $order['order'] = ($sort['cname'] == 'desc' ? 'asc' : 'desc');
+          if (isset($sort['a.cname'])) {
+            $order['sort'] = 'a.cname';
+            $order['order'] = ($sort['a.cname'] == 'desc' ? 'asc' : 'desc');
           } else {
-            $order['sort'] = 'cname';
+            $order['sort'] = 'a.cname';
             $order['order'] = 'desc';
           }
           $sort_url = _A_::$app->router()->UrlTo('categories', $order);
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Name
-          <?php if(isset($sort['cname'])) : ?>
+          <?php if(isset($sort['a.cname'])) : ?>
             <small>
-              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              <i class="fa <?= ($sort['a.cname'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
             </small>
           <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-3 col">
         <?php
-          if (isset($sort['displayorder'])) {
-            $order['sort'] = 'displayorder';
-            $order['order'] = ($sort['displayorder'] == 'desc' ? 'asc' : 'desc');
+          if (isset($sort['a.displayorder'])) {
+            $order['sort'] = 'a.displayorder';
+            $order['order'] = ($sort['a.displayorder'] == 'desc' ? 'asc' : 'desc');
           } else {
-            $order['sort'] = 'displayorder';
+            $order['sort'] = 'a.displayorder';
             $order['order'] = 'desc';
           }
           $sort_url = _A_::$app->router()->UrlTo('categories', $order);
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Display Order
-          <?php if(isset($sort['displayorder'])) : ?>
+          <?php if(isset($sort['a.displayorder'])) : ?>
             <small>
-              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              <i class="fa <?= ($sort['a.displayorder'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
             </small>
           <?php endif; ?>
         </a>

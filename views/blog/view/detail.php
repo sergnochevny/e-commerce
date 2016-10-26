@@ -1,5 +1,4 @@
 <link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/blog.css'); ?>">
-<?php include('views/index/main_gallery.php'); ?>
 <div id="blog" class="container">
   <section class="just-posts-grid">
     <div class="just-post-row row">
@@ -21,4 +20,3 @@
     </div>
   </section>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/view.js'); ?>' type="text/javascript"></script>
