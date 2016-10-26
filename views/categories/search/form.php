@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
-              <?= isset($search['cname'])?'<div class="label label-search-info">Like: '.$search['cname'].'</div>':''?>
+              <?= isset($search['cname']) ? '<div class="label label-search-info">Like: ' . $search['cname'] . '</div>' : '' ?>
               <?= isset($search['active']) ? '<a data-search_reset title="Reset search" class="button reset">&times;</a>' : '' ?>
             </div>
             <b class="sr-ds">

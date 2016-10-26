@@ -97,6 +97,27 @@
       return $response;
     }
 
+
+    protected static function build_where(&$filter) {
+      $result = "";
+      if(isset($filter["a.post_title"])) $result[] = "a.post_title LIKE '%" . mysql_real_escape_string(static::validData($filter["a.post_title"])) . "%'";
+      if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . mysql_real_escape_string(static::validData($filter["a.post_status"]))."'";
+      if(isset($filter["a.post_date"])) {
+        $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date => '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["from"])) . "'" : "") .
+          (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["to"])) . "'" : "");
+        if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
+      }
+      if(isset($filter["b.group_id"])) $result[] = "b.group_id = '" . mysql_real_escape_string(static::validData($filter["b.group_id"])) . "'";
+      if(!empty($result) && (count($result) > 0)) {
+        $result = implode(" AND ", $result);
+        if(strlen(trim($result)) > 0){
+          $result = " WHERE " . $result;
+          $filter['active'] = true;
+        }
+      }
+      return $result;
+    }
+
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT * ";

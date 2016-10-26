@@ -25,7 +25,6 @@
     }
 
     $(document).on('submit.search_action', "form[data-search]", function (event, reset) {
-        event = event || window.event;
         event.preventDefault();
         if (reset) {
             data = {};
@@ -44,7 +43,6 @@
     });
 
     $(document).on('click.search_action', "form[data-search] [data-search_reset]", function (event) {
-        event = event || window.event;
         event.preventDefault();
         event.stopPropagation();
         var search = $('form[data-search]');
@@ -57,7 +55,6 @@
     });
 
     $(document).on('click.search_action', "[data-to_page]", function (event) {
-        event = event || window.event;
         event.preventDefault();
         var search = $('form[data-search]');
         if (search.length) {
@@ -72,7 +69,6 @@
     });
 
     $(document).on('click.search_action', "[data-sort]", function (event) {
-        event = event || window.event;
         event.preventDefault();
         var search = $('form[data-search]');
         if (search.length) {

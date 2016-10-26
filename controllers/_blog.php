@@ -296,6 +296,13 @@
       $this->template->view_layout('filter/filter');
     }
 
+    protected function search_fields($view = false) {
+      return [
+        'a.post_date', 'a.post_title', 'a.post_status',
+        'b.group_id',
+      ];
+    }
+
     protected function before_save(&$data) {
       if(!isset($data[$this->id_name])) $data['post_author'] = Controller_Admin::get_from_session();
       $data['post_title'] = addslashes(trim(html_entity_decode(($data['post_title']))));
@@ -420,6 +427,14 @@
         $category_name = Model_Blogcategory::get_by_id(_A_::$app->get('cat'))['name'];
       }
       $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
+    }
+
+    protected function before_search_form_layout(&$search_data, $view = false) {
+      $categories = [];
+      $rows = Model_Blogcategory::get_list(0, 0, $res_count);
+      foreach($rows as $row) $categories[$row['id']] = $row['name'];
+
+      $search_data['categories'] = $categories;
     }
 
   }

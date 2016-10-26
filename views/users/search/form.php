@@ -64,3 +64,4 @@
     </div>
   </div>
 </form>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/search.js'); ?>' type="text/javascript"></script>
