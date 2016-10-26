@@ -17,7 +17,7 @@
           <span class="price"><ins><span class="amount"><?= $format_price; ?></span></ins></span>
         <?php }
           if(isset($saleprice) && ($price != $saleprice)) { ?>
-            <span class="price" style="float:right;color: red;">Sale:<ins><span
+            <span class="price" style="float:right;color: red;">Sale: <ins><span
                   class="amount_wd"><?= $format_sale_price; ?></span></ins></span>
           <?php } ?>
       </div>
