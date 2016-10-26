@@ -3,18 +3,22 @@
     <div class="row">
       <div class="col-sm-2 col">
         <?php
-          if (isset($sort['cname'])) {
-            $order['sort'] = 'cname';
-            $order['order'] = ($sort['cname'] == 'desc' ? 'asc' : 'desc');
+          if (isset($sort['discount_amount'])) {
+            $order['sort'] = 'discount_amount';
+            $order['order'] = ($sort['discount_amount'] == 'desc' ? 'asc' : 'desc');
           } else {
-            $order['sort'] = 'cname';
+            $order['sort'] = 'discount_amount';
             $order['order'] = 'desc';
           }
-          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+          $sort_url = _A_::$app->router()->UrlTo('discount', $order);
         ?>
-        <a href="#">
+        <a data-sort href="<?= $sort_url ?>">
           Details
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['discount_amount'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-1 col text-center">
@@ -26,11 +30,15 @@
             $order['sort'] = 'enabled';
             $order['order'] = 'desc';
           }
-          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+          $sort_url = _A_::$app->router()->UrlTo('discount', $order);
         ?>
-        <a href="#">
+        <a data-sort href="<?= $sort_url ?>">
           On
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['enabled'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-2 col text-center">
@@ -42,11 +50,15 @@
             $order['sort'] = 'allow_multiple';
             $order['order'] = 'desc';
           }
-          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+          $sort_url = _A_::$app->router()->UrlTo('discount', $order);
         ?>
-        <a href="#">
+        <a data-sort href="<?= $sort_url ?>">
           Multiple
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['allow_multiple'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-2 col text-center">
@@ -58,11 +70,15 @@
             $order['sort'] = 'coupon_code';
             $order['order'] = 'desc';
           }
-          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+          $sort_url = _A_::$app->router()->UrlTo('discount', $order);
         ?>
-        <a href="#">
+        <a data-sort href="<?= $sort_url ?>">
           Coupon
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['coupon_code'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-2 col text-center">
@@ -74,11 +90,15 @@
             $order['sort'] = 'date_start';
             $order['order'] = 'desc';
           }
-          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+          $sort_url = _A_::$app->router()->UrlTo('discount', $order);
         ?>
-        <a href="#">
+        <a data-sort href="<?= $sort_url ?>">
           Starts
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['date_start'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-2 col text-center">
@@ -90,11 +110,15 @@
             $order['sort'] = 'date_end';
             $order['order'] = 'desc';
           }
-          $sort_url = _A_::$app->router()->UrlTo('categories', $order);
+          $sort_url = _A_::$app->router()->UrlTo('discount', $order);
         ?>
-        <a href="#">
+        <a data-sort href="<?= $sort_url ?>">
           Ends
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['date_end'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
     </div>
