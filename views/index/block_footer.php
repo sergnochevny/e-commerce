@@ -3,33 +3,41 @@
     <div class="footer-widgets-top-inner">
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
-          <aside id="woocommerce_products-5" class="widget woocommerce widget_products">
-            <h4 class="widget-title">Best Sellers Products</h4>
-            <div id="bsells_products" class="row products product_list_widget">
-            </div>
-          </aside>
+          <h4 class="widget-title">Best Sellers Products</h4>
+          <div class="row">
+            <aside id="woocommerce_products-5" class="widget woocommerce widget_products">
+              <div id="bsells_products" class="row products product_list_widget">
+              </div>
+            </aside>
+          </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
-          <aside id="woocommerce_products-2" class="widget woocommerce widget_products">
-            <h4 class="widget-title">Popular Textile</h4>
-            <div id="popular_products" class="row products product_list_widget">
-            </div>
-          </aside>
+          <h4 class="widget-title">Popular Textile</h4>
+          <div class="row">
+            <aside id="woocommerce_products-2" class="widget woocommerce widget_products">
+              <div id="popular_products" class="row products product_list_widget">
+              </div>
+            </aside>
+          </div>
         </div>
         <div class="clear"></div>
         <div class="col-xs-12 col-sm-6 col-md-6">
-          <aside id="woocommerce_products-3" class="widget woocommerce widget_products">
-            <h4 class="widget-title">New Products</h4>
-            <div id="new_products" class="row products product_list_widget">
-            </div>
-          </aside>
+          <h4 class="widget-title">New Products</h4>
+          <div class="row">
+            <aside id="woocommerce_products-3" class="widget woocommerce widget_products">
+              <div id="new_products" class="row products product_list_widget">
+              </div>
+            </aside>
+          </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
-          <aside id="woocommerce_products-4" class="widget woocommerce widget_products">
-            <h4 class="widget-title">Featured Products</h4>
-            <div id="best_products" class="row products product_list_widget">
-            </div>
-          </aside>
+          <h4 class="widget-title">Featured Products</h4>
+          <div class="row">
+            <aside id="woocommerce_products-4" class="widget woocommerce widget_products">
+              <div id="best_products" class="row products product_list_widget">
+              </div>
+            </aside>
+          </div>
         </div>
       </div>
     </div>

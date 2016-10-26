@@ -24,7 +24,7 @@
           <?php if(isset($saleprice) && ($price != $saleprice)) { ?>
             <div class="col-md-12 text-left">
               <div class="row">
-                <small class="text-danger price">Sale: <span class="amount_wd"><?= $format_sale_price; ?></span></small>
+                <small class="text-sale price">Sale: <span class="amount_wd"><?= $format_sale_price; ?></span></small>
               </div>
             </div>
           <?php } ?>

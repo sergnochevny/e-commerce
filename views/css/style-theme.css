@@ -1647,6 +1647,7 @@ table.table-bordered center a {
     }
 }
 
+
 .comments-area .comment-respond .comment-reply-title {
     margin-top: 0;
     color: #2c3e50;
@@ -1736,6 +1737,30 @@ table.table-bordered center a {
 .product-title{
     font-size: .9em;
     color: #222;
+    margin-bottom: 5px;
+}
+.text-sale{
+    color: red;
+}
+@media (max-width: 992px) {
+    .product-image{
+        height: 80px;
+    }
+}
+@media (max-width: 768px) {
+    .product-image{
+        height: 70px;
+    }
+}
+@media (max-width: 767px) {
+    .product-image{
+        height: 270px;
+    }
+}
+@media (max-width: 480px) {
+    .product-image{
+        height: 160px;
+    }
 }
 /* footer clients */
 .footer-clients {
@@ -1856,19 +1881,12 @@ table.table-bordered center a {
     /*font-size: 13px;*/
 }
 
-.footer-widgets-bottom .widget .widget-title {
-    margin: 0 0 0px 0;
-    color: #667700;
-}
-
 .widget .widget-title {
-    color: #667700;
     font-family: "Montserrat", sans-serif;
-    font-size: 200%;
+    font-size: 1.5em;
     font-weight: normal;
     text-transform: uppercase;
     margin: 0 0 20px 0;
-    /*text-shadow: 1px 1px 0 #000*/;
 }
 
 .widget .form-control {
