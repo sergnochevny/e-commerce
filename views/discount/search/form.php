@@ -4,13 +4,98 @@
       <div class="panel-heading">
         <div class="h4 search-container-title">
           <div class="row">
-            <div class="col-xs-1 col-sm-2"><i class="fa fa-search"></i></div>
-            <div class="col-xs-9 comment-text">
-              <?=isset($search['colour'])?'<span>Like: </span><b>'.$search['colour'].'</b>':''?>
+            <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
+            <div class="col-xs-10 search-result-list comment-text">
+              <?
+                if (isset($search['promotion_type'])) {
+                  $promotion = '';
+                  switch ($search['promotion_type']) {
+                    case 1:
+                      $promotion = 'Any purchase';
+                      break;
+                    case 2:
+                      $promotion = 'First purchase';
+                      break;
+                    case 3:
+                      $promotion = 'Next purchase after the start date';
+                      break;
+                  }
+                  echo '<div class="label label-search-info">Promotion: ' . $promotion . '</div>';
+                }
+
+                if (isset($search['user_type'])) {
+                  $user_type = '';
+                  switch ($search['user_type']) {
+                    case 1:
+                      $user_type = 'All new users';
+                      break;
+                    case 2:
+                      $user_type = 'All registered users';
+                      break;
+                    case 3:
+                      $user_type = 'All selected users (i.e. use the users selected below)';
+                      break;
+                  }
+                  echo '<div class="label label-search-info">Users type: ' . $user_type . '</div>';
+                }
+
+                if (isset($search['discount_type'])) {
+                  $discount_type = '';
+                  switch ($search['discount_type']) {
+                    case 1:
+                      $discount_type = 'Sub total';
+                      break;
+                    case 2:
+                      $discount_type = 'Shipping';
+                      break;
+                    case 3:
+                      $discount_type = 'Total (inc shipping and handling)';
+                      break;
+                  }
+                  echo '<div class="label label-search-info">Discount subtotal type: ' . $discount_type . '</div>';
+                }
+
+                if (isset($search['product_type'])) {
+                  $product_type = '';
+                  switch ($search['product_type']) {
+                    case 1:
+                      $product_type = 'All selected fabrics *';
+                      break;
+                    case 2:
+                      $product_type = 'All selected categories *';
+                      break;
+                    case 3:
+                      $product_type = 'All selected manufacturers *';
+                      break;
+                  }
+                  echo '<div class="label label-search-info">Fabrics: ' . $product_type . '</div>';
+                }
+
+                if (isset($search['product_type'])) {
+                  $product_type = '';
+                  switch ($search['product_type']) {
+                    case 1:
+                      $product_type = 'All selected fabrics *';
+                      break;
+                    case 2:
+                      $product_type = 'All selected categories *';
+                      break;
+                    case 3:
+                      $product_type = 'All selected manufacturers *';
+                      break;
+                  }
+                  echo '<div class="label label-search-info">Fabrics: ' . $product_type . '</div>';
+                }
+                if (!empty($search['date_start'])) {
+                  echo '<div class="label label-search-info">Date from: ' . $search['date_start'] . '</div>';
+                }
+                if (!empty($search['date_ends'])) {
+                  echo '<div class="label label-search-info">Date to: ' . $search['date_ends'] . '</div>';
+                }
+              ?>
+              <?= isset($search['active']) ? '<a data-search_reset title="Reset search" class="button reset">&times;</a>' : '' ?>
             </div>
-            <b class="sr-ds">
-              <i class="fa fa-chevron-right"></i>
-            </b>
+            <b class="sr-ds"><i class="fa fa-chevron-right"></i></b>
           </div>
         </div>
       </div>
@@ -24,9 +109,6 @@
                 Promotion
                 <select name="search[promotion_type]" id="promotion_type" class="input-text">
                   <option value="" selected>
-                    Any
-                  </option>
-                  <option value="0" <?= ($search['promotion_type'] == 0) ? 'selected' : ''; ?>>
                     Select the promotion type
                   </option>
                   <option value="1" <?= ($search['promotion_type'] == 1) ? 'selected' : ''; ?>>
@@ -110,20 +192,22 @@
           </div>
           <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-                <label for="discount_on">
-                  Date ranges from:
-                  <input type="text" id="discount_starts" class="input-text" name="search[date_start]" placeholder="Chose start date"
-                    value="<?= isset($search['date_start']) ? $search['date_start'] : '' ?>">
-                </label>
+              <label for="discount_on">
+                Date ranges from:
+                <input type="text" id="date-from" class="input-text" name="search[date_start]"
+                       placeholder="Chose start date"
+                       value="<?= isset($search['date_start']) ? $search['date_start'] : '' ?>">
+              </label>
             </div>
           </div>
           <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-                <label for="discount_on">
-                  Date ranges to:
-                  <input type="text" id="discount_ends" class="input-text" name="search[date_end]" placeholder="Chose end date"
-                         value="<?= isset($search['date_end']) ? $search['date_end'] : '' ?>">
-                </label>
+              <label for="discount_on">
+                Date ranges to:
+                <input type="text" id="date-to" class="input-text" name="search[date_end]"
+                       placeholder="Chose end date"
+                       value="<?= isset($search['date_end']) ? $search['date_end'] : '' ?>">
+              </label>
             </div>
           </div>
         </div>
@@ -131,8 +215,11 @@
       </div>
 
       <div class="panel-footer hidden">
-        <a data-search_submit class="btn button pull-right">Search</a>
-        <a data-search_reset class="btn reset">Reset</a>
+        <div class="row">
+          <div class="col-sm-12">
+            <a data-search_submit class="button pull-right">Search</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

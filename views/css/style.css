@@ -2079,7 +2079,7 @@ form[data-search] > .row > .panel > .panel-heading{
 .search-result-list .reset{
     padding: 0;
     position: absolute;
-    right: -20px;
+    right: -40px;
     top: 2px;
     color: red;
     border: 0;

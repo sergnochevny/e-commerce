@@ -47,7 +47,7 @@
                 <div class="label label-search-info">
                     Date to: <?= $search['a.dt']['to']  ?></div>
               <?php endif; ?>
-              <?= isset($search['active']) ? '<a data-search_reset class="button reset">&times;</a>' : '' ?>
+              <?= isset($search['active']) ? '<a data-search_reset title="Reset search" class="button reset">&times;</a>' : '' ?>
             </div>
             <b class="sr-ds">
               <i class="fa fa-chevron-right"></i>
@@ -234,7 +234,11 @@
       </div>
 
       <div class="panel-footer hidden">
-        <a data-search_submit class="btn button pull-right">Search</a>
+        <div class="row">
+          <div class="col-sm-12">
+            <a data-search_submit class="button pull-right">Search</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

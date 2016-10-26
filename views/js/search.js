@@ -1,6 +1,7 @@
 
 (function($){
 
+
     $('#date-from').datepicker({
         dateFormat: 'mm/dd/yy',
         onSelect: function (dateText, inst) {
@@ -14,4 +15,6 @@
             $('#dateFrom').datepicker('option', 'maxDate', new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay));
         }
     });
+
+
 })(jQuery);
