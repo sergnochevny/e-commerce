@@ -40,7 +40,7 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
+    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT a.*, b.aid, b.email ";
       $query .= " FROM " . static::$table . " a";

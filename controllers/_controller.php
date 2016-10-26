@@ -16,6 +16,8 @@
 
     protected function before_search_form_layout(&$search_data) { }
 
+    protected function before_list_layout() { }
+
     protected function build_order(&$sort) {
       $sort = _A_::$app->get('sort');
       if(isset($sort)) {
@@ -57,9 +59,9 @@
         if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
         else  $search = _A_::$app->get('search');
         if(isset($search)) {
-          $search_form = array_filter($search, function($val){
-            if (is_array($val)) return true;
-            return (strlen(trim($val))>0);
+          $search_form = array_filter($search, function($val) {
+            if(is_array($val)) return true;
+            return (strlen(trim($val)) > 0);
           });
           foreach($fields as $key) {
             if(isset($search_form[$key])) $filter[$key] = $search_form[$key];
@@ -96,12 +98,11 @@
           }
         }
       }
-
-      $this->search_form($search_form);
+      return $search_form;
     }
 
     protected function get_list() {
-      $this->build_search_filter($filter);
+      $search_form = $this->build_search_filter($filter);
       $this->build_order($sort);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
       $per_page = 12;
@@ -110,8 +111,10 @@
       if($page <= 0) $page = 1;
       $start = (($page - 1) * $per_page);
       $res_count_rows = 0;
-      $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, $filter, &$sort]);
+      $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, &$filter, &$sort]);
       $this->after_get_list($rows);
+      if(isset($filter['active'])) $search_form['active'] = $filter['active'];
+      $this->search_form($search_form);
       $this->template->vars('rows', $rows);
       $this->template->vars('sort', $sort);
       ob_start();
@@ -121,6 +124,7 @@
       $this->template->vars('count_rows', $res_count_rows);
       $this->template->vars('list', $rows);
       (new Controller_Paginator($this->main))->paginator($total, $page, $this->controller, $per_page);
+      $this->before_list_layout();
       $this->main->view_layout('list');
     }
 

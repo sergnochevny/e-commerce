@@ -72,7 +72,7 @@
       }
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
+    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $res = null;
       $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount FROM blog_groups a";
       $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";

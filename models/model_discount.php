@@ -94,7 +94,7 @@
       return $res;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
+    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $res = null;
       $q = "SELECT * FROM " . static::$table;
       $q .= self::build_where($filter);

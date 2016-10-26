@@ -6,28 +6,6 @@
     protected $form_title_add = 'WRITE NEW POST';
     protected $form_title_edit = 'EDIT POST';
 
-    private function upload_img() {
-      $img = null;
-      $timestamp = time();
-      $uploaddir = 'img/blog/';
-      $file = $uploaddir . $timestamp . basename($_FILES['uploadfile']['name']);
-      $ext = substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1);
-      $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.JPG', '.BMP', '.GIF', '.PNG', '.jpeg', '.JPEG'];
-
-      if(!in_array($ext, $filetypes)) {
-        $error = ['Error format'];
-        $this->template->vars('error', $error);
-      } else {
-        if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $file)) {
-          $img = $file;
-        } else {
-          $error = ['Error at saving the file!!!'];
-          $this->template->vars('error', $error);
-        }
-      }
-      return $img;
-    }
-
     private function autop($pee, $br = true) {
       $pre_tags = [];
 

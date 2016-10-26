@@ -17,7 +17,7 @@
       return $order;
     }
 
-    protected static function build_where($filter) {
+    protected static function build_where(&$filter) {
       $result = "";
       if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pname"])) . "%'";
       if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::validData($filter["a.pvisible"]))."'";
@@ -33,9 +33,13 @@
       if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::validData($filter["b.cid"])) . "'";
       if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::validData($filter["c.id"])) . "'";
       if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::validData($filter["d.id"])) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::validData($filter["e.id"])) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
-        if(strlen(trim($result)) > 0) $result = " WHERE " . $result;
+        if(strlen(trim($result)) > 0){
+          $result = " WHERE " . $result;
+          $filter['active'] = true;
+        }
       }
       return $result;
     }
@@ -275,7 +279,7 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
+    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT DISTINCT a.* ";
       $query .= " FROM " . static::$table . " a";
