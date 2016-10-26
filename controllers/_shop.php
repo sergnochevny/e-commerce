@@ -554,7 +554,6 @@
       if($matches->product_in($pid))
         $this->template->vars('in_matches', '1');
 
-      $this->template->vars('data', $data);
       $priceyard = $data['priceyard'];
       $aPrds = [];
       $aPrds[] = $pid;    #add product id
@@ -589,7 +588,6 @@
       $bTemp = false;
       $sys_hide_price = Model_Price::sysHideAllRegularPrices();
       $hide_price = $data['hideprice'];
-      $this->template->vars('sys_hide_price', $sys_hide_price);
       $this->template->vars('hide_price', $hide_price);
 
       $bSystemDiscount = false;
@@ -619,7 +617,7 @@
       #check if the product has its own discount
       $sDiscount = '';
       $bDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $rExDiscountPrice, $discountIds);
-      $this->template->vars('format_price', $format_price);
+      $data['format_price'] = $format_price;
 
       ob_start();
       if($rSystemDiscount > 0) {

@@ -168,7 +168,7 @@
                       <p class="price">Price:
                         <ins>
                           <span class="amount">
-                          <?= $format_price; ?>
+                          <?= $data['format_price']; ?>
                           </span>
                         </ins>
                       </p>
@@ -232,7 +232,7 @@
 
               <div class="col-sm-12">
                 <div class="row">
-                  <span id="b_in_product" style="font-weight: 600;">
+                  <span id="b_in_product" style="0font-weight: 600;">
 
                   </span>
                 </div>

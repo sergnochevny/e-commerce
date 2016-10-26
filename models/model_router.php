@@ -8,10 +8,13 @@ Class Model_Router extends Model_Base
         $_sef_url = $sef_url;
         $itherator = 0;
         while (true) {
-            $sql = "SELECT * from url_sef where sef = '" . mysql_escape_string($sef_url) . "'";
+            $sql = "SELECT * from url_sef where sef = '" . mysql_real_escape_string($sef_url) . "'";
             $find_result = mysql_query($sql);
             if (!mysql_num_rows($find_result)) {
-                $sql = "INSERT INTO url_sef(url,sef) VALUES('" . $url . "', '" . mysql_escape_string($sef_url) . "')";
+//              $sql = "SELECT * from url_sef where $url = '" . mysql_real_escape_string($url) . "'";
+//              $find_result = mysql_query($sql);
+
+                $sql = "REPLACE INTO url_sef(url,sef) VALUES('" . $url . "', '" . mysql_escape_string($sef_url) . "')";
                 $res = mysql_query($sql);
                 if (!$res) $sef_url = $url;
                 break;
