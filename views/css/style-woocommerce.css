@@ -234,7 +234,7 @@ span#b_in_product {
     top: -15px;
     width: 80px;
     height: 80px;
-    z-index: 99;
+    z-index: 50;
     vertical-align: middle;
 }
 
