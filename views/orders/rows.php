@@ -14,14 +14,32 @@
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Order
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['trid'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <?php if (Controller_Admin::is_logged()): ?>
+        <?php
+          if (isset($sort['username'])) {
+            $order['sort'] = 'username';
+            $order['order'] = ($sort['username'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'username';
+            $order['order'] = 'desc';
+          }
+          $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+        ?>
         <div class="col-sm-2 col text-center">
           <a data-sort href="<?= $sort_url ?>">
             Customer
-            <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+            <?php if(isset($sort['username'])) : ?>
+              <small>
+                <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              </small>
+            <?php endif; ?>
           </a>
         </div>
       <?php endif; ?>
@@ -38,7 +56,11 @@
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Date
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['order_date'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-2 col text-center">
@@ -54,7 +76,11 @@
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Status
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['status'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-2 col text-center">
@@ -70,7 +96,11 @@
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Total
-          <small><i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i></small>
+          <?php if(isset($sort['total'])) : ?>
+            <small>
+              <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+            </small>
+          <?php endif; ?>
         </a>
       </div>
     </div>

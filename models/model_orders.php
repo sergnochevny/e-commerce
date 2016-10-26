@@ -95,13 +95,11 @@
       return null;
     }
 
-    public static function get_total_count($id = null, $filter = null) {
+    public static function get_total_count($filter = null) {
       $q = "SELECT";
       $q .= " COUNT(ord.oid)";
       $q .= " FROM fabrix_orders ord";
       $q .= " LEFT JOIN fabrix_accounts user ON ord.oid = user.aid";
-      $q .= (isset($id) || isset($filter)) ? " WHERE" : '';
-      $q .= isset($id) ? " ord.oid = '$id'" : '';
       $q .= static::build_where($filter);
       $result = mysql_query($q);
       if($result) {
