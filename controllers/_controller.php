@@ -14,11 +14,11 @@
       }
     }
 
-    protected function before_search_form_layout(&$search_data) { }
+    protected function before_search_form_layout(&$search_data, $view = false) { }
 
-    protected function before_list_layout() { }
+    protected function before_list_layout($view = false) { }
 
-    protected function build_order(&$sort) {
+    protected function build_order(&$sort, $view = false) {
       $sort = _A_::$app->get('sort');
       if(isset($sort)) {
         $order = is_null(_A_::$app->get('order')) ? 'DESC' : _A_::$app->get('order');
@@ -30,14 +30,15 @@
       }
     }
 
-    protected function search_form($search_form) {
-      $this->before_search_form_layout($search_form);
+    protected function search_form($search_form, $view = false) {
+      $template = $view ? 'view/search/form' : 'search/form';
+      $this->before_search_form_layout($search_form, $view);
       $this->template->vars('search', $search_form);
       $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller));
       $search_form = null;
       ob_start();
       try {
-        $this->main->view_layout('search/form');
+        $this->main->view_layout($template);
         $search_form = ob_get_contents();
       } catch(Exception $e) {
       }
@@ -45,16 +46,16 @@
       $this->template->vars('search_form', $search_form);
     }
 
-    protected function after_get_list(&$rows) { }
+    protected function after_get_list(&$rows, $view = false) { }
 
-    protected function search_fields() {
+    protected function search_fields($view = false) {
       return null;
     }
 
-    protected function build_search_filter(&$filter) {
+    protected function build_search_filter(&$filter, $view = false) {
       $search_form = null;
       $filter = null;
-      $fields = $this->search_fields();
+      $fields = $this->search_fields($view);
       if(isset($fields)) {
         if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
         else  $search = _A_::$app->get('search');
@@ -101,9 +102,9 @@
       return $search_form;
     }
 
-    protected function get_list() {
-      $search_form = $this->build_search_filter($filter);
-      $this->build_order($sort);
+    protected function get_list($view = false) {
+      $search_form = $this->build_search_filter($filter, $view);
+      $this->build_order($sort, $view);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
       $per_page = 12;
       $total = forward_static_call([$this->model_name, 'get_total_count'], $filter);
@@ -112,20 +113,20 @@
       $start = (($page - 1) * $per_page);
       $res_count_rows = 0;
       $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, &$filter, &$sort]);
-      $this->after_get_list($rows);
+      $this->after_get_list($rows, $view);
       if(isset($filter['active'])) $search_form['active'] = $filter['active'];
-      $this->search_form($search_form);
+      $this->search_form($search_form, $view);
       $this->template->vars('rows', $rows);
       $this->template->vars('sort', $sort);
       ob_start();
-      $this->template->view_layout('rows');
+      $this->template->view_layout($view ? 'view/rows' : 'rows');
       $rows = ob_get_contents();
       ob_end_clean();
       $this->template->vars('count_rows', $res_count_rows);
       $this->template->vars('list', $rows);
-      (new Controller_Paginator($this->main))->paginator($total, $page, $this->controller, $per_page);
-      $this->before_list_layout();
-      $this->main->view_layout('list');
+      (new Controller_Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $per_page);
+      $this->before_list_layout($view);
+      $this->main->view_layout($view ? 'view/list' : 'list');
     }
 
     /**
@@ -143,4 +144,16 @@
       else  $this->main->view($this->controller);
     }
 
+    /**
+     * @export
+     */
+    public function view() {
+      ob_start();
+      $this->get_list(true);
+      $list = ob_get_contents();
+      ob_end_clean();
+      if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('list', $list);
+      $this->main->view('view/' . $this->controller);
+    }
   }

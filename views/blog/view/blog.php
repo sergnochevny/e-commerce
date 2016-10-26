@@ -1,5 +1,6 @@
-<link rel="stylesheet" type="text/css" href="<?php _A_::$app->router('views/css/blog.css') ?>">
-<div class="container">
+<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/blog.css'); ?>">
+<?php include('views/index/main_gallery.php'); ?>
+<div id="blog" class="container">
   <div class="row">
     <div class="col-md-12">
       <article class="page type-page status-publish entry">
@@ -8,12 +9,6 @@
           <?=$list?>
         </div>
       </article>
-      <nav class="paging-navigation" role="navigation">
-        <h4 class="sr-only">Post navigation</h4>
-        <ul class="pagination">
-          <?= isset($paginator) ? $paginator : ''; ?>
-        </ul>
-      </nav>
     </div>
   </div>
 </div>

@@ -209,9 +209,9 @@
 
     private function image($data) {
       $file_img = trim(str_replace('{base_url}', '', $data['img']), '/\\');
-      if(basename($file_img) == $file_img){
-        if(file_exists('img/blog/'.$file_img) && is_file('img/blog/'.$file_img) && is_readable('img/blog/'.$file_img)) {
-          $data['img'] = _A_::$app->router()->UrlTo('img/blog/'.$file_img);
+      if(basename($file_img) == $file_img) {
+        if(file_exists('img/blog/' . $file_img) && is_file('img/blog/' . $file_img) && is_readable('img/blog/' . $file_img)) {
+          $data['img'] = _A_::$app->router()->UrlTo('img/blog/' . $file_img);
           $data['file_img'] = $file_img;
         } else {
           $data['img'] = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
@@ -342,7 +342,18 @@
       $this->template->vars('image', $image);
     }
 
-    protected function after_get_list(&$rows) {
+    protected function build_search_filter(&$filter, $view = false) {
+      $res = parent::build_search_filter($filter, $view);
+      if($view) {
+        $filter = ['a.post_status' => 'publish'];
+        if(!empty(_A_::$app->get('cat'))) {
+          $filter['b.group_id'] = _A_::$app->get('cat');
+        }
+      }
+      return $res;
+    }
+
+    protected function after_get_list(&$rows, $view = false) {
       foreach($rows as $key => $row) {
         $rows[$key]['post_title'] = stripslashes($row['post_title']);
         $rows[$key]['post_date'] = date('F jS, Y', strtotime($row['post_date']));
@@ -402,6 +413,13 @@
         return false;
       }
       return true;
+    }
+
+    protected function before_list_layout($view = false) {
+      if(!empty(_A_::$app->get('cat'))) {
+        $category_name = Model_Blogcategory::get_by_id(_A_::$app->get('cat'))['name'];
+      }
+      $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
     }
 
   }
