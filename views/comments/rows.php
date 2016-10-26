@@ -2,18 +2,63 @@
     <div class="col-xs-12 table-list-header hidden-xs">
         <div class="row">
             <div class="col-sm-3 col">
-                Email <a href="#">
-                    <small><i class="fa fa-chevron-down"></i></small>
+                <?php
+                    if (isset($sort['email'])) {
+                        $order['sort'] = 'email';
+                        $order['order'] = ($sort['email'] == 'desc' ? 'asc' : 'desc');
+                    } else {
+                        $order['sort'] = 'email';
+                        $order['order'] = 'desc';
+                    }
+                    $sort_url = _A_::$app->router()->UrlTo('comments', $order);
+                ?>
+                <a data-sort href="<?= $sort_url ?>">
+                    Email
+                    <?php if(isset($sort['email'])) : ?>
+                        <small>
+                            <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                        </small>
+                    <?php endif; ?>
                 </a>
             </div>
             <div class="col-sm-3 col text-center">
-                Title <a href="#">
-                    <small><i class="fa fa-chevron-down"></i></small>
+                <?php
+                    if (isset($sort['title'])) {
+                        $order['sort'] = 'title';
+                        $order['order'] = ($sort['title'] == 'desc' ? 'asc' : 'desc');
+                    } else {
+                        $order['sort'] = 'title';
+                        $order['order'] = 'desc';
+                    }
+                    $sort_url = _A_::$app->router()->UrlTo('comments', $order);
+                ?>
+                <a data-sort href="<?= $sort_url ?>">
+                    Title
+                    <?php if(isset($sort['title'])) : ?>
+                        <small>
+                            <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                        </small>
+                    <?php endif; ?>
                 </a>
             </div>
             <div class="col-sm-2 col text-center">
-                Date <a href="#">
-                    <small><i class="fa fa-chevron-down"></i></small>
+                <?php
+                    if (isset($sort['dt'])) {
+                        $order['sort'] = 'dt';
+                        $order['order'] = ($sort['dt'] == 'desc' ? 'asc' : 'desc');
+                    } else {
+                        $order['sort'] = 'dt';
+                        $order['order'] = 'desc';
+                    }
+                    $sort_url = _A_::$app->router()->UrlTo('comments', $order);
+                ?>
+                <a data-sort href="<?= $sort_url ?>">
+                    Date
+                    <?php if(isset($sort['dt'])) : ?>
+                        <small>
+                            <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                        </small>
+                    <?php endif; ?>
                 </a>
             </div>
         </div>
