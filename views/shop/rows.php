@@ -31,9 +31,9 @@
       </h3>
       <div class="product-price-box clearfix">
         <?php if($sys_hide_price == 0 && $hide_price == 0) { ?>
-          <span class="price"><span class="amount"><?= $format_price; ?></span></span>
+          <span class="price pull-left"><span class="amount"><?= $format_price; ?></span></span>
         <?php } if(isset($saleprice) && ($price != $saleprice)) { ?>
-          <span class="text-sale">
+          <span class="text-sale pull-right">
             Sale: <span class="amount_wd"><?= $format_sale_price; ?></span>
           </span>
         <?php } ?>
