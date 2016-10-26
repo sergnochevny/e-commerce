@@ -4,9 +4,12 @@
       <div class="panel-heading">
         <div class="h4 search-container-title">
           <div class="row">
-            <div class="col-xs-1 col-sm-2"><i class="fa fa-search"></i></div>
-            <div class="col-xs-9 comment-text">
-              <?= isset($search['trid']) ? '<span>Like: </span><b>' . $search['trid'] . '</b>' : '' ?>
+            <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
+            <div class="col-xs-10 search-result-list comment-text">
+              <?= isset($search['trid']) ? '<div class="label label-search-info">TR ID: ' . $search['trid'] . '</div>' : '' ?>
+              <?= isset($search['name']) ? '<div class="label label-search-info">Customer: ' . $search['name'] . '</div>' : '' ?>
+              <?= isset($search['name']) ? '<div class="label label-search-info">Date from: ' . $search['name'] . '</div>' : '' ?>
+              <?= isset($search['name']) ? '<div class="label label-search-info">Date to: ' . $search['name'] . '</div>' : '' ?>
             </div>
             <b class="sr-ds">
               <i class="fa fa-chevron-right"></i>
@@ -67,8 +70,11 @@
       </div>
 
       <div class="panel-footer hidden">
-        <a data-search_submit class="btn button pull-right">Search</a>
-        <a data-search_reset class="btn reset">Reset</a>
+        <div class="row">
+          <div class="col-sm-12">
+            <a data-search_submit class="button pull-right">Search</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

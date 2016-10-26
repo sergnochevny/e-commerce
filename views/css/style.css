@@ -2101,6 +2101,7 @@ form[data-search] > .row > .panel > .panel-heading{
 .label-search-info {
     background-color: #ddd;
     margin-top: 5px;
+    margin-right: 5px;
     padding-top: .45em;
     display: inline-block;
     color: #666;
