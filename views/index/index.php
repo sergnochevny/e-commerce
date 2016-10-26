@@ -71,7 +71,7 @@
 </div>
 
 <div class="container">
-  <div class="row">
+  <div class="row bestseller-row">
     <div class="col-md-12">
 
       <div class="row">
@@ -82,6 +82,12 @@
           </h3>
 
           <div class="row products best-products"></div>
+
+          <div class="row bestseller-action-row">
+            <div class="col-md-12 text-center">
+              <a class="button button-2x">MORE</a>
+            </div>
+          </div>
 
         </div>
       </div>

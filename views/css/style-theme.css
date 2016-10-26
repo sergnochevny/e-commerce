@@ -1724,10 +1724,19 @@ table.table-bordered center a {
 }
 
 .footer-widgets-top .footer-widgets-top-inner {
-    border-top: 2px solid #222;
-    padding: 70px 0 30px;
+    border-top: 1px solid #222;
+    padding: 60px 0 30px;
 }
-
+.product-image{
+    width: 100%;
+    height: 120px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.product-title{
+    font-size: .9em;
+    color: #222;
+}
 /* footer clients */
 .footer-clients {
     text-align: center;
