@@ -119,8 +119,12 @@
       $this->template->view_layout('select');
     }
 
-    protected function search_fields() {
-      return ['a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece', 'a.best', 'a.specials', 'b.cid', 'c.id', 'd.id'];
+    protected function search_fields($view = false) {
+      return [
+        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
+        'a.piece', 'a.best', 'a.specials', 'b.cid',
+        'c.id', 'd.id', 'e.id'
+      ];
     }
 
     protected function load(&$data) {
@@ -211,9 +215,23 @@
       $this->template->vars('images', $images);
     }
 
-    protected function before_search_form_layout(&$search_data) {
-      $search_data['categories'] = Model_Categories::get_list(0, 0, $res_count);
-      $search_data['patterns'] = Model_Patterns::get_list(0, 0, $res_count);
-      $search_data['colours'] = Model_Colours::get_list(0, 0, $res_count);
+    protected function before_search_form_layout(&$search_data, $view = false) {
+      $categories = [];
+      $rows = Model_Categories::get_list(0, 0, $res_count);
+      foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
+      $patterns = [];
+      $rows = Model_Patterns::get_list(0, 0, $res_count);
+      foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
+      $colours = [];
+      $rows = Model_Colours::get_list(0, 0, $res_count);
+      foreach($rows as $row) $colours[$row['id']] = $row['colour'];
+      $manufacturers = [];
+      $rows = Model_Manufacturers::get_list(0, 0, $res_count);
+      foreach($rows as $row) $manufacturers[$row['id']] = $row['manufacturer'];
+
+      $search_data['categories'] = $categories;
+      $search_data['patterns'] = $patterns;
+      $search_data['colours'] = $colours;
+      $search_data['manufacturers'] = $manufacturers;
     }
   }

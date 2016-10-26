@@ -4,7 +4,7 @@
 
     protected static $table;
 
-    protected static function build_where($filter) {
+    protected static function build_where(&$filter) {
       $query = "";
       if(isset($filter)) {
         $where = "";
@@ -42,7 +42,10 @@
 
           $where .= ((strlen($where1) > 0) ? ((strlen($where) > 0) ? " and (" : " (").$where1.")":'');
         }
-        if(strlen($where)>0) $query = " WHERE " . $where;
+        if(strlen($where)>0) {
+          $query = " WHERE " . $where;
+          $filter['active'] = true;
+        }
       }
       return $query;
     }

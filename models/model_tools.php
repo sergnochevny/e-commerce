@@ -59,8 +59,8 @@ Class Model_Tools extends Model_Base
         $page_Name = '';
 
         $route_control = explode('/', $route_control)[0];
-        if (_A_::$app->router()->controller == 'blog' && _A_::$app->router()->action=='post') {
-            $post_id = !is_null(_A_::$app->get('post_id')) ? _A_::$app->get('post_id') : null;
+        if (_A_::$app->router()->controller == 'blog' && _A_::$app->router()->action=='view') {
+            $post_id = !is_null(_A_::$app->get('id')) ? _A_::$app->get('id') : null;
             if (isset($post_id)) {
                 $result = mysql_query("select post_title from blog_posts WHERE id='$post_id'");
                 if ($result && mysql_num_rows($result) > 0) {

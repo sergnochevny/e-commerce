@@ -40,7 +40,7 @@
       return $response;
     }
 
-    public static function get_list($start, $limit, &$res_count_rows, $filter = null, &$sort = null) {
+    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT a.id, a.manufacturer, count(b.pid) AS amount";
       $query .= " FROM " . static::$table . " a";

@@ -64,7 +64,7 @@
                 <li class="menu-item menu-item-type-custom menu-item-object-custom"><a
                     href="<?= _A_::$app->router()->UrlTo('shop') ?>">Shop</a></li>
                 <li class="menu-item menu-item-type-custom menu-item-object-custom"><a
-                    href="<?= _A_::$app->router()->UrlTo('blog') ?>">Blog</a></li>
+                    href="<?= _A_::$app->router()->UrlTo('blog/view') ?>">Blog</a></li>
               </ul>
             </div>
           </aside>

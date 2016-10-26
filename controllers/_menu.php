@@ -85,8 +85,8 @@
       $items = Model_Tools::get_items_for_menu('blog_category');
       ob_start();
       foreach($items as $item) {
-        $href = _A_::$app->router()->UrlTo('/blog', ['cat' => $item['group_id']]);
         $name = $item['name'];
+        $href = _A_::$app->router()->UrlTo('blog/view', ['cat' => $item['group_id']], $name);
         $this->template->vars('href', $href, true);
         $this->template->vars('name', $name, true);
         $this->template->view_layout('menu_item');
