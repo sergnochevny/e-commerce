@@ -57,6 +57,7 @@
     });
 
     $(document).on('click.search_action', "[data-to_page]", function (event) {
+        event = event || window.event;
         event.preventDefault();
         var search = $('form[data-search]');
         if (search.length) {
@@ -71,6 +72,7 @@
     });
 
     $(document).on('click.search_action', "[data-sort]", function (event) {
+        event = event || window.event;
         event.preventDefault();
         var search = $('form[data-search]');
         if (search.length) {
