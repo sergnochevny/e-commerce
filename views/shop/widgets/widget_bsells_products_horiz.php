@@ -3,10 +3,10 @@
       <figure class="product-image-box">
         <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $row[0]], $row['pname']); ?>">
           <img src="<?= $filename; ?>" alt="">
+          <figcaption>
+            <?php if($bProductDiscount) { ?><span class="extra_discount">Extra Discount!</span><?php } ?>
+          </figcaption>
         </a>
-        <figcaption>
-          <?php if($bProductDiscount) { ?><span class="extra_discount">Extra Discount!</span><?php } ?>
-        </figcaption>
       </figure>
 
       <span class="product-category">

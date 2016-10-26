@@ -3,7 +3,7 @@
     <div class="footer-widgets-top-inner">
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
-          <h4 class="widget-title">Best Sellers Products</h4>
+          <h4 class="section-title">Best Sellers Products</h4>
           <div class="row">
             <aside id="woocommerce_products-5" class="widget woocommerce widget_products">
               <div id="bsells_products" class="row products product_list_widget">
@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
-          <h4 class="widget-title">Popular Textile</h4>
+          <h4 class="section-title">Popular Textile</h4>
           <div class="row">
             <aside id="woocommerce_products-2" class="widget woocommerce widget_products">
               <div id="popular_products" class="row products product_list_widget">
@@ -22,7 +22,7 @@
         </div>
         <div class="clear"></div>
         <div class="col-xs-12 col-sm-6 col-md-6">
-          <h4 class="widget-title">New Products</h4>
+          <h4 class="section-title">New Products</h4>
           <div class="row">
             <aside id="woocommerce_products-3" class="widget woocommerce widget_products">
               <div id="new_products" class="row products product_list_widget">
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
-          <h4 class="widget-title">Featured Products</h4>
+          <h4 class="section-title">Featured Products</h4>
           <div class="row">
             <aside id="woocommerce_products-4" class="widget woocommerce widget_products">
               <div id="best_products" class="row products product_list_widget">

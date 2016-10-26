@@ -1,5 +1,4 @@
-<li
-  class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
+<div class="product-item">
   <div class="product-inner">
     <span class="on-sale">Best!</span>
     <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
@@ -47,4 +46,4 @@
       </div>
     </a>
   </div>
-</li>
+</div>

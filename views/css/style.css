@@ -101,13 +101,20 @@ body {
     padding-top: 25px;
     padding-bottom: 15px;
 }
-
+.product-image,
+.product-image-box{
+    -webkit-box-shadow: 0 0 3px 0 #999999;
+    -moz-box-shadow: 0 0 3px 0 #999999;
+    box-shadow: 0 0 3px 0 #999999;
+}
 .button{
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
 }
-
+.bestseller-row{
+    margin-top: 30px;
+}
 .button.default-button{
     margin-bottom: 5px;
     padding: 7px 14px;
