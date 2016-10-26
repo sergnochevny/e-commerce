@@ -1,5 +1,4 @@
-<li
-  class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
+<div class="product-item">
   <div class="product-inner">
     <span class="on-sale">Best!</span>
     <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
@@ -41,13 +40,10 @@
         <?php } ?>
         <?php if(isset($saleprice) && ($price != $saleprice)) { ?>
           <span class="price" style="float:right;color: red;">
-                    Sale:
-                    <ins>
-                        <span class="amount_wd"><?= $format_sale_price; ?></span>
-                    </ins>
-                </span>
+              Sale: <ins><span class="amount_wd"><?= $format_sale_price; ?></span></ins>
+          </span>
         <?php } ?>
       </div>
     </a>
   </div>
-</li>
+</div>

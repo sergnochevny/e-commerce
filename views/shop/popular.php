@@ -40,11 +40,8 @@
         <?php } ?>
         <?php if(isset($saleprice) && ($price != $saleprice)) { ?>
           <span class="price" style="float:right;color: red;">
-                        Sale:
-                        <ins>
-                            <span class="amount_wd"><?= $format_sale_price; ?></span>
-                        </ins>
-                    </span>
+              Sale: <ins><span class="amount_wd"><?= $format_sale_price; ?></span></ins>
+          </span>
         <?php } ?>
       </div>
     </a>

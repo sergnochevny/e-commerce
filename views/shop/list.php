@@ -8,10 +8,27 @@
   <div class="col-xs-12 search-result-header">
 
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
+
+        <p class="woocommerce-result-count">
+          <?php
+            if (!empty(_A_::$app->get('cat'))) {
+              echo 'CATEGORY: ' . $category_name . '<br/>';
+            }
+            if (!empty(_A_::$app->get('mnf'))) {
+              echo 'MANUFACTURER: ' . $mnf_name . '<br/>';
+            }
+            if (!empty(_A_::$app->get('ptrn'))) {
+              echo 'PATTERN: ' . $ptrn_name . '<br/>';
+            }
+          ?>
+        </p>
+
+      </div>
+      <div class="col-sm-4">
         <?= isset($search) ? '<p class="">Search query: <b>' . $search . '</b></p>' : '' ?>
       </div>
-      <div class="col-sm-6 search-result-container text-right">
+      <div class="col-sm-4 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
       </div>
     </div>
@@ -19,21 +36,6 @@
   </div>
 </div>
 
-
-<p class="woocommerce-result-count">
-  <?php
-    if (!empty(_A_::$app->get('cat'))) {
-      echo 'CATEGORY: ' . $category_name . '<br/>';
-    }
-    if (!empty(_A_::$app->get('mnf'))) {
-      echo 'MANUFACTURER: ' . $mnf_name . '<br/>';
-    }
-    if (!empty(_A_::$app->get('ptrn'))) {
-      echo 'PATTERN: ' . $ptrn_name . '<br/>';
-    }
-  ?>
-
-</p>
 <div class="row">
   <div class="col-xs-12">
     <?= isset($annotation) ? '<p class="annotation">' . $annotation . '</p>' : '';?>

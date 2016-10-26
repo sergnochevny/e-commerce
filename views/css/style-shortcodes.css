@@ -169,9 +169,6 @@
   position: relative;
   padding: 6px 0;
 }
-.just-divider .just-section-title span {
-  margin: 0px 10px;
-}
 .just-divider.line-yes .divider-inner:after {
   display: none;
 }
@@ -226,13 +223,13 @@
 .just-divider.line-yes.text-left.icon-left .divider-inner, .just-divider.line-yes.text-left.icon-right .divider-inner, .just-divider.line-yes.text-left.icon-no .divider-inner, .just-divider.line-yes.text-no.icon-left .divider-inner {
   padding-left: 2px;
 }
-.just-divider.line-yes.text-left.icon-left .just-section-title span, .just-divider.line-yes.text-left.icon-right .just-section-title span, .just-divider.line-yes.text-left.icon-no .just-section-title span, .just-divider.line-yes.text-no.icon-left .just-section-title span {
+.just-divider.line-yes.text-left.icon-left .section-title span, .just-divider.line-yes.text-left.icon-right .section-title span, .just-divider.line-yes.text-left.icon-no .section-title span, .just-divider.line-yes.text-no.icon-left .section-title span {
   margin-left: 0;
 }
 .just-divider.line-yes.text-right.icon-right .divider-inner, .just-divider.line-yes.text-right.icon-left .divider-inner, .just-divider.line-yes.text-right.icon-no .divider-inner, .just-divider.line-yes.text-no.icon-right .divider-inner {
   padding-right: 2px;
 }
-.just-divider.line-yes.text-right.icon-right .just-section-title span, .just-divider.line-yes.text-right.icon-left .just-section-title span, .just-divider.line-yes.text-right.icon-no .just-section-title span, .just-divider.line-yes.text-no.icon-right .just-section-title span {
+.just-divider.line-yes.text-right.icon-right .section-title span, .just-divider.line-yes.text-right.icon-left .section-title span, .just-divider.line-yes.text-right.icon-no .section-title span, .just-divider.line-yes.text-no.icon-right .section-title span {
   margin-left: 0;
 }
 .just-divider.line-yes.text-no.icon-no {

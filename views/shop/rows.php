@@ -7,9 +7,7 @@
       <?php }
         $opt['pid'] = $row[0];
       ?>
-      <a <?= isset($search) ? 'class="a_search"' : '' ?>
-        href="<?= _A_::$app->router()->UrlTo('shop/product', $opt, $row['pname']); ?>">
-      </a>
+      <a <?= isset($search) ? 'class="a_search"' : '' ?> href="<?= _A_::$app->router()->UrlTo('shop/product', $opt, $row['pname']); ?>"></a>
       <figcaption>
         <?php
           if($in_cart) {
@@ -25,18 +23,20 @@
         ?>
       </figcaption>
     </figure>
-    <a <?= isset($search) ? 'class="a_search"' : '' ?> href="<?= _A_::$app->router()->UrlTo('shop/product', $opt, $row['pname']); ?>">
       <span class="product-category"><?= $row['pname']; ?></span>
-      <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>
+      <h3>
+        <a <?= isset($search) ? 'class="a_search"' : '' ?> href="<?= _A_::$app->router()->UrlTo('shop/product', $opt, $row['pname']); ?>">
+          <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
+        </a>
+      </h3>
       <div class="product-price-box clearfix">
         <?php if($sys_hide_price == 0 && $hide_price == 0) { ?>
-          <span class="price"><ins><span class="amount"><?= $format_price; ?></span></ins></span>
+          <span class="price pull-left"><span class="amount"><?= $format_price; ?></span></span>
         <?php } if(isset($saleprice) && ($price != $saleprice)) { ?>
-          <span class="price salePrice" style="float:right;color: red;">
-            Sale: <ins><span class="amount_wd"><?= $format_sale_price; ?></span></ins>
+          <span class="text-sale pull-right">
+            Sale: <span class="amount_wd"><?= $format_sale_price; ?></span>
           </span>
         <?php } ?>
       </div>
-    </a>
   </div>
 </div>

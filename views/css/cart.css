@@ -1180,27 +1180,27 @@ table.my_account_orders .order-actions .button {
     margin: 0 0 20px;
 }
 
-.product_list_widget li::before, .product_list_widget li::after {
+.product_list_widget .product-item::before, .product_list_widget .product-item::after {
     content: " ";
     display: table;
 }
 
-.product_list_widget li::after {
+.product_list_widget .product-item::after {
     clear: both;
 }
 
-.product_list_widget li img {
+.product_list_widget .product-item img {
     float: left;
     margin: 0 15px 0 0;
     max-width: 50px;
     width: 50px;
 }
 
-.product_list_widget li .star-rating {
+.product_list_widget .product-item .star-rating {
     margin: 5px 0 0;
 }
 
-.product_list_widget li .product-title {
+.product_list_widget .product-item .product-title {
     color: #222222;
     display: block;
     font-size: 14px;
@@ -1212,58 +1212,58 @@ table.my_account_orders .order-actions .button {
     white-space: nowrap;
 }
 
-.product_list_widget li span.amount, .product_list_widget li ins, .product_list_widget li del {
+.product_list_widget .product-item span.amount, .product_list_widget .product-item ins, .product_list_widget .product-item del {
     font-family: "Montserrat", sans-serif;
 }
 
-.product_list_widget li span.amount {
+.product_list_widget .product-item span.amount {
     color: #222222;
     font-size: 11px;
 }
 
-.product_list_widget li del {
+.product_list_widget .product-item del {
     color: #9a9a9a;
 }
 
-.product_list_widget li del span.amount {
+.product_list_widget .product-item del span.amount {
     color: #9a9a9a;
 }
 
-.product_list_widget.cart_list li img {
+.product_list_widget.cart_list .product-item img {
     float: right;
     margin: 0 0 0 10px;
 }
 
-.product_list_widget.cart_list li a {
+.product_list_widget.cart_list .product-item a {
     color: #222222;
 }
 
-.cart_list li dl dt, .cart_list li dl dd, .product_list_widget li dl dt, .product_list_widget li dl dd {
+.cart_list .product-item dl dt, .cart_list .product-item dl dd, .product_list_widget .product-item dl dt, .product_list_widget .product-item dl dd {
     line-height: 20px;
     margin: 0 5px 0 0;
 }
 
-.cart_list li dl dt p, .cart_list li dl dd p, .product_list_widget li dl dt p, .product_list_widget li dl dd p {
+.cart_list .product-item dl dt p, .cart_list .product-item dl dd p, .product_list_widget .product-item dl dt p, .product_list_widget .product-item dl dd p {
     line-height: inherit;
 }
 
-.footer-widgets-bottom .widget.product_list_widget li {
+.footer-widgets-bottom .widget.product_list_widget .product-item {
     padding: 8px 0;
 }
 
-.footer-widgets-bottom .widget.product_list_widget li .product-title {
+.footer-widgets-bottom .widget.product_list_widget .product-item .product-title {
     color: #999999;
 }
 
-.footer-widgets-bottom .widget.product_list_widget li span.amount {
+.footer-widgets-bottom .widget.product_list_widget .product-item span.amount {
     color: #999999;
 }
 
-.footer-widgets-bottom .widget.product_list_widget li del {
+.footer-widgets-bottom .widget.product_list_widget .product-item del {
     color: #4e4e4e;
 }
 
-.footer-widgets-bottom .widget.product_list_widget li del span.amount {
+.footer-widgets-bottom .widget.product_list_widget .product-item del span.amount {
     color: #4e4e4e;
 }
 
@@ -1310,4 +1310,3 @@ table.my_account_orders .order-actions .button {
     border-color: #222222;
     color: #222222;
 }
-
