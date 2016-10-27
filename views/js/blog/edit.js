@@ -4,7 +4,6 @@
 
   $(document).on('tiny_init',
     function (event) {
-      debugger;
       tinymce.init(
         {
           selector: '#editable_content',
