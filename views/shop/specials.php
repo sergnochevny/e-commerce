@@ -23,13 +23,13 @@
       <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>
       <div class="product-price-box clearfix">
         <?php if ($sys_hide_price == 0 && $hide_price == 0) { ?>
-          <span class="price">
-            <ins><span class="amount"><?= $format_price; ?></span></ins>
+          <span class="price pull-left">
+            <span class="amount"><?= $format_price; ?></span>
           </span>
         <?php } ?>
         <?php if (isset($saleprice) && ($price != $saleprice)) { ?>
-          <span class="price">
-            Sale: <ins><span class="amount_wd"><?= $format_sale_price; ?></span></ins>
+          <span class="price pull-right">
+            Sale: <span class="amount_wd"><?= $format_sale_price; ?></span>
           </span>
         <?php } ?>
       </div>

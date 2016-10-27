@@ -4,7 +4,7 @@
 <form method="POST" id="edit_form" action="<?= $action; ?>" class="enquiry-form ">
   <section class="just-posts-grid blog-post-edit-in">
     <div class="just-post-row">
-      <div class="just-post col-sm-12 col-md-10 col-md-offset-1" id="blog-page">
+      <div class="col-sm-12 col-md-10 col-md-offset-1" id="blog-page">
         <h3 id="editable_title">
           <b><span class="hang-punct">&laquo;</span><?= $data['post_title']; ?><span class="punct">&raquo;</span></b>
         </h3>

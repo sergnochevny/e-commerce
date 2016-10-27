@@ -85,7 +85,7 @@
 
           <div class="row bestseller-action-row">
             <div class="col-md-12 text-center">
-              <a class="button button-2x">MORE</a>
+              <a href="<?= _A_::$app->router()->UrlTo('shop/bestsellers'); ?>" class="button button-2x">MORE</a>
             </div>
           </div>
 
