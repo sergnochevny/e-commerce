@@ -90,7 +90,7 @@
       <input type="hidden" name="order" value="<?=array_values($sort)[0]?>">
     </form>
   </div>
-  <?php foreach($rows as $row): ?><?php $prms['aid'] = $row[0];
+  <?php foreach($rows as $row): ?><?php $prms['aid'] = $row['aid'];
     if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
     <div class="col-xs-12 table-list-row">
       <div class="row">
@@ -99,7 +99,7 @@
             <div class="row">Id</div>
           </div>
           <div class="col-xs-8 col-sm-12">
-            <div class="row cut-text-in-one-line"><?= $row[0]; ?></div>
+            <div class="row cut-text-in-one-line"><?= $row['aid']; ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-4 table-list-row-item">
@@ -107,7 +107,7 @@
             <div class="row">Email</div>
           </div>
           <div class="col-xs-8 col-sm-12 text-center xs-text-left">
-            <div class="row"><?= $row[1] ?></div>
+            <div class="row"><?= $row['email'] ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-3 table-list-row-item">
@@ -115,7 +115,7 @@
             <div class="row">Name</div>
           </div>
           <div class="col-xs-8 col-sm-12 text-center xs-text-left">
-            <div class="row"><?= $row[3] . ' ' . $row[4] ?></div>
+            <div class="row"><?= $row['bill_firstname'] . ' ' . $row['bill_lastname'] ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-2 table-list-row-item">
@@ -123,7 +123,7 @@
             <div class="row">Date Registered</div>
           </div>
           <div class="col-xs-8 col-sm-12 text-center xs-text-left">
-            <div class="row"><?= date("m/j/y", $row[30]) ?></div>
+            <div class="row"><?= date("m/j/Y", strtotime($row['date_registered']));?></div>
           </div>
         </div>
 

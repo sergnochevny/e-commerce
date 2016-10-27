@@ -2,6 +2,14 @@
 
   class Controller_Shop extends Controller_Controller {
 
+    protected function search_fields($view = false) {
+      return [
+        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
+        'a.piece', 'a.best', 'a.specials', 'b.cid',
+        'c.id', 'd.id', 'e.id'
+      ];
+    }
+
     private function show_category_list() {
       $items = Model_Tools::get_items_for_menu('all');
       $this->template->vars('items', $items, true);
@@ -282,14 +290,37 @@
       return $list;
     }
 
+    protected function before_search_form_layout(&$search_data, $view = false) {
+      $categories = [];
+      $rows = Model_Categories::get_list(0, 0, $res_count);
+      foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
+      $patterns = [];
+      $rows = Model_Patterns::get_list(0, 0, $res_count);
+      foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
+      $colours = [];
+      $rows = Model_Colours::get_list(0, 0, $res_count);
+      foreach($rows as $row) $colours[$row['id']] = $row['colour'];
+      $manufacturers = [];
+      $rows = Model_Manufacturers::get_list(0, 0, $res_count);
+      foreach($rows as $row) $manufacturers[$row['id']] = $row['manufacturer'];
+
+      $search_data['categories'] = $categories;
+      $search_data['patterns'] = $patterns;
+      $search_data['colours'] = $colours;
+      $search_data['manufacturers'] = $manufacturers;
+    }
+
     /**
      * @export
      */
     public function shop() {
       $this->template->vars('cart_enable', '_');
-      $this->show_category_list();
+      $this->main->template->vars('page_title', "Product Catalog");
+      $search_form = $this->build_search_filter($filter);
+      $this->search_form($search_form);
       if(_A_::$app->request_is_ajax()) exit($this->product_list());
       else {
+//        $this->show_category_list();
         ob_start();
         $this->product_list();
         $list = ob_get_contents();
@@ -304,7 +335,7 @@
      */
     public function last() {
       $this->template->vars('cart_enable', '_');
-      $this->main->template->vars('page_title', 'What\'s New');
+      $this->main->template->vars('page_title', "What's New");
       if(_A_::$app->request_is_ajax()) exit($this->product_list_by_type('last', 50));
       else {
         //$this->show_category_list();

@@ -20,6 +20,6 @@
       <?= $form; ?>
   </div>
 </div>
-<script defer src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
-<script defer src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit.js'); ?>' type="text/javascript"></script>
+<script src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit.js'); ?>' type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/blog/image.js'); ?>' type="text/javascript"></script>

@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
-              <?
+              <?php
                 if (isset($search['promotion_type'])) {
                   $promotion = '';
                   switch ($search['promotion_type']) {
