@@ -2109,6 +2109,9 @@ form[data-search] > .row > .panel > .panel-heading{
     padding-bottom: 10px;
     border-radius: 4px 4px 0 0;
 }
+.table-list-header a:hover{
+    color: #a6bd00;
+}
 .table-list-row{
     padding-top: 10px;
     padding-bottom: 10px;
