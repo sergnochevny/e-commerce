@@ -12,7 +12,6 @@
           </div>
         </div>
         <div class="col-sm-2 text-center"></div>
-        </div>
       </div>
     </div>
   </div>

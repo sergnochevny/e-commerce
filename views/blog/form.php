@@ -6,18 +6,17 @@
     <div class="just-post-row">
       <div class="col-sm-12 col-md-10 col-md-offset-1" id="blog-page">
         <h3 id="editable_title">
-          <b><span class="hang-punct">&laquo;</span><?= $data['post_title']; ?><span class="punct">&raquo;</span></b>
+          <b><?= $data['post_title']; ?></b>
         </h3>
       </div>
       <div id="image" class="col-sm-12 col-md-10 col-md-offset-1">
         <?=$image;?>
+        <span class="upd-img-line"><i class="fa fa-edit"></i></span>
       </div>
       <div class="col-xs-12 col-md-10 col-md-offset-1">
         <div class="just-post-detail">
-          <div
-            class="just-divider text-center line-yes icon-hide">
-            <div class="divider-inner"
-                 style="background-color: #fff">
+          <div class="just-divider text-center line-yes icon-hide">
+            <div class="divider-inner" style="background-color: #fff">
               <span class="post-date"><?= $data['post_date']; ?></span>
             </div>
           </div>
