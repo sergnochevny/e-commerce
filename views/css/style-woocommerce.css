@@ -346,7 +346,8 @@ input[type='time']:focus,
 input[type='url']:focus,
 input[type='color']:focus {
     border-color: #999 !important;
-    box-shadow: 0 1px 7px #ddd !important;
+    box-shadow: 0 1px 3px #EEE !important;
+    outline: none !important;
 }
 
 .form-row .select2-container .select2-choice {

@@ -11,7 +11,7 @@
                  class="<?= isset($search) ? 'a_search' : '' ?> button back_button">Back</a>
             </div>
           </div>
-          <div class="col-sm-10 text-center">
+          <div class="col-sm-8 text-center">
             <div class="row">
               <h3 style="margin-bottom: 30px"
                   class="product_title product_title_style entry-title"><?= $data['pname']; ?></h3>

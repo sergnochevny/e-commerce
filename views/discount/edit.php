@@ -9,7 +9,7 @@
               <a href="<?= $back_url; ?>" class="button back_button">Back</a>
             </div>
           </div>
-          <div class="col-sm-10 text-center">
+          <div class="col-sm-8 text-center">
             <div class="row">
               <h3 class="page-title"><?= $form_title ?></h3>
             </div>
