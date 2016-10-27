@@ -2197,6 +2197,11 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
 #image:hover .upd-img-line{
     opacity: 1;
 }
+
+.widget-info-container .product-image{
+    background-position: center;
+}
+
 .upd-img-line{
     left: 50%;
     margin-left: -12px;

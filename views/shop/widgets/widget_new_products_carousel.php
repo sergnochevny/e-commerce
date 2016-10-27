@@ -22,7 +22,7 @@
           <span class="price pull-left"><ins><span class="amount"><?= $format_price; ?></span></ins></span>
         <?php }
           if(isset($saleprice) && ($price != $saleprice)) { ?>
-            <span class="price pull-right" style="float:right;color: red;">Sale: <ins><span
+            <span class="text-sale pull-right" style="float:right;color: red;">Sale: <ins><span
                   class="amount_wd"><?= $format_sale_price; ?></span></ins></span>
           <?php } ?>
       </div>

@@ -1762,7 +1762,11 @@ table.table-bordered center a {
     margin-bottom: 5px;
 }
 .text-sale{
-    color: red;
+    color: red !important;
+}
+
+.text-sale *{
+    color: red !important;
 }
 @media (max-width: 992px) {
     .product-image{
