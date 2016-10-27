@@ -5,7 +5,6 @@
 
   if (danger.length) {
     danger.css('display', 'block');
-    $('html, body').stop().animate({scrollTop: parseInt(danger.offset().top) - 250}, 1000);
     setTimeout(function () {
       $('.danger').css('display', 'none');
     }, 8000);
@@ -78,9 +77,6 @@
   //             $(document).trigger('tiny_init');
   //             if (danger.length) {
   //               danger.css('display', 'block');
-  //               $('html, body').stop().animate({
-  //                 scrollTop: parseInt(danger.offset().top) - 250
-  //               }, 1000);
   //               setTimeout(function () {
   //                 $('.danger').remove();
   //               }, 8000);
