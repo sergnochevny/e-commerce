@@ -1,5 +1,4 @@
 <div class="container">
-  <?= isset($categories) ? $categories : ''; ?>
   <div id="content" class="main-content-inner" role="main">
     <?=$list;?>
   </div>

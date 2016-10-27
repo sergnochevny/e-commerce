@@ -46,7 +46,7 @@
                           action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
                       <label class="screen-reader-text" for="s">Search for:</label>
                       <input id="search" type="search" class="search-field"
-                             placeholder="Search Products&hellip;" value="<?= isset($search) ? $search : '' ?>" name="s"
+                             placeholder="Search Products&hellip;" value="<?= isset($search_str) ? $search_str : '' ?>" name="s"
                              title="Search for:"/>
                       <input id="b_search" type="button" value="Search"/>
                     </form>
