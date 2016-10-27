@@ -1258,6 +1258,16 @@ td.product-subtotal {
     margin-top: 10px;
 }
 
+.panel-toggle-settings > .collapse {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.panel-toggle-settings > .collapse > .row:first-child{
+    margin-top: 15px;
+}
+.panel-toggle-settings > .collapse > .row:last-child{
+    margin-bottom: 15px;
+}
 .product_title_style {
     line-height: 30px !important;
     margin-bottom: 10px;

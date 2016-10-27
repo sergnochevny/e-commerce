@@ -25,9 +25,12 @@
   $("#edit_form [name=ship_as_billing]").on('change',
     function (event) {
       var destination = $(this).attr('aria-controls');
-      if(destination){
-        $('#'+destination).collapse('toggle');
-      }
+        var dest = $('#'+destination);
+        if(dest.hasClass('in')){
+            dest.removeClass('in')
+        }else{
+            dest.addClass('in')
+        }
     }
   );
 

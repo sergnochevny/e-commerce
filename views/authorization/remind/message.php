@@ -20,9 +20,9 @@
   <link charset="UTF-8" rel="stylesheet"
         href="<?= _A_::$app->router()->UrlTo('/views/css/woocommerce-smallscreen.css') ?>"
         type="text/css" media="only screen and (max-width: 768px)">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/woocommerce.css') ?>"
-        type="text/css"
-        media="all">
+<!--  <link charset="UTF-8" rel="stylesheet" href="--><? //= _A_::$app->router()->UrlTo('/views/css/woocommerce.css') ?><!--"-->
+<!--        type="text/css"-->
+<!--        media="all">-->
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/bootstrap.min.css') ?>"
         type="text/css"
         media="all">
@@ -45,8 +45,8 @@
         type="text/css"
         media="all">
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/style-woocommerce.css') ?>"
-        type="text/css"
-        media="all">
+<!--        type="text/css"-->
+<!--        media="all">-->
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/style-shortcodes.css') ?>"
         type="text/css"
         media="all">
