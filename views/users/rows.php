@@ -90,7 +90,7 @@
       <input type="hidden" name="order" value="<?=array_values($sort)[0]?>">
     </form>
   </div>
-  <?php foreach($rows as $row): ?><?php $prms['aid'] = $row[0];
+  <?php foreach($rows as $row): ?><?php $prms['aid'] = $row['aid'];
     if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
     <div class="col-xs-12 table-list-row">
       <div class="row">
@@ -99,7 +99,7 @@
             <div class="row">Id</div>
           </div>
           <div class="col-xs-8 col-sm-12">
-            <div class="row cut-text-in-one-line"><?= $row[0]; ?></div>
+            <div class="row cut-text-in-one-line"><?= $row['aid']; ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-4 table-list-row-item">
