@@ -107,7 +107,7 @@
             <div class="row">Email</div>
           </div>
           <div class="col-xs-8 col-sm-12 text-center xs-text-left">
-            <div class="row"><?= $row[1] ?></div>
+            <div class="row"><?= $row['email'] ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-3 table-list-row-item">
@@ -115,7 +115,7 @@
             <div class="row">Name</div>
           </div>
           <div class="col-xs-8 col-sm-12 text-center xs-text-left">
-            <div class="row"><?= $row[3] . ' ' . $row[4] ?></div>
+            <div class="row"><?= $row['bill_firstname'] . ' ' . $row['bill_lastname'] ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-2 table-list-row-item">
@@ -123,7 +123,7 @@
             <div class="row">Date Registered</div>
           </div>
           <div class="col-xs-8 col-sm-12 text-center xs-text-left">
-            <div class="row"><?= date("m/j/y", $row[30]) ?></div>
+            <div class="row"><?= date("m/j/Y", $row['date_registered']) ?></div>
           </div>
         </div>
 
