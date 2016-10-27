@@ -123,7 +123,7 @@
             <div class="row">Date Registered</div>
           </div>
           <div class="col-xs-8 col-sm-12 text-center xs-text-left">
-            <div class="row"><?= date("m/j/Y", $row['date_registered']) ?></div>
+            <div class="row"><?= date("m/j/Y", strtotime($row['date_registered']));?></div>
           </div>
         </div>
 

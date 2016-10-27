@@ -1,6 +1,4 @@
 <?php include_once 'views/messages/alert-boxes.php'; ?>
-
-
 <form method="POST" id="edit_form" action="<?= $action; ?>" class="enquiry-form ">
   <section class="just-posts-grid blog-post-edit-in">
     <div class="just-post-row">
