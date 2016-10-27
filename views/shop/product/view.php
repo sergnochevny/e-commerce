@@ -5,18 +5,19 @@
       <div class="col-xs-12">
         <div class="row afterhead-row">
 
-          <div class="col-xs-12 back_button_container">
+          <div class="col-sm-2 back_button_container">
             <div class="row">
               <a id="back_url" href="<?= $back_url; ?>"
                  class="<?= isset($search) ? 'a_search' : '' ?> button back_button">Back</a>
             </div>
           </div>
-          <div class="col-xs-12 text-center">
+          <div class="col-sm-10 text-center">
             <div class="row">
               <h3 style="margin-bottom: 30px"
                   class="product_title product_title_style entry-title"><?= $data['pname']; ?></h3>
             </div>
           </div>
+          <div class="col-sm-2"></div>
 
         </div>
       </div>
