@@ -4,6 +4,7 @@
 
   $(document).on('tiny_init',
     function (event) {
+      debugger;
       tinymce.init(
         {
           selector: '#editable_content',
@@ -51,4 +52,7 @@
       $('html, body').stop().animate({scrollTop: parseInt($('.blog-post-edit-in').offset().top) - 100}, 100);
     }
   );
+
+  $(document).trigger('tiny_init');
+
 })(jQuery);
