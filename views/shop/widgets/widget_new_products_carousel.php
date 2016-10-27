@@ -1,4 +1,4 @@
-<div class="col-xs-12 product-item">
+<div class="col-xs-12  product-item">
   <div class="product-inner">
       <figure class="product-image-box">
         <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $row[0]], $row['pname']); ?>">
@@ -19,10 +19,10 @@
       </h3>
       <div class="product-price-box clearfix">
         <?php if($sys_hide_price == 0 && $hide_price == 0) { ?>
-          <span class="price"><ins><span class="amount"><?= $format_price; ?></span></ins></span>
+          <span class="price pull-left"><ins><span class="amount"><?= $format_price; ?></span></ins></span>
         <?php }
           if(isset($saleprice) && ($price != $saleprice)) { ?>
-            <span class="price" style="float:right;color: red;">Sale: <ins><span
+            <span class="price pull-right" style="float:right;color: red;">Sale: <ins><span
                   class="amount_wd"><?= $format_sale_price; ?></span></ins></span>
           <?php } ?>
       </div>

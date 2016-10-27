@@ -10,9 +10,9 @@
                     Showing results: <?= $data['results_serch']; ?>
                 </p>
                 <div class="products">
-                    <ul class="product-inner">
+                    <div class="products">
                         <?php $x = 0; while ($x < $data['results_serch']) { $x++; ?>
-                            <li class="last product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
+                            <div class="col-xs-12 col-sm-6 col-md-4 product-item">
                                 <div class="product-inner">
                                     <a href="<?= _A_::$app->router()->UrlTo('product_page', $opt); ?>">
                                         <figure class="product-image-box">
@@ -32,9 +32,9 @@
                                         </div>
                                     </a>
                                 </div>
-                            </li>
+                            </div>
                         <?php } ?>
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>

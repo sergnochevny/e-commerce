@@ -25,7 +25,7 @@
             </div>
           <?php } ?>
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 ">
               <div class="just-divider text-center line-yes icon-hide">
                 <div class="divider-inner" style="background-color: #fff">
                   <span class="post-date"><?= $data['post_date']; ?></span>
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-12 text-justify">
+            <div class="col-xs-12 text-justify just-post-detail">
               <?= $data['post_content']; ?>
             </div>
           </div>

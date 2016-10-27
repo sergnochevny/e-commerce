@@ -1257,7 +1257,9 @@ td.product-subtotal {
 #cart_main_container a.back_button input.button {
     margin-top: 10px;
 }
-
+.col-xs-6.zoom{
+    margin-bottom: 30px;
+}
 .panel-toggle-settings > .collapse {
     padding-top: 0;
     padding-bottom: 0;
@@ -1326,7 +1328,9 @@ td.product-subtotal {
 .wc-change_user_data {
     padding: 1em 0 0 0;
 }
-
+.amount_wd, .amount{
+    color: #667700;
+}
 .woocommerce-cart .wc-change_user_data a.checkout-button {
     display: block;
     text-align: center;
@@ -1851,13 +1855,6 @@ a.button-move:focus, a.button-move:hover{
     top: 0;
     left: 0;
     transition: all .5s ease-in-out;
-}
-
-.just-post .just-post-image {
-    transition: all .5s ease-in-out;
-    -webkit-box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
-    -moz-box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
-    box-shadow: 0 5px 15px -1px rgba(0,0,0,.2);
 }
 
 .just-post:hover .just-post-image figure img {

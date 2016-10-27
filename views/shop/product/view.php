@@ -43,7 +43,7 @@
                 $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
               ?>
               <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
-                itemprop="image" class="woocommerce-main-image zoom" title=""
+                itemprop="image" class="product-main-image zoom" title=""
                 <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                 <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
                 <img width="499" height="499"
@@ -73,11 +73,11 @@
                         $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
                         ?>
                         <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
-                          class="col-xs-3 zoom"
+                          class="col-xs-6 zoom"
                           title=""
                           <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                           <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
-                          <img width="110" height="110" src="<?= $filename; ?>"
+                          <img width="100%" src="<?= $filename; ?>"
                                class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
                         </a>
                         <?php
@@ -94,11 +94,11 @@
                         $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
                         ?>
                         <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
-                          class="col-xs-3 zoom"
+                          class="col-xs-6 zoom"
                           title=""
                           <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                           <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
-                          <img width="110" height="110" src="<?= $filename; ?>"
+                          <img width="100%" src="<?= $filename; ?>"
                                class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
                         </a>
                         <?php
@@ -114,11 +114,11 @@
                         $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
                         ?>
                         <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
-                          class="zoom col-xs-3"
+                          class="zoom col-xs-6"
                           title=""
                           <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                           <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
-                          <img width="110" height="110" src="<?= $filename; ?>"
+                          <img width="100%" src="<?= $filename; ?>"
                                class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
                         </a>
                         <?php
@@ -134,11 +134,11 @@
                         $filename1 = isset($filename1) ? _A_::$app->router()->UrlTo($filename1) : null;
                         ?>
                         <a <?= isset($filename1) ? 'href="' . $filename1 . '"' : ''; ?>
-                          class="zoom col-xs-3"
+                          class="zoom col-xs-6"
                           title=""
                           <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                           <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
-                          <img width="110" height="110" src="<?= $filename; ?>"
+                          <img width="100%" src="<?= $filename; ?>"
                                class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
                         </a>
                         <?php
@@ -191,42 +191,45 @@
 
               <div class="col-sm-12">
                 <div class="row">
+                  <div class="row">
 
-                  <div class="btn-group product-detail-view-actions" role="group" aria-label="...">
-                    <?php
-                      $pid = _A_::$app->get('pid');
-                      if ($data['inventory'] > 0) {
-                        ?>
-                        <a class="button" id="add_cart"
-                           href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= !isset($in_cart) ? '' : 'style="display: none;"'; ?>>
-                          Add to cart
+                    <div class="btn-group product-detail-view-actions" role="group" aria-label="...">
+                      <?php
+                        $pid = _A_::$app->get('pid');
+                        if ($data['inventory'] > 0) {
+                          ?>
+                          <a class="button" id="add_cart"
+                             href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= !isset($in_cart) ? '' : 'style="display: none;"'; ?>>
+                            Add to cart
+                          </a>
+                          <a class="button" id="view_cart"
+                             href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= isset($in_cart) ? '' : 'style="display: none;"'; ?>>
+                            Basket
+                          </a>
+                        <?php } ?>
+                        <?php if ($data['inventory'] > 0 && $allowed_samples) { ?>
+                          <a id="add_samples_cart" class="button"
+                             href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
+                            Add Samples
+                          </a>
+                        <?php } ?>
+                      <?php
+                        $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
+                        $mhref = _A_::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
+                      ?>
+                      <a class="button" href="<?= $ahref; ?>">Ask a Question</a>
+                      <?php if ($img1_exists) { ?>
+                        <a class="button" id="add_matches"
+                           href="<?= $mhref; ?>" <?= !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
+                          Added to Matches
                         </a>
-                        <a class="button" id="view_cart"
-                           href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= isset($in_cart) ? '' : 'style="display: none;"'; ?>>
-                          Basket
+                        <a class="button" id="view_matches"
+                           href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= isset($in_matches) ? '' : 'style="display: none;"'; ?>>
+                          View Matches
                         </a>
                       <?php } ?>
-                      <?php if ($data['inventory'] > 0 && $allowed_samples) { ?>
-                        <a id="add_samples_cart" class="button"
-                           href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= !isset($in_samples_cart) ? '' : 'style="display: none;"'; ?>>
-                          Add Samples
-                        </a>
-                      <?php } ?>
-                    <?php
-                      $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
-                      $mhref = _A_::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
-                    ?>
-                    <a class="button" href="<?= $ahref; ?>">Ask a Question</a>
-                    <?php if ($img1_exists) { ?>
-                      <a class="button" id="add_matches"
-                         href="<?= $mhref; ?>" <?= !isset($in_matches) ? '' : 'style="display: none;"'; ?>>
-                        Added to Matches
-                      </a>
-                      <a class="button" id="view_matches"
-                         href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= isset($in_matches) ? '' : 'style="display: none;"'; ?>>
-                        View Matches
-                      </a>
-                    <?php } ?>
+                    </div>
+
                   </div>
                 </div>
               </div>
