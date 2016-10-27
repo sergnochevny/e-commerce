@@ -2,7 +2,6 @@
 <?php include('views/index/main_gallery.php'); ?>
 <div class="container">
   <div id="content" class="main-content-inner" role="main">
-
     <div class="row">
       <div class="col-md-12">
         <article class="page type-page status-publish entry">
