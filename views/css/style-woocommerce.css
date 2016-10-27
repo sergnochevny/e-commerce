@@ -90,10 +90,10 @@ span#b_in_product {
     text-transform: uppercase;
 }
 .textile{
-    background-image: url("/views/images/temp/textile.png");
+    background-image: url("../images/temp/textile.png");
 }
 .best-textile{
-    background-image: url("/views/images/temp/textile1.png");
+    background-image: url("../images/temp/textile1.png");
     background-position: left center;
 }
 .textile .banner-action-link{
@@ -108,7 +108,7 @@ span#b_in_product {
     padding-left: 60px;
 }
 .popular-textile{
-    background-image: url("/views/images/temp/textile2.png");
+    background-image: url("../images/temp/textile2.png");
 }
 .textile .banner-detail, .best-textile .banner-detail, .popular-textile .banner-detail{
     margin-top: 40px;
