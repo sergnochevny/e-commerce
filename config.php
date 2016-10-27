@@ -74,8 +74,8 @@
         'default' => [
           'connection' => "localhost",
           'user' => "root",
-          'password' => "JzpEk0659o",
-//                'password' => "",
+//          'password' => "JzpEk0659o",
+          'password' => "",
           'db' => ['iluvfabrix']
         ]
       ]
