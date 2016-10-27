@@ -1,6 +1,8 @@
 <div class="container">
+
   <div class="row">
     <div class="col-xs-12">
+
       <div class="row afterhead-row">
         <div class="col-sm-2 back_button_container">
           <a href="<?= $back_url; ?>" class="button back_button">Back</a>
@@ -11,8 +13,8 @@
           </div>
         </div>
         <div class="col-sm-2 text-center"></div>
-        </div>
       </div>
+
     </div>
   </div>
 

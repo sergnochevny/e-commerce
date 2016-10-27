@@ -859,6 +859,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     color: #222222;
     font-weight: 300;
     line-height: 40px;
+    margin-top: 0 !important;
 }
 
 .product-item .woocommerce-product-rating .star-rating {

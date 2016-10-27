@@ -14,8 +14,5 @@
           } ?>
         </div>
       <?php } ?>
-    <div class="col-xs-12 alert-success danger">
-      Example of notification
-    </div>
   </div>
 </div>

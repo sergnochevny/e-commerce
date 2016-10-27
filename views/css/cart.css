@@ -666,6 +666,7 @@ div.product .product_title {
     font-weight: 300;
     line-height: 40px;
     text-transform: uppercase;
+    margin-top: 0 !important;
 }
 
 div.product .woocommerce-product-rating .star-rating {
