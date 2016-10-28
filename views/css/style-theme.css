@@ -1780,7 +1780,7 @@ table.table-bordered center a {
 }
 @media (max-width: 767px) {
     .product-image{
-        height: 270px;
+        height: 170px;
     }
 }
 @media (max-width: 480px) {

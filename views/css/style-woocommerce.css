@@ -551,7 +551,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     display: inline-block;
     background-position: top center;
     background-size: cover;
-    height: 220px;
+    min-height: 200px;
     -webkit-transition: all .2s ease-in;
     -moz-transition: all .2s ease-in;
     -o-transition: all .2s ease-in;

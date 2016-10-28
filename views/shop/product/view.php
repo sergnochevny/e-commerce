@@ -55,13 +55,13 @@
                 <div class="row">
                   <?php
                     if (!empty($data['image2']) || !empty($data['image3']) ||
-                  !empty($data['image4']) || !empty($data['image5'])
-                    ) {
+                    !empty($data['image4']) || !empty($data['image5'])
+                      ) {
                   ?>
                   <p class="more-images">MORE IMAGES OF THIS FABRIC</p>
                   <div class="row">
                     <?php
-                      }
+
                       if (!empty($data['image2'])) {
                         $filename = 'upload/upload/' . $data['image2'];
                         $filename1 = 'upload/upload/' . 'v_' . $data['image2'];
@@ -145,6 +145,7 @@
                       }
                     ?>
                   </div>
+                  <?php } ?>
                 </div>
               </div>
 
