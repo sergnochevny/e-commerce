@@ -7,6 +7,10 @@
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
               <?php
+                if (isset($search['coupon_code'])) {
+                  echo '<div class="label label-search-info">Coupon Code Like: ' . $search['coupon_code'] . '</div>';
+                }
+
                 if (isset($search['promotion_type'])) {
                   $promotion = '';
                   switch ($search['promotion_type']) {
@@ -27,12 +31,15 @@
                   $user_type = '';
                   switch ($search['user_type']) {
                     case 1:
-                      $user_type = 'All new users';
+                      $user_type = 'All users';
                       break;
                     case 2:
-                      $user_type = 'All registered users';
+                      $user_type = 'All new users';
                       break;
                     case 3:
+                      $user_type = 'All registered users';
+                      break;
+                    case 4:
                       $user_type = 'All selected users (i.e. use the users selected below)';
                       break;
                   }
@@ -59,38 +66,26 @@
                   $product_type = '';
                   switch ($search['product_type']) {
                     case 1:
-                      $product_type = 'All selected fabrics *';
+                      $product_type = 'All fabrics';
                       break;
                     case 2:
-                      $product_type = 'All selected categories *';
+                      $product_type = 'All selected fabrics';
                       break;
                     case 3:
-                      $product_type = 'All selected manufacturers *';
+                      $product_type = 'All selected categories';
+                      break;
+                    case 4:
+                      $product_type = 'All selected manufacturers';
                       break;
                   }
                   echo '<div class="label label-search-info">Fabrics: ' . $product_type . '</div>';
                 }
 
-                if (isset($search['product_type'])) {
-                  $product_type = '';
-                  switch ($search['product_type']) {
-                    case 1:
-                      $product_type = 'All selected fabrics *';
-                      break;
-                    case 2:
-                      $product_type = 'All selected categories *';
-                      break;
-                    case 3:
-                      $product_type = 'All selected manufacturers *';
-                      break;
-                  }
-                  echo '<div class="label label-search-info">Fabrics: ' . $product_type . '</div>';
-                }
                 if (!empty($search['date_start'])) {
                   echo '<div class="label label-search-info">Date from: ' . $search['date_start'] . '</div>';
                 }
-                if (!empty($search['date_ends'])) {
-                  echo '<div class="label label-search-info">Date to: ' . $search['date_ends'] . '</div>';
+                if (!empty($search['date_end'])) {
+                  echo '<div class="label label-search-info">Date to: ' . $search['date_end'] . '</div>';
                 }
               ?>
               <?= isset($search['active']) ? '<a data-search_reset title="Reset search" class="button reset">&times;</a>' : '' ?>
@@ -103,42 +98,54 @@
       <div class="panel-body hidden">
 
         <div class="row">
-          <div class="col-xs-12 col-sm-3">
+          <div class="col-xs-12 col-sm-8">
+            <div class="form-row">
+              <label>Coupon Code</label>
+              <input type="text" class="input-text" placeholder="Like ..." name="search[coupon_code]"
+                     value="<?= isset($search['coupon_code']) ? $search['coupon_code'] : '' ?>">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
             <div class="form-row">
               <label for="promotion_type">
                 Promotion
                 <select name="search[promotion_type]" id="promotion_type" class="input-text">
-                  <option value="" selected>
-                    Select the promotion type
+                  <option value="" <?= (isset($search['promotion_type']))?'':'selected'?>>
+                    Any
                   </option>
-                  <option value="1" <?= ($search['promotion_type'] == 1) ? 'selected' : ''; ?>>
+                  <option value="1" <?= (isset($search['promotion_type']) && $search['promotion_type'] == 1) ? 'selected' : ''; ?>>
                     Any purchase
                   </option>
-                  <option value="2" <?= ($search['promotion_type'] == 2) ? 'selected' : ''; ?>>
+                  <option value="2" <?= (isset($search['promotion_type']) && $search['promotion_type'] == 2) ? 'selected' : ''; ?>>
                     First purchase
                   </option>
-                  <option value="3" <?= ($search['promotion_type'] == 3) ? 'selected' : ''; ?>>
+                  <option value="3" <?= (isset($search['promotion_type']) && $search['promotion_type'] == 3) ? 'selected' : ''; ?>>
                     Next purchase after the start date
                   </option>
                 </select>
               </label>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-5">
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
             <div class="form-row">
               <label for="user_type">
                 Users type
                 <select name="search[user_type]" id="user_type" class="input-text">
-                  <option value="0" <?= ($search['user_type'] == 0) ? 'selected' : ''; ?>>
+                  <option value="" <?= (isset($search['user_type']))?'':'selected'?>>
+                    Any
+                  </option>
+                  <option value="1" <?= (isset($search['user_type']) && $search['user_type'] == 1) ? 'selected' : ''; ?>>
                     All users
                   </option>
-                  <option value="1" <?= ($search['user_type'] == 1) ? 'selected' : ''; ?>>
+                  <option value="2" <?= (isset($search['user_type']) && $search['user_type'] == 2) ? 'selected' : ''; ?>>
                     All new users
                   </option>
-                  <option value="2" <?= ($search['user_type'] == 2) ? 'selected' : ''; ?>>
+                  <option value="3" <?= (isset($search['user_type']) && $search['user_type'] == 3) ? 'selected' : ''; ?>>
                     All registered users
                   </option>
-                  <option value="3" <?= ($search['user_type'] == 3) ? 'selected' : ''; ?>>
+                  <option value="4" <?= (isset($search['user_type']) && $search['user_type'] == 4) ? 'selected' : ''; ?>>
                     All selected users (i.e. use the users selected below)
                   </option>
                 </select>
@@ -150,17 +157,41 @@
               <label for="discount_type">
                 Discount subtotal type
                 <select name="search[discount_type]" id="discount_type">
-                  <option value="0" <?= ($search['discount_type'] == 0) ? 'discount_type' : ''; ?>>
+                  <option value="" <?= (isset($search['discount_type']))?'':'selected'?>>
                     Any
                   </option>
-                  <option value="1" <?= ($search['discount_type'] == 0) ? 'discount_type' : ''; ?>>
+                  <option value="1" <?= (isset($search['discount_type']) && $search['discount_type'] == 1) ? 'discount_type' : ''; ?>>
                     Sub total
                   </option>
-                  <option value="2" <?= ($search['discount_type'] == 0) ? 'discount_type' : ''; ?>>
+                  <option value="2" <?= (isset($search['discount_type']) && $search['discount_type'] == 2) ? 'discount_type' : ''; ?>>
                     Shipping
                   </option>
-                  <option value="3" <?= ($search['discount_type'] == 0) ? 'discount_type' : ''; ?>>
+                  <option value="3" <?= (isset($search['discount_type']) && $search['discount_type'] == 3) ? 'discount_type' : ''; ?>>
                     Total (inc shipping and handling)
+                  </option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-row">
+              <label for="product_type">
+                Fabrics
+                <select name="search[product_type]" id="product_type">
+                  <option value="" <?= (isset($search['product_type']))?'':'selected'?>>
+                    Any
+                  </option>
+                  <option value="1" <?= (isset($search['product_type']) && $search['product_type'] == 1) ? 'product_type' : ''; ?>>
+                    All fabrics
+                  </option>
+                  <option value="2" <?= (isset($search['product_type']) && $search['product_type'] == 2) ? 'product_type' : ''; ?>>
+                    All selected fabrics
+                  </option>
+                  <option value="3" <?= (isset($search['product_type']) && $search['product_type'] == 3) ? 'product_type' : ''; ?>>
+                    All selected categories
+                  </option>
+                  <option value="4" <?= (isset($search['product_type']) && $search['product_type'] == 4) ? 'product_type' : ''; ?>>
+                    All selected manufacturers
                   </option>
                 </select>
               </label>
@@ -169,28 +200,7 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-12 col-sm-4">
-            <div class="form-row">
-              <label for="product_type">
-                Fabrics
-                <select name="search[product_type]" id="product_type">
-                  <option value="0" <?= ($search['product_type'] == 0) ? 'product_type' : ''; ?>>
-                    All fabrics
-                  </option>
-                  <option value="1" <?= ($search['product_type'] == 0) ? 'product_type' : ''; ?>>
-                    All selected fabrics *
-                  </option>
-                  <option value="2" <?= ($search['product_type'] == 0) ? 'product_type' : ''; ?>>
-                    All selected categories *
-                  </option>
-                  <option value="3" <?= ($search['product_type'] == 0) ? 'product_type' : ''; ?>>
-                    All selected manufacturers *
-                  </option>
-                </select>
-              </label>
-            </div>
-          </div>
-          <div class="col-xs-6 col-sm-4">
+          <div class="col-xs-6 col-sm-6">
             <div class="form-row">
               <label for="discount_on">
                 Date ranges from:
@@ -200,7 +210,7 @@
               </label>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-4">
+          <div class="col-xs-6 col-sm-6">
             <div class="form-row">
               <label for="discount_on">
                 Date ranges to:
