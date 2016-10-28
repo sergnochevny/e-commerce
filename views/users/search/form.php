@@ -67,16 +67,60 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="form-row">
-              <label>Registration date ranges from:</label>
-              <input type="text" id="date-from" class="input-text" placeholder="Chose start date" name="search[date_registered][from]"
-                     value="<?= isset($search['a.dt']['from']) ? $search['a.dt']['from'] : '' ?>">
+              <label>Organization Name:</label>
+              <input type="text" class="input-text" placeholder="Like ..." name="search[organization]"
+                     value="<?= isset($search['organization']) ? $search['organization'] : '' ?>">
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-row">
-              <label>Registration date ranges to:</label>
-              <input type="text" id="date-to" class="input-text" placeholder="Chose end date" name="search[date_registered][to]"
-                     value="<?= isset($search['a.dt']['to']) ? $search['a.dt']['to'] : '' ?>">
+              <label>Address:</label>
+              <input type="text" class="input-text" placeholder="Like ..." name="search[address]"
+                     value="<?= isset($search['address']) ? $search['address'] : '' ?>">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-row">
+              <label>Country:</label>
+              <select name="search[countries]">
+                <?php foreach ($search['countries'] as $index => $country): ?>
+                  <option value="<?= $index ?>"><?= $country ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-row">
+              <label>State:</label>
+              <select name="search[countries]">
+                <?php foreach ($search['states'] as $index => $state): ?>
+                  <option value="<?= $index ?>"><?= $state ?></option>
+                <?php endforeach; ?>
+              </select></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-row">
+              <label>City like:</label>
+              <input type="text" class="input-text" placeholder="Like ..." name="search[city]"
+                     value="<?= isset($search['city']) ? $search['city'] : '' ?>">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-row">
+              <label>Postal Code:</label>
+              <input type="text" class="input-text" placeholder="Like ..." name="search[postal]"
+                     value="<?= isset($search['postal']) ? $search['postal'] : '' ?>">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-row">
+              <label>Phone like:</label>
+              <input type="text" class="input-text" placeholder="Like ..." name="search[phone]"
+                     value="<?= isset($search['phone']) ? $search['phone'] : '' ?>">
             </div>
           </div>
         </div>
