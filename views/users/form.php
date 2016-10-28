@@ -79,10 +79,6 @@
                   <label class="required_field"><strong> Country:</strong></label>
                   <select data-change-province data-destination="bill_province" name="bill_country"
                           value="<?= $data['bill_country'] ?>" class="input-text ">
-                    <option <?= (isset($data['bill_country']) && !empty($data['bill_country'])) ? '' : 'selected' ?>
-                      disabled>
-                      Select Country
-                    </option>
                     <?= isset($data['bill_list_countries']) ? $data['bill_list_countries'] : '' ?>
                   </select>
                 </div>
@@ -91,10 +87,6 @@
                 <div class="form-row">
                   <label><strong> Province/State:</strong></label>
                   <select name="bill_province" value="<?= $data['bill_province'] ?>" class="input-text ">
-                    <option <?= (isset($data['bill_province']) && !empty($data['bill_province']{0})) ? '' : 'selected' ?>
-                      disabled>
-                      Select Province
-                    </option>
                     <?= isset($data['bill_list_province']) ? $data['bill_list_province'] : '' ?>
                   </select>
                 </div>
@@ -210,10 +202,6 @@
                   <div class="form-row">
                     <select data-change-province data-destination="ship_province" name="ship_country"
                             value="<?= $data['ship_country'] ?>" class="input-text ">
-                      <option <?= (isset($data['ship_country']) && !empty($data['ship_country'])) ? '' : 'selected' ?>
-                        disabled>
-                        Select Country
-                      </option>
                       <?= isset($data['ship_list_countries']) ? $data['ship_list_countries'] : '' ?>
                     </select>
                   </div>
@@ -222,10 +210,6 @@
                   <label><strong> Province/State:</strong></label>
                   <div class="form-row">
                     <select name="ship_province" value="<?= $data['ship_province'] ?>" class="input-text ">
-                      <option <?= (isset($data['ship_province']) && !empty($data['ship_province']{0})) ? '' : 'selected' ?>
-                        disabled>
-                        Select Province
-                      </option>
                       <?= isset($data['ship_list_province']) ? $data['ship_list_province'] : '' ?>
                     </select>
                   </div>
@@ -282,4 +266,5 @@
 </form>
 <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/') ?>">
 <script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/users/province.js'); ?>' type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/users/form.js'); ?>' type="text/javascript"></script>

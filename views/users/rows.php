@@ -114,7 +114,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Name</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= $row['full_name']?></div>
           </div>
         </div>

@@ -7,10 +7,10 @@
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
               <?php if(isset($search['a.pname'])): ?>
-                  <div class="label label-search-info">Name like:<?= $search['a.pname'] ?></div>
+                  <div class="label label-search-info">Name Like:<?= $search['a.pname'] ?></div>
               <?php endif; ?>
               <?php if(isset($search['a.pnumber'])): ?>
-                  <div class="label label-search-info">Product number like: <?= $search['a.pnumber'] ?></div>
+                  <div class="label label-search-info">Product number Like: <?= $search['a.pnumber'] ?></div>
               <?php endif; ?>
               <?php if(isset($search['b.cid'])): ?>
                   <div class="label label-search-info">Category: <?= $search['categories'][$search['b.cid']] ?></div>

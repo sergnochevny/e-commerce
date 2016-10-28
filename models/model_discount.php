@@ -6,7 +6,7 @@
 
     protected static function build_order(&$sort) {
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['sid' => 'desc'];
+        $sort = ['date_start' => 'desc'];
       }
       return parent::build_order($sort);
     }
@@ -76,6 +76,26 @@
       return $data;
     }
 
+    protected static function build_where(&$filter) {
+      $result = "";
+      if(isset($filter["sid"])) $result[] = "sid = '" . mysql_real_escape_string(static::validData($filter["sid"])) . "'";
+      if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . mysql_real_escape_string(static::validData($filter["promotion_type"])) . "'";
+      if(isset($filter["user_type"])) $result[] = "user_type = '" . mysql_real_escape_string(static::validData($filter["user_type"])) . "'";
+      if(isset($filter["discount_type"])) $result[] = "discount_type = '" . mysql_real_escape_string(static::validData($filter["discount_type"])) . "'";
+      if(isset($filter["product_type"])) $result[] = "product_type = '" . mysql_real_escape_string(static::validData($filter["product_type"])) . "'";
+      if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::validData($filter["coupon_code"]))))) . "%'";
+      if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(mysql_real_escape_string(static::validData($filter['date_start']))) . "'" : "");
+      if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(mysql_real_escape_string(static::validData($filter['date_end']))) . "'" : "");
+      if(!empty($result) && (count($result) > 0)) {
+        $result = implode(" AND ", $result);
+        if(strlen(trim($result)) > 0) {
+          $result = " WHERE " . $result;
+          $filter['active'] = true;
+        }
+      }
+      return $result;
+    }
+
     public static function get_total_count($filter = null) {
       $res = 0;
       $q = "SELECT COUNT(sid) FROM " . static::$table;
@@ -100,46 +120,6 @@
         while($row = mysql_fetch_assoc($result)) {
           $res[] = $row;
         }
-      }
-      return $res;
-    }
-
-    public static function getFabrixSpecialsByID($id) {
-      $res = null;
-      $q = "select * from " . static::$table . " WHERE sid='" . (integer)$id . "'";
-      $result = mysql_query($q);
-      if($result) {
-        $res = mysql_fetch_assoc($result);
-      }
-      return $res;
-    }
-
-    public static function getFabrixSpecialsUsageById($id) {
-      $res = null;
-      $q = "select * from fabrix_specials_usage WHERE sid='" . (integer)$id . "'";
-      $result = mysql_query($q);
-      if($result) {
-        $res = mysql_fetch_assoc($result);
-      }
-      return $res;
-    }
-
-    public static function getFabrixOrdersById($id) {
-      $res = null;
-      $q = "select * from fabrix_orders WHERE oid='" . $id . "'";
-      $result = mysql_query($q);
-      if($result) {
-        $res = mysql_fetch_assoc($result);
-      }
-      return $res;
-    }
-
-    public static function getFabrixAccountByOrderId($id) {
-      $res = null;
-      $q = "select * from fabrix_accounts WHERE aid='" . (integer)$id . "'";
-      $result = mysql_query($q);
-      if($result) {
-        $res = mysql_fetch_assoc($result);
       }
       return $res;
     }
