@@ -1142,9 +1142,6 @@ table.tableNoResp > tbody > tr > td {
     width: 100px;
 }
 
-.danger {
-    margin-bottom: 30px;
-}
 
 .title404 {
     font-weight: bold;
@@ -1186,14 +1183,6 @@ table.tableNoResp > tbody > tr > td {
 
 .user_name {
     color: #ffffff;
-}
-
-.danger pre {
-    border: none;
-    padding: 0;
-    margin: 0;
-    color: #a94442;
-    font-size: 14px;
 }
 
 .products .product-price-box {
