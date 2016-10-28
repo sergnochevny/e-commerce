@@ -68,7 +68,7 @@
               </label>
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>Product number:
                 <input type="text" name="search[a.pnumber]"
@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>Specific category
                 <select name="search[b.cid]" id="best">
@@ -96,7 +96,7 @@
               </label>
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>Specific manufacturer
                 <select name="search[e.id]" id="best">
@@ -130,7 +130,7 @@
             </div>
           </div>
 
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Best textile:
                 <select name="search[a.best]" id="best">
@@ -143,7 +143,7 @@
               </label>
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Specials:
                 <select name="search[a.specials]" id="">
@@ -161,7 +161,7 @@
         </div>
         <div class="row">
 
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>In specific colour
                 <select name="search[c.id]" id="best">
@@ -178,7 +178,7 @@
               </label>
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>With specific pattern
                 <select name="search[d.id]" id="best">
@@ -195,7 +195,7 @@
               </label>
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Piece
                 <select name="search[a.piece]" id="best">
@@ -210,7 +210,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label for="discount_on">
                 Starts at:
@@ -220,7 +220,7 @@
               </label>
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label for="discount_on">
                 Ends at:

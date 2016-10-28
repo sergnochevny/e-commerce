@@ -2090,6 +2090,16 @@ form[data-search] > .row > .panel > .panel-heading{
     background-color: transparent;
     font-size: 1.52em;
 }
+@media (max-width: 992px) {
+    .search-result-list .reset{
+        right: -20px;
+    }
+}
+@media (max-width: 768px) {
+    .search-result-list .reset{
+        right: 10px;
+    }
+}
 .search-result-list .reset:hover{
     color: darkred !important;
 }

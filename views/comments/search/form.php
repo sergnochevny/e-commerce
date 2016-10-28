@@ -26,14 +26,14 @@
 
       <div class="panel-body hidden">
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>User:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[b.email]"
                      value="<?= isset($search['b.email']) ? $search['b.email'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>Title:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[a.title]"
@@ -43,7 +43,7 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Date ranges from:</label>
               <input type="text" class="input-text" id="date-from" placeholder="Chose start date"
@@ -51,7 +51,7 @@
                      value="<?= isset($search['a.dt']['from']) ? $search['a.dt']['from'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Date ranges to:</label>
               <input type="text" class="input-text" id="date-to" placeholder="Chose end date"
@@ -59,7 +59,7 @@
                      value="<?= isset($search['a.dt']['to']) ? $search['a.dt']['to'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Status:</label>
               <select name="search[a.moderated]" id="">

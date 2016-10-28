@@ -28,14 +28,14 @@
 
       <div class="panel-body hidden">
         <div class="row">
-          <div class="col-xs-8">
+          <div class="col-sm-8">
             <div class="form-row">
               <label>Post title:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[post_title]"
                      value="<?= isset($search['a.post_title']) ? $search['a.post_title'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Chose Category Name:</label>
               <select name="search[b.group_id]" id="">
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Date ranges from:</label>
               <input type="text" class="input-text" id="date-from" placeholder="Chose start date"
@@ -56,7 +56,7 @@
                      value="<?= isset($search['a.post_date']['from']) ? $search['a.post_date']['from'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Date ranges to:</label>
               <input type="text" class="input-text" id="date-to" placeholder="Chose end date"
@@ -64,7 +64,7 @@
                      value="<?= isset($search['a.post_date']['to']) ? $search['a.post_date']['to'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Status:</label>
               <select name="search[post_status]" id="">

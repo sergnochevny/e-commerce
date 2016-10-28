@@ -108,7 +108,7 @@
                                data-status="<?= $row['moderated'] == '1' ? '0' : '1' ?>"
                                data-id="<?= $row['id'] ?>"
                                href="<?= _A_::$app->router()->UrlTo('comments/moderate', $prms) ?>">
-                                <?= $row['moderated'] == '0' ? 'Hide' : 'Publish'; ?>
+                                <?= $row['moderated'] == '0' ? 'Publish' : 'Hide'; ?>
                             </a>
                         </div>
                     </div>

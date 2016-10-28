@@ -21,14 +21,14 @@
 
       <div class="panel-body hidden">
         <div class="row">
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>User Email:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[email]"
                      value="<?= isset($search['email']) ? $search['email'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-8">
+          <div class="col-sm-8">
             <div class="form-row">
               <label>User First and/or Last Name:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[full_name]"
@@ -37,14 +37,14 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>Registration date ranges from:</label>
               <input type="text" id="date-from" class="input-text" placeholder="Chose start date" name="search[date_registered][from]"
                      value="<?= isset($search['a.dt']['from']) ? $search['a.dt']['from'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>Registration date ranges to:</label>
               <input type="text" id="date-to" class="input-text" placeholder="Chose end date" name="search[date_registered][to]"

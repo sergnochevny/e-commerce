@@ -20,14 +20,14 @@
 
       <div class="panel-body hidden">
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>Order transaction code:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[trid]"
                      value="<?= isset($search['trid']) ? $search['trid'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>Customer:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[full_name]"
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Date ranges from:</label>
               <input type="text" class="input-text" id="date-from" placeholder="Chose start date"
@@ -44,7 +44,7 @@
                      value="<?= isset($search['order_date']) ? $search['order_date'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Date ranges to:</label>
               <input type="text" class="input-text" id="date-to" placeholder="Chose end date"
@@ -52,7 +52,7 @@
                      value="<?= isset($search['order_date']) ? $search['order_date'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Status:</label>
               <select name="search[status]" id="">
