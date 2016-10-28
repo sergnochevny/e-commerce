@@ -20,7 +20,7 @@
           <div class="product-price-box clearfix">
             <span class="price">
               <ins>
-                  <span class="amount"><?= $row['format_price']; ?></span>
+                  <span class="amount"><?= '$' . $row['format_price']; ?></span>
               </ins>
             </span>
           </div>

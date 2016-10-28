@@ -85,7 +85,7 @@ span#b_in_product {
     bottom: 0;
     right: 0;
     color: #222;
-    text-shadow: 1px 1px 0 #fff;
+    text-shadow: -1px 1px 0 #fff;
     font-size: 2rem;
     text-transform: uppercase;
 }
@@ -118,7 +118,6 @@ span#b_in_product {
 .popular-textile .banner-detail h3{
     font-size: 3.5rem;
     letter-spacing: normal;
-    font-family: "Playfair Display", serif;
     font-weight: bold;
 }
 .textile .banner-detail h3{
