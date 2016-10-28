@@ -6,18 +6,37 @@
 
     protected static function build_order(&$sort) {
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['aid' => 'desc'];
-      } else {
-        foreach($sort as $key => $val) {
-          if($key == 'name') {
-            $sort['bill_firstname'] = $val;
-            $sort['bill_lastname'] = $val;
-            unset($sort[$key]);
-            break;
-          }
-        }
+        $sort = ['full_name' => 'desc'];
       }
       return parent::build_order($sort);
+    }
+
+    protected static function build_where(&$filter) {
+      $result = "";
+      if(isset($filter["email"])) $result[] = "email LIKE '%" . mysql_real_escape_string(static::validData($filter["email"])) . "%'";
+      if(isset($filter["full_name"])) $result[] = "CONCAT(bill_firstname, ' ', bill_lastname) LIKE '%" . mysql_real_escape_string(static::validData($filter["full_name"])) . "%'";
+      if(isset($filter["organization"])) $result[] = "bill_organization LIKE '%" . mysql_real_escape_string(static::validData($filter["organization"])) . "%'";
+      if(isset($filter["postal"])) $result[] = "bill_postal LIKE '%" . mysql_real_escape_string(static::validData($filter["postal"])) . "%'";
+      if(isset($filter["phone"])) $result[] = "bill_phone LIKE '%" . mysql_real_escape_string(static::validData($filter["phone"])) . "%'";
+      if(isset($filter["city"])) $result[] = "bill_city LIKE '%" . mysql_real_escape_string(static::validData($filter["city"])) . "%'";
+      if(isset($filter["address"]))
+        $result[] = "(bill_address1 LIKE '%" . mysql_real_escape_string(static::validData($filter["address"])) . "%'" .
+          "OR bill_address2 LIKE '%" . mysql_real_escape_string(static::validData($filter["address"])) . "%')";
+      if(isset($filter["registered"])) {
+        $where = (!empty($filter["registered"]['from']) ? "date_registered => '" . mysql_real_escape_string(static::validData($filter["registered"]["from"])) . "'" : "") .
+          (!empty($filter["registered"]['to']) ? " AND date_registered <= '" . mysql_real_escape_string(static::validData($filter["registered"]["to"])) . "'" : "");
+        if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
+      }
+      if(isset($filter["country"])) $result[] = "bill_country = '" . mysql_real_escape_string(static::validData($filter["country"])) . "'";
+      if(isset($filter["province"])) $result[] = "bill_province = '" . mysql_real_escape_string(static::validData($filter["province"])) . "'";
+      if(!empty($result) && (count($result) > 0)) {
+        $result = implode(" AND ", $result);
+        if(strlen(trim($result)) > 0) {
+          $result = " WHERE " . $result;
+          $filter['active'] = true;
+        }
+      }
+      return $result;
     }
 
     public static function get_total_count($filter = null) {
@@ -32,11 +51,11 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      $query = "SELECT * ";
+      $query = "SELECT * , CONCAT(bill_firstname, ' ', bill_lastname) as full_name";
       $query .= " FROM " . static::$table;
       $query .= static::build_where($filter);
       $query .= static::build_order($sort);
-      if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
+      if($limit != 0) $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);
