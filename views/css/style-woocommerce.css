@@ -1469,36 +1469,12 @@ ul.product_list_widget li div.coverDiv {
 ul.product_list_widget li .star-rating {
     margin: 5px 0 0;
 }
-
-ul.product_list_widget li .product-title {
-    color: #000;
-    /*white-space: nowrap;*/
-    overflow: hidden;
-    /*text-overflow: ellipsis;*/
-    display: block;
-    font-size: 100%;
-    /*font-style: italic;*/
-    line-height: 200%;
-    padding-top: 5px;
+.product-title a{
+    color: #222;
 }
-
-ul.product_list_widget li span.amount, ul.product_list_widget li ins, ul.product_list_widget li del {
-    font-family: "Montserrat", sans-serif;
+.widget-price-container > div > div > span{
+    font-size: 85%;
 }
-
-ul.product_list_widget li span.amount {
-    font-size: 11px;
-    color: #667700;
-}
-
-ul.product_list_widget li del {
-    color: #9a9a9a;
-}
-
-ul.product_list_widget li del span.amount {
-    color: #9a9a9a;
-}
-
 ul.product_list_widget.cart_list li img {
     float: right;
     margin: 0 0 0 10px;
