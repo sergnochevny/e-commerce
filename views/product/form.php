@@ -15,7 +15,16 @@
             <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text"
                    placeholder="e.g. abc888999">
           </div>
+          <div class="form-row">
+            <label><b>Short description:</b></label>
+            <input type="text" value="<?= $data['sdesc']; ?>" name="sdesc" class="input-text ">
+          </div>
 
+          <div class="form-row">
+            <label><b>Long description:</b></label>
+            <textarea class="input-text " style="height: 117px"
+                      name="ldesc"><?= trim($data['ldesc']); ?></textarea>
+          </div>
           <div class="form-row">
             <label><b>Meta Description:</b></label>
             <input type="text" name="metadescription"
@@ -54,18 +63,6 @@
             <input type="text" id="m_width" name="width" value="<?= $data['width']; ?>" class="input-text ">
           </div>
 
-          <div class="form-row">
-            <label>
-              <b>Piece:</b>
-              <input type="checkbox" <?= (isset($data['piece']) && ($data['piece'] == "1")) ? 'checked' : '' ?>
-                     value="1" name="piece" class="input-checkbox">
-            </label>
-          </div>
-
-          <div class="form-row">
-            <label class="required_field" for="p_yard"><b>Price:</b></label>
-            <input type="text" id="p_yard" name="priceyard" value="<?= $data['priceyard']; ?>" class="input-text ">
-          </div>
 
           <div class="form-row">
             <label>
@@ -73,23 +70,6 @@
               <input type="checkbox" <?= (isset($data['hideprice']) && ($data['hideprice'] == "1")) ? 'checked' : '' ?>
                      value="1" name="hideprice" class="input-checkbox">
             </label>
-          </div>
-
-          <div class="form-row">
-            <label><b>Mfg. & Stock number:</b></label>
-            <input type="text" name="stock_number" value="<?= $data['stock_number']; ?>" class="input-text ">
-          </div>
-
-          <hr/>
-          <div class="form-row">
-            <label><b>Dimensions:</b></label>
-            <input type="text" name="dimensions" value="<?= $data['dimensions']; ?>" class="input-text ">
-          </div>
-
-          <div class="form-row">
-            <label for="current_inv"><b>Current inventory:</b></label>
-            <input type="text" id="current_inv" name="inventory" value="<?= $data['inventory']; ?>"
-                   class="input-text ">
           </div>
 
           <div class="form-row">
@@ -113,7 +93,6 @@
                      name="whole" value="1" class="input-checkbox">
             </label>
           </div>
-          <hr/>
           <div class="form-row">
             <label><b>Manufacturer:</b></label>
             <select name="manufacturerId">
@@ -134,17 +113,6 @@
             </div>
             <div class="clear"></div>
           </div>
-          <div class="form-row">
-            <label><b>Short description:</b></label>
-            <input type="text" value="<?= $data['sdesc']; ?>" name="sdesc" class="input-text ">
-          </div>
-
-          <div class="form-row">
-            <label><b>Long description:</b></label>
-            <textarea class="input-text " style="height: 117px"
-                      name="ldesc"><?= trim($data['ldesc']); ?></textarea>
-          </div>
-          <hr/>
 
           <small style="color:#999;"><b>NOTE</b>: Select a place, and then click "Upload file" to set the image there.
           </small>
@@ -152,7 +120,7 @@
             <a id="upload" class="button alt" style="cursor: pointer;">Upload file</a>
           </div>
 
-          <p>
+          <div>
             <label>
               <b style="vertical-align: 3px">Best Textile:</b>
               <input type="checkbox" name="best"
@@ -168,8 +136,37 @@
               <b style="vertical-align: 3px">Visible:</b>
               <input type="checkbox" <?= (isset($data['pvisible']) && ($data['pvisible'] == "1")) ? 'checked' : '' ?>
                      name="pvisible" value="1" class="input-checkbox">
+            </label><br>
+            <label>
+              <b>Piece:</b>
+              <input type="checkbox" <?= (isset($data['piece']) && ($data['piece'] == "1")) ? 'checked' : '' ?>
+                     value="1" name="piece" class="input-checkbox">
             </label>
-          </p>
+          </div>
+
+          <div class="form-row">
+            <label class="required_field" for="p_yard"><b>Price:</b></label>
+            <input type="text" id="p_yard" name="priceyard" value="<?= $data['priceyard']; ?>" class="input-text ">
+          </div>
+
+          <div class="form-row">
+            <label><b>Mfg. & Stock number:</b></label>
+            <input type="text" name="stock_number" value="<?= $data['stock_number']; ?>" class="input-text ">
+          </div>
+
+          <div class="form-row">
+            <label><b>Dimensions:</b></label>
+            <input type="text" name="dimensions" value="<?= $data['dimensions']; ?>" class="input-text ">
+          </div>
+
+          <hr/>
+
+          <div class="form-row">
+            <label for="current_inv"><b>Current inventory:</b></label>
+            <input type="text" id="current_inv" name="inventory" value="<?= $data['inventory']; ?>"
+                   class="input-text ">
+          </div>
+
         </div>
       </div>
     </div><!--col-2-->

@@ -5,8 +5,8 @@
   }
 ?>
 
-<div class="col-xs-12 text-center content-header">
-  <h2>Comments</h2>
+<div class="col-xs-12 text-center afterhead-row">
+  <h3 class="page-title">Comments</h3>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>

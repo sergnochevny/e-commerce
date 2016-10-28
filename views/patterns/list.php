@@ -6,8 +6,8 @@
   }
 ?>
 
-  <div class="col-xs-12 text-center">
-    <h2>Patterns</h2>
+  <div class="col-xs-12 text-center afterhead-row">
+    <h3 class="page-title">Patterns</h3>
   </div>
 
   <?= isset($search_form) ? $search_form : '' ?>

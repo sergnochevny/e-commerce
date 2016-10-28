@@ -8,8 +8,8 @@
   include_once 'views/messages/alert-boxes.php';
 ?>
 
-<div class="col-xs-12 text-center content-header">
-  <h2><?= (isset($user_id) && !$is_admin) ? $rows[0]['username'] : ((!$is_admin)?'My':'') ?> Orders</h2>
+<div class="col-xs-12 text-center afterhead-row">
+  <h3 class="page-title"><?= (isset($user_id) && !$is_admin) ? $rows[0]['username'] : ((!$is_admin)?'My':'') ?> Orders</h3>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>

@@ -6,8 +6,8 @@
   include_once 'views/messages/alert-boxes.php';
 ?>
 
-<div class="col-xs-12 text-center content-header">
-  <h2>Categories</h2>
+<div class="col-xs-12 text-center afterhead-row">
+  <h3 class="page-title">Categories</h3>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>
