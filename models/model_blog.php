@@ -13,10 +13,10 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["a.post_title"])) $result[] = "a.post_title LIKE '%" . mysql_real_escape_string(static::validData($filter["a.post_title"])) . "%'";
+      if(isset($filter["a.post_title"])) $result[] = "a.post_title LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::validData($filter["a.post_title"]))))) . "%'";
       if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . mysql_real_escape_string(static::validData($filter["a.post_status"])) . "'";
       if(isset($filter["a.post_date"])) {
-        $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date => '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["from"])) . "'" : "") .
+        $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date >= '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["from"])) . "'" : "") .
           (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["to"])) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }

@@ -229,13 +229,20 @@
       $rows = Model_Address::get_countries_all();
       foreach($rows as $row) $countries[$row['id']] = $row['name'];
       $states = [];
-      $rows = Model_Address::get_province_all();
+      $rows = (isset($search_data['country']))? Model_Address::get_country_state($search_data['country']):Model_Address::get_province_all();
       foreach($rows as $row) $states[$row['id']] = $row['name'];
 
       $search_data['countries'] = $countries;
       $search_data['states'] = $states;
     }
 
+    /**
+     * @export
+     */
+    public function users(){
+      $this->form_handling();
+      parent::index();
+    }
 
 //    public function modify_accounts_password()
 //    {

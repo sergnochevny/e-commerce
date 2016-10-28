@@ -203,6 +203,14 @@
       return true;
     }
 
+    protected function search_fields($view = false) {
+      return [
+        'sid', 'promotion_type', 'user_type',
+        'discount_type', 'product_type', 'coupon_code',
+        'date_start', 'date_end'
+      ];
+    }
+
 
     protected function detailed($back_url){
       $id = _A_::$app->get($this->id_name);

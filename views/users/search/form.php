@@ -7,16 +7,16 @@
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
               <?php if(isset($search['email'])): ?>
-                <div class="label label-search-info">Email like:<?= $search['email'] ?></div>
+                <div class="label label-search-info">Email Like:<?= $search['email'] ?></div>
               <?php endif; ?>
               <?php if(isset($search['full_name'])): ?>
-                <div class="label label-search-info">Full Name like: <?= $search['full_name'] ?></div>
+                <div class="label label-search-info">Full Name Like: <?= $search['full_name'] ?></div>
               <?php endif; ?>
               <?php if(isset($search['organization'])): ?>
-                <div class="label label-search-info">Organization like: <?= $search['organization'] ?></div>
+                <div class="label label-search-info">Organization Like: <?= $search['organization'] ?></div>
               <?php endif; ?>
               <?php if(isset($search['address'])): ?>
-                <div class="label label-search-info">Address like: <?= $search['address'] ?></div>
+                <div class="label label-search-info">Address Like: <?= $search['address'] ?></div>
               <?php endif; ?>
               <?php if(isset($search['country'])): ?>
                 <div class="label label-search-info">Country: <?= $search['countries'][$search['country']] ?>
@@ -26,12 +26,16 @@
                 <div class="label label-search-info">State: <?= $search['states'][$search['province']] ?>
                 </div>
               <?php endif; ?>
-              <?php if(isset($search['date_registered'])): ?>
-                <div class="label label-search-info">State: <?= $search['date_registered'] ?>
-                </div>
+              <?php if(!empty($search['registered']['from'])): ?>
+                <div class="label label-search-info">
+                  Date from: <?= $search['registered']['from'] ?></div>
+              <?php endif; ?>
+              <?php if(!empty($search['registered']['to'])): ?>
+                <div class="label label-search-info">
+                  Date to: <?= $search['registered']['to'] ?></div>
               <?php endif; ?>
               <?php if(isset($search['city'])): ?>
-                <div class="label label-search-info">City like: <?= $search['city']?>
+                <div class="label label-search-info">City Like: <?= $search['city'] ?>
                 </div>
               <?php endif; ?>
               <?php if(isset($search['postal'])): ?>
@@ -39,7 +43,7 @@
                 </div>
               <?php endif; ?>
               <?php if(isset($search['phone'])): ?>
-                <div class="label label-search-info">Phone like: <?= $search['phone'] ?>
+                <div class="label label-search-info">Phone Like: <?= $search['phone'] ?>
                 </div>
               <?php endif; ?>
               <?= isset($search['active']) ? '<a data-search_reset title="Reset search" class="button reset">&times;</a>' : '' ?>
@@ -62,7 +66,7 @@
           </div>
           <div class="col-sm-8">
             <div class="form-row">
-              <label>User First and/or Last Name:</label>
+              <label>User Full Name:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[full_name]"
                      value="<?= isset($search['full_name']) ? $search['full_name'] : '' ?>">
             </div>
@@ -85,37 +89,42 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>Country:</label>
-              <select name="search[countries]">
-                <?php foreach ($search['countries'] as $index => $country): ?>
-                  <option value="<?= $index ?>"><?= $country ?></option>
-                <?php endforeach; ?>
+              <select data-change-province data-destination="search[province]" name="search[country]">
+                <option value="" <?= isset($search['country']) ? '' : 'selected' ?>>Any</option>
+                <?php if(isset($search['countries'])): ?>
+                  <?php foreach($search['countries'] as $key => $val): ?>
+                    <option
+                      value="<?= $key ?>" <?= (isset($search['country']) && ($key == $search['country'])) ? 'selected' : '' ?>>
+                      <?= $val ?>
+                    </option>
+                  <?php endforeach; ?>
+                <?php endif; ?>
               </select>
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             <div class="form-row">
               <label>State:</label>
-              <select name="search[countries]">
-                <?php foreach ($search['states'] as $index => $state): ?>
-                  <option value="<?= $index ?>"><?= $state ?></option>
-                <?php endforeach; ?>
+              <select name="search[province]">
+                <option value="" <?= isset($search['province']) ? '' : 'selected' ?>>Any</option>
+                <?php if(isset($search['states'])): ?>
+                  <?php foreach($search['states'] as $key => $val): ?>
+                    <option
+                      value="<?= $key ?>" <?= (isset($search['province']) && ($key == $search['province'])) ? 'selected' : '' ?>>
+                      <?= $val ?>
+                    </option>
+                  <?php endforeach; ?>
+                <?php endif; ?>
               </select></div>
-          </div>
-          <div class="col-sm-4">
-            <div class="form-row">
-              <label>Date registered:</label>
-              <input type="text" class="input-text" id="date-from" placeholder="" name="search[date_registered]"
-                     value="<?= isset($search['date_registered']) ? $search['date_registered'] : '' ?>">
-            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-4">
             <div class="form-row">
-              <label>City like:</label>
+              <label>City Like:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[city]"
                      value="<?= isset($search['city']) ? $search['city'] : '' ?>">
             </div>
@@ -129,9 +138,25 @@
           </div>
           <div class="col-sm-4">
             <div class="form-row">
-              <label>Phone like:</label>
+              <label>Phone Like:</label>
               <input type="text" class="input-text" placeholder="Like ..." name="search[phone]"
                      value="<?= isset($search['phone']) ? $search['phone'] : '' ?>">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-row">
+              <label>Date ranges from:</label>
+              <input type="text" class="input-text" id="date-from" placeholder="Chose start date"
+                     name="search[date_registered][from]"
+                     value="<?= isset($search['registered']['from']) ? $search['registered']['from'] : '' ?>">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-row">
+              <label>Date ranges to:</label>
+              <input type="text" class="input-text" id="date-to" placeholder="Chose end date"
+                     name="search[date_registered][to]"
+                     value="<?= isset($search['registered']['to']) ? $search['registered']['to'] : '' ?>">
             </div>
           </div>
         </div>

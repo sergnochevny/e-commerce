@@ -49,14 +49,14 @@
         $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.jpeg'];
 
         if(!in_array($ext, $filetypes)) {
-          $this->template->vars('error', 'Error format');
+          $this->template->vars('img_error', 'Error format');
         } else {
           if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
             if(substr($data['image' . $idx], 0, 1) == 't') Model_Product::delete_img($data['image' . $idx]);
             $data['image' . $idx] = $file;
             Model_Product::convert_image($uploaddir, $file);
           } else {
-            $this->template->vars('error', 'Upload error');
+            $this->template->vars('img_error', 'Upload error');
           }
         }
       } elseif($method == 'images.delete') {

@@ -17,7 +17,7 @@
       if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::validData($filter["a.pvisible"]))."'";
       if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::validData($filter["a.piece"]))."'";
       if(isset($filter["a.dt"])) {
-        $where = (!empty($filter["a.dt"]['from']) ? "a.dt => '" . mysql_real_escape_string(static::validData($filter["a.dt"]["from"])) . "'" : "") .
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["from"])) . "'" : "") .
           (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["to"])) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
