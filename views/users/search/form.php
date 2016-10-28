@@ -26,6 +26,10 @@
                 <div class="label label-search-info">State: <?= $search['states'][$search['province']] ?>
                 </div>
               <?php endif; ?>
+              <?php if(isset($search['date_registered'])): ?>
+                <div class="label label-search-info">State: <?= $search['date_registered'] ?>
+                </div>
+              <?php endif; ?>
               <?php if(isset($search['city'])): ?>
                 <div class="label label-search-info">City like: <?= $search['city']?>
                 </div>
@@ -81,7 +85,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>Country:</label>
               <select name="search[countries]">
@@ -91,7 +95,7 @@
               </select>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="form-row">
               <label>State:</label>
               <select name="search[countries]">
@@ -99,6 +103,13 @@
                   <option value="<?= $index ?>"><?= $state ?></option>
                 <?php endforeach; ?>
               </select></div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-row">
+              <label>Date registered:</label>
+              <input type="text" class="input-text" id="date-from" placeholder="" name="search[date_registered]"
+                     value="<?= isset($search['date_registered']) ? $search['date_registered'] : '' ?>">
+            </div>
           </div>
         </div>
         <div class="row">
