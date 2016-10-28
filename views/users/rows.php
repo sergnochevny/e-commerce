@@ -24,7 +24,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-4 col text-center">
+      <div class="col-sm-4 col">
         <?php
           if(isset($sort['email'])) {
             $order['sort'] = 'email';
@@ -44,7 +44,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-3 col text-center">
+      <div class="col-sm-3 col">
         <?php
           if(isset($sort['full_name'])) {
             $order['sort'] = 'full_name';
@@ -64,7 +64,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-2 col text-center">
+      <div class="col-sm-2 col">
         <?php
           if(isset($sort['date_registered'])) {
             $order['sort'] = 'date_registered';
@@ -106,7 +106,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Email</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= $row['email'] ?></div>
           </div>
         </div>
@@ -114,15 +114,15 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Name</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
-            <div class="row"><?= $row['full_name']?></div>
+          <div class="col-xs-8 col-sm-12 xs-text-left">
+            <div class="row"><?= $row['bill_firstname'] . ' ' . $row['bill_lastname'] ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-2 table-list-row-item">
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Date Registered</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= date("m/j/Y", strtotime($row['date_registered']));?></div>
           </div>
         </div>
@@ -141,7 +141,7 @@
     </div>
   <?php endforeach; ?>
 <?php else: ?>
-  <div class="col-sm-12 text-center offset-top">
+  <div class="col-sm-12 offset-top">
     <h2 class="offset-top">No results found</h2>
   </div>
 <?php endif; ?>

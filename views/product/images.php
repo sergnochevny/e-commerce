@@ -5,7 +5,7 @@
         <label>
           <input type="radio" name="images" class="images" value="1" style="display:none;"/>
           <div class="b_modify_images_main_pic"
-               style='background:no-repeat; background-image: url(<?= !empty($data['u_image1']) ? $data['u_image1'] : $not_image; ?>); background-size: 300px; width: 300px; height:226px;'>
+               style='background:no-repeat; background-image: url(<?= !empty($data['u_image1']) ? $data['u_image1'] : $not_image; ?>); background-size: 300px; width: 300px;'>
             <?php if(!empty($data['u_image1'])) { ?>
               <div class='b_modify_images_pic_del'>
                 <a href='<?= $data['pid'] ?>' data-img_idx='1' class='pic_del_images'>

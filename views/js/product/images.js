@@ -17,8 +17,8 @@
                 var main_img = $('.b_modify_images_main_pic'),
                     secondary_img = $('.b_modify_images_pic');
 
-                main_img.height((main_img.width() - 90)+ 'px');
-                secondary_img.height((secondary_img.width() - 80)+ 'px');
+                main_img.height((main_img.width() - 160)+ 'px');
+                secondary_img.height((secondary_img.width() - 180)+ 'px');
 
             }).trigger('resize');
 
