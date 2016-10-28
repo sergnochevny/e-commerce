@@ -220,7 +220,7 @@
         'aid', 'email', 'full_name',
         'organization', 'address',
         'province', 'city', 'country',
-        'postal', 'phone',
+        'postal', 'phone', 'registered'
       ];
     }
 

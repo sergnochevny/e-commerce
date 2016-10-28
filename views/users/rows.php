@@ -46,20 +46,20 @@
       </div>
       <div class="col-sm-3 col text-center">
         <?php
-          if(isset($sort['name'])) {
-            $order['sort'] = 'name';
-            $order['order'] = ($sort['name'] == 'desc' ? 'asc' : 'desc');
+          if(isset($sort['full_name'])) {
+            $order['sort'] = 'full_name';
+            $order['order'] = ($sort['full_name'] == 'desc' ? 'asc' : 'desc');
           } else {
-            $order['sort'] = 'name';
+            $order['sort'] = 'full_name';
             $order['order'] = 'desc';
           }
           $sort_url = _A_::$app->router()->UrlTo('users', $order);
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Name
-          <?php if(isset($sort['name'])): ?>
+          <?php if(isset($sort['full_name'])): ?>
             <small>
-              <i class="fa <?= ($sort['name'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              <i class="fa <?= ($sort['full_name'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
             </small>
           <?php endif; ?>
         </a>
@@ -115,7 +115,7 @@
             <div class="row">Name</div>
           </div>
           <div class="col-xs-8 col-sm-12 text-center xs-text-left">
-            <div class="row"><?= $row['bill_firstname'] . ' ' . $row['bill_lastname'] ?></div>
+            <div class="row"><?= $row['full_name']?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-2 table-list-row-item">
