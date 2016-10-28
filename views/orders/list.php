@@ -1,4 +1,6 @@
 <?php
+  $user_id = _A_::$app->get('aid');
+  $is_admin = Controller_Admin::is_logged();
   $prms = null;
   if (!is_null(_A_::$app->get('page'))) {
     $prms['page'] = _A_::$app->get('page');
@@ -7,7 +9,7 @@
 ?>
 
 <div class="col-xs-12 text-center content-header">
-  <h2><?= isset($user_id) && !$is_admin ? $rows[0]['username'] : 'My' ?> Orders</h2>
+  <h2><?= (isset($user_id) && !$is_admin) ? $rows[0]['username'] : ((!$is_admin)?'My':'') ?> Orders</h2>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>

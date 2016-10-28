@@ -16,10 +16,10 @@
       }
     }
 
-    private function product_in($p_id, &$item, $template = 'product_in') {
+    private function product_in($pid, &$item, $template = 'product_in') {
       $base_url = _A_::$app->router()->UrlTo('/');
 
-      $product = Model_Product::get_by_id($p_id);
+      $product = Model_Product::get_by_id($pid);
       $filename = 'upload/upload/' . $item['image1'];
       if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
         $filename = "upload/upload/not_image.jpg";
@@ -36,8 +36,8 @@
       $discountIds = isset($cart['discountIds']) ? $cart['discountIds'] : [];
       $saleprice = $product['priceyard'];
       $sDiscount = 0;
-      $saleprice = round(Model_Price::calculateProductSalePrice($p_id, $saleprice, $discountIds), 2);
-      $bProductDiscount = Model_Price::checkProductDiscount($p_id, $sDiscount, $saleprice, $discountIds);
+      $saleprice = round(Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds), 2);
+      $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
 
       $cart['discountIds'] = $discountIds;
 
@@ -62,7 +62,7 @@
 
       $this->template->vars('img_url', $img_url);
       $this->template->vars('item', $item);
-      $this->template->vars('pid', $p_id);
+      $this->template->vars('pid', $pid);
       $this->template->vars('t_pr', $t_pr);
       $this->template->view_layout($template);
     }
@@ -81,16 +81,16 @@
       }
     }
 
-    private function sample_in($p_id, &$item, $template = 'sample_in_proceed') {
+    private function sample_in($pid, &$item, $template = 'sample_in_proceed') {
       $base_url = _A_::$app->router()->UrlTo('/');
-      $item = Model_Product::get_product_params($p_id);
+      $item = Model_Shop::get_product_params($pid);
       $filename = 'upload/upload/' . $item['image1'];
       if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
         $filename = "upload/upload/not_image.jpg";
       }
       $img_url = _A_::$app->router()->UrlTo($filename);
       $this->template->vars('item', $item);
-      $this->template->vars('pid', $p_id);
+      $this->template->vars('pid', $pid);
       $this->template->view_layout($template);
     }
 
@@ -189,7 +189,7 @@
           if(isset($oid)) {
             if(count($cart_items) > 0) {
               foreach($cart_items as $pid => $item) {
-                $product = Model_Product::get_product_params($pid);
+                $product = Model_Shop::get_product_params($pid);
                 $pnumber = $product['pnumber'];
                 $pname = $product['pname'];
                 $qty = $item['quantity'];
@@ -202,13 +202,13 @@
                   $remainder = $inventory - $qty;
                   $remainder = ($remainder <= 0) ? 0 : $remainder;
 
-                  Model_Product::set_product_inventory($pid, $remainder);
+                  Model_Shop::set_inventory($pid, $remainder);
                 }
               }
             }
             if(count($cart_samples_items) > 0) {
               foreach($cart_samples_items as $pid => $item) {
-                $product = Model_Product::get_product_params($pid);
+                $product = Model_Shop::get_product_params($pid);
                 $pnumber = $product['pnumber'];
                 $pname = $product['pname'];
                 $qty = 1;
@@ -316,7 +316,7 @@
         $discount = 0;
         if(count($cart_items) > 0) {
           foreach($cart_items as $key => $item) {
-            $product = Model_Product::get_product_params($key);
+            $product = Model_Shop::get_product_params($key);
             $pname = $product['Product_name'];
             $pnumber = $product['Product_number'];
             $formatprice = $item['format_sale_price'];
@@ -330,7 +330,7 @@
 
         if(count($cart_samples_items) > 0) {
           foreach($cart_samples_items as $key => $item) {
-            $product = Model_Product::get_product_params($key);
+            $product = Model_Shop::get_product_params($key);
             $pname = $product['Product_name'];
             $pnumber = $product['Product_number'];
 
@@ -1076,8 +1076,8 @@
     function add() {
       $base_url = _A_::$app->router()->UrlTo('/');
       if(!empty(_A_::$app->get('pid'))) {
-        $p_id = Model_Product::validData(_A_::$app->get('pid'));
-        $product = Model_Product::get_product_params($p_id);
+        $pid = Model_Shop::validData(_A_::$app->get('pid'));
+        $product = Model_Shop::get_product_params($pid);
         $_cart = _A_::$app->session('cart');
         $cart_items = isset($_cart['items']) ? $_cart['items'] : [];
         if($product['inventory'] > 0) {
@@ -1085,7 +1085,7 @@
           $item_added = false;
           if(count($cart_items) > 0) {
             foreach($cart_items as $key => $item) {
-              if($item['pid'] == $p_id) {
+              if($item['pid'] == $pid) {
                 $cart_items[$key]['quantity'] += 1;
                 $item_added = true;
               }
@@ -1094,7 +1094,7 @@
 
           if(!$item_added) {
 
-            $pid = $p_id;
+            $pid = $pid;
             $price = $product['Price'];
             $inventory = $product['inventory'];
             $piece = $product['piece'];
@@ -1179,15 +1179,15 @@
     function add_samples() {
       $base_url = _A_::$app->router()->UrlTo('/');
       if(!empty(_A_::$app->get('pid'))) {
-        $p_id = Model_Product::validData(_A_::$app->get('pid'));
-        $product = Model_Product::get_product_params($p_id);
+        $pid = Model_Shop::validData(_A_::$app->get('pid'));
+        $product = Model_Shop::get_product_params($pid);
         $cart = _A_::$app->session('cart');
         $cart_items = isset($cart['items']) ? $cart['items'] : [];
         $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
         if($product['inventory'] > 0) {
 
           $item_added = false;
-          if(count($cart_samples_items) > 0 && isset($cart_samples_items[$p_id])) {
+          if(count($cart_samples_items) > 0 && isset($cart_samples_items[$pid])) {
             $item_added = true;
           }
 
@@ -1270,7 +1270,7 @@
       $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
       if(preg_match('/^\d+(\.\d{0,})?$/', $quantity)) {
 
-        $product = Model_Product::get_product_params($pid);
+        $product = Model_Shop::get_product_params($pid);
         $inventory = $product['inventory'];
         $piece = $product['piece'];
         $whole = $product['whole'];

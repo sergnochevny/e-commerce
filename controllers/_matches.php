@@ -37,12 +37,12 @@
       $added = 0;
 
       if(!is_null(_A_::$app->get('pid')) && !empty(_A_::$app->get('pid'))) {
-        $p_id = _A_::$app->get('pid');
+        $pid = _A_::$app->get('pid');
         $matches_items = isset(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
         $item_added = false;
         if(count($matches_items) > 0) {
           foreach($matches_items as $key => $item) {
-            if($item['pid'] == $p_id) {
+            if($item['pid'] == $pid) {
               $item_added = true;
             }
           }
@@ -50,13 +50,13 @@
 
         if(!$item_added) {
           $suffix_img = 'b_';
-          $images = Model_Product::images($p_id);
+          $images = Model_Product::images($pid);
 
           if(isset($images['image1'])) {
             $file_img = 'upload/upload/' . $images['image1'];
             if(file_exists($file_img) && is_file($file_img)) {
               $images['image1'] = $suffix_img . $images['image1'];
-              $matches_items[] = ['pid' => $p_id, 'img' => $images['image1']];
+              $matches_items[] = ['pid' => $pid, 'img' => $images['image1']];
             }
             $message = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
             $added = 1;
@@ -83,11 +83,11 @@
      */
     public function del() {
       if(!is_null(_A_::$app->post('pid')) && !empty(_A_::$app->post('pid'))) {
-        $p_id = _A_::$app->post('pid');
+        $pid = _A_::$app->post('pid');
         $matches_items = isset(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
         if(count($matches_items) > 0) {
           foreach($matches_items as $key => $item) {
-            if($item['pid'] == $p_id) {
+            if($item['pid'] == $pid) {
               unset($matches_items[$key]);
             }
           }

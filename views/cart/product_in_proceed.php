@@ -1,4 +1,4 @@
-<tr class="cart_item" data-pid="<?= $p_id; ?>" data-row="items">
+<tr class="cart_item" data-pid="<?= $pid; ?>" data-row="items">
     <td data-title="Product" class="product-name"><a><?= $item['Product_name']; ?></a></td>
     <!--<td data-title="Product" class="product-number">
         <span class="number"><?= $item['Product_number']; ?></span>

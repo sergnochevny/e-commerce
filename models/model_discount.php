@@ -4,17 +4,11 @@
 
     protected static $table = 'fabrix_specials';
 
-    private static function build_order(&$sort) {
-      $order = '';
+    protected static function build_order(&$sort) {
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['sid' => 'desc'];
       }
-      foreach($sort as $key => $val) {
-        if(strlen($order) > 0) $order .= ',';
-        $order .= ' ' . $key . ' ' . $val;
-      }
-      $order = ' ORDER BY ' . $order;
-      return $order;
+      return parent::build_order($sort);
     }
 
     public static function generateCouponCode($sid) {

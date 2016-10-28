@@ -6,10 +6,27 @@
           <div class="row">
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
-              <?= isset($search['trid']) ? '<div class="label label-search-info">TR ID: ' . $search['trid'] . '</div>' : '' ?>
-              <?= isset($search['name']) ? '<div class="label label-search-info">Customer: ' . $search['name'] . '</div>' : '' ?>
-              <?= isset($search['name']) ? '<div class="label label-search-info">Date from: ' . $search['name'] . '</div>' : '' ?>
-              <?= isset($search['name']) ? '<div class="label label-search-info">Date to: ' . $search['name'] . '</div>' : '' ?>
+              <?php if(isset($search['a.trid'])): ?>
+                <div class="label label-search-info">Transaction: <?= $search['a.trid'] ?></div>
+              <?php endif; ?>
+              <?php if(isset($search['username'])): ?>
+                <div class="label label-search-info">Customer: <?= $search['username'] ?></div>
+              <?php endif; ?>
+              <?php if(isset($search['a.status'])): ?>
+                <div class="label label-search-info">
+                  Status: <?= isset($search['a.status']) && $search['a.status'] == 1 ? 'Complete' : 'In progress' ?>
+                </div>
+              <?php endif; ?>
+              <?php if(!empty($search['a.order_date']['from'])): ?>
+                <div class="label label-search-info">
+                  Date from: <?= $search['a.order_date']['from']  ?></div>
+              <?php endif; ?>
+              <?php if(!empty($search['a.order_date']['to'])): ?>
+                <div class="label label-search-info">
+                  Date to: <?= $search['a.order_date']['to']  ?></div>
+              <?php endif; ?>
+
+              <?= isset($search['active']) ? '<a data-search_reset title="Reset search" class="button reset">&times;</a>' : '' ?>
             </div>
             <b class="sr-ds">
               <i class="fa fa-chevron-right"></i>
@@ -23,15 +40,15 @@
           <div class="col-xs-6">
             <div class="form-row">
               <label>Order transaction code:</label>
-              <input type="text" class="input-text" placeholder="Like ..." name="search[trid]"
-                     value="<?= isset($search['trid']) ? $search['trid'] : '' ?>">
+              <input type="text" class="input-text" placeholder="Like ..." name="search[a.trid]"
+                     value="<?= isset($search['a.trid']) ? $search['a.trid'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-6">
             <div class="form-row">
               <label>Customer:</label>
-              <input type="text" class="input-text" placeholder="Like ..." name="search[full_name]"
-                     value="<?= isset($search['name']) ? $search['name'] : '' ?>">
+              <input type="text" class="input-text" placeholder="Like ..." name="search[username]"
+                     value="<?= isset($search['username']) ? $search['username'] : '' ?>">
             </div>
           </div>
         </div>
@@ -40,27 +57,27 @@
             <div class="form-row">
               <label>Date ranges from:</label>
               <input type="text" class="input-text" id="date-from" placeholder="Chose start date"
-                     name="search[order_date][]"
-                     value="<?= isset($search['order_date']) ? $search['order_date'] : '' ?>">
+                     name="search[a.order_date][from]"
+                     value="<?= isset($search['a.order_date']['from']) ? $search['a.order_date']['from'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-4">
             <div class="form-row">
               <label>Date ranges to:</label>
               <input type="text" class="input-text" id="date-to" placeholder="Chose end date"
-                     name="search[order_date][]"
-                     value="<?= isset($search['order_date']) ? $search['order_date'] : '' ?>">
+                     name="search[order_date][to]"
+                     value="<?= isset($search['a.order_date']['to']) ? $search['a.order_date']['to'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-4">
             <div class="form-row">
               <label>Status:</label>
-              <select name="search[status]" id="">
-                <option value selected>Any</option>
-                <option value="0" <?= isset($search['status']) && $search['status'] == 0 ? 'selected' : '' ?>>In
+              <select name="search[a.status]" id="">
+                <option value <?= !isset($search['a.status'])?'selected':''?>>Any</option>
+                <option value="0" <?= isset($search['a.status']) && $search['a.status'] == 0 ? 'a.selected' : '' ?>>In
                   process
                 </option>
-                <option value="1" <?= isset($search['status']) && $search['status'] == 1 ? 'selected' : '' ?>>
+                <option value="1" <?= isset($search['a.status']) && $search['a.status'] == 1 ? 'selected' : '' ?>>
                   Completed
                 </option>
               </select>

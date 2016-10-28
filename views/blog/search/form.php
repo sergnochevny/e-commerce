@@ -31,7 +31,7 @@
           <div class="col-xs-8">
             <div class="form-row">
               <label>Post title:</label>
-              <input type="text" class="input-text" placeholder="Like ..." name="search[post_title]"
+              <input type="text" class="input-text" placeholder="Like ..." name="search[a.post_title]"
                      value="<?= isset($search['a.post_title']) ? $search['a.post_title'] : '' ?>">
             </div>
           </div>
@@ -39,6 +39,7 @@
             <div class="form-row">
               <label>Chose Category Name:</label>
               <select name="search[b.group_id]" id="">
+                <option value <?= !isset($search['b.group_id'])?'selected':''?>>Any</option>
                 <?php foreach ($search['categories'] as $index => $category): ?>
                   <option
                     value="<?= $index ?>" <?= (isset($search['b.group_id']) && $index == $search['b.group_id']) ? 'selected' : '' ?>><?= $category ?></option>
@@ -52,7 +53,7 @@
             <div class="form-row">
               <label>Date ranges from:</label>
               <input type="text" class="input-text" id="date-from" placeholder="Chose start date"
-                     name="search[order_date][starts]"
+                     name="search[a.post_date][from]"
                      value="<?= isset($search['a.post_date']['from']) ? $search['a.post_date']['from'] : '' ?>">
             </div>
           </div>
@@ -60,14 +61,14 @@
             <div class="form-row">
               <label>Date ranges to:</label>
               <input type="text" class="input-text" id="date-to" placeholder="Chose end date"
-                     name="search[order_date][ends]"
+                     name="search[a.post_date][to]"
                      value="<?= isset($search['a.post_date']['to']) ? $search['a.post_date']['to'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-4">
             <div class="form-row">
               <label>Status:</label>
-              <select name="search[post_status]" id="">
+              <select name="search[a.post_status]" id="">
                 <option value <?= !isset($search['a.post_status'])?'selected':''?>>Any</option>
                 <option
                   value="0" <?= isset($search['a.post_status']) && $search['a.post_status'] == 0 ? 'selected' : '' ?>>

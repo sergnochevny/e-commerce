@@ -361,25 +361,27 @@
     }
 
     protected function after_get_list(&$rows, $view = false) {
-      foreach($rows as $key => $row) {
-        $rows[$key]['post_title'] = stripslashes($row['post_title']);
-        $rows[$key]['post_date'] = date('F jS, Y', strtotime($row['post_date']));
+      if (isset($rows)){
+        foreach($rows as $key => $row) {
+          $rows[$key]['post_title'] = stripslashes($row['post_title']);
+          $rows[$key]['post_date'] = date('F jS, Y', strtotime($row['post_date']));
 
-        $data = Model_Blog::get_desc_keys($row['id']);
-        if(isset($row['post_content']) && is_array($row['post_content'])) {
-          $data = stripslashes($data['description']);
-        } else {
-          $data = stripslashes($row['post_content']);
-          $data = substr(strip_tags(str_replace('{base_url}', _A_::$app->router()->UrlTo('/'), $data)), 0, 300);
-          $data = preg_replace('#(style="[^>]*")#U', '', $data);
+          $data = Model_Blog::get_desc_keys($row['id']);
+          if(isset($row['post_content']) && is_array($row['post_content'])) {
+            $data = stripslashes($data['description']);
+          } else {
+            $data = stripslashes($row['post_content']);
+            $data = substr(strip_tags(str_replace('{base_url}', _A_::$app->router()->UrlTo('/'), $data)), 0, 300);
+            $data = preg_replace('#(style="[^>]*")#U', '', $data);
+          }
+          $rows[$key]['description'] = $data;
+          $img = Model_Blog::get_img($row['id']);
+          $filename = str_replace('{base_url}/', '', $img);
+          if(!(file_exists($filename) && is_file($filename))) {
+            $img = 'upload/upload/not_image.jpg';
+          }
+          $rows[$key]['img'] = _A_::$app->router()->UrlTo($img);
         }
-        $rows[$key]['description'] = $data;
-        $img = Model_Blog::get_img($row['id']);
-        $filename = str_replace('{base_url}/', '', $img);
-        if(!(file_exists($filename) && is_file($filename))) {
-          $img = 'upload/upload/not_image.jpg';
-        }
-        $rows[$key]['img'] = _A_::$app->router()->UrlTo($img);
       }
     }
 

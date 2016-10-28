@@ -4,22 +4,20 @@
 
     protected static $table = 'fabrix_accounts';
 
-    private static function build_order(&$sort) {
-      $order = '';
+    protected static function build_order(&$sort) {
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['aid' => 'desc'];
-      }
-      foreach($sort as $key => $val) {
-        if(strlen($order) > 0) $order .= ',';
-        if($key == 'name') {
-          $order .= ' bill_firstname ' . $val;
-          $order .= ', bill_lastname ' . $val;
-        } else {
-          $order .= ' ' . $key . ' ' . $val;
+      } else {
+        foreach($sort as $key => $val) {
+          if($key == 'name') {
+            $sort['bill_firstname'] = $val;
+            $sort['bill_lastname'] = $val;
+            unset($sort[$key]);
+            break;
+          }
         }
       }
-      $order = ' ORDER BY ' . $order;
-      return $order;
+      return parent::build_order($sort);
     }
 
     public static function get_total_count($filter = null) {
