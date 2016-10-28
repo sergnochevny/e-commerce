@@ -107,7 +107,7 @@
           </div>
           <hr/>
           <div class="form-row">
-            <label>
+            <label class="inline" style="margin-left: 0">
               <b>Whole:</b>
               <input type="checkbox" <?= (isset($data['whole']) && ($data['whole'] == "1")) ? 'checked' : '' ?>
                      name="whole" value="1" class="input-checkbox">
