@@ -1,12 +1,12 @@
-<tr class="cart_item" data-pid="<?= $p_id; ?>" data-row="items">
+<tr class="cart_item" data-pid="<?= $pid; ?>" data-row="items">
     <td class="product-thumbnail" style="padding: 0">
-        <a href="<?= _A_::$app->router()->UrlTo('shop/product',['pid'=>$p_id,'back'=>'cart']); ?>">
+        <a href="<?= _A_::$app->router()->UrlTo('shop/product',['pid'=>$pid,'back'=>'cart']); ?>">
             <img width="110" height="110" alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
                  src="<?= $img_url; ?>">
         </a>
     </td>
     <td data-title="Product" class="product-name">
-        <a href="<?= _A_::$app->router()->UrlTo('shop/product',['pid'=>$p_id,'back'=>'cart']); ?>"><?= $item['Product_name']; ?></a>
+        <a href="<?= _A_::$app->router()->UrlTo('shop/product',['pid'=>$pid,'back'=>'cart']); ?>"><?= $item['Product_name']; ?></a>
     </td>
     <td data-title="Price" class="product-price">
         <span class="amount"><?= $item['format_price']; ?></span>

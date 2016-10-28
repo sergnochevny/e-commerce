@@ -4,18 +4,6 @@
 
     protected static $table = 'fabrix_admins';
 
-    private static function build_order(&$sort) {
-      $order = '';
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-      }
-      foreach($sort as $key => $val) {
-        if(strlen($order) > 0) $order .= ',';
-        $order .= ' ' . $key . ' ' . $val;
-      }
-      $order = ' ORDER BY ' . $order;
-      return $order;
-    }
-
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(*) FROM " . static::$table;

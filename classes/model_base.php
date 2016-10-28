@@ -50,6 +50,19 @@
       return $query;
     }
 
+    protected static function build_order(&$sort) {
+      $order = '';
+      if(isset($sort)){
+        foreach($sort as $key => $val) {
+          if(strlen($order) > 0) $order .= ',';
+          $order .= ' ' . $key . ' ' . $val;
+        }
+        $order = ' ORDER BY ' . $order;
+      }
+      return $order;
+    }
+
+
     public static function get_fields() {
       $response = null;
       $query = "DESCRIBE " . static::$table;

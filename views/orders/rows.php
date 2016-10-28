@@ -1,11 +1,11 @@
-<?php if (sizeof($rows) > 0): ?>
+<?php if (isset($rows) && count($rows) > 0): ?>
   <div class="col-xs-12 table-list-header hidden-xs">
     <div class="row">
       <div class="col-sm-3 col">
         <?php
-          if (isset($sort['o.trid'])) {
-            $order['sort'] = 'o.trid';
-            $order['order'] = ($sort['o.trid'] == 'desc' ? 'asc' : 'desc');
+          if (isset($sort['a.trid'])) {
+            $order['sort'] = 'a.trid';
+            $order['order'] = ($sort['a.trid'] == 'desc' ? 'asc' : 'desc');
           } else {
             $order['sort'] = 'trid';
             $order['order'] = 'desc';
@@ -14,9 +14,9 @@
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Order
-          <?php if(isset($sort['o.trid'])) : ?>
+          <?php if(isset($sort['a.trid'])) : ?>
             <small>
-              <i class="fa <?= ($sort['o.trid'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              <i class="fa <?= ($sort['a.trid'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
             </small>
           <?php endif; ?>
         </a>
@@ -45,60 +45,60 @@
       <?php endif; ?>
       <div class="col-sm-2 col text-center">
         <?php
-          if (isset($sort['o.order_date'])) {
-            $order['sort'] = 'o.order_date';
-            $order['order'] = ($sort['o.order_date'] == 'desc' ? 'asc' : 'desc');
+          if (isset($sort['a.order_date'])) {
+            $order['sort'] = 'a.order_date';
+            $order['order'] = ($sort['a.order_date'] == 'desc' ? 'asc' : 'desc');
           } else {
-            $order['sort'] = 'o.order_date';
+            $order['sort'] = 'a.order_date';
             $order['order'] = 'desc';
           }
           $sort_url = _A_::$app->router()->UrlTo('orders', $order);
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Date
-          <?php if(isset($sort['o.order_date'])) : ?>
+          <?php if(isset($sort['a.order_date'])) : ?>
             <small>
-              <i class="fa <?= ($sort['o.order_date'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              <i class="fa <?= ($sort['a.order_date'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
             </small>
           <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-2 col text-center">
         <?php
-          if (isset($sort['o.status'])) {
-            $order['sort'] = 'o.status';
-            $order['order'] = ($sort['o.status'] == 'desc' ? 'asc' : 'desc');
+          if (isset($sort['a.status'])) {
+            $order['sort'] = 'a.status';
+            $order['order'] = ($sort['a.status'] == 'desc' ? 'asc' : 'desc');
           } else {
-            $order['sort'] = 'o.status';
+            $order['sort'] = 'a.status';
             $order['order'] = 'desc';
           }
           $sort_url = _A_::$app->router()->UrlTo('orders', $order);
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Status
-          <?php if(isset($sort['o.status'])) : ?>
+          <?php if(isset($sort['a.status'])) : ?>
             <small>
-              <i class="fa <?= ($sort['o.status'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              <i class="fa <?= ($sort['a.status'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
             </small>
           <?php endif; ?>
         </a>
       </div>
       <div class="col-sm-2 col text-center">
         <?php
-          if (isset($sort['o.total'])) {
-            $order['sort'] = 'o.total';
-            $order['order'] = ($sort['o.total'] == 'desc' ? 'asc' : 'desc');
+          if (isset($sort['a.total'])) {
+            $order['sort'] = 'a.total';
+            $order['order'] = ($sort['a.total'] == 'desc' ? 'asc' : 'desc');
           } else {
-            $order['sort'] = 'o.total';
+            $order['sort'] = 'a.total';
             $order['order'] = 'desc';
           }
           $sort_url = _A_::$app->router()->UrlTo('orders', $order);
         ?>
         <a data-sort href="<?= $sort_url ?>">
           Total
-          <?php if(isset($sort['o.total'])) : ?>
+          <?php if(isset($sort['a.total'])) : ?>
             <small>
-              <i class="fa <?= ($sort['o.total'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              <i class="fa <?= ($sort['a.total'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
             </small>
           <?php endif; ?>
         </a>

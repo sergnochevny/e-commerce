@@ -4,17 +4,11 @@
 
     protected static $table = 'fabrix_categories';
 
-    private static function build_order(&$sort) {
-      $order = '';
+    protected static function build_order(&$sort) {
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['a.cname' => 'asc'];
       }
-      foreach($sort as $key => $val) {
-        if(strlen($order) > 0) $order .= ',';
-        $order .= ' ' . $key . ' ' . $val;
-      }
-      $order = ' ORDER BY ' . $order;
-      return $order;
+      return parent::build_order($sort);
     }
 
     public static function get_total_count($filter = null) {

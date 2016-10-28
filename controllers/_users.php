@@ -97,7 +97,7 @@
     protected function validate(&$data, &$error) {
 
       if(empty($data['email'])) {
-        $error = ['Data can\'t be blank!'];
+        $error = ["Email can't be blank!"];
       } else {
         if(Model_User::exist($data['email'], $data['aid'])) {
           $error[] = 'User with such email already exists!';
@@ -214,6 +214,28 @@
       if($is_user) exit($this->main->view('edit'));
       else exit($this->main->view_admin('edit'));
     }
+
+    protected function search_fields($view = false) {
+      return [
+        'aid', 'email', 'full_name',
+        'organization', 'address',
+        'province', 'city', 'country',
+        'postal', 'phone',
+      ];
+    }
+
+    protected function before_search_form_layout(&$search_data, $view = false) {
+      $countries = [];
+      $rows = Model_Address::get_countries_all();
+      foreach($rows as $row) $countries[$row['id']] = $row['name'];
+      $states = [];
+      $rows = Model_Address::get_province_all();
+      foreach($rows as $row) $states[$row['id']] = $row['name'];
+
+      $search_data['countries'] = $countries;
+      $search_data['states'] = $states;
+    }
+
 
 //    public function modify_accounts_password()
 //    {

@@ -6,10 +6,38 @@
           <div class="row">
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
-              <?= isset($search['email']) ? '<div class="label label-search-info">Email: ' . $search['email'] . '</div>' : '' ?>
-              <?= isset($search['full_name']) ? '<div class="label label-search-info">Email: ' . $search['full_name'] . '</div>' : '' ?>
-              <?= isset($search['full_name']) ? '<div class="label label-search-info">Date from: ' . $search['full_name'] . '</div>' : '' ?>
-              <?= isset($search['full_name']) ? '<div class="label label-search-info">Date to: ' . $search['full_name'] . '</div>' : '' ?>
+              <?php if(isset($search['email'])): ?>
+                <div class="label label-search-info">Email like:<?= $search['email'] ?></div>
+              <?php endif; ?>
+              <?php if(isset($search['full_name'])): ?>
+                <div class="label label-search-info">Full Name like: <?= $search['full_name'] ?></div>
+              <?php endif; ?>
+              <?php if(isset($search['organization'])): ?>
+                <div class="label label-search-info">Organization like: <?= $search['organization'] ?></div>
+              <?php endif; ?>
+              <?php if(isset($search['address'])): ?>
+                <div class="label label-search-info">Address like: <?= $search['address'] ?></div>
+              <?php endif; ?>
+              <?php if(isset($search['country'])): ?>
+                <div class="label label-search-info">Country: <?= $search['countries'][$search['country']] ?>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['province'])): ?>
+                <div class="label label-search-info">State: <?= $search['states'][$search['province']] ?>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['city'])): ?>
+                <div class="label label-search-info">City like: <?= $search['city']?>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['postal'])): ?>
+                <div class="label label-search-info">Postal Code: <?= $search['postal'] ?>
+                </div>
+              <?php endif; ?>
+              <?php if(isset($search['phone'])): ?>
+                <div class="label label-search-info">Phone like: <?= $search['phone'] ?>
+                </div>
+              <?php endif; ?>
               <?= isset($search['active']) ? '<a data-search_reset title="Reset search" class="button reset">&times;</a>' : '' ?>
             </div>
             <b class="sr-ds">
