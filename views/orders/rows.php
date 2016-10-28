@@ -32,7 +32,7 @@
           }
           $sort_url = _A_::$app->router()->UrlTo('orders', $order);
         ?>
-        <div class="col-sm-2 col text-center">
+        <div class="col-sm-2 col">
           <a data-sort href="<?= $sort_url ?>">
             Customer
             <?php if(isset($sort['username'])) : ?>
@@ -43,7 +43,7 @@
           </a>
         </div>
       <?php endif; ?>
-      <div class="col-sm-2 col text-center">
+      <div class="col-sm-2 col">
         <?php
           if (isset($sort['a.order_date'])) {
             $order['sort'] = 'a.order_date';
@@ -63,7 +63,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-2 col text-center">
+      <div class="col-sm-2 col">
         <?php
           if (isset($sort['a.status'])) {
             $order['sort'] = 'a.status';
@@ -83,7 +83,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-2 col text-center">
+      <div class="col-sm-2 col">
         <?php
           if (isset($sort['a.total'])) {
             $order['sort'] = 'a.total';
@@ -127,7 +127,7 @@
             <div class="col-xs-4 visible-xs helper-row">
               <div class="row">Customer</div>
             </div>
-            <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+            <div class="col-xs-8 col-sm-12 xs-text-left">
               <div class="row cut-text-in-one-line"><?= $row['username']; ?></div>
             </div>
           </div>
@@ -136,7 +136,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Date</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= gmdate("m/j/y", $row['order_date']) ?></div>
           </div>
         </div>
@@ -144,7 +144,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Status</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row">
               <?= $row['status'] == 0 ? '<i title="In process" class="fa fa-clock-o"></i>' : '<i title="Done" class="fa fa-check"></i>' ?>
             </div>
@@ -155,7 +155,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Total</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= '$' . number_format($row['total'], 2); ?></div>
           </div>
         </div>
@@ -170,7 +170,7 @@
     </div>
   <?php endforeach; ?>
 <?php else: ?>
-  <div class="col-sm-12 text-center offset-top">
+  <div class="col-sm-12 offset-top">
     <h2 class="offset-top">No results found</h2>
   </div>
 <?php endif; ?>

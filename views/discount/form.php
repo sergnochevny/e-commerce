@@ -1,8 +1,8 @@
 <?php include_once 'views/messages/alert-boxes.php'; ?>
-<form method="POST" id="edit_form" action="<?= $action; ?>" class="col-md-8 col-md-offset-2">
+<form method="POST" id="edit_form" action="<?= $action; ?>" class="col-sm-12 col-md-8 col-md-offset-2">
   
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-sm-12">
       <div class="row">
         <div class="form-row">
           <div class="col-xs-12">
@@ -29,18 +29,18 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="col-xs-12">
+          <div class="col-xs-12 col-sm-12">
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-sm-12">
                 <label for="coupon_code">
                   Coupon Code <i data-promotion href="#coupon_code" class="fa fa-question-circle"></i>
                 </label>
               </div>
-              <div class="col-xs-12">
+              <div class="col-sm-8">
                 <input type="text" name="coupon_code" id="coupon_code"
                        value="<?= $data['coupon_code'] ?>" class="input-text">
               </div>
-              <div class="col-xs-12">
+              <div class="col-sm-4">
                 <label style="font-size: 10px; margin-top: 7px" for="generate_code">
                   <input type="checkbox" name="generate_code" id="generate_code" value="1"
                     <?= (isset($data['generate_code']) && $data['generate_code'] == '1') ? 'checked' : '' ?>

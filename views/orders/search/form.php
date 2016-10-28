@@ -14,7 +14,7 @@
               <?php endif; ?>
               <?php if(isset($search['a.status'])): ?>
                 <div class="label label-search-info">
-                  Status: <?= isset($search['a.status']) && $search['a.status'] == 1 ? 'Complete' : 'In progress' ?>
+                  Status: <?= isset($search['a.status']) && $search['a.status'] == 1 ? 'Completed' : 'In progress' ?>
                 </div>
               <?php endif; ?>
               <?php if(!empty($search['a.order_date']['from'])): ?>

@@ -21,7 +21,7 @@
                     <?php endif; ?>
                 </a>
             </div>
-            <div class="col-sm-3 col text-center">
+            <div class="col-sm-3 col">
                 <?php
                     if (isset($sort['title'])) {
                         $order['sort'] = 'title';
@@ -41,7 +41,7 @@
                     <?php endif; ?>
                 </a>
             </div>
-            <div class="col-sm-2 col text-center">
+            <div class="col-sm-2 col">
                 <?php
                     if (isset($sort['dt'])) {
                         $order['sort'] = 'dt';
@@ -86,7 +86,7 @@
                     <div class="col-xs-4 visible-xs helper-row">
                         <div class="row">Title</div>
                     </div>
-                    <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+                    <div class="col-xs-8 col-sm-12 xs-text-left">
                         <div class="row"><?= $row['title'] ?></div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                     <div class="col-xs-4 visible-xs helper-row">
                         <div class="row">Date</div>
                     </div>
-                    <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+                    <div class="col-xs-8 col-sm-12 xs-text-left">
                         <div class="row"><?= date("m/d/Y", strtotime($row['dt'])) ?></div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                     <div class="col-xs-4 visible-xs helper-row">
                         <div class="row">Visibility</div>
                     </div>
-                    <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+                    <div class="col-xs-8 col-sm-12 xs-text-left">
                         <div class="row">
                             <a class="comment-moderated-action <?= $row['moderated'] == '0' ? '' : 'text-danger'; ?>"
                                data-status="<?= $row['moderated'] == '1' ? '0' : '1' ?>"
@@ -131,7 +131,7 @@
         </div>
     <?php endforeach; ?>
 <?php else: ?>
-    <div class="col-sm-12 text-center offset-top">
+    <div class="col-sm-12 offset-top">
         <h2 class="offset-top">No results found</h2>
     </div>
 <?php endif; ?>

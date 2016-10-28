@@ -21,7 +21,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-1 col text-center">
+      <div class="col-sm-1 col">
         <?php
           if (isset($sort['enabled'])) {
             $order['sort'] = 'enabled';
@@ -41,7 +41,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-2 col text-center">
+      <div class="col-sm-2 col">
         <?php
           if (isset($sort['allow_multiple'])) {
             $order['sort'] = 'allow_multiple';
@@ -61,7 +61,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-2 col text-center">
+      <div class="col-sm-2 col">
         <?php
           if (isset($sort['coupon_code'])) {
             $order['sort'] = 'coupon_code';
@@ -81,7 +81,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-2 col text-center">
+      <div class="col-sm-2 col">
         <?php
           if (isset($sort['date_start'])) {
             $order['sort'] = 'date_start';
@@ -101,7 +101,7 @@
           <?php endif; ?>
         </a>
       </div>
-      <div class="col-sm-2 col text-center">
+      <div class="col-sm-2 col">
         <?php
           if (isset($sort['date_end'])) {
             $order['sort'] = 'date_end';
@@ -146,7 +146,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">On</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= $row['enabled'] ?></div>
           </div>
         </div>
@@ -154,7 +154,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Multiple</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= $row['allow_multiple'] ?></div>
           </div>
         </div>
@@ -162,7 +162,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Coupon</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= !empty($row['coupon_code']) ? $row['coupon_code'] : 'N/A'; ?></div>
           </div>
         </div>
@@ -170,7 +170,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Starts</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= $row['date_start']; ?></div>
           </div>
         </div>
@@ -178,7 +178,7 @@
           <div class="col-xs-4 visible-xs helper-row">
             <div class="row">Starts</div>
           </div>
-          <div class="col-xs-8 col-sm-12 text-center xs-text-left">
+          <div class="col-xs-8 col-sm-12 xs-text-left">
             <div class="row"><?= $row['date_end']; ?></div>
           </div>
         </div>
@@ -198,7 +198,7 @@
     </div>
   <?php endforeach; ?>
 <?php else: ?>
-  <div class="col-sm-12 text-center offset-top">
+  <div class="col-sm-12 offset-top">
     <h2 class="offset-top">No results found</h2>
   </div>
 <?php endif; ?>

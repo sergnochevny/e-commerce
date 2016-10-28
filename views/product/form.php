@@ -6,12 +6,14 @@
         <div class="col-md-6">
           <div class="form-row">
             <label class="required_field"><b>Product name:</b></label>
-            <input type="text" name="pname" value="<?= $data['pname']; ?>" class="input-text" placeholder="e.g. Stunning Patterned Tapestry In Blue">
+            <input type="text" name="pname" value="<?= $data['pname']; ?>" class="input-text"
+                   placeholder="e.g. Stunning Patterned Tapestry In Blue">
           </div>
 
           <div class="form-row">
             <label class="required_field"><b>Product number:</b></label>
-            <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text" placeholder="e.g. abc888999">
+            <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text"
+                   placeholder="e.g. abc888999">
           </div>
 
           <div class="form-row">
@@ -33,7 +35,20 @@
               <?= $data['categories']; ?>
             </div>
           </div>
-
+          <div class="form-row">
+            <label><b>Colours: </b></label>
+            <div>
+              <?= $data['colours']; ?>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>
+              <b>Pattern Types:</b>
+            </label>
+            <div>
+              <?= $data['patterns']; ?>
+            </div>
+          </div>
           <div class="form-row">
             <label><b>Width:</b></label>
             <input type="text" id="m_width" name="width" value="<?= $data['width']; ?>" class="input-text ">
@@ -78,14 +93,6 @@
           </div>
 
           <div class="form-row">
-            <label>
-              <b>Whole:</b>
-              <input type="checkbox" <?= (isset($data['whole']) && ($data['whole'] == "1")) ? 'checked' : '' ?>
-                     name="whole" value="1" class="input-checkbox">
-            </label>
-          </div>
-
-          <div class="form-row">
             <label><b>Weight:</b></label>
             <select name="weight_id">
               <option value="0" <?= ($data['weight_id'] == "0") ? 'selected' : ''; ?>>Use Category Weight</option>
@@ -100,21 +107,33 @@
           </div>
           <hr/>
           <div class="form-row">
+            <label>
+              <b>Whole:</b>
+              <input type="checkbox" <?= (isset($data['whole']) && ($data['whole'] == "1")) ? 'checked' : '' ?>
+                     name="whole" value="1" class="input-checkbox">
+            </label>
+          </div>
+          <hr/>
+          <div class="form-row">
             <label><b>Manufacturer:</b></label>
             <select name="manufacturerId">
               <?= $data['manufacturers']; ?>
             </select>
           </div>
 
-          <div class="form-row">
-            <label><b>Colours: </b></label>
-            <div>
-              <?= $data['colours']; ?>
-            </div>
-          </div>
-
         </div>
         <div class="col-md-6">
+          <div class="form-row">
+            <label><b>Main images:</b></label>
+            <div class="text-center">
+              <div id="images" class="col-sm-12 col-md-12">
+                <div class="row">
+                  <?= $images; ?>
+                </div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
           <div class="form-row">
             <label><b>Short description:</b></label>
             <input type="text" value="<?= $data['sdesc']; ?>" name="sdesc" class="input-text ">
@@ -127,38 +146,12 @@
           </div>
           <hr/>
 
-          <div class="form-row">
-            <label><b>Main images:</b></label>
-            <div class="text-center">
-              <div id="images" class="col-sm-12 col-md-12">
-                <div class="row">
-                  <?= $images; ?>
-                </div>
-              </div>
-            </div>
-            <div class="clear"></div>
-          </div>
-          <hr style="margin-bottom: 0">
           <small style="color:#999;"><b>NOTE</b>: Select a place, and then click "Upload file" to set the image there.
           </small>
           <div class="col-md-12 text-center" style="margin-top: 15px">
             <a id="upload" class="button alt" style="cursor: pointer;">Upload file</a>
           </div>
-          <div class="col-md-12 text-center">
-            <div class="row">
-              <hr style="margin-bottom: 0">
-            </div>
-          </div>
-          <div class="form-row">
-            <label>
-              <b>Pattern Types:</b>
-            </label>
-            <div>
-              <?= $data['patterns']; ?>
-            </div>
-          </div>
 
-          <hr/>
           <p>
             <label>
               <b style="vertical-align: 3px">Best Textile:</b>
