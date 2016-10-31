@@ -5,20 +5,16 @@
       $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
     ?>
     <a href="<?= $href; ?>">
-      <figure class="product-image-box">
-        <img src="<?= $filename; ?>" alt="">
+      <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
         <?php if($bProductDiscount) { ?>
           <span class="extra_discount">Extra Discount!</span>
         <?php } ?>
-        <a href="<?= $href; ?>"></a>
         <figcaption>
           <?php
             if($in_cart) {
               include('views/cart/basket.php');
             } else { ?>
-              <a class="button add-to-basket" href="<?= $href; ?>">
-                View Details
-              </a>
+              <a class="button add-to-basket" href="<?= $href; ?>">View Details</a>
             <?php } ?>
         </figcaption>
       </figure>

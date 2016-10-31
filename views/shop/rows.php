@@ -1,14 +1,14 @@
 <div class="col-xs-12 col-sm-6 col-md-4 product-item">
   <div class="product-inner">
-
     <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
       <?php if($bProductDiscount) { ?>
         <span class="extra_discount">Extra Discount!</span>
       <?php }
-        $opt['pid'] = $row[0];
-        $href = _A_::$app->router()->UrlTo('shop/product', $opt, $row['pname'], ['cat', 'mnf', 'ptrn']);
+        $url_prms['pid'] = $row[0];
+        $url_prms['back'] = '';
+        $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
       ?>
-      <a <?= isset($search) ? 'class="a_search"' : '' ?> href="<?= $href; ?>"></a>
+      <a class="<?= isset($search) ? ' a_search' : '' ?>" href="<?= $href; ?>"></a>
       <figcaption>
         <?php
           if($in_cart) {
