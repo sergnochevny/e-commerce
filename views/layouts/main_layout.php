@@ -46,6 +46,7 @@
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jQuery-slimScroll-1.3.8/jquery.slimscroll.min.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
+    <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
 
   </head>
   <body class="woocommerce woocommerce-page">
@@ -54,7 +55,6 @@
         <div class="main-content main-content-shop">
           <?php include "views/header.php"; ?>
           <?= isset($content) ? $content : ''; ?>
-          <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
         </div>
       </div>
 

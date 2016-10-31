@@ -1,9 +1,10 @@
 <div class="row cart_item table-list-row-item" data-pid="<?= $pid; ?>" data-row="samples">
-  <div class="col-sm-5">
+  <div class="col-sm-6">
     <div class="row">
       <div class="col-sm-4">
-        <a href="<?= _A_::$app->router()->UrlTo('product', ['pid' => $pid, 'back' => 'cart']); ?>">
-          <img alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" src="<?= $img_url; ?>">
+        <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart']); ?>">
+          <img alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
+               src="<?= $img_url; ?>">
         </a>
       </div>
       <div class="col-sm-8">
