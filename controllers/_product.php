@@ -6,6 +6,14 @@
     protected $form_title_add = 'NEW PRODUCT';
     protected $form_title_edit = 'MODIFY PRODUCT';
 
+    protected function search_fields($view = false) {
+      return [
+        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
+        'a.piece', 'a.best', 'a.specials', 'b.cid',
+        'c.id', 'd.id', 'e.id'
+      ];
+    }
+
     private function select_filter($method, $filters, $start = null, $search = null) {
       $selected = isset($filters) ? $filters : [];
       $filter = Model_Product::get_filter_data($method, $count, $start, $search);
@@ -117,14 +125,6 @@
       $this->template->vars('selected', is_array($selected) ? $selected : [$selected]);
       $this->template->vars('data', is_array($data) ? $data : [$data]);
       $this->template->view_layout('select');
-    }
-
-    protected function search_fields($view = false) {
-      return [
-        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
-        'a.piece', 'a.best', 'a.specials', 'b.cid',
-        'c.id', 'd.id', 'e.id'
-      ];
     }
 
     protected function load(&$data) {

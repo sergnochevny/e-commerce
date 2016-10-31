@@ -2,6 +2,20 @@
 
   class Controller_Shop extends Controller_Controller {
 
+//    protected function show_category_list() {
+//      $items = Model_Tools::get_items_for_menu('all');
+//      $this->template->vars('items', $items, true);
+//      ob_start();
+//      $list = ob_get_contents();
+//      $this->template->vars('list', $list, true);
+//      ob_end_clean();
+//      ob_start();
+//      $this->template->view_layout('categories', 'menu');
+//      $categories = ob_get_contents();
+//      ob_end_clean();
+//      $this->main->template->vars('categories', $categories);
+//    }
+
     protected function search_fields($view = false) {
       return [
         'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
@@ -10,252 +24,34 @@
       ];
     }
 
-    private function show_category_list() {
-      $items = Model_Tools::get_items_for_menu('all');
-      $this->template->vars('items', $items, true);
-      ob_start();
-      $list = ob_get_contents();
-      $this->template->vars('list', $list, true);
-      ob_end_clean();
-      ob_start();
-      $this->template->view_layout('categories', 'menu');
-      $categories = ob_get_contents();
-      ob_end_clean();
-      $this->main->template->vars('categories', $categories);
-    }
-
-    private function product_list(&$filter) {
-
-      $page = !empty(_A_::$app->get('page')) ? Model_Shop::validData(_A_::$app->get('page')) : 1;
-      $per_page = 12;
-      $total = Model_Shop::get_total_count($filter);
-      if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
-      if($page <= 0) $page = 1;
-      $start = (($page - 1) * $per_page);
-
-
-      if(!empty(_A_::$app->get('cat'))) {
-        $cid = Model_Shop::validData(_A_::$app->get('cat'));
-        if ($category = Model_Categories::get_by_id($cid)) $category_name = $category['cname'];
-
-      } else {
-        if(!empty(_A_::$app->get('ptrn'))) {
-          if($ptrn = Model_Patterns::get_by_id(_A_::$app->get('ptrn'))) $ptrn_name = $ptrn['pattern'];
-          $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
-        } else {
-          if(!empty(_A_::$app->get('mnf'))) {
-            $mnf_id = _A_::$app->get('mnf');
-            if ($mnf = Model_Manufacturers::get_by_id($mnf_id)) $mnf_name = $mnf['manufacturer'];
-            $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
-          }
-        }
+    protected function build_search_filter(&$filter, $view = false) {
+      $search = null;
+      $res = parent::build_search_filter($filter, $view);
+      if(!isset($res['pname']) && !is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
+        $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
+        $this->main->template->vars('search_str', _A_::$app->post('s'));
+        $res['a.pname'] = _A_::$app->post('s');
+        $filter['a.pname'] = $search;
       }
-      $rows = Model_Shop::get_products($start, $per_page, $count_rows, $search);
-
-      if($rows) {
-
-        $url_prms = null;
-        if(!empty(_A_::$app->get('page'))) {
-          $url_prms['page'] = _A_::$app->get('page');
-        }
-        if(!empty(_A_::$app->get('cat'))) {
-          $url_prms['cat'] = _A_::$app->get('cat');
-        }
-        if(!empty(_A_::$app->get('mnf'))) {
-          $url_prms['mnf'] = _A_::$app->get('mnf');
-        }
-        if(!empty(_A_::$app->get('ptrn'))) {
-          $url_prms['ptrn'] = _A_::$app->get('ptrn');
-        }
-
-
-        $this->main->template->vars('count_rows', $count_rows);
-
-        ob_start();
-        foreach($rows as $row) {
-
-
-
-          $this->template->vars('search_str', $search);
-
-          $this->template->vars('url_prms', $url_prms);
-          $this->template->view_layout('rows');
-        }
-
-        $rows = ob_get_contents();
-        ob_end_clean();
+      if(!empty(_A_::$app->get('cat'))) {
+        $cid = _A_::$app->get('cat');
+        if($category = Model_Categories::get_by_id($cid)) $category_name = $category['cname'];
         $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
-        $this->main->template->vars('rows', $rows);
-
-        $paginator = new Controller_Paginator($this);
-        $paginator->paginator($total, $page, 'shop', $per_page);
-
-      } else {
-        $this->main->template->vars('count_rows', 0);
-        $rows = "No Result!";
-        $this->main->template->vars('rows', $rows);
+        $filter['hidden']['b.cid'] = $cid;
       }
-      $this->template->view_layout('list');
-    }
-
-    private function product_list_by_type($type = 'last', $max_count_items = 50) {
-      $image_suffix = 'b_';
-      $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-      $cart = array_keys($cart_items);
-      $page = !empty(_A_::$app->get('page')) ? Model_Shop::validData(_A_::$app->get('page')) : 1;
-      $per_page = 12;
-
-      if(!empty(_A_::$app->get('cat'))) {
-        $cid = Model_Shop::validData(_A_::$app->get('cat'));
-        $this->template->vars('cat_id', $cid);
+      if(!empty(_A_::$app->get('ptrn'))) {
+        $ptrn_id = _A_::$app->get('ptrn');
+        if($ptrn = Model_Patterns::get_by_id($ptrn_id)) $ptrn_name = $ptrn['pattern'];
+        $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
+        $filter['hidden']['d.id'] = $ptrn_id;
       }
-
-      $total = Model_Shop::get_count_by_type($type);
-      if($total > $max_count_items)
-        $total = $max_count_items;
-      if($page > ceil($total / $per_page))
-        $page = ceil($total / $per_page);
-      if($page <= 0)
-        $page = 1;
-      $start = (($page - 1) * $per_page);
-      $limit = $per_page;
-      if($total < ($start + $per_page)) $limit = $total - $start;
-
-      $res_count_rows = 0;
-      $rows = Model_Shop::get_list_by_type($type, $start, $limit, $res_count_rows);
-      $this->template->vars('count_rows', $res_count_rows);
-
-      if($rows) {
-        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
-        $this->template->vars('sys_hide_price', $sys_hide_price);
-
-        ob_start();
-        foreach($rows as $row) {
-          $row['sdesc'] = substr($row['sdesc'], 0, 100);
-          $row['ldesc'] = substr($row['ldesc'], 0, 100);
-          $filename = 'upload/upload/' . $image_suffix . $row['image1'];
-          if(!(file_exists($filename) && is_file($filename))) {
-            $filename = 'upload/upload/not_image.jpg';
-          }
-          $filename = _A_::$app->router()->UrlTo($filename);
-
-          $url_prms = ['pid' => $row['pid'], 'back' => $type];
-          if(!empty(_A_::$app->get('page'))) {
-            $url_prms['page'] = _A_::$app->get('page');
-          }
-          if(!empty(_A_::$app->get('cat'))) {
-            $url_prms['cat'] = _A_::$app->get('cat');
-          }
-
-          $pid = $row['pid'];
-          $price = $row['priceyard'];
-          $inventory = $row['inventory'];
-          $piece = $row['piece'];
-          $format_price = '';
-          $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
-
-          $discountIds = [];
-          $saleprice = $row['priceyard'];
-          $sDiscount = 0;
-          $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
-          $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
-          $format_sale_price = '';
-          $saleprice = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
-
-          $this->template->vars('url_prms', $url_prms);
-          $this->template->vars('filename', $filename);
-          $this->template->vars('row', $row);
-          $this->template->vars('pid', $pid);
-          $this->template->vars('piece', $piece);
-          $this->template->vars('price', $price);
-          $this->template->vars('inventory', $inventory);
-          $this->template->vars('format_sale_price', $format_sale_price);
-          $this->template->vars('format_price', $format_price);
-          $this->template->vars('saleprice', $saleprice);
-          $this->template->vars('bProductDiscount', $bProductDiscount);
-          $this->template->vars('sDiscount', $sDiscount);
-          $this->template->vars('in_cart', in_array($row[0], $cart));
-          $this->template->vars('hide_price', $row['hideprice']);
-          $this->template->view_layout($type);
-        }
-
-        $list = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('category_name', isset($category_name) ? $category_name : '');
-        $this->main->template->vars('rows', $list);
-
-        (new Controller_Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, $per_page);
-      } else {
-        $this->main->template->vars('count_rows', 0);
-        $list = "No Result!";
-        $this->main->template->vars('rows', $list);
+      if(!empty(_A_::$app->get('mnf'))) {
+        $mnf_id = _A_::$app->get('mnf');
+        if($mnf = Model_Manufacturers::get_by_id($mnf_id)) $mnf_name = $mnf['manufacturer'];
+        $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
+        $filter['hidden']['e.id'] = $mnf_id;
       }
-      $this->template->view_layout('list');
-    }
-
-    private function widget_products($type, $start, $limit, $layout = 'widget_products') {
-      $rows = Model_Shop::get_widget_list_by_type($type, $start, $limit, $row_count, $image_suffix);
-      $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-      $cart = array_keys($cart_items);
-      if($rows) {
-        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
-        $this->template->vars('sys_hide_price', $sys_hide_price);
-
-        ob_start();
-        $first = true;
-        $last = false;
-        $i = 1;
-        foreach($rows as $row) {
-          $row['sdesc'] = substr($row['sdesc'], 0, 100);
-          $row['ldesc'] = substr($row['ldesc'], 0, 100);
-          $filename = 'upload/upload/' . $image_suffix . $row['image1'];
-          if(!(file_exists($filename) && is_file($filename))) {
-            $filename = 'upload/upload/not_image.jpg';
-          }
-          $filename = _A_::$app->router()->UrlTo($filename);
-          $pid = $row['pid'];
-          $price = $row['priceyard'];
-          $inventory = $row['inventory'];
-          $piece = $row['piece'];
-          $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
-
-          $discountIds = [];
-          $saleprice = $row['priceyard'];
-          $sDiscount = 0;
-          $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
-          $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
-          $format_sale_price = '';
-          $saleprice = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
-          $hide_price = $row['hideprice'];
-          $last = $i++ == $row_count;
-          $this->template->vars('last', $last);
-          $this->template->vars('first', $first);
-          $this->template->vars('saleprice', $saleprice);
-          $this->template->vars('price', $price);
-          $this->template->vars('format_sale_price', $format_sale_price);
-          $this->template->vars('bProductDiscount', $bProductDiscount);
-          $this->template->vars('sDiscount', $sDiscount);
-          $this->template->vars('piece', $piece);
-          $this->template->vars('inventory', $inventory);
-          $this->template->vars('discountIds', $discountIds);
-          $this->template->vars('pid', $pid);
-          $this->template->vars('in_cart', in_array($row[0], $cart));
-          $this->template->vars('filename', $filename);
-          $this->template->vars('format_price', $format_price);
-          $this->template->vars('row', $row);
-          $this->template->vars('hide_price', $hide_price);
-          $this->template->vars('sys_hide_price', $sys_hide_price);
-
-          $this->template->view_layout('widgets/' . $layout);
-          $first = false;
-        }
-
-        $list = ob_get_contents();
-        ob_end_clean();
-      } else {
-        $list = "No Result!";
-      }
-      return $list;
+      return $res;
     }
 
     protected function before_search_form_layout(&$search_data, $view = false) {
@@ -278,16 +74,49 @@
       $search_data['manufacturers'] = $manufacturers;
     }
 
-    protected function build_search_filter(&$filter, $view = false) {
-      $search = null;
-      $res = parent::build_search_filter($filter, $view);
-      if (!isset($res['pname']) && !is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))){
-        $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
-        $this->main->template->vars('search_str', _A_::$app->post('s'));
-        $res['pname'] = $search;
-        $filter['a.pname'] = $search;
-      }
-      return $res;
+    protected function after_get_list(&$rows, $view = false, $type = null) {
+      $url_prms = null;
+      if(!empty(_A_::$app->get('page'))) $url_prms['page'] = _A_::$app->get('page');
+      if(!empty(_A_::$app->get('cat'))) $url_prms['cat'] = _A_::$app->get('cat');
+      if(!empty(_A_::$app->get('mnf'))) $url_prms['mnf'] = _A_::$app->get('mnf');
+      if(!empty(_A_::$app->get('ptrn'))) $url_prms['ptrn'] = _A_::$app->get('ptrn');
+      if(isset($type)) $url_prms['back'] = $type;
+      $this->template->vars('url_prms', $url_prms);
+    }
+
+    protected function product_list_by_type($type = 'last', $max_count_items = 50) {
+      $search_form = $this->build_search_filter($filter);
+      $this->build_order($sort);
+      $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
+      $per_page = 12;
+      $total = Model_Shop::get_count_by_type($type, $filter);
+      if($total > $max_count_items) $total = $max_count_items;
+      if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
+      if($page <= 0) $page = 1;
+      $start = (($page - 1) * $per_page);
+      $limit = $per_page;
+      if($total < ($start + $per_page)) $limit = $total - $start;
+      $rows = Model_Shop::get_list_by_type($type, $start, $limit, $res_count_rows, $filter, $sort);
+      $this->after_get_list($rows, false, $type);
+      if(isset($filter['active'])) $search_form['active'] = $filter['active'];
+      $this->search_form($search_form);
+      $this->template->vars('rows', $rows);
+      $this->template->vars('sort', $sort);
+      ob_start();
+      $this->template->view_layout($type);
+      $rows = ob_get_contents();
+      ob_end_clean();
+      $this->template->vars('count_rows', $res_count_rows);
+      $this->template->vars('list', $rows);
+      (new Controller_Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, $per_page);
+      $this->before_list_layout();
+      $this->main->view_layout('list');
+    }
+
+    protected function widget_products($type, $start, $limit, $layout = 'list') {
+      $rows = Model_Shop::get_widget_list_by_type($type, $start, $limit, $row_count);
+      $this->template->vars('rows', $rows);
+      $this->template->view_layout('widget/' . $layout);
     }
 
     /**
@@ -296,18 +125,7 @@
     public function shop() {
       $this->template->vars('cart_enable', '_');
       $this->main->template->vars('page_title', "Product Catalog");
-      $search_form = $this->build_search_filter($filter);
-      $this->search_form($search_form);
-      if(_A_::$app->request_is_ajax()) exit($this->product_list());
-      else {
-//        $this->show_category_list();
-        ob_start();
-        $this->product_list();
-        $list = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('list',$list);
-      }
-      $this->main->view('shop');
+      $this->index(false);
     }
 
     /**
@@ -316,15 +134,12 @@
     public function last() {
       $this->template->vars('cart_enable', '_');
       $this->main->template->vars('page_title', "What's New");
-      if(_A_::$app->request_is_ajax()) exit($this->product_list_by_type('last', 50));
-      else {
-        //$this->show_category_list();
-        ob_start();
-        $this->product_list_by_type('last', 50);
-        $list = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('list',$list);
-      }
+      ob_start();
+      $this->product_list_by_type('last', 50);
+      $list = ob_get_contents();
+      ob_end_clean();
+      if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('list', $list);
       $this->main->view('shop');
     }
 
@@ -337,15 +152,12 @@
       $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates.<br>All items available on a FIRST COME, FIRST SERVED basis only.';
       $this->main->template->vars('page_title', $page_title);
       $this->main->template->vars('annotation', $annotation);
-      if(_A_::$app->request_is_ajax()) exit($this->product_list_by_type('specials', 360));
-      else {
-//      $this->show_category_list();
-        ob_start();
-        $this->product_list_by_type('specials', 360);
-        $list = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('list',$list);
-      }
+      ob_start();
+      $this->product_list_by_type('specials', 360);
+      $list = ob_get_contents();
+      ob_end_clean();
+      if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('list', $list);
       $this->main->view('shop');
     }
 
@@ -355,15 +167,12 @@
     public function popular() {
       $this->template->vars('cart_enable', '_');
       $this->main->template->vars('page_title', 'Popular Textile');
-      if(_A_::$app->request_is_ajax()) exit($this->product_list_by_type('popular', 360));
-      else {
-//      $this->show_category_list();
-        ob_start();
-        $this->product_list_by_type('popular', 360);
-        $list = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('list',$list);
-      }
+      ob_start();
+      $this->product_list_by_type('popular', 360);
+      $list = ob_get_contents();
+      ob_end_clean();
+      if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('list', $list);
       $this->main->view('shop');
     }
 
@@ -373,15 +182,12 @@
     public function best() {
       $this->template->vars('cart_enable', '_');
       $this->main->template->vars('page_title', 'Best Textile');
-      if(_A_::$app->request_is_ajax()) exit($this->product_list_by_type('best', 360));
-      else {
-//      $this->show_category_list();
-        ob_start();
-        $this->product_list_by_type('best', 360);
-        $list = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('list',$list);
-      }
+      ob_start();
+      $this->product_list_by_type('best', 360);
+      $list = ob_get_contents();
+      ob_end_clean();
+      if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('list', $list);
       $this->main->view('shop');
     }
 
@@ -391,15 +197,12 @@
     public function bestsellers() {
       $this->template->vars('cart_enable', '_');
       $this->main->template->vars('page_title', 'Best Sellers');
-      if(_A_::$app->request_is_ajax()) exit($this->product_list_by_type('bsells', 360));
-      else {
-//      $this->show_category_list();
-        ob_start();
-        $this->product_list_by_type('bsells', 360);
-        $list = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('list',$list);
-      }
+      ob_start();
+      $this->product_list_by_type('bsells', 360);
+      $list = ob_get_contents();
+      ob_end_clean();
+      if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('list', $list);
       $this->main->view('shop');
     }
 
@@ -429,52 +232,27 @@
     /**
      * @export
      */
-    public function product_filter_list() {
-      $this->main->template->vars('ProductFilterList', Model_Shop::product_filter_list());
+    public function widget() {
+      switch(_A_::$app->get('type')) {
+        case 'popular':
+          $this->widget_products('popular', 0, 5);
+          break;
+        case 'new':
+          $this->widget_products('new', 0, 5);
+          break;
+        case 'best':
+          $this->widget_products('best', 0, 5);
+          break;
+        case 'bsells':
+          $this->widget_products('bsells', 6, 5);
+          break;
+        case 'carousel':
+          $this->widget_products('carousel', 0, 30, 'widget_new_products_carousel');
+          break;
+        case 'bsells_horiz':
+          $this->widget_products('bsells', 0, 6, 'widget_bsells_products_horiz');
+      }
     }
-
-    /**
-     * @export
-     */
-    public function widget_popular() {
-      echo $this->widget_products('popular', 0, 5);
-    }
-
-    /**
-     * @export
-     */
-    public function widget_new() {
-      echo $this->widget_products('new', 0, 5);
-    }
-
-    /**
-     * @export
-     */
-    public function widget_new_carousel() {
-      echo $this->widget_products('carousel', 0, 30, 'widget_new_products_carousel');
-    }
-
-    /**
-     * @export
-     */
-    public function widget_best() {
-      echo $this->widget_products('best', 0, 5);
-    }
-
-    /**
-     * @export
-     */
-    public function widget_bsells() {
-      echo $this->widget_products('bsells', 6, 5);
-    }
-
-    /**
-     * @export
-     */
-    public function widget_bsells_horiz() {
-      echo $this->widget_products('bsells', 0, 6, 'widget_bsells_products_horiz');
-    }
-
 
     /**
      * @export
@@ -482,10 +260,7 @@
     public function product() {
       $pid = _A_::$app->get('pid');
       $data = Model_Shop::get_product($pid);
-
-      $matches = new Controller_Matches($this->main);
-      if($matches->product_in($pid))
-        $this->template->vars('in_matches', '1');
+      if(Controller_Matches::product_in($data['pid'])) $this->template->vars('in_matches', '1');
 
       $priceyard = $data['priceyard'];
       $aPrds = [];
@@ -625,16 +400,8 @@
 
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');
-        switch($back) {
-          case 'matches':
-            $back_url = _A_::$app->router()->UrlTo('matches');
-            break;
-          case 'cart':
-            $back_url = _A_::$app->router()->UrlTo('cart');
-            break;
-          default:
-            $back_url = _A_::$app->router()->UrlTo('shop' . DS . $back, $url_prms);
-        }
+        if(in_array($back, ['matches', 'cart', ''])) $back_url = _A_::$app->router()->UrlTo($back, $url_prms);
+        else $back_url = _A_::$app->router()->UrlTo('shop' . DS . $back, $url_prms);
       } else {
         $back_url = _A_::$app->router()->UrlTo('shop', $url_prms);
       }
@@ -653,6 +420,5 @@
       $this->template->vars('back_url', $back_url);
       $this->main->view('product/view');
     }
-
 
   }

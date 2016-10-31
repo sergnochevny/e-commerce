@@ -190,7 +190,7 @@
       $this->main->view_layout('msg_add');
     }
 
-    public function product_in($pid) {
+    public static function product_in($pid) {
       if(isset(_A_::$app->session('matches')['items'])) {
         $matches_items = _A_::$app->session('matches')['items'];
       } else {

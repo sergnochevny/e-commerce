@@ -5,7 +5,7 @@
     /**
      * @export
      */
-    public function index() {
+    public function index($requred_access = true) {
       $this->main->view('index');
     }
 
@@ -43,7 +43,20 @@
     public function about() {
       $this->main->view('static/about');
     }
-//////////////////////////////////////////////////////////// STATIC
+
+    /**
+     * @export
+     */
+    public function message() {
+      $this->main->message();
+    }
+
+    /**
+     * @export
+     */
+    public function error404() {
+      $this->main->error404();
+    }
 
 //    function show_break_img_count()
 //    {
@@ -119,27 +132,5 @@
 //        echo $total . ' | ' . $total_break . ' | ' . $total_break_p . ' | ' . $total_break_v;
 //    }
 
-//////////////////////////////////////////////////////////// IMAGE
-    /**
-     * @export
-     */
-    public function search() {
-      $search_qv = Model_Tools::validData(_A_::$app->get('s'));
-      $this->template->vars('userInfo', $search_qv);
-      $this->main->view('search');
-    }
 
-    /**
-     * @export
-     */
-    public function message() {
-      $this->main->message();
-    }
-
-    /**
-     * @export
-     */
-    public function error404() {
-      $this->main->error404();
-    }
   }
