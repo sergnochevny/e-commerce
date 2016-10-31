@@ -19,7 +19,7 @@
                 </div>
               </div>
 
-              <p><a href="index">Fabrics start at $10.00 / yard. PLUS FREE SHIPPING.* Click to shop.</a>
+              <p><a href="index">Fabrics start at $10.00 <sup>/ yard</sup>. PLUS FREE SHIPPING.* Click to shop.</a>
               </p>
 
               <p>*(Free Ground Shipping in the Contiguous United States Only. Faster Shipping available at

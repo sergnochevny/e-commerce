@@ -303,10 +303,10 @@
           if($piece == 1 && $inventory > 0) {
             $price = $price * $inventory;
             $row['price'] = "$" . number_format($price, 2);
-            $row['format_price'] = sprintf('%s / piece', $price);
+            $row['format_price'] = sprintf('%s <sup>/ piece</sup>', $price);
           } else {
             $row['price'] = "$" . number_format($price, 2);
-            $row['format_price'] = sprintf('%s / yard', $price);
+            $row['format_price'] = sprintf('%s <sup>/ yard</sup>', $price);
           }
           $response[] = $row;
         }

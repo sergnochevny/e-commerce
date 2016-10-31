@@ -1,37 +1,37 @@
-<tr class="cart_item" data-pid="<?= $pid; ?>" data-row="items">
-    <td class="product-thumbnail" style="padding: 0">
-        <a href="<?= _A_::$app->router()->UrlTo('shop/product',['pid'=>$pid,'back'=>'cart']); ?>">
-            <img width="110" height="110" alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                 src="<?= $img_url; ?>">
+<div class="row cart_item table-list-row-item" data-pid="<?= $pid; ?>">
+  <div class="col-sm-5">
+    <div class="row">
+      <div class="col-sm-4">
+        <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart']); ?>">
+          <img class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
+               src="<?= $img_url; ?>">
         </a>
-    </td>
-    <td data-title="Product" class="product-name">
-        <a href="<?= _A_::$app->router()->UrlTo('shop/product',['pid'=>$pid,'back'=>'cart']); ?>"><?= $item['Product_name']; ?></a>
-    </td>
-    <td data-title="Price" class="product-price">
-        <span class="amount"><?= $item['format_price']; ?></span>
-    </td>
-    <td data-title="Discount" class="product-discount">
-        <span class="discount"><?= $item['format_discount'];; ?></span>
-    </td>
-    <td data-title="Sale Price" class="product-price" >
-        <span class="amount"><?= $item['format_sale_price']; ?> </span>
-    </td>
-    <td data-title="Quantity" class="product-quantity">
-        <div class="quantity">
-            <?php if($item['piece'] == 0){?>
-            <input data-role="quantity" data-whole="<?= ($item['whole'] == 1?'1':'0')?>" type="number" min="1" max="100000" class="qty text" title="Quantity" value="<?= $item['quantity']; ?>">
-            <?php } else {?>
-                <span class="quantity"><?= $item['quantity']; ?></span>
-            <?php }?>
-        </div>
-    </td>
-    <td data-title="Total" class="product-subtotal">
-        <span class="amount"><?= $t_pr; ?></span>
-    </td>
-    <td class="product-remove text-center">
-        <a class="del_product_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_product');?>">
-            <i class="fa fa-trash-o"></i>
+      </div>
+      <div class="col-sm-8">
+        <a
+          href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart']); ?>">
+          <?= $item['Product_name']; ?>
         </a>
-    </td>
-</tr>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-1"><?= $item['format_discount']; ?></div>
+  <div class="col-sm-2"><?= $item['format_sale_price']; ?></div>
+  <div class="col-sm-2">
+    <?php if ($item['piece'] == 0) { ?>
+      <input data-role="quantity"
+             data-whole="<?= ($item['whole'] == 1 ? '1' : '0') ?>" type="number" min="1"
+             max="100000" class="qty input-text" title="Quantity" value="<?= $item['quantity']; ?>">
+    <?php } else { ?>
+      <span class="quantity"><?= $item['quantity']; ?></span>
+    <?php } ?>
+  </div>
+  <div class="col-sm-1">
+    <span class="amount"><?= $t_pr; ?></span>
+  </div>
+  <div class="col-sm-1 text-center">
+    <a class="del_product_cart" href="<? _A_::$app->router()->UrlTo('cart/del_product'); ?>">
+      <i class="fa fa-trash-o text-danger"></i>
+    </a>
+  </div>
+</div>

@@ -1,6 +1,9 @@
-<div id="cart_main_container" class="container">
-  <?= isset($content) ? $content : ''; ?>
+<div class="container">
+  <div id="content" class="main-content-inner" role="main">
+    <?= isset($content) ? $content : ''; ?>
+  </div>
 </div>
+
 <div id="confirm_dialog" class="overlay"></div>
 <div class="popup">
   <div class="fcheck"></div>

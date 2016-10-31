@@ -1,41 +1,37 @@
-<table border="0" cellpadding="0" cellspacing="0" style="margin: 0;">
-    <tr>
-        <td class="copyProducts"><br/><strong>SAMPLES DETAILS & COST</strong></td>
-    </tr>
-    <tr>
-        <td class="copyProducts">
-
+<div class="col-xs-12 col-sm-12 table-list-row-item">
+    <div class="row">
+        <div class="col-sm-12"><strong>SAMPLES DETAILS & COST</strong></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
             Samples are sent through the Post Office and are usually
             delivered within 5&dash;7 days. Samples will be sent the next
             business day after order confirmation.
-            <br/><br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
             You may order Next Day courier for an additional charge.
-            <table class="table table-bordered table-condensed">
-                <tr>
-                    <td class="copyProducts">1) Sample 1:</td>
-                    <td class="copyProducts"><?= '$' . number_format(SAMPLES_PRICE_SINGLE, 2); ?></td>
-                </tr>
-                <tr>
-                    <td class="copyProducts">2) Samples 2 - 5:</td>
-                    <td class="copyProducts"><?= '$' . number_format(SAMPLES_PRICE_MULTIPLE, 2); ?></td>
-                </tr>
-                <tr>
-                    <td class="copyProducts">3) Samples 6 & over:</td>
-                    <td class="copyProducts"><?= '$' . number_format(SAMPLES_PRICE_ADDITIONAL, 2); ?>
-                        / sample
-                    </td>
-                </tr>
-                <?php if(!(isset($cart_items) && strlen($cart_items) > 0)){?>
-                    <tr>
-                        <td class="copyProducts">4) Courier delivery
-                            surcharge:
-                        </td>
-                        <td class="copyProducts"><?= '$' . number_format(SAMPLES_PRICE_EXPRESS_SHIPPING, 2); ?></td>
-                    </tr>
-                <?php }?>
-            </table>
-            <br/>
-
-        </td>
-    </tr>
-</table>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-6 col-sm-5">1) Sample 1:</div>
+                <div class="col-xs-6 col-sm-7"><?= '$' . number_format(SAMPLES_PRICE_SINGLE, 2); ?></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-5">2) Samples 2 - 5:</div>
+                <div class="col-xs-6 col-sm-7"><?= '$' . number_format(SAMPLES_PRICE_MULTIPLE, 2); ?></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-5">3) Samples 6 & over:</div>
+                <div class="col-xs-6 col-sm-7"><?= '$' . number_format(SAMPLES_PRICE_ADDITIONAL, 2); ?> <sup>/ sample</sup></div>
+            </div>
+            <?php if(!(isset($cart_items) && strlen($cart_items) > 0)){?>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-5">4) Courier delivery surcharge:</div>
+                    <div class="col-xs-6 col-sm-7"><?= '$' . number_format(SAMPLES_PRICE_EXPRESS_SHIPPING, 2); ?></div>
+                </div>
+            <?php }?>
+        </div>
+    </div>
+</div>

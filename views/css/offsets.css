@@ -1,0 +1,21 @@
+.half-inner-offset-top{
+    padding-top: 10px;
+}
+.half-inner-offset-bottom{
+    padding-bottom: 10px;
+}
+.half-inner-offset-vertical{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.half-outer-offset-top{
+    margin-top: 10px;
+}
+.half-outer-offset-bottom{
+    margin-bottom: 10px;
+}
+.half-outer-offset-vertical{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
