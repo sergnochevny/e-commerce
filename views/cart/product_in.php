@@ -20,7 +20,7 @@
   <div class="col-sm-2">
     <?php if ($item['piece'] == 0) { ?>
       <input data-role="quantity"
-             data-whole="<?= ($item['whole'] == 1 ? '1' : '0') ?>" type="number" min="1"
+             data-whole="<?= ($item['whole'] == 1 ? '1' : '0') ?>" min="1"
              max="100000" class="qty input-text" title="Quantity" value="<?= $item['quantity']; ?>">
     <?php } else { ?>
       <span class="quantity"><?= $item['quantity']; ?></span>
@@ -30,7 +30,7 @@
     <span class="amount"><?= $t_pr; ?></span>
   </div>
   <div class="col-sm-1 text-center">
-    <a class="del_product_cart" href="<? _A_::$app->router()->UrlTo('cart/del_product'); ?>">
+    <a class="del_product_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_product'); ?>">
       <i class="fa fa-trash-o text-danger"></i>
     </a>
   </div>

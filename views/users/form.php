@@ -264,7 +264,6 @@
       </div>
     </div>
 </form>
-<input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/') ?>">
 <script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.js'); ?>' type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/users/province.js'); ?>' type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/users/form.js'); ?>' type="text/javascript"></script>

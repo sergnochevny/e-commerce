@@ -400,7 +400,7 @@
 
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');
-        if(in_array($back, ['matches', 'cart', ''])) $back_url = _A_::$app->router()->UrlTo($back, $url_prms);
+        if(in_array($back, ['matches', 'cart', 'shop', ''])) $back_url = _A_::$app->router()->UrlTo($back, $url_prms);
         else $back_url = _A_::$app->router()->UrlTo('shop' . DS . $back, $url_prms);
       } else {
         $back_url = _A_::$app->router()->UrlTo('shop', $url_prms);

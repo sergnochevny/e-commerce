@@ -20,20 +20,20 @@
             </div>
           </div>
 
-          <div class="col-xs-12 table-list-row">
+          <div id="product_in_cart" class="col-xs-12 table-list-row">
             <?= isset($cart_items) ? $cart_items : ''; ?>
             <?php
-              if (isset($cart_items) && strlen($cart_items) > 0) { ?>
+              if(isset($cart_items) && strlen($cart_items) > 0) { ?>
                 <div class="row cart_item table-list-row-item">
                   <hr class="half-outer-offset-vertical">
                 </div>
-                <div class="row cart_item table-list-row-item">
+                <div id="row_subtotal_items" class="row cart_item table-list-row-item">
                   <div class="col-xs-12 table-list-row-item">
                     <div class="row">
                       <div class="col-xs-2 text-right">
                         <b>Subtotal:</b>
                       </div>
-                      <div class="col-xs-10">
+                      <div id="subtotal_items" class="col-xs-10">
                         <?= isset($sum_items) ? $sum_items : ''; ?>
                       </div>
                     </div>
@@ -42,16 +42,16 @@
               <?php } ?>
           </div>
 
-          <?php if (isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
+          <?php if(isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
             <div class="col-xs-12 table-list-row">
-              <?php if (isset($cart_samples_legend)) { ?>
-                <div class="row"><?= isset($cart_samples_legend) ? $cart_samples_legend : ''; ?></div>
-              <?php } ?>
+              <div id="samples_legend" class="row">
+                <?= isset($cart_samples_legend) ? $cart_samples_legend : ''; ?>
+              </div>
             </div>
 
-            <?php if (isset($cart_samples_items)) { ?>
+            <?php if(isset($cart_samples_items)) { ?>
 
-              <div class="row">
+              <div id="samples_table" class="row">
                 <div class="col-xs-12 data-view">
 
                   <div class="col-xs-12 table-list-header hidden-xs">
@@ -63,14 +63,14 @@
 
                   <div class="col-xs-12 table-list-row">
                     <?= $cart_samples_items ?>
-                    <?php if (isset($cart_items) && strlen($cart_items) > 0) { ?>
-                      <div class="row">
+                    <?php if(isset($cart_items) && strlen($cart_items) > 0) { ?>
+                      <div id="row_subtotal_samples" class="row">
                         <div class="col-xs-12 table-list-row-item">
                           <div class="row">
                             <div class="col-xs-2">
                               Subtotal:
                             </div>
-                            <div class="col-xs-10">
+                            <div id="subtotal_samples_items" class="col-xs-10">
                               <?= isset($sum_samples) ? $sum_samples : ''; ?>
                             </div>
                           </div>
@@ -78,47 +78,46 @@
                       </div>
                     <?php } ?>
                   </div>
-
                 </div>
               </div>
 
+            <?php } ?>
           <?php } ?>
-      <?php } ?>
 
-          <?php if ( (isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0) ) { ?>
+          <?php if((isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0)) { ?>
             <div class="col-xs-12 table-list-row">
-              <div class="row">
-                <?php echo isset($shipping) ? $shipping : ''; ?>
-              </div>
-              <?php
-              if ((isset($cart_samples_items) && strlen($cart_samples_items) > 0)
-                && (isset($cart_items) && strlen($cart_items) > 0)) {
-                ?>
-                  <div class="row">
-                    <div class="col-xs-12 table-list-row-item">
-                      <div class="row">
-                        <div class="col-xs-2">
-                          Subtotal:
-                        </div>
-                        <div class="col-xs-10">
-                          <?= isset($sum_all_items) ? $sum_all_items : ''; ?>
-                        </div>
-                      </div>
+            <?php
+            if((isset($cart_samples_items) && strlen($cart_samples_items) > 0)
+              && (isset($cart_items) && strlen($cart_items) > 0)
+            ) {
+              ?>
+              <div id="div_subtotal_table" class="row">
+                <div id="subtotal_table" class="col-xs-12 table-list-row-item">
+                  <div id="row_subtotal" class="row">
+                    <div class="col-xs-2">
+                      Subtotal:
+                    </div>
+                    <div id="subtotal" class="col-xs-10">
+                      <?= isset($sum_all_items) ? $sum_all_items : ''; ?>
                     </div>
                   </div>
-                <?php } ?>
-                <?php if ((isset($cart_samples_items) && strlen($cart_samples_items) > 0)
-                && (isset($cart_items) && strlen($cart_items) > 0)
-                  ) { ?>
-                <div class="row">
-                  <div class="col-xs-12 table-list-row-item">
-                    <div class="row">
-                      <div class="col-xs-2">
-                        Subtotal:
-                      </div>
-                      <div class="col-xs-10">
-                        $<?= number_format($subtotal_ship, 2); ?> USD
-                      </div>
+                </div>
+              </div>
+            <?php } ?>
+            <?php if((isset($cart_samples_items) && strlen($cart_samples_items) > 0)
+              && (isset($cart_items) && strlen($cart_items) > 0)
+            ) { ?>
+              <div id="shipping" class="row">
+                <?php echo isset($shipping) ? $shipping : ''; ?>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 table-list-row-item">
+                  <div class="row">
+                    <div class="col-xs-2">
+                      Subtotal:
+                    </div>
+                    <div id="subtotal_ship" class="col-xs-10">
+                      $<?= number_format($subtotal_ship, 2); ?> USD
                     </div>
                   </div>
                 </div>
@@ -137,7 +136,7 @@
                   CONTINUE SHOPPING
                 </a>
 
-                <?php if (
+                <?php if(
                   (isset($cart_items) && strlen($cart_items) > 0) ||
                   (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
                 ) { ?>
@@ -150,13 +149,9 @@
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
-
     </div>
-
   </div>
 </div>
 

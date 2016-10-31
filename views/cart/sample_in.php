@@ -2,7 +2,7 @@
   <div class="col-sm-6">
     <div class="row">
       <div class="col-sm-4">
-        <a href="<?= _A_::$app->router()->UrlTo('product', ['pid' => $pid, 'back' => 'cart']); ?>">
+        <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart']); ?>">
           <img alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
                src="<?= $img_url; ?>">
         </a>
