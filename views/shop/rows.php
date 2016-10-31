@@ -2,8 +2,8 @@
   <?php foreach($rows as $row): ?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">
       <div class="product-inner">
-        <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
-          <?php if($bProductDiscount) { ?>
+        <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
+          <?php if($row['bProductDiscount']) { ?>
             <span class="extra_discount">Extra Discount!</span>
           <?php }
             $url_prms['pid'] = $row[0];
@@ -13,7 +13,7 @@
           <a href="<?= $href; ?>"></a>
           <figcaption>
             <?php
-              if($in_cart) {
+              if($row['in_cart']) {
                 include('views/cart/basket.php');
               } else {
                 ?>
@@ -28,7 +28,7 @@
           <a href="<?= $href; ?>"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></a>
         </h3>
         <div class="product-price-box clearfix">
-          <?php if($row['sys_hide_price'] == 0 && $row['hide_price'] == 0) { ?>
+          <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
             <span class="price pull-left"><span class="amount"><?= $row['format_price']; ?></span></span>
           <?php }
             if(isset($row['saleprice']) && ($row['price'] != $row['saleprice'])) { ?>

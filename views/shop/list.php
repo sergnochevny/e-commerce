@@ -24,11 +24,8 @@
           ?>
         </p>
       </div>
-      <div class="col-sm-4">
-        <?= isset($search_str) ? '<p class="">Search query: <b>' . $search_str . '</b></p>' : '' ?>
-      </div>
-      <div class="col-sm-4 search-result-container">
-        <span class="woocommerce-result-count pull-right">Showing <?= $count_rows; ?> results</span>
+      <div class="col-sm-8 search-result-container text-right">
+        <span class="search-result">Showing <?= $count_rows; ?> results</span>
       </div>
     </div>
   </div>
@@ -42,7 +39,7 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="row products">
-        <?= $rows; ?>
+        <?= $list; ?>
     </div>
   </div>
 </div>

@@ -22,19 +22,25 @@
       if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::validData($filter["d.id"])) . "'";
       if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::validData($filter["e.id"])) . "'";
       if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        if(strlen(trim($result)) > 0) {
+        if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
+      }
+      if(isset($filter['hidden']["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::validData($filter['hidden']["b.cid"])) . "'";
+      if(isset($filter['hidden']["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::validData($filter['hidden']["c.id"])) . "'";
+      if(isset($filter['hidden']["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::validData($filter['hidden']["d.id"])) . "'";
+      if(isset($filter['hidden']["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::validData($filter['hidden']["e.id"])) . "'";
+      if(!empty($result) && (count($result) > 0)) {
+        $result = implode(" AND ", $result);
       }
       $result = " WHERE a.pnumber is not null and a.pvisible = '1'" . (!empty($result) ? ' AND ' . $result : '');
       return $result;
     }
 
-    protected static function prepare_layout_product($row, $cart, $sys_hide_price) {
+    protected static function prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix = 'b_') {
       $row['sdesc'] = substr($row['sdesc'], 0, 100);
       $row['ldesc'] = substr($row['ldesc'], 0, 100);
-      $filename = 'upload/upload/b_' . $row['image1'];
+      $filename = 'upload/upload/' . $image_suffix . $row['image1'];
       if(!(file_exists($filename) && is_file($filename))) {
         $filename = 'upload/upload/not_image.jpg';
       }
@@ -92,14 +98,21 @@
 
     public static function get_product($pid) {
       self::inc_popular($pid);
-      return Model_Product::get_by_id($pid);
+      $row = Model_Product::get_by_id($pid);
+
+      $sys_hide_price = Model_Price::sysHideAllRegularPrices();
+      $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+      $cart = array_keys($cart_items);
+      $response = self::prepare_layout_product($row, $cart, $sys_hide_price);
+
+      return $response;
     }
 
     public static function inc_popular($pid) {
       mysql_query("update fabrix_products set popular = popular+1 WHERE pid='$pid'");
     }
 
-    public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows, &$image_suffix) {
+    public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows) {
       $response = null;
       $q = "";
       $image_suffix = '';
@@ -135,7 +148,7 @@
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
         while($row = mysql_fetch_array($result)) {
-          $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price);
+          $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix);
         }
       }
       return $response;
@@ -189,7 +202,7 @@
       return $res;
     }
 
-    public static function get_list_by_type($type = 'new', $start, $per_page, &$res_count_rows = 0) {
+    public static function get_list_by_type($type = 'new', $start, $per_page, &$res_count_rows = 0, &$filter = null, &$sort = null) {
       $rows = null;
       $q = "";
       switch($type) {
@@ -286,7 +299,7 @@
       return $rows;
     }
 
-    public static function get_count_by_type($type) {
+    public static function get_count_by_type($type, $filter = null) {
       switch($type) {
         case 'all':
           if(!empty(_A_::$app->get('cat'))) {
