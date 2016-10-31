@@ -6,6 +6,7 @@
   include_once 'views/messages/alert-boxes.php';
 ?>
 
+
 <div class="col-xs-12 text-center afterhead-row">
   <h3 class="page-title">Discounts</h3>
 </div>
