@@ -15,6 +15,12 @@
             <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text"
                    placeholder="e.g. abc888999">
           </div>
+
+          <div class="form-row">
+            <label><b>Mfg. & Stock number:</b></label>
+            <input type="text" name="stock_number" value="<?= $data['stock_number']; ?>" class="input-text ">
+          </div>
+
           <div class="form-row">
             <label><b>Short description:</b></label>
             <input type="text" value="<?= $data['sdesc']; ?>" name="sdesc" class="input-text ">
@@ -37,7 +43,15 @@
             <input type="text" name="metakeywords" value="<?= $data['metakeywords']; ?>" class="input-text"
                    placeholder="Just a few words, separated by coma">
           </div>
-
+          <div class="form-row">
+            <hr>
+          </div>
+          <div class="form-row">
+            <label><b>Manufacturer:</b></label>
+            <select name="manufacturerId">
+              <?= $data['manufacturers']; ?>
+            </select>
+          </div>
           <div class="form-row">
             <label><b>Categories:</b></label>
             <div>
@@ -58,47 +72,49 @@
               <?= $data['patterns']; ?>
             </div>
           </div>
+
           <div class="form-row">
-            <label><b>Width:</b></label>
-            <input type="text" id="m_width" name="width" value="<?= $data['width']; ?>" class="input-text ">
+            <hr style="margin: 5px 0">
           </div>
-
-
           <div class="form-row">
-            <label>
-              <b>Hide regular price:</b>
-              <input type="checkbox" <?= (isset($data['hideprice']) && ($data['hideprice'] == "1")) ? 'checked' : '' ?>
-                     value="1" name="hideprice" class="input-checkbox">
+            <label class="inline pull-left" style="margin-left: 0">
+              <b>Piece:</b>
+              <input type="checkbox" <?= (isset($data['piece']) && ($data['piece'] == "1")) ? 'checked' : '' ?>
+                     value="1" name="piece" class="input-checkbox">
             </label>
-          </div>
-
-          <div class="form-row">
-            <label><b>Weight:</b></label>
-            <select name="weight_id">
-              <option value="0" <?= ($data['weight_id'] == "0") ? 'selected' : ''; ?>>Use Category Weight</option>
-              <option value="1" <?= ($data['weight_id'] == "1") ? 'selected' : ''; ?>>Light</option>
-              <option value="2" <?= ($data['weight_id'] == "2") ? 'selected' : ''; ?>>Medium</option>
-              <option value="3" <?= ($data['weight_id'] == "3") ? 'selected' : ''; ?>>Heavy</option>
-            </select>
-            <small style="color:#999;">
-              <b>NOTE:</b> choosing any of Light, Medium, Heavy overrides the default weight
-              for the category.
-            </small>
-          </div>
-          <hr/>
-          <div class="form-row">
-            <label class="inline" style="margin-left: 0">
+            <label class="inline pull-left">
               <b>Whole:</b>
               <input type="checkbox" <?= (isset($data['whole']) && ($data['whole'] == "1")) ? 'checked' : '' ?>
                      name="whole" value="1" class="input-checkbox">
             </label>
           </div>
           <div class="form-row">
-            <label><b>Manufacturer:</b></label>
-            <select name="manufacturerId">
-              <?= $data['manufacturers']; ?>
-            </select>
+            <hr style="margin: 5px 0">
           </div>
+          <div class="form-row">
+            <label class="inline pull-left" style="margin-left: 0">
+              <b>Best Textile:</b>
+              <input type="checkbox" name="best"
+                     value="1" <?= (isset($data['best']) && ($data['best'] == "1")) ? 'checked' : '' ?>
+                     class="input-checkbox">
+            </label>
+            <label class="inline pull-left">
+              <b>Specials:</b>
+              <input type="checkbox" <?= (isset($data['specials']) && ($data['specials'] == "1")) ? 'checked' : '' ?>
+                     name="specials" value="1" class="input-checkbox">
+            </label>
+          </div>
+          <div class="form-row">
+            <hr style="margin: 5px 0">
+          </div>
+          <div class="form-row">
+            <label class='inline pull-left' style="margin-left: 0">
+              <b style="vertical-align: 3px">Visible:</b>
+              <input type="checkbox" <?= (isset($data['pvisible']) && ($data['pvisible'] == "1")) ? 'checked' : '' ?>
+                     name="pvisible" value="1" class="input-checkbox">
+            </label>
+          </div>
+
 
         </div>
         <div class="col-md-6">
@@ -120,51 +136,55 @@
             <a id="upload" class="button alt" style="cursor: pointer;">Upload file</a>
           </div>
 
+          <div class="col-md-12 form-row">
+            <div class="row">
+              <hr style="margin: 5px 0">
+            </div>
+          </div>
+
+
           <div>
-            <label>
-              <b style="vertical-align: 3px">Best Textile:</b>
-              <input type="checkbox" name="best"
-                     value="1" <?= (isset($data['best']) && ($data['best'] == "1")) ? 'checked' : '' ?>
-                     class="input-checkbox">
-            </label><br>
-            <label>
-              <b style="vertical-align: 3px">Specials:</b>
-              <input type="checkbox" <?= (isset($data['specials']) && ($data['specials'] == "1")) ? 'checked' : '' ?>
-                     name="specials" value="1" class="input-checkbox">
-            </label><br>
-            <label>
-              <b style="vertical-align: 3px">Visible:</b>
-              <input type="checkbox" <?= (isset($data['pvisible']) && ($data['pvisible'] == "1")) ? 'checked' : '' ?>
-                     name="pvisible" value="1" class="input-checkbox">
-            </label><br>
-            <label>
-              <b>Piece:</b>
-              <input type="checkbox" <?= (isset($data['piece']) && ($data['piece'] == "1")) ? 'checked' : '' ?>
-                     value="1" name="piece" class="input-checkbox">
-            </label>
-          </div>
+            <div class="form-row">
+              <label class="required_field" for="p_yard"><b>Price:</b></label>
+              <input type="text" id="p_yard" name="priceyard" value="<?= $data['priceyard']; ?>" class="input-text ">
+            </div>
+            <div class="form-row">
+              <label class="inline" style="margin-left: 0">
+                <b>Hide regular price:</b>
+                <input type="checkbox" <?= (isset($data['hideprice']) && ($data['hideprice'] == "1")) ? 'checked' : '' ?>
+                       value="1" name="hideprice" class="input-checkbox">
+              </label>
+            </div>
+            <div class="form-row">
+              <label for="current_inv"><b>Current inventory:</b></label>
+              <input type="text" id="current_inv" name="inventory" value="<?= $data['inventory']; ?>"
+                     class="input-text ">
+            </div>
 
-          <div class="form-row">
-            <label class="required_field" for="p_yard"><b>Price:</b></label>
-            <input type="text" id="p_yard" name="priceyard" value="<?= $data['priceyard']; ?>" class="input-text ">
-          </div>
+            <div class="form-row">
+              <label><b>Width:</b></label>
+              <input type="text" id="m_width" name="width" value="<?= $data['width']; ?>" class="input-text ">
+            </div>
 
-          <div class="form-row">
-            <label><b>Mfg. & Stock number:</b></label>
-            <input type="text" name="stock_number" value="<?= $data['stock_number']; ?>" class="input-text ">
-          </div>
+            <div class="form-row">
+              <label><b>Dimensions:</b></label>
+              <input type="text" name="dimensions" value="<?= $data['dimensions']; ?>" class="input-text ">
+            </div>
 
-          <div class="form-row">
-            <label><b>Dimensions:</b></label>
-            <input type="text" name="dimensions" value="<?= $data['dimensions']; ?>" class="input-text ">
-          </div>
+            <div class="form-row">
+              <label><b>Weight:</b></label>
+              <select name="weight_id">
+                <option value="0" <?= ($data['weight_id'] == "0") ? 'selected' : ''; ?>>Use Category Weight</option>
+                <option value="1" <?= ($data['weight_id'] == "1") ? 'selected' : ''; ?>>Light</option>
+                <option value="2" <?= ($data['weight_id'] == "2") ? 'selected' : ''; ?>>Medium</option>
+                <option value="3" <?= ($data['weight_id'] == "3") ? 'selected' : ''; ?>>Heavy</option>
+              </select>
+              <small style="color:#999;">
+                <b>NOTE:</b> choosing any of Light, Medium, Heavy overrides the default weight
+                for the category.
+              </small>
+            </div>
 
-          <hr/>
-
-          <div class="form-row">
-            <label for="current_inv"><b>Current inventory:</b></label>
-            <input type="text" id="current_inv" name="inventory" value="<?= $data['inventory']; ?>"
-                   class="input-text ">
           </div>
 
         </div>
