@@ -170,7 +170,7 @@
     </div>
   <?php endforeach; ?>
 <?php else: ?>
-  <div class="col-sm-12 offset-top">
+  <div class="col-sm-12 offset-top text-center">
     <h2 class="offset-top">No results found</h2>
   </div>
 <?php endif; ?>

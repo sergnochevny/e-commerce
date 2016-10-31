@@ -16,29 +16,16 @@
     protected function build_search_filter(&$filter, $view = false) {
       $search_form = parent::build_search_filter($filter, $view);
       if(Controller_User::is_logged()) {
-        $filter['a.aid'] = Controller_User::get_from_session()['aid'];
+        $filter['hidden']['a.aid'] = Controller_User::get_from_session()['aid'];
+      } elseif(Controller_Admin::is_logged()) {
+        if(!is_null(_A_::$app->get('aid'))) {
+          $filter['hidden']['a.aid'] = _A_::$app->get('aid');
+        }
+        if(!is_null(_A_::$app->get('sid'))) {
+          $filter['hidden']['c.sid'] = _A_::$app->get('sid');
+        }
       }
       return $search_form;
-    }
-
-    protected function before_search_form_layout(&$search_data, $view = false) {
-//      $categories = [];
-//      $rows = Model_Categories::get_list(0, 0, $res_count);
-//      foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
-//      $patterns = [];
-//      $rows = Model_Patterns::get_list(0, 0, $res_count);
-//      foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
-//      $colours = [];
-//      $rows = Model_Colours::get_list(0, 0, $res_count);
-//      foreach($rows as $row) $colours[$row['id']] = $row['colour'];
-//      $manufacturers = [];
-//      $rows = Model_Manufacturers::get_list(0, 0, $res_count);
-//      foreach($rows as $row) $manufacturers[$row['id']] = $row['manufacturer'];
-//
-//      $search_data['categories'] = $categories;
-//      $search_data['patterns'] = $patterns;
-//      $search_data['colours'] = $colours;
-//      $search_data['manufacturers'] = $manufacturers;
     }
 
     protected function load(&$data) {
