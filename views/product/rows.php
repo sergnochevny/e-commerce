@@ -29,6 +29,6 @@
     <?php endforeach; ?>
 <?php else: ?>
   <div class="col-sm-12 text-center offset-top">
-    <h2 class="offset-top">No results found</h2>
+    <h2 class="offset-top page-title">No results found</h2>
   </div>
 <?php endif; ?>
