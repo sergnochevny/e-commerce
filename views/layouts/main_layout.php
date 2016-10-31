@@ -21,6 +21,7 @@
     <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-smallscreen.css'); ?>'
           media='only screen and (max-width: 768px)'/>
 
+    <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/offsets.css'); ?>'/>
     <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/bootstrap.min.css'); ?>'/>
     <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/font-awesome.min.css'); ?>'/>
     <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/js_composer.min.css'); ?>'/>

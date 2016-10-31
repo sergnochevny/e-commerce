@@ -28,7 +28,7 @@
                                             class="product-category"><?= $data['product_category']; ?></span>
                                         <h3><?= $data['product_description']; ?></h3>
                                         <div class="product-price-box clearfix">
-                                            <ins><span class="amount"><?= $data['product_amount']; ?>/ yard</span></ins>
+                                            <ins><span class="amount"><?= $data['product_amount']; ?><sup>/ yard</sup></span></ins>
                                         </div>
                                     </a>
                                 </div>

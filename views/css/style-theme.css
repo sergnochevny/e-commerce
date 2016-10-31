@@ -2166,5 +2166,10 @@ body.archive .main-content {
     }
 }
 
+.cart_item{
+    position: relative;
+}
 
-
+.cart_item{
+    margin-bottom: 15px;
+}

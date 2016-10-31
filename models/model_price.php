@@ -17,10 +17,10 @@
       if($piece == 1 && $inventory > 0) {
         $price = $price * $inventory;
         $format_price = self::formatPrice($price);
-        $format_price = sprintf('%s / piece', $format_price);
+        $format_price = sprintf('%s <sup>/ piece</sup>', $format_price);
       } else {
         $format_price = self::formatPrice($price);
-        $format_price = sprintf('%s / yard', $format_price);
+        $format_price = sprintf('%s <sup>/ yard</sup>', $format_price);
       }
       return $price;
     }
