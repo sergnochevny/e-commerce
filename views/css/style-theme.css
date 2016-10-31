@@ -146,7 +146,6 @@ blockquote cite {
 img {
     display: inline-block;
     max-width: 100%;
-    height: auto;
 }
 
 img[class*="wp-image-"] {

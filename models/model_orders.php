@@ -25,10 +25,17 @@
       if(isset($filter["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::validData($filter["c.sid"])) . "'";
 
       if(!empty($result) && (count($result) > 0)) {
+        if(strlen(trim(implode(" AND ", $result))) > 0) {
+          $filter['active'] = true;
+        }
+      }
+      if(isset($filter['hidden']["a.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::validData($filter['hidden']['a.aid']))."'";
+      if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::validData($filter['hidden']["c.sid"])) . "'";
+
+      if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0){
           $result = " WHERE " . $result;
-          $filter['active'] = true;
         }
       }
       return $result;
@@ -127,7 +134,7 @@
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
       $query = "select";
-      $query .= " a.*, CONCAT(b.bill_firstname,' ',b.bill_lastname) as username";
+      $query .= " DISTINCT a.*, CONCAT(b.bill_firstname,' ',b.bill_lastname) as username";
       $query .= " from fabrix_orders a";
       $query .= " left join fabrix_accounts b on a.aid = b.aid";
       $query .= " left join fabrix_specials_usage c on a.oid = c.oid";
