@@ -1,3 +1,14 @@
+.inner-offset-top{
+    padding-top: 20px;
+}
+.inner-offset-bottom{
+    padding-bottom: 20px;
+}
+.inner-offset-vertical{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .half-inner-offset-top{
     padding-top: 10px;
 }

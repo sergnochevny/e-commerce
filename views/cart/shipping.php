@@ -26,15 +26,16 @@
       <div class="col-xs-10 col-sm-push-2">
         <div class="row">
 
-          <div class="col-sm-6">
+          <div class="col-sm-6 inner-offset-bottom">
             <label for="roll" class="inline">
               <input id="roll" type="checkbox" name="roll" value="1" <?= $bShipRoll ? 'checked' : ''; ?>>
               Ship my fabric on a roll.
             </label>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6 inner-offset-bottom">
             <b>NOTE:</b> This cost $<?= number_format(RATE_ROLL, 2); ?> USD
           </div>
+
         </div>
       </div>
 
@@ -48,10 +49,10 @@
     <div class="col-xs-10 col-sm-push-2">
       <div class="row">
 
-        <div class="col-sm-6">
-          SHIPPING
+        <div class="col-sm-6 inner-offset-bottom">
+          <b>SHIPPING</b>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 inner-offset-bottom">
           <b><span style="color: #663300">$<?= number_format($shipcost, 2); ?> USD</span></b>
         </div>
 
@@ -67,10 +68,10 @@
       <div class="col-xs-10 col-sm-push-2">
         <div class="row">
 
-          <div class="col-sm-6">
-            HANDLING
+          <div class="col-sm-6 inner-offset-bottom">
+            <b>HANDLING</b>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6 inner-offset-bottom">
             <b><span style="color: #663300">$<?= number_format(RATE_HANDLING, 2); ?> USD</span></b>
           </div>
 
@@ -87,10 +88,10 @@
       <div class="col-xs-10 col-sm-push-2">
         <div class="row">
 
-          <div class="col-sm-6">
-            SHIPPING DISCOUNT
+          <div class="col-sm-6 inner-offset-bottom">
+            <b>SHIPPING DISCOUNT</b>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6 inner-offset-bottom">
             <b><span style="color: #663300">$<?= number_format($shipDiscount, 2); ?> USD</span></b>
           </div>
 

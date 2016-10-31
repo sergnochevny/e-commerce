@@ -175,33 +175,10 @@ span#b_in_product {
     color: #fff;
 }
 
-#apply_coupon {
-    display: inline-block !important;
-    padding: 0 10px !important;
-}
 
-#all_to_basket,
-#clear_matches,
 #apply_coupon {
-    margin-bottom: 5px;
-    padding: 5px 20px;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 12px;
-    display: inline-block;
-    line-height: 30px;
-    border-radius: 0;
-    background-color: rgba(102, 119, 0, 0.8);
-    border: 2px solid #455600;
-    color: #fff;
-}
-
-#all_to_basket:hover,
-#clear_matches:hover,
-#apply_coupon:hover {
-    background: none;
-    border-color: #667700;
-    color: #667700;
+    height: 36px;
+    padding-top: 8px;
 }
 
 #select_ship {
@@ -210,10 +187,6 @@ span#b_in_product {
     color: #333;
     height: 36px;
     padding: 0 5px;
-}
-
-#coupon_code {
-    padding: 3px 5px;
 }
 
 .button.alt:hover {

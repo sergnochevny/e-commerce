@@ -20,30 +20,23 @@
             </div>
           </div>
 
-          <div class="col-xs-12 table-list-row">
+          <div class="col-sm-12 table-list-row">
             <?= isset($cart_items) ? $cart_items : ''; ?>
             <?php
               if (isset($cart_items) && strlen($cart_items) > 0) { ?>
-                <div class="row cart_item table-list-row-item">
-                  <hr class="half-outer-offset-vertical">
-                </div>
-                <div class="row cart_item table-list-row-item">
-                  <div class="col-xs-12 table-list-row-item">
-                    <div class="row">
-                      <div class="col-xs-2 text-right">
-                        <b>Subtotal:</b>
-                      </div>
-                      <div class="col-xs-10">
-                        <?= isset($sum_items) ? $sum_items : ''; ?>
-                      </div>
+                <div class="row table-list-row-item">
+                    <div class="col-sm-2">
+                      <b>Subtotal:</b>
                     </div>
-                  </div>
+                    <div class="col-sm-10">
+                      <?= isset($sum_items) ? $sum_items : ''; ?>
+                    </div>
                 </div>
               <?php } ?>
           </div>
 
           <?php if (isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
-            <div class="col-xs-12 table-list-row">
+            <div class="col-xs-12 inner-offset-vertical">
               <?php if (isset($cart_samples_legend)) { ?>
                 <div class="row"><?= isset($cart_samples_legend) ? $cart_samples_legend : ''; ?></div>
               <?php } ?>
@@ -67,10 +60,10 @@
                       <div class="row">
                         <div class="col-xs-12 table-list-row-item">
                           <div class="row">
-                            <div class="col-xs-2">
-                              Subtotal:
+                            <div class="col-xs-6 col-sm-2">
+                              <b>Subtotal:</b>
                             </div>
-                            <div class="col-xs-10">
+                            <div class="col-xs-6 col-sm-10">
                               <?= isset($sum_samples) ? $sum_samples : ''; ?>
                             </div>
                           </div>
@@ -95,7 +88,7 @@
                 && (isset($cart_items) && strlen($cart_items) > 0)) {
                 ?>
                   <div class="row">
-                    <div class="col-xs-12 table-list-row-item">
+                    <div class="col-xs-12 table-list-row-item inner-offset-bottom">
                       <div class="row">
                         <div class="col-xs-2">
                           Subtotal:
@@ -111,7 +104,7 @@
                 && (isset($cart_items) && strlen($cart_items) > 0)
                   ) { ?>
                 <div class="row">
-                  <div class="col-xs-12 table-list-row-item">
+                  <div class="col-xs-12 table-list-row-item half-inner-offset-bottom">
                     <div class="row">
                       <div class="col-xs-2">
                         Subtotal:
