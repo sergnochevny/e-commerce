@@ -566,7 +566,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 
 .products:not(.product_list_widget) > .product-item{
-    min-height: 326px;
+    min-height: 366px;
 }
 .product-inner > h3{
     margin-top: 0;
@@ -593,8 +593,11 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     box-shadow: 0 5px 20px #b4b4b4;
     min-height: 110px;
 }
+.product-detail-view-actions .button:nth-child(3n - 1){
+    margin-right: 0 !important;
+}
 .product-detail-view-actions .button{
-    width: 42.5%;
+    width: 44.5%;
     margin-bottom: 5.5%;
     margin-left: 2.75%;
     margin-right: 2.75%;
@@ -849,6 +852,10 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 
 .product-item .images {
     margin-bottom: 50px;
+}
+
+.images{
+    margin-bottom: 25px;
 }
 
 .product-item .images div.thumbnails {
