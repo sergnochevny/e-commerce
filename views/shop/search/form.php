@@ -7,7 +7,7 @@
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
               <?php if(isset($search['a.pname'])): ?>
-                  <div class="label label-search-info">Name Like:<?= $search['a.pname'] ?></div>
+                  <div class="label label-search-info">Name Like: <?= $search['a.pname'] ?></div>
               <?php endif; ?>
               <?php if(isset($search['a.pnumber'])): ?>
                   <div class="label label-search-info">Product number Like: <?= $search['a.pnumber'] ?></div>
@@ -16,7 +16,10 @@
                   <div class="label label-search-info">Category: <?= $search['categories'][$search['b.cid']] ?></div>
               <?php endif; ?>
               <?php if(isset($search['c.id'])): ?>
-                  <div class="label label-search-info">Colour: <?= $search['colours'][$search['c.id']] ?></div>
+                <div class="label label-search-info">Colour: <?= $search['colours'][$search['c.id']] ?></div>
+              <?php endif; ?>
+              <?php if(isset($search['d.id'])): ?>
+                <div class="label label-search-info">Pattern: <?= $search['patterns'][$search['d.id']] ?></div>
               <?php endif; ?>
               <?php if(isset($search['e.id'])): ?>
                   <div class="label label-search-info">Manufacturer: <?= $search['manufacturers'][$search['e.id']] ?>

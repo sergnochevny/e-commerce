@@ -44,8 +44,8 @@
   </div>
 </div>
 
-<input type="hidden" id="hidden_bsells_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_bsells') ?>">
-<input type="hidden" id="hidden_popular_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_popular') ?>">
-<input type="hidden" id="hidden_new_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_new') ?>/">
-<input type="hidden" id="hidden_best_products" value="<?= _A_::$app->router()->UrlTo('shop/widget_best') ?>">
+<input type="hidden" id="hidden_bsells_products" value="<?= _A_::$app->router()->UrlTo('shop/widget',['type'=>'bsells']) ?>">
+<input type="hidden" id="hidden_popular_products" value="<?= _A_::$app->router()->UrlTo('shop/widget',['type'=>'popular']) ?>">
+<input type="hidden" id="hidden_new_products" value="<?= _A_::$app->router()->UrlTo('shop/widget',['type'=>'new']) ?>">
+<input type="hidden" id="hidden_best_products" value="<?= _A_::$app->router()->UrlTo('shop/widget',['type'=>'best']) ?>">
 <script src='<?= _A_::$app->router()->UrlTo('views/js/index/block_footer.js'); ?>' type="text/javascript"></script>

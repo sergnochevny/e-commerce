@@ -2,15 +2,71 @@
 
   Class Model_Shop extends Model_Base {
 
-    public static function product_filter_list() {
-      $x = 0;
-      $results = mysql_query("select * from fabrix_categories");
-      $category = [];
-      while($row = mysql_fetch_array($results)) {
-        $x++;
-        $category[] = [$row[0], $row[1]];
+    protected static $table = 'fabrix_products';
+
+    protected static function build_where(&$filter) {
+      $result = "";
+      if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pname"])) . "%'";
+      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::validData($filter["a.pvisible"])) . "'";
+      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::validData($filter["a.piece"])) . "'";
+      if(isset($filter["a.dt"])) {
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["from"])) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["to"])) . "'" : "");
+        if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      return ['total_category_in_select' => $x, 'category_in_select' => $category];
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pnumber"])) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::validData($filter["a.best"])) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::validData($filter["a.specials"])) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::validData($filter["b.cid"])) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::validData($filter["c.id"])) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::validData($filter["d.id"])) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::validData($filter["e.id"])) . "'";
+      if(!empty($result) && (count($result) > 0)) {
+        if(strlen(trim(implode(" AND ", $result))) > 0) {
+          $filter['active'] = true;
+        }
+      }
+      if(isset($filter['hidden']["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::validData($filter['hidden']["b.cid"])) . "'";
+      if(isset($filter['hidden']["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::validData($filter['hidden']["c.id"])) . "'";
+      if(isset($filter['hidden']["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::validData($filter['hidden']["d.id"])) . "'";
+      if(isset($filter['hidden']["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::validData($filter['hidden']["e.id"])) . "'";
+      if(!empty($result) && (count($result) > 0)) {
+        $result = implode(" AND ", $result);
+      }
+      $result = " WHERE a.pnumber is not null and a.pvisible = '1'" . (!empty($result) ? ' AND ' . $result : '');
+      return $result;
+    }
+
+    protected static function prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix = 'b_') {
+      $row['sdesc'] = substr($row['sdesc'], 0, 100);
+      $row['ldesc'] = substr($row['ldesc'], 0, 100);
+      $filename = 'upload/upload/' . $image_suffix . $row['image1'];
+      if(!(file_exists($filename) && is_file($filename))) {
+        $filename = 'upload/upload/not_image.jpg';
+      }
+      $row['filename'] = _A_::$app->router()->UrlTo($filename);
+
+      $pid = $row['pid'];
+      $price = $row['priceyard'];
+      $inventory = $row['inventory'];
+      $piece = $row['piece'];
+      $format_price = '';
+      $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
+
+      $discountIds = [];
+      $saleprice = $row['priceyard'];
+      $sDiscount = 0;
+      $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
+      $row['bProductDiscount'] = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
+      $format_sale_price = '';
+      $row['sDiscount'] = $sDiscount;
+      $row['saleprice'] = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
+      $row['format_sale_price'] = $format_sale_price;
+      $row['format_price'] = $format_price;
+      $row['in_cart'] = in_array($row['pid'], $cart);
+      $row['sys_hide_price'] = $sys_hide_price;
+      $row['price'] = $price;
+      return $row;
     }
 
     public static function set_inventory($pid, $inventory = 0) {
@@ -42,14 +98,22 @@
 
     public static function get_product($pid) {
       self::inc_popular($pid);
-      return Model_Product::get_by_id($pid);
+      $row = Model_Product::get_by_id($pid);
+
+      $sys_hide_price = Model_Price::sysHideAllRegularPrices();
+      $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+      $cart = array_keys($cart_items);
+      $response = self::prepare_layout_product($row, $cart, $sys_hide_price);
+
+      return $response;
     }
 
     public static function inc_popular($pid) {
       mysql_query("update fabrix_products set popular = popular+1 WHERE pid='$pid'");
     }
 
-    public static function get_widget_list_by_type($type, $start, $limit, &$res_row_count, &$image_suffix) {
+    public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows) {
+      $response = null;
       $q = "";
       $image_suffix = '';
       switch($type) {
@@ -78,16 +142,16 @@
           $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' ORDER BY popular DESC LIMIT " . $start . "," . $limit;
           break;
       }
-      $rows = mysql_query($q);
-      $res_row_count = mysql_num_rows($rows);
-      if($rows) {
-        $res = $rows;
-        $rows = [];
-        while($row = mysql_fetch_array($res)) {
-          $rows[] = $row;
+      if($result = mysql_query($q)) {
+        $res_count_rows = mysql_num_rows($result);
+        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart = array_keys($cart_items);
+        while($row = mysql_fetch_array($result)) {
+          $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix);
         }
       }
-      return $rows;
+      return $response;
     }
 
     public static function get_items_for_menu($type) {
@@ -138,7 +202,8 @@
       return $res;
     }
 
-    public static function get_list_by_type($type = 'new', $start, $per_page, &$res_row_count = 0) {
+    public static function get_list_by_type($type = 'new', $start, $per_page, &$res_count_rows = 0, &$filter = null, &$sort = null) {
+      $rows = null;
       $q = "";
       switch($type) {
         case 'all':
@@ -222,23 +287,19 @@
           }
           break;
       }
-      $res = mysql_query($q);
-      $rows = null;
-      if($res) {
-        $rows = mysql_query($q);
-        $res_row_count = mysql_num_rows($rows);
-        if($rows) {
-          $res = $rows;
-          $rows = [];
-          while($row = mysql_fetch_array($res)) {
-            $rows[] = $row;
-          }
+      if($result = mysql_query($q)) {
+        $res_count_rows = mysql_num_rows($result);
+        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart = array_keys($cart_items);
+        while($row = mysql_fetch_array($result)) {
+          $rows[] = self::prepare_layout_product($row, $cart, $sys_hide_price);
         }
       }
       return $rows;
     }
 
-    public static function get_count_by_type($type) {
+    public static function get_count_by_type($type, $filter = null) {
       switch($type) {
         case 'all':
           if(!empty(_A_::$app->get('cat'))) {
@@ -319,33 +380,6 @@
       return $total;
     }
 
-    protected static function build_where(&$filter) {
-      $result = "";
-      if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pname"])) . "%'";
-      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::validData($filter["a.pvisible"]))."'";
-      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::validData($filter["a.piece"]))."'";
-      if(isset($filter["a.dt"])) {
-        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["from"])) . "'" : "") .
-          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["to"])) . "'" : "");
-        if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
-      }
-      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pnumber"])) . "%'";
-      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::validData($filter["a.best"])) . "'";
-      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::validData($filter["a.specials"])) . "'";
-      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::validData($filter["b.cid"])) . "'";
-      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::validData($filter["c.id"])) . "'";
-      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::validData($filter["d.id"])) . "'";
-      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::validData($filter["e.id"])) . "'";
-      if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        if(strlen(trim($result)) > 0){
-          $filter['active'] = true;
-        }
-      }
-      $result = " a.pnumber is not null and a.pvisible = '1' AND " . $result;
-      return $result;
-    }
-
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
@@ -384,142 +418,10 @@
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
         while($row = mysql_fetch_array($result)) {
-          $row['ldesc'] = substr($row['ldesc'], 0, 100);
-          $filename = 'upload/upload/b_' . $row['image1'];
-          if(!(file_exists($filename) && is_file($filename))) {
-            $filename = 'upload/upload/not_image.jpg';
-          }
-          $row['filename'] = _A_::$app->router()->UrlTo($filename);
-
-          $pid = $row['pid'];
-          $price = $row['priceyard'];
-          $inventory = $row['inventory'];
-          $piece = $row['piece'];
-          $format_price = '';
-          $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
-
-          $discountIds = [];
-          $saleprice = $row['priceyard'];
-          $sDiscount = 0;
-          $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
-          $row['bProductDiscount'] = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
-          $format_sale_price = '';
-          $row['sDiscount'] = $sDiscount;
-          $row['saleprice'] = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
-          $row['format_sale_price'] = $format_sale_price;
-          $row['format_price'] = $format_price;
-          $row['in_cart'] = in_array($row['pid'], $cart);
-          $row['sys_hide_price'] = $sys_hide_price;
-          $row['price'] = $price;
-
-          $response[] = $row;
+          $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price);
         }
       }
       return $response;
-    }
-
-
-    public static function get_total($search = null) {
-      if(!empty(_A_::$app->get('cat'))) {
-        $cid = static::validData(_A_::$app->get('cat'));
-        $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
-          " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-          " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cid'";
-        if(isset($search)) {
-          $q_total .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
-            " or LOWER(a.pname) like '%" . $search . "%'";
-        }
-      } else {
-        if(!empty(_A_::$app->get('ptrn'))) {
-          $ptrn_id = static::validData(_A_::$app->get('ptrn'));
-          $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
-            " LEFT JOIN fabrix_product_patterns b ON a.pid = b.prodid " .
-            " WHERE  a.pnumber is not null and a.pvisible = '1' and b.patternId='$ptrn_id'";
-
-          if(isset($search)) {
-            $q_total .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
-              " or LOWER(a.pname) like '%" . $search . "%')";
-          }
-        } else {
-          if(!empty(_A_::$app->get('mnf'))) {
-            $mnf_id = static::validData(_A_::$app->get('mnf'));
-            $q_total = "SELECT COUNT(*) FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and manufacturerId = '$mnf_id'";
-            if(isset($search)) {
-              $q_total .= " and (LOWER(pnumber) like '%" . $search . "%'" .
-                " or LOWER(pname) like '%" . $search . "%')";
-            }
-          } else {
-            $q_total = "SELECT COUNT(*) FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' ";
-            if(isset($search)) {
-              $q_total .= " and (LOWER(pnumber) like '%" . $search . "%'" .
-                " or LOWER(pname) like '%" . $search . "%')";
-            }
-          }
-        }
-      }
-
-      $res = mysql_query($q_total);
-      $total = mysql_fetch_row($res)[0];
-      return $total;
-    }
-
-    public static function get_products($start, $per_page, &$res_count_rows, $search = null) {
-      if(!empty(_A_::$app->get('cat'))) {
-        $cid = static::validData(_A_::$app->get('cat'));
-        $q = "SELECT a.* FROM fabrix_products a" .
-          " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-          " WHERE  a.pnumber IS NOT NULL AND a.pvisible = '1' and b.cid='$cid'";
-
-        if(isset($search)) {
-          $q .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
-            " or LOWER(a.pname) like '%" . $search . "%')";
-        }
-
-        $q .= " ORDER BY b.display_order LIMIT $start, $per_page";
-      } else {
-        if(!empty(_A_::$app->get('ptrn'))) {
-          $ptrn_id = static::validData(_A_::$app->get('ptrn'));
-          $q = "SELECT a.* FROM fabrix_products a" .
-            " LEFT JOIN fabrix_product_patterns b ON a.pid = b.prodId " .
-            " WHERE  a.pnumber IS NOT NULL AND a.pvisible = '1' and b.patternId='$ptrn_id'";
-
-          if(isset($search)) {
-            $q .= " and (LOWER(a.pnumber) like '%" . $search . "%'" .
-              " or LOWER(a.pname) like '%" . $search . "%')";
-          }
-          $q .= " ORDER BY a.dt DESC, a.pid DESC LIMIT $start, $per_page";
-        } else {
-          if(!empty(_A_::$app->get('mnf'))) {
-            $mnf_id = static::validData(_A_::$app->get('mnf'));
-            $q = "SELECT * FROM fabrix_products WHERE  pnumber IS NOT NULL AND pvisible = '1' AND manufacturerId = '$mnf_id'";
-            if(isset($search)) {
-              $q .= " and (LOWER(pnumber) like '%" . $search . "%'" .
-                " or LOWER(pname) like '%" . $search . "%')";
-            }
-            $q .= " ORDER BY dt DESC, pid DESC LIMIT $start,$per_page";
-          } else {
-
-            $q = "SELECT * FROM fabrix_products WHERE  pnumber IS NOT NULL AND pvisible = '1'";
-
-            if(isset($search)) {
-              $q .= " and (LOWER(pnumber) like '%" . $search . "%'" .
-                " or LOWER(pname) like '%" . $search . "%')";
-            }
-
-            $q .= " ORDER BY dt DESC, pid DESC LIMIT $start, $per_page";
-          }
-        }
-      }
-      $q = mysql_query($q);
-      $res = [];
-      $res_count_rows = mysql_num_rows($q);
-      if(is_resource($q)) {
-        while($row = mysql_fetch_array($q)) {
-          $res[] = $row;
-        }
-      }
-
-      return $res;
     }
 
   }
