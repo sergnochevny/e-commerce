@@ -1,22 +1,37 @@
 <div class="col-xs-12 col-sm-6 col-md-4 product-item">
   <div class="product-inner">
-      <figure class="product-image-box">
-        <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $row[0]], $row['pname']); ?>">
-          <img src="<?= $filename; ?>" alt="">
+    <?php
+      $url_prms=['pid' => $row[0], 'back'=>''];
+      $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
+    ?>
+    <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
+        <a href="<?= $href; ?>">
           <figcaption>
             <?php if($bProductDiscount) { ?><span class="extra_discount">Extra Discount!</span><?php } ?>
+            <?php
+              if($in_cart) {
+                include('views/cart/basket.php');
+              } else {
+                ?>
+                <a class="button add-to-basket <?= isset($search) ? 'a_search' : '' ?>"
+                   href="<?= $href; ?>">
+                  View Details
+                </a>
+                <?php
+              }
+            ?>
           </figcaption>
         </a>
       </figure>
 
       <span class="product-category">
-        <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $row[0]], $row['pname']); ?>">
+        <a href="<?= $href; ?>">
           <?= $row['pname']; ?>
         </a>
       </span>
 
       <h3 class="descProduct">
-        <a href="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $row[0]], $row['pname']); ?>">
+        <a href="<?= $href; ?>">
           <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
         </a>
       </h3>

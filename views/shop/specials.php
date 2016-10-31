@@ -7,7 +7,6 @@
     <a href="<?= $href; ?>">
       <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
         <?php if ($bProductDiscount) { ?> <span class="extra_discount">Extra Discount!</span> <?php } ?>
-        <a href="<?= $href; ?>"></a>
         <figcaption>
           <?php
             if($in_cart) {

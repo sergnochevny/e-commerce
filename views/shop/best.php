@@ -8,9 +8,7 @@
       <figure class="product-image-box" style="background-image:url(<?= $filename; ?>)">
         <?php if($bProductDiscount) { ?>
           <span class="extra_discount">Extra Discount!</span>
-        <?php }
-        ?>
-        <a href="<?= $href; ?> "> </a>
+        <?php } ?>
         <figcaption>
           <?php
             if($in_cart) {
