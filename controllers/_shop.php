@@ -24,24 +24,16 @@
       $this->main->template->vars('categories', $categories);
     }
 
-    private function product_list() {
-      $image_suffix = 'b_';
-      $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-      $cart = array_keys($cart_items);
-      $search = null;
-      if(!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
-        $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
-        $this->main->template->vars('search', _A_::$app->post('s'));
-      }
+    private function product_list(&$filter) {
 
       $page = !empty(_A_::$app->get('page')) ? Model_Shop::validData(_A_::$app->get('page')) : 1;
       $per_page = 12;
-      $total = Model_Shop::get_total($search);
-      if($page > ceil($total / $per_page))
-        $page = ceil($total / $per_page);
-      if($page <= 0)
-        $page = 1;
+      $total = Model_Shop::get_total_count($filter);
+      if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
+      if($page <= 0) $page = 1;
       $start = (($page - 1) * $per_page);
+
+
       if(!empty(_A_::$app->get('cat'))) {
         $cid = Model_Shop::validData(_A_::$app->get('cat'));
         if ($category = Model_Categories::get_by_id($cid)) $category_name = $category['cname'];
@@ -59,58 +51,34 @@
         }
       }
       $rows = Model_Shop::get_products($start, $per_page, $count_rows, $search);
+
       if($rows) {
+
+        $url_prms = null;
+        if(!empty(_A_::$app->get('page'))) {
+          $url_prms['page'] = _A_::$app->get('page');
+        }
+        if(!empty(_A_::$app->get('cat'))) {
+          $url_prms['cat'] = _A_::$app->get('cat');
+        }
+        if(!empty(_A_::$app->get('mnf'))) {
+          $url_prms['mnf'] = _A_::$app->get('mnf');
+        }
+        if(!empty(_A_::$app->get('ptrn'))) {
+          $url_prms['ptrn'] = _A_::$app->get('ptrn');
+        }
+
+
         $this->main->template->vars('count_rows', $count_rows);
-        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
-        $this->main->template->vars('sys_hide_price', $sys_hide_price);
+
         ob_start();
         foreach($rows as $row) {
-          $row['ldesc'] = substr($row['ldesc'], 0, 100);
-          $filename = 'upload/upload/' . $image_suffix . $row['image1'];
-          if(!(file_exists($filename) && is_file($filename))) {
-            $filename = 'upload/upload/not_image.jpg';
-          }
-          $filename = _A_::$app->router()->UrlTo($filename);
 
-          $opt = null;
-          if(!empty(_A_::$app->get('page'))) {
-            $opt['page'] = _A_::$app->get('page');
-          }
-          if(!empty(_A_::$app->get('cat'))) {
-            $opt['cat'] = _A_::$app->get('cat');
-          }
-          if(!empty(_A_::$app->get('mnf'))) {
-            $opt['mnf'] = _A_::$app->get('mnf');
-          }
-          if(!empty(_A_::$app->get('ptrn'))) {
-            $opt['ptrn'] = _A_::$app->get('ptrn');
-          }
 
-          $pid = $row['pid'];
-          $price = $row['priceyard'];
-          $inventory = $row['inventory'];
-          $piece = $row['piece'];
-          $format_price = '';
-          $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
-          $discountIds = [];
-          $saleprice = $row['priceyard'];
-          $sDiscount = 0;
-          $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
-          $this->template->vars('bProductDiscount', Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds));
-          $format_sale_price = '';
-          $this->template->vars('saleprice', Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece));
-          $this->template->vars('format_sale_price', $format_sale_price);
-          $this->template->vars('format_price', $format_price);
-          $this->template->vars('in_cart', in_array($row[0], $cart));
-          $hide_price = $row['hideprice'];
-          $this->template->vars('hide_price', $hide_price);
-          $this->template->vars('filename', $filename);
-          $this->template->vars('sys_hide_price', $sys_hide_price);
-          $this->template->vars('row', $row);
-          $this->template->vars('price', $price);
-          $this->template->vars('search', $search);
-          $this->template->vars('opt', $opt);
+          $this->template->vars('search_str', $search);
+
+          $this->template->vars('url_prms', $url_prms);
           $this->template->view_layout('rows');
         }
 
@@ -121,6 +89,7 @@
 
         $paginator = new Controller_Paginator($this);
         $paginator->paginator($total, $page, 'shop', $per_page);
+
       } else {
         $this->main->template->vars('count_rows', 0);
         $rows = "No Result!";
@@ -226,6 +195,8 @@
 
     private function widget_products($type, $start, $limit, $layout = 'widget_products') {
       $rows = Model_Shop::get_widget_list_by_type($type, $start, $limit, $row_count, $image_suffix);
+      $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+      $cart = array_keys($cart_items);
       if($rows) {
         $sys_hide_price = Model_Price::sysHideAllRegularPrices();
         $this->template->vars('sys_hide_price', $sys_hide_price);
@@ -255,12 +226,8 @@
           $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
           $format_sale_price = '';
           $saleprice = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
-
           $hide_price = $row['hideprice'];
-          $this->template->vars('hide_price', $hide_price);
-
           $last = $i++ == $row_count;
-
           $this->template->vars('last', $last);
           $this->template->vars('first', $first);
           $this->template->vars('saleprice', $saleprice);
@@ -272,6 +239,7 @@
           $this->template->vars('inventory', $inventory);
           $this->template->vars('discountIds', $discountIds);
           $this->template->vars('pid', $pid);
+          $this->template->vars('in_cart', in_array($row[0], $cart));
           $this->template->vars('filename', $filename);
           $this->template->vars('format_price', $format_price);
           $this->template->vars('row', $row);
@@ -308,6 +276,18 @@
       $search_data['patterns'] = $patterns;
       $search_data['colours'] = $colours;
       $search_data['manufacturers'] = $manufacturers;
+    }
+
+    protected function build_search_filter(&$filter, $view = false) {
+      $search = null;
+      $res = parent::build_search_filter($filter, $view);
+      if (!isset($res['pname']) && !is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))){
+        $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
+        $this->main->template->vars('search_str', _A_::$app->post('s'));
+        $res['pname'] = $search;
+        $filter['a.pname'] = $search;
+      }
+      return $res;
     }
 
     /**
@@ -627,10 +607,9 @@
       }
       $cart = array_keys($cart_items);
       $in_cart = in_array($pid, $cart);
-      if($in_cart)
-        $this->template->vars('in_cart', '1');
+      if($in_cart) $this->template->vars('in_cart', '1');
 
-      $url_prms = ['page' => '1'];
+      $url_prms = [];
       if(!empty(_A_::$app->get('page'))) {
         $url_prms['page'] = _A_::$app->get('page');
       }
@@ -662,7 +641,7 @@
 
       if(!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
         $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
-        $this->main->template->vars('search', _A_::$app->post('s'));
+        $this->main->template->vars('search_str', _A_::$app->post('s'));
       }
 
       $this->template->vars('data', $data);

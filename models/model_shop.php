@@ -319,6 +319,106 @@
       return $total;
     }
 
+    protected static function build_where(&$filter) {
+      $result = "";
+      if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pname"])) . "%'";
+      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::validData($filter["a.pvisible"]))."'";
+      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::validData($filter["a.piece"]))."'";
+      if(isset($filter["a.dt"])) {
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["from"])) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::validData($filter["a.dt"]["to"])) . "'" : "");
+        if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
+      }
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::validData($filter["a.pnumber"])) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::validData($filter["a.best"])) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::validData($filter["a.specials"])) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::validData($filter["b.cid"])) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::validData($filter["c.id"])) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::validData($filter["d.id"])) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::validData($filter["e.id"])) . "'";
+      if(!empty($result) && (count($result) > 0)) {
+        $result = implode(" AND ", $result);
+        if(strlen(trim($result)) > 0){
+          $filter['active'] = true;
+        }
+      }
+      $result = " a.pnumber is not null and a.pvisible = '1' AND " . $result;
+      return $result;
+    }
+
+    public static function get_total_count($filter = null) {
+      $response = 0;
+      $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
+      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+      $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
+      $query .= " LEFT JOIN fabrix_colour c ON fabrix_product_colours.colourId = c.id";
+      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+      $query .= static::build_where($filter);
+      if($result = mysql_query($query)) {
+        $response = mysql_fetch_row($result)[0];
+      }
+      return $response;
+    }
+
+    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
+      $response = null;
+      $query = "SELECT DISTINCT a.* ";
+      $query .= " FROM " . static::$table . " a";
+      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+      $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
+      $query .= " LEFT JOIN fabrix_colour c ON fabrix_product_colours.colourId = c.id";
+      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+      $query .= static::build_where($filter);
+      $query .= static::build_order($sort);
+      if($limit != 0) $query .= " LIMIT $start, $limit";
+
+      if($result = mysql_query($query)) {
+        $res_count_rows = mysql_num_rows($result);
+        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
+        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
+        $cart = array_keys($cart_items);
+        while($row = mysql_fetch_array($result)) {
+          $row['ldesc'] = substr($row['ldesc'], 0, 100);
+          $filename = 'upload/upload/b_' . $row['image1'];
+          if(!(file_exists($filename) && is_file($filename))) {
+            $filename = 'upload/upload/not_image.jpg';
+          }
+          $row['filename'] = _A_::$app->router()->UrlTo($filename);
+
+          $pid = $row['pid'];
+          $price = $row['priceyard'];
+          $inventory = $row['inventory'];
+          $piece = $row['piece'];
+          $format_price = '';
+          $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
+
+          $discountIds = [];
+          $saleprice = $row['priceyard'];
+          $sDiscount = 0;
+          $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
+          $row['bProductDiscount'] = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
+          $format_sale_price = '';
+          $row['sDiscount'] = $sDiscount;
+          $row['saleprice'] = Model_Price::getPrintPrice($saleprice, $format_sale_price, $inventory, $piece);
+          $row['format_sale_price'] = $format_sale_price;
+          $row['format_price'] = $format_price;
+          $row['in_cart'] = in_array($row['pid'], $cart);
+          $row['sys_hide_price'] = $sys_hide_price;
+          $row['price'] = $price;
+
+          $response[] = $row;
+        }
+      }
+      return $response;
+    }
+
+
     public static function get_total($search = null) {
       if(!empty(_A_::$app->get('cat'))) {
         $cid = static::validData(_A_::$app->get('cat'));
