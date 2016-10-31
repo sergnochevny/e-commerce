@@ -23,7 +23,7 @@
           <div id="product_in_cart" class="col-xs-12 table-list-row">
             <?= isset($cart_items) ? $cart_items : ''; ?>
             <?php
-              if(isset($cart_items) && strlen($cart_items) > 0) { ?>
+              if (isset($cart_items) && strlen($cart_items) > 0) { ?>
                 <div class="row cart_item table-list-row-item">
                   <hr class="half-outer-offset-vertical">
                 </div>
@@ -42,14 +42,20 @@
               <?php } ?>
           </div>
 
-          <?php if(isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 data-view">
+
+          <?php if (isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
             <div class="col-xs-12 table-list-row">
               <div id="samples_legend" class="row">
                 <?= isset($cart_samples_legend) ? $cart_samples_legend : ''; ?>
               </div>
             </div>
 
-            <?php if(isset($cart_samples_items)) { ?>
+            <?php if (isset($cart_samples_items)) { ?>
 
               <div id="samples_table" class="row">
                 <div class="col-xs-12 data-view">
@@ -63,7 +69,7 @@
 
                   <div class="col-xs-12 table-list-row">
                     <?= $cart_samples_items ?>
-                    <?php if(isset($cart_items) && strlen($cart_items) > 0) { ?>
+                    <?php if (isset($cart_items) && strlen($cart_items) > 0) { ?>
                       <div id="row_subtotal_samples" class="row">
                         <div class="col-xs-12 table-list-row-item">
                           <div class="row">
@@ -84,27 +90,32 @@
             <?php } ?>
           <?php } ?>
 
-          <?php if((isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0)) { ?>
-            <div class="col-xs-12 table-list-row">
+          <?php if ((isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0)) { ?>
             <?php
-            if((isset($cart_samples_items) && strlen($cart_samples_items) > 0)
+            if ((isset($cart_samples_items) && strlen($cart_samples_items) > 0)
               && (isset($cart_items) && strlen($cart_items) > 0)
             ) {
               ?>
-              <div id="div_subtotal_table" class="row">
-                <div id="subtotal_table" class="col-xs-12 table-list-row-item">
-                  <div id="row_subtotal" class="row">
-                    <div class="col-xs-2">
-                      Subtotal:
-                    </div>
-                    <div id="subtotal" class="col-xs-10">
-                      <?= isset($sum_all_items) ? $sum_all_items : ''; ?>
+              <div class="col-xs-12 table-list-row">
+                <div id="div_subtotal_table" class="row">
+                  <div id="subtotal_table" class="col-xs-12 table-list-row-item">
+                    <div id="row_subtotal" class="row">
+                      <div class="col-xs-2">
+                        Subtotal:
+                      </div>
+                      <div id="subtotal" class="col-xs-10">
+                        <?= isset($sum_all_items) ? $sum_all_items : ''; ?>
+                      </div>
                     </div>
                   </div>
                 </div>
+
               </div>
             <?php } ?>
-            <?php if((isset($cart_samples_items) && strlen($cart_samples_items) > 0)
+          <?php } ?>
+
+          <div class="col-xs-12 half-inner-offset-vertical">
+            <?php if ((isset($cart_samples_items) && strlen($cart_samples_items) > 0)
               && (isset($cart_items) && strlen($cart_items) > 0)
             ) { ?>
               <div id="shipping" class="row">
@@ -123,9 +134,6 @@
                 </div>
               </div>
             <?php } ?>
-          <?php } ?>
-
-          <div class="col-xs-12 half-inner-offset-vertical">
             <div class="row">
               <div id="coupon_total">
                 <?= isset($coupon_total) ? $coupon_total : ''; ?>
@@ -136,7 +144,7 @@
                   CONTINUE SHOPPING
                 </a>
 
-                <?php if(
+                <?php if (
                   (isset($cart_items) && strlen($cart_items) > 0) ||
                   (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
                 ) { ?>
@@ -149,10 +157,10 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
