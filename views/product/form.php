@@ -111,11 +111,13 @@
             <label class='inline pull-left' style="margin-left: 0">
               <b style="vertical-align: 3px">Visible:</b>
               <input type="checkbox" <?= (isset($data['pvisible']) && ($data['pvisible'] == "1")) ? 'checked' : '' ?>
-                     name="pvisible" value="1" class="input-checkbox">
+                     name="pvisible" value="1" class="input-checkbox" style="vertical-align: 0">
             </label>
           </div>
 
-
+          <div class="form-row visible-sm">
+            <hr style="margin: 5px 0">
+          </div>
         </div>
         <div class="col-md-6">
           <div class="form-row">
@@ -138,7 +140,7 @@
 
           <div class="col-md-12 form-row">
             <div class="row">
-              <hr style="margin: 5px 0">
+              <hr style="margin: 25px 0">
             </div>
           </div>
 
@@ -154,6 +156,11 @@
                 <input type="checkbox" <?= (isset($data['hideprice']) && ($data['hideprice'] == "1")) ? 'checked' : '' ?>
                        value="1" name="hideprice" class="input-checkbox">
               </label>
+            </div>
+            <div class="col-md-12 form-row">
+              <div class="row">
+                <hr style="margin: 15px 0">
+              </div>
             </div>
             <div class="form-row">
               <label for="current_inv"><b>Current inventory:</b></label>
