@@ -1693,3 +1693,18 @@ ul.product_list_widget li dl dd p {
     background-color: black;
     border-color: #b40000;
 }
+
+.bordered-item-container input[type="checkbox"]{
+    margin-top: 0;
+    vertical-align: -2px;
+}
+.bordered-item-container{
+    background-color: #DDD;
+    border-bottom: 1px solid #D0D0D0;
+}
+.bordered-item{
+    min-height: 50px;
+}
+.first-bordered-item{
+    border: 1px solid #222;
+}

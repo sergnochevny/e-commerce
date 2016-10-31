@@ -80,9 +80,7 @@
 
           <?php if ( (isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0) ) { ?>
             <div class="col-xs-12 table-list-row">
-              <div class="row">
-                <?php echo isset($shipping) ? $shipping : ''; ?>
-              </div>
+              <?php echo isset($shipping) ? $shipping : ''; ?>
               <?php
               if ((isset($cart_samples_items) && strlen($cart_samples_items) > 0)
                 && (isset($cart_items) && strlen($cart_items) > 0)) {

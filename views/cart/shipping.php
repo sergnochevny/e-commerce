@@ -23,16 +23,16 @@
   <div class="col-xs-12 table-list-row-item">
     <div class="row">
 
-      <div class="col-xs-10 col-sm-push-2">
+      <div class="col-xs-10 col-sm-push-2 bordered-item-container">
         <div class="row">
 
-          <div class="col-sm-6 inner-offset-bottom">
+          <div class="col-sm-6 bordered-item half-inner-offset-vertical">
             <label for="roll" class="inline">
               <input id="roll" type="checkbox" name="roll" value="1" <?= $bShipRoll ? 'checked' : ''; ?>>
               Ship my fabric on a roll.
             </label>
           </div>
-          <div class="col-sm-6 inner-offset-bottom">
+          <div class="col-sm-6 bordered-item half-inner-offset-vertical">
             <b>NOTE:</b> This cost $<?= number_format(RATE_ROLL, 2); ?> USD
           </div>
 
@@ -46,13 +46,13 @@
 <div class="col-xs-12 table-list-row-item">
   <div class="row">
 
-    <div class="col-xs-10 col-sm-push-2">
+    <div class="col-xs-10 col-sm-push-2 bordered-item-container">
       <div class="row">
 
-        <div class="col-sm-6 inner-offset-bottom">
+        <div class="col-sm-6 bordered-item half-inner-offset-vertical">
           <b>SHIPPING</b>
         </div>
-        <div class="col-sm-6 inner-offset-bottom">
+        <div class="col-sm-6 bordered-item half-inner-offset-vertical">
           <b><span style="color: #663300">$<?= number_format($shipcost, 2); ?> USD</span></b>
         </div>
 
@@ -65,13 +65,13 @@
   <div class="col-xs-12 table-list-row-item">
     <div class="row">
 
-      <div class="col-xs-10 col-sm-push-2">
+      <div class="col-xs-10 col-sm-push-2 bordered-item-container">
         <div class="row">
 
-          <div class="col-sm-6 inner-offset-bottom">
+          <div class="col-sm-6 bordered-item half-inner-offset-vertical">
             <b>HANDLING</b>
           </div>
-          <div class="col-sm-6 inner-offset-bottom">
+          <div class="col-sm-6 bordered-item half-inner-offset-vertical">
             <b><span style="color: #663300">$<?= number_format(RATE_HANDLING, 2); ?> USD</span></b>
           </div>
 
@@ -85,13 +85,13 @@
   <div class="col-xs-12 table-list-row-item">
     <div class="row">
 
-      <div class="col-xs-10 col-sm-push-2">
+      <div class="col-xs-10 col-sm-push-2 bordered-item-container">
         <div class="row">
 
-          <div class="col-sm-6 inner-offset-bottom">
+          <div class="col-sm-6 bordered-item inner-offset-bottom">
             <b>SHIPPING DISCOUNT</b>
           </div>
-          <div class="col-sm-6 inner-offset-bottom">
+          <div class="col-sm-6 bordered-item inner-offset-bottom">
             <b><span style="color: #663300">$<?= number_format($shipDiscount, 2); ?> USD</span></b>
           </div>
 
@@ -104,7 +104,7 @@
 
 
 <?php if (count($cart_items) > 0) { ?>
-  <div class="col-xs-12 table-list-row-item">
+  <div class="col-xs-12 table-list-row-item inner-offset-vertical">
 
     <p>
       <b>NOTE: </b>
