@@ -782,16 +782,6 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     height: 50px;
 }
 
-.products .owl-item .product-item h3:after,
-.products .product-item h3:after {
-    content: '';
-    width: 20px;
-    height: 1px;
-    background: #e0e0e0;
-    display: block;
-    position: relative;
-    top: 6px;
-}
 
 .products .owl-item .product-item h3 a,
 .products .product-item h3 a {
@@ -832,9 +822,12 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     float: left;
     margin: 0;
     font-size: 100%;
-    font-weight: 300;
     color: #222222;
     line-height: 20px;
+}
+
+.price .amount{
+    font-weight: bold;
 }
 
 .product-price-box ins .amount {
@@ -856,13 +849,13 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 
 .products .product-item .product-category {
-    border-bottom: 1px solid #667700;
+    overflow: hidden;
     color: #667700;
     display: block;
-    font-size: 100%;
+    font-size: 1.3em;
+    padding-top: 4px;
     font-weight: bold;
     line-height: 12px;
-    overflow: hidden;
     text-overflow: ellipsis;
     text-transform: capitalize;
     white-space: nowrap;
