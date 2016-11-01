@@ -55,16 +55,13 @@
         </div>
       <?php } ?>
 
-      <?php if (isset($discount) && ($discount > 0)) { ?>
-        <div class="row">
-          <div class="col-sm-12 table-list-row-item">
-            <div class="row">
-              <div class="col-sm-10 text-right">You Saved</div>
-              <div class="col-sm-2">$<?= number_format($discount, 2); ?></div>
-            </div>
-          </div>
+    <?php if (isset($discount) && ($discount > 0)) { ?>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="col-sm-2">You Saved</div>
+          <div class="col-sm-8">$<?= number_format($discount, 2); ?></div>
         </div>
-      <?php } ?>
-    </div>
+      </div>
+    <?php } ?>
   </div>
-<?php } ?>
+</div>

@@ -165,7 +165,6 @@
             <!--</form>-->
 
             <div class="collaterals">
-
               <div class="proceed_totals">
                 <?php if (
                   (isset($cart_items) && strlen($cart_items) > 0) ||
