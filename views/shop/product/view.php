@@ -6,16 +6,12 @@
         <div class="row afterhead-row">
 
           <div class="col-sm-2 back_button_container">
-            <div class="row">
               <a id="back_url" href="<?= $back_url; ?>"
                  class="<?= isset($search) ? 'a_search' : '' ?> button back_button">Back</a>
-            </div>
           </div>
           <div class="col-sm-8 text-center">
-            <div class="row">
               <h3 style="margin-bottom: 30px"
                   class="product_title product_title_style entry-title"><?= $data['pname']; ?></h3>
-            </div>
           </div>
           <div class="col-sm-2"></div>
 
@@ -26,7 +22,6 @@
     <div class="row">
       <div
         class="col-xs-12 product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
-        <div class="row">
 
           <div class="col-md-6 images">
             <div class="row">
@@ -46,12 +41,12 @@
                 itemprop="image" class="product-main-image zoom" title=""
                 <?= isset($filename1) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                 <?= isset($filename1) ? 'data-img = "' . $filename1 . '"' : '' ?>>
-                <img width="499" height="499"
+                <img width="100%"
                      src="<?= isset($filename1) ? $filename1 : $filename; ?>"
                      class="attachment-shop_single size-shop_single wp-post-image" alt="" title=""/>
               </a>
 
-              <div class="thumbnails col-xs-12">
+              <div class="thumbnails col-sm-12">
                 <div class="row">
                   <?php
                     if (!empty($data['image2']) || !empty($data['image3']) ||
@@ -281,11 +276,11 @@
             </div>
           </div>
 
-        </div>
       </div>
     </div>
 
   </div>
+</div>
   <input type="hidden" id="back_url" value="<?= $back_url; ?>">
   <script src='<?= _A_::$app->router()->UrlTo('views/js/shop/product.js'); ?>' type="text/javascript"></script>
 
