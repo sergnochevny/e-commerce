@@ -208,7 +208,7 @@ span#b_in_product {
     color: #ffffff;
     font-size: 11px;
     position: absolute;
-    left: -14px;
+    left: -8px;
     top: -15px;
     width: 80px;
     height: 80px;
@@ -535,6 +535,8 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 .products .owl-item .product-item,
 .products .product-item {
+    padding-left: 10px;
+    padding-right: 10px;
     margin-bottom: 30px;
 }
 
@@ -746,8 +748,9 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     margin: 0;
 }
 
-.products .owl-item .product-item h3,
-.products .product-item h3 {
+.products .owl-item .product-item p.description,
+.products .owl-item .product-item p.description a,
+.products .product-item p.description {
     font-size: 100%;
     line-height: 18px;
     text-transform: capitalize;
