@@ -38,12 +38,7 @@
       <div class="col-xs-8 col-sm-12">
         <div class="row">
           <div class="quantity">
-            <?php if($item['piece'] == 0) { ?>
-              <input data-role="quantity" data-whole="<?= ($item['whole'] == 1 ? '1' : '0') ?>" type="number" min="1"
-                     max="100000" class="qty text" title="Quantity" value="<?= $item['quantity']; ?>">
-            <?php } else { ?>
               <span class="quantity"><?= $item['quantity']; ?></span>
-            <?php } ?>
           </div>
         </div>
       </div>
