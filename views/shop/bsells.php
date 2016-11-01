@@ -22,9 +22,9 @@
           </a>
         </figure>
 
-        <a href="<?= $href; ?>">
-          <span class="product-category"><?= $row['pname']; ?></span>
-          <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>
+
+          <span class="product-category"><a href="<?= $href; ?>"><?= $row['pname']; ?></a></span>
+          <p class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></p>
           <div class="product-price-box clearfix">
             <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
               <span class="price pull-left">
@@ -39,7 +39,7 @@
           </span>
             <?php } ?>
           </div>
-        </a>
+
       </div>
     </div>
   <?php endforeach; ?>

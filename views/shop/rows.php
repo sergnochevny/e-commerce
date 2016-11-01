@@ -23,10 +23,12 @@
             ?>
           </figcaption>
         </figure>
-        <span class="product-category"><?= $row['pname']; ?></span>
-        <h3>
-          <a href="<?= $href; ?>"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></a>
-        </h3>
+        <span class="product-category">
+          <a href="<?= $href; ?>"><?= $row['pname']; ?></a>
+        </span>
+        <p class="description">
+          <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
+        </p>
         <div class="product-price-box clearfix">
           <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
             <span class="price pull-left"><span class="amount"><?= $row['format_price']; ?></span></span>

@@ -14,7 +14,7 @@
           </figcaption>
         </figure>
         <span class="product-category"><?= $row['pname']; ?></span>
-        <h3><?= $row['ldesc']; ?></h3>
+        <p class="description"><?= $row['ldesc']; ?></p>
         <div class="product-price-box clearfix">
             <span class="price">
               <ins>

@@ -18,7 +18,7 @@
             $this->template->vars('img', _A_::$app->router()->UrlTo('upload/upload/' . $item['img']));
             $this->template->vars('top', $top);
             $this->template->vars('left', $left);
-            $this->template->view_layout('matches_item');
+            $this->template->view_layout('item');
             $left += 6;
             $top += 4;
           }
@@ -50,7 +50,7 @@
 
         if(!$item_added) {
           $suffix_img = 'b_';
-          $images = Model_Product::images($pid);
+          $images = Model_Product::get_by_id($pid);
 
           if(isset($images['image1'])) {
             $file_img = 'upload/upload/' . $images['image1'];
@@ -81,7 +81,7 @@
     /**
      * @export
      */
-    public function del() {
+    public function delete() {
       if(!is_null(_A_::$app->post('pid')) && !empty(_A_::$app->post('pid'))) {
         $pid = _A_::$app->post('pid');
         $matches_items = isset(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];

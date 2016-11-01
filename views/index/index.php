@@ -1,26 +1,21 @@
 <?php include('views/index/main_gallery.php'); ?>
 <div class="container">
-
   <div class="row">
     <div class="col-md-12">
-
       <div class="row">
         <div class="col-md-12">
-
           <h3 class="section-title">Special For You <br>
             <small>Best item collections in we have in store</small>
           </h3>
-
-          <div class="col-md-12">
-            <div class="products special-products"></div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="products special-products"></div>
+            </div>
           </div>
-
         </div>
       </div>
-
     </div>
   </div>
-
 </div>
 
 <div class="banner-area">
@@ -64,7 +59,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -73,32 +67,27 @@
 <div class="container">
   <div class="row bestseller-row">
     <div class="col-md-12">
-
       <div class="row">
         <div class="col-md-12">
-
           <h3 class="section-title">Best Sellers <br>
             <small>Best item collection we have in store</small>
           </h3>
-
           <div class="row products best-products"></div>
-
           <div class="row bestseller-action-row">
             <div class="col-md-12 text-center">
               <a href="<?= _A_::$app->router()->UrlTo('shop/bestsellers'); ?>" class="button button-2x">MORE</a>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
 
-<input type="hidden" id="get_url" value="<?= _A_::$app->router()->UrlTo('shop/widget',['type'=>'carousel']); ?>">
-<input type="hidden" id="slider_url" value="<?= _A_::$app->router()->UrlTo('shop/widget',['type'=>'bsells_horiz']); ?>">
+<input type="hidden" id="get_url" value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'carousel']); ?>">
+<input type="hidden" id="slider_url"
+       value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bsells_horiz']); ?>">
 <script src='<?= _A_::$app->router()->UrlTo('views/js/index/index.js'); ?>' type="text/javascript"></script>
 <?php include('views/index/block_footer.php'); ?>
 

@@ -30,11 +30,9 @@
         </a>
       </span>
 
-        <h3 class="descProduct">
-          <a href="<?= $href; ?>">
-            <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
-          </a>
-        </h3>
+        <p class="description">
+          <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
+        </p>
 
         <div class="product-price-box clearfix">
           <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
