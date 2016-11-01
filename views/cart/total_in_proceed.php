@@ -1,4 +1,4 @@
-<?php if ((isset($cart_items) && count($cart_items) > 0) || (isset($cart_samples_items) && count($cart_samples_items) > 0)) { ?>
+<?php if ((isset($cart_items) && count($cart_items) > 0) || (isset($cart_samples_items) && count($cart_samples_items) > 0)) :?>
   <div class="div_subtotal_table">
     <div class="col-xs-12 table-list-row">
       <?php if (isset($handlingcost) && ($handlingcost > 0)) { ?>
@@ -65,3 +65,4 @@
     <?php } ?>
   </div>
 </div>
+<?php endif;?>
