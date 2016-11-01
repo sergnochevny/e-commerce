@@ -1,6 +1,6 @@
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
-    <div class="col-xs-12  product-item">
+    <div class="product-item">
       <div class="product-inner">
         <?php
           $url_prms['pid'] = $row[0];
@@ -27,12 +27,10 @@
         </figure>
 
         <span class="on-sale">New!</span>
-        <span class="product-category"><?= $row['pname']; ?></span>
-        <h3 class="descProduct">
-          <a href="<?= $href; ?>">
-            <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
-          </a>
-        </h3>
+        <span class="product-category"><a href="<?= $href; ?>"><?= $row['pname']; ?></a></span>
+        <p class="description">
+          <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
+        </p>
         <div class="product-price-box clearfix">
           <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
             <span class="price pull-left"><ins><span class="amount"><?= $row['format_price']; ?></span></ins></span>
@@ -45,8 +43,4 @@
       </div>
     </div>
   <?php endforeach; ?>
-<?php else: ?>
-  <div class="col-sm-12 text-center offset-top">
-    <h2 class="offset-top page-title">No results found</h2>
-  </div>
 <?php endif; ?>

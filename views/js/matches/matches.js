@@ -8,7 +8,7 @@
     $(document).ready(function (event) {
         setTimeout(function () {
             $('html,body').stop().animate({
-                scrollTop: $('#matches-page').offset().top
+                scrollTop: $('#content').offset().top
             }, 2000);
         }, 300);
     });
@@ -30,7 +30,7 @@
         hoverClass: "ui-state-hover",
         drop: function (event, ui) {
             var pid = $(ui.draggable).attr('data-id'),
-                url = base_url + 'matches/del';
+                url = base_url + 'matches/delete';
             $('#content').waitloader('show');
             $.post(
                 url,
@@ -46,7 +46,7 @@
     $('.detailsDragImg').droppable({
         hoverClass: "ui-state-hover",
         drop: function (event, ui) {
-            $('#matches-page').waitloader('show');
+            $('#content').waitloader('show');
             var pid = $(ui.draggable).attr('data-id');
             window.location = base_url + 'shop/product?pid=' + pid+'&back=matches';
         }
@@ -55,12 +55,12 @@
     $('#clear_matches').on('click', function (ev) {
         ev.preventDefault();
         var url = $(this).attr('href');
-        $('#matches-page').waitloader('show');
+        $('#content').waitloader('show');
         $.post(url, {}, function (data) {
             $('img#product_img_holder').each(function () {
                 $(this).remove();
             });
-            $('#matches-page').waitloader('remove');
+            $('#content').waitloader('remove');
 
         });
     });
@@ -77,12 +77,12 @@
                 url = $(this).attr('href'),
                 load_url = base_url + 'cart/amount';
 
-            $('#matches-page').waitloader('show');
+            $('#content').waitloader('show');
 
             $.post(url, {data: data},function (data) {
                 $.when(
-                    $('#matches-page').waitloader('remove'),
-                    $(data).appendTo('#matches-page'),
+                    $('#content').waitloader('remove'),
+                    $(data).appendTo('#content'),
                     $('span#cart_amount').load(load_url)
                 ).done(function () {
 //                          if($('span#cart_amount').length>0){
@@ -90,7 +90,7 @@
                     var buttons = {
                         "Basket": function () {
                             $(this).remove();
-                            $('#matches-page').waitloader('show');
+                            $('#content').waitloader('show');
                             window.location = base_url + 'cart';
                         }
                     };

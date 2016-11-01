@@ -7,8 +7,8 @@
           $url_prms['pid'] = $row['pid'];
           $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
         ?>
-        <a href="<?= $href; ?>">
           <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
+            <a href="<?= $href; ?>">
             <?php if($row['bProductDiscount']) { ?>
               <span class="extra_discount">Extra Discount!</span>
             <?php } ?>
@@ -20,9 +20,10 @@
                   <a class="button add-to-basket" href="<?= $href; ?>">View Details</a>
                 <?php } ?>
             </figcaption>
+            </a>
           </figure>
-          <span class="product-category"><?= $row['pname']; ?></span>
-          <h3 class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></h3>
+          <span class="product-category"><a href="<?= $href; ?>"><?= $row['pname']; ?></a></span>
+          <p class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></p>
           <div class="product-price-box clearfix">
             <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
               <span class="price pull-left">
@@ -37,7 +38,6 @@
           </span>
             <?php } ?>
           </div>
-        </a>
       </div>
     </div>
   <?php endforeach; ?>
