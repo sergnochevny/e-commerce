@@ -1,7 +1,7 @@
 <?php $href = _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart'], $item['Product_name']); ?>
 <div class="col-xs-12 table-list-row" data-block="cart_item" data-pid="<?= $pid; ?>" data-row="items">
   <div class="row">
-    <div class="col-xs-12 col-sm-4 table-list-row-item">
+    <div class="col-xs-12 col-sm-6 table-list-row-item">
       <div class="row">
         <div class="col-sm-5">
           <img alt=""
@@ -21,14 +21,6 @@
       </div>
       <div class="col-xs-8 col-sm-12">
         <div class="row"><span class="amount"><?= $item['format_price']; ?></span></div>
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-2 table-list-row-item">
-      <div class="col-xs-4 visible-xs helper-row">
-        <div class="row">Discount</div>
-      </div>
-      <div class="col-xs-8 col-sm-12">
-        <div class="row"><?= $item['format_discount']; ?></div>
       </div>
     </div>
     <div class="col-xs-12 col-sm-2 table-list-row-item">

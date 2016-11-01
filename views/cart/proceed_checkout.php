@@ -4,15 +4,12 @@
       <div class="col-sm-2 back_button_container">
         <a href="<?= $back_url; ?>" class="button back_button">Back</a>
       </div>
-      <div class="col-sm-8"></div>
+      <div class="col-sm-8 text-center"><h3 class="page-title">PLEASE REVIEW AND CONFIRM ORDER</h3></div>
       <div class="col-sm-2"></div>
     </div>
   </div>
 </div>
 
-<div class="col-xs-12 text-center afterhead-row">
-  <h3 class="page-title">PLEASE REVIEW AND CONFIRM ORDER</h3>
-</div>
 
 <div class="row">
   <div class="col-xs-12 data-view">
@@ -58,42 +55,49 @@
   </div>
 <?php } ?>
 
-<div class="col-xs-12">
-  <?= isset($shipping) ? $shipping : ''; ?>
+<div class="col-xs-12 data-view">
+  <div class="row table-list-row">
+    <?= isset($shipping) ? $shipping : ''; ?>
+  </div>
 </div>
 
+<div class="col-xs-12 data-view">
+  <div class="row">
+    <?php
+      if ((isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0)) {
+        echo isset($total_proceed) ? $total_proceed : '';
+      }
+    ?>
+  </div>
+</div>
 
 <div class="row row_bill_ship">
-  <div class="col-md-12">
 
-    <article class="col-md-12 page type-page status-publish entry">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-xs-12 text-center afterhead-row">
-            <h3 class="page-title" style="font-size: 1.4em">PLEASE REVIEW AND CONFIRM YOUR DETAILS</h3>
-          </div>
-          <div data-block="proceed_bill_ship" class="row data-view">
-            <?= isset($bill_ship_info) ? $bill_ship_info : '' ?>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 wc-change_user_data text-center inner-offset-bottom">
-        <div class="row">
-          <a data-block="change_user_data" class="checkout-button button alt wc-forward"
-             href="<?= $change_user_url; ?>">
-            Edit Billing or Shipping
-          </a>
-        </div>
-      </div>
-    </article>
-    <div class="col-md-12 wc-change_user_data text-center inner-offset-bottom">
+  <article class="col-md-12 page type-page status-publish entry">
+    <div class="col-md-12">
       <div class="row">
-        <hr>
+        <div class="col-xs-12 text-center afterhead-row">
+          <h3 class="page-title" style="font-size: 1.4em">PLEASE REVIEW AND CONFIRM YOUR DETAILS</h3>
+        </div>
+        <div data-block="proceed_bill_ship" class="col-xs-12 data-view">
+          <?= isset($bill_ship_info) ? $bill_ship_info : '' ?>
+        </div>
       </div>
     </div>
 
-  </div>
+    <div class="col-md-12 wc-change_user_data text-center inner-offset-bottom">
+      <div class="row">
+        <a data-block="change_user_data" class="checkout-button button alt wc-forward"
+           href="<?= $change_user_url; ?>">
+          Edit Billing or Shipping
+        </a>
+      </div>
+    </div>
+  </article>
+
+
 </div>
+
 <div class="row">
   <div class="col-md-12">
     <div class="wc-proceed-to-checkout text-center">
