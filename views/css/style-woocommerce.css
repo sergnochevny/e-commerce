@@ -609,6 +609,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 .products .owl-item .product-item .product-image-box figcaption:hover,
 .products .product-item .product-image-box figcaption:hover {
     opacity: 1;
+    z-index: 999;
 }
 .products .owl-item .product-item:hover .product-image-box figcaption .add-to-basket,
 .products .product-item:hover .product-image-box figcaption .add-to-basket{
