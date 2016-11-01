@@ -4,15 +4,12 @@
       <div class="col-sm-2 back_button_container">
         <a href="<?= $back_url; ?>" class="button back_button">Back</a>
       </div>
-      <div class="col-sm-8"></div>
+      <div class="col-sm-8 text-center"><h3 class="page-title">PLEASE REVIEW AND CONFIRM ORDER</h3></div>
       <div class="col-sm-2"></div>
     </div>
   </div>
 </div>
 
-<div class="col-xs-12 text-center afterhead-row">
-  <h3 class="page-title">PLEASE REVIEW AND CONFIRM ORDER</h3>
-</div>
 
 <div class="row">
   <div class="col-xs-12 data-view">
