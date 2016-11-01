@@ -37,29 +37,29 @@
         $cid = _A_::$app->get('cat');
         if($category = Model_Categories::get_by_id($cid)) $category_name = $category['cname'];
         $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
-        $filter['hidden']['b.cid'] = $cid;
         unset($filter['b.cid']);
+        $filter['hidden']['b.cid'] = $cid;
       }
       if(!empty(_A_::$app->get('ptrn'))) {
         $ptrn_id = _A_::$app->get('ptrn');
         if($ptrn = Model_Patterns::get_by_id($ptrn_id)) $ptrn_name = $ptrn['pattern'];
         $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
-        $filter['hidden']['d.id'] = $ptrn_id;
         unset($filter['d.id']);
+        $filter['hidden']['d.id'] = $ptrn_id;
       }
       if(!empty(_A_::$app->get('mnf'))) {
         $mnf_id = _A_::$app->get('mnf');
         if($mnf = Model_Manufacturers::get_by_id($mnf_id)) $mnf_name = $mnf['manufacturer'];
         $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
-        $filter['hidden']['e.id'] = $mnf_id;
         unset($filter['e.id']);
+        $filter['hidden']['e.id'] = $mnf_id;
       }
       return $res;
     }
 
     protected function build_order(&$sort, $view = false) {
       if(!empty(_A_::$app->get('cat'))) {
-        $sort['b.display_order'] = 'asc';
+        $sort['fabrix_product_categories.display_order'] = 'asc';
       } else {
         $sort['a.pid'] = 'desc';
       }

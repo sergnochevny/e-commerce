@@ -535,8 +535,8 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 .products .owl-item .product-item,
 .products .product-item {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     margin-bottom: 30px;
 }
 
@@ -747,6 +747,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 .products .owl-item .product-item .on-sale,
 .products .product-item .on-sale {
     margin: 0;
+    z-index: 9999;
 }
 
 .products .owl-item .product-item p.description,

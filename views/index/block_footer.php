@@ -1,7 +1,7 @@
 <div class="footer-widgets-top">
   <div class="container">
     <div class="col-xs-12 inner-offset-top">
-      <div class="row">
+      <div class="row  footer-widgets-top-inner">
         <div class="col-xs-12 col-sm-6 col-md-6">
           <h4 class="section-title">Best Sellers Products</h4>
           <div class="row">

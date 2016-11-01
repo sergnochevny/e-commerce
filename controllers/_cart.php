@@ -648,9 +648,6 @@
       $prms = null;
       $back_url = _A_::$app->router()->UrlTo('cart');
       $this->main->template->vars('back_url', $back_url);
-//        $cart = _A_::$app->session('cart');
-//        unset($cart['discountIds']);
-//        _A_::$app->setSession('cart', $cart);
       ob_start();
       $this->products_in('product_in_proceed');
       $cart_items = ob_get_contents();
