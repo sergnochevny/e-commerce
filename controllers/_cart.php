@@ -1045,7 +1045,7 @@
       $paypal['bn'] = "toolkit-php";
 
       $this->main->template->vars('paypal', $paypal);
-      $this->main->view('proceed_agreem');
+      $this->main->view_layout('proceed_agreem');
     }
 
     /**

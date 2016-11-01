@@ -95,7 +95,6 @@
         $('#content').waitloader('show');
         var url = $(this).attr('href');
         $.post(url, {}, function (data) {
-          debugger;
           var answer = JSON.parse(data);
           $.when(
             $('#content').waitloader('remove'),

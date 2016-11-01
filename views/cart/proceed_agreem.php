@@ -102,16 +102,14 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div class="col-sm-12">
-          <div class="row">
-            <div class="form-row">
-              <label for="agreeterm" class="inline">
-                <input type="checkbox" name="agreeterm" data-block="agreeterm"/>
-                I have read and agreed to your website Terms and Conditions.
-              </label>
-            </div>
-          </div>
-        </div>
+        <label for="agreeterm" class="inline">
+          <input type="checkbox" name="agreeterm" data-block="agreeterm"/>
+          I have read and agreed to your website Terms and Conditions.
+        </label>
+      </div>
+    </div>
+    <div class="row offset-top">
+      <div class="col-md-12">
         <div data-block="container_proceed_pay" class="wc-proceed-to-pay" style="display: none;">
           <form method="post" data-block="paypal_form" name="paypal_form" action="<?= $paypal['url'] ?>">
 
@@ -161,7 +159,7 @@
             <input type=hidden name="night_phone_b" value="<?= substr($bill_phone, 3, 6); ?>">
             <input type=hidden name="night_phone_c" value="<?= substr($bill_phone, 6, 10); ?>">
 
-            <input type="submit" name="Submit" value="Pay with PayPal">
+            <input class="button" type="submit" name="Submit" value="Pay with PayPal">
 
             <!-- Shipping and Misc Information -->
             <input type="hidden" name="shipping" value="">
@@ -170,13 +168,9 @@
             <input type="hidden" name="tax" value="">
             <input type="hidden" name="custom" value="">
             <input type="hidden" name="invoice" value="">
-
           </form>
-
         </div>
-
       </div>
     </div>
-
   </div>
 </div>
