@@ -1,4 +1,4 @@
-<div class="col-xs-12 table-list-row" data-pid="<? $pid; ?>" data-row="samples">
+<div class="col-xs-12 table-list-row">
     <div class="row">
         <div class="col-xs-12 col-sm-4 table-list-row-item">
             Shipping
