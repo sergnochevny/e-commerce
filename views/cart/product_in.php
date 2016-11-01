@@ -1,5 +1,5 @@
 <?php $href = _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart'], $item['Product_name']); ?>
-<div class="col-xs-12 table-list-row cart_item" data-pid="<?= $pid; ?>" data-row="items">
+<div class="col-xs-12 table-list-row" data-block="cart_item" data-pid="<?= $pid; ?>" data-row="items">
   <div class="row">
     <div class="col-xs-12 col-sm-4 table-list-row-item">
       <div class="row">

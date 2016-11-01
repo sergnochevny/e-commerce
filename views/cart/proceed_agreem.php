@@ -87,8 +87,8 @@
     <div class="col-md-12">
         <input type="checkbox" name="agreeterm" id="agreeterm"/>
         I have read and agreed to your website Terms and Conditions.</p><br/>
-        <div id="container_proceed_pay" class="wc-proceed-to-pay" style="display: none;">
-            <form method="post" id="paypal_form" name="paypal_form" action="<?= $paypal['url']?>">
+        <div data-block="container_proceed_pay" class="wc-proceed-to-pay" style="display: none;">
+            <form method="post" data-block="paypal_form" name="paypal_form" action="<?= $paypal['url']?>">
 
                 <!-- PayPal Configuration -->
                 <input type="hidden" name="business" value="<?= $paypal['business']?>">

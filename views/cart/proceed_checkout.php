@@ -22,7 +22,7 @@
                             <th class="product-subtotal">SubTotal</th>
                         </tr>
                         </thead>
-                        <tbody id="product_in_cart">
+                        <tbody data-block="product_in_cart">
 
                         <?php
 
@@ -74,13 +74,13 @@
                     <div class="proceed_title">
                         <span>PLEASE REVIEW AND CONFIRM YOUR DETAILS</span>
                     </div>
-                    <div id="proceed_bill_ship" class="collaterals">
+                    <div data-block="proceed_bill_ship" class="collaterals">
                         <?= isset($bill_ship_info) ? $bill_ship_info : '' ?>
                     </div>
                 </div>
             </div>
             <div class="wc-change_user_data">
-                <a id="change_user_data" class="checkout-button button alt wc-forward"
+                <a data-block="change_user_data" class="checkout-button button alt wc-forward"
                    href="<?= $change_user_url; ?>">
                     Edit Billing or Shipping
                 </a>
@@ -97,7 +97,7 @@
                 (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
             ) { ?>
 
-                <a id="proceed_agreem_button" class="checkout-button button alt wc-forward"
+                <a data-block="proceed_agreem_button" class="checkout-button button alt wc-forward"
                    href="<?= _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
                     Proceed to Agreement</a>
             <?php } ?>
