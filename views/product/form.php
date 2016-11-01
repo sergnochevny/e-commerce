@@ -123,8 +123,8 @@
           <div class="form-row">
             <label><b>Main images:</b></label>
             <div class="text-center">
-              <div id="images" class="col-sm-12 col-md-12">
-                <div class="row">
+              <div class="col-sm-12 col-md-12">
+                <div id="images" class="row">
                   <?= $images; ?>
                 </div>
               </div>

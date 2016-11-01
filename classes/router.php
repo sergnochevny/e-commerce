@@ -251,6 +251,7 @@
           $_path = $matches[1];
         if(count($matches) > 2) {
           parse_str($matches[2], $_params);
+          if(!(isset($params) && is_array($params))) $params = [];
           $params = array_merge($params, $_params);
         }
         $sef_include_params = isset($params) ? array_diff_key($params, array_flip($sef_exclude_params)) : [];

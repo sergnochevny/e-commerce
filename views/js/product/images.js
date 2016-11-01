@@ -67,7 +67,11 @@
             var url = $('form#edit_form').attr('action');
             data.append('method', 'images.main');
             data.append('idx', $(this).attr('data-img_idx'));
-            postdata(this, url, data, $('#images'));
+            postdata(this, url, data, $('#images'),
+              function(){
+                var imagesSize = new ResizeImageContainer();
+              }
+            );
         }
     );
 
@@ -98,7 +102,11 @@
                         var url = $('form#edit_form').attr('action');
                         data.append('method', 'images.delete');
                         data.append('idx', idx);
-                        postdata(this, url, data, $('#images'));
+                        postdata(this, url, data, $('#images'),
+                          function(){
+                            var imagesSize = new ResizeImageContainer();
+                          }
+                        );
                         $("#confirm_action").off('click.confirm_action');
                         $('body').waitloader('remove');
                     }
@@ -129,7 +137,11 @@
                 var url = $('form#edit_form').attr('action');
                 data.append('method', 'images.upload');
                 data.append('idx', (!$('input[name=images]:checked').val()) ? 1 : $('input[name=images]:checked').val());
-                postdata(this, url, data, $('#images'));
+                postdata(this, url, data, $('#images'),
+                  function(){
+                    var imagesSize = new ResizeImageContainer();
+                  }
+                );
             }
         }
     );
