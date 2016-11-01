@@ -4,7 +4,7 @@
 
         $('.best-products').load($('#slider_url').val());
 
-        $.get($('#get_url').val(), {}, function (data) {
+        $.get($('#get_url').val(), {empty: true}, function (data) {
             $('.special-products').html(data).owlCarousel({
                 responsive: {0: {items: 1}, 461: {items: 2}, 992: {items: 3}},
                 nav: true,

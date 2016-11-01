@@ -27,7 +27,7 @@
     $(document).on('submit.search_action', "form[data-search]", function (event, reset) {
         event.preventDefault();
         if (reset) {
-            data = {};
+            data = {empty:true};
         } else {
 
             var data = new FormData(this),
@@ -60,7 +60,7 @@
         if (search.length) {
             search.attr('action', $(this).attr('href')).trigger('submit');
         } else {
-            var data = {};
+            var data = {empty:true};
             if (search.length) {
                 data = new FormData(search[0]);
             }
@@ -74,7 +74,7 @@
         if (search.length) {
             search.attr('action', $(this).attr('href')).trigger('submit');
         } else {
-            postdata($(this).attr('href'), {});
+            postdata($(this).attr('href'), {empty: true});
         }
     });
 

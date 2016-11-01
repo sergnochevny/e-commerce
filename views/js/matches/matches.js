@@ -56,7 +56,7 @@
         ev.preventDefault();
         var url = $(this).attr('href');
         $('#content').waitloader('show');
-        $.post(url, {}, function (data) {
+        $.post(url, {empty:true}, function (data) {
             $('img#product_img_holder').each(function () {
                 $(this).remove();
             });

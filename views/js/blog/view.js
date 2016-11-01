@@ -5,7 +5,7 @@
     function (event) {
       setTimeout(function () {
         $('html, body').stop().animate({
-          scrollTop: $('#content').offset().top
+          scrollTop: $('#blog').offset().top
         }, 2000);
       }, 300);
     }

@@ -229,7 +229,7 @@
 
   $(document).on('calc_total', function () {
     var url = base_url + 'cart/coupon_total_calc';
-    var data = {};
+    var data = {emty:true};
     $.post(url, data, function (data) {
       $('[data-block=coupon_total]').html(data);
     });
@@ -250,7 +250,7 @@
   $(document).on('click', '[data-block=proceed_button]', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
-    $.get(url, {}, function (data) {
+    $.get(url, {empty: true}, function (data) {
       $.when($('#content').html(data))
         .done(function () {
           $('html, body').stop().animate({scrollTop: 0}, 1000);
@@ -261,7 +261,7 @@
   $(document).on('click', '[data-block=proceed_agreem_button]', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
-    $.get(url, {}, function (data) {
+    $.get(url, {empty: true}, function (data) {
       $.when($('#content').html(data))
         .done(function () {
           $('html, body').stop().animate({scrollTop: 0}, 1000);

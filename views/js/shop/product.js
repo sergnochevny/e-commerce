@@ -8,7 +8,7 @@
     event.preventDefault();
     var url = $(this).attr('href');
     $('#content').waitloader('show');
-    $.get(url, {}, function (answer) {
+    $.get(url, {empty:true}, function (answer) {
       var data = JSON.parse(answer);
       $.when(
         $('span#cart_amount').html(data.sum),
@@ -51,7 +51,7 @@
     event.preventDefault();
     var url = $(this).attr('href');
     $('#content').waitloader('show');
-    $.get(url, {}, function (answer) {
+    $.get(url, {empty: true}, function (answer) {
       var data = JSON.parse(answer);
       $.when(
         $('span#cart_amount').html(data.sum),
@@ -94,7 +94,7 @@
         ev.preventDefault();
         $('#content').waitloader('show');
         var url = $(this).attr('href');
-        $.post(url, {}, function (data) {
+        $.post(url, {empty: true}, function (data) {
           var answer = JSON.parse(data);
           $.when(
             $('#content').waitloader('remove'),
