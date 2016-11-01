@@ -2289,3 +2289,13 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
 .offset-top{
     padding-top: 15px;
 }
+.productsAddBasket{
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+}
+.productsAddBasket > .simple-icon-handbag{
+    font-size: 1em;
+}
