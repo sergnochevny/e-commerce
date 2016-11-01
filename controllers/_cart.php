@@ -551,10 +551,14 @@
     }
 
     private function calc_items_amount() {
+//      session_destroy();
+//      unset($_SESSION);
       $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
       $SUM = 0;
       foreach($cart_items as $key => $item) {
-        $SUM += round($item['quantity'] * $item['saleprice'], 2);
+        if (!empty($key)){
+          $SUM += round($item['quantity'] * $item['saleprice'], 2);
+        }
       }
 
       return $SUM;
@@ -833,8 +837,10 @@
 
       if(count($cart_items) > 0) {
         foreach($cart_items as $key => $item) {
-          $aPrds[] = $key;
-          $aPrds[] = $item['quantity'];
+          if(!empty($key)){
+            $aPrds[] = $key;
+            $aPrds[] = $item['quantity'];
+          }
         }
         $shipcost = round(Model_Shipping::calculateShipping($shipping, $aPrds, $bShipRoll), 2);
         if(count($aPrds) > 0) {
