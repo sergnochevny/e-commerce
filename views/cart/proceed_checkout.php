@@ -14,7 +14,6 @@
   <h3 class="page-title">PLEASE REVIEW AND CONFIRM ORDER</h3>
 </div>
 
-
 <div class="row">
   <div class="col-xs-12 data-view">
 
@@ -42,11 +41,12 @@
 
   </div>
 </div>
+
 <?php if (isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
   <div class="row">
     <div class="col-sm-12 inner-offset-vertical sample_item" data-row="samples">
       <div data-title="Product" class="col-sm-4 product-name">
-        <a>Samples cost</a>
+        Samples cost
       </div>
       <div data-title="Price" class="col-sm-4 product-price">
         <?= isset($sum_samples) ? $sum_samples : ''; ?>
@@ -58,7 +58,7 @@
   </div>
 <?php } ?>
 
-<div class="col-xs-12 table-list-row">
+<div class="col-xs-12">
   <?= isset($shipping) ? $shipping : ''; ?>
 </div>
 
@@ -66,9 +66,9 @@
 <div class="row row_bill_ship">
   <div class="col-md-12">
 
-    <article class="col-md-12 page type-page status-publish entry" style="overflow:hidden;">
-      <div class="row" style="margin: 0;">
-        <div class="woocommerce">
+    <article class="col-md-12 page type-page status-publish entry">
+      <div class="col-md-12">
+        <div class="row">
           <div class="col-xs-12 text-center afterhead-row">
             <h3 class="page-title" style="font-size: 1.4em">PLEASE REVIEW AND CONFIRM YOUR DETAILS</h3>
           </div>
