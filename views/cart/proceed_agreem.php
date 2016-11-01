@@ -106,7 +106,7 @@
           <div class="row">
             <div class="form-row">
               <label for="agreeterm" class="inline">
-                <input type="checkbox" name="agreeterm" id="agreeterm"/>
+                <input type="checkbox" name="agreeterm" data-block="agreeterm"/>
                 I have read and agreed to your website Terms and Conditions.
               </label>
             </div>

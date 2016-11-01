@@ -262,7 +262,7 @@
     });
   });
 
-  $(document).on('click', '#proceed_agreem_button', function (event) {
+  $(document).on('click', '[data-block=proceed_agreem_button]', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
     $.get(url, {}, function (data) {
@@ -274,6 +274,7 @@
   });
 
   $(document).on('change', '[data-block=agreeterm]', function (event) {
+    debugger;
     $('#container_proceed_pay').toggle(this.checked);
   });
 
