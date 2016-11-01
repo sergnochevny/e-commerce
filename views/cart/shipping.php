@@ -7,20 +7,22 @@
 
       <div class="row">
         <div class="col-xs-12">
-          <label for="select_ship">
-            Method:
-            <select data-block="select_ship" size="1" name="ship">
-              <option value="0">select shipping method</option>
-              <option <?= ($shipping == 1) ? 'selected' : '' ?> value="1">express post</option>
-              <option <?= ($shipping == 3) ? 'selected' : '' ?> value="3">ground ship</option>
-            </select>
-          </label>
+          <div class="form-row">
+            <label for="select_ship">
+              Method:
+              <select data-block="select_ship" size="1" name="ship">
+                <option value="0">select shipping method</option>
+                <option <?= ($shipping == 1) ? 'selected' : '' ?> value="1">express post</option>
+                <option <?= ($shipping == 3) ? 'selected' : '' ?> value="3">ground ship</option>
+              </select>
+            </label>
+          </div>
         </div>
       </div>
 
       <?php if(count($cart_items) > 0): ?>
         <div class="row">
-          <div class="col-xs-12 col-sm-6">
+          <div class="col-xs-6 col-sm-6">
             <div class="row form-row">
               <label for="roll" class="inline">
                 <input data-block="roll" type="checkbox" name="roll" value="1" <?= $bShipRoll ? 'checked' : ''; ?>>
@@ -28,26 +30,26 @@
               </label>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-6">
+          <div class="col-xs-6 col-sm-6">
             <b>NOTE: </b> This cost $<?= number_format(RATE_ROLL, 2); ?> USD
           </div>
         </div>
       <?php endif; ?>
 
       <div class="row">
-        <div class="col-xs-12 col-sm-6 inner-offset-bottom">
+        <div class="col-xs-6 col-sm-6">
           <b>SHIPPING</b>
         </div>
-        <div class="col-xs-12 col-sm-6 inner-offset-bottom">
+        <div class="col-xs-6 col-sm-6">
           $<?= number_format($shipcost, 2); ?> USD
         </div>
       </div>
       <?php if(count($cart_items) > 0): ?>
         <div class="row">
-          <div class="col-xs-12 col-sm-6 inner-offset-bottom">
+          <div class="col-xs-6 col-sm-6">
             <b>HANDLING</b>
           </div>
-          <div class="col-xs-12 col-sm-6 inner-offset-bottom">
+          <div class="col-xs-6 col-sm-6">
             $<?= number_format(RATE_HANDLING, 2); ?> USD
           </div>
         </div>
@@ -55,18 +57,17 @@
 
       <?php if($shipDiscount > 0) : ?>
         <div class="row">
-          <div class="col-xs-12 col-sm-6 inner-offset-bottom">
+          <div class="col-xs-6 col-sm-6">
             <b>SHIPPING DISCOUNT</b>
           </div>
-          <div class="col-xs-12 col-sm-6 inner-offset-bottom">
+          <div class="col-xs-6 col-sm-6">
             $<?= number_format($shipDiscount, 2); ?> USD
           </div>
         </div>
       <?php endif; ?>
-
     </div>
 
-    <div class="col-xs-12 col-sm-8 col-sm-offset-4">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-4 inner-offset-top">
       <small style="color: #999">NOTE:
         <?php
           if($shipping == 1) {
