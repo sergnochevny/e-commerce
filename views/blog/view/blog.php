@@ -5,8 +5,8 @@
     <div class="row">
       <div class="col-md-12">
         <article class="page type-page status-publish entry">
-          <div class="col-xs-12 text-center content-header">
-            <h1>I Luv Fabrix Blog</h1>
+          <div class="col-xs-12 text-center afterhead-row">
+            <h3 class="page-title">I Luv Fabrix Blog</h3>
           </div>
           <div id="content" class="entry-content">
             <?=$list?>
