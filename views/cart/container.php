@@ -1,19 +1,9 @@
-<body
-  class="page page-id-1707 page-template-default woocommerce-cart woocommerce-page header-large ltr sticky-header-yes wpb-js-composer js-comp-ver-4.11.1 vc_responsive small-sticky">
-
-
-<link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' type='text/css'
-      media='all'/>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
-
-<div class="site-container">
-  <?php include "views/header.php"; ?>
-  <div class="main-content main-content-shop">
-    <div id="cart_main_container" class="container">
-      <?= isset($content) ? $content : ''; ?>
-    </div>
+<div class="container">
+  <div id="content" class="main-content-inner" role="main">
+    <?= isset($content) ? $content : ''; ?>
   </div>
 </div>
+
 <div id="confirm_dialog" class="overlay"></div>
 <div class="popup">
   <div class="fcheck"></div>

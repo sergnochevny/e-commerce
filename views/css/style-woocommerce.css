@@ -359,7 +359,6 @@ input[type='color']:focus {
 .form-row .inline {
     margin-left: 20px;
     height: 36px;
-    line-height: 36px;
 }
 
 .form-row .inline input {
