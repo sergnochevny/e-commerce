@@ -45,7 +45,6 @@
     function (event, submit) {
       event.preventDefault();
       if (submit) {
-        debugger;
         $('[name=post_title]').val(tinyMCE.get('editable_title').getContent());
         $('[name=post_content]').val(tinyMCE.get('editable_content').getContent());
         var data = new FormData(this);

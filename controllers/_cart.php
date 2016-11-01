@@ -67,7 +67,7 @@
       $this->template->view_layout($template);
     }
 
-    private function samples_in($template = 'sample_in_proceed') {
+    private function samples_in($template = 'sample_in') {
       $base_url = _A_::$app->router()->UrlTo('/');
       $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
       if(count($cart_samples_items) > 0) {
@@ -81,7 +81,7 @@
       }
     }
 
-    private function sample_in($pid, &$item, $template = 'sample_in_proceed') {
+    private function sample_in($pid, &$item, $template = 'sample_in') {
       $base_url = _A_::$app->router()->UrlTo('/');
       $item = Model_Shop::get_product_params($pid);
       $filename = 'upload/upload/' . $item['image1'];
@@ -89,6 +89,7 @@
         $filename = "upload/upload/not_image.jpg";
       }
       $img_url = _A_::$app->router()->UrlTo($filename);
+      $this->template->vars('img_url', $img_url);
       $this->template->vars('item', $item);
       $this->template->vars('pid', $pid);
       $this->template->view_layout($template);
@@ -1352,7 +1353,7 @@
      */
     public function del_sample() {
       if(!is_null(_A_::$app->get('pid'))) {
-        $pid = _A_::$app->session('pid');
+        $pid = _A_::$app->get('pid');
         $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
         if(isset($cart_samples_items[$pid])) {
           unset($cart_samples_items[$pid]);

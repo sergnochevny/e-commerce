@@ -117,6 +117,7 @@
 
   $(document).on('click', '.del_sample_cart',
     function (event) {
+    debugger;
       event.preventDefault();
       var url = $(this).attr('href');
       var pid = $(this).parents('.sample_item').attr('data-pid');

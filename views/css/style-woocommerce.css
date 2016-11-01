@@ -591,7 +591,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 .attachment-shop_thumbnail{
     box-shadow: 0 5px 20px #b4b4b4;
-    min-height: 110px;
+    min-height: 60px;
 }
 .product-detail-view-actions .button:nth-child(3n - 1){
     margin-right: 0 !important;
