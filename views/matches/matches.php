@@ -47,7 +47,7 @@
                 <?= isset($matches_items) ? $matches_items : '' ?>
               </div>
             </div>
-            <b id="b_in_product">
+            <div style="width: 100%" class="text-center inner-offset-vertical" id="b_in_product">
               <a class="button" id="all_to_basket"
                  href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
                 Add All to Basket
@@ -56,7 +56,7 @@
                  href="<?= _A_::$app->router()->UrlTo('matches/clear'); ?>">
                 Clear Matches
               </a>
-            </b>
+            </div>
 
           </section>
         </div>
