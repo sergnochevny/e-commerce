@@ -52,9 +52,7 @@
     <?php endif; ?>
     <?php if(isset($cart_samples_items) && strlen($cart_samples_items) > 0): ?>
       <div class="col-xs-12 inner-offset-bottom" data-block="samples_legend">
-        <div class="row">
-          <?= isset($cart_samples_legend) ? $cart_samples_legend : ''; ?>
-        </div>
+        <?= isset($cart_samples_legend) ? $cart_samples_legend : ''; ?>
       </div>
       <div class="row" data-block="samples_table">
         <div class="col-xs-12 data-view">
@@ -78,7 +76,9 @@
       <div class="col-xs-12 inner-offset-vertical" data-block="row_subtotal_samples">
         <div class="row">
           <div class="col-sm-2 col-sm-offset-8">Samples Subtotal:</div>
-          <div class="col-sm-2" data-block="subtotal_samples_items"><b><?= isset($sum_samples) ? $sum_samples : ''; ?></b></div>
+          <div class="col-sm-2" data-block="subtotal_samples_items">
+            <b><?= isset($sum_samples) ? $sum_samples : ''; ?></b>
+          </div>
         </div>
       </div>
 

@@ -55,7 +55,8 @@
       var data = JSON.parse(answer);
       $.when(
         $('span#cart_amount').html(data.sum),
-        $(data.msg).appendTo('#content')
+        $(data.msg).appendTo('#content'),
+        $('#add_samples_cart').stop().hide().addClass('visible-item')
       ).done(function () {
         $('#content').waitloader('remove');
 
@@ -112,8 +113,8 @@
             };
 
             if (answer.added == 1) {
-              $('#add_matches').stop().hide().addClass('visible-item');
-              $('#view_matches').stop().show().removeClass('visible-item');
+              $('#add_matches').stop().hide().addClass('visible-item')
+              $('#view_matches').stop().show().removeClass('visible-item').addClass('btn-row');
               $.extend(buttons, {
                 "Matches": function () {
                   $(this).remove();

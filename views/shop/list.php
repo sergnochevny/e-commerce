@@ -16,6 +16,7 @@
   <div class="col-xs-12 search-result-header">
     <div class="row">
       <div class="col-sm-4">
+        <?php if (!empty(_A_::$app->get('cat')) || !empty(_A_::$app->get('mnf')) || !empty(_A_::$app->get('ptrn'))) : ?>
         <p class="woocommerce-result-count">
           <?php
             if (!empty(_A_::$app->get('cat'))) {
@@ -29,6 +30,7 @@
             }
           ?>
         </p>
+        <?php endif; ?>
       </div>
       <div class="col-sm-8 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>

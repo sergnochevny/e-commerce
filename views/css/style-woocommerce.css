@@ -43,15 +43,6 @@ span#b_in_product {
 
 .button.alt {
     min-width: 187px;
-    margin-bottom: 5px;
-    padding: 5px 8px;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 14px;
-    line-height: 30px;
-    border-radius: 0;
-    background-color: rgba(102, 119, 0, 0.8);
-    border: 2px solid #455600;
     color: #fff;
 
 }
@@ -609,7 +600,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
         padding-right: 17px;
     }
 
-    .product-detail-view-actions .btn-row:nth-of-type(2n) {
+    .product-detail-view-actions .btn-row:nth-child(2n) {
         padding-right: 15px;
         padding-left: 17px;
     }

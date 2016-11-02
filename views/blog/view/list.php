@@ -6,11 +6,9 @@
         <div class="row">
           <div class="col-sm-4">
             <p class="woocommerce-result-count">
-              <?php
-                if(!empty(_A_::$app->get('cat'))) {
-                  echo 'CATEGORY: ' . $category_name . '<br/>';
-                }
-              ?>
+              <?php if(!empty(_A_::$app->get('cat'))): ?>
+                CATEGORY: <?= $category_name ?> '<br/>
+              <?php endif; ?>
             </p>
           </div>
           <div class="col-sm-4"></div>

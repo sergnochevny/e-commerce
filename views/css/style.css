@@ -1569,26 +1569,6 @@ td.product-subtotal {
 button[data-filter-search]{
 
 }
-a.button.alt{
-    position: relative;
-    text-transform: uppercase;
-    background: #667700;
-    color: #ffffff;
-    font-size: 12px !important;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
-    padding: 8px 10px !important;
-    font-weight: 400;
-    line-height: normal !important;
-    -webkit-transition: all .3s cubic-bezier(.2, 1, .25, 1);
-    -moz-transition: all .3s cubic-bezier(.2, 1, .25, 1);
-    -o-transition: all .3s cubic-bezier(.2, 1, .25, 1);
-    transition: all .3s cubic-bezier(.2, 1, .25, 1);
-    -webkit-border-radius: 2px !important;
-    -moz-border-radius: 2px !important;
-    border-radius: 2px !important;
-    border: 2px solid #455600;
-}
-
 .selected_item > input {
     display: inline-block;
 }
