@@ -6,9 +6,6 @@
   <div class="entry-content">
     <div class="row">
       <div class="col-xs-12">
-        <div class="col-xs-12 text-center afterhead-row">
-          <h3 class="page-title">I Luv Fabrix Matches</h3>
-        </div>
         <div class="col-xs-12">
           <section class="just-posts-grid">
             <div id="dragZone">

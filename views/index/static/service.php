@@ -43,7 +43,7 @@
               <p>We cannot guarantee dye lot if a sample is purchased more than 2 weeks prior to the
                 purchase of your order. Dye lots are normally close but each dye lot is different.</p>
 
-              <h3>ALL SALES ARE FINAL</h3>
+              <h3>All sales are final</h3>
 
               <p>All special orders are final sale. No refunds. No cancellations. No returns.</p>
 
