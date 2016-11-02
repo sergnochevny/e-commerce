@@ -65,9 +65,9 @@
 }
 
 .dragZoneTitle {
-    background-color: #f5f5f5;
+    background-color: #ddd;
     border-bottom: 4px solid #fff;
-    color: #999;
+    color: #666;
     left: 0;
     text-transform: uppercase;
     padding: 10px 0;
@@ -106,7 +106,7 @@
 }
 
 .detailsDragImg {
-    background-color: #667700;
+    background-color: #666;
     border-radius: 0 4px 0 0;
     color: #FFF;
     height: 120px;

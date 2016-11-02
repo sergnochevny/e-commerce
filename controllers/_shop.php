@@ -303,129 +303,49 @@
     public function product() {
       $pid = _A_::$app->get('pid');
       $data = Model_Shop::get_product($pid);
-      if(Controller_Matches::product_in($data['pid'])) $this->template->vars('in_matches', '1');
-
-      $priceyard = $data['priceyard'];
-      $aPrds = [];
-      $aPrds[] = $pid;    #add product id
-      $aPrds[] = 1;        #add qty
-
-      #get the shipping
-      if(!is_null(_A_::$app->session('cart')) && isset(_A_::$app->session('cart')['ship'])) {
-        $shipping = (int)_A_::$app->session('cart')['ship'];
-      } else {
-        $shipping = DEFAULT_SHIPPING;
-        $_cart = _A_::$app->session('cart');
-        $_cart['ship'] = $shipping;
-        _A_::$app->setSession('cart', $_cart);
-      }
-
-      if(!is_null(_A_::$app->get('cart')) && isset(_A_::$app->session('cart')['ship_roll'])) {
-        $bShipRoll = (boolean)_A_::$app->session('cart')['ship_roll'];
-      } else {
-        $bShipRoll = false;
-        $cart = _A_::$app->session('cart');
-        $cart['ship_roll'] = 0;
-        _A_::$app->setSession('cart', $cart);
-      }
-
-      $shipcost = 0;
-
-      #grab the user id
-      $uid = 0;
-      if(!is_null(_A_::$app->session('user'))) {
-        $uid = (int)_A_::$app->session('user')['aid'];
-      }
-      $bTemp = false;
-      $sys_hide_price = Model_Price::sysHideAllRegularPrices();
-      $hide_price = $data['hideprice'];
-      $this->template->vars('hide_price', $hide_price);
-
-      $bSystemDiscount = false;
-      $discountIds = [];
-      $sSystemDiscount = false;
-      $sPriceDiscount = '';
-      $rSystemDiscount = 0;
-      $rDiscountPrice = 0;
-      $rSystemDiscount = Model_Price::calculateDiscount(DISCOUNT_CATEGORY_ALL, $uid, $aPrds, $priceyard, $shipcost, '', $bTemp, true, $sPriceDiscount, $sSystemDiscount, $shipping, $discountIds);
-      if((strlen($sSystemDiscount) > 0) || ($rSystemDiscount > 0)) {
-        $bSystemDiscount = true;
-        $rDiscountPrice = $priceyard - $rSystemDiscount;
-      }
-
-      #check the price for the discount
-      if($bSystemDiscount) {
-        $rExDiscountPrice = $rDiscountPrice;
-      } else {
-        $rExDiscountPrice = $priceyard;
-      }
-
-      $inventory = $data['inventory'];
-      $piece = $data['piece'];
-      $format_price = '';
-      $price = Model_Price::getPrintPrice($priceyard, $format_price, $inventory, $piece);
-
-      #check if the product has its own discount
-      $sDiscount = '';
-      $bDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $rExDiscountPrice, $discountIds);
-      $data['format_price'] = $format_price;
-
       ob_start();
-      if($rSystemDiscount > 0) {
-        $tmp = Model_Price::getPrintPrice($rDiscountPrice, $sDiscountPrice, $inventory, $piece);
+      if($data['rSystemDiscount'] > 0) {
         $field_name = "Sale price:";
-        $field_value = sprintf("%s<br><strong>%s</strong>", $sPriceDiscount, $sDiscountPrice);
+        $field_value = sprintf("%s<br><strong>%s</strong>", $data['sPriceDiscount'], $data['sDiscountPrice']);
         $this->template->vars('field_name', $field_name);
         $this->template->vars('field_value', $field_value);
         $this->template->view_layout('product/discount');
       }
 
-      if($bDiscount) {
-        $tmp = Model_Price::getPrintPrice($rExDiscountPrice, $sDiscountPrice, $inventory, $piece);
-        if($bSystemDiscount) {
+      if($data['bDiscount']) {
+        if($data['bSystemDiscount']) {
           $field_name = "Extra disc. price:";
         } else {
           $field_name = "Sale price:";
         }
-        if($bSystemDiscount) {
-          $field_value = sprintf("<strong>%s</strong><br>Reduced a further %s.", $sDiscountPrice, $sDiscount);
+        if($data['bSystemDiscount']) {
+          $field_value = sprintf("<strong>%s</strong><br>Reduced a further %s.", $data['sDiscountPrice'], $data['sDiscount']);
         } else {
-          $field_value = sprintf("<strong>%s</strong><br>Reduced by %s.", $sDiscountPrice, $sDiscount);
+          $field_value = sprintf("<strong>%s</strong><br>Reduced by %s.", $data['sDiscountPrice'], $data['sDiscount']);
         }
         $this->template->vars('field_name', $field_name);
         $this->template->vars('field_value', $field_value);
         $this->template->view_layout('product/discount');
       }
 
-      if(strlen($sSystemDiscount) > 0) {
+      if(strlen($data['sSystemDiscount']) > 0) {
         $field_name = 'Shipping discount:';
-        $field_value = $sSystemDiscount;
+        $field_value = $data['sSystemDiscount'];
         $this->template->vars('field_name', $field_name);
         $this->template->vars('field_value', $field_value);
         $this->template->view_layout('product/discount');
       }
 
-      if(count($discountIds) > 0) {
-        if(Model_Price::getNextChangeInDiscoutDate($discountIds) > 0) {
+        if(isset($data['next_change']) && $data['next_change']) {
           $field_name = 'Sale ends in:';
-          $field_value = Model_Price::displayDiscountTimeRemaining($discountIds);
+          $field_value = $data['time_rem'];
           $this->template->vars('field_name', $field_name);
           $this->template->vars('field_value', $field_value);
           $this->template->view_layout('product/discount');
         }
-      }
       $discount_info = ob_get_contents();
       ob_end_clean();
       $this->template->vars('discount_info', $discount_info);
-
-      if(isset(_A_::$app->session('cart')['items'])) {
-        $cart_items = _A_::$app->session('cart')['items'];
-      } else {
-        $cart_items = [];
-      }
-      $cart = array_keys($cart_items);
-      $in_cart = in_array($pid, $cart);
-      if($in_cart) $this->template->vars('in_cart', '1');
 
       $url_prms = [];
       if(!empty(_A_::$app->get('page'))) {
@@ -455,8 +375,6 @@
       }
 
       $this->template->vars('data', $data);
-      $this->template->vars('sys_hide_price', $sys_hide_price);
-
       $allowed_samples = Model_Samples::allowedSamples($pid);
       $this->template->vars('allowed_samples', $allowed_samples);
       $this->template->vars('cart_enable', '_');

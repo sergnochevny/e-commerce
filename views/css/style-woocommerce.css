@@ -598,14 +598,23 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     margin-right: 0 !important;
 }
 .product-detail-view-actions .button{
-    width: 44.5%;
-    margin-bottom: 5.5%;
-    margin-left: 2.75%;
-    margin-right: 2.75%;
-    display: inline-block;
-    float: left;
+    width: 100%;
     text-align: center;
+    margin-bottom: 4px;
 }
+
+@media (min-width: 992px){
+
+    .product-detail-view-actions .btn-row {
+        padding-right: 17px;
+    }
+
+    .product-detail-view-actions .btn-row:nth-of-type(2n) {
+        padding-right: 15px;
+        padding-left: 17px;
+    }
+}
+
 .products .owl-item .product-item .product-image-box figcaption:hover,
 .products .product-item .product-image-box figcaption:hover {
     opacity: 1;

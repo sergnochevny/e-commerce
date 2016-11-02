@@ -71,6 +71,119 @@
       return $row;
     }
 
+    protected static function prepare_layout_product_detail($data, $cart, $sys_hide_price) {
+      if(Controller_Matches::product_in($data['pid'])) $data['in_matches'] = true;
+      $priceyard = $data['priceyard'];
+      $aPrds = [];
+      $aPrds[] = $data['pid'];    #add product id
+      $aPrds[] = 1;        #add qty
+
+      #get the shipping
+      if(isset($cart['ship'])) {
+        $shipping = (int)$cart['ship'];
+      } else {
+        $shipping = DEFAULT_SHIPPING;
+        $cart['ship'] = $shipping;
+        _A_::$app->setSession('cart', $cart);
+      }
+
+      if(isset($cart['ship_roll'])) {
+        $data['bShipRoll'] = (boolean)$cart['ship_roll'];
+      } else {
+        $data['bShipRoll'] = false;
+        $cart['ship_roll'] = 0;
+        _A_::$app->setSession('cart', $cart);
+      }
+
+      $shipcost = 0;
+      $uid = 0;
+      if(Controller_User::is_logged()) $uid = (int)Controller_User::get_from_session()['aid'];
+      $bTemp = false;
+
+      $bSystemDiscount = false;
+      $discountIds = [];
+      $sSystemDiscount = false;
+      $sPriceDiscount = '';
+      $rDiscountPrice = 0;
+      $rSystemDiscount = Model_Price::calculateDiscount(DISCOUNT_CATEGORY_ALL, $uid, $aPrds, $priceyard, $shipcost, '', $bTemp, true, $sPriceDiscount, $sSystemDiscount, $shipping, $discountIds);
+      if((strlen($sSystemDiscount) > 0) || ($rSystemDiscount > 0)) {
+        $bSystemDiscount = true;
+        $rDiscountPrice = $priceyard - $rSystemDiscount;
+      }
+
+      #check the price for the discount
+      if($bSystemDiscount) {
+        $rExDiscountPrice = $rDiscountPrice;
+      } else {
+        $rExDiscountPrice = $priceyard;
+      }
+
+      $inventory = $data['inventory'];
+      $piece = $data['piece'];
+      $format_price = '';
+      $data['price'] = Model_Price::getPrintPrice($priceyard, $format_price, $inventory, $piece);
+      $data['format_price'] = $format_price;
+
+      #check if the product has its own discount
+      $sDiscount = '';
+      $bDiscount = Model_Price::checkProductDiscount($data['pid'], $sDiscount, $rExDiscountPrice, $discountIds);
+      $data['bDiscount'] = $bDiscount;
+      $data['sDiscount'] = $sDiscount;
+
+      $tmp = Model_Price::getPrintPrice($rDiscountPrice, $sDiscountPrice, $inventory, $piece);
+      $data['rDiscountPrice'] = $rDiscountPrice;
+      $tmp = Model_Price::getPrintPrice($rExDiscountPrice, $sDiscountPrice, $inventory, $piece);
+      $data['rExDiscountPrice'] = $rExDiscountPrice;
+      $data['sDiscountPrice'] = $sDiscountPrice;
+      $data['rSystemDiscount'] = $rSystemDiscount;
+      $data['sys_hide_price'] = $sys_hide_price;
+      $data['sPriceDiscount'] = $sPriceDiscount;
+      $data['sSystemDiscount'] = $sSystemDiscount;
+
+      if(count($discountIds) > 0) {
+        $data['next_change'] = (Model_Price::getNextChangeInDiscoutDate($discountIds) > 0);
+        $data['time_rem'] = Model_Price::displayDiscountTimeRemaining($discountIds);
+      }
+
+      if(isset($cart['items'])) {
+        $cart_items = $cart['items'];
+      } else {
+        $cart_items = [];
+      }
+      if(isset($cart['samples_items'])) {
+        $samples_items = $cart['samples_items'];
+      } else {
+        $samples_items = [];
+      }
+      $data['in_samples_cart'] = in_array($data['pid'], array_keys($samples_items));
+      $data['in_cart'] = in_array($data['pid'], array_keys($cart_items));
+
+      $data['img1_exists'] = true;
+      $data['filename'] = 'upload/upload/' . $data['image1'];
+      $data['filename1'] = 'upload/upload/' . 'v_' . $data['image1'];
+      if(!(file_exists($data['filename']) && is_file($data['filename']) && is_readable($data['filename']))) {
+        $data['filename'] = "upload/upload/not_image.jpg";
+        $data['filename1'] = null;
+        $data['img1_exists'] = false;
+      }
+      $data['filename'] = _A_::$app->router()->UrlTo($data['filename']);
+      $data['filename1'] = isset($data['filename1']) ? _A_::$app->router()->UrlTo($data['filename1']) : null;
+      for($i = 2; $i < 6; $i++) {
+        if(!empty($data['image' . $i])) {
+          $data['img' . $i . '_filename'] = 'upload/upload/' . $data['image' . $i];
+          $data['img' . $i . '_filename1'] = 'upload/upload/' . 'v_' . $data['image' . $i];
+          if(!(file_exists($data['img' . $i . '_filename']) && is_file($data['img' . $i . '_filename']) && is_readable($data['img' . $i . '_filename']))) {
+            $data['img' . $i . '_filename'] = "upload/upload/not_image.jpg";
+            $data['img' . $i . '_filename1'] = null;
+          }
+          $data['img' . $i . '_filename'] = _A_::$app->router()->UrlTo($data['img' . $i . '_filename']);
+          $data['img' . $i . '_filename1'] = isset($data['img' . $i . '_filename1']) ? _A_::$app->router()->UrlTo($data['img' . $i . '_filename1']) : null;
+        }
+      }
+
+      return $data;
+    }
+
     public static function set_inventory($pid, $inventory = 0) {
       $q = "update fabrix_products set inventory=" . $inventory;
       $q .= ($inventory == 0) ? ", pvisible = 0" : "";
@@ -101,11 +214,9 @@
     public static function get_product($pid) {
       self::inc_popular($pid);
       $row = Model_Product::get_by_id($pid);
-
       $sys_hide_price = Model_Price::sysHideAllRegularPrices();
-      $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-      $cart = array_keys($cart_items);
-      $response = self::prepare_layout_product($row, $cart, $sys_hide_price);
+      $cart = _A_::$app->session('cart');
+      $response = self::prepare_layout_product_detail($row, $cart, $sys_hide_price);
 
       return $response;
     }
@@ -206,7 +317,7 @@
 
     public static function get_total_count($filter = null) {
       $response = 0;
-      if(isset($filter['type']) && ($filter['type']=='bestsellers')){
+      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
         $query = "select COUNT(n.pid) from (";
         $query .= "SELECT a.pid, SUM(k.quantity) as s FROM " . static::$table . " a";
         $query .= " LEFT JOIN fabrix_order_details k ON a.pid = k.product_id";
@@ -221,7 +332,7 @@
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if(isset($filter['type']) && ($filter['type']=='bestsellers')) {
+      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
         $query .= " GROUP BY a.pid";
         $query .= " ORDER BY s DESC) m";
         $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
@@ -234,7 +345,7 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      if(isset($filter['type']) && ($filter['type']=='bestsellers')){
+      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
         $query = "select n.* from (";
         $query .= "SELECT a.pid, SUM(k.quantity) as s FROM " . static::$table . " a";
         $query .= " LEFT JOIN fabrix_order_details k ON a.pid = k.product_id";
@@ -249,12 +360,12 @@
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if(isset($filter['type']) && ($filter['type']=='bestsellers')) {
+      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
         $query .= " GROUP BY a.pid";
       }
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
-      if(isset($filter['type']) && ($filter['type']=='bestsellers')) {
+      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
         $query .= ") m";
         $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
       }

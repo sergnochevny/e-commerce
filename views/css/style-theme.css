@@ -2194,7 +2194,12 @@ body.archive .main-content {
 [disabled] {
     opacity: 0.6;
 }
-sup{
+
+sup {
     color: #999 !important;
     font-weight: normal !important;
+}
+
+.note {
+    color: #666;
 }
