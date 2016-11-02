@@ -2090,14 +2090,22 @@ form[data-search] > .row > .panel > .panel-heading{
     }
 }
 @media (max-width: 768px) {
-    .product-in-cart-image{
+    .product-in-cart-image, .sample-in-cart-image{
         margin-bottom: 15px;
     }
-    .product-in-cart-title{
+    .product-in-cart-title, .sample-in-cart-title{
         font-size: 1.4em;
     }
+    .footer-credit-right{
+        text-align: center;
+    }
+    div[data-block=cart_item] img, div[data-block=sample_item] img{
+        box-shadow: none;
+    }
 }
-
+.footer-credit-right img{
+    width: 261px;
+}
 .search-result-list .reset:hover{
     color: darkred !important;
 }

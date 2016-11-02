@@ -3,11 +3,11 @@
     <div class="row">
         <div class="col-xs-12 col-sm-10 table-list-row-item">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-2 sample-in-cart-image">
                     <img alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
                          src="<?= $img_url; ?>">
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-10 sample-in-cart-title">
                     <a href="<?= $href; ?>"><?= $item['Product_name']; ?></a>
                 </div>
             </div>

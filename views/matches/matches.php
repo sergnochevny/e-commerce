@@ -8,14 +8,6 @@
       <div class="col-xs-12">
         <div class="col-xs-12">
           <section class="just-posts-grid">
-            <div id="dragZone">
-              <div class="dragZoneTitle">Matches Area</div>
-              <div id="dragZoneArea">
-                <div class="deleteDragImg icon-delete"></div>
-                <div class="detailsDragImg"></div>
-                <?= isset($matches_items) ? $matches_items : '' ?>
-              </div>
-            </div>
             <div class="note">
               <hr>
               <div class="matches-note text-bold">
@@ -48,6 +40,14 @@
                 </p>
               </div>
               <hr>
+            </div>
+            <div id="dragZone">
+              <div class="dragZoneTitle">Matches Area</div>
+              <div id="dragZoneArea">
+                <div class="deleteDragImg icon-delete"></div>
+                <div class="detailsDragImg"></div>
+                <?= isset($matches_items) ? $matches_items : '' ?>
+              </div>
             </div>
             <div style="width: 100%" class="text-center inner-offset-vertical" id="b_in_product">
               <?php if(isset($matches_items)): ?>
