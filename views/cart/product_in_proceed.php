@@ -3,15 +3,13 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6 table-list-row-item">
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-5 product-in-cart-image">
           <img alt=""
                class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
                src="<?= $img_url; ?>">
         </div>
-        <div class="col-sm-7">
-          <div class="row">
-            <a href="<?= $href ?>"><?= $item['Product_name']; ?></a>
-          </div>
+        <div class="col-sm-7 product-in-cart-title">
+          <a href="<?= $href ?>"><?= $item['Product_name']; ?></a>
         </div>
       </div>
     </div>

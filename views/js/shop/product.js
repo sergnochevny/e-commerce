@@ -13,8 +13,8 @@
       $.when(
         $('span#cart_amount').html(data.sum),
         $(data.msg).appendTo('#content'),
-        $('#add_cart').fadeOut(),
-        $('#view_cart').fadeIn()
+        $('#add_cart').stop().hide(),
+        $('#view_cart').stop().show()
       ).done(function () {
         $('#content').waitloader('remove');
 
@@ -112,8 +112,8 @@
             };
 
             if (answer.added == 1) {
-              $('#add_matches').fadeOut();
-              $('#view_matches').fadeIn();
+              $('#add_matches').stop().hide();
+              $('#view_matches').stop().show();
               $.extend(buttons, {
                 "Matches": function () {
                   $(this).remove();

@@ -2089,6 +2089,15 @@ form[data-search] > .row > .panel > .panel-heading{
         right: 10px;
     }
 }
+@media (max-width: 768px) {
+    .product-in-cart-image{
+        margin-bottom: 15px;
+    }
+    .product-in-cart-title{
+        font-size: 1.4em;
+    }
+}
+
 .search-result-list .reset:hover{
     color: darkred !important;
 }
