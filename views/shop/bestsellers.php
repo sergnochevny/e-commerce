@@ -21,25 +21,20 @@
             </figcaption>
           </a>
         </figure>
-
-
-          <span class="product-category"><a href="<?= $href; ?>"><?= $row['pname']; ?></a></span>
-          <p class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></p>
-          <div class="product-price-box clearfix">
-            <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
-              <span class="price pull-left">
-            <ins>
+        <span class="product-category"><a href="<?= $href; ?>"><?= $row['pname']; ?></a></span>
+        <p class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></p>
+        <div class="product-price-box clearfix">
+          <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
+            <div class="price pull-left">
               <span class="amount"><?= $row['format_price']; ?></span>
-            </ins>
-          </span>
-            <?php } ?>
-            <?php if(isset($row['saleprice']) && ($row['price'] != $row['saleprice'])) { ?>
-              <span class="text-sale pull-right" style="float:right;color: red;">
-            Sale: <ins><span class="amount_wd"><?= $row['format_sale_price']; ?></span></ins>
-          </span>
-            <?php } ?>
-          </div>
-
+            </div>
+          <?php } ?>
+          <?php if(isset($row['saleprice']) && ($row['price'] != $row['saleprice'])) { ?>
+            <div class="text-sale pull-right" style="float:right;color: red;">Sale:
+              <span class="amount_wd"><?= $row['format_sale_price']; ?></span>
+            </div>
+          <?php } ?>
+        </div>
       </div>
     </div>
   <?php endforeach; ?>

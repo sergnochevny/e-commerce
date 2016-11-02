@@ -12,6 +12,7 @@
             }, 2000);
         }, 300);
     });
+
     $('#dragZoneArea > img').mousedown(function (eventObject) {
         $(this).css("z-index", a++);
     }).draggable({
@@ -56,7 +57,8 @@
         ev.preventDefault();
         var url = $(this).attr('href');
         $('#content').waitloader('show');
-        $.post(url, {empty:true}, function (data) {
+        var data = new FormData();
+        $.post(url, data, function (data) {
             $('img#product_img_holder').each(function () {
                 $(this).remove();
             });

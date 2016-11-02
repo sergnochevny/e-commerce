@@ -17,7 +17,7 @@
             <span class="quantity"><?= $item['quantity']; ?></span>
         </div>
         <div class="col-xs-12 col-sm-1 table-list-row-item">
-            <a class="del_sample_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_sample');?>"><i class=" fa fa-trash-o"></i></a>
+            <a data-block="del_sample_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_sample');?>"><i class=" fa fa-trash-o"></i></a>
         </div>
     </div>
 </div>

@@ -63,7 +63,7 @@
     $(".popup a.close").trigger('click');
   });
 
-  $(document).on('click', '.del_product_cart',
+  $(document).on('click', '[data-block=del_product_cart]',
     function (event) {
       event.preventDefault();
       var url = $(this).attr('href');
@@ -116,7 +116,7 @@
     }
   );
 
-  $(document).on('click', '.del_sample_cart',
+  $(document).on('click', '[data-block=del_sample_cart]',
     function (event) {
       event.preventDefault();
       var url = $(this).attr('href');
@@ -250,7 +250,7 @@
   $(document).on('click', '[data-block=proceed_button]', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
-    $.get(url, {empty: true}, function (data) {
+    $.get(url, {}, function (data) {
       $.when($('#content').html(data))
         .done(function () {
           $('html, body').stop().animate({scrollTop: 0}, 1000);
@@ -261,7 +261,7 @@
   $(document).on('click', '[data-block=proceed_agreem_button]', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
-    $.get(url, {empty: true}, function (data) {
+    $.get(url, {}, function (data) {
       $.when($('#content').html(data))
         .done(function () {
           $('html, body').stop().animate({scrollTop: 0}, 1000);

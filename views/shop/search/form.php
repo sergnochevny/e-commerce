@@ -76,8 +76,8 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="form-row">
-              <label>Specific category
-                <select name="search[b.cid]" id="best">
+              <label <?= isset($search['hidden']['b.cid']) ? 'disabled' : '' ?>>Specific category
+                <select name="search[b.cid]" <?= isset($search['hidden']['b.cid']) ? 'disabled' : '' ?>>
                   <option value="" <?= isset($search['b.cid']) ? '' : 'selected' ?>>Any</option>
                   <?php if(isset($search['categories'])):
                     foreach($search['categories'] as $key => $val): ?>
@@ -93,8 +93,8 @@
           </div>
           <div class="col-sm-6">
             <div class="form-row">
-              <label>Specific manufacturer
-                <select name="search[e.id]" id="best">
+              <label <?= isset($search['hidden']['e.id']) ? 'disabled' : '' ?>>Specific manufacturer
+                <select name="search[e.id]" <?= isset($search['hidden']['e.id']) ? 'disabled' : '' ?>>
                   <option value="" <?= isset($search['e.id']) ? '' : 'selected' ?>>Any</option>
                   <?php if(isset($search['manufacturers'])):
                     foreach($search['manufacturers'] as $key => $val):?>
@@ -112,8 +112,8 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="form-row">
-              <label>In specific colour
-                <select name="search[c.id]" id="best">
+              <label <?= isset($search['hidden']['c.id']) ? 'disabled' : '' ?>>In specific colour
+                <select name="search[c.id]" <?= isset($search['hidden']['c.id']) ? 'disabled' : '' ?>>
                   <option value="" <?= isset($search['c.id']) ? '' : 'selected' ?>>Any</option>
                   <?php if(isset($search['colours'])):
                     foreach($search['colours'] as $key => $val):?>
@@ -129,8 +129,8 @@
           </div>
           <div class="col-sm-4">
             <div class="form-row">
-              <label>With specific pattern
-                <select name="search[d.id]" id="best">
+              <label <?= isset($search['hidden']['d.id']) ? 'disabled' : '' ?>>With specific pattern
+                <select name="search[d.id]" <?= isset($search['hidden']['d.id']) ? 'disabled' : '' ?>>
                   <option value="" <?= isset($search['d.id']) ? '' : 'selected' ?>>Any</option>
                   <?php if(isset($search['patterns'])):
                     foreach($search['patterns'] as $key => $val):?>
@@ -147,7 +147,7 @@
           <div class="col-sm-4">
             <div class="form-row">
               <label>Piece
-                <select name="search[a.piece]" id="best">
+                <select name="search[a.piece]">
                   <option value="" <?= isset($search['a.piece']) ? '' : 'selected' ?>>Any</option>
                   <option value="1" <?= isset($search['a.piece']) && $search['a.piece'] == 1 ? 'selected' : '' ?>>Yes
                   </option>

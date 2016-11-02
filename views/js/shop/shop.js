@@ -11,7 +11,7 @@
                 $('#content').waitloader('show');
                 $.get(
                     url,
-                    {empty:true},
+                    {},
                     function (answer) {
                         var data = JSON.parse(answer);
                         $.when(

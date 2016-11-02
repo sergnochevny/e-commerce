@@ -32,9 +32,9 @@
 
     protected function search_form($search_form, $view = false) {
       $template = $view ? 'view/search/form' : 'search/form';
+      $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller));
       $this->before_search_form_layout($search_form, $view);
       $this->template->vars('search', $search_form);
-      $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller));
       $search_form = null;
       ob_start();
       try {
