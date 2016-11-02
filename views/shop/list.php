@@ -7,6 +7,12 @@
 <?= isset($search_form) ? $search_form : '' ?>
 
 <div class="row">
+  <div class="col-xs-12">
+    <?= isset($annotation) ? '<p class="annotation inner-offset-bottom">' . $annotation . '</p>' : '';?>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-xs-12 search-result-header">
     <div class="row">
       <div class="col-sm-4">
@@ -31,11 +37,6 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
-    <?= isset($annotation) ? '<p class="annotation">' . $annotation . '</p>' : '';?>
-  </div>
-</div>
 <div class="row">
   <div class="col-xs-12">
     <div class="row products">
