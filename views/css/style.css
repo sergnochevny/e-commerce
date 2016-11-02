@@ -2299,3 +2299,7 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
 .productsAddBasket > .simple-icon-handbag{
     font-size: 1em;
 }
+
+.input-for-quantity{
+    width: 60px;
+}
