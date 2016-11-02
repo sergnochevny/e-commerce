@@ -50,13 +50,6 @@
         </div>
       </div>
     <?php endif; ?>
-
-    <div class="row">
-      <div class="col-xs-12 text-center">
-        <hr class="half-outer-offset-top"/>
-      </div>
-    </div>
-
     <?php if(isset($cart_samples_items) && strlen($cart_samples_items) > 0): ?>
       <div class="col-xs-12 inner-offset-bottom" data-block="samples_legend">
         <div class="row">
