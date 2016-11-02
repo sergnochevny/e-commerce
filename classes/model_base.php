@@ -30,19 +30,19 @@
               }
               break;
             case 'between':
-              if(!empty($val[1]['from'])){
+              if(!empty($val[1]['from'])) {
                 $where1 = $key . " >= '" . mysql_real_escape_string(static::validData($val[1]['from'])) . "'";
               }
-              if(!empty($val[1]['to'])){
+              if(!empty($val[1]['to'])) {
                 if(strlen($where1) > 0) $where1 .= " and ";
-                $where1 .= $key ." <= '" . mysql_real_escape_string(static::validData($val[1]['to'])) . "'";
+                $where1 .= $key . " <= '" . mysql_real_escape_string(static::validData($val[1]['to'])) . "'";
               }
               break;
           }
 
-          $where .= ((strlen($where1) > 0) ? ((strlen($where) > 0) ? " and (" : " (").$where1.")":'');
+          $where .= ((strlen($where1) > 0) ? ((strlen($where) > 0) ? " and (" : " (") . $where1 . ")" : '');
         }
-        if(strlen($where)>0) {
+        if(strlen($where) > 0) {
           $query = " WHERE " . $where;
           $filter['active'] = true;
         }
@@ -52,7 +52,7 @@
 
     protected static function build_order(&$sort) {
       $order = '';
-      if(isset($sort)){
+      if(isset($sort) && (count($sort) > 0)) {
         foreach($sort as $key => $val) {
           if(strlen($order) > 0) $order .= ',';
           $order .= ' ' . $key . ' ' . $val;
@@ -61,7 +61,6 @@
       }
       return $order;
     }
-
 
     public static function get_fields() {
       $response = null;
@@ -82,4 +81,5 @@
       return $data;
     }
   }
+
 ?>

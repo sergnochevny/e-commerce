@@ -14,8 +14,8 @@
             </p>
           </div>
           <div class="col-sm-4"></div>
-          <div class="col-sm-4 search-result-container">
-            <span class="woocommerce-result-count pull-right">Showing <?= $count_rows; ?> results</span>
+          <div class="col-sm-4 search-result-container text-right">
+            <span class="search-result">Showing <?= $count_rows; ?> results</span>
           </div>
         </div>
       </div>

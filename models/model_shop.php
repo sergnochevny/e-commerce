@@ -30,6 +30,8 @@
       if(isset($filter['hidden']["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::validData($filter['hidden']["c.id"])) . "'";
       if(isset($filter['hidden']["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::validData($filter['hidden']["d.id"])) . "'";
       if(isset($filter['hidden']["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::validData($filter['hidden']["e.id"])) . "'";
+      if(isset($filter['hidden']["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::validData($filter['hidden']["a.best"])) . "'";
+      if(isset($filter['hidden']["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::validData($filter['hidden']["a.specials"])) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
       }
@@ -127,7 +129,7 @@
         case 'best':
           $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and best = '1' ORDER BY pid DESC LIMIT " . $start . "," . $limit;
           break;
-        case 'bsells':
+        case 'bestsellers':
           $q = "select n.*" .
             " from (SELECT a.pid, SUM(b.quantity) as s" .
             " FROM fabrix_products a" .
@@ -202,187 +204,15 @@
       return $res;
     }
 
-    public static function get_list_by_type($type = 'new', $start, $per_page, &$res_count_rows = 0, &$filter = null, &$sort = null) {
-      $rows = null;
-      $q = "";
-      switch($type) {
-        case 'all':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q = "SELECT a.* FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-//                " WHERE  a.pnumber is not null and b.cid='$cid' ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
-              " WHERE  a.pnumber is not null and b.cid='" . $cid . "'" .
-              " ORDER BY b.display_order ASC, a.dt DESC, a.pid DESC" .
-              " LIMIT $start,$per_page";
-          } else {
-            $q = "SELECT * FROM fabrix_products WHERE pnumber is not null" .
-              " ORDER BY pid DESC" .
-              " LIMIT $start,$per_page";
-          }
-          break;
-        case 'last':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q = "SELECT a.* FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-              " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cid' ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
-          } else {
-            $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' ORDER BY  dt DESC, pid DESC LIMIT $start,$per_page";
-          }
-          break;
-        case 'best':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q = "SELECT a.* FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-              " WHERE  a.pnumber is not null and a.pvisible = '1'  and a.best = '1' and b.cid='$cid' ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
-          } else {
-            $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and best = '1' ORDER BY dt DESC, pid DESC LIMIT $start,$per_page";
-          }
-          break;
-        case 'specials':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q = "SELECT a.* FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-              " WHERE  a.pnumber is not null and a.pvisible = '1' and a.specials='1' and b.cid='$cid'" .
-              " ORDER BY a.dt DESC, a.pid DESC LIMIT $start,$per_page";
-          } else {
-            $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and specials='1'" .
-              " ORDER BY  dt DESC, pid DESC LIMIT $start,$per_page";
-          }
-          break;
-        case 'popular':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q = "SELECT a.* FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-              " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cid' ORDER BY popular DESC LIMIT $start,$per_page";
-          } else {
-            $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' ORDER BY popular DESC LIMIT $start,$per_page";
-          }
-          break;
-        case 'bsells':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q = "select n.*" .
-              " from (SELECT a.pid, SUM(b.quantity) as s" .
-              " FROM fabrix_products a" .
-              " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
-              " LEFT JOIN fabrix_product_categories pc ON a.pid = pc.pid and b.cid='$cid'" .
-              " WHERE a.pnumber is not null and a.pvisible = '1'" .
-              " GROUP BY a.pid" .
-              " ORDER BY s DESC  LIMIT $start,$per_page) m" .
-              " LEFT JOIN fabrix_products n ON m.pid = n.pid";
-          } else {
-            $q = "select n.*" .
-              " from (SELECT a.pid, SUM(b.quantity) as s" .
-              " FROM fabrix_products a" .
-              " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
-              " WHERE a.pnumber is not null and a.pvisible = '1'" .
-              " GROUP BY a.pid" .
-              " ORDER BY s DESC  LIMIT $start,$per_page) m" .
-              " LEFT JOIN fabrix_products n ON m.pid = n.pid";
-          }
-          break;
-      }
-      if($result = mysql_query($q)) {
-        $res_count_rows = mysql_num_rows($result);
-        $sys_hide_price = Model_Price::sysHideAllRegularPrices();
-        $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
-        $cart = array_keys($cart_items);
-        while($row = mysql_fetch_array($result)) {
-          $rows[] = self::prepare_layout_product($row, $cart, $sys_hide_price);
-        }
-      }
-      return $rows;
-    }
-
-    public static function get_count_by_type($type, $filter = null) {
-      switch($type) {
-        case 'all':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-              " WHERE  a.pnumber is not null and b.cid='$cid'";
-          } else {
-            $q_total = "SELECT COUNT(*) FROM fabrix_products WHERE pnumber is not null ";
-          }
-          break;
-        case 'last':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-              " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cid'";
-          } else {
-            $q_total = "SELECT COUNT(*) FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' ORDER BY dt DESC";
-          }
-          break;
-        case 'best':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-              " WHERE  a.pnumber is not null and a.best='1' and a.pvisible = '1' and b.cid='$cid'";
-          } else {
-            $q_total = "SELECT COUNT(*) FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and best = '1'";
-          }
-          break;
-        case 'specials':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-              " WHERE  a.pnumber is not null and a.pvisible = '1' and a.specials='1' and b.cid='$cid'";
-          } else {
-            $q_total = "SELECT COUNT(*) FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and specials='1' ORDER BY dt DESC";
-          }
-          break;
-        case 'popular':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
-              " LEFT JOIN fabrix_product_categories b ON a.pid = b.pid " .
-              " WHERE  a.pnumber is not null and a.pvisible = '1' and b.cid='$cid'";
-          } else {
-            $q_total = "SELECT COUNT(*) FROM fabrix_products WHERE  pnumber is not null and pvisible = '1'";
-          }
-          break;
-        case 'bsells':
-          if(!empty(_A_::$app->get('cat'))) {
-            $cid = static::validData(_A_::$app->get('cat'));
-            $q_total = "select COUNT(n.pid)" .
-              " from (SELECT a.pid, SUM(b.quantity) as s" .
-              " FROM fabrix_products a" .
-              " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
-              " LEFT JOIN fabrix_product_categories pc ON a.pid = pc.pid and b.cid='$cid'" .
-              " WHERE a.pnumber is not null and a.pvisible = '1'" .
-              " GROUP BY a.pid" .
-              " ORDER BY s DESC) m" .
-              " LEFT JOIN fabrix_products n ON m.pid = n.pid";
-          } else {
-            $q_total = "select COUNT(n.pid)" .
-              " from (SELECT a.pid, SUM(b.quantity) as s" .
-              " FROM fabrix_products a" .
-              " LEFT JOIN fabrix_order_details b ON a.pid = b.product_id" .
-              " WHERE a.pnumber is not null and a.pvisible = '1'" .
-              " GROUP BY a.pid" .
-              " ORDER BY s DESC) m" .
-              " LEFT JOIN fabrix_products n ON m.pid = n.pid";
-          }
-          break;
-      }
-      $res = mysql_query($q_total);
-      $total = mysql_fetch_row($res)[0];
-      return $total;
-    }
-
     public static function get_total_count($filter = null) {
       $response = 0;
-      $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
+      if(isset($filter['type']) && ($filter['type']=='bestsellers')){
+        $query = "select COUNT(n.pid) from (";
+        $query .= "SELECT a.pid, SUM(k.quantity) as s FROM " . static::$table . " a";
+        $query .= " LEFT JOIN fabrix_order_details k ON a.pid = k.product_id";
+      } else {
+        $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
+      }
       $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
       $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
       $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
@@ -391,6 +221,11 @@
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
+      if(isset($filter['type']) && ($filter['type']=='bestsellers')) {
+        $query .= " GROUP BY a.pid";
+        $query .= " ORDER BY s DESC) m";
+        $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
+      }
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
       }
@@ -399,8 +234,13 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      $query = "SELECT DISTINCT a.* ";
-      $query .= " FROM " . static::$table . " a";
+      if(isset($filter['type']) && ($filter['type']=='bestsellers')){
+        $query = "select n.* from (";
+        $query .= "SELECT a.pid, SUM(k.quantity) as s FROM " . static::$table . " a";
+        $query .= " LEFT JOIN fabrix_order_details k ON a.pid = k.product_id";
+      } else {
+        $query = "SELECT DISTINCT a.* FROM " . static::$table . " a";
+      }
       $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
       $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
       $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
@@ -409,9 +249,15 @@
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
+      if(isset($filter['type']) && ($filter['type']=='bestsellers')) {
+        $query .= " GROUP BY a.pid";
+      }
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
-
+      if(isset($filter['type']) && ($filter['type']=='bestsellers')) {
+        $query .= ") m";
+        $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
+      }
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);
         $sys_hide_price = Model_Price::sysHideAllRegularPrices();

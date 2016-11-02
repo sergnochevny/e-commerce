@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
-      <a class="del_product_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_product'); ?>">
+      <a data-block="del_product_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_product'); ?>">
         <i class="fa fa-trash-o"></i>
       </a>
     </div>

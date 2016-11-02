@@ -65,6 +65,7 @@
       'display_errors' => 'On',
       'mysql.connect_timeout' => 60,
       'error_reporting' => (E_ALL & (~E_DEPRECATED)),
+      'always_populate_raw_post_data' => -1,
     ],
     'date_default_timezone_set' => ['UTC'],
     'setlocale' => [LC_ALL, 'en_US'],
