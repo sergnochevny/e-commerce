@@ -40,7 +40,7 @@
           <div class="quantity">
             <?php if($item['piece'] == 0) { ?>
               <input data-role="quantity" data-whole="<?= ($item['whole'] == 1 ? '1' : '0') ?>" type="text" min="1"
-                     max="100000" class="qty text input-text input-for-quantity" title="Quantity" value="<?= $item['quantity']; ?>">
+                     max="100000" class="qty text input-text input-for-spinner" title="Quantity" value="<?= $item['quantity']; ?>">
             <?php } else { ?>
               <span class="quantity"><?= $item['quantity']; ?></span>
             <?php } ?>

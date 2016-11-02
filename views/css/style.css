@@ -2300,6 +2300,9 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     font-size: 1em;
 }
 
-.input-for-quantity{
-    width: 60px;
+.ui-spinner > input.input-for-spinner{
+    width: 80px !important;
+    margin: 0;
+    height: 30px;
+    padding: 4px 10px;
 }
