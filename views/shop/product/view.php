@@ -18,11 +18,8 @@
     </div>
 
     <div class="row">
-      <div
-        class="col-xs-12 product type-product status-publish has-post-thumbnail product_cat-brooches product_tag-fashion product_tag-jewelry sale featured shipping-taxable purchasable product-type-simple product-cat-brooches product-tag-fashion product-tag-jewelry instock">
 
         <div class="col-md-6 images">
-          <div class="row">
             <a <?= isset($data['filename1']) ? 'href="' . $data['filename1'] . '"' : ''; ?>
               itemprop="image" class="product-main-image zoom" title=""
               <?= isset($data['filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
@@ -31,7 +28,6 @@
                    src="<?= isset($data['filename1']) ? $data['filename1'] : $data['filename']; ?>"
                    class="attachment-shop_single size-shop_single wp-post-image" alt="" title=""/>
             </a>
-
             <div class="thumbnails col-sm-12">
               <div class="row">
                 <?php
@@ -93,13 +89,9 @@
                   <?php } ?>
               </div>
             </div>
-
-          </div>
         </div>
 
         <div class="col-md-6 summary entry-summary">
-          <div class="row">
-
             <div class="col-sm-12">
               <div class="row">
                 <div class="product_title_desc">
@@ -107,7 +99,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col-sm-12">
               <div class="row">
                 <div class="product_title_price">
@@ -123,7 +114,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col-sm-12">
               <div class="row">
                 <table class="table table-bordered table-striped red">
@@ -134,7 +124,6 @@
                 <div class="quantity"></div>
               </div>
             </div>
-
             <div class="col-sm-12">
               <div class="row">
                 <div class="product-detail-view-actions" aria-label="...">
@@ -179,7 +168,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col-sm-12">
               <div class="row">
                   <span id="b_in_product" style="0font-weight: 600;">
@@ -187,7 +175,6 @@
                   </span>
               </div>
             </div>
-
             <div class="col-sm-12">
               <div class="row">
                 <div class="product_meta">
@@ -223,10 +210,8 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
 
-      </div>
     </div>
 
   </div>
