@@ -17,7 +17,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-startup-image" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
-    <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-layout.css'); ?>'/>
     <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-smallscreen.css'); ?>'
           media='only screen and (max-width: 768px)'/>
 

@@ -15,8 +15,6 @@
 
   <link charset="UTF-8" rel="apple-touch-startup-image"
         href="<?= _A_::$app->router()->UrlTo('/views/images/lf-logo.png') ?>">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/woocommerce-layout.css') ?>"
-        type="text/css" media="all">
   <link charset="UTF-8" rel="stylesheet"
         href="<?= _A_::$app->router()->UrlTo('/views/css/woocommerce-smallscreen.css') ?>"
         type="text/css" media="only screen and (max-width: 768px)">

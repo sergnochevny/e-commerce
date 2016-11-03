@@ -25,7 +25,7 @@
           <div class="col-xs-6 col-sm-6">
             <div class="row form-row">
               <label for="roll" class="inline">
-                <input data-block="roll" type="checkbox" name="roll" value="1" <?= $bShipRoll ? 'checked' : ''; ?>>
+                <input data-block="roll" type="checkbox" id="roll" name="roll" value="1" <?= $bShipRoll ? 'checked' : ''; ?>>
                 Ship my fabric on a roll.
               </label>
             </div>
