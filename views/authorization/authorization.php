@@ -8,8 +8,10 @@
 
       <div class="col-xs-12 col-sm-8 col-sm-push-2 panel panel-default panel-default-vertical-sizing">
         <div class="col-xs-12">
-          <form method="post" id="authorization" action="<?= _A_::$app->router()->UrlTo('authorization'); ?>" class="login">
-            <input type="hidden" name="redirect" value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
+          <form method="post" id="authorization" action="<?= _A_::$app->router()->UrlTo('authorization'); ?>"
+                class="login">
+            <input type="hidden" name="redirect"
+                   value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
 
             <div class="form-row">
               <label for="username" class="required-field">Email Address/Username</label>
@@ -24,8 +26,8 @@
             <div class="form-row">
               <div class="col-xs-6">
                 <div class="row">
-                  <input id="blogin" type="button" class="button" name="login"
-                         data-action="<?= _A_::$app->router()->UrlTo('authorization'); ?>" value="Login"/>
+                  <a id="blogin" type="button" class="button" name="login"
+                     data-action="<?= _A_::$app->router()->UrlTo('authorization'); ?>">Login</a>
                 </div>
               </div>
               <div class="col-xs-6 text-right">

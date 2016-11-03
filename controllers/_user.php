@@ -30,7 +30,7 @@
             exit('Empty Email or Password field');
           $email = _A_::$app->post('login');
           $password = _A_::$app->post('pass');
-          if(!$this->authorize($email, $password))
+          if(!self::authorize($email, $password))
             exit('Wrong Email or Password');
           $url = base64_decode(urldecode(_A_::$app->post('redirect')));
           $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('shop');
@@ -70,9 +70,6 @@
       return false;
     }
 
-    /**
-     * @export
-     */
     public function authorize($email, $password) {
       $email = stripslashes(strip_tags(trim($email)));
       $password = stripslashes(strip_tags(trim($password)));

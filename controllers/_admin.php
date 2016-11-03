@@ -76,20 +76,16 @@
             exit('Empty Login or Password field');
           $login = _A_::$app->post('login');
           $password = _A_::$app->post('pass');
-          if(!$this->authorize($login, $password))
+          if(!self::authorize($login, $password))
             exit('Wrong Login or Password');
           $url = base64_decode(urldecode(_A_::$app->post('redirect')));
           $url = (strlen($url) > 0) ? $url : _A_::$app->router()->UrlTo('product');
           $this->redirect($url);
         } else {
-
-          $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') :
-            urlencode(base64_encode(_A_::$app->router()->UrlTo('product')));
+          $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : urlencode(base64_encode(_A_::$app->router()->UrlTo('product')));
           $this->template->vars('redirect', $redirect);
-
           $menu = new Controller_Menu($this);
           $menu->show_menu();
-
           $this->main->view('admin');
         }
       } else {
@@ -123,10 +119,7 @@
       $this->redirect(_A_::$app->router()->UrlTo('/'));
     }
 
-    /**
-     * @export
-     */
-    public function authorize($login, $password) {
+    public static function authorize($login, $password) {
       $login = stripslashes(strip_tags(trim($login)));
       $password = stripslashes(strip_tags(trim($password)));
       $res = Model_Auth::admin_authorize($login, $password);

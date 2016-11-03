@@ -13,7 +13,7 @@
                onclick="return location.href = '<?= _A_::$app->router()->UrlTo('shop'); ?>'">
             <p class="just-slide-desc">Featured Fabric Selection</p>
             <h2 class="just-slide-title">View our Fabrics</h2>
-            <a class="button" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Shop Now</a>
+            <a data-waitloader class="button" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Shop Now</a>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
                onclick="return location.href = '<?= _A_::$app->router()->UrlTo('shop'); ?>'">
             <p class="just-slide-desc">Featured Fabric Selection</p>
             <h2 class="just-slide-title">View our Fabrics</h2>
-            <a class="button" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Shop Now</a>
+            <a data-waitloader class="button" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Shop Now</a>
           </div>
         </div>
       </div>

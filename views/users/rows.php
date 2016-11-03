@@ -128,13 +128,13 @@
         </div>
 
         <div class="col-xs-12 col-sm-2 text-right action-buttons">
-          <a data-modify href="<?= _A_::$app->router()->UrlTo('users/edit', $prms) ?>">
+          <a data-waitloader data-modify href="<?= _A_::$app->router()->UrlTo('users/edit', $prms) ?>">
             <i class="fa fa-pencil"></i>
           </a>
           <a data-delete class="text-danger" href="<?= _A_::$app->router()->UrlTo('users/delete', $prms) ?>">
             <i class=" fa fa-trash-o"></i>
           </a>
-          <a class="text-success" href="<?= _A_::$app->router()->UrlTo('orders', array_merge($prms,['back'=>'users'])) ?>"><i
+          <a data-waitloader class="text-success" href="<?= _A_::$app->router()->UrlTo('orders', array_merge($prms,['back'=>'users'])) ?>"><i
               class="fa fa-eye"></i></a>
         </div>
       </div>

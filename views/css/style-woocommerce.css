@@ -229,11 +229,13 @@ span#b_in_product {
 
 .form-row input.input-text {
     background-color: #fff;
-    border: 1px solid #DDD;
+    /*border: 1px solid #DDD;*/
+    border: 1px solid #b0b0b0;
     border-radius: 2px !important;
     -webkit-border-radius: 2px !important;
     -moz-border-radius: 2px !important;
-    box-shadow: 0 0 0 #DDD !important;
+    /*box-shadow: 0 0 0 #DDD !important;*/
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
     font-size: 12px;
     height: 42px;
     padding: 0 10px;
@@ -270,13 +272,11 @@ select:focus {
     border-color: #999 !important;
 }
 
-.panel-default {
-    border: 1px solid #DDD !important;
-}
-
 .form-row select {
     background-color: #fff;
-    border: 1px solid #DDD;
+    /*border: 1px solid #DDD;*/
+    border: 1px solid #b0b0b0;
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -288,8 +288,10 @@ select:focus {
 
 .form-row textarea {
     background-color: #fff;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
+    border: 1px solid #b0b0b0;
     border-radius: 2px;
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     resize: none;
