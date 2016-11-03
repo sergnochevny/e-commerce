@@ -7,7 +7,7 @@
       <?php foreach($items as $item): ?>
         <?php $href = _A_::$app->router()->UrlTo('shop', ['cat' => $item['cid']], $item['cname']); ?>
         <div class="list_category_item">
-          <a title="<?= $name; ?>" class="shop_category" href="<?= $href; ?>"><?= $item['cname']; ?></a>
+          <a data-waitloader title="<?= $name; ?>" class="shop_category" href="<?= $href; ?>"><?= $item['cname']; ?></a>
         </div>
       <?php endforeach; ?>
     </div>
