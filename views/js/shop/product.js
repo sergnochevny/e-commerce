@@ -2,7 +2,7 @@
 
 (function ($) {
   var base_url = $('#base_url').val();
-  var back_url = $('#back_url').val();
+  var back_url = $('#back_url').attr('href');
 
   function postdata(url, data, callback) {
     $('body').waitloader('show');
