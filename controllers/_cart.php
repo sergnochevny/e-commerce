@@ -1151,9 +1151,7 @@
           $this->main->view_layout('basket');
           $button = ob_get_contents();
           ob_end_clean();
-
-          $res = json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]);
-          echo $res;
+          exit(json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]));
         } else {
 
           $SUM = 0;
@@ -1170,9 +1168,7 @@
           $this->main->view_layout('msg_add');
           $msg = ob_get_contents();
           ob_end_clean();
-
-          $res = json_encode(['msg' => $msg, 'sum' => $cart_sum]);
-          echo $res;
+          exit(json_encode(['msg' => $msg, 'sum' => $cart_sum]));
         }
       }
     }

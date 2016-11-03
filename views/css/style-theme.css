@@ -566,7 +566,7 @@ a img.aligncenter {
     position: absolute;
     float: left;
     min-width: 160px;
-    padding: 15px 0;
+    /*padding: 0;*/
     margin: 0;
     background-color: #ffffff;
     border: 1px solid #cccccc;

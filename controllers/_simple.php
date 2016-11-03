@@ -6,6 +6,7 @@
     protected $form_title_add;
     protected $form_title_edit;
     protected $view_title;
+    protected $save_warning = "All Data saved successfully!";
 
     protected abstract function load(&$data);
 
@@ -46,7 +47,7 @@
       $data = null;
       $this->load($data);
       if($this->form_handling($data) && _A_::$app->request_is_post()) {
-        $this->save();
+        $this->save($data);
         $this->get_list();
       } else {
         $this->template->vars('form_title', $title);
@@ -62,7 +63,7 @@
           $this->before_save($data);
           $id = forward_static_call_array(['Model_' . ucfirst($this->controller), 'save'], [&$data]);
           $this->after_save($id, $data);
-          $warning = ["All Data saved successfully!"];
+          $warning = [$this->save_warning];
           $result = true;
         } catch(Exception $e) {
           $error[] = $e->getMessage();
@@ -77,8 +78,8 @@
     /**
      * @export
      */
-    public function add() {
-      $this->main->test_access_rights();
+    public function add($required_access = true) {
+      if($required_access) $this->main->is_admin_authorized();
       $this->edit_add_handling($this->controller . '/add', $this->form_title_add, $this->controller);
     }
 
@@ -99,16 +100,16 @@
     /**
      * @export
      */
-    public function edit() {
-      $this->main->test_access_rights();
+    public function edit($required_access = true) {
+      if($required_access) $this->main->is_admin_authorized();
       $this->edit_add_handling($this->controller . '/edit', $this->form_title_edit, $this->controller);
     }
 
     /**
      * @export
      */
-    public function delete() {
-      $this->main->test_access_rights();
+    public function delete($required_access = true) {
+      if($required_access) $this->main->is_admin_authorized();
       if(_A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_name))) {
         try {
           forward_static_call(['Model_' . ucfirst($this->controller), 'delete'], $id);
@@ -119,7 +120,7 @@
         }
         exit($this->get_list());
       }
-      $this->index();
+      $this->index($required_access);
     }
 
   }

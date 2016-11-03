@@ -265,4 +265,8 @@
       }
     }
 
+    public function index($required_access = true) { }
+
+    public function view() { }
+
   }

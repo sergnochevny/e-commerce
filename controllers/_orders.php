@@ -46,7 +46,7 @@
      */
     public function view() {
 
-      $this->main->test_any_logged('orders');
+      $this->main->is_any_authorized('orders');
       $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
       $oid = !is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null;
       $prms['page'] = $page;
@@ -144,7 +144,7 @@
      * @export
      */
     public function orders() {
-      $this->main->test_any_logged('orders');
+      $this->main->is_any_authorized('orders');
       ob_start();
       $this->get_list();
       $list = ob_get_contents();

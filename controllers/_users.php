@@ -244,6 +244,12 @@
       parent::index();
     }
 
+    public function view() { }
+
+    public function index($required_access = true) { }
+
+
+
 //    public function modify_accounts_password()
 //    {
 //        $per_page = 200;

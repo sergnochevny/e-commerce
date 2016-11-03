@@ -168,7 +168,7 @@
     public function shop() {
       $this->template->vars('cart_enable', '_');
       $this->main->template->vars('page_title', "Product Catalog");
-      $this->index(false);
+      parent::index(false);
     }
 
     /**
@@ -347,7 +347,7 @@
       ob_end_clean();
       $this->template->vars('discount_info', $discount_info);
 
-      $url_prms = [];
+      $url_prms = null;
       if(!empty(_A_::$app->get('page'))) {
         $url_prms['page'] = _A_::$app->get('page');
       }
@@ -363,7 +363,7 @@
 
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');
-        if(in_array($back, ['matches', 'cart', 'shop', ''])) $back_url = _A_::$app->router()->UrlTo($back, $url_prms);
+        if(in_array($back, ['matches', 'cart', 'shop', 'favorites', ''])) $back_url = _A_::$app->router()->UrlTo($back, $url_prms);
         else $back_url = _A_::$app->router()->UrlTo('shop' . DS . $back, $url_prms);
       } else {
         $back_url = _A_::$app->router()->UrlTo('shop', $url_prms);
@@ -381,5 +381,9 @@
       $this->template->vars('back_url', $back_url);
       $this->main->view('product/view');
     }
+
+    public function index($required_access = true) { }
+
+    public function view() { }
 
   }

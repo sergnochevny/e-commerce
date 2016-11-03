@@ -6,12 +6,10 @@
         <div class="row afterhead-row">
 
           <div class="col-sm-2 back_button_container">
-              <a id="back_url" href="<?= $back_url; ?>"
-                 class="<?= isset($search) ? 'a_search' : '' ?> button back_button">Back</a>
+            <a id="back_url" href="<?= $back_url; ?>" class="button back_button">Back</a>
           </div>
           <div class="col-sm-8 text-center">
-            <h3 style="margin-bottom: 30px"
-                class="product_title product_title_style entry-title"><?= $data['pname']; ?></h3>
+            <h3 style="margin-bottom: 30px" class="product_title product_title_style entry-title"><?= $data['pname']; ?></h3>
           </div>
           <div class="col-sm-2"></div>
 
@@ -116,9 +114,9 @@
                   <?php if($data['sys_hide_price'] == 0 && $data['hideprice'] == 0) { ?>
                     <p class="price">Price:
                       <ins>
-                          <span class="amount">
+                        <span class="amount">
                           <?= $data['format_price']; ?>
-                          </span>
+                        </span>
                       </ins>
                     </p>
                   <?php } ?>
@@ -144,36 +142,40 @@
                     $pid = $data['pid'];
                     if($data['inventory'] > 0) {
                       ?>
-                          <a class="btn button" id="add_cart"
-                             href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"':''; ?>>
-                            Add to cart
-                          </a>
-                          <a class="btn button" id="view_cart"
-                             href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
-                            Basket
-                          </a>
+                      <a class="btn button" id="add_cart"
+                         href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
+                        Add to cart
+                      </a>
+                      <a class="btn button" id="view_cart"
+                         href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
+                        Basket
+                      </a>
                     <?php } ?>
                   <?php if($data['inventory'] > 0 && $allowed_samples) { ?>
-                        <a id="add_samples_cart" class="btn button"
-                           href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"':''; ?>>
-                          Add Samples
-                        </a>
+                    <a id="add_samples_cart" class="btn button"
+                       href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
+                      Add Samples
+                    </a>
                   <?php } ?>
                   <?php
                     $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
                     $mhref = _A_::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
                   ?>
-                      <a class="btn button" href="<?= $ahref; ?>">Ask a Question</a>
+                  <a class="btn button" href="<?= $ahref; ?>">Ask a Question</a>
                   <?php if($data['img1_exists']) { ?>
-                        <a class="btn button" id="add_matches"
-                           href="<?= $mhref; ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? 'style="display: none;"':''; ?>>
-                          Added to Matches
-                        </a>
-                        <a class="btn button" id="view_matches"
-                           href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
-                          View Matches
-                        </a>
+                    <a class="btn button" id="add_matches"
+                       href="<?= $mhref; ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? 'style="display: none;"' : ''; ?>>
+                      Add to Matches
+                    </a>
+                    <a class="btn button" id="view_matches"
+                       href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
+                      View Matches
+                    </a>
                   <?php } ?>
+                  <a class="btn button" id="add_favorites" data-pid="<?= $data['pid'] ?>"
+                     href="<?= _A_::$app->router()->UrlTo('favorites/add'); ?>">
+                    Add To Favorites
+                  </a>
                 </div>
               </div>
             </div>
