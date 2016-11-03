@@ -104,11 +104,6 @@
       return !is_null(_A_::$app->session('_'));
     }
 
-    public function edit() { }
-
-    public function add() { }
-
-    public function delete() { }
 
     /**
      * @export
@@ -149,4 +144,9 @@
         $this->sendWelcomeEmail($data['email']);
       }
     }
+
+    public function index($required_access = true) { }
+
+    public function view() { }
+
   }

@@ -39,7 +39,7 @@
       return $result;
     }
 
-    protected static function prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix = 'b_') {
+    public static function prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix = 'b_') {
       $row['sdesc'] = substr($row['sdesc'], 0, 100);
       $row['ldesc'] = substr($row['ldesc'], 0, 100);
       $filename = 'upload/upload/' . $image_suffix . $row['image1'];
@@ -71,7 +71,7 @@
       return $row;
     }
 
-    protected static function prepare_layout_product_detail($data, $cart, $sys_hide_price) {
+    public static function prepare_layout_product_detail($data, $cart, $sys_hide_price) {
       if(Controller_Matches::product_in($data['pid'])) $data['in_matches'] = true;
       $priceyard = $data['priceyard'];
       $aPrds = [];

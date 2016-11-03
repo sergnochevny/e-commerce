@@ -507,6 +507,8 @@
         $data = static::get_by_id($id);
         $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
         $res = mysql_query($query);
+        $query = "DELETE FROM fabrix_product_favorites WHERE pid = $id";
+        if($res) $res = mysql_query($query);
         $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
         if($res) $res = mysql_query($query);
         $query = "DELETE FROM fabrix_product_colours WHERE prodId = $id";

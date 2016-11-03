@@ -237,7 +237,7 @@
      * @export
      */
     public function view() {
-      $this->main->test_access_rights();
+      $this->main->is_admin_authorized();
       $this->detailed($this->controller);
     }
 
