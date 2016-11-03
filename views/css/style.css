@@ -754,12 +754,14 @@ td.product-subtotal {
     height: 140pt;
 }
 
-.panel-default.sel_panel{
+.panel-default.sel_panel {
     border: 0 !important;
 }
-.panel{
+
+.panel {
     box-shadow: none;
 }
+
 .sel_panel {
     width: 100%;
     padding-bottom: 0 !important;
@@ -858,13 +860,14 @@ button[data-filter-search] {
     margin-bottom: 25px;
     -webkit-transition: box-shadow .15s;
     -moz-transition: box-shadow .15s;
-    -ms-transition: box-shadow .15s;
     -o-transition: box-shadow .15s;
     transition: box-shadow .15s;
 }
-.b_modify_images_1 > label{
+
+.b_modify_images_1 > label {
     width: 100%;
 }
+
 .b_modify_images_main_pic {
     position: relative;
     width: 100% !important;
@@ -877,7 +880,6 @@ button[data-filter-search] {
     margin-bottom: 30px;
     -webkit-transition: box-shadow .15s;
     -moz-transition: box-shadow .15s;
-    -ms-transition: box-shadow .15s;
     -o-transition: box-shadow .15s;
     transition: box-shadow .15s;
 }
@@ -903,7 +905,21 @@ button[data-filter-search] {
     margin-top: 50px;
 }
 
-input[type='text'], input[type='password'], input[type='date'], input[type='datetime'], input[type='datetime-local'], input[type='month'], input[type='week'], input[type='email'], input[type='number'], input[type='search'], input[type='tel'], input[type='time'], input[type='url'], input[type='color'], select {
+input[type='text'],
+input[type='password'],
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='month'],
+input[type='week'],
+input[type='email'],
+input[type='number'],
+input[type='search'],
+input[type='tel'],
+input[type='time'],
+input[type='url'],
+input[type='color'],
+select {
     margin-bottom: 10px;
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
@@ -912,11 +928,6 @@ input[type='text'], input[type='password'], input[type='date'], input[type='date
 .filter_select_panel {
     position: relative;
     height: 400px;
-    margin: 0;
-    padding: 0;
-}
-
-.woocommerce .filter_select_panel.form-row {
     margin: 0;
     padding: 0;
 }
@@ -943,7 +954,6 @@ input[type='text'], input[type='password'], input[type='date'], input[type='date
     border-right: 0 !important;
     -webkit-transition: all .25s;
     -moz-transition: all .25s;
-    -ms-transition: all .25s;
     -o-transition: all .25s;
     transition: all .25s;
 }
@@ -964,7 +974,6 @@ input[type='text'], input[type='password'], input[type='date'], input[type='date
     border-bottom-left-radius: 0;
     -webkit-transition: all .25s;
     -moz-transition: all .25s;
-    -ms-transition: all .25s;
     -o-transition: all .25s;
     transition: all .25s;
 }
@@ -1039,11 +1048,6 @@ a.button-move:focus, a.button-move:hover {
 }
 
 .footer-block {
-    display: flex;
-    flex-flow: row wrap;
-}
-
-.woocommerce ul.products, .woocommerce-page ul.products {
     display: flex;
     flex-flow: row wrap;
 }
@@ -1443,10 +1447,11 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     padding: 4px 10px;
 }
 
-.header-topnav hr{
-    margin:0;
-    padding:0;
+.header-topnav hr {
+    margin: 0;
+    padding: 0;
 }
+
 @media (max-width: 992px) {
     .search-result-list .reset {
         right: -20px;

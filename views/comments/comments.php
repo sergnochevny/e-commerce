@@ -40,4 +40,5 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<script src='<?= _A_::$app->router()->UrlTo('views/js/comments/comments.js'); ?>' type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/simple/simples.js'); ?>' type="text/javascript"></script>

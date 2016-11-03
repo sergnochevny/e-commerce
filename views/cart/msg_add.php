@@ -1,1 +1,1 @@
-<div id="msg" style="color: red; font-weight: bold;"><?= $message;?></div>
+<?= $message;?>
