@@ -27,14 +27,14 @@
             <div class="form-row">
               <div class="col-xs-6">
                 <div class="row">
-                  <a data-link id="blogin" type="button" class="default-button button" name="login"
+                  <a data-link id="blogin" type="button" class="btn button" name="login"
                      data-action="<?= _A_::$app->router()->UrlTo('user'); ?>">
                     Login
                   </a>
                 </div>
               </div>
               <div class="col-xs-6">
-                <div class="row">
+                <div class="row text-right">
                   <label for="rememberme" class="inline text-right">
                     Remember me
                     <input name="rememberme" value="1" type="checkbox" id="rememberme"/>
@@ -43,8 +43,10 @@
               </div>
             </div>
 
-            <div class="text-center">
-              <div class="results" style="color: red;"></div>
+            <div class="col-xs-12">
+              <div class="row text-center">
+                <div class="results" style="color: red;"></div>
+              </div>
             </div>
           </form>
         </div>
