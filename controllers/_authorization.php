@@ -19,7 +19,7 @@
     }
 
     private function admin_authorize($login, $password) {
-      return (new Controller_Admin($this->main))->authorize($login, $password);
+      return Controller_Admin::authorize($login, $password);
     }
 
     private function lost_password_form() {
@@ -115,7 +115,7 @@
     }
 
     public function user_authorize($mail, $password) {
-      return (new Controller_User($this->main))->authorize($mail, $password);
+      return Controller_User::authorize($mail, $password);
     }
 
     /**

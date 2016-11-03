@@ -26,8 +26,8 @@
             <div class="form-row">
               <div class="col-xs-6">
                 <div class="row">
-                  <input id="blogin" type="button" class="button" name="login"
-                         data-action="<?= _A_::$app->router()->UrlTo('authorization'); ?>" value="Login"/>
+                  <a id="blogin" type="button" class="button" name="login"
+                     data-action="<?= _A_::$app->router()->UrlTo('authorization'); ?>">Login</a>
                 </div>
               </div>
               <div class="col-xs-6 text-right">

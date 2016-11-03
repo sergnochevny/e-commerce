@@ -8,7 +8,7 @@
 
       <div class="col-xs-12 col-sm-8 col-sm-push-2 panel panel-default panel-default-vertical-sizing">
         <div class="col-xs-12">
-          <form method="POST" id="authorization" action="<?= _A_::$app->router()->UrlTo('user/authorization'); ?>/"
+          <form method="POST" id="authorization" action="<?= _A_::$app->router()->UrlTo('user'); ?>/"
                 class="login">
 
             <input type="hidden" name="redirect"
@@ -27,8 +27,10 @@
             <div class="form-row">
               <div class="col-xs-6">
                 <div class="row">
-                  <input id="blogin" type="button" class="default-button button" name="login"
-                         data-action="<?= _A_::$app->router()->UrlTo('user'); ?>" value="Login"/>
+                  <a data-link id="blogin" type="button" class="default-button button" name="login"
+                     data-action="<?= _A_::$app->router()->UrlTo('user'); ?>">
+                    Login
+                  </a>
                 </div>
               </div>
               <div class="col-xs-6">

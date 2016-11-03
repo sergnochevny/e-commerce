@@ -9,7 +9,7 @@
           <ul class="nav navbar-nav navbar-right">
             <?php if(!isset($my_account_admin_menu)) { ?>
               <li class="dropdown">
-                <a data-waitloader href="#" rel="nofollow" class="dropdown-toggle" data-toggle="dropdown">
+                <a href="#" rel="nofollow" class="dropdown-toggle" data-toggle="dropdown">
                   <i class=" drip-icon-search"></i>
                   <span class="topnav-label hidden-xs">Search</span>
                 </a>

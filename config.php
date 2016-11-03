@@ -12,7 +12,6 @@
       'TITLE_MIN_CHARS' => 5,
       'DATA_MAX_CHARS' => 1000,
       'DATA_MIN_CHARS' => 15,
-      'DEMO' => 1,
       'DISCOUNT_STRING_JOINER' => '<br />',
       'DISCOUNT_TYPE_NONE' => 0,
       'DISCOUNT_TYPE_SUBTOTAL' => 1,

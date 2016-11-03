@@ -1,5 +1,5 @@
 <li class="dropdown">
-    <a data-waitloader data-link href="<?= _A_::$app->router()->UrlTo('authorization'); ?>" <?= (isset($toggle) && $toggle) ? 'class="dropdown-toggle" data-toggle="dropdown"' : '' ?>>
+    <a <?= (isset($toggle) && $toggle) ? '': 'data-waitloader'?> data-link href="<?= _A_::$app->router()->UrlTo('authorization'); ?>" <?= (isset($toggle) && $toggle) ? 'class="dropdown-toggle" data-toggle="dropdown"' : '' ?>>
         <i class="drip-icon-user"></i>
         <span class="topnav-label hidden-xs">
             My Account
