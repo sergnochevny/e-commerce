@@ -7,7 +7,7 @@
 
           <div class="col-sm-2 back_button_container">
             <div class="row">
-              <a id="back_url" href="<?= $back_url; ?>" class="button back_button">Back</a>
+              <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">Back</a>
             </div>
           </div>
           <div class="col-sm-8 text-center">

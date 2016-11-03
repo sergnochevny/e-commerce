@@ -55,10 +55,6 @@
     });
   });
 
-  $('#modal').on('hidden.bs.modal', function () {
-    $("#confirm_dialog").removeClass('overlay_display');
-  });
-
   $('a#add_samples_cart').on('click', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
@@ -71,7 +67,6 @@
         $('#add_samples_cart').stop().hide().addClass('visible-item')
       ).done(function () {
         $('body').waitloader('remove');
-        $("#confirm_dialog").addClass('overlay_display');
         $('#modal').modal('show');
 
         var buttons = {
@@ -116,7 +111,7 @@
         var buttons = {
           "Continue shopping": function () {
             $('body').waitloader('show');
-              window.location = back_url;
+            window.location = back_url;
           }
         };
 
@@ -133,7 +128,6 @@
         }
 
         $('body').waitloader('remove');
-        $("#confirm_dialog").addClass('overlay_display');
         $('#modal').modal('show');
 
         $('#msg').dialog({
@@ -156,6 +150,11 @@
     });
   });
 
+  $(document).on('click', "#continue", function (event) {
+    event.preventDefault;
+    if (back_url) window.location = back_url;
+  });
+
   $('a#add_favorites').on('click', function (ev) {
     ev.preventDefault();
     $('body').waitloader('show');
@@ -169,35 +168,16 @@
         $(data).appendTo('#content')
       ).done(function () {
 
-        $('body').waitloader('remove');
-        $("#confirm_dialog").addClass('overlay_display');
-        $('#modal').modal('show');
-
-        var buttons = {
-          "Continue shopping": function () {
-            $('body').waitloader('show');
-            window.location = back_url;
-          }
-        };
-
-        $('#msg').dialog({
-          draggable: false,
-          dialogClass: 'msg',
-          title: 'Add to Matches',
-          modal: true,
-          zIndex: 10000,
-          autoOpen: true,
-          width: '500',
-          resizable: false,
-          buttons: buttons,
-          close: function (event, ui) {
+        $('#modal').on('hidden.bs.modal',
+          function () {
             $(this).remove();
           }
-        });
-        $('.msg').css('z-index', '10001');
-        $('.ui-widget-overlay').css('z-index', '10000');
-        $('body').waitloader('remove');
+        );
 
+        if($('#modal').length>0){
+          $('#modal').modal('show');
+          $('body').waitloader('remove');
+        }
       });
     });
   });

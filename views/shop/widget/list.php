@@ -9,7 +9,7 @@
               $url_prms['back'] = '';
               $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
             ?>
-            <a href="<?= $href; ?>" title="<?= $row['pname']; ?>">
+            <a data-waitloader href="<?= $href; ?>" title="<?= $row['pname']; ?>">
               <div class="product-image" style="background-image:url(<?= $row['filename']; ?>)">
                 <?php if($row['bProductDiscount']) { ?>  <span
                   class="extra_discount_small">Extra Discount!</span> <?php } ?>
@@ -19,7 +19,7 @@
           <div class="col-xs-6 col-sm-8">
             <div class="row">
               <div class="product-title">
-                <a href="<?= $href; ?>" title="<?= $row['pname']; ?>">
+                <a data-waitloader href="<?= $href; ?>" title="<?= $row['pname']; ?>">
                   <?= $row['pname']; ?>
                 </a>
               </div>

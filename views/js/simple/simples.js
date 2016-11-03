@@ -9,10 +9,6 @@
     $(".popup a.close").trigger('click');
   });
 
-  $('#modal').on('hidden.bs.modal', function () {
-    $('#modal').find('.modal-footer').stop().show();
-  });
-
   $(document).on('click', 'a[data-delete]', function (event) {
     event.preventDefault();
     if (!$(this).is('.disabled')) {

@@ -8,7 +8,7 @@
           $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
         ?>
         <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
-          <a href="<?= $href; ?>">
+          <a data-waitloader href="<?= $href; ?>">
             <?php if($row['bProductDiscount']) { ?>
               <span class="extra_discount">Extra Discount!</span>
             <?php } ?>
@@ -18,7 +18,7 @@
                   include('views/cart/basket.php');
                 } else {
                   ?>
-                  <a class="button add-to-basket" href="<?= $href; ?>">View Details</a>
+                  <a data-waitloader class="button add-to-basket" href="<?= $href; ?>">View Details</a>
                   <?php
                 }
               ?>

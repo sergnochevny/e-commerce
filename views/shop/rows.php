@@ -10,21 +10,21 @@
             $url_prms['back'] = 'shop';
             $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
           ?>
-          <a href="<?= $href; ?>"></a>
+          <a data-waitloader href="<?= $href; ?>"></a>
           <figcaption>
             <?php
               if($row['in_cart']) {
                 include('views/cart/basket.php');
               } else {
                 ?>
-                <a class="button add-to-basket" href="<?= $href; ?>">View Details</a>
+                <a data-waitloader class="button add-to-basket" href="<?= $href; ?>">View Details</a>
                 <?php
               }
             ?>
           </figcaption>
         </figure>
         <span class="product-category">
-          <a href="<?= $href; ?>"><?= $row['pname']; ?></a>
+          <a data-waitloader href="<?= $href; ?>"><?= $row['pname']; ?></a>
         </span>
         <p class="description">
           <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>

@@ -5,7 +5,7 @@
 
       <div class="row afterhead-row">
         <div class="col-sm-2 back_button_container">
-          <a id="back_url" href="<?= $back_url; ?>" class="button back_button">Back</a>
+          <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">Back</a>
         </div>
         <div class="col-sm-8 text-center">
           <div class="row">

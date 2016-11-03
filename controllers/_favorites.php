@@ -49,7 +49,7 @@
 
     protected function after_save($id, &$data) {
       $row = Model_Product::get_by_id($data['pid']);
-      $this->save_warning = $row['pname']." is Favorite Textile!";
+      $this->save_warning = $row['pname']." added to Favorite Fabrics!";
     }
 
     protected function edit_add_handling($url, $title, $back_url = null) {
@@ -62,6 +62,10 @@
       } else {
         $this->redirect(_A_::$app->router()->UrlTo('shop'));
       }
+    }
+
+    protected function before_form_layout(&$data = null) {
+      $this->template->vars('back_url', _A_::$app->router()->UrlTo('shop'));
     }
 
     /**
