@@ -948,6 +948,11 @@ select {
     margin-bottom: 0;
 }
 
+
+#modal_content{
+    width: 100%;
+}
+
 #modal_content .filter_select_panel .search_panel > .input-group > input {
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
