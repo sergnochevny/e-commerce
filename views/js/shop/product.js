@@ -4,32 +4,6 @@
   var base_url = $('#base_url').val();
   var back_url = $('#back_url').attr('href');
 
-  function postdata(url, data, callback) {
-    $('body').waitloader('show');
-    var this_ = this;
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: data,
-      cache: false,
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        if (callback) {
-          $.when(callback.call(this_, data)).done(function(){
-            $('body').waitloader('remove');
-          });
-        } else {
-          $('body').waitloader('remove');
-        }
-      },
-      error: function (xhr, str) {
-        alert('Error: ' + xhr.responseCode);
-        $('body').waitloader('remove');
-      },
-    });
-  }
-
   $(document).on('click.confirm_action', ".popup a.close", function (event) {
     $("#confirm_dialog").removeClass('overlay_display');
     $('body').css('overflow', 'auto');
@@ -134,7 +108,7 @@
     $('body').waitloader('show');
     var url = $(this).attr('href');
     var data = new FormData();
-    postdata.call(this, url, data, function (data) {
+    $.postdata(this, url, data, function (data) {
       var answer = JSON.parse(data);
       $.when(
         $(answer.data).appendTo('#content')
@@ -189,7 +163,7 @@
     var pid = $(this).attr('data-pid');
     var data = new FormData();
     data.append('pid', pid);
-    postdata.call(this, url, data, function (data) {
+    $.postdata(this, url, data, function (data) {
       $('body').waitloader('show');
       $.when(
         $(data).appendTo('#content')

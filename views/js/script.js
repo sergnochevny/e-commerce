@@ -2,7 +2,7 @@
 
 jQuery(document).ready(function ($) {
 
-  $('#menu-button').on('click', function() {
+  $('#menu-button').on('click', function () {
     $(document.body).toggleClass('menu-open');
   });
 
@@ -57,6 +57,34 @@ jQuery(document).ready(function ($) {
 });
 
 (function ($) {
+  $.extend({
+    /*$.post function replacement*/
+    postdata: function (this_, url, data, callback) {
+      $('body').waitloader('show');
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          if (callback) {
+            $.when(callback.call(this_, data)).done(function () {
+              $('body').waitloader('remove');
+            });
+          } else {
+            $('body').waitloader('remove');
+          }
+        },
+        error: function (xhr, str) {
+          alert('Error: ' + xhr.responseCode);
+          $('body').waitloader('remove');
+        },
+      });
+    }
+  });
+
   $.fn.extend({
     waitloader: function (action) {
       var wait_loader_fa = '<div class="ui-widget-overlay" id="wait_loader">' +
@@ -104,7 +132,7 @@ jQuery(document).ready(function ($) {
     });
   });
 
-  $(document).on('click', '[data-waitloader]',function (event) {
+  $(document).on('click', '[data-waitloader]', function (event) {
     $('body').waitloader('show');
   });
 

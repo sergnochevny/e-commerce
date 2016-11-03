@@ -217,7 +217,7 @@
         var express_samples = $('[data-block=express_samples]')[0].checked ? 1 : 0;
         var data = {express_samples: express_samples};
       }
-      $.post(url, data,
+      $.postdata(this, url, data,
         function (data) {
           $('[data-block=shipping]').html(data);
           $('[data-block=subtotal_ship]').load(stotal_url);
@@ -230,7 +230,7 @@
   $(document).on('calc_total', function () {
     var url = base_url + 'cart/coupon_total_calc';
     var data = {emty:true};
-    $.post(url, data, function (data) {
+    $.postdata(this, url, data, function (data) {
       $('[data-block=coupon_total]').html(data);
     });
   });
