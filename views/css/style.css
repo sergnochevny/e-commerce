@@ -1447,6 +1447,11 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     padding: 4px 10px;
 }
 
+.header-topnav hr {
+    margin: 0;
+    padding: 0;
+}
+
 @media (max-width: 992px) {
     .search-result-list .reset {
         right: -20px;
