@@ -132,15 +132,15 @@
     /**
      * @export
      */
-    public function index($requred_access = true) {
-      if($requred_access) $this->main->test_access_rights();
+    public function index($required_access = true) {
+      if($required_access) $this->main->is_admin_authorized();
       ob_start();
       $this->get_list();
       $list = ob_get_contents();
       ob_end_clean();
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
-      if($requred_access && Controller_Admin::is_logged()) $this->main->view_admin($this->controller);
+      if($required_access && Controller_Admin::is_logged()) $this->main->view_admin($this->controller);
       else  $this->main->view($this->controller);
     }
 

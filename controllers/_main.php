@@ -77,7 +77,7 @@
       }
     }
 
-    public function test_access_rights($redirect_to_url = true) {
+    public function is_admin_authorized($redirect_to_url = true) {
       $admin = new Controller_Admin($this->main);
       if(!$admin->is_authorized()) {
         if($redirect_to_url) {
@@ -95,7 +95,7 @@
       }
     }
 
-    public function test_any_logged($redirect = null) {
+    public function is_any_authorized($redirect = null) {
       if(!Controller_Admin::is_logged() && !Controller_User::is_logged()) {
         $prms = [];
         if(isset($redirect)) {

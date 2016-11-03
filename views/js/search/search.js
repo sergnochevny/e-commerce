@@ -53,7 +53,6 @@
   $(document).on('click.search_action', "[data-to_page]", function (event) {
     event.preventDefault();
     var search = $('form[data-search]');
-    debugger;
     if (search.length) {
       search.attr('action', $(this).attr('href')).trigger('submit');
     } else {

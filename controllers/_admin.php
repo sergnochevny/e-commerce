@@ -45,17 +45,17 @@
       return _A_::$app->session('_a');
     }
 
-    public function edit() { }
+    public function add($required_access = true) { }
 
-    public function add() { }
+    public function edit($required_access = true) { }
 
-    public function delete() { }
+    public function delete($required_access = true) { }
 
     /**
      * @export
      */
     public function change() {
-      $this->main->test_access_rights();
+      $this->main->is_admin_authorized();
       $action = 'admin/change';
       $title = 'CHANGE DATA';
       $url = '';

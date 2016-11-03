@@ -5,7 +5,7 @@
     /**
      * @export
      */
-    public function index($requred_access = true) {
+    public function index($required_access = true) {
       $this->main->view('index');
     }
 
