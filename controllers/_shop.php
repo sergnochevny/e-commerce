@@ -14,6 +14,11 @@
       $search = null;
       $type = isset($filter['type']) ? $filter['type'] : null;
       $res = parent::build_search_filter($filter, $view);
+
+      $filter['hidden']['a.pnumber'] = 'null';
+      $filter['hidden']['a.pvisible'] = '1';
+      $filter['hidden']['a.image1'] = 'null';
+
       if(!isset($res['pname']) && !is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
         $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
         $this->main->template->vars('search_str', _A_::$app->post('s'));
@@ -336,13 +341,13 @@
         $this->template->view_layout('product/discount');
       }
 
-        if(isset($data['next_change']) && $data['next_change']) {
-          $field_name = 'Sale ends in:';
-          $field_value = $data['time_rem'];
-          $this->template->vars('field_name', $field_name);
-          $this->template->vars('field_value', $field_value);
-          $this->template->view_layout('product/discount');
-        }
+      if(isset($data['next_change']) && $data['next_change']) {
+        $field_name = 'Sale ends in:';
+        $field_value = $data['time_rem'];
+        $this->template->vars('field_name', $field_name);
+        $this->template->vars('field_value', $field_value);
+        $this->template->view_layout('product/discount');
+      }
       $discount_info = ob_get_contents();
       ob_end_clean();
       $this->template->vars('discount_info', $discount_info);

@@ -6,6 +6,9 @@
 
     protected static function build_where(&$filter) {
       $result = "";
+      if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . mysql_real_escape_string(static::validData($filter['hidden']["b.pvisible"])) . "'";
+      if(isset($filter['hidden']["b.pnumber"])) $result[] = "b.pnumber is not null";
+      if(isset($filter['hidden']["b.image1"])) $result[] = "b.image1 is not null";
       if(isset($filter['hidden']["a.pid"])) $result[] = "a.pid = '" . mysql_real_escape_string(static::validData($filter['hidden']["a.pid"])) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
@@ -61,7 +64,7 @@
 
     public static function save($data) {
       extract($data);
-      $query = "REPLACE INTO " . static::$table . " (pid, r_pid) VALUE ('" . $pid . "', '".$r_pid."')";
+      $query = "REPLACE INTO " . static::$table . " (pid, r_pid) VALUE ('" . $pid . "', '" . $r_pid . "')";
       $res = mysql_query($query);
       if(!$res) throw new Exception(mysql_error());
       $id = mysql_insert_id();

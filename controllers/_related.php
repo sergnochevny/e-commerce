@@ -3,13 +3,20 @@
   class Controller_Related extends Controller_FormSimple {
 
     protected function search_fields($view = false) {
-      return ['a.pid'];
+      if ($view){
+        return ['a.pid'];
+      }
     }
 
     protected function build_search_filter(&$filter, $view = false) {
       $res = parent::build_search_filter($filter, $view);
       $filter['hidden']['a.pid'] = _A_::$app->get('pid');
       if(!isset($filter['hidden']['a.pid'])) throw new Exception('No Related Products');
+      $filter['hidden']['b.pnumber'] = 'null';
+      $filter['hidden']['b.image1'] = 'null';
+      if ($view){
+        $filter['hidden']['b.pvisible'] = '1';
+      }
       return $res;
     }
 
@@ -23,21 +30,19 @@
     }
 
     protected function build_order(&$sort, $view = false) {
-      $sort['a.id'] = 'desc';
+      if($view){
+        $sort['a.id'] = 'desc';
+      }
     }
-
-    public function index($required_access = true) { }
-
-    public function view() { }
-
-    public function edit($required_access = true) { }
 
     /**
      * @export
      */
-    public function related() {
-      if(_A_::$app->request_is_ajax()) exit($this->get_list(true));
+    public function view() {
+      if(_A_::$app->request_is_ajax()) parent::view();
       else throw new Exception('No Related Products');
+
     }
+
 
   }
