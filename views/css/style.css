@@ -1429,6 +1429,27 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     max-height: 405px;
     margin-bottom: 15px;
 }
+.extra_discount{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-transform: uppercase;
+    background: #db4436;
+    color: #ffffff;
+    font-size: 13px;
+    display: inline-block;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+    padding: 10px 15px;
+    font-weight: 400;
+    -webkit-transition: all .3s cubic-bezier(.2, 1, .25, 1);
+    -moz-transition: all .3s cubic-bezier(.2, 1, .25, 1);
+    -o-transition: all .3s cubic-bezier(.2, 1, .25, 1);
+    transition: all .3s cubic-bezier(.2, 1, .25, 1);
+    border: 2px solid #fc783b;
+    text-align: center;
+}
 
 .offset-top {
     padding-top: 15px;
