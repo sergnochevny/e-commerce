@@ -109,21 +109,24 @@
             <div class="form-row">
               <label for="promotion_type">
                 Promotion
-                <select name="search[promotion_type]" id="promotion_type" class="input-text">
-                  <option value="" <?= (isset($search['promotion_type']))?'':'selected'?>>
-                    Any
-                  </option>
-                  <option value="1" <?= (isset($search['promotion_type']) && $search['promotion_type'] == 1) ? 'selected' : ''; ?>>
-                    Any purchase
-                  </option>
-                  <option value="2" <?= (isset($search['promotion_type']) && $search['promotion_type'] == 2) ? 'selected' : ''; ?>>
-                    First purchase
-                  </option>
-                  <option value="3" <?= (isset($search['promotion_type']) && $search['promotion_type'] == 3) ? 'selected' : ''; ?>>
-                    Next purchase after the start date
-                  </option>
-                </select>
               </label>
+              <select name="search[promotion_type]" id="promotion_type" class="input-text">
+                <option value="" <?= (isset($search['promotion_type'])) ? '' : 'selected' ?>>
+                  Any
+                </option>
+                <option
+                  value="1" <?= (isset($search['promotion_type']) && $search['promotion_type'] == 1) ? 'selected' : ''; ?>>
+                  Any purchase
+                </option>
+                <option
+                  value="2" <?= (isset($search['promotion_type']) && $search['promotion_type'] == 2) ? 'selected' : ''; ?>>
+                  First purchase
+                </option>
+                <option
+                  value="3" <?= (isset($search['promotion_type']) && $search['promotion_type'] == 3) ? 'selected' : ''; ?>>
+                  Next purchase after the start date
+                </option>
+              </select>
             </div>
           </div>
         </div>
@@ -132,69 +135,76 @@
             <div class="form-row">
               <label for="user_type">
                 Users type
-                <select name="search[user_type]" id="user_type" class="input-text">
-                  <option value="" <?= (isset($search['user_type']))?'':'selected'?>>
-                    Any
-                  </option>
-                  <option value="1" <?= (isset($search['user_type']) && $search['user_type'] == 1) ? 'selected' : ''; ?>>
-                    All users
-                  </option>
-                  <option value="2" <?= (isset($search['user_type']) && $search['user_type'] == 2) ? 'selected' : ''; ?>>
-                    All new users
-                  </option>
-                  <option value="3" <?= (isset($search['user_type']) && $search['user_type'] == 3) ? 'selected' : ''; ?>>
-                    All registered users
-                  </option>
-                  <option value="4" <?= (isset($search['user_type']) && $search['user_type'] == 4) ? 'selected' : ''; ?>>
-                    All selected users (i.e. use the users selected below)
-                  </option>
-                </select>
               </label>
+              <select name="search[user_type]" id="user_type" class="input-text">
+                <option value="" <?= (isset($search['user_type'])) ? '' : 'selected' ?>>
+                  Any
+                </option>
+                <option value="1" <?= (isset($search['user_type']) && $search['user_type'] == 1) ? 'selected' : ''; ?>>
+                  All users
+                </option>
+                <option value="2" <?= (isset($search['user_type']) && $search['user_type'] == 2) ? 'selected' : ''; ?>>
+                  All new users
+                </option>
+                <option value="3" <?= (isset($search['user_type']) && $search['user_type'] == 3) ? 'selected' : ''; ?>>
+                  All registered users
+                </option>
+                <option value="4" <?= (isset($search['user_type']) && $search['user_type'] == 4) ? 'selected' : ''; ?>>
+                  All selected users (i.e. use the users selected below)
+                </option>
+              </select>
             </div>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="form-row">
               <label for="discount_type">
                 Discount subtotal type
-                <select name="search[discount_type]" id="discount_type">
-                  <option value="" <?= (isset($search['discount_type']))?'':'selected'?>>
-                    Any
-                  </option>
-                  <option value="1" <?= (isset($search['discount_type']) && $search['discount_type'] == 1) ? 'discount_type' : ''; ?>>
-                    Sub total
-                  </option>
-                  <option value="2" <?= (isset($search['discount_type']) && $search['discount_type'] == 2) ? 'discount_type' : ''; ?>>
-                    Shipping
-                  </option>
-                  <option value="3" <?= (isset($search['discount_type']) && $search['discount_type'] == 3) ? 'discount_type' : ''; ?>>
-                    Total (inc shipping and handling)
-                  </option>
-                </select>
               </label>
+              <select name="search[discount_type]" id="discount_type">
+                <option value="" <?= (isset($search['discount_type'])) ? '' : 'selected' ?>>
+                  Any
+                </option>
+                <option
+                  value="1" <?= (isset($search['discount_type']) && $search['discount_type'] == 1) ? 'discount_type' : ''; ?>>
+                  Sub total
+                </option>
+                <option
+                  value="2" <?= (isset($search['discount_type']) && $search['discount_type'] == 2) ? 'discount_type' : ''; ?>>
+                  Shipping
+                </option>
+                <option
+                  value="3" <?= (isset($search['discount_type']) && $search['discount_type'] == 3) ? 'discount_type' : ''; ?>>
+                  Total (inc shipping and handling)
+                </option>
+              </select>
             </div>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="form-row">
               <label for="product_type">
                 Fabrics
-                <select name="search[product_type]" id="product_type">
-                  <option value="" <?= (isset($search['product_type']))?'':'selected'?>>
-                    Any
-                  </option>
-                  <option value="1" <?= (isset($search['product_type']) && $search['product_type'] == 1) ? 'product_type' : ''; ?>>
-                    All fabrics
-                  </option>
-                  <option value="2" <?= (isset($search['product_type']) && $search['product_type'] == 2) ? 'product_type' : ''; ?>>
-                    All selected fabrics
-                  </option>
-                  <option value="3" <?= (isset($search['product_type']) && $search['product_type'] == 3) ? 'product_type' : ''; ?>>
-                    All selected categories
-                  </option>
-                  <option value="4" <?= (isset($search['product_type']) && $search['product_type'] == 4) ? 'product_type' : ''; ?>>
-                    All selected manufacturers
-                  </option>
-                </select>
               </label>
+              <select name="search[product_type]" id="product_type">
+                <option value="" <?= (isset($search['product_type'])) ? '' : 'selected' ?>>
+                  Any
+                </option>
+                <option
+                  value="1" <?= (isset($search['product_type']) && $search['product_type'] == 1) ? 'product_type' : ''; ?>>
+                  All fabrics
+                </option>
+                <option
+                  value="2" <?= (isset($search['product_type']) && $search['product_type'] == 2) ? 'product_type' : ''; ?>>
+                  All selected fabrics
+                </option>
+                <option
+                  value="3" <?= (isset($search['product_type']) && $search['product_type'] == 3) ? 'product_type' : ''; ?>>
+                  All selected categories
+                </option>
+                <option
+                  value="4" <?= (isset($search['product_type']) && $search['product_type'] == 4) ? 'product_type' : ''; ?>>
+                  All selected manufacturers
+                </option>
+              </select>
             </div>
           </div>
         </div>
@@ -204,20 +214,20 @@
             <div class="form-row">
               <label for="discount_on">
                 Date ranges from:
-                <input type="text" id="date-from" class="input-text" name="search[date_start]"
-                       placeholder="Chose start date"
-                       value="<?= isset($search['date_start']) ? $search['date_start'] : '' ?>">
               </label>
+              <input type="text" id="date-from" class="input-text" name="search[date_start]"
+                     placeholder="Chose start date"
+                     value="<?= isset($search['date_start']) ? $search['date_start'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-6 col-sm-6">
             <div class="form-row">
               <label for="discount_on">
                 Date ranges to:
-                <input type="text" id="date-to" class="input-text" name="search[date_end]"
-                       placeholder="Chose end date"
-                       value="<?= isset($search['date_end']) ? $search['date_end'] : '' ?>">
               </label>
+              <input type="text" id="date-to" class="input-text" name="search[date_end]"
+                     placeholder="Chose end date"
+                     value="<?= isset($search['date_end']) ? $search['date_end'] : '' ?>">
             </div>
           </div>
         </div>
