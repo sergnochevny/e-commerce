@@ -35,6 +35,7 @@
       $response = 0;
       $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
       $query .= " LEFT JOIN fabrix_products b ON b.pid = a.r_pid";
+      $query .= " LEFT JOIN fabrix_products c ON c.pid = a.pid";
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
@@ -44,8 +45,9 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      $query = "SELECT DISTINCT b.* FROM " . static::$table . " a";
+      $query = "SELECT DISTINCT c.pid as cpid, c.pname as cpname, b.* FROM " . static::$table . " a";
       $query .= " LEFT JOIN fabrix_products b ON b.pid = a.r_pid";
+      $query .= " LEFT JOIN fabrix_products c ON c.pid = a.pid";
       $query .= static::build_where($filter);
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";

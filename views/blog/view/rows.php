@@ -7,7 +7,7 @@
       <div class="just-post-row row">
         <?php foreach($rows as $row): ?>
           <?php
-          $prms = ['id' => $row[0]];
+          $prms = ['id' => $row['id']];
           $post_href = _A_::$app->router()->UrlTo('blog/view', $prms, $row['post_title']);
           ?>
           <div class="just-post col-xs-12 col-sm-6 col-md-4">

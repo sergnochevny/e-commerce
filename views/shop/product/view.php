@@ -2,6 +2,7 @@
   $pid = $data['pid'];
   $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
   $mhref = _A_::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
+  $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
 ?>
 
 <div id="content" class="container">
@@ -140,9 +141,9 @@
                   <div class="row">
                     <p class="price h4 text-right">Price:
                       <ins>
-                            <span class="amount">
-                              <?= $data['format_price']; ?>
-                            </span>
+                        <span class="amount">
+                          <?= $data['format_price']; ?>
+                        </span>
                       </ins>
                     </p>
                   </div>
@@ -231,21 +232,13 @@
 
     </div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <h3 class="section-title">Related Fabrix <br>
-          <small>Best item collections related to this fabric</small>
-        </h3>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="products special-products"></div>
-        </div>
-      </div>
-    </div>
+    <div class="row" data-related><input data-href_related type="hidden" value="<?= $href_related; ?>"/></div>
 
   </div>
 </div>
+<link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>' type='text/css'
+      media='all'/>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owl.carousel.min.js'); ?>'></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/shop/product.js'); ?>' type="text/javascript"></script>
 
 
