@@ -44,11 +44,11 @@
             <div id="dragZoneArea">
               <div class="deleteDragImg icon-delete"></div>
               <div class="detailsDragImg"></div>
-              <?= isset($matches_items) ? $matches_items : '' ?>
+              <?= isset($list) ? $list : '' ?>
             </div>
           </div>
           <div style="width: 100%" class="text-center inner-offset-vertical" id="b_in_product">
-            <?php if(isset($matches_items)): ?>
+            <?php if(isset($list)): ?>
               <a class="button" id="all_to_basket"
                  href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
                 Add All to Basket

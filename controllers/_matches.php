@@ -5,34 +5,6 @@
     /**
      * @export
      */
-    public function matches() {
-      $matches = null;
-      if(isset(_A_::$app->session('matches')['items'])) {
-        $matches_items = _A_::$app->session('matches')['items'];
-        if(count($matches_items) > 0) {
-          ob_start();
-          $left = 2;
-          $top = 2;
-          foreach($matches_items as $key => $item) {
-            $this->template->vars('product_id', $item['pid']);
-            $this->template->vars('img', _A_::$app->router()->UrlTo('upload/upload/' . $item['img']));
-            $this->template->vars('top', $top);
-            $this->template->vars('left', $left);
-            $this->template->view_layout('item');
-            $left += 6;
-            $top += 4;
-          }
-          $matches = ob_get_contents();
-          ob_end_clean();
-        }
-      }
-      $this->template->vars('matches_items', $matches);
-      $this->main->view('matches');
-    }
-
-    /**
-     * @export
-     */
     public function add() {
       $added = 0;
 
