@@ -93,7 +93,7 @@
           }
         }
         $_matches = _A_::$app->session('matches');
-        _A_::$app->session('matches')['items'] = $matches_items;
+        $_matches['items'] = $matches_items;
         _A_::$app->setSession('matches', $_matches);
       }
     }
