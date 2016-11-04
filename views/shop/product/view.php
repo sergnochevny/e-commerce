@@ -103,56 +103,55 @@
 
           <div class="row">
             <div class="panel panel-default panel-body" style="box-shadow: none">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <p class="text-justify"><?= $data['ldesc']; ?></p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <p class="text-justify"><?= $data['ldesc']; ?></p>
+                </div>
+              </div>
+              <?php if ($data['sys_hide_price'] == 0 && $data['hideprice'] == 0) { ?>
+                <div class="col-sm-12">
+                  <div class="row">
+                    <hr>
                   </div>
                 </div>
-                <?php if ($data['sys_hide_price'] == 0 && $data['hideprice'] == 0) { ?>
-                  <div class="col-sm-12">
-                    <div class="row">
-                      <hr>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="row">
-                      <div class="btn-group product-actions">
-                        <a class="btn button" id="add_favorites" title="Add to favorites" data-pid="<?= $data['pid'] ?>"
-                           href="<?= _A_::$app->router()->UrlTo('favorites/add'); ?>">
-                          <i class="fa fa-heart"></i>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class="btn-group product-actions">
+                      <a class="btn button" id="add_favorites" title="Add to favorites" data-pid="<?= $data['pid'] ?>"
+                         href="<?= _A_::$app->router()->UrlTo('favorites/add'); ?>">
+                        <i class="fa fa-heart"></i>
+                      </a>
+                      <?php if ($data['img1_exists']) { ?>
+                        <a class="btn button" title="Add to Matches" id="add_matches"
+                           href="<?= $mhref; ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? 'style="display: none;"' : ''; ?>>
+                          <i class="fa fa-exchange"></i>
                         </a>
-                        <?php if ($data['img1_exists']) { ?>
-                          <a class="btn button" title="Add to Matches" id="add_matches"
-                             href="<?= $mhref; ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? 'style="display: none;"' : ''; ?>>
-                            <i class="fa fa-exchange"></i>
-                          </a>
-                          <a class="btn button" title="Go to Matches" id="view_matches"
-                             href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
-                            <i class="fa fa-bookmark"></i>
-                          </a>
-                        <?php } ?>
-                        <a class="btn button" title="Ask a question" href="<?= $ahref; ?>">?</a>
+                        <a class="btn button" title="Go to Matches" id="view_matches"
+                           href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
+                          <i class="fa fa-bookmark"></i>
+                        </a>
+                      <?php } ?>
+                      <a class="btn button" title="Ask a question" href="<?= $ahref; ?>">?</a>
 
-                      </div>
                     </div>
                   </div>
-                  <div class="col-sm-6">
-                    <div class="row">
-                        <p class="price h4 text-right">Price:
-                          <ins>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <p class="price h4 text-right">Price:
+                      <ins>
                             <span class="amount">
                               <?= $data['format_price']; ?>
                             </span>
-                          </ins>
-                        </p>
-                    </div>
+                      </ins>
+                    </p>
                   </div>
-                <?php } ?>
+                </div>
+              <?php } ?>
             </div>
           </div>
 
         </div>
-
         <div class="col-sm-12">
           <div class="row">
             <table class="table table-bordered table-striped red">
@@ -195,13 +194,6 @@
         </div>
         <div class="col-sm-12">
           <div class="row">
-                  <span id="b_in_product" style="0font-weight: 600;">
-
-                  </span>
-          </div>
-        </div>
-        <div class="col-sm-12">
-          <div class="row">
             <div class="product_meta">
               <h3>DETAILS</h3>
               <table class="table table-bordered table-striped">
@@ -236,7 +228,22 @@
           </div>
         </div>
       </div>
+
     </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="section-title">Related Fabrix <br>
+          <small>Best item collections related to this fabric</small>
+        </h3>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="products special-products"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/shop/product.js'); ?>' type="text/javascript"></script>
