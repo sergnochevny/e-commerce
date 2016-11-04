@@ -140,7 +140,7 @@
       ob_end_clean();
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
-      if($required_access && Controller_Admin::is_logged()) $this->main->view_admin($this->controller);
+      if(Controller_Admin::is_logged()) $this->main->view_admin($this->controller);
       else  $this->main->view($this->controller);
     }
 
