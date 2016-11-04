@@ -61,7 +61,7 @@
             $message = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
             $added = 1;
           } else {
-            $message = 'Error with added fabric to Matches.<br>Main image of the fabric is empty.';
+            $message = 'Error with adding fabric to Matches.<br> Main image of the fabric is empty.';
           }
         }
         $_matches = _A_::$app->session('matches');

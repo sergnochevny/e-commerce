@@ -16,41 +16,22 @@
         $.get(url, {}, function (answer) {
             var data = JSON.parse(answer);
             $.when(
-                $('span#cart_amount').html(data.sum),
-                $(data.msg).appendTo('#content'),
-                $('#add_cart').stop().hide().addClass('visible-item'),
-                $('#view_cart').stop().show().removeClass('visible-item')
+                $(data.msg).appendTo('#content')
             ).done(function () {
 
-                $('body').waitloader('remove');
-                $("#confirm_dialog").addClass('overlay_display');
-                $('#modal').modal('show');
+                $('#add_cart').stop().hide().addClass('visible-item');
+                $('#view_cart').stop().show().removeClass('visible-item');
 
-                var buttons = {
-                    "Basket": function () {
-                        $(this).remove();
-                        $('body').waitloader('show');
-                        window.location = base_url + 'cart';
-                    }
-                };
-
-                $('#msg').dialog({
-                    draggable: false,
-                    dialogClass: 'msg',
-                    title: 'Add to Basket',
-                    modal: true,
-                    zIndex: 10000,
-                    autoOpen: true,
-                    width: '500',
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
+                $('#modal').on('hidden.bs.modal',
+                    function () {
                         $(this).remove();
                     }
-                });
-                $('.msg').css('z-index', '10001');
-                $('.ui-widget-overlay').css('z-index', '10000');
+                );
 
+                if ($('#modal').length > 0) {
+                    $('#modal').modal('show');
+                    $('body').waitloader('remove');
+                }
             });
         });
     });
@@ -62,38 +43,21 @@
         $.get(url, {}, function (answer) {
             var data = JSON.parse(answer);
             $.when(
-                $('span#cart_amount').html(data.sum),
-                $(data.msg).appendTo('#content'),
-                $('#add_samples_cart').stop().hide().addClass('visible-item')
+                $(data.msg).appendTo('#content')
             ).done(function () {
-                $('body').waitloader('remove');
-                $('#modal').modal('show');
 
-                var buttons = {
-                    "Basket": function () {
-                        $(this).remove();
-                        $('body').waitloader('show');
-                        window.location = base_url + 'cart';
-                    }
-                };
+                $('#add_samples_cart').stop().hide().addClass('visible-item')
 
-                $('#msg').dialog({
-                    draggable: false,
-                    dialogClass: 'msg',
-                    title: 'Add to Basket',
-                    modal: true,
-                    zIndex: 10000,
-                    autoOpen: true,
-                    width: '500',
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
+                $('#modal').on('hidden.bs.modal',
+                    function () {
                         $(this).remove();
                     }
-                });
-                $('.msg').css('z-index', '10001');
-                $('.ui-widget-overlay').css('z-index', '10000');
+                );
 
+                if ($('#modal').length > 0) {
+                    $('#modal').modal('show');
+                    $('body').waitloader('remove');
+                }
             });
         });
     });
@@ -108,50 +72,28 @@
             $.when(
                 $(answer.data).appendTo('#content')
             ).done(function () {
-                var buttons = {
-                    "Continue shopping": function () {
-                        $('body').waitloader('show');
-                        window.location = back_url;
-                    }
-                };
 
                 if (answer.added == 1) {
-                    $('#add_matches').stop().hide().addClass('visible-item');
-                    $('#view_matches').stop().show().removeClass('visible-item').addClass('btn-row');
-                    $.extend(buttons, {
-                        "Matches": function () {
-                            $(this).remove();
-                            $('body').waitloader('show');
-                            window.location = base_url + 'matches';
-                        }
-                    });
+                    $('#add_matches').stop().hide();
+                    $('#view_matches').stop().show().addClass('btn-row');
                 }
 
-                $('body').waitloader('remove');
-                $('#modal').modal('show');
-
-                $('#msg').dialog({
-                    draggable: false,
-                    dialogClass: 'msg',
-                    title: 'Add to Matches',
-                    modal: true,
-                    zIndex: 10000,
-                    autoOpen: true,
-                    width: '500',
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
+                $('#modal').on('hidden.bs.modal',
+                    function () {
                         $(this).remove();
                     }
-                });
-                $('.msg').css('z-index', '10001');
-                $('.ui-widget-overlay').css('z-index', '10000');
+                );
+
+                if ($('#modal').length > 0) {
+                    $('#modal').modal('show');
+                    $('body').waitloader('remove');
+                }
             });
         });
     });
 
     $(document).on('click', "#continue", function (event) {
-        event.preventDefault;
+        event.preventDefault();
         if (back_url) window.location = back_url;
     });
 
