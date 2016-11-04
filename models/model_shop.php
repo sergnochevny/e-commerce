@@ -35,7 +35,7 @@
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
       }
-      $result = " WHERE a.pnumber is not null and a.pvisible = '1'" . (!empty($result) ? ' AND ' . $result : '');
+      $result = " WHERE a.pnumber is not null and a.pvisible = '1'  and a.image1 is not null" . (!empty($result) ? ' AND ' . $result : '');
       return $result;
     }
 
@@ -210,6 +210,7 @@
         'image1' => $data['image1']
       ];
     }
+
 
     public static function get_product($pid) {
       self::inc_popular($pid);
