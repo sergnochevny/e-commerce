@@ -5,6 +5,7 @@
   $('#authorization').on('submit',
     function (event) {
       event.preventDefault();
+      $('body').waitloader('show');
       var msg = $(this).serialize(),
         url = $(this).attr['action'];
       $.ajax({
@@ -12,7 +13,15 @@
         url: url,
         data: msg,
         success: function (data) {
-          $('.results').html(data);
+          var results = $('.results');
+          $.when(results.html(data)).done(function () {
+            if (results.children('script').length == 0) {
+              $('body').waitloader('remove');
+              setTimeout(function () {
+                results.html('');
+              }, 3000);
+            }
+          });
         },
         error: function (xhr) {
           alert('Error: ' + xhr.responseCode);

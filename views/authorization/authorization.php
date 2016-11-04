@@ -26,7 +26,7 @@
             <div class="form-row">
               <div class="col-xs-6">
                 <div class="row">
-                  <a id="blogin" type="button" class="button" name="login"
+                  <a data-link id="blogin" type="button" class="btn button" name="login"
                      data-action="<?= _A_::$app->router()->UrlTo('authorization'); ?>">Login</a>
                 </div>
               </div>
@@ -40,8 +40,10 @@
               </div>
             </div>
 
-            <div class="text-center">
-              <div class="results" style="color: red;"></div>
+            <div class="col-xs-12">
+              <div class="row text-center">
+                <div class="results" style="color: red;"></div>
+              </div>
             </div>
           </form>
         </div>
