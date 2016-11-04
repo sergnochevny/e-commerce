@@ -369,7 +369,11 @@
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');
         if(in_array($back, ['matches', 'cart', 'shop', 'favorites', ''])) $back_url = _A_::$app->router()->UrlTo($back, $url_prms);
-        else $back_url = _A_::$app->router()->UrlTo('shop' . DS . $back, $url_prms);
+        elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials'])){
+          $back_url = _A_::$app->router()->UrlTo('shop' . DS . $back, $url_prms);
+        } else {
+          $back_url =  _A_::$app->router()->UrlTo(base64_decode(urldecode($back)), $url_prms);;
+        }
       } else {
         $back_url = _A_::$app->router()->UrlTo('shop', $url_prms);
       }

@@ -71,7 +71,7 @@
               " order by colour"
             );
             while($row = mysql_fetch_array($results)) {
-              $filters[$row[0]] = $row[1];
+              $filters[$row['id']] = $row['colour'];
             }
           }
           break;
@@ -90,7 +90,7 @@
               " order by pattern"
             );
             while($row = mysql_fetch_array($results)) {
-              $filters[$row[0]] = $row[1];
+              $filters[$row['id']] = $row['pattern'];
             }
           }
           break;
@@ -116,7 +116,7 @@
             " order by a.cname"
           );
           while($row = mysql_fetch_array($results)) {
-            $filters[$row[0]] = [$row[1], isset($categories[$row[0]]) ? $categories[$row[0]] : $row[2]];
+            $filters[$row['cid']] = [$row['cname'], isset($categories[$row['cid']]) ? $categories[$row['cid']] : $row['pos']];
           }
           break;
       }
@@ -135,7 +135,7 @@
           );
           if($results)
             while($row = mysql_fetch_array($results)) {
-              $data[$row[0]] = $row[1];
+              $data[$row['id']] = $row['pattern'];
             }
           break;
         case 'colours':
@@ -147,7 +147,7 @@
           );
           if($results)
             while($row = mysql_fetch_array($results)) {
-              $data[$row[0]] = $row[1];
+              $data[$row['id']] = $row['colour'];
             }
           break;
         case 'categories':
@@ -159,7 +159,7 @@
           );
           if($results)
             while($row = mysql_fetch_array($results)) {
-              $data[$row[0]] = [$row[1], $row[2]];
+              $data[$row['cid']] = [$row['cname'], $row['display_order']];
             }
           break;
         case 'manufacturers':
@@ -170,7 +170,7 @@
           );
           if($results)
             while($row = mysql_fetch_array($results)) {
-              $data[$row[0]] = $row[1];
+              $data[$row['id']] = $row['manufacturer'];
             }
           break;
       }
@@ -202,7 +202,7 @@
           $q .= " limit $start, $FILTER_LIMIT";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
-            $filter[] = [$row[0], $row[1]];
+            $filter[] = [$row['id'], $row['colour']];
           }
           break;
         case 'patterns':
@@ -221,7 +221,7 @@
           $q .= " limit $start, $FILTER_LIMIT";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
-            $filter[] = [$row[0], $row[1]];
+            $filter[] = [$row['id'], $row['pattern']];
           }
           break;
         case 'categories':
@@ -240,7 +240,7 @@
           $q .= " limit $start, $FILTER_LIMIT";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
-            $filter[] = [$row[0], $row[1]];
+            $filter[] = [$row['cid'], $row['cname']];
           }
       }
       return $filter;
@@ -251,7 +251,7 @@
       $q = "select * from fabrix_manufacturers order by manufacturer";
       $results = mysql_query($q);
       while($row = mysql_fetch_array($results)) {
-        $data[$row[0]] = $row[1];
+        $data[$row['id']] = $row['manufacturer'];
       }
       return $data;
     }
@@ -470,7 +470,7 @@
             $res = mysql_query($q);
             if($res) {
               $row = mysql_fetch_array($res, MYSQL_NUM);
-              $categories = [$row[0] => $row[1]];
+              $categories = [$row['cid'] => $row['pos']];
               $data['categories'] = $categories;
             }
           }

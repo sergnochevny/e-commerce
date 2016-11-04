@@ -44,7 +44,7 @@
     </div>
   </div>
   <?php foreach($rows as $row): ?>
-    <?php $prms['cid'] = $row[0]; if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
+    <?php $prms['id'] = $row['id']; if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
     <div class="col-xs-12 table-list-row">
       <div class="row">
         <div class="col-xs-12 col-sm-8 table-list-row-item">
@@ -52,7 +52,7 @@
             <div class="row">Manufacturer</div>
           </div>
           <div class="col-xs-8 col-sm-12">
-            <div class="row"><?= $row[1] ?></div>
+            <div class="row"><?= $row['id'] ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-3 table-list-row-item">

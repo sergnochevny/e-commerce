@@ -55,7 +55,7 @@
         " order by a.name"
       );
       while($row = mysql_fetch_array($results)) {
-        $filters[$row[0]] = [$row[1], isset($categories[$row[0]]) ? $categories[$row[0]] : $row[2]];
+        $filters[$row['id']] = [$row['name'], isset($categories[$row['id']]) ? $categories[$row['id']] : $row['pos']];
       }
       $data['categories'] = $filters;
     }
@@ -70,7 +70,7 @@
       );
       if($results)
         while($row = mysql_fetch_array($results)) {
-          $data[$row[0]] = [$row[1], $row[2]];
+          $data[$row['id']] = [$row['name'], $row['pos']];
         }
       return $data;
     }
@@ -95,7 +95,7 @@
       $q .= " limit $start, $FILTER_LIMIT";
       $results = mysql_query($q);
       while($row = mysql_fetch_array($results)) {
-        $filter[] = [$row[0], $row[1]];
+        $filter[] = [$row['id'], $row['name']];
       }
       return $filter;
     }

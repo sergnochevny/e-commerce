@@ -23,7 +23,7 @@
   </div>
   <?php foreach ($rows as $row): ?>
     <?php
-    $prms = ['id' => $row[0]];
+    $prms = ['id' => $row['id']];
     if (!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
     ?>
     <div class="col-xs-12 table-list-row">
