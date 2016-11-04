@@ -35,10 +35,7 @@
       $('#content').waitloader('show');
       var data = new FormData();
       data.append('pid', pid);
-      $.postdata(
-        this,
-        url,
-        data,
+      $.postdata(this, url, data,
         function (data) {
           $(ui.draggable).remove();
           $('#content').waitloader('remove');
