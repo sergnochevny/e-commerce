@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a data-waitloader id="continue" href="#" class="button">Continue Shopping</a>
+        <a data-waitloader id="continue" href="#" class="button pull-left">Continue Shopping</a>
         <a class="button" data-dismiss="modal">Close</a>
       </div>
     </div>

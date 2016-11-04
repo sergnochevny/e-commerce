@@ -660,6 +660,19 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     }
 }
 
+@media (max-width: 992px) {
+
+    .no-offset-right {
+        padding-right: 15px !important;
+    }
+    .no-offset-left {
+        padding-left: 15px !important;
+    }
+
+}
+#view_matches{
+    color: #667700;
+}
 .outer-offset-bottom {
     margin-bottom: 15px !important;
 }

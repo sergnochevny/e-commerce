@@ -98,8 +98,8 @@
         </div>
       </div>
 
-      <div class="col-md-6 summary entry-summary">
-        <div class="col-sm-12">
+      <div class="col-xs-12 col-md-6 summary entry-summary">
+        <div class="col-xs-12">
 
           <div class="row">
             <div class="panel panel-default panel-body" style="box-shadow: none">
@@ -152,7 +152,7 @@
           </div>
 
         </div>
-        <div class="col-sm-12">
+        <div class="col-xs-12">
           <div class="row">
             <table class="table table-bordered table-striped red">
               <tbody>
@@ -162,18 +162,18 @@
             <div class="quantity"></div>
           </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-xs-12">
           <div class="row">
             <div class="product-detail-view-actions" aria-label="...">
 
               <div class="row">
                 <div class="col-sm-6 no-offset-right">
                   <?php if ($data['inventory'] > 0) { ?>
-                    <a class="btn button col-sm-12" id="add_cart"
+                    <a class="btn button col-xs-12" id="add_cart"
                        href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
                       Add to cart
                     </a>
-                    <a class="btn button col-sm-12" id="view_cart"
+                    <a class="btn button col-xs-12" id="view_cart"
                        href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
                       Basket
                     </a>
@@ -192,7 +192,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-xs-12">
           <div class="row">
             <div class="product_meta">
               <h3>DETAILS</h3>
