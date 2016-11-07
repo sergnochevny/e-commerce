@@ -2,13 +2,15 @@
   <?php foreach($rows as $row): ?>
     <?php $prms['pid'] = $row['pid'];
     if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
-    <div class="col-xs-6 col-sm-3 col-md-2 product-item for-related">
+    <div class="col-xs-12">
       <div class="product-inner">
-        <figure class="product-image-box" style="background-image: url(<?= $row['filename']; ?>)"></figure>
-        <span class="product-category"><?= $row['pname']; ?></span>
-        <div class="form-row">
-          <label class="inline" style="font-weight: normal; margin-left: 0; height: auto"><input type="checkbox" name="related-select"> Add</label>
-        </div>
+        <label class="inline" style="font-weight: normal; margin-left: 0; height: auto">
+          <div class="form-row">
+            <input type="checkbox" name="related-select">
+            <figure class="product-image-box" style="background-image: url(<?= $row['filename']; ?>)"></figure>
+            <span class="product-category"><?= $row['pname']; ?></span>
+          </div>
+        </label>
       </div>
     </div>
   <?php endforeach; ?>

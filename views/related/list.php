@@ -13,9 +13,8 @@
 
   <div class="row">
     <div class="col-xs-12 search-result-header">
-
       <div class="row">
-        <div class="col-sm-6 col-sm-offset-6 search-result-container text-right">
+        <div class="col-xs-12 search-result-container text-right">
           <span class="search-result">Showing <?= $count_rows; ?> results</span>
         </div>
       </div>
@@ -52,4 +51,5 @@
   </div>
 </div>
 
+<script src='<?= _A_::$app->router()->UrlTo('views/js/product/related/add.js'); ?>' type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.js'); ?>' type="text/javascript"></script>
