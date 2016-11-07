@@ -127,6 +127,11 @@
       $this->template->view_layout('select');
     }
 
+    private function generate_related($data) {
+      $this->template->vars('data', $data);
+      $this->template->view_layout('related');
+    }
+
     protected function load(&$data) {
       $data['pid'] = _A_::$app->get('pid');
       $data['metadescription'] = Model_Product::sanitize(_A_::$app->post('metadescription') ? _A_::$app->post('metadescription') : '');
@@ -161,6 +166,9 @@
       $data['image4'] = Model_Product::sanitize(_A_::$app->post('image4') ? _A_::$app->post('image4') : '');
       $data['image5'] = Model_Product::sanitize(_A_::$app->post('image5') ? _A_::$app->post('image5') : '');
       $data['inventory'] = !is_null(_A_::$app->post('inventory')) ? _A_::$app->post('inventory') : 0;
+      $data['related'] = !is_null(_A_::$app->post('related')) ? _A_::$app->post('related') : [];
+      $data['related_select'] = !is_null(_A_::$app->post('related_select')) ? _A_::$app->post('related_select') : [];
+
     }
 
     protected function validate(&$data, &$error) {
@@ -207,6 +215,12 @@
       $select = ob_get_contents();
       ob_end_clean();
       $data['manufacturers'] = $select;
+
+      ob_start();
+      $this->generate_related($data);
+      $related = ob_get_contents();
+      ob_end_clean();
+      $data['$related'] = $select;
 
       ob_start();
       $this->images($data);
