@@ -6,8 +6,7 @@
 
     protected static function build_where(&$filter) {
       $query = "";
-      if(isset($filter)) {
-        $where = "";
+      if(isset($filter)) { $where = "";
         foreach($filter as $key => $val) {
           $where1 = "";
           switch($val[0]) {

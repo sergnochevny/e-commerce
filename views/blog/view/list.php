@@ -5,11 +5,11 @@
       <div class="col-xs-12 search-result-header">
         <div class="row">
           <div class="col-sm-4">
-            <p class="woocommerce-result-count">
-              <?php if(!empty(_A_::$app->get('cat'))): ?>
+            <?php if(!empty(_A_::$app->get('cat'))): ?>
+              <p class="woocommerce-result-count">
                 CATEGORY: <?= $category_name ?> '<br/>
-              <?php endif; ?>
-            </p>
+              </p>
+            <?php endif; ?>
           </div>
           <div class="col-sm-4"></div>
           <div class="col-sm-4 search-result-container text-right">
