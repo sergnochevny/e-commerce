@@ -7,9 +7,9 @@
 
     protected function load(&$data) {
       $data['id'] = _A_::$app->get('id');
-      $data['title'] = Model_Comments::validData(_A_::$app->post('title'));
-      $data['data'] = Model_Comments::validData(_A_::$app->post('data'));
-      $data['moderated'] = Model_Comments::validData(_A_::$app->post('moderated'));
+      $data['title'] = Model_Comments::sanitize(_A_::$app->post('title'));
+      $data['data'] = Model_Comments::sanitize(_A_::$app->post('data'));
+      $data['moderated'] = Model_Comments::sanitize(_A_::$app->post('moderated'));
     }
 
     protected function validate(&$data, &$error) {

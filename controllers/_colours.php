@@ -7,7 +7,7 @@
 
     protected function load(&$data) {
       $data['id'] = _A_::$app->get('id');
-      $data['colour'] = Model_Colours::validData(_A_::$app->post('colour'));
+      $data['colour'] = Model_Colours::sanitize(_A_::$app->post('colour'));
     }
 
     protected function validate(&$data, &$error) {

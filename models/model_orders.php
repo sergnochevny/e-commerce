@@ -13,24 +13,24 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["a.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::validData($filter['a.aid']))."'";
-      if(isset($filter['username'])) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysql_real_escape_string(static::validData($filter["username"]))))) . "%'";
-      if(isset($filter["a.status"])) $result[] = "a.status = '" . mysql_real_escape_string(static::validData($filter["a.status"]))."'";
+      if(isset($filter["a.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::sanitize($filter['a.aid']))."'";
+      if(isset($filter['username'])) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["username"]))))) . "%'";
+      if(isset($filter["a.status"])) $result[] = "a.status = '" . mysql_real_escape_string(static::sanitize($filter["a.status"]))."'";
       if(isset($filter["a.order_date"])) {
-        $where = (!empty($filter["a.order_date"]['from']) ? "a.order_date >= '" . strtotime(mysql_real_escape_string(static::validData($filter["a.order_date"]["from"]))) . "'" : "") .
-          (!empty($filter["a.order_date"]['to']) ? " AND a.order_date <= '" . strtotime(mysql_real_escape_string(static::validData($filter["a.order_date"]["to"]))) . "'" : "");
+        $where = (!empty($filter["a.order_date"]['from']) ? "a.order_date >= '" . strtotime(mysql_real_escape_string(static::sanitize($filter["a.order_date"]["from"]))) . "'" : "") .
+          (!empty($filter["a.order_date"]['to']) ? " AND a.order_date <= '" . strtotime(mysql_real_escape_string(static::sanitize($filter["a.order_date"]["to"]))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.trid"])) $result[] = "a.trid LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::validData($filter["a.trid"]))))) . "%'";
-      if(isset($filter["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::validData($filter["c.sid"])) . "'";
+      if(isset($filter["a.trid"])) $result[] = "a.trid LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["a.trid"]))))) . "%'";
+      if(isset($filter["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::sanitize($filter["c.sid"])) . "'";
 
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']["a.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::validData($filter['hidden']['a.aid']))."'";
-      if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::validData($filter['hidden']["c.sid"])) . "'";
+      if(isset($filter['hidden']["a.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::sanitize($filter['hidden']['a.aid']))."'";
+      if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["c.sid"])) . "'";
 
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);

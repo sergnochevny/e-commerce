@@ -1080,7 +1080,7 @@
     function add() {
       $base_url = _A_::$app->router()->UrlTo('/');
       if(!empty(_A_::$app->get('pid'))) {
-        $pid = Model_Shop::validData(_A_::$app->get('pid'));
+        $pid = Model_Shop::sanitize(_A_::$app->get('pid'));
         $product = Model_Shop::get_product_params($pid);
         $_cart = _A_::$app->session('cart');
         $cart_items = isset($_cart['items']) ? $_cart['items'] : [];
@@ -1179,7 +1179,7 @@
     function add_samples() {
       $base_url = _A_::$app->router()->UrlTo('/');
       if(!empty(_A_::$app->get('pid'))) {
-        $pid = Model_Shop::validData(_A_::$app->get('pid'));
+        $pid = Model_Shop::sanitize(_A_::$app->get('pid'));
         $product = Model_Shop::get_product_params($pid);
         $cart = _A_::$app->session('cart');
         $cart_items = isset($cart['items']) ? $cart['items'] : [];

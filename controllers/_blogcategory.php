@@ -9,7 +9,7 @@
     protected function load(&$data) {
       $data = [
         $this->id_name => _A_::$app->get($this->id_name),
-        'name' => Model_Blogcategory::validData(_A_::$app->post('name')),
+        'name' => Model_Blogcategory::sanitize(_A_::$app->post('name')),
       ];
     }
 

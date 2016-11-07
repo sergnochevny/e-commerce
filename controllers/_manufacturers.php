@@ -7,7 +7,7 @@
 
     protected function load(&$data) {
       $data['id'] = _A_::$app->get('id');
-      $data['manufacturer'] = Model_Manufacturers::validData(_A_::$app->post('manufacturer'));
+      $data['manufacturer'] = Model_Manufacturers::sanitize(_A_::$app->post('manufacturer'));
     }
 
     protected function validate(&$data, &$error) {

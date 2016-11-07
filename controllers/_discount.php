@@ -64,27 +64,27 @@
 
     protected function load(&$data) {
       $data[$this->id_name] = _A_::$app->get($this->id_name);
-      $data['promotion_type'] = Model_Discount::validData(!is_null(_A_::$app->post('promotion_type')) ? _A_::$app->post('promotion_type') : '');
-      $data['coupon_code'] = Model_Discount::validData(!is_null(_A_::$app->post('coupon_code')) ? _A_::$app->post('coupon_code') : '');
-      $data['generate_code'] = Model_Discount::validData(!is_null(_A_::$app->post('generate_code')) ? _A_::$app->post('generate_code') : false);
-      $data['discount_amount'] = Model_Discount::validData(_A_::$app->post('discount_amount'));
-      $data['discount_amount_type'] = Model_Discount::validData(_A_::$app->post('discount_amount_type'));
-      $data['discount_type'] = Model_Discount::validData(_A_::$app->post('discount_type'));
+      $data['promotion_type'] = Model_Discount::sanitize(!is_null(_A_::$app->post('promotion_type')) ? _A_::$app->post('promotion_type') : '');
+      $data['coupon_code'] = Model_Discount::sanitize(!is_null(_A_::$app->post('coupon_code')) ? _A_::$app->post('coupon_code') : '');
+      $data['generate_code'] = Model_Discount::sanitize(!is_null(_A_::$app->post('generate_code')) ? _A_::$app->post('generate_code') : false);
+      $data['discount_amount'] = Model_Discount::sanitize(_A_::$app->post('discount_amount'));
+      $data['discount_amount_type'] = Model_Discount::sanitize(_A_::$app->post('discount_amount_type'));
+      $data['discount_type'] = Model_Discount::sanitize(_A_::$app->post('discount_type'));
       $data['shipping_type'] = !is_null(_A_::$app->post('shipping_type')) ? _A_::$app->post('shipping_type') : 0;
-      $data['required_amount'] = Model_Discount::validData(!is_null(_A_::$app->post('required_amount')) ? _A_::$app->post('required_amount') : 0);
-      $data['required_type'] = Model_Discount::validData(_A_::$app->post('required_type'));
-      $data['user_type'] = Model_Discount::validData(_A_::$app->post('user_type'));
+      $data['required_amount'] = Model_Discount::sanitize(!is_null(_A_::$app->post('required_amount')) ? _A_::$app->post('required_amount') : 0);
+      $data['required_type'] = Model_Discount::sanitize(_A_::$app->post('required_type'));
+      $data['user_type'] = Model_Discount::sanitize(_A_::$app->post('user_type'));
       $data['users'] = !is_null(_A_::$app->post('users')) ? _A_::$app->post('users') : null;
-      $data['product_type'] = Model_Discount::validData(_A_::$app->post('product_type'));
+      $data['product_type'] = Model_Discount::sanitize(_A_::$app->post('product_type'));
       $data['filter_products'] = !is_null(_A_::$app->post('filter_products')) ? _A_::$app->post('filter_products') : null;
-      $data['allow_multiple'] = Model_Discount::validData(!is_null(_A_::$app->post('allow_multiple')) ? _A_::$app->post('allow_multiple') : 0);
-      $data['date_start'] = Model_Discount::validData(!is_null(_A_::$app->post('date_start')) ? _A_::$app->post('date_start') : '');
-      $data['date_end'] = Model_Discount::validData(!is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '');
-      $data['enabled'] = Model_Discount::validData(!is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : 0);
-      $data['countdown'] = Model_Discount::validData(!is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : 0);
-      $data['discount_comment1'] =  Model_Discount::validData(!is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '');
-      $data['discount_comment2'] = Model_Discount::validData(!is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '');
-      $data['discount_comment3'] = Model_Discount::validData(!is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '');
+      $data['allow_multiple'] = Model_Discount::sanitize(!is_null(_A_::$app->post('allow_multiple')) ? _A_::$app->post('allow_multiple') : 0);
+      $data['date_start'] = Model_Discount::sanitize(!is_null(_A_::$app->post('date_start')) ? _A_::$app->post('date_start') : '');
+      $data['date_end'] = Model_Discount::sanitize(!is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '');
+      $data['enabled'] = Model_Discount::sanitize(!is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : 0);
+      $data['countdown'] = Model_Discount::sanitize(!is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : 0);
+      $data['discount_comment1'] =  Model_Discount::sanitize(!is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '');
+      $data['discount_comment2'] = Model_Discount::sanitize(!is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '');
+      $data['discount_comment3'] = Model_Discount::sanitize(!is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '');
       $data['date_end'] = strlen($data['date_end']) > 0 ? strtotime($data['date_end']) : 0;
       $data['date_start'] = strlen($data['date_start']) > 0 ? strtotime($data['date_start']) : 0;
 

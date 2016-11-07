@@ -14,28 +14,28 @@
             case 'like':
               if(is_array($val[1])) {
                 foreach($val[1] as $like) {
-                  $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::validData($like)) . "%'";
+                  $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::sanitize($like)) . "%'";
                 }
               } else {
-                $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::validData($val[1])) . "%'";
+                $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::sanitize($val[1])) . "%'";
               }
               break;
             case '=':
               if(is_array($val[1])) {
                 foreach($val[1] as $like) {
-                  $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($like)) . "'";
+                  $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::sanitize($like)) . "'";
                 }
               } else {
-                $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::validData($val[1])) . "'";
+                $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::sanitize($val[1])) . "'";
               }
               break;
             case 'between':
               if(!empty($val[1]['from'])) {
-                $where1 = $key . " >= '" . mysql_real_escape_string(static::validData($val[1]['from'])) . "'";
+                $where1 = $key . " >= '" . mysql_real_escape_string(static::sanitize($val[1]['from'])) . "'";
               }
               if(!empty($val[1]['to'])) {
                 if(strlen($where1) > 0) $where1 .= " and ";
-                $where1 .= $key . " <= '" . mysql_real_escape_string(static::validData($val[1]['to'])) . "'";
+                $where1 .= $key . " <= '" . mysql_real_escape_string(static::sanitize($val[1]['to'])) . "'";
               }
               break;
           }
@@ -74,7 +74,7 @@
       return $response;
     }
 
-    public static function validData($data) {
+    public static function sanitize($data) {
       $data = stripslashes($data);
       $data = htmlspecialchars($data);
       $data = trim($data);

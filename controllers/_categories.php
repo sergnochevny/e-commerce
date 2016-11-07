@@ -9,8 +9,8 @@
     protected function load(&$data) {
       $data = [
         $this->id_name => _A_::$app->get($this->id_name),
-        'cname' => Model_Categories::validData(_A_::$app->post('cname')),
-        'displayorder' => Model_Categories::validData(_A_::$app->post('displayorder'))
+        'cname' => Model_Categories::sanitize(_A_::$app->post('cname')),
+        'displayorder' => Model_Categories::sanitize(_A_::$app->post('displayorder'))
       ];
     }
 

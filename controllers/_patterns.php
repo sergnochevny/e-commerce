@@ -7,7 +7,7 @@
 
     protected function load(&$data) {
       $data['id'] = _A_::$app->get('id');
-      $data['pattern'] = Model_Patterns::validData(_A_::$app->post('pattern'));
+      $data['pattern'] = Model_Patterns::sanitize(_A_::$app->post('pattern'));
     }
 
     protected function validate(&$data, &$error) {

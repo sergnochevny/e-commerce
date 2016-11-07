@@ -78,14 +78,14 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["sid"])) $result[] = "sid = '" . mysql_real_escape_string(static::validData($filter["sid"])) . "'";
-      if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . mysql_real_escape_string(static::validData($filter["promotion_type"])) . "'";
-      if(isset($filter["user_type"])) $result[] = "user_type = '" . mysql_real_escape_string(static::validData($filter["user_type"])) . "'";
-      if(isset($filter["discount_type"])) $result[] = "discount_type = '" . mysql_real_escape_string(static::validData($filter["discount_type"])) . "'";
-      if(isset($filter["product_type"])) $result[] = "product_type = '" . mysql_real_escape_string(static::validData($filter["product_type"])) . "'";
-      if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::validData($filter["coupon_code"]))))) . "%'";
-      if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(mysql_real_escape_string(static::validData($filter['date_start']))) . "'" : "");
-      if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(mysql_real_escape_string(static::validData($filter['date_end']))) . "'" : "");
+      if(isset($filter["sid"])) $result[] = "sid = '" . mysql_real_escape_string(static::sanitize($filter["sid"])) . "'";
+      if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . mysql_real_escape_string(static::sanitize($filter["promotion_type"])) . "'";
+      if(isset($filter["user_type"])) $result[] = "user_type = '" . mysql_real_escape_string(static::sanitize($filter["user_type"])) . "'";
+      if(isset($filter["discount_type"])) $result[] = "discount_type = '" . mysql_real_escape_string(static::sanitize($filter["discount_type"])) . "'";
+      if(isset($filter["product_type"])) $result[] = "product_type = '" . mysql_real_escape_string(static::sanitize($filter["product_type"])) . "'";
+      if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["coupon_code"]))))) . "%'";
+      if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(mysql_real_escape_string(static::sanitize($filter['date_start']))) . "'" : "");
+      if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(mysql_real_escape_string(static::sanitize($filter['date_end']))) . "'" : "");
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0) {
@@ -361,7 +361,7 @@
       $filter = null;
       $FILTER_LIMIT = FILTER_LIMIT;
       $start = isset($start) ? $start : 0;
-      $search = mysql_escape_string(self::validData($search));
+      $search = mysql_escape_string(self::sanitize($search));
       switch($type) {
         case 'users':
           $q = "select count(aid) from fabrix_accounts";

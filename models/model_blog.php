@@ -13,14 +13,14 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["a.post_title"])) $result[] = "a.post_title LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::validData($filter["a.post_title"]))))) . "%'";
-      if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . mysql_real_escape_string(static::validData($filter["a.post_status"])) . "'";
+      if(isset($filter["a.post_title"])) $result[] = "a.post_title LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["a.post_title"]))))) . "%'";
+      if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . mysql_real_escape_string(static::sanitize($filter["a.post_status"])) . "'";
       if(isset($filter["a.post_date"])) {
-        $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date >= '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["from"])) . "'" : "") .
-          (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . mysql_real_escape_string(static::validData($filter["a.post_date"]["to"])) . "'" : "");
+        $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date >= '" . mysql_real_escape_string(static::sanitize($filter["a.post_date"]["from"])) . "'" : "") .
+          (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . mysql_real_escape_string(static::sanitize($filter["a.post_date"]["to"])) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["b.group_id"])) $result[] = "b.group_id = '" . mysql_real_escape_string(static::validData($filter["b.group_id"])) . "'";
+      if(isset($filter["b.group_id"])) $result[] = "b.group_id = '" . mysql_real_escape_string(static::sanitize($filter["b.group_id"])) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0) {
@@ -79,7 +79,7 @@
       $filter = null;
       $FILTER_LIMIT = FILTER_LIMIT;
       $start = isset($start) ? $start : 0;
-      $search = mysql_escape_string(static::validData($search));
+      $search = mysql_escape_string(static::sanitize($search));
       $q = "select count(id) from blog_groups";
       if(isset($search) && (strlen($search) > 0)) {
         $q .= " where name like '%$search%'";
