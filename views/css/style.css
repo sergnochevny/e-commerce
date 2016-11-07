@@ -475,13 +475,8 @@ p.discount {
     vertical-align: middle;
 }
 
-.header-topnav .navbar-nav .dropdown > a {
-    height: 40px;
-    color: #ffffff;
-    font-family: "Playfair Display", serif;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background: none !important;
+.my-account a {
+    padding-right: 0 !important;
 }
 
 .legned_lost_password {
@@ -523,6 +518,7 @@ ul.products li .product-inner > a {
     line-height: 40px;
     padding-top: 0;
     padding-bottom: 0;
+    margin-left: 30px;
     position: relative;
 }
 
