@@ -153,8 +153,9 @@
             <div class="form-row">
               <label class="inline" style="margin-left: 0">
                 <b>Hide regular price:</b>
-                <input type="checkbox" <?= (isset($data['hideprice']) && ($data['hideprice'] == "1")) ? 'checked' : '' ?>
-                       value="1" name="hideprice" class="input-checkbox">
+                <input
+                  type="checkbox" <?= (isset($data['hideprice']) && ($data['hideprice'] == "1")) ? 'checked' : '' ?>
+                  value="1" name="hideprice" class="input-checkbox">
               </label>
             </div>
             <div class="col-md-12 form-row">
@@ -205,10 +206,61 @@
       <div class="row">
         <div class="col-sm-12"><h3>Related products</h3></div>
       </div>
-      <div class="row">
+      <div class="row related-form">
         <div class="col-xs-12">
+          <div class="col-xs-12 panel panel-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-row">
+                  <div class="col-sm-2">
+                    <label for="">
+                      <input type="checkbox">
+                      <img width="100" height="100">
+                    </label>
+                  </div>
+                  <div class="col-sm-10">
+                    Product item
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="form-row">
+                  <div class="col-sm-2">
+                    <label for="">
+                      <input type="checkbox">
+                      <img width="100" height="100">
+                    </label>
+                  </div>
+                  <div class="col-sm-10">
+                    Product item
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <nav class="paging-navigation" role="navigation">
+                  <h4 class="sr-only">Navigation</h4>
+                  <ul class="pagination">
+                    <?= isset($paginator) ? $paginator : 'Navigation here'; ?>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-sm-12"><a id="submit" class="button" style="width: 150px;">Save product</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row related-selected">
+        <div class="col-xs-12">
+          <div class="col-xs-12">
+            <div class="row" data-related><input data-href_related type="hidden"
+                                                 value="<?= isset($href_related) ? $href_related : ''; ?>"/></div>
+          </div>
           <div class="text-center">
-            <a id="submit" class="button" style="width: 150px;">Add</a>
+            <a id="submit" class="button" style="width: 150px;">Add new</a>
           </div>
         </div>
       </div>
@@ -244,3 +296,6 @@
 <script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
         type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/product/form.js'); ?>' type="text/javascript"></script>
+<link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>' type='text/css'
+      media='all'/>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owl.carousel.min.js'); ?>'></script>
