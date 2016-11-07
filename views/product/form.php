@@ -202,6 +202,21 @@
       <hr>
     </div>
     <div class="col-xs-12">
+      <div class="row">
+        <div class="col-sm-12"><h3>Related products</h3></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="text-center">
+            <a id="submit" class="button" style="width: 150px;">Add</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <hr>
+    </div>
+    <div class="col-xs-12">
       <div class="text-center">
         <a id="submit" class="button" style="width: 150px;">Save</a>
       </div>
