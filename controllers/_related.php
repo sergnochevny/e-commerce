@@ -42,6 +42,7 @@
     }
 
     protected function get_list($view = false) {
+
       $c_product = new Controller_Product($this->main);
       $search_form = $c_product->build_search_filter($filter, $view);
       $c_product->build_order($sort, $view);

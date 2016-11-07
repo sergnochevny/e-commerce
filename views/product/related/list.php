@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="text-center">
-        <a data-related-add class="button" style="width: 150px;">Add new</a>
+        <a data-related-add class="button" style="width: 250px;">Add Related Fabrics</a>
       </div>
     </div>
   </div>

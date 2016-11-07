@@ -6,7 +6,9 @@
           $url_prms['pid'] = $row['pid'];
           $href = _A_::$app->router()->UrlTo('related/delete', $url_prms);
         ?>
-        <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)"></figure>
+        <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
+          <input type="hidden" name="related[]" value="<?= $row['pid'];?>" />
+        </figure>
         <span class="product-category"><?= $row['pname']; ?></span>
       </div>
     </div>

@@ -1,12 +1,12 @@
 <?php
   $prms = null;
-  if (!is_null(_A_::$app->get('page'))) {
+  if(!is_null(_A_::$app->get('page'))) {
     $prms['page'] = _A_::$app->get('page');
   }
 ?>
 
-<div class="col-xs-12 text-center afterhead-row">
-  <h3 class="page-title">Products</h3>
+<div class="col-xs-12 text-center">
+  <b class="h3">Select Related Fabrics</b>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>
@@ -46,6 +46,13 @@
       </ul>
     </nav>
 
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="text-center">
+      <a data-related_add_ok class="button" style="width: 150px;">Ok</a>
+    </div>
   </div>
 </div>
 

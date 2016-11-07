@@ -206,6 +206,12 @@
       </div>
     </div>
 
+    <div class="col-xs-12">
+      <div class="text-center">
+        <a id="submit" class="button" style="width: 150px;">Save</a>
+      </div>
+    </div>
+
   </div><!--col-2-->
 
   <div data-related_block class="col-xs-12">
@@ -214,12 +220,6 @@
     </div>
     <div id="content" data-edit_related class="row products">
       <input type="hidden" value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
-    </div>
-  </div>
-
-  <div class="col-xs-12">
-    <div class="text-center">
-      <a id="submit" class="button" style="width: 150px;">Save</a>
     </div>
   </div>
 

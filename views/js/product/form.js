@@ -192,8 +192,8 @@
     var this_ = this;
     var related = $('[data-edit_related]');
     var url = related.children('input[type=hidden]').val();
+    $(this_).hide();
     related.load(url, function(){
-      $(this_).hide();
       $('[data-fields_block]').hide();
     });
   });
