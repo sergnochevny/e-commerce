@@ -501,7 +501,7 @@ a img.aligncenter {
 
 .header-topnav .welcome-message {
     color: #ffffff;
-    font-family: "Playfair Display", serif;
+    font-family: 'Trirong', serif;
     line-height: 40px;
     transition: line-height 1s;
 }
@@ -514,7 +514,7 @@ a img.aligncenter {
 .header-topnav .navbar-nav .dropdown .dropdown-toggle, .user_name span {
     height: 40px;
     color: #ffffff;
-    font-family: "Playfair Display", serif;
+    font-family: 'Trirong', serif;
     padding-top: 10px;
     padding-bottom: 10px;
     background: none !important;
@@ -783,7 +783,7 @@ a img.aligncenter {
 }
 
 .site-navigation .nav {
-    font-family: "Playfair Display", serif;
+    font-family: 'Trirong', serif;
     text-transform: uppercase;
 }
 
