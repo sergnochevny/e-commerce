@@ -209,11 +209,13 @@
   </div><!--col-2-->
 
   <div data-related_block class="col-xs-12">
-    <div data-related class="products">
-      <?= isset($related) ? $related : ''; ?>
-    </div>
-    <div id="content" data-edit_related class="row products">
-      <input type="hidden" value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
+    <div class="col-xs-12 panel panel-default">
+      <div data-related class="products">
+        <?= isset($related) ? $related : ''; ?>
+      </div>
+      <div id="content" data-edit_related class="row products">
+        <input type="hidden" value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
+      </div>
     </div>
   </div>
 
