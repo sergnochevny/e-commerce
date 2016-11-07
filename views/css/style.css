@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Trirong');
+
 body {
     cursor: default;
     -webkit-transition: opacity 1.25s ease-in;
@@ -475,9 +477,16 @@ p.discount {
     vertical-align: middle;
 }
 
-.my-account a {
+.my-account > a {
     padding-right: 0 !important;
+    padding-top: 10px !important;
+    font-family: 'Trirong', serif;
+    color: #FFF;
 }
+.my-account > a:hover, .my-account > a:active, .my-account > a:focus{
+    background-color: transparent !important;
+}
+
 
 .legned_lost_password {
     padding-bottom: 0;
@@ -515,7 +524,7 @@ ul.products li .product-inner > a {
     float: right;
     border: 1px solid #FFF;
     margin-top: -5px;
-    margin-left: 5px;
+    margin-left: 10px;
     border-radius: 2px;
 }
 .header-search input{
@@ -523,7 +532,7 @@ ul.products li .product-inner > a {
     background-color: transparent;
     border: 0;
     color: #FFF;
-    padding: 5px 6px;
+    padding: 2px 6px;
 }
 .header-search input#search{
     border-right: 1px solid #FFF;
