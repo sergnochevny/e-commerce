@@ -204,18 +204,20 @@
     function () {
       var url = base_url + 'cart/shipping_calc';
       var stotal_url = base_url + 'cart/get_subtotal_ship';
+      var data = new FormData();
       if ($('[data-block=select_ship]').length > 0) {
         var coupon = '';
         if ($('[data-block=coupon_code]').length > 0) coupon = $('[data-block=coupon_code]').val();
         var ship = $('[data-block=select_ship]').val();
         var roll = 0;
         if ($('[data-block=roll]').length > 0) roll = $('[data-block=roll]')[0].checked ? 1 : 0;
-        var data = {ship: ship, roll: roll, coupon: coupon};
+        data.append('ship', ship);
+        data.append('roll',roll);
+        data.append('coupon',coupon);
       }
 
       if ($('[data-block=express_samples]').length > 0) {
-        var express_samples = $('[data-block=express_samples]')[0].checked ? 1 : 0;
-        var data = {express_samples: express_samples};
+        data.append('express_samples', $('[data-block=express_samples]')[0].checked ? 1 : 0);
       }
       $.postdata(this, url, data,
         function (data) {
@@ -229,7 +231,8 @@
 
   $(document).on('calc_total', function () {
     var url = base_url + 'cart/coupon_total_calc';
-    var data = {emty:true};
+    var data = new FormData();
+    data.append('emty',true);
     $.postdata(this, url, data, function (data) {
       $('[data-block=coupon_total]').html(data);
     });
