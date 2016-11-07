@@ -1,10 +1,10 @@
 <?php
   $prms = null;
-  if(!is_null(_A_::$app->get('page'))) {
+  if (!is_null(_A_::$app->get('page'))) {
     $prms['page'] = _A_::$app->get('page');
   }
 ?>
-
+<div class="col-xs-12">
 <div class="col-xs-12 text-center">
   <b class="h3">Select Related Fabrics</b>
 </div>
@@ -15,12 +15,7 @@
   <div class="col-xs-12 search-result-header">
 
     <div class="row">
-      <div class="col-sm-6 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('product/add', $prms); ?>" data-modify class="btn button">
-          ADD NEW PRODUCT
-        </a>
-      </div>
-      <div class="col-sm-6 search-result-container text-right">
+      <div class="col-sm-6 col-sm-offset-6 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
       </div>
     </div>
@@ -52,6 +47,7 @@
   <div class="col-xs-12">
     <div class="text-center">
       <a data-related_add_ok class="button" style="width: 150px;">Ok</a>
+    </div>
     </div>
   </div>
 </div>

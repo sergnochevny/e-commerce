@@ -16,9 +16,7 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-12">
-    <hr>
-  </div>
+
 <?php endif; ?>
 <div id="confirm_dialog" class="overlay"></div>
 <div class="popup">
