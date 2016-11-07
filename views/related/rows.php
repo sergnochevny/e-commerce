@@ -6,8 +6,8 @@
       <div class="product-inner">
         <figure class="product-image-box" style="background-image: url(<?= $row['filename']; ?>)"></figure>
         <span class="product-category"><?= $row['pname']; ?></span>
-        <div class="form-row" style="margin-left: 0">
-          <label class="inline" style="font-weight: normal"><input type="checkbox" name="related-select"> Add</label>
+        <div class="form-row">
+          <label class="inline" style="font-weight: normal; margin-left: 0; height: auto"><input type="checkbox" name="related-select"> Add</label>
         </div>
       </div>
     </div>
