@@ -235,28 +235,28 @@
       $image_suffix = '';
       switch($type) {
         case 'new':
-          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' ORDER BY  dt DESC, pid DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and image1 is not null ORDER BY  dt DESC, pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'carousel':
           $image_suffix = 'b_';
-          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' ORDER BY  dt DESC, pid DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and image1 is not null ORDER BY  dt DESC, pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'best':
-          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and best = '1' ORDER BY pid DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and best = '1' and image1 is not null ORDER BY pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'bestsellers':
           $q = "select n.*" .
             " from (SELECT a.pid, SUM(b.quantity) as s" .
             " FROM fabrix_products a" .
             " LEFT JOIN fabrix_order_details b ON a . pid = b . product_id" .
-            " WHERE a . pnumber is not null and a . pvisible = '1'" .
+            " WHERE a . pnumber is not null and a . pvisible = '1' and a.image1 is not null" .
             " GROUP BY a . pid" .
             " ORDER BY s DESC" .
             " LIMIT " . $start . "," . $limit . ") m" .
             " LEFT JOIN fabrix_products n ON m.pid = n.pid";
           break;
         case 'popular':
-          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' ORDER BY popular DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and image1 is not null ORDER BY popular DESC LIMIT " . $start . "," . $limit;
           break;
       }
       if($result = mysql_query($q)) {
@@ -280,12 +280,12 @@
             " FROM fabrix_categories a" .
             " LEFT JOIN fabrix_product_categories c on a.cid = c.cid" .
             " LEFT JOIN fabrix_products b ON b.pid = c.pid" .
-            " WHERE b.pvisible = '1'" .
+            " WHERE b.pvisible = '1' and b.image1 is not null" .
             " ORDER BY a.displayorder";
           break;
         case 'new':
           $q = "SELECT distinct a.*" .
-            " FROM (SELECT pid FROM fabrix_products WHERE pvisible = '1' ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
+            " FROM (SELECT pid FROM fabrix_products WHERE pvisible = '1' and image1 is not null ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
             " LEFT JOIN fabrix_product_categories c ON b.pid = c.pid" .
             " LEFT JOIN fabrix_categories a on a.cid = c.cid" .
             " ORDER BY a.displayorder";
@@ -294,7 +294,7 @@
           $q = "SELECT distinct a.*" .
             " FROM fabrix_products b " .
             " INNER JOIN fabrix_manufacturers a ON b.manufacturerId = a.id" .
-            " WHERE b.pvisible = '1'" .
+            " WHERE b.pvisible = '1' and b.image1 is not null" .
             " ORDER BY b.dt DESC";
           break;
         case 'patterns':
@@ -302,7 +302,7 @@
             " FROM  fabrix_patterns a" .
             " LEFT JOIN fabrix_product_patterns c on a.id = c.patternId" .
             " LEFT JOIN fabrix_products b ON  b.pid = c.prodId" .
-            " WHERE b.pvisible = '1'";
+            " WHERE b.pvisible = '1' and b.image1 is not null";
           break;
         case 'blog_category':
           $q = "SELECT distinct a.*" .

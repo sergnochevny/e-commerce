@@ -248,12 +248,17 @@
 
     public static function get_manufacturers() {
       $data = [];
-      $q = "select * from fabrix_manufacturers order by manufacturer";
-      $results = mysql_query($q);
-      while($row = mysql_fetch_array($results)) {
+      $rows = Model_Manufacturers::get_list(0,0,$res_count);
+      foreach($rows as $row) {
         $data[$row['id']] = $row['manufacturer'];
       }
       return $data;
+    }
+
+    public static function get_related($pid) {
+      $filter['hidden']['a.pid'] = $pid;
+      $filter['hidden']['b.image1'] = 'null';
+      return Model_Related::get_list(0,0,$res_count, $filter);
     }
 
     public static function get_total_count($filter = null) {
@@ -493,6 +498,13 @@
         if($res && (count($patterns) > 0)) {
           foreach($patterns as $patternId) {
             $res = $res && mysql_query("REPLACE INTO fabrix_product_patterns SET prodID='$pid', patternId='$patternId'");
+            if(!$res) break;
+          }
+        }
+        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_related WHERE pid='$pid'");
+        if($res && (count($related) > 0)) {
+          foreach($related as $r_pid) {
+            $res = $res && mysql_query("REPLACE INTO fabrix_product_related SET pid='$pid', r_pid='$r_pid'");
             if(!$res) break;
           }
         }
