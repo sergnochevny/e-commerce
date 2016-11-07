@@ -4,7 +4,7 @@
       <h3 class="section-title">Related Fabrics</h3>
     </div>
   </div>
-  <div class="row related-selected">
+  <div class="row related-selected" style="padding-bottom: 15px">
     <div class="col-xs-12">
       <div class="col-xs-12">
         <div class="row" data-carousel data-related>
@@ -12,13 +12,11 @@
         </div>
       </div>
       <div class="text-center">
-        <a data-related-add class="button" style="width: 150px;">Add new</a>
+        <a data-related-add class="btn button" style="width: 150px;">Add new</a>
       </div>
     </div>
   </div>
-  <div class="col-xs-12">
-    <hr>
-  </div>
+
 <?php endif; ?>
 <div id="confirm_dialog" class="overlay"></div>
 <div class="popup">

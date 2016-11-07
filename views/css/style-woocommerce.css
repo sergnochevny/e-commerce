@@ -564,6 +564,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     position: relative;
 }
 
+
 .products .owl-item .product-item .product-image-box,
 .products .product-item .product-image-box {
     overflow: hidden;
@@ -578,6 +579,16 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     -moz-transition: all .2s ease-in;
     -o-transition: all .2s ease-in;
     transition: all .2s ease-in;
+}
+
+.product-item.for-related .product-image-box{
+    min-height: 120px;
+}
+.products > .product-item.for-related{
+    min-height: 180px !important;
+}
+.products > .product-item.for-related .product-category{
+    font-size: 1em;
 }
 
 .products .owl-item .product-item .product-image-box:hover,
