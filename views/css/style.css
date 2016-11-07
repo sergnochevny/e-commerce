@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
+@import url('https://fonts.googleapis.com/css?family=Arbutus+Slab');
 
 body {
     cursor: default;
@@ -479,8 +479,9 @@ p.discount {
 
 .my-account > a {
     padding-right: 0 !important;
-    padding-top: 10px !important;
-    font-family: 'Trirong', serif;
+    padding-top: 8px !important;
+    padding-bottom: 12px !important;
+    font-family: 'Arbutus Slab', serif;
     color: #FFF;
 }
 .my-account > a:hover, .my-account > a:active, .my-account > a:focus{
@@ -532,7 +533,7 @@ ul.products li .product-inner > a {
     background-color: transparent;
     border: 0;
     color: #FFF;
-    padding: 2px 6px;
+    padding: 6px;
 }
 .header-search input#search{
     border-right: 1px solid #FFF;

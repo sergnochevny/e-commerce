@@ -68,33 +68,31 @@
             <label>
               <b>Pattern Types:</b>
             </label>
-            <div>
-              <?= $data['patterns']; ?>
+            <div class="row">
+              <div class="col-sm-12" style="margin-bottom: 15px;">
+                <?= $data['patterns']; ?>
+              </div>
             </div>
           </div>
 
 
           <div class="form-row">
             <div class="row">
-              <div class="col-sm-12" style="padding-top: 15px">
+              <div class="col-xs-12 col-sm-4">
                 <label class="inline pull-left" style="margin-left: 0">
                   <b>Piece:</b>
                   <input type="checkbox" <?= (isset($data['piece']) && ($data['piece'] == "1")) ? 'checked' : '' ?>
                          value="1" name="piece" class="input-checkbox">
                 </label>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
+              <div class="col-xs-12 col-sm-4">
                 <label class="inline pull-left" style="margin-left: 0">
                   <b>Whole:</b>
                   <input type="checkbox" <?= (isset($data['whole']) && ($data['whole'] == "1")) ? 'checked' : '' ?>
                          name="whole" value="1" class="input-checkbox">
                 </label>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
+              <div class="col-xs-12 col-sm-4">
                 <label class="inline pull-left" style="margin-left: 0">
                   <b>Best Textile:</b>
                   <input type="checkbox" name="best"
@@ -104,16 +102,14 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-xs-12 col-sm-4">
                 <label class="inline pull-left" style="margin-left: 0">
                   <b>Specials:</b>
                   <input type="checkbox" <?= (isset($data['specials']) && ($data['specials'] == "1")) ? 'checked' : '' ?>
                          name="specials" value="1" class="input-checkbox">
                 </label>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
+              <div class="col-xs-12 col-sm-4">
                 <label class='inline pull-left' style="margin-left: 0">
                   <b style="vertical-align: 3px">Visible:</b>
                   <input type="checkbox" <?= (isset($data['pvisible']) && ($data['pvisible'] == "1")) ? 'checked' : '' ?>
