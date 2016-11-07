@@ -18,6 +18,17 @@
     }, 8000);
   }
 
+  $('[data-carousel]').owlCarousel({
+    responsive: {0: {items: 1}, 461: {items: 2}, 721: {items: 2}, 992: {items: 3}},
+    nav: true,
+    navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
+    autoplay: true,
+    loop: true,
+    autoplayHoverPause: false,
+    dots: true
+  });
+
+
   setEvToFilter();
 
   function postdata(this_, url, data, context, callback) {

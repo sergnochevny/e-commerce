@@ -127,6 +127,23 @@
       $this->template->view_layout('select');
     }
 
+    private function generate_related($data) {
+      $pid = $data['pid'];
+      if(isset($pid)){
+        $filter['hidden']['a.pid'] = $pid;
+        $filter['hidden']['b.image1'] = 'null';
+        $res_count_rows = 0;
+        $rows = Model_Related::get_list(0,0,$res_count_rows, $filter);
+        $this->template->vars('rows', $rows);
+        ob_start();
+        $this->template->view_layout('related/rows');
+        $rows = ob_get_contents();
+        ob_end_clean();
+        $this->template->vars('list', $rows);
+        $this->main->view_layout('related/list');
+      }
+    }
+
     protected function load(&$data) {
       $data['pid'] = _A_::$app->get('pid');
       $data['metadescription'] = Model_Product::sanitize(_A_::$app->post('metadescription') ? _A_::$app->post('metadescription') : '');
@@ -161,6 +178,9 @@
       $data['image4'] = Model_Product::sanitize(_A_::$app->post('image4') ? _A_::$app->post('image4') : '');
       $data['image5'] = Model_Product::sanitize(_A_::$app->post('image5') ? _A_::$app->post('image5') : '');
       $data['inventory'] = !is_null(_A_::$app->post('inventory')) ? _A_::$app->post('inventory') : 0;
+      $data['related'] = !is_null(_A_::$app->post('related')) ? _A_::$app->post('related') : [];
+      $data['related_select'] = !is_null(_A_::$app->post('related_select')) ? _A_::$app->post('related_select') : [];
+
     }
 
     protected function validate(&$data, &$error) {
@@ -207,6 +227,12 @@
       $select = ob_get_contents();
       ob_end_clean();
       $data['manufacturers'] = $select;
+
+      ob_start();
+      $this->generate_related($data);
+      $related = ob_get_contents();
+      ob_end_clean();
+      $this->template->vars('related', $related);
 
       ob_start();
       $this->images($data);
