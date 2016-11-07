@@ -12,6 +12,19 @@
       return parent::build_order($sort);
     }
 
+    public static function get_by_id($pid, $aid) {
+      $data = null;
+      $q = "select * from " . self::$table;
+      $q .= " where pid = '$pid' and aid = '$aid'";
+      $res = mysql_query($q);
+      if($res) {
+        $data = mysql_fetch_assoc($res);
+      } else {
+        throw new Exception(mysql_error());
+      }
+      return $data;
+    }
+
     protected static function build_where(&$filter) {
       $result = "";
       if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.pname"])) . "%'";
@@ -88,7 +101,7 @@
 
     public static function save(&$data) {
       extract($data);
-      $query = "REPLACE INTO " . static::$table . " (aid, pid) VALUE ('" . $aid . "','".$pid."')";
+      $query = "REPLACE INTO " . static::$table . " (aid, pid) VALUE ('" . $aid . "','" . $pid . "')";
       $res = mysql_query($query);
       if(!$res) throw new Exception(mysql_error());
       $id = mysql_insert_id();

@@ -18,7 +18,7 @@
     }
 
     protected function validate(&$data, &$error) {
-      if(empty($data['pid'])){
+      if(empty($data['pid'])) {
         $error[] = 'Select Product to append to Favorites!';
         $this->template->vars('error', $error);
         return false;
@@ -49,7 +49,7 @@
 
     protected function after_save($id, &$data) {
       $row = Model_Product::get_by_id($data['pid']);
-      $this->save_warning = $row['pname']." added to Favorite Fabrics!";
+      $this->save_warning = $row['pname'] . " added to Favorite Fabrics!";
     }
 
     protected function edit_add_handling($url, $title, $back_url = null) {
@@ -89,5 +89,16 @@
     public function view() { }
 
     public function edit($required_access = true) { }
+
+    public static function product_in($pid) {
+      $res = false;
+      $aid = Controller_User::get_from_session()['aid'];
+      try {
+        $res = Model_Favorites::get_by_id($pid, $aid);
+        $res = (isset($res) && is_array($res) && (count($res) > 0));
+      } catch(Exceptin $e) {
+      };
+      return $res;
+    }
 
   }

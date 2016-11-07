@@ -369,10 +369,10 @@
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');
         if(in_array($back, ['matches', 'cart', 'shop', 'favorites', ''])) $back_url = _A_::$app->router()->UrlTo($back, $url_prms);
-        elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials'])){
+        elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials'])) {
           $back_url = _A_::$app->router()->UrlTo('shop' . DS . $back, $url_prms);
         } else {
-          $back_url =  _A_::$app->router()->UrlTo(base64_decode(urldecode($back)), $url_prms);;
+          $back_url = _A_::$app->router()->UrlTo(base64_decode(urldecode($back)), $url_prms);;
         }
       } else {
         $back_url = _A_::$app->router()->UrlTo('shop', $url_prms);
@@ -383,6 +383,7 @@
         $this->main->template->vars('search_str', _A_::$app->post('s'));
       }
 
+      $this->template->vars('in_favorites', Controller_Favorites::product_in($pid));
       $this->template->vars('data', $data);
       $allowed_samples = Model_Samples::allowedSamples($pid);
       $this->template->vars('allowed_samples', $allowed_samples);
