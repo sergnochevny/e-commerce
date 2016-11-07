@@ -70,7 +70,7 @@
       }
     }
 
-    public static function save($data) {
+    public static function save(&$data) {
       extract($data);
       $name = mysql_real_escape_string($name);
       if(isset($id)) {

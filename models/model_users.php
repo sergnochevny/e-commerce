@@ -125,7 +125,7 @@
       }
     }
 
-    public static function save($data) {
+    public static function save(&$data) {
       extract($data);
 
       $email = mysql_real_escape_string($email);

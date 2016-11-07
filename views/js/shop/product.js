@@ -8,10 +8,10 @@
   if (related.length) {
     $('body').waitloader('show');
     var url = $('[data-href_related]').val();
-    related.load(url, function () {
-        debugger;
+    related.load(url,
+      function () {
         $('[data-carousel]').owlCarousel({
-          responsive: {0: {items: 1}, 461: {items: 2}, 992: {items: 3}},
+          responsive: {0: {items: 1}, 461: {items: 2}, 721: {items: 2}, 992: {items: 3}},
           nav: true,
           navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
           autoplay: true,

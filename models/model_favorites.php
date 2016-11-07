@@ -86,7 +86,7 @@
       return $response;
     }
 
-    public static function save($data) {
+    public static function save(&$data) {
       extract($data);
       $query = "REPLACE INTO " . static::$table . " (aid, pid) VALUE ('" . $aid . "','".$pid."')";
       $res = mysql_query($query);

@@ -1,72 +1,83 @@
 <?php
 
-  class Controller_Matches extends Controller_Controller {
+  class Controller_Matches extends Controller_FormSimple {
 
-    /**
-     * @export
-     */
-    public function add() {
-      $added = 0;
+    protected $id_name = 'pid';
 
-      if(!is_null(_A_::$app->get('pid')) && !empty(_A_::$app->get('pid'))) {
-        $pid = _A_::$app->get('pid');
-        $matches_items = isset(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
-        $item_added = false;
-        if(count($matches_items) > 0) {
-          foreach($matches_items as $key => $item) {
-            if($item['pid'] == $pid) {
-              $item_added = true;
-            }
-          }
-        }
+    protected function load(&$data) {
+      $data[$this->id_name] = _A_::$app->get($this->id_name);
+    }
 
-        if(!$item_added) {
-          $suffix_img = 'b_';
-          $images = Model_Product::get_by_id($pid);
+    protected function after_save($id, &$data) {
+      $data['message'] = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
+      if(!$id) {
+        $data['message'] = empty($data[$this->id_name]) ? 'Error with added fabric to Matches.' : 'Error with adding fabric to Matches.<br> Main image of the fabric is empty.';
+      }
+      $data['res'] = $id ? 1 : 0;
+    }
 
-          if(isset($images['image1'])) {
-            $file_img = 'upload/upload/' . $images['image1'];
-            if(file_exists($file_img) && is_file($file_img)) {
-              $images['image1'] = $suffix_img . $images['image1'];
-              $matches_items[] = ['pid' => $pid, 'img' => $images['image1']];
-            }
-            $message = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
-            $added = 1;
-          } else {
-            $message = 'Error with adding fabric to Matches.<br> Main image of the fabric is empty.';
-          }
-        }
-        $_matches = _A_::$app->session('matches');
-        $_matches['items'] = $matches_items;
-        _A_::$app->setSession('matches', $_matches);
-      } else
-        $message = 'Error with added fabric to Matches.';
-      $this->template->vars('message', $message);
+    protected function validate(&$data, &$error) {
+      return true;
+    }
 
+    protected function before_form_layout(&$data = null) {
+      $this->template->vars('message', $data['message']);
+      $added = $data['res'];
       ob_start();
       $this->template->view_layout('msg_add');
       $data = ob_get_contents();
       ob_end_clean();
-      echo json_encode(['data' => $data, 'added' => $added]);
+      exit(json_encode(['data' => $data, 'added' => $added]));
+    }
+
+    public function view() { }
+
+    public function edit($required_access = true) { }
+
+    public static function product_in($pid) {
+      if(isset(_A_::$app->session('matches')['items'])) {
+        $matches_items = _A_::$app->session('matches')['items'];
+      } else {
+        return false;
+      }
+
+      $item_added = false;
+      foreach($matches_items as $key => $item) {
+        if($item['pid'] == $pid) {
+          $item_added = true;
+          break;
+        }
+      }
+      return $item_added;
     }
 
     /**
      * @export
      */
-    public function delete() {
-      if(!is_null(_A_::$app->post('pid')) && !empty(_A_::$app->post('pid'))) {
-        $pid = _A_::$app->post('pid');
-        $matches_items = isset(_A_::$app->session('matches')['items']) ? _A_::$app->session('matches')['items'] : [];
-        if(count($matches_items) > 0) {
-          foreach($matches_items as $key => $item) {
-            if($item['pid'] == $pid) {
-              unset($matches_items[$key]);
-            }
-          }
+    public function matches() {
+      parent::index(false);
+    }
+
+    /**
+     * @export
+     */
+    public function add($required_access = true) {
+      if($this->form_handling($data) && _A_::$app->request_is_post()) parent::add(false);
+      else throw new Exception('404');
+    }
+
+    /**
+     * @export
+     */
+    public function delete($required_access = true) {
+      if(_A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_name))) {
+        try {
+          forward_static_call(['Model_' . ucfirst($this->controller), 'delete'], $id);
+          $this->after_delete($id);
+        } catch(Exception $e) {
+          $error[] = $e->getMessage();
+          $this->template->vars('error', $error);
         }
-        $_matches = _A_::$app->session('matches');
-        $_matches['items'] = $matches_items;
-        _A_::$app->setSession('matches', $_matches);
       }
     }
 
@@ -74,8 +85,13 @@
      * @export
      */
     public function clear() {
-      if(isset(_A_::$app->session('matches')['items'])) {
-        _A_::$app->setSession('matches', null);
+      if(_A_::$app->request_is_ajax()) {
+        try {
+          forward_static_call(['Model_' . ucfirst($this->controller), 'clear']);
+        } catch(Exception $e) {
+          $error[] = $e->getMessage();
+          $this->template->vars('error', $error);
+        }
       }
     }
 
@@ -94,7 +110,7 @@
               $item_added = false;
 
               foreach($cart_items as $key => $item) {
-                if($item['pid'] == $product_id) {
+                if($item[$this->id_name] == $product_id) {
                   // $cart_items[$key]['quantity'] += 1;
                   $item_added = true;
                 }
@@ -129,7 +145,7 @@
                   $product['format_discount'] = $format_discount;
                   $product['format_price'] = $format_price;
                   $product['format_sale_price'] = $format_sale_price;
-                  $cart_items[$product['pid']] = $product;
+                  $cart_items[$product[$this->id_name]] = $product;
                   $message .= 'The product ' . $product['Product_name'] . ' have been added to your Basket.<br>';
                 } else {
                   $message .= 'The product ' . $product['Product_name'] . ' is unavailable. The product was not added.<br>';
@@ -160,23 +176,6 @@
 
       $this->template->vars('message', $message);
       $this->main->view_layout('msg_add');
-    }
-
-    public static function product_in($pid) {
-      if(isset(_A_::$app->session('matches')['items'])) {
-        $matches_items = _A_::$app->session('matches')['items'];
-      } else {
-        return false;
-      }
-
-      $item_added = false;
-      foreach($matches_items as $key => $item) {
-        if($item['pid'] == $pid) {
-          $item_added = true;
-          break;
-        }
-      }
-      return $item_added;
     }
 
   }

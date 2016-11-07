@@ -82,7 +82,7 @@
       return $data;
     }
 
-    public static function save($data) {
+    public static function save(&$data) {
       extract($data);
       $cname = mysql_real_escape_string($cname);
       if(!empty($cid)) {

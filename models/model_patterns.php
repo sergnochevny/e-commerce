@@ -55,7 +55,7 @@
       return $response;
     }
 
-    public static function save($data) {
+    public static function save(&$data) {
       extract($data);
       if(isset($id)) {
         $query = "UPDATE " . static::$table . " SET pattern ='" . $pattern . "' WHERE id =" . $id;

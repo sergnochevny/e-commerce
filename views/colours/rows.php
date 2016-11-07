@@ -1,4 +1,4 @@
-<?php if(sizeof($rows) > 0): ?>
+<?php if(count($rows) > 0): ?>
   <div class="col-xs-12 table-list-header hidden-xs">
     <div class="row">
       <div class="col-sm-8 col">

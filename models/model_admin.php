@@ -72,7 +72,7 @@
       if(!$result) throw new Exception(mysql_error());
     }
 
-    public static function save($data) {
+    public static function save(&$data) {
       extract($data);
       if(!isset($id)) {
         $q = "INSERT INTO  " . static::$table .

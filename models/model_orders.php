@@ -71,7 +71,7 @@
       return false;
     }
 
-    public static function save($data) {
+    public static function save(&$data) {
       extract($data);
       if(isset($oid)) {
         $query = "UPDATE " . static::$table .
