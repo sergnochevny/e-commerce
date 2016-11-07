@@ -203,70 +203,12 @@
       <hr>
     </div>
     <div class="col-xs-12">
-      <div class="row">
-        <div class="col-sm-12"><h3>Related products</h3></div>
+      <div data-related_block class="row products">
+        <?= isset($related) ? $related : ''; ?>
       </div>
-      <div class="row related-form">
-        <div class="col-xs-12">
-          <div class="col-xs-12 panel panel-body">
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="form-row">
-                  <div class="col-sm-2">
-                    <label for="">
-                      <input type="checkbox">
-                      <img width="100" height="100">
-                    </label>
-                  </div>
-                  <div class="col-sm-10">
-                    Product item
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-12">
-                <div class="form-row">
-                  <div class="col-sm-2">
-                    <label for="">
-                      <input type="checkbox">
-                      <img width="100" height="100">
-                    </label>
-                  </div>
-                  <div class="col-sm-10">
-                    Product item
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <nav class="paging-navigation" role="navigation">
-                  <h4 class="sr-only">Navigation</h4>
-                  <ul class="pagination">
-                    <?= isset($paginator) ? $paginator : 'Navigation here'; ?>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-            <div class="row text-center">
-              <div class="col-sm-12"><a id="submit" class="button" style="width: 150px;">Save product</a></div>
-            </div>
-          </div>
-        </div>
+      <div data-edit_related_block class="row products">
+        <input type="hidden" value="<?= _A_::$app->router()->UrlTo('related/edit',['pid'=>$data['pid']])?>"/>
       </div>
-      <div class="row related-selected">
-        <div class="col-xs-12">
-          <div class="col-xs-12">
-            <div class="row" data-related><input data-href_related type="hidden"
-                                                 value="<?= isset($href_related) ? $href_related : ''; ?>"/></div>
-          </div>
-          <div class="text-center">
-            <a id="submit" class="button" style="width: 150px;">Add new</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-12">
-      <hr>
     </div>
     <div class="col-xs-12">
       <div class="text-center">
@@ -295,7 +237,7 @@
 </form>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
         type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/product/form.js'); ?>' type="text/javascript"></script>
 <link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>' type='text/css'
       media='all'/>
 <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owl.carousel.min.js'); ?>'></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/product/form.js'); ?>' type="text/javascript"></script>
