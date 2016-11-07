@@ -21,7 +21,7 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <div class="row products">
+        <div class="products">
           <?= $list; ?>
         </div>
       </div>
