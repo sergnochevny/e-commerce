@@ -521,7 +521,8 @@ ul.products li .product-inner > a {
     display: block;
     height: 40px;
     line-height: 40px;
-    padding: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     position: relative;
 }
 
