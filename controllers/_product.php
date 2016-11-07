@@ -128,8 +128,20 @@
     }
 
     private function generate_related($data) {
-      $this->template->vars('data', $data);
-      $this->template->view_layout('related');
+      $pid = $data['pid'];
+      if(isset($pid)){
+        $filter['hidden']['a.pid'] = $pid;
+        $filter['hidden']['b.image1'] = 'null';
+        $res_count_rows = 0;
+        $rows = Model_Related::get_list(0,0,$res_count_rows, $filter);
+        $this->template->vars('rows', $rows);
+        ob_start();
+        $this->template->view_layout('related/rows');
+        $rows = ob_get_contents();
+        ob_end_clean();
+        $this->template->vars('list', $rows);
+        $this->main->view_layout('related/list');
+      }
     }
 
     protected function load(&$data) {
@@ -220,7 +232,7 @@
       $this->generate_related($data);
       $related = ob_get_contents();
       ob_end_clean();
-      $data['$related'] = $select;
+      $this->template->vars('related', $related);
 
       ob_start();
       $this->images($data);

@@ -255,12 +255,6 @@
       return $data;
     }
 
-    public static function get_related($pid) {
-      $filter['hidden']['a.pid'] = $pid;
-      $filter['hidden']['b.image1'] = 'null';
-      return Model_Related::get_list(0,0,$res_count, $filter);
-    }
-
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
