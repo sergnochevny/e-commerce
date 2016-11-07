@@ -130,6 +130,7 @@
     private function generate_related($data) {
       $pid = $data['pid'];
       if(isset($pid)){
+        $filter['hidden']['view'] = true;
         $filter['hidden']['a.pid'] = $pid;
         $filter['hidden']['b.image1'] = 'null';
         $res_count_rows = 0;

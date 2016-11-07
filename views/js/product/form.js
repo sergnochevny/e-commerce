@@ -186,4 +186,42 @@
       }
     );
   }
+
+  $('[data-related-add]').on('click', function(event){
+    event.preventDefault();
+    var this_ = this;
+    var related = $('[data-edit_related]');
+    var url = related.children('input[type=hidden]').val();
+    related.load(url, function(){
+      $(this_).hide();
+      $('[data-fields_block]').hide();
+    });
+  });
+
+
+  $('.popup a.close').on('click.confirm_action', function (event) {
+    $("#confirm_action").off('click.confirm_action');
+    $("#confirm_dialog").removeClass('overlay_display');
+  });
+
+  $('#confirm_no').on('click.confirm_action',  function (event) {
+    $(".popup a.close").trigger('click');
+  });
+
+  $('a[data-delete]').on('click', function (event) {
+    event.preventDefault();
+    if (!$(this).is('.disabled')) {
+      var href = $(this).attr('href');
+      $("#confirm_action").on('click.confirm_action', function (event) {
+        $('body').waitloader('show');
+        event.preventDefault();
+        $("#confirm_dialog").removeClass('overlay_display');
+        $('#content').load(href);
+        $("#confirm_action").off('click.confirm_action');
+        $('body').waitloader('remove');
+      });
+      $("#confirm_dialog").addClass('overlay_display');
+    }
+  });
+
 })(jQuery);
