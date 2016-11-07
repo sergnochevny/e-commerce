@@ -9,22 +9,18 @@
           <ul class="nav navbar-nav navbar-right">
             <?php if(!isset($my_account_admin_menu)) { ?>
               <li class="dropdown">
-                <a href="#" rel="nofollow" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class=" drip-icon-search"></i>
-                  <span class="topnav-label hidden-xs">Search</span>
+                <a href="#" rel="nofollow" class="dropdown-toggle search-call" style="padding-right: 0" data-toggle="dropdown">
+                  <i class="drip-icon-search"></i>
+                  <form id="f_search" role="search" method="post" class="header-search hidden"
+                        action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
+                    <label class="screen-reader-text" for="s">Search for:</label>
+                    <input id="search" type="search" class="search-field"
+                           placeholder="Search Products&hellip;"
+                           value="<?= isset($search_str) ? $search_str : '' ?>" name="s"
+                           title="Search for:"/>
+                    <input id="b_search" type="button" value="Search"/>
+                  </form>
                 </a>
-                <ul class="dropdown-menu topnav-search-dropdown">
-                  <li>
-                    <form id="f_search" role="search" method="post" class="woocommerce-product-search"
-                          action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
-                      <label class="screen-reader-text" for="s">Search for:</label>
-                      <input id="search" type="search" class="search-field"
-                             placeholder="Search Products&hellip;" value="<?= isset($search_str) ? $search_str : '' ?>" name="s"
-                             title="Search for:"/>
-                      <input id="b_search" type="button" value="Search"/>
-                    </form>
-                  </li>
-                </ul>
               </li>
             <?php } ?>
             <?= isset($my_account_admin_menu) ? $my_account_admin_menu : '' ?>

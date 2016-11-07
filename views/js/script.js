@@ -6,6 +6,11 @@ jQuery(document).ready(function ($) {
     $(document.body).toggleClass('menu-open');
   });
 
+  $(document).on('click', '.search-call', function () {
+    $(this).children('form').toggleClass('hidden');
+  });
+
+
   $(document).on('click', '[data-search] .panel-heading', function () {
     var body = $(this).next('.panel-body');
     var footer = body.next('.panel-footer');

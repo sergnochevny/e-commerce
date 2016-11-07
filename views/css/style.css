@@ -511,6 +511,24 @@ ul.products li .product-inner > a {
     right: 0;
 }
 
+.header-search{
+    float: right;
+    border: 1px solid #FFF;
+    margin-top: -5px;
+    margin-left: 5px;
+    border-radius: 2px;
+}
+.header-search input{
+    margin-bottom: 0 !important;
+    background-color: transparent;
+    border: 0;
+    color: #FFF;
+    padding: 5px 6px;
+}
+.header-search input#search{
+    border-right: 1px solid #FFF;
+}
+
 .user_name span.topnav-label {
     color: #a5b63f;
     display: block;
