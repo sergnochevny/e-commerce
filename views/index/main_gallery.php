@@ -1,7 +1,7 @@
 <!--Slider-->
-<link rel='stylesheet' href='<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>' type='text/css'
-      media='all'/>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owl.carousel.min.js'); ?>'></script>
+<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>">
+<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.theme.default.min.css'); ?>">
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
 
 <div class="just-slider-wrap">
   <div class="just-slides just-slider-active owl-carousel owl-theme owl-loaded">
