@@ -205,13 +205,6 @@
         <hr>
       </div>
     </div>
-
-    <div class="col-xs-12">
-      <div class="text-center">
-        <a id="submit" class="button" style="width: 150px;">Save</a>
-      </div>
-    </div>
-
   </div><!--col-2-->
 
   <div data-related_block class="col-xs-12">
@@ -219,9 +212,14 @@
       <div data-related class="products">
         <?= isset($related) ? $related : ''; ?>
       </div>
-      <div id="content" data-edit_related class="row products">
-        <input type="hidden" value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
-      </div>
+      <input data-related_get_list type="hidden" value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
+      <div id="content" data-edit_related class="row products"></div>
+    </div>
+  </div>
+
+  <div data-submit_btn class="col-xs-12">
+    <div class="text-center">
+      <a id="submit" class="button" style="width: 150px;">Save</a>
     </div>
   </div>
 
