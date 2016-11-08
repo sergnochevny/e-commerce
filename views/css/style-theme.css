@@ -513,9 +513,9 @@ a img.aligncenter {
 .header-topnav .navbar-nav .dropdown .dropdown-toggle, .user_name span {
     height: 40px;
     color: #ffffff;
-    font-family: 'Trirong', serif;
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-right: 0;
     background: none !important;
 }
 

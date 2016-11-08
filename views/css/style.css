@@ -17,9 +17,11 @@ body {
 
 .product-image,
 .product-image-box {
-    -webkit-box-shadow: 0 0 3px 0 #999999;
-    -moz-box-shadow: 0 0 3px 0 #999999;
-    box-shadow: 0 0 3px 0 #999999;
+    border: 2px solid #DDD;
+    border-radius: 2px;
+}
+.product-image-box figcaption{
+    border-radius: 4px;
 }
 
 .button {
