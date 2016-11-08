@@ -780,12 +780,38 @@ td.product-subtotal {
     height: 140pt;
 }
 
+.remove-related-product{
+    font-size: 2em;
+    position: absolute;
+    text-align: center;
+    background-color: rgba(0,0,0,.5);
+    width: 32px;
+    right: 2px;
+    height: 32px;
+    top: 2px;
+    color: #FFF;
+    cursor: pointer;
+}
+.remove-related-product:hover{
+    color: #F00;
+}
+
+.related-cat{
+    line-height: normal !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    height: 70px !important;
+}
+
 .panel-default.sel_panel {
-    border: 0 !important;
+    display: inline-block;
+    border: 1px solid #b0b0b0;
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
 }
 
 .panel {
-    border: 1px solid #DDD;
+    border: 1px solid #b0b0b0;
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
 }
 
 .sel_panel {

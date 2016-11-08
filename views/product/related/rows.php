@@ -9,7 +9,8 @@
         <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
           <input type="hidden" name="related[]" value="<?= $row['pid'];?>" />
         </figure>
-        <span class="product-category"><?= $row['pname']; ?></span>
+        <span class="product-category related-cat"><?= $row['pname']; ?></span>
+        <a class="remove-related-product">&times;</a>
       </div>
     </div>
   <?php endforeach; ?>
