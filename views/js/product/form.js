@@ -213,7 +213,6 @@
   });
 
   $('[data-related-add]').on('click', function (event) {
-    debugger;
     event.preventDefault();
     var this_ = this;
     var related = $('[data-edit_related]');

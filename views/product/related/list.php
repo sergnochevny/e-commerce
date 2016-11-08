@@ -28,7 +28,8 @@
     <br/>
     <div class="text-center" style="width: 100%">
       <a id="confirm_action"><input type="button" value="Yes confirm" class="button"/></a>
-      <a id="confirm_no"><input type="button" value="No" class="button"/></a></div>
+      <a id="confirm_no"><input type="button" value="No" class="button"/></a>
+    </div>
   </div>
 </div>
 

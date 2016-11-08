@@ -11,8 +11,7 @@
               </p>
             <?php endif; ?>
           </div>
-          <div class="col-sm-4"></div>
-          <div class="col-sm-4 search-result-container text-right">
+          <div class="col-sm-8 search-result-container text-right">
             <span class="search-result">Showing <?= $count_rows; ?> results</span>
           </div>
         </div>

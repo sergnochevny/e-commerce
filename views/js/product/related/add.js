@@ -10,5 +10,11 @@
     }
   );
 
+  $('[data-related_chk]').on('change',
+    function (event) {
+      if(this.checked) $(this).parents('label').addClass('checked');
+      else $(this).parents('label').removeClass('checked');
+    }
+  );
 
 })(jQuery);
