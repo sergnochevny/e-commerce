@@ -785,8 +785,7 @@ td.product-subtotal {
 }
 
 .panel {
-    border: 1px solid #b0b0b0;
-    box-shadow: 0 0 3px 1px #dbdbdb inset;
+    border: 1px solid #DDD;
 }
 
 .sel_panel {
@@ -1221,6 +1220,7 @@ form[data-search] {
 
 form[data-search] > .row > .panel > .panel-heading {
     cursor: pointer;
+    border-bottom: 0;
 }
 
 .btn-primary {
