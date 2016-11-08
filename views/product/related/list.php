@@ -6,7 +6,7 @@
 <div class="row related-selected">
   <div class="col-xs-12">
     <div class="col-xs-12">
-      <div class="row" data-carousel data-related>
+      <div class="row owl-carousel" data-carousel data-related>
         <?php if(!empty($list)): ?>
           <?= $list; ?>
         <?php endif; ?>

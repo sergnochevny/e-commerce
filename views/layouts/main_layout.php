@@ -35,16 +35,18 @@
     <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>' media='all'/>
     <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css'); ?>'/>
 
-    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery_11_3.js'); ?>'></script>
+<!--    <script type='text/javascript' src='--><?//= _A_::$app->router()->UrlTo('views/js/jquery_11_3.js'); ?><!--'></script>-->
+    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery2/jquery-2.2.4.min.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
-    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-migrate.min.js'); ?>'></script>
+    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery2/jquery-migrate-1.4.1.min.js'); ?>'></script>
+<!--    <script type='text/javascript' src='--><?//= _A_::$app->router()->UrlTo('views/js/jquery-migrate.min.js'); ?><!--'></script>-->
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/bootstrap.min.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.min.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.bootstrap.min.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.prettyPhoto.js'); ?>'></script>
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/search/search.js'); ?>'></script>
     <!--script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/js_composer_front.js'); ?>'></script-->
-    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jQuery-slimScroll-1.3.8/jquery.slimscroll.min.js'); ?>'></script>
+<!--    <script type='text/javascript' src='--><?//= _A_::$app->router()->UrlTo('views/js/jQuery-slimScroll-1.3.8/jquery.slimscroll.min.js'); ?><!--'></script>-->
     <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
     <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
 
