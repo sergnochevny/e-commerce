@@ -323,6 +323,7 @@
 	}, {
 		filter: [ 'items', 'settings' ],
 		run: function() {
+			debugger;
 			var clones = [],
 				items = this._items,
 				settings = this.settings,
@@ -553,6 +554,7 @@
 	 * @returns {jQuery|HTMLElement} - The item container.
 	 */
 	Owl.prototype.prepare = function(item) {
+		debugger;
 		var event = this.trigger('prepare', { content: item });
 
 		if (!event.data) {
@@ -570,6 +572,7 @@
 	 * @public
 	 */
 	Owl.prototype.update = function() {
+		debugger;
 		var i = 0,
 			n = this._pipe.length,
 			filter = $.proxy(function(p) { return this[p] }, this._invalidated),
@@ -1299,6 +1302,7 @@
 		content.filter(function() {
 			return this.nodeType === 1;
 		}).each($.proxy(function(index, item) {
+			debugger;
 			item = this.prepare(item);
 			this.$stage.append(item);
 			this._items.push(item);
@@ -2834,7 +2838,7 @@
 	Navigation.prototype.initialize = function() {
 		var override,
 			settings = this._core.settings;
-
+		debugger;
 		// create DOM structure for relative navigation
 		this._controls.$relative = (settings.navContainer ? $(settings.navContainer)
 			: $('<div>').addClass(settings.navContainerClass).appendTo(this.$element)).addClass('disabled');
