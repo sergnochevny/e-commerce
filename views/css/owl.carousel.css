@@ -96,10 +96,12 @@
     position: absolute;
     right: 50%;
     bottom: 30px;
-    margin-right: -42px;
+    margin-right: -43px;
     cursor: pointer;
 }
-
+.big-gallery .owl-stage{
+  padding-bottom: 0;
+}
 .owl-carousel.owl-loaded {
   display: block;
 }
