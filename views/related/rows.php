@@ -7,12 +7,12 @@
         <input data-related_chk data-pid="<?= $row['pid']; ?>" type="checkbox"
                <?= (isset($related_selected) && in_array($row['pid'], $related_selected))?'checked':'';?>
                name="related-select[<?= $row['pid']; ?>]" style="display: none;"/>
-        <div class="col-xs-2 col-sm-4 col-md-3 figure">
+        <div class="col-xs-3 col-sm-4 col-md-3 figure">
           <div class="row">
             <figure style="background-image: url(<?= $row['filename']; ?>)"></figure>
           </div>
         </div>
-        <div class="col-xs-10 col-sm-8 col-md-9 product-desc">
+        <div class="col-xs-9 col-sm-8 col-md-9 product-desc">
           <span><?= $row['pname']; ?></span>
         </div>
       </label>

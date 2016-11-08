@@ -1859,11 +1859,6 @@ ul.product_list_widget li dl dd p {
     padding:0 15px 15px 15px;
 }
 
-.related_products .product-item:nth-of-type(2n){
-    padding-left: 0;
-}
-
-
 .related_products .product-item label{
     padding: 15px;
     border: 2px solid #EEE;
@@ -1871,6 +1866,7 @@ ul.product_list_widget li dl dd p {
     margin: 0;
     width: 100%;
     border-radius: 2px;
+    overflow: hidden;
 }
 
 .related_products .product-item .product-desc {
