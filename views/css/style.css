@@ -902,6 +902,7 @@ button[data-filter-search] {
     height: 200px;
     margin: 0;
     opacity: 0;
+    cursor: pointer;
 }
 .images:checked + div{
     box-shadow: 0 0 10px #000;

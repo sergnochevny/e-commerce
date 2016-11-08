@@ -1866,10 +1866,11 @@ ul.product_list_widget li dl dd p {
 
 .related_products .product-item label{
     padding: 15px;
-    box-shadow: 0 0 5px #999;
+    border: 2px solid #EEE;
     color: #999;
     margin: 0;
     width: 100%;
+    border-radius: 2px;
 }
 
 .related_products .product-item .product-desc {
@@ -1880,7 +1881,7 @@ ul.product_list_widget li dl dd p {
 }
 
 .related_products .product-item label.checked{
-    box-shadow: 0 0 3px 3px rgba(34, 34, 34, 0.54);
+    border: 2px solid #555;
     color: #000;
 }
 

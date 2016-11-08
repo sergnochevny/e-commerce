@@ -6,7 +6,7 @@
 ?>
 <div class="col-xs-12">
   <div class="col-xs-12 text-center">
-    <b class="h3">Select Related Fabrics</b>
+    <div class="h3" style="padding-bottom: 15px">Select Related Fabrics</div>
   </div>
 
   <?= isset($search_form) ? $search_form : '' ?>
