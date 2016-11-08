@@ -215,30 +215,4 @@
       $("#confirm_dialog").addClass('overlay_display');
     }
   });
-
-  $('[data-related-add]').on('click', function (event) {
-    event.preventDefault();
-    var this_ = this;
-    var related = $('[data-edit_related]');
-    var url = $('[data-related_get_list]').val();
-    $(this_).hide();
-    related.load(url, function () {
-      $('[data-fields_block]').hide();
-      $('[data-submit_btn]').hide();
-      var owl = $('[data-carousel]').data('owl.carousel');
-      if(owl){
-        var owl_items = owl.items();
-        $.each(owl_items, function(idx, item){
-            if ($(item).find('[data-pid]').length) {
-              var pid = $(item).find('[data-pid]').attr('data-pid');
-              $('.related_products input[data-pid='+pid+']').attr('checked', true);
-              $('.related_products input[data-pid='+pid+']').parents('label').addClass('checked');
-            }
-          }
-        );
-      }
-      $('body').stop().animate({scrollTop: 0});
-    });
-  });
-
 })(jQuery);

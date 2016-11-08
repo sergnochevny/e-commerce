@@ -1,4 +1,12 @@
 <link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('upload/styles.css'); ?>">
+<script src='<?= _A_::$app->router()->UrlTo('views/js/product/images.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
+        type="text/javascript"></script>
+<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>">
+<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.theme.default.min.css'); ?>">
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/product/related.js'); ?>' type="text/javascript"></script>
+
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
@@ -33,4 +41,3 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/product/images.js'); ?>' type="text/javascript"></script>

@@ -95,8 +95,6 @@
 .owl-nav{
     position: absolute;
     right: 50%;
-    bottom: 30px;
-    margin-right: -43px;
     cursor: pointer;
 }
 .big-gallery .owl-stage{

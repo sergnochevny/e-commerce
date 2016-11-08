@@ -10,7 +10,7 @@
           <input type="hidden" name="related[]" value="<?= $row['pid'];?>" />
         </figure>
         <span class="product-category related-cat"><?= $row['pname']; ?></span>
-        <a class="remove-related-product">&times;</a>
+        <a data-related_delete class="remove-related-product">&times;</a>
       </div>
     </div>
   <?php endforeach; ?>
