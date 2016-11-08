@@ -26,6 +26,7 @@
         navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
         autoplay: true,
         loop: false,
+        rewind: true,
         autoplayHoverPause: true,
         dots: true
       }
@@ -224,6 +225,18 @@
     related.load(url, function () {
       $('[data-fields_block]').hide();
       $('[data-submit_btn]').hide();
+      var owl = $('[data-carousel]').data('owl.carousel');
+      if(owl){
+        var owl_items = owl.items();
+        $.each(owl_items, function(idx, item){
+            if ($(item).find('[data-pid]').length) {
+              var pid = $(item).find('[data-pid]').attr('data-pid');
+              $('.related_products input[data-pid='+pid+']').attr('checked', true);
+              $('.related_products input[data-pid='+pid+']').parents('label').addClass('checked');
+            }
+          }
+        );
+      }
       $('body').stop().animate({scrollTop: 0});
     });
   });

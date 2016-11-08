@@ -3,7 +3,7 @@
     <?php $prms['pid'] = $row['pid'];
     if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
     <div class="col-xs-12 col-sm-6  product-item">
-      <label class="product-block <?= (isset($related_selected) && in_array($row['pid'], $related_selected))?'checked':'';?>" style="font-weight: normal; margin-left: 0; height: auto">
+      <label class="product-block" style="font-weight: normal; margin-left: 0; height: auto">
         <input data-related_chk data-pid="<?= $row['pid']; ?>" type="checkbox"
                <?= (isset($related_selected) && in_array($row['pid'], $related_selected))?'checked':'';?>
                name="related-select[<?= $row['pid']; ?>]" style="display: none;"/>
