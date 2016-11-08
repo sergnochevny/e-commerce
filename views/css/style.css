@@ -891,6 +891,22 @@ button[data-filter-search] {
     transition: box-shadow .15s;
 }
 
+.images{
+    position: absolute;
+    z-index: 1;
+    left: 15px;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+    width: 89%;
+    height: 200px;
+    margin: 0;
+    opacity: 0;
+}
+.images:checked + div{
+    box-shadow: 0 0 10px #000;
+}
+
 
 @media (min-width: 768px), (max-width: 992px){
     .b_modify_images_pic{
@@ -917,6 +933,7 @@ button[data-filter-search] {
     -moz-transition: box-shadow .15s;
     -o-transition: box-shadow .15s;
     transition: box-shadow .15s;
+    border: 4px solid #FFF;
 }
 
 .b_modify_images_main_pic .pic_del_images {

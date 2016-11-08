@@ -2,7 +2,7 @@
   <div class="col-sm-12 col-md-12 b_modify_images_main">
     <div class="row">
       <div class="col-md-12 b_modify_images_1">
-        <input type="radio" name="images" class="images" value="1" style="display:none;"/>
+        <input type="radio" name="images" class="images" value="1"/>
         <div class="b_modify_images_main_pic"
              style='background:no-repeat; background-image: url(<?= !empty($data['u_image1']) ? $data['u_image1'] : $not_image; ?>); background-size: 300px; width: 300px;'>
           <?php if(!empty($data['u_image1'])) { ?>
@@ -18,7 +18,7 @@
       <div class="col-xs-12 b_modify_images_2">
         <div class="row">
           <div class="col-xs-6">
-            <input type="radio" name="images" class="images" value="2" style="display:none;"/>
+            <input type="radio" name="images" class="images" value="2"/>
             <div class='b_modify_images_pic'
                  style='background-image: url(<?= !empty($data['u_image2']) ? $data['u_image2'] : $not_image; ?>)'>
               <?php if(!empty($data['u_image2'])) { ?>
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="col-xs-6">
-              <input type="radio" name="images" class="images" value="3" style="display:none;"/>
+              <input type="radio" name="images" class="images" value="3"/>
               <div class='b_modify_images_pic'
                    style='background-image: url(<?= !empty($data['u_image3']) ? $data['u_image3'] : $not_image; ?>); background-size: 100px 100px;'>
                 <?php if(!empty($data['u_image3'])) { ?>
@@ -58,7 +58,7 @@
               </div>
           </div>
           <div class="col-xs-6">
-            <input type="radio" name="images" class="images" value="4" style="display:none;"/>
+            <input type="radio" name="images" class="images" value="4"/>
             <div class='b_modify_images_pic'
                  style='background-image: url(<?= !empty($data['u_image4']) ? $data['u_image4'] : $not_image; ?>); background-size: 100px 100px;'>
               <?php if(!empty($data['u_image4'])) { ?>
@@ -78,7 +78,7 @@
             </div>
           </div>
           <div class="col-xs-6">
-            <input type="radio" name="images" class="images" value="5" style="display:none;"/>
+            <input type="radio" name="images" class="images" value="5"/>
             <div class='b_modify_images_pic'
                  style='background-image: url(<?= !empty($data['u_image5']) ? $data['u_image5'] : $not_image; ?>); background-size: 100px 100px;'>
               <?php if(!empty($data['u_image5'])) { ?>
