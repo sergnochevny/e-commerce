@@ -1,9 +1,8 @@
 (function ($) {
 
-  debugger;
-
   $('[data-related_add_ok]').on('click',
     function (event) {
+      debugger;
       event.preventDefault();
       $('[data-edit_related]').empty();
       $('[data-related-add]').show();
@@ -31,22 +30,38 @@
         element += '    </div>';
         element += '  </div>';
 
+        if(!owl){
+          $('[data-carousel]').owlCarousel(
+            {
+              responsive: {0: {items: 1}, 461: {items: 2}, 721: {items: 2}, 992: {items: 3}},
+              nav: true,
+              navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
+              autoplay: true,
+              loop: false,
+              autoplayHoverPause: true,
+              dots: true
+            }
+          );
+          var owl = $('[data-carousel]').data('owl.carousel');
+        }
+
         var idx = owl.add(element);
-        owl.refresh();
         $(this).attr('data-carousel_idx', idx);
       } else {
         $(this).parents('label').removeClass('checked');
         var owl_items = owl.items();
         $.each(owl_items,
           function (idx, item) {
-            if($(item).find('[data-pid_'+pid+']').length){
+            if ($(item).find('[data-pid_' + pid + ']').length) {
               owl.remove(idx);
               return false;
             }
           }
         );
-        $('.related-selected .owl-stage').find('data-pid_' + pid).parents('owl-item').remove();
       }
+      debugger;
+      if(!$('[data-related] .product-item').length) owl.destroy();
+      else  owl.refresh();
     }
   );
 
