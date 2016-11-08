@@ -62,6 +62,7 @@
 .owl-carousel .owl-stage {
   position: relative;
   -ms-touch-action: pan-Y;
+    padding-bottom: 40px;
 }
 .owl-carousel .owl-stage:after {
   content: ".";
@@ -77,17 +78,28 @@
   /* fix for flashing background */
   -webkit-transform: translate3d(0px, 0px, 0px);
 }
-.owl-carousel .owl-controls .owl-nav .owl-prev,
-.owl-carousel .owl-controls .owl-nav .owl-next,
-.owl-carousel .owl-controls .owl-dot {
-  cursor: pointer;
-  cursor: hand;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.owl-nav > div{
+    display: inline-block;
+    padding: 4px 15px;
+    background-color: #667700;
+    border: 2px solid #455600;
+    color: #FFF;
 }
+.owl-nav > div:first-child{
+    border-right: 0;
+    border-radius: 2px 0 0 2px;
+}
+.owl-nav > div:last-child{
+    border-radius: 0 2px 2px 0;
+}
+.owl-nav{
+    position: absolute;
+    right: 50%;
+    bottom: 30px;
+    margin-right: -42px;
+    cursor: pointer;
+}
+
 .owl-carousel.owl-loaded {
   display: block;
 }

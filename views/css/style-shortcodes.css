@@ -285,9 +285,8 @@
 }
 .just-brands-wrap .owl-carousel .owl-controls .owl-nav > div {
   display: inline-block;
-  width: 20px;
   border: 1px solid #667700;
-  margin: 0px 2px;
+  margin: 0 2px;
   padding: 4px;
   width: 30px;
   height: 30px;
