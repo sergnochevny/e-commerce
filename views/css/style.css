@@ -877,16 +877,25 @@ button[data-filter-search] {
 
 .b_modify_images_pic {
     background-size: cover !important;
-    min-width: 237px;
+    max-width: 237px;
+    min-width: 212px;
+    width: 100%;
     min-height: 200px !important;
     position: relative;
-    width: 100%;
     background-position: top center;
     margin-bottom: 25px;
     -webkit-transition: box-shadow .15s;
     -moz-transition: box-shadow .15s;
     -o-transition: box-shadow .15s;
     transition: box-shadow .15s;
+}
+
+
+@media (min-width: 768px), (max-width: 992px){
+    .b_modify_images_pic{
+        max-width: 100%;
+        min-width: 1px;
+    }
 }
 
 .b_modify_images_1 > label {
