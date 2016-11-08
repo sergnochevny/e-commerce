@@ -84,6 +84,7 @@
   }
 
   $('[data-related_block] form[data-search]').on('submit.search_action', function (event, reset) {
+    debugger;
     event.preventDefault();
     if (reset) {
       var data = new FormData();
