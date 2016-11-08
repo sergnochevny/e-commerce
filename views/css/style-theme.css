@@ -501,7 +501,6 @@ a img.aligncenter {
 
 .header-topnav .welcome-message {
     color: #ffffff;
-    font-family: 'Arbutus Slab', serif;
     line-height: 38px;
     transition: line-height 1s;
 }
@@ -597,7 +596,6 @@ a img.aligncenter {
 }
 
 .header-topnav .topnav-minicart-dropdown .widget {
-    font-family: 'Arbutus Slab', serif;
     font-size: 11px;
     margin: 0;
     padding: 0;
@@ -662,9 +660,8 @@ a img.aligncenter {
 }
 
 .site-navigation .navbar-header a.navbar-brand .site-with-text {
-    padding: 10px 0px;
+    padding: 10px 0;
     color: #222222;
-    font-family: 'Arbutus Slab', serif;
     text-transform: uppercase;
 }
 
@@ -782,7 +779,6 @@ a img.aligncenter {
 }
 
 .site-navigation .nav {
-    font-family: 'Arbutus Slab', serif;
     text-transform: uppercase;
     font-weight: normal;
 }

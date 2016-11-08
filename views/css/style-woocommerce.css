@@ -564,7 +564,18 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     position: relative;
 }
 
+.owl-prev, .owl-next{
+    -webkit-transition: background-color .3s;
+    -moz-transition: background-color .3s;
+    -ms-transition: background-color .3s;
+    -o-transition: background-color .3s;
+    transition: background-color .3s;
+}
 
+.owl-prev:hover,
+.owl-next:hover{
+    background-color: black;
+}
 .products .owl-item .product-item .product-image-box,
 .products .product-item .product-image-box {
     overflow: hidden;
@@ -580,7 +591,10 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     -o-transition: all .2s ease-in;
     transition: all .2s ease-in;
 }
-
+#menu-header-menu{
+    margin-top: 14px;
+    font-weight: normal;
+}
 .product-item.for-related .product-image-box{
     min-height: 120px;
 }
