@@ -1,6 +1,6 @@
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
-    <div class="product-item">
+    <div class="product-item" data-pid_<?= $row['pid'];?>>
       <div class="product-inner">
         <?php
           $url_prms['pid'] = $row['pid'];

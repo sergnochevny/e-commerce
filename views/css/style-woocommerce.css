@@ -1869,6 +1869,7 @@ ul.product_list_widget li dl dd p {
     box-shadow: 0 0 5px #999;
     color: #999;
     margin: 0;
+    width: 100%;
 }
 
 .related_products .product-item .product-desc {
