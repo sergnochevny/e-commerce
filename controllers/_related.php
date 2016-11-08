@@ -41,8 +41,40 @@
       }
     }
 
-    protected function get_list($view = false) {
+    protected function before_search_form_layout(&$search_data, $view = false) {
+      $categories = [];
+      $rows = Model_Categories::get_list(0, 0, $res_count);
+      foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
+      $patterns = [];
+      $rows = Model_Patterns::get_list(0, 0, $res_count);
+      foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
+      $colours = [];
+      $rows = Model_Colours::get_list(0, 0, $res_count);
+      foreach($rows as $row) $colours[$row['id']] = $row['colour'];
+      $manufacturers = [];
+      $rows = Model_Manufacturers::get_list(0, 0, $res_count);
+      foreach($rows as $row) $manufacturers[$row['id']] = $row['manufacturer'];
 
+      $search_data['categories'] = $categories;
+      $search_data['patterns'] = $patterns;
+      $search_data['colours'] = $colours;
+      $search_data['manufacturers'] = $manufacturers;
+    }
+
+    protected function after_get_list(&$rows, $view = false) {
+      $related_selected = [];
+      $pid = _A_::$app->get('pid');
+      if(isset($pid)) {
+        $filter['hidden']['view'] = true;
+        $filter['hidden']['a.pid'] = $pid;
+        $filter['hidden']['b.image1'] = 'null';
+        $_rows = Model_Related::get_list(0, 0, $res_count_rows, $filter);
+        if(isset($_rows)) foreach($_rows as $row) $related_selected[] = $row['pid'];
+      }
+      $this->template->vars('related_selected', $related_selected);
+    }
+
+    protected function get_list($view = false) {
       $c_product = new Controller_Product($this->main);
       $search_form = $c_product->build_search_filter($filter, $view);
       $c_product->build_order($sort, $view);
@@ -54,6 +86,7 @@
       $start = (($page - 1) * $per_page);
       $res_count_rows = 0;
       $rows = Model_Product::get_list($start, $per_page, $res_count_rows, $filter, $sort);
+      $this->after_get_list($rows, $view);
       $c_product->after_get_list($rows, $view);
       if(isset($filter['active'])) $search_form['active'] = $filter['active'];
       $this->search_form($search_form, $view);
