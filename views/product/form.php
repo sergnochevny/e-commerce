@@ -181,14 +181,10 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="form-row">
-              <div class="row">
-                <label><b>Main images:</b></label>
-              </div>
-              <div class="text-center">
-                <div class="col-sm-12 col-md-12">
-                  <div id="images" class="row">
-                    <?= $images; ?>
-                  </div>
+              <label><b>Main images:</b></label>
+              <div class="col-sm-12 col-md-12">
+                <div id="images" class="row">
+                  <?= $images; ?>
                 </div>
               </div>
               <div class="clear"></div>

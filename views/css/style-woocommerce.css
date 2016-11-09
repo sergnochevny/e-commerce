@@ -1880,6 +1880,7 @@ ul.product_list_widget li dl dd p {
 
 .related_products .product-item label.checked{
     border: 2px solid #555;
+    box-shadow: inset 0 0 3px #000;
     color: #000;
 }
 

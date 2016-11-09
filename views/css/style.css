@@ -99,6 +99,7 @@ body {
     right: -2px;
     top: 0;
     position: absolute;
+    text-align: center;
 }
 
 .b_b_modify_images_pic_upload {
@@ -966,6 +967,7 @@ button[data-filter-search] {
     display: inline-block;
     line-height: 20px;
     color: #222;
+    text-align: center;
     right: -2px;
     top: -2px;
     position: absolute;
@@ -1568,7 +1570,7 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
 
     .b_modify_images_pic {
         margin-bottom: 15px;
-        min-height: 257px !important;
+        min-height: 207px !important;
         background-repeat: no-repeat;
     }
 }
