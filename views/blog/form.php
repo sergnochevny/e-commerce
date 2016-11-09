@@ -8,17 +8,24 @@
         </h3>
       </div>
       <div id="image" class="col-sm-12 col-md-10 col-md-offset-1">
-        <?=$image;?>
+        <?= $image; ?>
         <span class="upd-img-line"><i class="fa fa-edit"></i></span>
       </div>
       <div class="col-xs-12 col-md-10 col-md-offset-1">
         <div class="just-post-detail">
           <div class="just-divider text-center line-yes icon-hide">
             <div class="divider-inner" style="background-color: #fff">
-              <span class="post-date"><?= $data['post_date']?></span>
+              <span class="post-date"><?= $data['post_date'] ?></span>
             </div>
           </div>
-          <div id="editable_content" class="text-justify empty-post-area"><?= !empty($data['post_content']) ? $data['post_content'] : 'Double click to start writing'; ?></div>
+          <div id="editable_content" class="text-justify empty-post-area">
+            <?= !empty($data['post_content']) ? $data['post_content'] :
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore" .
+              " et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " .
+              " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " .
+              "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui " .
+              "officia deserunt mollit anim id est laborum."; ?>
+          </div>
         </div>
       </div>
       <div class="col-xs-12">
@@ -54,7 +61,9 @@
         </div>
         <div class="form-row">
           <label><strong>Publish:</strong></label>
-          <input type="checkbox" <?= (isset($data['post_status']) && ($data['post_status'] == "publish")) ? 'checked' : ''; ?> name="post_status" value="publish" class="input-checkbox">
+          <input
+            type="checkbox" <?= (isset($data['post_status']) && ($data['post_status'] == "publish")) ? 'checked' : ''; ?>
+            name="post_status" value="publish" class="input-checkbox">
         </div>
         <div class="col-xs-12">
           <div class="text-center">
