@@ -9,7 +9,7 @@
         <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
           <input type="hidden" name="related[]" value="<?= $row['pid'];?>" />
         </figure>
-        <span class="product-category related-cat"><?= $row['pname']; ?></span>
+        <span class="product-category related-cat"><?= $row['pname']; ?><span class="opa"></span></span>
         <a data-related_delete class="remove-related-product">&times;</a>
       </div>
     </div>

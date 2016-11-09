@@ -3,7 +3,7 @@
 </div>
 <div class="row related-selected">
   <div class="col-xs-12">
-    <div class="col-xs-12">
+    <div class="col-xs-12" style="margin-bottom: 30px">
       <div class="owl-carousel" data-carousel data-related>
         <?php if(!empty($list)): ?>
           <?= $list; ?>
