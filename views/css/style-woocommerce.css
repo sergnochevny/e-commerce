@@ -637,12 +637,14 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 
 .product-main-image > img {
-    box-shadow: 0 5px 20px #b4b4b4;
+    border: 2px solid #DDD;
+    border-radius: 2px;
 }
 
 .attachment-shop_thumbnail {
-    box-shadow: 0 5px 20px #b4b4b4;
-    min-height: 60px;
+    border: 2px solid #DDD;
+    min-height: 168px;
+    border-radius: 2px;
 }
 
 .product-detail-view-actions .visible-item:nth-child(3n) {
