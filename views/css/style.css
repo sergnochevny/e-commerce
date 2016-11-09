@@ -1754,6 +1754,7 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     min-height: 200px;
     background-color: #EEE;
     border-radius: 2px;
+    padding: 15px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
