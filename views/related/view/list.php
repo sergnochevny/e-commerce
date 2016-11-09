@@ -6,7 +6,7 @@
   </div>
   <div class="col-xs-12">
     <div class="row">
-      <div data-carousel class="products">
+      <div data-carousel class="products owl-carousel">
         <?= $list; ?>
       </div>
     </div>

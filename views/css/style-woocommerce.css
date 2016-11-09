@@ -552,12 +552,12 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     margin-top: 30px;
 }
 
-.products .owl-item .product-item,
-.products .product-item {
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-bottom: 30px;
-}
+/*.products .owl-item .product-item,*/
+/*.products .product-item {*/
+    /*padding-left: 15px;*/
+    /*padding-right: 15px;*/
+    /*margin-bottom: 30px;*/
+/*}*/
 
 .products .owl-item .product-item .product-inner,
 .products .product-item .product-inner {
@@ -612,6 +612,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 
 .products:not(.product_list_widget) > .product-item {
     min-height: 370px;
+    padding-bottom: 30px;
 }
 
 .product-inner > h3 {
@@ -1852,6 +1853,7 @@ ul.product_list_widget li dl dd p {
     box-shadow: 0 0 5px #999;
     margin: 0;
 }
+
 .related_products .product-item{
     margin: 0;
     padding:0 15px 15px 15px;
@@ -1930,4 +1932,9 @@ ul.product_list_widget li dl dd p {
     text-transform: capitalize;
     white-space: nowrap;
     padding-bottom: 5px;
+}
+
+.related .products .owl-item .product-item .product-image-box,
+.related .products .product-item .product-image-box {
+    min-height: 180px;
 }

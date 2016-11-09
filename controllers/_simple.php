@@ -110,7 +110,7 @@
      */
     public function delete($required_access = true) {
       if($required_access) $this->main->is_admin_authorized();
-      if(_A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_name))) {
+      if(_A_::$app->request_is_post() && _A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_name))) {
         try {
           forward_static_call(['Model_' . ucfirst($this->controller), 'delete'], $id);
           $this->after_delete($id);

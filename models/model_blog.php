@@ -70,7 +70,7 @@
       );
       if($results)
         while($row = mysql_fetch_array($results)) {
-          $data[$row['id']] = [$row['name'], $row['pos']];
+          $data[$row['id']] = [$row['name'], $row['order']];
         }
       return $data;
     }
@@ -79,7 +79,7 @@
       $filter = null;
       $FILTER_LIMIT = FILTER_LIMIT;
       $start = isset($start) ? $start : 0;
-      $search = mysql_escape_string(static::sanitize($search));
+      $search = mysql_real_escape_string(static::sanitize($search));
       $q = "select count(id) from blog_groups";
       if(isset($search) && (strlen($search) > 0)) {
         $q .= " where name like '%$search%'";

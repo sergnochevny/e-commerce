@@ -2,67 +2,67 @@
 <form id="edit_form" action="<?= $action ?>" method="post">
   <div data-fields_block class="col-xs-12">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-xs-12 col-md-6">
         <div class="row">
           <div class="col-sm-12">
             <div class="form-row">
-            <label class="required_field"><b>Product name:</b></label>
-            <input type="text" name="pname" value="<?= $data['pname']; ?>" class="input-text"
-                   placeholder="e.g. Stunning Patterned Tapestry In Blue">
-          </div>
+              <label class="required_field"><b>Product name:</b></label>
+              <input type="text" name="pname" value="<?= $data['pname']; ?>" class="input-text"
+                     placeholder="e.g. Stunning Patterned Tapestry In Blue">
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
             <div class="form-row">
-            <label class="required_field"><b>Product number:</b></label>
-            <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text"
-                   placeholder="e.g. abc888999">
-          </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="form-row">
-            <label><b>Mfg. & Stock number:</b></label>
-            <input type="text" name="stock_number" value="<?= $data['stock_number']; ?>" class="input-text ">
-          </div>
+              <label class="required_field"><b>Product number:</b></label>
+              <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text"
+                     placeholder="e.g. abc888999">
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
             <div class="form-row">
-            <label><b>Short description:</b></label>
-            <input type="text" value="<?= $data['sdesc']; ?>" name="sdesc" class="input-text ">
-          </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="form-row">
-            <label><b>Long description:</b></label>
-            <textarea class="input-text " style="height: 117px"
-                      name="ldesc"><?= trim($data['ldesc']); ?></textarea>
-          </div>
+              <label><b>Mfg. & Stock number:</b></label>
+              <input type="text" name="stock_number" value="<?= $data['stock_number']; ?>" class="input-text ">
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
             <div class="form-row">
-            <label><b>Meta Description:</b></label>
-            <input type="text" name="metadescription"
-              <?= !empty($data['metadescription']) ? 'value="' . $data['metadescription'] . '"' : ''; ?>
-                   class="input-text" placeholder="e.g. Lovely patterned woven fabric, with stunning color combo">
-          </div>
+              <label><b>Short description:</b></label>
+              <input type="text" value="<?= $data['sdesc']; ?>" name="sdesc" class="input-text ">
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
             <div class="form-row">
-            <label><b>Meta Keywords:</b></label>
-            <input type="text" name="metakeywords" value="<?= $data['metakeywords']; ?>" class="input-text"
-                   placeholder="Just a few words, separated by coma">
+              <label><b>Long description:</b></label>
+              <textarea class="input-text " style="height: 117px"
+                        name="ldesc"><?= trim($data['ldesc']); ?></textarea>
+            </div>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-row">
+              <label><b>Meta Description:</b></label>
+              <input type="text" name="metadescription"
+                <?= !empty($data['metadescription']) ? 'value="' . $data['metadescription'] . '"' : ''; ?>
+                     class="input-text" placeholder="e.g. Lovely patterned woven fabric, with stunning color combo">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-row">
+              <label><b>Meta Keywords:</b></label>
+              <input type="text" name="metakeywords" value="<?= $data['metakeywords']; ?>" class="input-text"
+                     placeholder="Just a few words, separated by coma">
+            </div>
           </div>
         </div>
         <div class="row">
@@ -73,11 +73,11 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="form-row">
-            <label><b>Manufacturer:</b></label>
-            <select name="manufacturerId">
-              <?= $data['manufacturers']; ?>
-            </select>
-          </div>
+              <label><b>Manufacturer:</b></label>
+              <select name="manufacturerId">
+                <?= $data['manufacturers']; ?>
+              </select>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -101,7 +101,7 @@
         <div class="row" style="margin-bottom: 10px">
           <div class="col-sm-12">
             <div class="form-row">
-                <label><b>Colours: </b></label>
+              <label><b>Colours: </b></label>
               <?= $data['colours']; ?>
             </div>
           </div>
@@ -127,47 +127,49 @@
               </div>
             </div>
             <div class="form-row">
-            <div class="row">
-              <div class="col-xs-12 col-sm-4">
-                <label class="inline pull-left" style="margin-left: 0">
-                  <input type="checkbox" <?= (isset($data['piece']) && ($data['piece'] == "1")) ? 'checked' : '' ?>
-                         value="1" name="piece" class="input-checkbox">
-                  <b>Piece</b>
-                </label>
+              <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                  <label class="inline pull-left" style="margin-left: 0">
+                    <input type="checkbox" <?= (isset($data['piece']) && ($data['piece'] == "1")) ? 'checked' : '' ?>
+                           value="1" name="piece" class="input-checkbox">
+                    <b>Piece</b>
+                  </label>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                  <label class="inline pull-left" style="margin-left: 0">
+                    <input type="checkbox" <?= (isset($data['whole']) && ($data['whole'] == "1")) ? 'checked' : '' ?>
+                           name="whole" value="1" class="input-checkbox">
+                    <b>Whole</b>
+                  </label>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                  <label class="inline pull-left" style="margin-left: 0">
+                    <input type="checkbox" name="best"
+                           value="1" <?= (isset($data['best']) && ($data['best'] == "1")) ? 'checked' : '' ?>
+                           class="input-checkbox">
+                    <b>Best Textile</b>
+                  </label>
+                </div>
               </div>
-              <div class="col-xs-12 col-sm-4">
-                <label class="inline pull-left" style="margin-left: 0">
-                  <input type="checkbox" <?= (isset($data['whole']) && ($data['whole'] == "1")) ? 'checked' : '' ?>
-                         name="whole" value="1" class="input-checkbox">
-                  <b>Whole</b>
-                </label>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <label class="inline pull-left" style="margin-left: 0">
-                  <input type="checkbox" name="best"
-                         value="1" <?= (isset($data['best']) && ($data['best'] == "1")) ? 'checked' : '' ?>
-                         class="input-checkbox">
-                  <b>Best Textile</b>
-                </label>
+              <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                  <label class="inline pull-left" style="margin-left: 0">
+                    <input
+                      type="checkbox" <?= (isset($data['specials']) && ($data['specials'] == "1")) ? 'checked' : '' ?>
+                      name="specials" value="1" class="input-checkbox">
+                    <b>Specials</b>
+                  </label>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                  <label class='inline pull-left' style="margin-left: 0">
+                    <input
+                      type="checkbox" <?= (isset($data['pvisible']) && ($data['pvisible'] == "1")) ? 'checked' : '' ?>
+                      name="pvisible" value="1" class="input-checkbox" style="vertical-align: 0">
+                    <b style="vertical-align: 3px">Visible</b>
+                  </label>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-xs-12 col-sm-4">
-                <label class="inline pull-left" style="margin-left: 0">
-                  <input type="checkbox" <?= (isset($data['specials']) && ($data['specials'] == "1")) ? 'checked' : '' ?>
-                         name="specials" value="1" class="input-checkbox">
-                  <b>Specials</b>
-                </label>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <label class='inline pull-left' style="margin-left: 0">
-                  <input type="checkbox" <?= (isset($data['pvisible']) && ($data['pvisible'] == "1")) ? 'checked' : '' ?>
-                         name="pvisible" value="1" class="input-checkbox" style="vertical-align: 0">
-                  <b style="vertical-align: 3px">Visible</b>
-                </label>
-              </div>
-            </div>
-          </div>
           </div>
         </div>
         <div class="row">
@@ -195,7 +197,9 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="col-xs-12">
-              <small style="color:#999;"><b>NOTE</b>: Select a place, and then click "Upload file" to set the image there.</small>
+              <small style="color:#999;"><b>NOTE</b>: Select a place, and then click "Upload file" to set the image
+                there.
+              </small>
             </div>
           </div>
         </div>
@@ -269,9 +273,7 @@
       <div class="col-xs-12">
         <hr>
       </div>
-
     </div>
-
   </div>
 
   <div data-related_block class="col-xs-12">
@@ -279,7 +281,8 @@
       <div data-related class="row products">
         <?= isset($related) ? $related : ''; ?>
       </div>
-      <input data-related_get_list type="hidden" value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
+      <input data-related_get_list type="hidden"
+             value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
       <div id="content" data-edit_related class="row products"></div>
     </div>
   </div>
