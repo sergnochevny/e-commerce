@@ -311,7 +311,7 @@
       ob_start();
       if($data['rSystemDiscount'] > 0) {
         $field_name = "Sale price:";
-        $field_value = sprintf("%s<br><strong>%s</strong>", $data['sPriceDiscount'], $data['sDiscountPrice']);
+        $field_value = sprintf("%s<br><strong>%s</strong>", $data['sPriceDiscount'], $data['srDiscountPrice']);
         $this->template->vars('field_name', $field_name);
         $this->template->vars('field_value', $field_value);
         $this->template->view_layout('product/discount');
@@ -324,9 +324,9 @@
           $field_name = "Sale price:";
         }
         if($data['bSystemDiscount']) {
-          $field_value = sprintf("<strong>%s</strong><br>Reduced a further %s.", $data['sDiscountPrice'], $data['sDiscount']);
+          $field_value = sprintf("Reduced a further %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
         } else {
-          $field_value = sprintf("<strong>%s</strong><br>Reduced by %s.", $data['sDiscountPrice'], $data['sDiscount']);
+          $field_value = sprintf("Reduced by %s.<br><strong>%s</strong>", $data['rDiscount'], $data['sDiscountPrice']);
         }
         $this->template->vars('field_name', $field_name);
         $this->template->vars('field_value', $field_value);

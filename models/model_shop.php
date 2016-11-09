@@ -135,6 +135,7 @@
 
       $tmp = Model_Price::getPrintPrice($rDiscountPrice, $sDiscountPrice, $inventory, $piece);
       $data['rDiscountPrice'] = $rDiscountPrice;
+      $data['srDiscountPrice'] = $sDiscountPrice;
       $tmp = Model_Price::getPrintPrice($rExDiscountPrice, $sDiscountPrice, $inventory, $piece);
       $data['rExDiscountPrice'] = $rExDiscountPrice;
       $data['sDiscountPrice'] = $sDiscountPrice;
