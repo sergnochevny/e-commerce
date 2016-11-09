@@ -863,8 +863,8 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 .products .product-item p.description {
     font-size: 100%;
     line-height: 18px;
-    text-transform: capitalize;
     overflow: hidden;
+    font-weight: normal !important;
     color: #000;
     padding: 10px 0;
     height: 49px;
