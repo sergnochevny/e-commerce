@@ -142,6 +142,7 @@
       $data['sys_hide_price'] = $sys_hide_price;
       $data['sPriceDiscount'] = $sPriceDiscount;
       $data['sSystemDiscount'] = $sSystemDiscount;
+      $data['bSystemDiscount'] = $bSystemDiscount;
 
       if(count($discountIds) > 0) {
         $data['next_change'] = (Model_Price::getNextChangeInDiscoutDate($discountIds) > 0);
