@@ -2,7 +2,7 @@
   <?php foreach($rows as $row): ?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">
       <div class="product-inner">
-        <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
+        <figure data-product class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
           <?php if($row['bProductDiscount']) { ?>
             <span class="extra_discount">Extra Discount!</span>
           <?php }

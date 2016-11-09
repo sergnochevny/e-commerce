@@ -7,7 +7,7 @@
           $url_prms['back'] = urlencode(base64_encode(_A_::$app->router()->UrlTo('shop/product', ['pid'=>$row['cpid']], $row['cpname'], ['cat', 'mnf', 'ptrn'])));
           $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
         ?>
-          <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
+          <figure data-product class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
               <?php if($row['bProductDiscount']) { ?>
                 <span class="extra_discount">Extra Discount!</span>
               <?php } ?>
