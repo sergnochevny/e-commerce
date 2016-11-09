@@ -1760,6 +1760,10 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     -ms-border-radius: 2px;
 }
 
+.owl-nav{
+    top: -30px;
+}
+
 .owl-nav > div {
     display: inline-block;
     position: relative;
