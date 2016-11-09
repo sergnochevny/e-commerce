@@ -278,7 +278,7 @@
 
   <div data-related_block class="col-xs-12">
     <div class="col-xs-12 panel panel-default" style="padding-bottom: 30px">
-      <div data-related class="products">
+      <div data-related class="row products">
         <?= isset($related) ? $related : ''; ?>
       </div>
       <input data-related_get_list type="hidden" value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
