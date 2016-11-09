@@ -72,9 +72,8 @@
 </div>
 
 <div class="row row_bill_ship">
-
-  <article class="col-md-12 page type-page status-publish entry">
-    <div class="col-md-12">
+  <article class="col-xs-12 page type-page status-publish entry">
+    <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12 text-center afterhead-row">
           <h3 class="page-title" style="font-size: 1.4em">PLEASE REVIEW AND CONFIRM YOUR DETAILS</h3>
@@ -85,7 +84,7 @@
       </div>
     </div>
 
-    <div class="col-md-12 wc-change_user_data text-center inner-offset-bottom">
+    <div class="col-xs-12 wc-change_user_data text-center inner-offset-bottom">
       <div class="row">
         <a data-block="change_user_data" class="checkout-button button alt wc-forward"
            href="<?= $change_user_url; ?>">
@@ -99,7 +98,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-xs-12">
     <div class="wc-proceed-to-checkout text-center">
       <?php if (
         (isset($cart_items) && strlen($cart_items) > 0) ||
@@ -116,7 +115,7 @@
 
 <?php if (isset($abc)) : ?>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-xs-12">
 
       <article class="page type-page status-publish entry" style="overflow:hidden;">
         <br/>
@@ -182,7 +181,7 @@
 
 
   <div class="row row_bill_ship">
-    <div class="col-md-12">
+    <div class="col-xs-12">
 
       <article class="page type-page status-publish entry" style="overflow:hidden;">
         <div class="row" style="margin: 0;">
@@ -206,7 +205,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-xs-12">
       <div class="wc-proceed-to-checkout">
         <?php if (
           (isset($cart_items) && strlen($cart_items) > 0) ||
