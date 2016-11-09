@@ -240,15 +240,13 @@
         $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.JPG', '.BMP', '.GIF', '.PNG', '.jpeg', '.JPEG'];
 
         if(!in_array($ext, $filetypes)) {
-          $error = ['Error format'];
-          $this->template->vars('error', $error);
+          $data['error'] = 'Error format';
         } else {
           if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
             if(substr($data['img'], 0, 1) == 't') Model_Blog::delete_img($data['img']);
             $data['img'] = $file;
           } else {
-            $error = ['Error at saving the file!!!'];
-            $this->template->vars('error', $error);
+            $data['error'] = 'Error at saving the file!!!';
           }
         }
       }

@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.carousel.css'); ?>">
+<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.theme.default.min.css'); ?>">
+<script type='text/javascript'
+        src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
 <?php
   $pid = $data['pid'];
   $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
@@ -5,10 +9,10 @@
   $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
 ?>
 
-<div id="content" class="container">
-  <div class="col-md-12">
-
+<div id="content" class="container product_view">
+  <div class="col-xs-12">
     <div class="row">
+
       <div class="col-xs-12">
         <div class="row afterhead-row">
 
@@ -25,95 +29,94 @@
 
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-6 images">
+      <div class="col-xs-12">
         <div class="row">
-          <a <?= isset($data['filename1']) ? 'href="' . $data['filename1'] . '"' : ''; ?>
-            itemprop="image" class="product-main-image zoom" title=""
-            <?= isset($data['filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-            <?= isset($data['filename1']) ? 'data-img = "' . $data['filename1'] . '"' : '' ?>>
-            <img width="100%"
-                 src="<?= isset($data['filename1']) ? $data['filename1'] : $data['filename']; ?>"
-                 class="attachment-shop_single size-shop_single wp-post-image" alt="" title=""/>
-          </a>
-          <div class="thumbnails col-sm-12">
+
+          <div class="col-xs-12 col-md-6">
             <div class="row">
-              <?php
-                if(!empty($data['image2']) || !empty($data['image3']) ||
-                  !empty($data['image4']) || !empty($data['image5'])
-                ) {
-                  ?>
-                  <p class="more-images">MORE IMAGES OF THIS FABRIC</p>
-                  <div class="row">
-                    <?php
+              <a <?= isset($data['filename1']) ? 'href="' . $data['filename1'] . '"' : ''; ?>
+                itemprop="image" class="product-main-image zoom" title=""
+                <?= isset($data['filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                <?= isset($data['filename1']) ? 'data-img = "' . $data['filename1'] . '"' : '' ?>>
+                <img width="100%"
+                     src="<?= isset($data['filename1']) ? $data['filename1'] : $data['filename']; ?>"
+                     class="attachment-shop_single size-shop_single wp-post-image" alt="" title=""/>
+              </a>
+              <div class="thumbnails col-sm-12">
+                <div class="row">
+                  <?php
+                    if(!empty($data['image2']) || !empty($data['image3']) ||
+                      !empty($data['image4']) || !empty($data['image5'])
+                    ) {
+                      ?>
+                      <p class="more-images">MORE IMAGES OF THIS FABRIC</p>
+                      <div class="row">
+                        <?php
 
-                      if(!empty($data['image2'])) { ?>
-                        <a <?= isset($data['img2_filename1']) ? 'href="' . $data['img2_filename1'] . '"' : ''; ?>
-                          class="col-xs-6 zoom"
-                          title=""
-                          <?= isset($data['img2_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                          <?= isset($data['img2_filename1']) ? 'data-img = "' . $data['img2_filename1'] . '"' : '' ?>>
-                          <img width="100%" src="<?= $data['img2_filename']; ?>"
-                               class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
-                        </a>
-                        <?php
-                      }
+                          if(!empty($data['image2'])) { ?>
+                            <a <?= isset($data['img2_filename1']) ? 'href="' . $data['img2_filename1'] . '"' : ''; ?>
+                              class="col-xs-6 zoom"
+                              title=""
+                              <?= isset($data['img2_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                              <?= isset($data['img2_filename1']) ? 'data-img = "' . $data['img2_filename1'] . '"' : '' ?>>
+                              <img width="100%" src="<?= $data['img2_filename']; ?>"
+                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                            </a>
+                            <?php
+                          }
 
-                      if(!empty($data['image3'])) { ?>
-                        <a <?= isset($data['img3_filename1']) ? 'href="' . $data['img3_filename1'] . '"' : ''; ?>
-                          class="col-xs-6 zoom"
-                          title=""
-                          <?= isset($data['img3_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                          <?= isset($data['img3_filename1']) ? 'data-img = "' . $data['img3_filename1'] . '"' : '' ?>>
-                          <img width="100%" src="<?= $data['img3_filename']; ?>"
-                               class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
-                        </a>
-                        <?php
-                      }
-                      if(!empty($data['image4'])) { ?>
-                        <a <?= isset($data['img4_filename1']) ? 'href="' . $data['img4_filename1'] . '"' : ''; ?>
-                          class="zoom col-xs-6"
-                          title=""
-                          <?= isset($data['img4_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                          <?= isset($data['img4_filename1']) ? 'data-img = "' . $data['img4_filename1'] . '"' : '' ?>>
-                          <img width="100%" src="<?= $data['img4_filename']; ?>"
-                               class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
-                        </a>
-                        <?php
-                      }
-                      if(!empty($data['image5'])) { ?>
-                        <a <?= isset($data['img5_filename1']) ? 'href="' . $data['img5_filename1'] . '"' : ''; ?>
-                          class="zoom col-xs-6"
-                          title=""
-                          <?= isset($data['img5_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                          <?= isset($data['img5_filename1']) ? 'data-img = "' . $data['img5_filename1'] . '"' : '' ?>>
-                          <img width="100%" src="<?= $data['img5_filename']; ?>"
-                               class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
-                        </a>
-                        <?php
-                      }
-                    ?>
-                  </div>
-                <?php } ?>
+                          if(!empty($data['image3'])) { ?>
+                            <a <?= isset($data['img3_filename1']) ? 'href="' . $data['img3_filename1'] . '"' : ''; ?>
+                              class="col-xs-6 zoom"
+                              title=""
+                              <?= isset($data['img3_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                              <?= isset($data['img3_filename1']) ? 'data-img = "' . $data['img3_filename1'] . '"' : '' ?>>
+                              <img width="100%" src="<?= $data['img3_filename']; ?>"
+                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                            </a>
+                            <?php
+                          }
+                          if(!empty($data['image4'])) { ?>
+                            <a <?= isset($data['img4_filename1']) ? 'href="' . $data['img4_filename1'] . '"' : ''; ?>
+                              class="zoom col-xs-6"
+                              title=""
+                              <?= isset($data['img4_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                              <?= isset($data['img4_filename1']) ? 'data-img = "' . $data['img4_filename1'] . '"' : '' ?>>
+                              <img width="100%" src="<?= $data['img4_filename']; ?>"
+                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                            </a>
+                            <?php
+                          }
+                          if(!empty($data['image5'])) { ?>
+                            <a <?= isset($data['img5_filename1']) ? 'href="' . $data['img5_filename1'] . '"' : ''; ?>
+                              class="zoom col-xs-6"
+                              title=""
+                              <?= isset($data['img5_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                              <?= isset($data['img5_filename1']) ? 'data-img = "' . $data['img5_filename1'] . '"' : '' ?>>
+                              <img width="100%" src="<?= $data['img5_filename']; ?>"
+                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                            </a>
+                            <?php
+                          }
+                        ?>
+                      </div>
+                    <?php } ?>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-xs-12 col-md-6 summary entry-summary">
-          <div class="col-xs-12">
-
+          <div class="col-xs-12 col-md-6 summary entry-summary">
             <div class="row">
+
               <div class="panel panel-default panel-body" style="box-shadow: none">
-                <div class="row">
-                  <div class="col-sm-12">
+                <div class="col-xs-12">
+                  <div class="row">
                     <p class="text-justify"><?= $data['ldesc']; ?></p>
                   </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-xs-12">
                   <div class="row">
                     <hr>
                   </div>
@@ -164,99 +167,95 @@
                   </div>
                 </div>
               </div>
-            </div>
 
-          </div>
-          <div class="col-xs-12">
-            <div class="row">
-              <table class="table table-bordered table-striped red">
-                <tbody>
-                <?= isset($discount_info) ? $discount_info : '' ?>
-                </tbody>
-              </table>
-              <div class="quantity"></div>
-            </div>
-          </div>
-          <div class="col-xs-12">
-            <div class="row">
-              <div class="product-detail-view-actions" aria-label="...">
-
+              <div class="col-xs-12">
                 <div class="row">
-                  <?php if($data['inventory'] > 0) { ?>
-                    <div class="<?= ($allowed_samples) ? 'col-sm-6 no-offset-right' : 'col-sm-12' ?> col-xs-12">
-                      <a class="btn button col-xs-12" id="add_cart"
-                         href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
-                        Add to Cart
-                      </a>
-                      <a class="btn button col-xs-12" id="view_cart"
-                         href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
-                        Cart
-                      </a>
-                    </div>
-                  <?php } ?>
-                  <?php if($data['inventory'] > 0 && $allowed_samples) { ?>
-                    <div class="col-sm-6 col-xs-12 no-offset-left">
-                      <a id="add_samples_cart" class="btn button col-xs-12"
-                         href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
-                        Add Samples
-                      </a>
-                    </div>
-                  <?php } ?>
+                  <table class="table table-bordered table-striped red">
+                    <tbody>
+                    <?= isset($discount_info) ? $discount_info : '' ?>
+                    </tbody>
+                  </table>
+                  <div class="quantity"></div>
                 </div>
-
               </div>
-            </div>
-          </div>
-          <div class="col-xs-12">
-            <div class="row">
-              <div class="product_meta">
-                <h3>DETAILS</h3>
-                <table class="table table-bordered table-striped">
-                  <tbody>
-                  <tr>
-                    <td class="row_title"><b>Name</b>:</td>
-                    <td><?= $data['pname']; ?></td>
-                  </tr>
-                  <tr>
-                    <td class="row_title"><b>Product #</b>:</td>
-                    <td><?= $data['pnumber']; ?></td>
-                  </tr>
-                  <?php if(($data['piece'] == 1) && ($data['inventory'] > 0)) { ?>
-                    <tr>
-                      <td class="row_title"><b>Dimensions</b>:</td>
-                      <td><?= $data['dimensions']; ?></td>
-                    </tr>
-                  <?php } else { ?>
-                    <tr>
-                      <td class="row_title"><b>Width</b>:</td>
-                      <td><?= $data['width']; ?></td>
-                    </tr>
-                    <tr style="<?= ($data['inventory'] > 0) ? '' : 'color: red;'; ?>">
-                      <td class="row_title"><b>Avail. yardage</b>:</td>
-                      <td><?= $data['inventory'];
-                        ?></td>
-                    </tr>
-                  <?php } ?>
-                  </tbody>
-                </table>
+
+              <div class="col-xs-12">
+                <div class="row">
+                  <div class="product-detail-view-actions" aria-label="...">
+
+                    <div class="row">
+                      <?php if($data['inventory'] > 0) { ?>
+                        <div class="<?= ($allowed_samples) ? 'col-sm-6 no-offset-right' : 'col-sm-12' ?> col-xs-12">
+                          <a class="btn button col-xs-12" id="add_cart"
+                             href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
+                            Add to Cart
+                          </a>
+                          <a class="btn button col-xs-12" id="view_cart"
+                             href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
+                            Cart
+                          </a>
+                        </div>
+                      <?php } ?>
+                      <?php if($data['inventory'] > 0 && $allowed_samples) { ?>
+                        <div class="col-sm-6 col-xs-12 no-offset-left">
+                          <a id="add_samples_cart" class="btn button col-xs-12"
+                             href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
+                            Add Samples
+                          </a>
+                        </div>
+                      <?php } ?>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="row">
+                  <div class="product_meta product_details">
+                    <h3>DETAILS</h3>
+                    <table class="table table-bordered table-striped">
+                      <tbody>
+                      <tr>
+                        <td class="row_title"><b>Name</b>:</td>
+                        <td><?= $data['pname']; ?></td>
+                      </tr>
+                      <tr>
+                        <td class="row_title"><b>Product #</b>:</td>
+                        <td><?= $data['pnumber']; ?></td>
+                      </tr>
+                      <?php if(($data['piece'] == 1) && ($data['inventory'] > 0)) { ?>
+                        <tr>
+                          <td class="row_title"><b>Dimensions</b>:</td>
+                          <td><?= $data['dimensions']; ?></td>
+                        </tr>
+                      <?php } else { ?>
+                        <tr>
+                          <td class="row_title"><b>Width</b>:</td>
+                          <td><?= $data['width']; ?></td>
+                        </tr>
+                        <tr style="<?= ($data['inventory'] > 0) ? '' : 'color: red;'; ?>">
+                          <td class="row_title"><b>Avail. yardage</b>:</td>
+                          <td><?= $data['inventory'];
+                            ?></td>
+                        </tr>
+                      <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
+      <div class="col-xs-12">
+        <div class="row related" data-related>
+          <input data-href_related type="hidden" value="<?= $href_related; ?>"/>
+        </div>
+      </div>
+
     </div>
-
-    <div class="row" data-related><input data-href_related type="hidden" value="<?= $href_related; ?>"/></div>
-
   </div>
 </div>
-<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>">
-<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.theme.default.min.css'); ?>">
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/shop/product.js'); ?>' type="text/javascript"></script>
-
-
-
-
-

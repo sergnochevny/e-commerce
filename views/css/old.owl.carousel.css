@@ -80,18 +80,18 @@
   /* fix for flashing background */
   -webkit-transform: translate3d(0px, 0px, 0px);
 }
-.products.owl-carousel .owl-controls{
+.products.owl-carousel .owl-nav{
   position: absolute;
   right: 0;
   top: -15px;
 }
 
-.just-slider-wrap .just-slides .owl-controls{
+.just-slider-wrap .just-slides .owl-nav{
   height: 18px;
   position: absolute;
   bottom: 20px;
 }
-.just-slider-wrap .just-slides .owl-controls .owl-dots{
+.just-slider-wrap .just-slides .owl-nav .owl-dots{
   text-align: center;
   width: 100%;
 }
@@ -117,17 +117,17 @@
   border-radius: 2px;
   border: 2px solid #455600;
 }
-.owl-carousel .owl-controls .owl-nav .owl-next{
+.owl-carousel .owl-nav .owl-next{
   border-radius: 0 2px 2px 0;
   border-left-width: 1px;
 }
-.owl-carousel .owl-controls .owl-nav .owl-prev{
+.owl-carousel .owl-nav .owl-prev{
   border-radius: 2px 0 0 2px;
   border-right-width: 1px;
 }
-.owl-carousel .owl-controls .owl-nav .owl-prev,
-.owl-carousel .owl-controls .owl-nav .owl-next,
-.owl-carousel .owl-controls .owl-dot {
+.owl-carousel .owl-nav .owl-prev,
+.owl-carousel .owl-nav .owl-next,
+.owl-carousel .owl-dot {
   cursor: pointer;
   cursor: hand;
   -webkit-user-select: none;

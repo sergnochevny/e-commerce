@@ -9,7 +9,7 @@
           </h3>
           <div class="row">
             <div class="col-md-12">
-              <div class="products special-products"></div>
+              <div class="products special-products owl-carousel"></div>
             </div>
           </div>
         </div>

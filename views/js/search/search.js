@@ -2,26 +2,11 @@
 (function ($) {
 
   function postdata(url, data) {
-    $('body').waitloader('show');
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: data,
-      cache: false,
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        $.when(
-          $('#content').html(data)
-        ).done(function () {
-          $('body').waitloader('remove');
-        });
-      },
-      error: function (xhr, str) {
-        alert('Error: ' + xhr.responseCode);
-        $('body').waitloader('remove');
+    $.postdata(this, url, data,
+      function(data){
+        $('#content').html(data);
       }
-    });
+    );
   }
 
   $(document).on('submit.search_action', "form[data-search]", function (event, reset) {
@@ -31,9 +16,9 @@
       var data = new FormData();
     } else {
       var data = new FormData(this),
-        search = $('form[data-sort]');
-      if (search.length) {
-        (new FormData(search[0])).forEach(function (value, key) {
+        sort = $('form[data-sort]');
+      if (sort.length) {
+        (new FormData(sort[0])).forEach(function (value, key) {
           data.append(key, value);
         });
       }
