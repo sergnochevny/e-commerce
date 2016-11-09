@@ -15,10 +15,10 @@
         <div class="just-post-detail">
           <div class="just-divider text-center line-yes icon-hide">
             <div class="divider-inner" style="background-color: #fff">
-              <span class="post-date"><?= $data['post_date']; ?></span>
+              <span class="post-date"><?= $data['post_date']?></span>
             </div>
           </div>
-          <div id="editable_content" class="text-justify"><?= $data['post_content']; ?></div>
+          <div id="editable_content" class="text-justify empty-post-area"><?= !empty($data['post_content']) ? $data['post_content'] : 'Double click to start writing'; ?></div>
         </div>
       </div>
       <div class="col-xs-12">

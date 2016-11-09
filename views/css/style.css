@@ -1749,6 +1749,16 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
     border-radius: 2px 0 0 2px;
     border-right-width: 1px;
 }
+
+.empty-post-area{
+    min-height: 200px;
+    background-color: #EEE;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+}
+
 .owl-nav > div {
     display: inline-block;
     position: relative;
