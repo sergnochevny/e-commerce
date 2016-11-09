@@ -278,24 +278,22 @@
         <hr>
       </div>
     </div>
+  </div>
 
-    <div data-related_block class="col-xs-12">
-      <div class="row">
-        <div class="col-xs-12 panel panel-default" style="padding-bottom: 30px">
-          <div data-related class="row products">
-            <?= isset($related) ? $related : ''; ?>
-          </div>
-          <input data-related_get_list type="hidden"
-                 value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
-          <div id="content" data-edit_related class="row products"></div>
-        </div>
+  <div data-related_block class="col-xs-12">
+    <div class="col-xs-12 panel panel-default" style="padding-bottom: 30px">
+      <div data-related class="row products">
+        <?= isset($related) ? $related : ''; ?>
       </div>
+      <input data-related_get_list type="hidden"
+             value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
+      <div id="content" data-edit_related class="row products"></div>
     </div>
+  </div>
 
-    <div data-submit_btn class="col-xs-12">
-      <div class="text-center">
-        <a id="submit" class="button" style="width: 150px;">Save</a>
-      </div>
+  <div data-submit_btn class="col-xs-12">
+    <div class="text-center">
+      <a id="submit" class="button" style="width: 150px;">Save</a>
     </div>
   </div>
 
