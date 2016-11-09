@@ -1890,6 +1890,7 @@ ul.product_list_widget li dl dd p {
     word-wrap: normal;
     text-align: justify;
     padding-right: 0;
+    overflow: hidden;
 }
 
 .related_products .product-item label.checked{
