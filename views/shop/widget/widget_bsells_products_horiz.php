@@ -7,8 +7,8 @@
           $url_prms['back'] = '';
           $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
         ?>
-          <figure data-product class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
-              <figcaption>
+          <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
+              <figcaption data-product>
                 <?php if($row['bProductDiscount']) { ?><span class="extra_discount">Extra Discount!</span><?php } ?>
                 <?php
                   if($row['in_cart']) {

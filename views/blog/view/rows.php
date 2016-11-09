@@ -13,7 +13,7 @@
           <div class="just-post col-xs-12 col-sm-6 col-md-4">
             <div class="just-post-image">
               <figure>
-                <a href="<?= $post_href ?>">
+                <a data-waitloader href="<?= $post_href ?>">
                   <img src="<?= $row['img']; ?>" alt="">
                 </a>
               </figure>

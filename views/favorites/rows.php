@@ -2,7 +2,7 @@
   <?php foreach($rows as $row): ?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">
       <div class="product-inner">
-        <figure data-product class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
+        <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
           <?php if($row['bProductDiscount']) { ?>
             <span class="extra_discount">Extra Discount!</span>
           <?php }
@@ -10,7 +10,7 @@
             $url_prms['back'] = 'favorites';
             $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
           ?>
-            <figcaption>
+            <figcaption data-product>
               <?php
                 if($row['in_cart']) {
                   include('views/cart/basket.php');

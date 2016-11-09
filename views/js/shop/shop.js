@@ -62,4 +62,16 @@
     $('#f_search_1').trigger('submit');
   });
 
+  $(document).on('click', '[data-product]',
+    function(event){
+      event.preventDefault();
+      if($(this).find(' > a').length){
+        $('body').waitloader('show');
+        location.href = $(this).find(' > a').attr('href');
+      }
+    }
+  );
+
+  $(document).on('click', '[data-product] > a', function(event){event.stopPropagation();});
+
 })(jQuery);

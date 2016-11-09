@@ -13,7 +13,7 @@
                 <a data-delete href="<?= _A_::$app->router()->UrlTo('blog/delete', $prms); ?>"
                    rel="nofollow"
                    class="button icon-delete add_to_cart_button   product_type_simple"></a>
-                <a data-modify href="<?= _A_::$app->router()->UrlTo('blog/edit', $prms); ?>"
+                <a data-waitloader data-modify href="<?= _A_::$app->router()->UrlTo('blog/edit', $prms); ?>"
                    class="button product-button icon-modify">
                 </a>
               </figcaption>
