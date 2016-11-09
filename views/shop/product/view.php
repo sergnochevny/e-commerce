@@ -28,232 +28,218 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6 images">
-        <div class="row">
-          <a <?= isset($data['filename1']) ? 'href="' . $data['filename1'] . '"' : ''; ?>
-            itemprop="image" class="product-main-image zoom" title=""
-            <?= isset($data['filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-            <?= isset($data['filename1']) ? 'data-img = "' . $data['filename1'] . '"' : '' ?>>
-            <img width="100%"
-                 src="<?= isset($data['filename1']) ? $data['filename1'] : $data['filename']; ?>"
-                 class="attachment-shop_single size-shop_single wp-post-image" alt="" title=""/>
+      <div class="row">
+
+        <div class="col-xs-12 col-md-6 images">
+          <a <?= isset($data['filename1']) ? 'href="' . $data['filename1'] . '"' : ''; ?> itemprop="image" class="product-main-image zoom" <?= isset($data['filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?> <?= isset($data['filename1']) ? 'data-img = "' . $data['filename1'] . '"' : '' ?>>
+            <img width="100%" src="<?= isset($data['filename1']) ? $data['filename1'] : $data['filename']; ?>" class="attachment-shop_single size-shop_single wp-post-image" alt="" title=""/>
           </a>
-          <div class="thumbnails col-sm-12">
-            <div class="row">
-              <?php
-                if(!empty($data['image2']) || !empty($data['image3']) ||
-                  !empty($data['image4']) || !empty($data['image5'])
-                ) {
-                  ?>
-                  <p class="more-images">MORE IMAGES OF THIS FABRIC</p>
-                  <div class="row">
-                    <?php
-
-                      if(!empty($data['image2'])) { ?>
-                        <a <?= isset($data['img2_filename1']) ? 'href="' . $data['img2_filename1'] . '"' : ''; ?>
-                          class="col-xs-6 zoom"
-                          title=""
-                          <?= isset($data['img2_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                          <?= isset($data['img2_filename1']) ? 'data-img = "' . $data['img2_filename1'] . '"' : '' ?>>
-                          <img width="100%" src="<?= $data['img2_filename']; ?>"
-                               class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
-                        </a>
-                        <?php
-                      }
-
-                      if(!empty($data['image3'])) { ?>
-                        <a <?= isset($data['img3_filename1']) ? 'href="' . $data['img3_filename1'] . '"' : ''; ?>
-                          class="col-xs-6 zoom"
-                          title=""
-                          <?= isset($data['img3_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                          <?= isset($data['img3_filename1']) ? 'data-img = "' . $data['img3_filename1'] . '"' : '' ?>>
-                          <img width="100%" src="<?= $data['img3_filename']; ?>"
-                               class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
-                        </a>
-                        <?php
-                      }
-                      if(!empty($data['image4'])) { ?>
-                        <a <?= isset($data['img4_filename1']) ? 'href="' . $data['img4_filename1'] . '"' : ''; ?>
-                          class="zoom col-xs-6"
-                          title=""
-                          <?= isset($data['img4_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                          <?= isset($data['img4_filename1']) ? 'data-img = "' . $data['img4_filename1'] . '"' : '' ?>>
-                          <img width="100%" src="<?= $data['img4_filename']; ?>"
-                               class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
-                        </a>
-                        <?php
-                      }
-                      if(!empty($data['image5'])) { ?>
-                        <a <?= isset($data['img5_filename1']) ? 'href="' . $data['img5_filename1'] . '"' : ''; ?>
-                          class="zoom col-xs-6"
-                          title=""
-                          <?= isset($data['img5_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
-                          <?= isset($data['img5_filename1']) ? 'data-img = "' . $data['img5_filename1'] . '"' : '' ?>>
-                          <img width="100%" src="<?= $data['img5_filename']; ?>"
-                               class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
-                        </a>
-                        <?php
-                      }
-                    ?>
-                  </div>
-                <?php } ?>
+          <div class="row">
+            <div class="thumbnails col-sm-12">
+              <?php if (!empty($data['image2']) || !empty($data['image3']) || !empty($data['image4']) || !empty($data['image5'])) { ?>
+                <p class="more-images">MORE IMAGES OF THIS FABRIC</p>
+                <div class="row">
+                  <?php
+                  if (!empty($data['image2'])) { ?>
+                    <a <?= isset($data['img2_filename1']) ? 'href="' . $data['img2_filename1'] . '"' : ''; ?>
+                      class="col-xs-6 zoom"
+                      <?= isset($data['img2_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                      <?= isset($data['img2_filename1']) ? 'data-img = "' . $data['img2_filename1'] . '"' : '' ?>>
+                      <img width="100%" src="<?= $data['img2_filename']; ?>"
+                           class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                    </a>
+                  <?php }
+                  if (!empty($data['image3'])) { ?>
+                    <a <?= isset($data['img3_filename1']) ? 'href="' . $data['img3_filename1'] . '"' : ''; ?>
+                      class="col-xs-6 zoom"
+                      <?= isset($data['img3_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                      <?= isset($data['img3_filename1']) ? 'data-img = "' . $data['img3_filename1'] . '"' : '' ?>>
+                      <img width="100%" src="<?= $data['img3_filename']; ?>"
+                           class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                    </a>
+                  <?php }
+                  if (!empty($data['image4'])) { ?>
+                    <a <?= isset($data['img4_filename1']) ? 'href="' . $data['img4_filename1'] . '"' : ''; ?>
+                      class="zoom col-xs-6"
+                      <?= isset($data['img4_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                      <?= isset($data['img4_filename1']) ? 'data-img = "' . $data['img4_filename1'] . '"' : '' ?>>
+                      <img width="100%" src="<?= $data['img4_filename']; ?>"
+                           class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                    </a>
+                  <?php }
+                  if (!empty($data['image5'])) { ?>
+                    <a <?= isset($data['img5_filename1']) ? 'href="' . $data['img5_filename1'] . '"' : ''; ?>
+                      class="zoom col-xs-6"
+                      <?= isset($data['img5_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
+                      <?= isset($data['img5_filename1']) ? 'data-img = "' . $data['img5_filename1'] . '"' : '' ?>>
+                      <img width="100%" src="<?= $data['img5_filename']; ?>"
+                           class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                    </a>
+                  <?php } ?>
+                </div>
+              <?php } ?>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="row">
         <div class="col-xs-12 col-md-6 summary entry-summary">
-          <div class="col-xs-12">
+          <div class="row">
+            <div class="col-xs-12">
 
-            <div class="row">
-              <div class="panel panel-default panel-body" style="box-shadow: none">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <p class="text-justify"><?= $data['ldesc']; ?></p>
-                  </div>
-                </div>
-                <div class="col-sm-12">
+              <div class="row">
+                <div class="panel panel-default panel-body" style="box-shadow: none">
                   <div class="row">
-                    <hr>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="row">
-                    <div class="btn-group product-actions">
-                      <a class="btn button" id="view_favorites" title="My Favorites"
-                         style="<?= (isset($in_favorites) && $in_favorites) ? '' : 'display:none'; ?>"
-                         data-pid="<?= $data['pid'] ?>"
-                         href="<?= _A_::$app->router()->UrlTo('favorites'); ?>">
-                        <i class="fa fa-heart red"></i>
-                      </a>
-                      <a class="btn button" id="add_favorites" title="Add to Favorites"
-                         style="<?= (isset($in_favorites) && $in_favorites) ? 'display:none' : ''; ?>"
-                         data-pid="<?= $data['pid'] ?>"
-                         href="<?= _A_::$app->router()->UrlTo('favorites/add'); ?>">
-                        <i class="fa fa-heart"></i>
-                      </a>
-                      <?php if($data['img1_exists']) { ?>
-                        <a class="btn button" title="Add to Matches" id="add_matches"
-                           href="<?= $mhref; ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? 'style="display: none;"' : ''; ?>>
-                          <i class="fa fa-exchange"></i>
-                        </a>
-                        <a class="btn button" title="To Matches" id="view_matches"
-                           href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
-                          <i class="fa fa-exchange red"></i>
-                        </a>
-                      <?php } ?>
-                      <a class="btn button" title="Ask a Question" href="<?= $ahref; ?>">
-                        <i class="fa fa-question" aria-hidden="true"></i>
-                      </a>
-
+                    <div class="col-sm-12">
+                      <p class="text-justify"><?= $data['ldesc']; ?></p>
                     </div>
                   </div>
-                </div>
-                <div class="col-sm-6">
                   <div class="row">
-                    <?php if($data['sys_hide_price'] == 0 && $data['hideprice'] == 0) { ?>
-                      <p class="price h4 text-right">Price:
-                        <ins>
-                        <span class="amount">
-                          <?= $data['format_price']; ?>
-                        </span>
-                        </ins>
-                      </p>
-                    <?php } ?>
+                    <div class="col-sm-12">
+                      <hr>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="btn-group product-actions">
+                        <a class="btn button" id="view_favorites" title="My Favorites"
+                           style="<?= (isset($in_favorites) && $in_favorites) ? '' : 'display:none'; ?>"
+                           data-pid="<?= $data['pid'] ?>"
+                           href="<?= _A_::$app->router()->UrlTo('favorites'); ?>">
+                          <i class="fa fa-heart red"></i>
+                        </a>
+                        <a class="btn button" id="add_favorites" title="Add to Favorites"
+                           style="<?= (isset($in_favorites) && $in_favorites) ? 'display:none' : ''; ?>"
+                           data-pid="<?= $data['pid'] ?>"
+                           href="<?= _A_::$app->router()->UrlTo('favorites/add'); ?>">
+                          <i class="fa fa-heart"></i>
+                        </a>
+                        <?php if ($data['img1_exists']) { ?>
+                          <a class="btn button" title="Add to Matches" id="add_matches"
+                             href="<?= $mhref; ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? 'style="display: none;"' : ''; ?>>
+                            <i class="fa fa-exchange"></i>
+                          </a>
+                          <a class="btn button" title="To Matches" id="view_matches"
+                             href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
+                            <i class="fa fa-exchange red"></i>
+                          </a>
+                        <?php } ?>
+                        <a class="btn button" title="Ask a Question" href="<?= $ahref; ?>">
+                          <i class="fa fa-question" aria-hidden="true"></i>
+                        </a>
+
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="row">
+                        <?php if ($data['sys_hide_price'] == 0 && $data['hideprice'] == 0) { ?>
+                          <p class="price h4 text-right">Price:
+                            <ins>
+                            <span class="amount">
+                              <?= $data['format_price']; ?>
+                            </span>
+                            </ins>
+                          </p>
+                        <?php } ?>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
 
-          </div>
-          <div class="col-xs-12">
-            <div class="row">
-              <table class="table table-bordered table-striped red">
-                <tbody>
-                <?= isset($discount_info) ? $discount_info : '' ?>
-                </tbody>
-              </table>
-              <div class="quantity"></div>
-            </div>
-          </div>
-          <div class="col-xs-12">
-            <div class="row">
-              <div class="product-detail-view-actions" aria-label="...">
-
-                <div class="row">
-                  <?php if($data['inventory'] > 0) { ?>
-                    <div class="<?= ($allowed_samples) ? 'col-sm-6 no-offset-right' : 'col-sm-12' ?> col-xs-12">
-                      <a class="btn button col-xs-12" id="add_cart"
-                         href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
-                        Add to Cart
-                      </a>
-                      <a class="btn button col-xs-12" id="view_cart"
-                         href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
-                        Cart
-                      </a>
-                    </div>
-                  <?php } ?>
-                  <?php if($data['inventory'] > 0 && $allowed_samples) { ?>
-                    <div class="col-sm-6 col-xs-12 no-offset-left">
-                      <a id="add_samples_cart" class="btn button col-xs-12"
-                         href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
-                        Add Samples
-                      </a>
-                    </div>
-                  <?php } ?>
-                </div>
-
-              </div>
-            </div>
-          </div>
-          <div class="col-xs-12">
-            <div class="row">
-              <div class="product_meta">
-                <h3>DETAILS</h3>
-                <table class="table table-bordered table-striped">
+            <div class="col-xs-12">
+              <div class="row">
+                <table class="table table-bordered table-striped red">
                   <tbody>
-                  <tr>
-                    <td class="row_title"><b>Name</b>:</td>
-                    <td><?= $data['pname']; ?></td>
-                  </tr>
-                  <tr>
-                    <td class="row_title"><b>Product #</b>:</td>
-                    <td><?= $data['pnumber']; ?></td>
-                  </tr>
-                  <?php if(($data['piece'] == 1) && ($data['inventory'] > 0)) { ?>
-                    <tr>
-                      <td class="row_title"><b>Dimensions</b>:</td>
-                      <td><?= $data['dimensions']; ?></td>
-                    </tr>
-                  <?php } else { ?>
-                    <tr>
-                      <td class="row_title"><b>Width</b>:</td>
-                      <td><?= $data['width']; ?></td>
-                    </tr>
-                    <tr style="<?= ($data['inventory'] > 0) ? '' : 'color: red;'; ?>">
-                      <td class="row_title"><b>Avail. yardage</b>:</td>
-                      <td><?= $data['inventory'];
-                        ?></td>
-                    </tr>
-                  <?php } ?>
+                  <?= isset($discount_info) ? $discount_info : '' ?>
                   </tbody>
                 </table>
+                <div class="quantity"></div>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="product-detail-view-actions" aria-label="...">
+
+                  <div class="row">
+                    <?php if ($data['inventory'] > 0) { ?>
+                      <div class="<?= ($allowed_samples) ? 'col-sm-6 no-offset-right' : 'col-sm-12' ?> col-xs-12">
+                        <a class="btn button col-xs-12" id="add_cart"
+                           href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
+                          Add to Cart
+                        </a>
+                        <a class="btn button col-xs-12" id="view_cart"
+                           href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
+                          Cart
+                        </a>
+                      </div>
+                    <?php } ?>
+                    <?php if ($data['inventory'] > 0 && $allowed_samples) { ?>
+                      <div class="col-sm-6 col-xs-12 no-offset-left">
+                        <a id="add_samples_cart" class="btn button col-xs-12"
+                           href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
+                          Add Samples
+                        </a>
+                      </div>
+                    <?php } ?>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="product_meta">
+                  <h3>DETAILS</h3>
+                  <table class="table table-bordered table-striped">
+                    <tbody>
+                    <tr>
+                      <td class="row_title"><b>Name</b>:</td>
+                      <td><?= $data['pname']; ?></td>
+                    </tr>
+                    <tr>
+                      <td class="row_title"><b>Product #</b>:</td>
+                      <td><?= $data['pnumber']; ?></td>
+                    </tr>
+                    <?php if (($data['piece'] == 1) && ($data['inventory'] > 0)) { ?>
+                      <tr>
+                        <td class="row_title"><b>Dimensions</b>:</td>
+                        <td><?= $data['dimensions']; ?></td>
+                      </tr>
+                    <?php } else { ?>
+                      <tr>
+                        <td class="row_title"><b>Width</b>:</td>
+                        <td><?= $data['width']; ?></td>
+                      </tr>
+                      <tr style="<?= ($data['inventory'] > 0) ? '' : 'color: red;'; ?>">
+                        <td class="row_title"><b>Avail. yardage</b>:</td>
+                        <td><?= $data['inventory'];
+                          ?></td>
+                      </tr>
+                    <?php } ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
-
     </div>
 
-    <div class="row" data-related><input data-href_related type="hidden" value="<?= $href_related; ?>"/></div>
+    <!--    <div class="row" data-related><input data-href_related type="hidden" value="-->
+    <? //= $href_related; ?><!--"/></div>-->
 
   </div>
 </div>
 <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owl.carousel.css'); ?>">
 <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.theme.default.min.css'); ?>">
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
+<script type='text/javascript'
+        src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/shop/product.js'); ?>' type="text/javascript"></script>
 
 

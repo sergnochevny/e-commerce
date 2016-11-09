@@ -919,17 +919,7 @@ button[data-filter-search] {
 }
 
 .images{
-    position: absolute;
-    z-index: 1;
-    left: 15px;
-    right: 15px;
-    top: 0;
-    bottom: 0;
-    width: 89%;
-    height: 200px;
-    margin: 0;
-    opacity: 0;
-    cursor: pointer;
+
 }
 .images:checked + div{
     box-shadow: 0 0 10px #000;
@@ -1752,7 +1742,6 @@ input[type='radio'].images:checked + div.b_modify_images_main_pic {
 
 .empty-post-area{
     min-height: 200px;
-    background-color: #EEE;
     border-radius: 2px;
     padding: 15px;
     -webkit-border-radius: 2px;
