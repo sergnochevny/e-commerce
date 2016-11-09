@@ -106,7 +106,7 @@
         (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
       ) { ?>
 
-        <a data-block="proceed_agreem_button" class="checkout-button button alt wc-forward"
+        <a data-block="proceed_agreem_button" style="margin-top: 15px" class="checkout-button button alt wc-forward"
            href="<?= _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
           Proceed to Agreement</a>
       <?php } ?>
@@ -213,7 +213,7 @@
           (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
         ) { ?>
 
-          <a data-block="proceed_agreem_button" class="checkout-button button alt wc-forward"
+          <a data-block="proceed_agreem_button" style="margin-top: 15px" class="checkout-button button alt wc-forward"
              href="<?= _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
             Proceed to Agreement</a>
         <?php } ?>

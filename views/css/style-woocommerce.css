@@ -611,7 +611,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 
 .products:not(.product_list_widget) > .product-item {
-    min-height: 370px;
+    min-height: 400px;
     padding-bottom: 30px;
 }
 
