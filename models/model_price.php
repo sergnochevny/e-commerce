@@ -126,7 +126,7 @@
         $shipFullSumDiscount1 = false;
         $shipFullSumDiscount2 = false;
         $shipFullSumDiscount3 = false;
-
+        $isDiscountApplay = false;
         while($rs = mysql_fetch_assoc($result)) {
 
           $bDoDiscount = self::checkDiscountApplies($rs, $uid, $rPrice);
@@ -196,7 +196,9 @@
               if($bReturnString) {
 
                 if($rs['discount_type'] == DISCOUNT_TYPE_SUBTOTAL) {
-                  $temp = sprintf("Reduced by %s.", $tempAmtString);
+                  if($isDiscountApplay) $temp = sprintf("reduced a further %s.", $tempAmtString);
+                  else $temp = sprintf("Reduced by %s.", $tempAmtString);
+                  $isDiscountApplay = true;
                 } else if($rs['discount_type'] == DISCOUNT_TYPE_TOTAL) {
                   $temp = sprintf("Your total order is reduced by %s.", $tempAmtString);
                 }
