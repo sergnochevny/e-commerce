@@ -116,12 +116,16 @@
           Ends
           <?php if(isset($sort['date_end'])) : ?>
             <small>
-              <i class="fa <?= ($sort['date_start'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              <i class="fa <?= ($sort['date_end'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
             </small>
           <?php endif; ?>
         </a>
       </div>
     </div>
+    <form data-sort>
+      <input type="hidden" name="sort" value="<?=array_keys($sort)[0]?>">
+      <input type="hidden" name="order" value="<?=array_values($sort)[0]?>">
+    </form>
   </div>
   <?php foreach($rows as $row): ?>
     <?php
@@ -190,7 +194,7 @@
              href="<?= _A_::$app->router()->UrlTo('discount/view', $prms); ?>">
             <i class="fa fa-check-circle"></i>
           </a>
-          <a data-delete class="text-danger" rel="nofollow" href="<?= _A_::$app->router()->UrlTo('discount/del', $prms); ?>">
+          <a data-delete class="text-danger" rel="nofollow" href="<?= _A_::$app->router()->UrlTo('discount/delete', $prms); ?>">
             <i class=" fa fa-trash-o"></i>
           </a>
         </div>

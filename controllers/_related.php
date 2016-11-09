@@ -107,7 +107,7 @@
      * @export
      */
     public function view() {
-      if(_A_::$app->request_is_ajax()) parent::view();
+      if(_A_::$app->request_is_ajax()) Controller_Controller::get_list(true);
       else throw new Exception('No Related Products');
     }
 

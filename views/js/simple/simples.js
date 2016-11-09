@@ -17,7 +17,18 @@
         $('body').waitloader('show');
         event.preventDefault();
         $("#confirm_dialog").removeClass('overlay_display');
-        $('#content').load(href);
+
+        var search = $('form[data-search]');
+        if(search.length) var data = new FormData(search);
+        else var data = new FormData(search);
+        var sort = $('form[data-sort]');
+        if (sort.length) {
+          (new FormData(sort[0])).forEach(function (value, key) {
+            data.append(key, value);
+          });
+        }
+        $.postdata(this, href, data, function(data){$('#content').html(data);} );
+
         $("#confirm_action").off('click.confirm_action');
         $('body').waitloader('remove');
       });
