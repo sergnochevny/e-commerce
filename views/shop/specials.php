@@ -7,21 +7,19 @@
           $url_prms['pid'] = $row['pid'];
           $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
         ?>
-        <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
-          <a href="<?= $href; ?>">
-            <?php if($row['bProductDiscount']) { ?> <span class="extra_discount">Extra Discount!</span> <?php } ?>
-            <figcaption>
-              <?php
-                if($row['in_cart']) {
-                  include('views/cart/basket.php');
-                } else { ?>
-                  <a class="button add-to-basket" href="<?= $href; ?>">
-                    View Details
-                  </a>
-                <?php } ?>
-            </figcaption>
-          </a>
-        </figure>
+          <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
+              <?php if($row['bProductDiscount']) { ?> <span class="extra_discount">Extra Discount!</span> <?php } ?>
+              <figcaption>
+                <?php
+                  if($row['in_cart']) {
+                    include('views/cart/basket.php');
+                  } else { ?>
+                    <a class="button add-to-basket" href="<?= $href; ?>">
+                      View Details
+                    </a>
+                  <?php } ?>
+              </figcaption>
+          </figure>
         <span class="product-category"><a href="<?= $href; ?>"><?= $row['pname']; ?></a></span>
         <p class="descProduct"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></p>
         <div class="product-price-box clearfix">

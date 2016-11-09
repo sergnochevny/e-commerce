@@ -10,19 +10,18 @@
             $url_prms['back'] = 'favorites';
             $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
           ?>
-          <a href="<?= $href; ?>"></a>
-          <figcaption>
-            <?php
-              if($row['in_cart']) {
-                include('views/cart/basket.php');
-              } else {
-                ?>
-                <a class="button add-to-basket" href="<?= $href; ?>">View Details</a>
-                <?php
-              }
-            ?>
-          </figcaption>
-        </figure>
+            <figcaption>
+              <?php
+                if($row['in_cart']) {
+                  include('views/cart/basket.php');
+                } else {
+                  ?>
+                  <a class="button add-to-basket" href="<?= $href; ?>">View Details</a>
+                  <?php
+                }
+              ?>
+            </figcaption>
+          </figure>
         <span class="product-category">
           <a href="<?= $href; ?>"><?= $row['pname']; ?></a>
         </span>
