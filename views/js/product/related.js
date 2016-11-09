@@ -177,6 +177,7 @@
 
   $(document).on('click', '[data-related-add]',
     function (event) {
+      $('body').waitloader('show');
       event.preventDefault();
       var this_ = this;
       var related = $('[data-edit_related]');
@@ -198,6 +199,7 @@
           );
         }
         $('body').stop().animate({scrollTop: 0});
+        $('body').waitloader('remove');
       });
     }
   );
