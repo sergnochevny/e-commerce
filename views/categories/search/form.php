@@ -7,7 +7,7 @@
             <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
             <div class="col-xs-10 search-result-list comment-text">
               <?= isset($search['cname']) ? '<div class="label label-search-info">Like: ' . $search['cname'] . '</div>' : '' ?>
-              <?= isset($search['active']) ? '<a data-search_reset title="Reset search" class="button reset">&times;</a>' : '' ?>
+              <?= isset($search['active']) ? '<a data-search_reset title="Reset search" href="javascript:void(\'\')" class="button reset">&times;</a>' : '' ?>
             </div>
             <b class="sr-ds">
               <i class="fa fa-chevron-right"></i>
@@ -31,7 +31,7 @@
       <div class="panel-footer hidden">
         <div class="row">
           <div class="col-sm-12">
-            <a data-search_submit class="button pull-right">Search</a>
+            <a data-search_submit class="button pull-right" href="<?= $action ?>">Search</a>
           </div>
         </div>
       </div>

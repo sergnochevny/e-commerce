@@ -15,7 +15,7 @@
                      value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
               <div class="form-row">
                 <label for="username" class="required-field">Username</label>
-                <input type="text" class="input-text" name="login" id="username" value=""/>
+                <input type="text" class="input-text" name="login" id="username" value="" autofocus/>
               </div>
 
               <div class="form-row">
@@ -26,10 +26,7 @@
               <div class="form-row">
                 <div class="col-xs-6">
                   <div class="row">
-                    <a data-link id="blogin" type="button" class="btn button" name="login"
-                       data-action="<?= _A_::$app->router()->UrlTo('admin'); ?>">
-                      Login
-                    </a>
+                    <input data-link id="blogin" type="submit" class="button" value="Login"/>
                   </div>
                 </div>
                 <div class="col-xs-6 text-right">

@@ -1,6 +1,6 @@
 <div class="container">
   <div id="content" class="main-content-inner" role="main">
-    <a href="<?= _A_::$app->router()->UrlTo('/'); ?>" class="btn button back_button">Back</a>
+    <a href="<?= _A_::$app->router()->UrlTo('/'); ?>" class="button back_button">Back</a>
     <div style="padding-top: 20px; margin: auto; width: 70%;">
       <div id="message">
         <p>

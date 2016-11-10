@@ -26,7 +26,7 @@
         element += '        <input type="hidden" name="related[]" value="' + pid + '"/>';
         element += '      </figure>';
         element += '      <span class="product-category">' + product_name + '</span>';
-        element += '      <a data-related_delete class="remove-related-product">×</a>';
+        element += '      <a data-related_delete  href="delete" class="remove-related-product">×</a>';
         element += '    </div>';
         element += '  </div>';
 

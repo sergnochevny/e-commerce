@@ -124,29 +124,29 @@
                 <div class="col-sm-6">
                   <div class="row">
                     <div class="btn-group product-actions">
-                      <a class="btn button" id="view_favorites" title="My Favorites"
+                      <a class="button" id="view_favorites" title="My Favorites"
                          style="<?= (isset($in_favorites) && $in_favorites) ? '' : 'display:none'; ?>"
                          data-pid="<?= $data['pid'] ?>"
                          href="<?= _A_::$app->router()->UrlTo('favorites'); ?>">
                         <i class="fa fa-heart red"></i>
                       </a>
-                      <a class="btn button" id="add_favorites" title="Add to Favorites"
+                      <a class="button" id="add_favorites" title="Add to Favorites"
                          style="<?= (isset($in_favorites) && $in_favorites) ? 'display:none' : ''; ?>"
                          data-pid="<?= $data['pid'] ?>"
                          href="<?= _A_::$app->router()->UrlTo('favorites/add'); ?>">
                         <i class="fa fa-heart"></i>
                       </a>
                       <?php if($data['img1_exists']) { ?>
-                        <a class="btn button" title="Add to Matches" id="add_matches"
+                        <a class="button" title="Add to Matches" id="add_matches"
                            href="<?= $mhref; ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? 'style="display: none;"' : ''; ?>>
                           <i class="fa fa-exchange"></i>
                         </a>
-                        <a class="btn button" title="To Matches" id="view_matches"
+                        <a class="button" title="To Matches" id="view_matches"
                            href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
                           <i class="fa fa-exchange red"></i>
                         </a>
                       <?php } ?>
-                      <a class="btn button" title="Ask a Question" href="<?= $ahref; ?>">
+                      <a class="button" title="Ask a Question" href="<?= $ahref; ?>">
                         <i class="fa fa-question" aria-hidden="true"></i>
                       </a>
 
@@ -186,11 +186,11 @@
                     <div class="row">
                       <?php if($data['inventory'] > 0) { ?>
                         <div class="<?= ($allowed_samples) ? 'col-sm-6 no-offset-right' : 'col-sm-12' ?> col-xs-12">
-                          <a class="btn button col-xs-12" id="add_cart"
+                          <a class="button col-xs-12" id="add_cart"
                              href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
                             Add to Cart
                           </a>
-                          <a class="btn button col-xs-12" id="view_cart"
+                          <a class="button col-xs-12" id="view_cart"
                              href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
                             Cart
                           </a>
@@ -198,7 +198,7 @@
                       <?php } ?>
                       <?php if($data['inventory'] > 0 && $allowed_samples) { ?>
                         <div class="col-sm-6 col-xs-12 no-offset-left">
-                          <a id="add_samples_cart" class="btn button col-xs-12"
+                          <a id="add_samples_cart" class="button col-xs-12"
                              href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
                             Add Samples
                           </a>

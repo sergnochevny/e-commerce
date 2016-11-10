@@ -9,17 +9,19 @@
     $(".popup a.close").trigger('click');
   });
 
-  $(document).on('click', 'a[data-delete]', function (event) {
+  $(document).on('click', '[data-delete]', function (event) {
     event.preventDefault();
     if (!$(this).is('.disabled')) {
       var href = $(this).attr('href');
       $("#confirm_action").on('click.confirm_action', function (event) {
-        $('body').waitloader('show');
+        debugger;
         event.preventDefault();
+        $('body').waitloader('show');
+        $("#confirm_action").off('click.confirm_action');
         $("#confirm_dialog").removeClass('overlay_display');
 
         var search = $('form[data-search]');
-        if(search.length) var data = new FormData(search);
+        if (search.length) var data = new FormData(search);
         else var data = new FormData(search);
         var sort = $('form[data-sort]');
         if (sort.length) {
@@ -27,10 +29,13 @@
             data.append(key, value);
           });
         }
-        $.postdata(this, href, data, function(data){$('#content').html(data);} );
+        $.postdata(this, href, data,
+          function (data) {
+            $('#content').html(data);
+            $('body').waitloader('remove');
+          }
+        );
 
-        $("#confirm_action").off('click.confirm_action');
-        $('body').waitloader('remove');
       });
       $("#confirm_dialog").addClass('overlay_display');
     }

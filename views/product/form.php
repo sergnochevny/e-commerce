@@ -206,7 +206,7 @@
 
         <div class="row">
           <div class="col-md-12 text-center" style="margin-top: 15px">
-            <a id="upload" class="button alt" style="cursor: pointer;">Upload file</a>
+            <a id="upload" href="upload" class="button alt" style="cursor: pointer;">Upload file</a>
           </div>
         </div>
 
@@ -289,7 +289,7 @@
 
   <div data-submit_btn class="col-xs-12">
     <div class="text-center">
-      <a id="submit" class="button" style="width: 150px;">Save</a>
+      <a id="submit" href="save" class="button" style="width: 150px;">Save</a>
     </div>
   </div>
 
@@ -305,8 +305,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <a id="build_filter" href="filter" class="btn btn-primary" data-dismiss="modal">Ok</a>
-          <a class="btn btn-default" data-dismiss="modal">Close</a>
+          <button id="build_filter" href="filter" class="button" data-dismiss="modal">Ok</button>
+          <button class="button" data-dismiss="modal">Close</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

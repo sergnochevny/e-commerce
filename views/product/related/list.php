@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="text-center">
-      <a data-related-add class="button" style="width: 250px;">Add Related Fabrics</a>
+      <a data-related-add href="add" class="button" style="width: 250px;">Add Related Fabrics</a>
     </div>
   </div>
 </div>

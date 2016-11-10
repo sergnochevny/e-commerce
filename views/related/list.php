@@ -40,7 +40,7 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="text-center">
-        <a data-related_add_ok class="button" style="width: 150px;">Ok</a>
+        <a data-related_add_ok class="button" href="ok" style="width: 150px;">Ok</a>
       </div>
     </div>
   </div>

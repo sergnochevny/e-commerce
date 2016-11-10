@@ -126,4 +126,8 @@
       }
     }
 
+    public function delete($required_access = true) {
+      parent::delete($required_access);
+    }
+
   }

@@ -37,7 +37,7 @@
 
 
 
-  $(document).on('click', 'a#pre_save',
+  $(document).on('click', '#pre_save',
     function (event) {
       event.preventDefault();
       $('#dialog').removeClass('hidden');
@@ -45,7 +45,7 @@
       $('html, body').stop().animate({scrollTop: parseInt($('#dialog').offset().top) - 100}, 100);
     }
   );
-  $(document).on('click', 'a#cancel',
+  $(document).on('click', '#cancel',
     function (event) {
       event.preventDefault();
       $('.blog-post-edit-in').removeClass('hidden');

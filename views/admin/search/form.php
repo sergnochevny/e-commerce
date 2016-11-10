@@ -29,8 +29,8 @@
     </div>
 
     <div class="panel-footer hidden">
-      <a data-search_submit class="btn button pull-right">Search</a>
-      <a data-search_reset class="btn reset">Reset</a>
+      <input type="button" data-search_submit class="btn button pull-right" value="Search"/>
+      <input type="button" data-search_reset class="btn reset" value="Reset"/>
     </div>
   </div>
 </form>

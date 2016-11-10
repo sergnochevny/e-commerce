@@ -52,7 +52,7 @@
               <div class="row">Name</div>
             </div>
             <div class="col-xs-8 col-sm-12">
-              <div class="row"><?= $row[1] ?></div>
+              <div class="row"><?= $row['cname'] ?></div>
             </div>
         </div>
         <div class="col-xs-12 col-sm-3 table-list-row-item">
@@ -60,7 +60,7 @@
               <div class="row">Display Order</div>
             </div>
             <div class="col-xs-8 col-sm-12">
-              <div class="row"><?= $row[2] ?></div>
+              <div class="row"><?= $row['displayorder'] ?></div>
             </div>
         </div>
         <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
@@ -68,7 +68,7 @@
             <i class="fa fa-pencil"></i>
           </a>
           <a href="<?= _A_::$app->router()->UrlTo('categories/delete', $prms) ?>" data-delete rel="nofollow"
-             class="text-danger <?= ($row[2]>0)?'disabled':''?>">
+             class="text-danger <?= ($row['amount']>0)?'disabled':''?>">
             <i class=" fa fa-trash-o"></i>
           </a>
         </div>

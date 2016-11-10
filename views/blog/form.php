@@ -31,7 +31,7 @@
       <div class="col-xs-12">
         <div class="text-center">
           <br/>
-          <a id="pre_save" class="button" style="width: 150px;">Save</a>
+          <input id="pre_save" class="button" type="button" style="width: 150px;" value="Save"/>
         </div>
       </div>
     </div>
@@ -68,8 +68,8 @@
         <div class="col-xs-12">
           <div class="text-center">
             <br/>
-            <a id="save" data-modify class="button" style="width: 150px;">Save</a>
-            <a id="cancel" data-modify class="button" style="width: 150px;">Cancel</a>
+            <a id="save"  href="save" data-modify class="button" style="width: 150px;">Save</a>
+            <a id="cancel"  href="cancel" data-modify class="button" style="width: 150px;">Cancel</a>
           </div>
         </div>
       </div>
@@ -87,8 +87,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <a id="build_filter" href="filter" class="btn btn-primary" data-dismiss="modal">Ok</a>
-          <a class="btn btn-default" data-dismiss="modal">Close</a>
+          <button id="build_filter" href="filter" class="button" data-dismiss="modal">Ok</button>
+          <button class="button" data-dismiss="modal">Close</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

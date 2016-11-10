@@ -7,7 +7,7 @@
 <div id="confirm_dialog" class="overlay"></div>
 <div class="popup">
   <div class="fcheck"></div>
-  <a class="close" title="close">&times;</a>
+  <a class="close" href="javascript:void('')" title="close">&times;</a>
   <div class="b_cap_cod_main">
     <p style="color: black;" class="text-center"><b>You confirm the removal?</b></p>
     <br/>

@@ -4,7 +4,7 @@
 
   $(document).off('.basket');
 
-  $(document).on('click.basket', 'a#to_basket',
+  $(document).on('click.basket', '#to_basket',
     function (event) {
       event.preventDefault();
 

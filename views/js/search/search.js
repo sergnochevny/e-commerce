@@ -1,15 +1,15 @@
 'use strict';
 (function ($) {
 
-  function postdata(url, data) {
-    $.postdata(this, url, data,
+  function postdata(this_, url, data) {
+    $.postdata(this_, url, data,
       function(data){
         $('#content').html(data);
       }
     );
   }
 
-  $(document).on('submit.search_action', "form[data-search]", function (event, reset) {
+  $(document).on('submit.search_action', 'form[data-search]', function (event, reset) {
     event.preventDefault();
     event.stopPropagation();
     if (reset) {
@@ -23,22 +23,22 @@
         });
       }
     }
-    postdata.call(this, $(this).attr('action'), data);
+    postdata(this, $(this).attr('action'), data);
   });
 
-  $(document).on('click.search_action', "form[data-search] [data-search_reset]", function (event) {
+  $(document).on('click.search_action', '[data-search_reset]', function (event) {
     event.preventDefault();
     event.stopPropagation();
     $('form[data-search]').trigger('submit', true);
   });
 
-  $(document).on('click.search_action', "form[data-search] [data-search_submit]", function (event) {
+  $(document).on('click.search_action', '[data-search_submit]', function (event) {
     event.preventDefault();
     event.stopPropagation();
     $('form[data-search]').trigger('submit');
   });
 
-  $(document).on('click.search_action', "[data-to_page]", function (event) {
+  $(document).on('click.search_action', '[data-to_page]', function (event) {
     event.preventDefault();
     event.stopPropagation();
     var search = $('form[data-search]');
@@ -49,11 +49,11 @@
       if (search.length) {
         data = new FormData(search[0]);
       }
-      postdata($(this).attr('href'), data);
+      postdata(this, $(this).attr('href'), data);
     }
   });
 
-  $(document).on('click.search_action', "[data-sort]", function (event) {
+  $(document).on('click.search_action', '[data-sort]', function (event) {
     event.preventDefault();
     event.stopPropagation();
     var search = $('form[data-search]');
@@ -61,7 +61,7 @@
       search.attr('action', $(this).attr('href')).trigger('submit');
     } else {
       var data = new FormData();
-      postdata($(this).attr('href'), data);
+      postdata(this, $(this).attr('href'), data);
     }
   });
 

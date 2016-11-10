@@ -307,7 +307,6 @@ a img.aligncenter {
 
 /* Bootstrap button style */
 .btn {
-    margin-bottom: 5px;
     padding: 0 20px;
     text-transform: uppercase;
     text-align: center;
@@ -1035,11 +1034,13 @@ a img.aligncenter {
     border: 1px solid #999;
     text-transform: uppercase;
     border-radius: 2px;
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
 }
 
 .paging-navigation ul.pagination li .page-numbers:hover {
     background: #999;
     color: white;
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
 }
 
 .paging-navigation ul.pagination li .page-numbers.dots {

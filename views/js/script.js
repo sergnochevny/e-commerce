@@ -49,7 +49,7 @@ jQuery(document).ready(function ($) {
   }
 
   /* Style Comments */
-  $('#commentsubmit').addClass('btn btn-primary');
+  $('#commentsubmit').addClass('button btn-primary');
 
   /* Style WordPress Default Widgets */
   $('.widget select').addClass('form-control');

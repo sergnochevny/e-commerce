@@ -8,14 +8,14 @@
 
 <div class="popup">
   <div class="fcheck"></div>
-  <a class="close" title="close">&times;</a>
+  <a class="close" href="javascript:void('')" title="close">&times;</a>
 
   <div class="b_cap_cod_main">
     <p style="color: black;" class="text-center"><b>You confirm the removal?</b></p>
     <br/>
     <div class="text-center" style="width: 100%">
-      <a id="confirm_action"><input type="button" value="Yes confirm" class="button"/></a>
-      <a id="confirm_no"><input type="button" value="No" class="button"/></a>
+      <a id="confirm_action" href="yes" class="button">Yes confirm</a>
+      <a id="confirm_no" href="no" class="button">No</a>
     </div>
   </div>
 </div>
@@ -33,8 +33,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary save-data" data-dismiss="modal">Save</a>
-        <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+        <input type="button" class="button save-data" href="save" data-dismiss="modal" value="Save"/>
+        <input type="button" class="button" data-dismiss="modal" value="Cancel"/>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

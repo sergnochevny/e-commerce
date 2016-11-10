@@ -17,7 +17,7 @@
 
     <div class="row">
       <div class="col-sm-6 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('categories/add', $prms); ?>" data-modify class="btn button">
+        <a href="<?= _A_::$app->router()->UrlTo('categories/add', $prms); ?>" data-modify class="button">
           ADD NEW COLOUR
         </a>
       </div>

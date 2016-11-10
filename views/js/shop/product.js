@@ -11,7 +11,7 @@
     related.load(url,
       function () {
         $('[data-carousel]').owlCarousel({
-          responsive: {0: {items: 1}, 520: {items: 2}, 820: {items: 3}, 990:{items: 4}},
+          responsive: {0: {items: 1}, 461: {items: 2}, 992: {items: 3}},
           margin: 15,
           nav: true,
           navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
@@ -31,7 +31,7 @@
     $('body').css('overflow', 'auto');
   });
 
-  $('a#add_cart').on('click', function (event) {
+  $('#add_cart').on('click', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
     $('body').waitloader('show');
@@ -58,7 +58,7 @@
     });
   });
 
-  $('a#add_samples_cart').on('click', function (event) {
+  $('#add_samples_cart').on('click', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
     $('body').waitloader('show');
@@ -84,7 +84,7 @@
     });
   });
 
-  $('a#add_matches').on('click', function (ev) {
+  $('#add_matches').on('click', function (ev) {
     ev.preventDefault();
     $('body').waitloader('show');
     var url = $(this).attr('href');
@@ -119,7 +119,7 @@
     if (back_url) window.location = back_url;
   });
 
-  $('a#add_favorites').on('click', function (ev) {
+  $('#add_favorites').on('click', function (ev) {
     ev.preventDefault();
     $('body').waitloader('show');
     var url = $(this).attr('href');

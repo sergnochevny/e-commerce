@@ -1,10 +1,10 @@
-<div class="filter_select_panel form-row">
+<div class="filter_select_panel row form-row">
   <div class="col-md-12 col-xs-12 search_panel">
     <div class="input-group">
       <input type="text" data-input_filter_search class="input-text" name="filter_select_search_<?= $filter_type; ?>"
              placeholder="Type for search ..." value="<?= isset($search) ? $search : ''; ?>">
       <span class="input-group-btn">
-        <a href="filter" data-filter-type="<?= $filter_type; ?>" data-filter-search class="button"
+        <a href="filter" data-filter-type="<?= $filter_type; ?>" data-filter-search class="btn button"
            data-destination="<?= $destination; ?>">
           <i class="fa fa-search" aria-hidden="true"></i>
         </a>

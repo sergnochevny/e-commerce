@@ -1791,6 +1791,7 @@ ul.product_list_widget li dl dd p {
 .search-panel > .panel-footer {
     padding: 15px;
     background-color: #FFF;
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
 }
 
 .sr-ds {
@@ -1949,9 +1950,4 @@ ul.product_list_widget li dl dd p {
     text-transform: capitalize;
     white-space: nowrap;
     padding-bottom: 5px;
-}
-
-.related .products .owl-item .product-item .product-image-box,
-.related .products .product-item .product-image-box {
-    min-height: 180px;
 }

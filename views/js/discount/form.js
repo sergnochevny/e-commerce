@@ -50,29 +50,16 @@
   });
 
   function postdata(this_, url, data, context, callback) {
-    $('body').waitloader('show');
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: data,
-      cache: false,
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        if (context !== undefined && context !== null) {
-          $.when(context.html(data)).done(
-            function () {
-              if (callback) callback.call(this_, data);
-              $('body').waitloader('remove');
-            }
-          );
-        } else {
-          if (callback) callback.call(this_, data);
-          $('body').waitloader('remove');
-        }
-      },
-      error: function (xhr, str) {
-        alert('Error: ' + xhr.responseCode);
+    $.postdata(this_, url, data, function (data) {
+      if (context !== undefined && context !== null) {
+        $.when(context.html(data)).done(
+          function () {
+            if (callback) callback.call(this_, data);
+            $('body').waitloader('remove');
+          }
+        );
+      } else {
+        if (callback) callback.call(this_, data);
         $('body').waitloader('remove');
       }
     });
@@ -99,7 +86,7 @@
       function () {
         $('#modal-title').html(title);
         $('#build_filter').attr('data-destination', destination);
-        $('a[data-filter-search]').attr('data-destination', destination);
+        $('[data-filter-search]').attr('data-destination', destination);
         setEvToFilterSearch();
         $('#modal').modal('show');
       }
@@ -161,7 +148,7 @@
     }
   );
 
-  $('a#submit').on('click',
+  $('#submit').on('click',
     function (event) {
       event.preventDefault();
       $(this).parents('form').trigger('submit', true);
@@ -208,7 +195,7 @@
   }
 
   function setEvToFilterSearch() {
-    $('a[data-filter-search]').on('click',
+    $('[data-filter-search]').on('click',
       function (event) {
         event.preventDefault();
         evFilterSearch.call(this, event);

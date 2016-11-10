@@ -33,7 +33,7 @@
   $('#blogin').on('click',
     function (event) {
       event.preventDefault();
-      var action = $(this).attr('data-action');
+      var action = $(this).attr('href');
       $('#authorization').attr('action', action).trigger('submit');
     }
   );

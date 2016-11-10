@@ -23,7 +23,7 @@
 
                 <p class="form-row form-row-wide">
                     <label for="username">Email Address <span class="required">*</span></label>
-                    <input type="text" class="input-text" name="login" id="username" value=""/>
+                    <input type="text" class="input-text" name="login" id="username" value="" autofocus/>
                 </p>
 
                 <p class="form-row">

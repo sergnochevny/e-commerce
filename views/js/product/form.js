@@ -18,10 +18,10 @@
     }, 8000);
   }
 
-  if($('[data-related] .product-item').length){
+  if ($('[data-related] .product-item').length) {
     $('[data-carousel]').owlCarousel(
       {
-        responsive: {0: {items: 1}, 520: {items: 2}, 820: {items: 3}, 990:{items: 4}},
+        responsive: {0: {items: 1}, 520: {items: 2}, 820: {items: 3}, 990: {items: 4}},
         margin: 15,
         nav: true,
         navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
@@ -38,30 +38,18 @@
 
   function postdata(this_, url, data, context, callback) {
     $('body').waitloader('show');
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: data,
-      cache: false,
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        if (context !== undefined && context !== null) {
-          $.when(context.html(data)).done(
-            function () {
-              if (callback) callback.call(this_, data);
-              $('body').waitloader('remove');
-            }
-          );
-        } else {
-          if (callback) callback.call(this_, data);
-          $('body').waitloader('remove');
-        }
-      },
-      error: function (xhr, str) {
-        alert('Error: ' + xhr.responseCode);
+    $.postdata(this_, url, data, function (data) {
+      if (context !== undefined && context !== null) {
+        $.when(context.html(data)).done(
+          function () {
+            if (callback) callback.call(this_, data);
+            $('body').waitloader('remove');
+          }
+        );
+      } else {
+        if (callback) callback.call(this_, data);
         $('body').waitloader('remove');
-      },
+      }
     });
   }
 
@@ -78,13 +66,14 @@
 
   $('#build_filter').on('click',
     function () {
+      debugger;
       var destination = $('[data-filter=' + $(this).attr('data-destination') + ']').parent('div');
       var data = new FormData($('form#edit_form')[0]);
       var url = $('form#edit_form').attr('action');
       data.append('method', $(this).attr('href'));
       data.append('type', $(this).attr('data-destination'));
       postdata(this, url, data, destination,
-        function () {
+        function (data) {
           $('#modal').modal('hide');
           setEvToFilter();
         }
@@ -98,7 +87,7 @@
     }
   );
 
-  $('a#submit').on('click',
+  $('#submit').on('click',
     function (event) {
       event.preventDefault();
       $(this).parents('form').trigger('submit', true);
@@ -134,7 +123,7 @@
       function () {
         $('#modal-title').html(title);
         $('#build_filter').attr('data-destination', destination);
-        $('a[data-filter-search]').attr('data-destination', destination);
+        $('[data-filter-search]').attr('data-destination', destination);
         setEvToFilterSearch();
         $('#modal').modal('show');
       }
@@ -143,7 +132,7 @@
 
   function setEvToFilterSearch() {
 
-    $('a[data-filter-search]').on('click',
+    $('[data-filter-search]').on('click',
       function (event) {
         event.preventDefault();
         evFilterSearch.call(this, event);
@@ -201,7 +190,7 @@
     $(".popup a.close").trigger('click');
   });
 
-  $('a[data-delete]').on('click', function (event) {
+  $('[data-delete]').on('click', function (event) {
     event.preventDefault();
     if (!$(this).is('.disabled')) {
       var href = $(this).attr('href');

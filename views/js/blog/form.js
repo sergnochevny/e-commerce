@@ -143,7 +143,7 @@
       function () {
         $('#modal-title').html(title);
         $('#build_filter').attr('data-destination', destination);
-        $('a[data-filter-search]').attr('data-destination', destination);
+        $('[data-filter-search]').attr('data-destination', destination);
         setEvToFilterSearch();
         $('#modal').modal('show');
       }
@@ -152,7 +152,7 @@
 
   function setEvToFilterSearch() {
 
-    $('a[data-filter-search]').on('click',
+    $('[data-filter-search]').on('click',
       function (event) {
         event.preventDefault();
         evFilterSearch.call(this, event);
@@ -201,7 +201,7 @@
     );
   }
 
-  $("a#save").on('click', function (event) {
+  $("#save").on('click', function (event) {
     event.preventDefault();
     $('#edit_form').trigger('submit', true);
   });

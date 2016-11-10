@@ -19,7 +19,7 @@
     </tr>
     <tr>
         <th>
-            <a class="comment-button btn publ-comment"
+            <a class="comment-button button publ-comment"
                data-id="<?= $comment['id'] ?>"
                data-address="<?= $update_url ?>"
                data-view-update="<?= $update_url ?>"

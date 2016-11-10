@@ -1,4 +1,4 @@
-<div class="filter_select_panel form-row">
+<div class="filter_select_panel row form-row">
   <div class="col-md-12 col-xs-12 search_panel">
     <div class="row">
       <div class="col-md-10 col-xs-10">

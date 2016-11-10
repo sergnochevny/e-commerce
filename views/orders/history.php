@@ -14,8 +14,7 @@
           </div>
           <div class="col-xs-1 text-right" style="padding-right: 0 !important;">
             <a title="Search" style="height: 34px" class="btn small" type="submit" name="find">
-              <iclass
-              ="fa fa-search"></i>
+              <i class="fa fa-search"></i>
             </a>
           </div>
         </form>
