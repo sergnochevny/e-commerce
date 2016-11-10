@@ -44,3 +44,6 @@
     <h2 class="offset-top page-title">No results found</h2>
   </div>
 <?php endif; ?>
+
+<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.js'); ?>' type="text/javascript"></script>
+

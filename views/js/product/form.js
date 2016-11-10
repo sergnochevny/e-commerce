@@ -66,7 +66,6 @@
 
   $('#build_filter').on('click',
     function () {
-      debugger;
       var destination = $('[data-filter=' + $(this).attr('data-destination') + ']').parent('div');
       var data = new FormData($('form#edit_form')[0]);
       var url = $('form#edit_form').attr('action');

@@ -1830,3 +1830,20 @@ span.opa {
 .widget-info-container{
     margin-bottom: 15px;
 }
+
+span[role=combobox]{
+    font-family: inherit;
+    cursor: pointer;
+    background-color: #fff;
+    /* border: 1px solid #DDD; */
+    border: 1px solid #b0b0b0;
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    font-size: 12px;
+    height: 42px;
+    padding: 12px 10px;
+    width: 100%!important;
+    margin-bottom: 10px;
+}

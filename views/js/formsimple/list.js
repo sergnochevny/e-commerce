@@ -1,5 +1,4 @@
 'use strict';
-
 (function ($) {
 
   var danger = $('.danger');
@@ -9,5 +8,7 @@
       $('.danger').css('display', 'none');
     }, 8000);
   }
+
+  $('select').selectmenu();
 
 })(jQuery);

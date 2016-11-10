@@ -14,7 +14,6 @@
     if (!$(this).is('.disabled')) {
       var href = $(this).attr('href');
       $("#confirm_action").on('click.confirm_action', function (event) {
-        debugger;
         event.preventDefault();
         $('body').waitloader('show');
         $("#confirm_action").off('click.confirm_action');
