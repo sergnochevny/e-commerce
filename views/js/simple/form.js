@@ -18,4 +18,11 @@
       $('#content').html(data);
     });
   });
+
+  $('input[type=text]').textinput();
+  $('input[type=textarea]').textinput();
+  $('input[type=number]').textinput();
+  $('textarea').textinput();
+  $('select').selectmenu();
+
 })(jQuery);

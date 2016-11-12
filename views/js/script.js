@@ -19,9 +19,11 @@ jQuery(document).ready(function ($) {
       body.addClass('hidden');
       footer.addClass('hidden');
       $(this).find('.sr-ds').children('.fa').removeClass('fa-rotate-90');
+      $(this).removeClass('collapsed');
     } else {
       body.removeClass('hidden');
       footer.removeClass('hidden');
+      $(this).addClass('collapsed');
       $(this).find('.sr-ds').children('.fa').addClass('fa-rotate-90');
     }
   });
@@ -140,5 +142,16 @@ jQuery(document).ready(function ($) {
   $(document).on('click', '[data-waitloader]', function (event) {
     $('body').waitloader('show');
   });
+
+  $(document).on('focus', 'input[type=text], input[type=textarea], textarea',
+    function(event){
+      $(this).parent().addClass('focus')
+    }
+  );
+  $(document).on('focusout', 'input[type=text], input[type=textarea], textarea',
+    function(event){
+      $(this).parent().removeClass('focus')
+    }
+  );
 
 })(jQuery);

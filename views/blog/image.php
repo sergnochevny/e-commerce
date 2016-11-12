@@ -1,5 +1,5 @@
 <?php if(isset($data['img'])) :?>
-  <div id="post_img" class="just-post-image"
+  <div id="post_img" data-post_img class="just-post-image"
        style="background-image: url('<?= $data['img']; ?>');">
   </div>
   <input type="file" id="uploadfile" name="uploadfile"

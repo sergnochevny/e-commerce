@@ -2,10 +2,10 @@
   <div class="row">
     <div class="col-xs-12 panel panel-default search-panel">
       <div class="panel-heading">
-        <div class="h4 search-container-title">
+        <div class="search-container-title">
           <div class="row">
-            <div class="col-xs-1 col-sm-1"><i class="fa fa-search"></i></div>
-            <div class="col-xs-10 search-result-list comment-text">
+            <div class="col-xs-1 col-sm-1"><i class="fa fa-2x fa-search"></i></div>
+            <div class="h4 col-xs-10 search-result-list comment-text">
               <?= isset($search['a.post_title']) ? '<div class="label label-search-info">Post Name Like: ' . $search['a.post_title'] . '</div>' : '' ?>
               <?= isset($search['b.group_id']) ? '<div class="label label-search-info">Category: ' . $search['categories'][$search['b.group_id']] . '</div>' : '' ?>
               <?= !empty($search['a.post_date']['from']) ? '<div class="label label-search-info">Date from: ' . $search['a.post_date']['from'] . '</div>' : '' ?>
@@ -17,10 +17,10 @@
                 ) :
                 ''
               ?>
-              <?= isset($search['active']) ? '<a data-search_reset  href="reset" title="Reset search" class="button reset">&times;</a>' : '' ?>
+              <?= isset($search['active']) ? '<a data-search_reset  href="javascript:void(\'\')" title="Reset search" class="reset"><i class="fa fa-2x fa-times" aria-hidden="true"></i></a>' : '' ?>
             </div>
             <b class="sr-ds">
-              <i class="fa fa-chevron-right"></i>
+              <i class="fa fa-2x fa-chevron-right"></i>
             </b>
           </div>
         </div>

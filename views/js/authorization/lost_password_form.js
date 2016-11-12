@@ -15,19 +15,12 @@
   $('#lost_password_form').on('submit',
     function (event) {
       event.preventDefault();
-      var msg = $(this).serialize(),
-        url = $(this).attr('action');
-      $.ajax({
-        type: 'POST',
-        url: url,
-        data: msg,
-        success: function (data) {
+      var data = new FormData(this);
+      var url = $(this).attr('action');
+      $.postdata(this, url, data, function (data) {
           $('#lost_password_container').html(data);
-        },
-        error: function (xhr, str) {
-          alert('Error: ' + xhr.responseCode);
         }
-      });
+      );
     }
   );
 
@@ -36,5 +29,10 @@
     $('#lost_password_form').trigger('submit');
   });
 
+  $('input[type=text]').textinput();
+  $('input[type=textarea]').textinput();
+  $('input[type=password]').textinput();
+  $('textarea').textinput();
+  $('select').selectmenu();
 
 })(jQuery);

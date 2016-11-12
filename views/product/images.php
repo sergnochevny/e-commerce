@@ -9,7 +9,7 @@
             <?php if(!empty($data['u_image1'])) { ?>
               <div class='b_modify_images_pic_del'>
                 <a href='<?= $data['pid'] ?>' data-img_idx='1' class='pic_del_images'>
-                  <span>&times;</span>
+                  <span><i class="fa fa-times" aria-hidden="true"></i></span>
                 </a>
               </div>
             <?php } ?>
@@ -29,7 +29,7 @@
                 <?php if(!empty($data['u_image2'])) { ?>
                   <div class='b_modify_images_pic_del'>
                     <a href='<?= $data['pid'] ?>' data-img_idx='2' class='pic_del_images'>
-                      <span>&times;</span>
+                      <span><i class="fa fa-times" aria-hidden="true"></i></span>
                     </a>
                   </div>
                   <div class='b_modify_images_pic_make_main'>
@@ -53,7 +53,7 @@
                 <?php if(!empty($data['u_image3'])) { ?>
                   <div class='b_modify_images_pic_del'>
                     <a href='<?= $data['pid'] ?>' data-img_idx='3' class='pic_del_images'>
-                      <span>&times;</span>
+                      <span><i class="fa fa-times" aria-hidden="true"></i></span>
                     </a>
                   </div>
                   <div class='b_modify_images_pic_make_main'>
@@ -77,7 +77,7 @@
                 <?php if(!empty($data['u_image4'])) { ?>
                   <div class='b_modify_images_pic_del'>
                     <a href='<?= $data['pid'] ?>' data-img_idx='4' class='pic_del_images'>
-                      <span>&times;</span>
+                      <span><i class="fa fa-times" aria-hidden="true"></i></span>
                     </a>
                   </div>
                   <div class='b_modify_images_pic_make_main'>
@@ -101,7 +101,7 @@
                 <?php if(!empty($data['u_image5'])) { ?>
                   <div class='b_modify_images_pic_del'>
                     <a href='<?= $data['pid'] ?>' data-img_idx='5' class='pic_del_images'>
-                      <span>&times;</span>
+                      <span><i class="fa fa-times" aria-hidden="true"></i></span>
                     </a>
                   </div>
                   <div class='b_modify_images_pic_make_main'>

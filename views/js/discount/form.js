@@ -2,22 +2,28 @@
 
 (function ($) {
 
-  $(function () {
-    $('#discount_comment1').charCounter({
-      charsLimit: 255,
-      charsLimitOutputBlock: '#discount_comment1_counter_output',
-      outputNotificationBlock: '#discount_comment1_counter_notification'
-    });
-    $('#discount_comment2').charCounter({
-      charsLimit: 255,
-      charsLimitOutputBlock: '#discount_comment2_counter_output',
-      outputNotificationBlock: '#discount_comment2_counter_notification'
-    });
-    $('#discount_comment3').charCounter({
-      charsLimit: 255,
-      charsLimitOutputBlock: '#discount_comment3_counter_output',
-      outputNotificationBlock: '#discount_comment3_counter_notification'
-    });
+  var danger = $('.danger');
+  if (danger.length) {
+    danger.css('display', 'block');
+    setTimeout(function () {
+      danger.css('display', 'none');
+    }, 8000);
+  }
+
+  $('#discount_comment1').charCounter({
+    charsLimit: 255,
+    charsLimitOutputBlock: '#discount_comment1_counter_output',
+    outputNotificationBlock: '#discount_comment1_counter_notification'
+  });
+  $('#discount_comment2').charCounter({
+    charsLimit: 255,
+    charsLimitOutputBlock: '#discount_comment2_counter_output',
+    outputNotificationBlock: '#discount_comment2_counter_notification'
+  });
+  $('#discount_comment3').charCounter({
+    charsLimit: 255,
+    charsLimitOutputBlock: '#discount_comment3_counter_output',
+    outputNotificationBlock: '#discount_comment3_counter_notification'
   });
 
   var discount_amount = document.getElementById('discount_amount'),
@@ -26,14 +32,7 @@
 
   Inputmask({mask: float_type, greedy: false}).mask(discount_amount).mask(restrictions);
 
-  $('content').waitloader('remove');
-
-  if ($('.danger').length) {
-    $('.danger').show();
-    setTimeout(function () {
-      $('.danger').stop().hide();
-    }, 8000);
-  }
+  $('body').waitloader('remove');
 
   $('#dateFrom').datepicker({
     dateFormat: 'mm/dd/yy',
@@ -326,5 +325,13 @@
   function toggleUsers() {
     $('[data-filter-panel-users]').empty();
   }
+
+  $('input[type=text]').textinput();
+  $('input[type=textarea]').textinput();
+  $('input[type=password]').textinput();
+  $('input[type=number]').textinput();
+
+  $('textarea').textinput();
+  $('select').selectmenu();
 
 })(jQuery);

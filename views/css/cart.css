@@ -145,6 +145,9 @@ form .form-row .inline input {
 
 .products .product-item .product-inner, .button.products .product-item .product-inner {
     position: relative;
+    background-color: rgb(245, 245, 245);
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgb(191, 191, 191);
 }
 
 .products .product-item .product-image-box, .button.products .product-item .product-image-box {

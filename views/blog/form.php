@@ -2,14 +2,14 @@
 <form method="POST" id="edit_form" action="<?= $action; ?>" class="enquiry-form ">
   <section class="just-posts-grid blog-post-edit-in">
     <div class="just-post-row">
-      <div class="col-sm-12 col-md-10 col-md-offset-1" id="blog-page">
+      <div class="col-sm-12 col-md-10 col-md-offset-1 text-center">
         <h3 id="editable_title">
           <b><?= $data['post_title']; ?></b>
         </h3>
       </div>
       <div id="image" class="col-sm-12 col-md-10 col-md-offset-1">
         <?= $image; ?>
-        <span class="upd-img-line"><i class="fa fa-edit"></i></span>
+        <span class="upd-img-line"><i data-post_img class="fa fa-2x fa-edit"></i></span>
       </div>
       <div class="col-xs-12 col-md-10 col-md-offset-1">
         <div class="just-post-detail">
@@ -19,12 +19,7 @@
             </div>
           </div>
           <div id="editable_content" class="text-justify empty-post-area">
-            <?= !empty($data['post_content']) ? $data['post_content'] :
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore" .
-              " et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " .
-              " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " .
-              "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui " .
-              "officia deserunt mollit anim id est laborum."; ?>
+            <?= !empty($data['post_content']) ? $data['post_content'] : ''; ?>
           </div>
         </div>
       </div>
@@ -79,7 +74,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
           <h4 id="modal-title" class="modal-title text-center"></h4>
         </div>
         <div class="modal-body" style="padding: 0;">

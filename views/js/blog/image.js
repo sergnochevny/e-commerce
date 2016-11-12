@@ -12,35 +12,22 @@
   }
 
   function postdata(this_, url, data, context, callback) {
-    $('body').waitloader('show');
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: data,
-      cache: false,
-      processData: false,
-      contentType: false,
-      success: function (data) {
+    $.postdata(this_, url,data,
+      function (data) {
         if (context !== undefined && context !== null) {
           $.when(context.html(data)).done(
             function () {
               if (callback) callback.call(this_, data);
-              $('body').waitloader('remove');
             }
           );
         } else {
           if (callback) callback.call(this_, data);
-          $('body').waitloader('remove');
         }
-      },
-      error: function (xhr, str) {
-        alert('Error: ' + xhr.responseCode);
-        $('body').waitloader('remove');
-      },
-    });
+      }
+    );
   }
 
-  $(document).on('click', '#post_img',
+  $(document).on('click', '[data-post_img]',
     function (event) {
       event.preventDefault();
       $('#uploadfile').trigger('click');

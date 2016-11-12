@@ -2,8 +2,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 id="modal-title" class="modal-title">Add To Favorites</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <h4 id="modal-title" class="modal-title">Add To Cart</h4>
       </div>
       <div class="modal-body">
         <div id="modal_content" style="display: inline-block;">

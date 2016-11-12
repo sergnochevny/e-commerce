@@ -7,6 +7,24 @@
           $url_prms['back'] = '';
           $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
         ?>
+        <div class="product-price-box clearfix">
+          <div class="price-header">
+            <?= (($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) || isset($row['saleprice'])) ? 'Price' : ''; ?>
+          </div>
+          <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
+            <div class="price">
+              <?= (isset($row['saleprice']) && ($row['price'] != $row['saleprice'])) ? '<hr>' : '' ?>
+              <span class="amount">
+                <?= $row['format_price']; ?>
+              </span>
+            </div>
+          <?php }
+            if(isset($row['saleprice']) && ($row['price'] != $row['saleprice'])) { ?>
+              <div class="price sale-price">
+                <span class="amount_wd"><?= $row['format_sale_price']; ?></span>
+              </div>
+            <?php } ?>
+        </div>
         <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">
           <?php if($row['bProductDiscount']) { ?>
             <span class="extra_discount">Extra Discount!</span>
@@ -25,18 +43,13 @@
         </figure>
 
         <span class="on-sale">New!</span>
-        <span class="product-category"><a href="<?= $href; ?>"><?= $row['pname']; ?></a></span>
-        <p class="description">
-          <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
-        </p>
-        <div class="product-price-box clearfix">
-          <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
-            <span class="price pull-left"><ins><span class="amount"><?= $row['format_price']; ?></span></ins></span>
-          <?php }
-            if(isset($row['saleprice']) && ($row['price'] != $row['saleprice'])) { ?>
-              <span class="text-sale pull-right" style="float:right;color: red;">Sale: <ins><span
-                    class="amount_wd"><?= $row['format_sale_price']; ?></span></ins></span>
-            <?php } ?>
+        <div class="product-description">
+          <div class="product-name">
+            <a data-waitloader href="<?= $href; ?>"><?= $row['pname']; ?></a>
+          </div>
+          <div class="description">
+            <?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?>
+          </div>
         </div>
       </div>
     </div>

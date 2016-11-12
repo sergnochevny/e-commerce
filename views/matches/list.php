@@ -7,26 +7,24 @@
     </div>
     <div class="matches-note-text">
       <p align="left">
-        <small>
-          In
-          &laquo;Matches&raquo; you can mix and match your
-          fabric samples by dragging them into the work
-          area below.
-          Experiment with possible combinations and have fun.
-          <br/>
-          If you want to purchase a fabric in matches area
-          press to &laquo;Add All to Basket&raquo;.
-          <br/>
-          If you want to remove a fabric from
-          your &laquo;Matches&raquo; drag it to the trash
-          can.
-          <br/>
-          If you want to remove all fabric from
-          your &laquo;Matches&raquo; press to &laquo;Clear
-          Matches&raquo;.<br>
-          Before experiment with other fabrics you need to
-          clear the area by clicking &laquo;Clear Matches&raquo;.
-        </small>
+        In
+        &laquo;Matches&raquo; you can mix and match your
+        fabric samples by dragging them into the work
+        area below.
+        Experiment with possible combinations and have fun.
+        <br/>
+        If you want to purchase a fabric in matches area
+        press to &laquo;Add All to Basket&raquo;.
+        <br/>
+        If you want to remove a fabric from
+        your &laquo;Matches&raquo; drag it to the trash
+        can.
+        <br/>
+        If you want to remove all fabric from
+        your &laquo;Matches&raquo; press to &laquo;Clear
+        Matches&raquo;.<br>
+        Before experiment with other fabrics you need to
+        clear the area by clicking &laquo;Clear Matches&raquo;.
       </p>
     </div>
     <hr>

@@ -16,12 +16,12 @@
   <div class="col-xs-12 search-result-header">
 
     <div class="row">
-      <div class="col-sm-6 action-button-add">
+      <div class="col-xs-6 action-button-add">
         <a href="<?= _A_::$app->router()->UrlTo('categories/add', $prms); ?>" data-modify class="button">
           ADD NEW COLOUR
         </a>
       </div>
-      <div class="col-sm-6 search-result-container text-right">
+      <div class="col-xs-6 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
       </div>
     </div>

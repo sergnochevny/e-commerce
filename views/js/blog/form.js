@@ -13,32 +13,19 @@
   setEvToFilter();
 
   function postdata(this_, url, data, context, callback) {
-    $('body').waitloader('show');
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: data,
-      cache: false,
-      processData: false,
-      contentType: false,
-      success: function (data) {
+    $.postdata(this_, url, data,
+      function (data) {
         if (context !== undefined && context !== null) {
           $.when(context.html(data)).done(
             function () {
               if (callback) callback.call(this_, data);
-              $('body').waitloader('remove');
             }
           );
         } else {
           if (callback) callback.call(this_, data);
-          $('body').waitloader('remove');
         }
-      },
-      error: function (xhr, str) {
-        alert('Error: ' + xhr.responseCode);
-        $('body').waitloader('remove');
-      },
-    });
+      }
+    );
   }
 
   $('form#edit_form').on('submit',
@@ -134,6 +121,7 @@
   }
 
   function evFilterAdd(event) {
+    debugger;
     var data = new FormData($('form#edit_form')[0]);
     var url = $('form#edit_form').attr('action');
     data.append('method', $(this).attr('href'));
@@ -205,5 +193,13 @@
     event.preventDefault();
     $('#edit_form').trigger('submit', true);
   });
+
+  $('input[type=text]').textinput();
+  $('input[type=textarea]').textinput();
+  $('input[type=password]').textinput();
+  $('input[type=number]').textinput();
+
+  $('textarea').textinput();
+  $('select').selectmenu();
 
 })(jQuery);
