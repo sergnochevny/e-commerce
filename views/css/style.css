@@ -13,8 +13,7 @@ body {
 }
 
 a:focus{
-    outline: thin dotted;
-    outline-offset: -2px;
+    outline: none;
 }
 
 .panel-default-vertical-sizing {
@@ -36,10 +35,6 @@ a:focus{
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-}
-
-.bestseller-row {
-    margin-top: 30px;
 }
 
 .button.default-button {

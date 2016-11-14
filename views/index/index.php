@@ -24,38 +24,44 @@
       <div class="row">
         <div class="row textile-row">
           <div class="col-md-12">
-            <div class="col-md-12 textile">
-              <a class="banner-action-link" href="<?= _A_::$app->router()->UrlTo('shop/last'); ?>">
-                <div class="banner-detail">
-                  <p>Brand new life, Brand new textile</p>
-                  <h3 class="no-inner-offset-top">What's New</h3>
-                  <p>Shop</p>
-                </div>
-              </a>
+            <div class="col-md-12 background-textile">
+              <div class="textile">
+                <a class="banner-action-link" href="<?= _A_::$app->router()->UrlTo('shop/last'); ?>">
+                  <div class="banner-detail">
+                    <p>Brand new life, Brand new textile</p>
+                    <h3 class="no-inner-offset-top">What's New</h3>
+                    <p>Shop</p>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <div class="col-md-12 best-textile">
-              <a class="banner-action-link" href="<?= _A_::$app->router()->UrlTo('shop/best'); ?>">
-                <div class="banner-detail">
-                  <p>New Collection</p>
-                  <h3 class="no-inner-offset-top">Best textile</h3>
-                  <p>Shop</p>
-                </div>
-              </a>
+            <div class="col-md-12 background-textile">
+              <div class="best-textile">
+                <a class="banner-action-link" href="<?= _A_::$app->router()->UrlTo('shop/best'); ?>">
+                  <div class="banner-detail">
+                    <p>New Collection</p>
+                    <h3 class="no-inner-offset-top">Best textile</h3>
+                    <p>Shop</p>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="col-md-12 popular-textile">
-              <a class="banner-action-link" href="<?= _A_::$app->router()->UrlTo('shop/popular'); ?>">
-                <div class="banner-detail">
-                  <p>New collection</p>
-                  <h3 class="no-inner-offset-top">Popular textile</h3>
-                  <p>Shop</p>
-                </div>
-              </a>
+            <div class="col-md-12 background-textile">
+              <div class="popular-textile">
+                <a class="banner-action-link" href="<?= _A_::$app->router()->UrlTo('shop/popular'); ?>">
+                  <div class="banner-detail">
+                    <p>New collection</p>
+                    <h3 class="no-inner-offset-top">Popular textile</h3>
+                    <p>Shop</p>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>

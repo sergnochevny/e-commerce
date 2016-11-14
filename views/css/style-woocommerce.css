@@ -66,7 +66,6 @@ span#b_in_product {
     -moz-transition: all .4s ease-in-out;
     -o-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
-    margin-bottom: 30px;
 }
 
 .banner-action-link {
@@ -81,6 +80,12 @@ span#b_in_product {
     text-transform: uppercase;
 }
 
+.background-textile {
+    padding: 0;
+    background: white;
+    margin-bottom: 30px;
+}
+
 .textile {
     background-image: url("../images/temp/textile.png");
 }
@@ -88,6 +93,10 @@ span#b_in_product {
 .best-textile {
     background-image: url("../images/temp/textile1.png");
     background-position: left center;
+}
+
+.popular-textile {
+    background-image: url("../images/temp/textile2.png");
 }
 
 .textile .banner-action-link {
@@ -102,10 +111,6 @@ span#b_in_product {
 
 .popular-textile .banner-action-link {
     padding-left: 60px;
-}
-
-.popular-textile {
-    background-image: url("../images/temp/textile2.png");
 }
 
 .textile .banner-detail, .best-textile .banner-detail, .popular-textile .banner-detail {
@@ -154,11 +159,7 @@ span#b_in_product {
 }
 
 .bestseller-row {
-    padding-bottom: 60px;
-}
-
-.bestseller-action-row {
-    margin-top: 30px;
+    padding-bottom: 30px;
 }
 
 /* @TODO */
