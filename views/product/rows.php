@@ -4,6 +4,14 @@
     if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">
       <div class="product-inner">
+        <div class="product-price-box clearfix">
+          <div class="price-header">Price</div>
+            <div class="price">
+              <span class="amount">
+                <?= $row['format_price']; ?>
+              </span>
+            </div>
+        </div>
         <figure class="product-image-box" style="background-image: url(<?= $row['filename']; ?>)">
           <figcaption>
             <a data-delete href="<?= _A_::$app->router()->UrlTo('product/delete', $prms); ?>" rel="nofollow"
@@ -13,14 +21,9 @@
             </a>
           </figcaption>
         </figure>
-        <span class="product-category"><?= $row['pname']; ?></span>
-        <p class="description"><?= $row['ldesc']; ?></p>
-        <div class="product-price-box clearfix">
-            <span class="price">
-              <ins>
-                  <span class="amount"><?= '$' . $row['format_price']; ?></span>
-              </ins>
-            </span>
+        <div class="product-description">
+          <div class="product-name"><?= $row['pname']; ?></div>
+          <div class="description"><?= (strlen($row['sdesc']) > 0) ? $row['sdesc'] : $row['ldesc']; ?></div>
         </div>
       </div>
     </div>

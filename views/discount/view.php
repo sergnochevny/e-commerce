@@ -19,7 +19,7 @@
     </div>
 
 
-    <div class="col-xs-12 data-view">
+    <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12 table-list-header hidden-xs">
           <div class="row">
@@ -118,7 +118,7 @@
 
       <?php if(count($orders) > 0): ?>
       <div class="row">
-        <div class="col-xs-12 data-view">
+        <div class="col-xs-12">
           <div class="row">
             <div class="col-xs-12 table-list-header hidden-xs">
               <div class="col-sm-4 col">

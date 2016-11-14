@@ -27,7 +27,7 @@
           <div class="row">
             <div class="col-xs-12 ">
               <div class="just-divider text-center line-yes icon-hide">
-                <div class="divider-inner" style="background-color: #fff">
+                <div class="divider-inner">
                   <span class="post-date"><?= $data['post_date']; ?></span>
                 </div>
               </div>

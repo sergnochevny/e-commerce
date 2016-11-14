@@ -18,7 +18,7 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-12 data-view">
+    <div class="col-xs-12">
       <div class="row related_products">
         <?= $list; ?>
       </div>

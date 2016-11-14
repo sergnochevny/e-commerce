@@ -121,7 +121,6 @@
   }
 
   function evFilterAdd(event) {
-    debugger;
     var data = new FormData($('form#edit_form')[0]);
     var url = $('form#edit_form').attr('action');
     data.append('method', $(this).attr('href'));

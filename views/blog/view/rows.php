@@ -23,7 +23,7 @@
                   href="<?= $post_href ?>"><?= isset($row['post_title']) ? $row['post_title'] : ''; ?></a>
               </h3>
               <div class="just-divider text-center line-yes icon-hide">
-                <div class="divider-inner" style="background-color: #fff"><span
+                <div class="divider-inner"><span
                     class="post-date"><?= $row['post_date']; ?></span>
                 </div>
               </div>

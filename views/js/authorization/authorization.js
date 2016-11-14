@@ -11,7 +11,6 @@
         function (data) {
           var results = $('.results');
           $.when(results.html(data)).done(function () {
-            debugger;
             if (results.children('script').length == 0) {
               setTimeout(function () {
                 results.html('');

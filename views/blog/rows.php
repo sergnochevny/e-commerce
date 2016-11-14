@@ -25,7 +25,7 @@
             </h3>
 
             <div class="just-divider text-center line-yes icon-hide">
-              <div style="background-color: #fff" class="divider-inner">
+              <div class="divider-inner">
                 <span class="post-date"><?= $row['post_date']; ?></span>
               </div>
             </div>

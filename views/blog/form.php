@@ -14,7 +14,7 @@
       <div class="col-xs-12 col-md-10 col-md-offset-1">
         <div class="just-post-detail">
           <div class="just-divider text-center line-yes icon-hide">
-            <div class="divider-inner" style="background-color: #fff">
+            <div class="divider-inner">
               <span class="post-date"><?= $data['post_date'] ?></span>
             </div>
           </div>

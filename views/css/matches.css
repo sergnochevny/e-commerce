@@ -47,7 +47,7 @@
 }
 
 #dragZoneArea {
-    background-color: #EEE;
+    background-color: rgb(245, 245, 245);
     height: 455px;
     margin: 45px 0 50px;
     position: relative;
@@ -56,7 +56,7 @@
 
 #dragZone {
     background-color: #FFF;
-    box-shadow: 0 10px 20px -2px #999;
+    box-shadow: 0 0 20px 0 #999;
     height: 500px;
     margin: 40px 0 50px;
     position: relative;

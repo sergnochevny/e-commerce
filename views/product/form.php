@@ -67,22 +67,12 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <hr>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
             <div class="form-row">
               <label><b>Manufacturer:</b></label>
               <select name="manufacturerId">
                 <?= $data['manufacturers']; ?>
               </select>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <hr>
           </div>
         </div>
         <div class="row" style="margin-bottom: 10px">
@@ -93,22 +83,12 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <hr>
-          </div>
-        </div>
         <div class="row" style="margin-bottom: 10px">
           <div class="col-sm-12">
             <div class="form-row">
               <label><b>Colours: </b></label>
               <?= $data['colours']; ?>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <hr>
           </div>
         </div>
         <div class="row" style="margin-bottom: 10px;">
@@ -121,11 +101,6 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <div class="row">
-              <div class="col-md-12">
-                <hr style="margin: 25px 0">
-              </div>
-            </div>
             <div class="form-row">
               <div class="row">
                 <div class="col-xs-12 col-sm-4">

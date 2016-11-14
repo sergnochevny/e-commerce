@@ -30,8 +30,10 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-12 data-view">
-    <?= $list; ?>
+  <div class="col-xs-12">
+    <div class="data-view">
+      <?= $list; ?>
+    </div>
   </div>
 </div>
 

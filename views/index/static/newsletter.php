@@ -9,7 +9,7 @@
                 <div class="wpb_column vc_column_container vc_col-sm-12">
                   <div class="wpb_wrapper">
                     <div class="just-divider text-left line-no icon-hide">
-                      <div class="divider-inner" style="background-color: #fff">
+                      <div class="divider-inner">
                         <h3 class="just-section-title">Newsletter</h3>
 
                         <p class="paragraph">DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</p>

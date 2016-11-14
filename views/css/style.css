@@ -12,6 +12,11 @@ body {
     background-blend-mode: overlay;
 }
 
+a:focus{
+    outline: thin dotted;
+    outline-offset: -2px;
+}
+
 .panel-default-vertical-sizing {
     padding-top: 25px;
     padding-bottom: 15px;
@@ -471,6 +476,7 @@ p.discount {
     width: 450px;
     float: right;
 }
+
 
 .header-topnav .navbar-nav .dropdown .topnav-label {
     padding-left: 10px;
@@ -1280,7 +1286,7 @@ form[data-search] > .row > .panel > .panel-heading {
 }
 
 .search-result {
-    color: #999;
+    color: #666;
     vertical-align: -20px;
     padding-bottom: 1px;
     border-bottom: 1px solid #D0D0D0;
@@ -1320,6 +1326,7 @@ form[data-search] > .row > .panel > .panel-heading {
 
 .data-view > .table-list-row:last-child {
     border-radius: 0 0 4px 4px;
+    margin-bottom: 0;
 }
 
 .helper-row {
@@ -1378,11 +1385,6 @@ span.opa {
     height: 80px;
     position: absolute;
     width: 100%;
-}
-
-.owl-item > .product-image-box, .owl-item > .product-image {
-    box-shadow: none !important;
-    border: 2px solid #999;
 }
 
 .just-posts-grid .just-post-image {
@@ -1832,7 +1834,27 @@ span.opa {
 }
 
 .widget-info-container {
+    float: left;
+    width: 100%;
+    background: #FFF;
     margin-bottom: 15px;
+    border-radius: 4px;
+    -webkit-border-adius: 4px;
+    -moz-border-radius: 4px;
+    box-shadow: 0 0 10px #ddd;
+
+}
+
+.widget-info-container .product-image{
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-top-right-radius: 0;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -moz-border-radius-topright: 0;
 }
 
 span[role=combobox] {
@@ -1885,4 +1907,22 @@ span[role=combobox].ui-button:active .ui-icon {
     font-family: inherit;
     max-height: 400px;
     overflow: auto;
+}
+.modal-content, .panel-body{
+    background: #fafafa;
+}
+.modal-header{
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    background: #e5e5e5;
+}
+
+@media (min-width: 768px){
+    .footer-widget-row{
+        margin-left: 0;
+    }
 }
