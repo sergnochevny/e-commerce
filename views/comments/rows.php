@@ -75,7 +75,7 @@
         <div class="col-xs-12 table-list-row">
             <div class="row">
                 <div class="col-xs-12 col-sm-3 table-list-row-item">
-                    <div class="col-xs-4 visible-xs helper-row">
+                    <div class="col-xs-4 visible-xs">
                         <div class="row">Email</div>
                     </div>
                     <div class="col-xs-8 col-sm-12">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-3 table-list-row-item">
-                    <div class="col-xs-4 visible-xs helper-row">
+                    <div class="col-xs-4 visible-xs">
                         <div class="row">Title</div>
                     </div>
                     <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-2 table-list-row-item">
-                    <div class="col-xs-4 visible-xs helper-row">
+                    <div class="col-xs-4 visible-xs">
                         <div class="row">Date</div>
                     </div>
                     <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-3 table-list-row-item">
-                    <div class="col-xs-4 visible-xs helper-row">
+                    <div class="col-xs-4 visible-xs">
                         <div class="row">Visibility</div>
                     </div>
                     <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -116,15 +116,15 @@
                 <div class="col-xs-12 col-sm-1 text-right action-buttons">
                     <a data-modify
                        href="<?= _A_::$app->router()->UrlTo('comments/edit', $prms) ?>"
-                       title="Edit comment"><i class="fa fa-pencil"></i>
+                       title="Edit comment"><i class="fa fa-2x fa-pencil"></i>
                     </a>
                     <a data-view class="text-success view-comment"
                        href="<?= _A_::$app->router()->UrlTo('comments/view', $prms) ?>"
-                       title="View comment"><i class="fa fa-eye"></i>
+                       title="View comment"><i class="fa fa-2x fa-eye"></i>
                     </a>
                     <a data-delete class="text-danger del_user"
                        href="<?= _A_::$app->router()->UrlTo('comments/delete', $prms); ?>"
-                       title="Delete comment"><i class=" fa fa-trash-o"></i>
+                       title="Delete comment"><i class=" fa fa-2x fa-trash-o"></i>
                     </a>
                 </div>
             </div>

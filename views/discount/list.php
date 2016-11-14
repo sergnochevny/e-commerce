@@ -15,7 +15,6 @@
 
 <div class="row">
   <div class="col-xs-12 search-result-header">
-
     <div class="row">
       <div class="col-xs-6 action-button-add">
         <a href="<?= _A_::$app->router()->UrlTo('discount/add', $prms); ?>" data-modify class="button">

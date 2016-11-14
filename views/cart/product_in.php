@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-2 table-list-row-item">
-      <div class="col-xs-4 visible-xs helper-row">
+      <div class="col-xs-4 visible-xs">
         <div class="row">Price</div>
       </div>
       <div class="col-xs-8 col-sm-12">
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-2 table-list-row-item">
-      <div class="col-xs-4 visible-xs helper-row">
+      <div class="col-xs-4 visible-xs">
         <div class="row">Discount</div>
       </div>
       <div class="col-xs-8 col-sm-12">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-2 table-list-row-item">
-      <div class="col-xs-4 visible-xs helper-row">
+      <div class="col-xs-4 visible-xs">
         <div class="row">Quantity</div>
       </div>
       <div class="col-xs-8 col-sm-12">
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-1 table-list-row-item">
-      <div class="col-xs-4 visible-xs helper-row">
+      <div class="col-xs-4 visible-xs">
         <div class="row">Total</div>
       </div>
       <div class="col-xs-8 col-sm-12">
@@ -56,7 +56,7 @@
     </div>
     <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
       <a data-block="del_product_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_product'); ?>">
-        <i class="fa fa-trash-o"></i>
+        <i class="fa fa-2x fa-trash-o"></i>
       </a>
     </div>
   </div>

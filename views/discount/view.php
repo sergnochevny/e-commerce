@@ -58,7 +58,7 @@
         <div class="col-xs-12 table-list-row">
           <div class="row">
             <div class="col-xs-12 col-sm-2 table-list-row-item">
-              <div class="col-xs-4 visible-xs helper-row">
+              <div class="col-xs-4 visible-xs">
                 <div class="row">Details</div>
               </div>
               <div class="col-xs-8 col-sm-12">
@@ -67,7 +67,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
-              <div class="col-xs-4 visible-xs helper-row">
+              <div class="col-xs-4 visible-xs">
                 <div class="row">On</div>
               </div>
               <div class="col-xs-8 col-sm-12">
@@ -75,7 +75,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
-              <div class="col-xs-4 visible-xs helper-row">
+              <div class="col-xs-4 visible-xs">
                 <div class="row">Multiple</div>
               </div>
               <div class="col-xs-8 col-sm-12">
@@ -83,7 +83,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
-              <div class="col-xs-4 visible-xs helper-row">
+              <div class="col-xs-4 visible-xs">
                 <div class="row">Coupon</div>
               </div>
               <div class="col-xs-8 col-sm-12">
@@ -91,7 +91,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
-              <div class="col-xs-4 visible-xs helper-row">
+              <div class="col-xs-4 visible-xs">
                 <div class="row">Starts</div>
               </div>
               <div class="col-xs-8 col-sm-12">
@@ -99,7 +99,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
-              <div class="col-xs-4 visible-xs helper-row">
+              <div class="col-xs-4 visible-xs">
                 <div class="row">Starts</div>
               </div>
               <div class="col-xs-8 col-sm-12">
@@ -155,7 +155,7 @@
               <div class="col-xs-12 table-list-row">
                 <div class="row">
                   <div class="col-xs-12 col-sm-4 table-list-row-item">
-                    <div class="col-xs-4 visible-xs helper-row">
+                    <div class="col-xs-4 visible-xs">
                       <div class="row">Order</div>
                     </div>
                     <div class="col-xs-8 col-sm-12">
@@ -164,7 +164,7 @@
                   </div>
                   <?php if(!isset($user_id)): ?>
                     <div class="col-xs-12 col-sm-2 table-list-row-item">
-                      <div class="col-xs-4 visible-xs helper-row">
+                      <div class="col-xs-4 visible-xs">
                         <div class="row">Customer</div>
                       </div>
                       <div class="col-xs-8 col-sm-12">
@@ -173,7 +173,7 @@
                     </div>
                   <?php endif; ?>
                   <div class="col-xs-12 col-sm-2 table-list-row-item">
-                    <div class="col-xs-4 visible-xs helper-row">
+                    <div class="col-xs-4 visible-xs">
                       <div class="row">Date</div>
                     </div>
                     <div class="col-xs-8 col-sm-12">
@@ -181,7 +181,7 @@
                     </div>
                   </div>
                   <div class="col-xs-12 col-sm-1 table-list-row-item">
-                    <div class="col-xs-4 visible-xs helper-row">
+                    <div class="col-xs-4 visible-xs">
                       <div class="row">Status</div>
                     </div>
                     <div class="col-xs-8 col-sm-12 text-center">
@@ -192,7 +192,7 @@
                   </div>
 
                   <div class="col-xs-12 col-sm-2 table-list-row-item">
-                    <div class="col-xs-4 visible-xs helper-row">
+                    <div class="col-xs-4 visible-xs">
                       <div class="row">Total</div>
                     </div>
                     <div class="col-xs-8 col-sm-12">
@@ -201,7 +201,7 @@
                   </div>
 
                   <div class="col-xs-12 col-sm-1 text-right action-buttons">
-                    <a href="<?= $view_url ?>"><i class="fa fa-eye"></i></a>
+                    <a href="<?= $view_url ?>"><i class="fa fa-2x fa-eye"></i></a>
                   </div>
                 </div>
               </div>

@@ -29,7 +29,7 @@
     <div class="col-xs-12 table-list-row">
       <div class="row">
         <div class="col-xs-12 col-sm-11 table-list-row-item">
-          <div class="col-xs-4 visible-xs helper-row">
+          <div class="col-xs-4 visible-xs">
             <div class="row">Name</div>
           </div>
           <div class="col-xs-8 col-sm-12">
@@ -39,11 +39,11 @@
         <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
           <a class="update"
              data-modify href="<?= _A_::$app->router()->UrlTo('blogcategory/edit', $prms); ?>">
-            <i class="fa fa-pencil"></i>
+            <i class="fa fa-2x fa-pencil"></i>
           </a>
           <a class="text-danger <?= $row[2] > 0 ? 'disabled' : 'delete'; ?>"
              data-delete href="<?= _A_::$app->router()->UrlTo('blogcategory/delete', $prms); ?>">
-            <i class="fa fa-trash"></i>
+            <i class="fa fa-2x fa-trash"></i>
           </a>
         </div>
       </div>

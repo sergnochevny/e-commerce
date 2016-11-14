@@ -27,14 +27,14 @@
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
                 <?php
                 if (!is_null(_A_::$app->session('_a'))) {
-                    echo '<a data-link title="" href="'._A_::$app->router()->UrlTo('discount').'">Discounts</a>';
+                    echo '<a data-waitloader data-link title="" href="'._A_::$app->router()->UrlTo('discount').'">Discounts</a>';
                 }
                 ?>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
                 <?php
                     if (!is_null(_A_::$app->session('_a'))) {
-                        echo '<a data-link title="" href="'._A_::$app->router()->UrlTo('users').'">Users</a>';
+                        echo '<a data-waitloader data-link title="" href="'._A_::$app->router()->UrlTo('users').'">Users</a>';
                     }
                 ?>
             </li>
@@ -55,14 +55,14 @@
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
                 <?php
                     if (!is_null(_A_::$app->session('_a'))) {
-                        echo '<a data-link title="" href="'._A_::$app->router()->UrlTo('comments/').'">Comments</a>';
+                        echo '<a data-waitloader data-link title="" href="'._A_::$app->router()->UrlTo('comments/').'">Comments</a>';
                     }
                 ?>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
                 <?php
                     if (!is_null(_A_::$app->session('_a'))) {
-                        echo '<a data-link title="" href="'._A_::$app->router()->UrlTo('orders').'">Orders</a>';
+                        echo '<a data-waitloader data-link title="" href="'._A_::$app->router()->UrlTo('orders').'">Orders</a>';
                     }
                 ?>
             </li>

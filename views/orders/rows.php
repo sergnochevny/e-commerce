@@ -115,7 +115,7 @@
     <div class="col-xs-12 table-list-row">
       <div class="row">
         <div class="col-xs-12 col-sm-3 table-list-row-item">
-          <div class="col-xs-4 visible-xs helper-row">
+          <div class="col-xs-4 visible-xs">
             <div class="row">Order</div>
           </div>
           <div class="col-xs-8 col-sm-12">
@@ -124,7 +124,7 @@
         </div>
         <?php if (!isset($user_id)): ?>
           <div class="col-xs-12 col-sm-2 table-list-row-item">
-            <div class="col-xs-4 visible-xs helper-row">
+            <div class="col-xs-4 visible-xs">
               <div class="row">Customer</div>
             </div>
             <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -133,7 +133,7 @@
           </div>
         <?php endif; ?>
         <div class="col-xs-12 col-sm-2 table-list-row-item">
-          <div class="col-xs-4 visible-xs helper-row">
+          <div class="col-xs-4 visible-xs">
             <div class="row">Date</div>
           </div>
           <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -141,7 +141,7 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-2 table-list-row-item">
-          <div class="col-xs-4 visible-xs helper-row">
+          <div class="col-xs-4 visible-xs">
             <div class="row">Status</div>
           </div>
           <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -152,7 +152,7 @@
         </div>
 
         <div class="col-xs-12 col-sm-2 table-list-row-item">
-          <div class="col-xs-4 visible-xs helper-row">
+          <div class="col-xs-4 visible-xs">
             <div class="row">Total</div>
           </div>
           <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -162,9 +162,9 @@
 
         <div class="col-xs-12 col-sm-1 text-right action-buttons">
           <?php if (Controller_Admin::is_logged()): ?>
-            <a class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-pencil"></i></a>
+            <a class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-2x fa-pencil"></i></a>
           <?php endif; ?>
-          <a href="<?= $view_url ?>"><i class="fa fa-eye"></i></a>
+          <a href="<?= $view_url ?>"><i class="fa fa-2x fa-eye"></i></a>
         </div>
       </div>
     </div>

@@ -95,7 +95,7 @@
     <div class="col-xs-12 table-list-row">
       <div class="row">
         <div class="col-xs-12 col-sm-1 table-list-row-item">
-          <div class="col-xs-4 visible-xs helper-row">
+          <div class="col-xs-4 visible-xs">
             <div class="row">Id</div>
           </div>
           <div class="col-xs-8 col-sm-12">
@@ -103,7 +103,7 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-4 table-list-row-item">
-          <div class="col-xs-4 visible-xs helper-row">
+          <div class="col-xs-4 visible-xs">
             <div class="row">Email</div>
           </div>
           <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -111,7 +111,7 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-3 table-list-row-item">
-          <div class="col-xs-4 visible-xs helper-row">
+          <div class="col-xs-4 visible-xs">
             <div class="row">Name</div>
           </div>
           <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -119,7 +119,7 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-2 table-list-row-item">
-          <div class="col-xs-4 visible-xs helper-row">
+          <div class="col-xs-4 visible-xs">
             <div class="row">Date Registered</div>
           </div>
           <div class="col-xs-8 col-sm-12 xs-text-left">
@@ -129,13 +129,13 @@
 
         <div class="col-xs-12 col-sm-2 text-right action-buttons">
           <a data-waitloader data-modify href="<?= _A_::$app->router()->UrlTo('users/edit', $prms) ?>">
-            <i class="fa fa-pencil"></i>
+            <i class="fa fa-2x fa-2x fa-pencil"></i>
           </a>
           <a data-delete class="text-danger" href="<?= _A_::$app->router()->UrlTo('users/delete', $prms) ?>">
-            <i class=" fa fa-trash-o"></i>
+            <i class=" fa fa-2x fa-2x fa-trash-o"></i>
           </a>
           <a data-waitloader class="text-success" href="<?= _A_::$app->router()->UrlTo('orders', array_merge($prms,['back'=>'users'])) ?>"><i
-              class="fa fa-eye"></i></a>
+              class="fa fa-2x fa-2x fa-eye"></i></a>
         </div>
       </div>
     </div>
