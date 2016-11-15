@@ -1826,7 +1826,7 @@ table.table-bordered center a {
 .footer-widgets-bottom {
     padding: 80px 0 10px;
     color: #999999;
-    background: #222222;
+    background: rgba(34, 34, 34, 0.71);
 }
 
 .footer-widgets-bottom a {
@@ -1843,7 +1843,11 @@ table.table-bordered center a {
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
-    color: #4e4e4e;
+    color: #000;
+}
+
+.footer-widgets-bottom .widget .textwidget p {
+    color: #fff !important;
 }
 
 .footer-widgets-bottom .widget ul li {
@@ -1857,7 +1861,7 @@ table.table-bordered center a {
 }
 
 .footer-widgets-bottom .widget ul li a {
-    color: #999999;
+    color: #fff;
     text-decoration: none;
 }
 

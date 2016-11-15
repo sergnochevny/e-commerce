@@ -478,7 +478,7 @@ p.discount {
 }
 
 .header-topnav .navbar-nav .dropdown i {
-    color: #dddddd;
+    color: #ddd;
     line-height: inherit;
     vertical-align: middle;
 }
@@ -1925,14 +1925,15 @@ span[role=combobox].ui-button:active .ui-icon {
 /*Shop Sidebar*/
 
 .shop__sidebar {
-    max-width: 20%;
-    height: 100%;
+    max-width: 15%;
     float: left;
     background-color: rgba(102,119,0,0.6);
     border: 1px solid #ccc;
-    margin-top: 127px;
+    margin-top: 62px;
     border-radius: 4px;
     box-shadow: 0 0 10px rgb(191, 191, 191);
+    position: absolute;
+    top: 260px;
 }
 .shop__sidebar .shop__sidebar-list {
     padding: 0;
@@ -1967,8 +1968,24 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 
 .main-content-shop .main-content-inner {
-    max-width: 78%;
+    max-width: 83%;
     float: right;
+}
+
+@media only screen and (max-width: 1199px) {
+    .products {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: stretch;
+    }
+    .products .list-item .list-inner, .products .list-item .list-inner .item-name {
+        height: 100%;
+    }
+    .products .list-item {
+        max-height: 165px;
+    }
+
 }
 
 @media only screen and (max-width: 991px) {
@@ -1977,6 +1994,7 @@ span[role=combobox].ui-button:active .ui-icon {
         height: auto;
         float: none;
         margin-top: 30px;
+        position: static;
     }
     .shop__sidebar .shop__sidebar-list {
         display: flex;
@@ -1987,6 +2005,8 @@ span[role=combobox].ui-button:active .ui-icon {
     .shop__sidebar .shop__sidebar-list .shop__sidebar-item {
         display: inline-block;
         border: none;
+        flex-grow: 1;
+        text-align: center;
     }
     .shop__sidebar .shop__sidebar-list .shop__sidebar-item .shop__sidebar-link {
         padding: 10px;
