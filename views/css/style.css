@@ -1928,10 +1928,11 @@ span[role=combobox].ui-button:active .ui-icon {
     max-width: 20%;
     height: 100%;
     float: left;
-    background-color: #ddd;
+    background-color: rgba(102,119,0,0.5);
     border: 1px solid #ccc;
-    margin-top: 130px;
+    margin-top: 127px;
     border-radius: 4px;
+    box-shadow: 0 0 10px rgb(191, 191, 191);
 }
 .shop__sidebar .shop__sidebar-list {
     padding: 0;
@@ -1953,10 +1954,10 @@ span[role=combobox].ui-button:active .ui-icon {
 .shop__sidebar .shop__sidebar-list .shop__sidebar-item .shop__sidebar-link {
     padding: 10px 15px;
     display: block;
-    color: #000 !important;
+    color: #fff !important;
     background: none !important;
     font-weight: bold;
-    text-shadow: 2px 1px 0 #f2f2f2;
+    text-shadow: 1px 1px 0 #666;
     transition: all .3s ease;
 }
 
@@ -1964,11 +1965,11 @@ span[role=combobox].ui-button:active .ui-icon {
     color: #667700 !important;
 }
 .main-content-shop .main-content-inner {
-    max-width: 80%;
+    max-width: 78%;
     float: right;
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 991px) {
     .shop__sidebar {
         max-width: 100%;
         height: auto;
@@ -1988,23 +1989,13 @@ span[role=combobox].ui-button:active .ui-icon {
     .shop__sidebar .shop__sidebar-list .shop__sidebar-item .shop__sidebar-link {
         padding: 10px;
     }
-    .shop__sidebar .shop__sidebar-list .shop__sidebar-item:not(:last-child) .shop__sidebar-link:after {
-        content: '\02223';
-        font-size: 18px;
-        color: #000;
-        font-weight: 600;
-        text-shadow: 2px 1px 0 #f2f2f2;
-        position: relative;
-        right: -9px;
-        transition: all .3s ease;
+    .shop__sidebar .shop__sidebar-list .shop__sidebar-item:not(:last-child) .shop__sidebar-link {
+        border-right: 2px solid #ccc;
     }
     .main-content-shop .main-content-inner {
         max-width: 100%;
         float: none;
     }
-}
-
-@media only screen and (max-width: 991px) {
     .site-navigation .nav .menu-item:not(:last-child) a, .site-navigation .nav .menu-item:not(:last-child) a:visited {
         border-bottom: 1px solid #ccc;
     }
@@ -2024,9 +2015,10 @@ span[role=combobox].ui-button:active .ui-icon {
         width: 100%;
         text-align: center;
     }
-    .shop__sidebar .shop__sidebar-list .shop__sidebar-item:not(:last-child) .shop__sidebar-link:after {
-        display: none;
+    .shop__sidebar .shop__sidebar-list .shop__sidebar-item:not(:last-child) .shop__sidebar-link {
+        border-right: none;
     }
+
 }
 
 
