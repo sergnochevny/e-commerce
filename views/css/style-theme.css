@@ -1045,18 +1045,20 @@ a img.aligncenter {
     font-size: 14px;
     min-width: 40px;
     padding: 6px 10px;
-    color: #999;
+    color: #666;
+    text-shadow: 2px 1px 0 #fff;
     border: 2px solid rgba(69, 86, 0, 0.8);
     /*border: 1px solid #999;*/
     text-transform: uppercase;
     border-radius: 2px;
-    box-shadow: 0 0 3px 1px #dbdbdb inset;
+    /*box-shadow: 0 0 3px 1px #dbdbdb inset;*/
 }
 
 .paging-navigation ul.pagination li .page-numbers:hover {
     background: rgba(102, 119, 0, 0.5);
-    color: white;
-    box-shadow: 0 0 3px 1px #dbdbdb inset;
+    color: #fff;
+    text-shadow: 2px 1px 0 #666;
+    /*box-shadow: 0 0 3px 1px #dbdbdb inset;*/
 }
 
 .paging-navigation ul.pagination li .page-numbers.dots {
@@ -1072,7 +1074,8 @@ a img.aligncenter {
     min-width: 40px;
     background: rgba(102, 119, 0, 0.7);
     /*background: #667700;*/
-    color: white;
+    color: #fff;
+    text-shadow: 2px 1px 0 #666;
 }
 
 .paging-navigation ul.pagination li .page-numbers.noclicable,
