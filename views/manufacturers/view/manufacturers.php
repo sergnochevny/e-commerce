@@ -1,15 +1,19 @@
 <div class="container">
-  <div class="shop__sidebar">
-    <nav>
-      <ul class="shop__sidebar-list">
-        <li class="shop__sidebar-item"><a href="#" class="shop__sidebar-link">Specials</a></li>
-        <li class="shop__sidebar-item"><a href="#" class="shop__sidebar-link">What's New</a></li>
-        <li class="shop__sidebar-item"><a href="#" class="shop__sidebar-link">Shop by Pattern Type</a></li>
-        <li class="shop__sidebar-item"><a href="#" class="shop__sidebar-link">Shop by Category</a></li>
-        <li class="shop__sidebar-item"><a href="#" class="shop__sidebar-link">Shop by Fabric Designer</a></li>
-      </ul>
-    </nav>
+  <div class="col-xs-12">
+    <div class="row afterhead-row">
+      <div class="col-sm-2 back_button_container">
+        <div class="row">
+          <a data-waitloader id="back_url" href="<?= _A_::$app->router()->UrlTo('shop'); ?>" class="button back_button">Back</a>
+        </div>
+      </div>
+      <div class="col-sm-10 text-center">
+        <div class="row">
+          <h3 class="page-title">Manufacturers</h3>
+        </div>
+      </div>
+    </div>
   </div>
+  <?= isset($shop_menu) ? $shop_menu : ''; ?>
   <div id="content" class="main-content-inner" role="main">
     <?= $list; ?>
   </div>
