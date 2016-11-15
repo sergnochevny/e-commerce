@@ -2176,8 +2176,7 @@ ul.product_list_widget li dl dd p {
     text-align: center;
     font-size: 14px;
     box-shadow: 0 0 5px #999;
-    right: -10px;
-    bottom: 5px;
+    bottom: 15px;
 }
 
 .products.product_list_widget .product-price-box .price {

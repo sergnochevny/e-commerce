@@ -52,7 +52,7 @@
             <div class="row">Manufacturer</div>
           </div>
           <div class="col-xs-8 col-sm-12">
-            <div class="row"><?= $row['id'] ?></div>
+            <div class="row"><?= $row['manufacturer'] ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-3 table-list-row-item">
@@ -60,7 +60,7 @@
             <div class="row">Products</div>
           </div>
           <div class="col-xs-8 col-sm-12">
-            <div class="row"><?= $row[2] ?></div>
+            <div class="row"><?= $row['amount'] ?></div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
@@ -68,7 +68,7 @@
             <i class="fa fa-2x fa-pencil"></i>
           </a>
           <a href="<?= _A_::$app->router()->UrlTo('manufacturers/delete', $prms) ?>" data-delete rel="nofollow"
-             class="text-danger <?= ($row[2]>0)?'disabled':''?>">
+             class="text-danger <?= ($row['amount']>0)?'disabled':''?>">
             <i class=" fa fa-2x fa-trash-o"></i>
           </a>
         </div>
