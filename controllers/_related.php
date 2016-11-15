@@ -36,6 +36,7 @@
     }
 
     protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
       if($view) {
         $sort['a.id'] = 'desc';
       }
@@ -79,7 +80,7 @@
       $search_form = $c_product->build_search_filter($filter, $view);
       $c_product->build_order($sort, $view);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-      $per_page = 12;
+      $per_page = $this->per_page;
       $total = Model_Product::get_total_count($filter);
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
       if($page <= 0) $page = 1;

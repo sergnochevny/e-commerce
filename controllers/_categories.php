@@ -6,6 +6,21 @@
     protected $form_title_add = 'NEW CATEGORY';
     protected $form_title_edit = 'MODIFY CATEGORY';
 
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.cname' => 'asc'];
+      }
+    }
+
+    protected function build_search_filter(&$filter, $view = false) {
+      $res = parent::build_search_filter($filter, $view);
+      if($view) {
+        $filter = ['hidden' => ['view' => true, 'b.pvisible' => 1]];
+      }
+      return $res;
+    }
+
     protected function load(&$data) {
       $data = [
         $this->id_name => _A_::$app->get($this->id_name),

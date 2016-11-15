@@ -4,13 +4,6 @@
 
     protected static $table = 'fabrix_specials';
 
-    protected static function build_order(&$sort) {
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['date_start' => 'desc'];
-      }
-      return parent::build_order($sort);
-    }
-
     protected static function build_where(&$filter) {
       $result = "";
       if(isset($filter["sid"])) $result[] = "sid = '" . mysql_real_escape_string(static::sanitize($filter["sid"])) . "'";

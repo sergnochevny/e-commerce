@@ -5,6 +5,21 @@
     protected $form_title_add = 'NEW COLOUR';
     protected $form_title_edit = 'MODIFY COLOUR';
 
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.colour' => 'asc'];
+      }
+    }
+
+    protected function build_search_filter(&$filter, $view = false) {
+      $res = parent::build_search_filter($filter, $view);
+      if($view) {
+        $filter = ['hidden' => ['view' => true, 'b.pvisible' => 1]];
+      }
+      return $res;
+    }
+
     protected function load(&$data) {
       $data['id'] = _A_::$app->get('id');
       $data['colour'] = Model_Colours::sanitize(_A_::$app->post('colour'));

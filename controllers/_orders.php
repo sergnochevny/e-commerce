@@ -13,6 +13,13 @@
       ];
     }
 
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.order_date' => 'desc'];
+      }
+    }
+
     protected function build_search_filter(&$filter, $view = false) {
       $search_form = parent::build_search_filter($filter, $view);
       if(Controller_User::is_logged()) {

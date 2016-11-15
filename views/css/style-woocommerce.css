@@ -15,7 +15,7 @@
 .button {
     position: relative;
     text-transform: uppercase;
-    background: #667700;
+    background: rgba(102, 119, 0, 0.5);
     color: #ffffff;
     font-size: 13px;
     display: inline-block;
@@ -29,12 +29,12 @@
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 2px;
-    border: 2px solid #455600;
+    border: 2px solid rgba(69, 86, 0, 0.8);
 }
 
 .button:hover {
     color: #ffffff !important;
-    background: #222222;
+    background: rgba(34, 34, 34, 0.8);
 }
 
 span#b_in_product {
@@ -201,6 +201,7 @@ span#b_in_product {
 
 .on-sale {
     background: #667700;
+    background: rgba(102, 119, 0, 0.8);
     right: inherit !important;
     padding: 0;
     padding-top: 34px;
@@ -905,7 +906,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 .products .owl-item .product-item .on-sale,
 .products .product-item .on-sale {
     margin: 0;
-    z-index: 9999;
+    z-index: 2;
 }
 
 .products .owl-item .product-item p.description,
@@ -2263,3 +2264,5 @@ ul.product_list_widget li dl dd p {
 .table-list-row .action-buttons a:last-child {
     margin-right: 0;
 }
+
+.products .list-item

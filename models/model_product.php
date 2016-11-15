@@ -4,13 +4,6 @@
 
     protected static $table = 'fabrix_products';
 
-    protected static function build_order(&$sort) {
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['a.pid' => 'desc'];
-      }
-      return parent::build_order($sort);
-    }
-
     protected static function build_where(&$filter) {
       $result = "";
       if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.pname"])) . "%'";

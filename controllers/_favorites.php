@@ -12,6 +12,14 @@
       ];
     }
 
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['z.dt' => 'desc'];
+        $sort = ['a.pid' => 'desc'];
+      }
+    }
+
     protected function load(&$data) {
       $data['pid'] = _A_::$app->post('pid');
       $data['aid'] = Controller_User::get_from_session()['aid'];

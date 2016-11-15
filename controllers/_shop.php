@@ -136,7 +136,7 @@
       $search_form = $this->build_search_filter($filter);
       $this->build_order($sort);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-      $per_page = 12;
+      $per_page = $this->per_page;
       $total = Model_Shop::get_total_count($filter);
       if($total > $max_count_items) $total = $max_count_items;
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);

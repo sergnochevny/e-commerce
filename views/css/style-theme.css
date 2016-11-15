@@ -636,7 +636,8 @@ a img.aligncenter {
 /* main header */
 .site-navigation {
     border-bottom: 1px solid #cacaca;
-    background-color: #ddd;
+    /*background-color: #ddd;*/
+    background-color: rgba(34, 34, 34, 0.1);
     width: 100%;
     z-index: 99;
     margin-bottom: 0px;
@@ -1045,7 +1046,8 @@ a img.aligncenter {
     min-width: 40px;
     padding: 6px 10px;
     color: #999;
-    border: 1px solid #999;
+    border: 2px solid rgba(69, 86, 0, 0.8);
+    /*border: 1px solid #999;*/
     text-transform: uppercase;
     border-radius: 2px;
     box-shadow: 0 0 3px 1px #dbdbdb inset;
@@ -1068,7 +1070,8 @@ a img.aligncenter {
 
 .paging-navigation ul.pagination li.active .page-numbers {
     min-width: 40px;
-    background: #667700;
+    background: rgba(102, 119, 0, 0.7);
+    /*background: #667700;*/
     color: white;
 }
 

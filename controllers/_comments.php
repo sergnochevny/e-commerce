@@ -5,6 +5,13 @@
     protected $form_title_edit = 'MODIFY COMMENT';
     protected $view_title = 'COMMENT VIEW';
 
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.dt' => 'desc'];
+      }
+    }
+
     protected function load(&$data) {
       $data['id'] = _A_::$app->get('id');
       $data['title'] = Model_Comments::sanitize(_A_::$app->post('title'));
