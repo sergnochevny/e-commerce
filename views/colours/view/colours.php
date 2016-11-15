@@ -13,7 +13,9 @@
       </div>
     </div>
   </div>
-  <?= isset($shop_menu) ? $shop_menu : ''; ?>
+  <div class="wo_search">
+    <?= isset($shop_menu) ? $shop_menu : ''; ?>
+  </div>
   <div id="content" class="main-content-inner" role="main">
     <?= $list; ?>
   </div>

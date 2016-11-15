@@ -1,5 +1,4 @@
 <div class="container">
-  <?= isset($shop_menu) ? $shop_menu : ''; ?>
   <div class="col-xs-12">
     <div class="row afterhead-row">
       <div class="col-sm-2 back_button_container">
@@ -13,6 +12,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="wo_search">
+    <?= isset($shop_menu) ? $shop_menu : ''; ?>
   </div>
   <div id="content" class="main-content-inner" role="main">
     <?= $list; ?>
