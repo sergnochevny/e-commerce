@@ -17,8 +17,8 @@
         if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["b.pvisible"])) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
+          $result = (!empty($result) ? " WHERE " . $result : '');
         }
-        $result = " WHERE " . (!empty($result) ? $result : '');
       } else {
         $result = parent::build_where($filter);
       }

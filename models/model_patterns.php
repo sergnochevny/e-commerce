@@ -14,11 +14,11 @@
             $filter['active'] = true;
           }
         }
-        if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["b.pvisible"])) . "'";
+        if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["c.pvisible"])) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
+          $result = (!empty($result) ? " WHERE " . $result : '');
         }
-        $result = " WHERE " . (!empty($result) ? $result : '');
       } else {
         $result = parent::build_where($filter);
       }
@@ -43,6 +43,7 @@
       $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view'])? " INNER" : " LEFT";
       $query .= " JOIN fabrix_product_patterns b ON b.patternId = a.id";
+      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.prodId" : '';
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
@@ -56,6 +57,7 @@
       $query .= " FROM " . static::$table . " a";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view'])? " INNER" : " LEFT";
       $query .= " JOIN fabrix_product_patterns b ON b.patternId = a.id";
+      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.prodId" : '';
       $query .= static::build_where($filter);
       $query .= " GROUP BY a.id, a.pattern";
       $query .= static::build_order($sort);

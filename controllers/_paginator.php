@@ -16,6 +16,10 @@
           $ptrn_id = _A_::$app->get('ptrn');
           $this->template->vars('ptrn_id', $ptrn_id);
         }
+        if(!is_null(_A_::$app->get('clr'))) {
+          $clr_id = _A_::$app->get('clr');
+          $this->template->vars('clr_id', $clr_id);
+        }
 
         $num_pages = ceil($total_rows / $per_page);
         $last_page = $num_pages;

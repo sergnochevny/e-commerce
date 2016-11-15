@@ -16,7 +16,7 @@
   <div class="col-xs-12 search-result-header">
     <div class="row">
       <div class="col-sm-4">
-        <?php if (!empty(_A_::$app->get('cat')) || !empty(_A_::$app->get('mnf')) || !empty(_A_::$app->get('ptrn'))) : ?>
+        <?php if (!empty(_A_::$app->get('cat')) || !empty(_A_::$app->get('mnf')) || !empty(_A_::$app->get('ptrn'))  || !empty(_A_::$app->get('clr'))) : ?>
         <p class="woocommerce-result-count">
           <?php
             if (!empty(_A_::$app->get('cat'))) {
@@ -27,6 +27,9 @@
             }
             if (!empty(_A_::$app->get('ptrn'))) {
               echo 'PATTERN: ' . $ptrn_name . '<br/>';
+            }
+            if (!empty(_A_::$app->get('clr'))) {
+              echo 'COLOUR: ' . $colour_name . '<br/>';
             }
           ?>
         </p>

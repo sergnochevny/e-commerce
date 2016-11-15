@@ -8,7 +8,7 @@
           <?php }
             $url_prms['pid'] = $row['pid'];
             $url_prms['back'] = 'favorites';
-            $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
+            $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr']);
           ?>
             <figcaption data-product>
               <?php

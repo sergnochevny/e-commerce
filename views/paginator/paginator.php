@@ -8,6 +8,9 @@
   if(isset($ptrn_id)) {
     $prms['ptrn'] = $ptrn_id;
   }
+  if(isset($clr_id)) {
+    $prms['clr'] = $clr_id;
+  }
 ?>
   <li>
     <?php

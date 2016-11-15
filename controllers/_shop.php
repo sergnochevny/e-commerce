@@ -52,6 +52,15 @@
         $filter['hidden']['e.id'] = $mnf_id;
         $res['hidden']['e.id'] = $mnf_id;
       }
+      if(!empty(_A_::$app->get('clr'))) {
+        $clr_id = _A_::$app->get('clr');
+        if($clr = Model_Colours::get_by_id($clr_id)) $colour_name = $clr['colour'];
+        $this->template->vars('colour_name', isset($colour_name) ? $colour_name : null);
+        unset($filter['c.id']);
+        unset($res['c.id']);
+        $filter['hidden']['c.id'] = $clr_id;
+        $res['hidden']['c.id'] = $clr_id;
+      }
       if(isset($type)) {
         $filter['type'] = $type;
         $res['type'] = $type;
@@ -126,6 +135,7 @@
       if(!empty(_A_::$app->get('cat'))) $url_prms['cat'] = _A_::$app->get('cat');
       if(!empty(_A_::$app->get('mnf'))) $url_prms['mnf'] = _A_::$app->get('mnf');
       if(!empty(_A_::$app->get('ptrn'))) $url_prms['ptrn'] = _A_::$app->get('ptrn');
+      if(!empty(_A_::$app->get('clr'))) $url_prms['clr'] = _A_::$app->get('clr');
       if(isset($type)) $url_prms['back'] = $type;
       $this->template->vars('url_prms', $url_prms);
     }
@@ -364,6 +374,9 @@
       }
       if((!empty(_A_::$app->get('ptrn')))) {
         $url_prms['ptrn'] = _A_::$app->get('ptrn');
+      }
+      if((!empty(_A_::$app->get('clr')))) {
+        $url_prms['clr'] = _A_::$app->get('clr');
       }
 
       if(!is_null(_A_::$app->get('back'))) {

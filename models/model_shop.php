@@ -37,8 +37,8 @@
       if(isset($filter['hidden']["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.specials"])) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
+        $result = (!empty($result) ? " WHERE " . $result : '');
       }
-      $result = " WHERE " . (!empty($result) ? $result : '');
       return $result;
     }
 

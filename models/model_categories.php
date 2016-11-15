@@ -5,7 +5,7 @@
     protected static $table = 'fabrix_categories';
 
     protected static function build_where(&$filter) {
-      if (isset($filter['hidden']['view']) && $filter['hidden']['view']){
+      if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $result = "";
         if(isset($filter["cname"])) $result[] = "a.cname LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.cname"])) . "%'";
         if(isset($filter["cid"])) $result[] = "a.cid = '" . mysql_real_escape_string(static::sanitize($filter["a.cid"])) . "'";
@@ -14,23 +14,23 @@
             $filter['active'] = true;
           }
         }
-        if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["b.pvisible"])) . "'";
+        if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["c.pvisible"])) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
+          $result = (!empty($result) ? " WHERE " . $result : '');
         }
-        $result = " WHERE " . (!empty($result) ? $result : '');
       } else {
         $result = parent::build_where($filter);
       }
       return $result;
     }
 
-
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(DISTINCT a.cid) FROM " . self::$table . " a";
-      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view'])? " INNER" : " LEFT";
+      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
       $query .= " JOIN fabrix_product_categories b ON b.cid = a.cid";
+      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.pid" : '';
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
         $response = mysql_fetch_row($result)[0];
@@ -40,10 +40,11 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      $query = "SELECT a.*, count(b.pid) AS amount";
+      $query = "SELECT DISTINCT a.*, count(b.pid) AS amount";
       $query .= " FROM fabrix_categories a";
-      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view'])? " INNER" : " LEFT";
+      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
       $query .= " JOIN fabrix_product_categories b ON b.cid = a.cid";
+      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.pid" : '';
       $query .= static::build_where($filter);
       $query .= " GROUP BY a.cid, a.cname";
       $query .= static::build_order($sort);

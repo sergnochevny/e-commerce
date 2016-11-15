@@ -5,7 +5,7 @@
         <span class="on-sale">Popular</span>
         <?php
           $url_prms['pid'] = $row['pid'];
-          $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn']);
+          $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr']);
         ?>
         <div class="product-price-box clearfix">
           <div class="price-header">
