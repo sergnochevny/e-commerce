@@ -1966,7 +1966,7 @@ span[role=combobox].ui-button:active .ui-icon {
     text-shadow: 1px 1px 0 #fff;
 }
 
-.main-content-shop .main-content-inner {
+.main-content-shop .shop__sidebar + .main-content-inner {
     max-width: 78%;
     float: right;
 }
