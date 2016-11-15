@@ -22,7 +22,7 @@
 
 </div>
 <div class="col-xs-12">
-  <div class="row">
+  <div class="row products-wrap">
     <div class="products">
       <?= $list; ?>
     </div>

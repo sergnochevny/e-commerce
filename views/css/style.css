@@ -2021,4 +2021,30 @@ span[role=combobox].ui-button:active .ui-icon {
 
 }
 
+/*Manufacturers Style*/
+
+.products-wrap {
+
+}
+
+.products .list-item {
+    margin: 5px 0;
+}
+
+.products .list-item .list-inner .item-name {
+    padding: 10px 15px;
+    display: block;
+    color: #333!important;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+    transition: all .3s ease;
+    background-color: rgba(34, 34, 34, 0.12);
+    border: 2px solid #999;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #999;
+}
+.products .list-item .list-inner .item-name:hover {
+    color: #667700 !important;
+}
+
 
