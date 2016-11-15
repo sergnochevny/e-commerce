@@ -36,6 +36,7 @@ fabric.properties
 /modal_windows/
 upload/upload/
 img/
+imgages/
 views/images/
 discount.txt
 fabrix_comments.sql
