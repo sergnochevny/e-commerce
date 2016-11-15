@@ -1928,7 +1928,7 @@ span[role=combobox].ui-button:active .ui-icon {
     max-width: 20%;
     height: 100%;
     float: left;
-    background-color: rgba(102,119,0,0.5);
+    background-color: rgba(102,119,0,0.6);
     border: 1px solid #ccc;
     margin-top: 127px;
     border-radius: 4px;
@@ -1962,8 +1962,10 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 
 .shop__sidebar .shop__sidebar-list .shop__sidebar-item .shop__sidebar-link:hover {
-    color: #667700 !important;
+    color: #666 !important;
+    text-shadow: 1px 1px 0 #fff;
 }
+
 .main-content-shop .main-content-inner {
     max-width: 78%;
     float: right;

@@ -1,44 +1,12 @@
-<ul role="group" class="dropdown-menu" id="sm-14573591911186943-2" aria-hidden="true"
-    aria-labelledby="sm-14573591911186943-1" aria-expanded="false"
-    style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
-
-    <li class="menu-item menu-item-type-post_type menu-item-object-product">
-        <a data-waitloader title="Specials" class="shop_menu" href="<?= _A_::$app->router()->UrlTo('shop/specials')?>">Specials</a>
-    </li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-product">
-        <a data-waitloader title="What's New" href="<?= _A_::$app->router()->UrlTo('shop/last');?>" class="has-submenu" id="sm-14573591911186943-3" aria-haspopup="true"
-           aria-controls="sm-14573591911186943-4" aria-expanded="false">What's New</a>
-        <ul role="group" class="dropdown-menu sm-nowrap" id="sm-14573591911186943-4" aria-hidden="true"
-            aria-labelledby="sm-14573591911186943-3" aria-expanded="false"
-            style="width: auto; display: none; top: auto; left: 0px; margin-left: -171.203px; margin-top: -35px; min-width: 10em; max-width: 20em;">
-            <?= $menu_new_category;?>
-        </ul>
-    </li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-product">
-        <a title="Shop by Pattern Type" href="#" class="has-submenu" id="sm-14573591911186943-5" aria-haspopup="true"
-           aria-controls="sm-14573591911186943-6" aria-expanded="false">Shop by Pattern Type</a>
-        <ul role="group" class="dropdown-menu sm-nowrap" id="sm-14573591911186943-6" aria-hidden="true"
-            aria-labelledby="sm-14573591911186943-5" aria-expanded="false"
-            style="width: auto; display: none; top: auto; left: 0px; margin-left: -140.891px; margin-top: -35px; min-width: 10em; max-width: 20em;">
-            <?= $menu_patterns;?>
-        </ul>
-    </li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-product">
-        <a title="Shop by Category" href="#" class="has-submenu" id="sm-14573591911186943-7" aria-haspopup="true"
-           aria-controls="sm-14573591911186943-8" aria-expanded="false">Shop by Category</a>
-        <ul role="group" class="dropdown-menu sm-nowrap" id="sm-14573591911186943-8" aria-hidden="true"
-            aria-labelledby="sm-14573591911186943-7" aria-expanded="false"
-            style="width: auto; display: none; top: auto; left: 0px; margin-left: -217.5px; margin-top: -35px; min-width: 10em; max-width: 20em;">
-            <?= $menu_all_category;?>
-        </ul>
-    </li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-product">
-        <a title="Shop by Fabric Designer" href="#" class="has-submenu" id="sm-14573591911186943-9" aria-haspopup="true"
-           aria-controls="sm-14573591911186943-10" aria-expanded="false">Shop by Fabric Designer</a>
-        <ul role="group" class="dropdown-menu sm-nowrap" id="sm-14573591911186943-10" aria-hidden="true"
-            aria-labelledby="sm-14573591911186943-9" aria-expanded="false"
-            style="width: auto; display: none; top: auto; left: 0px; margin-left: -187.422px; margin-top: -50px; min-width: 10em; max-width: 20em;">
-            <?= $menu_manufacturers;?>
-        </ul>
-    </li>
-</ul>
+<div class="shop__sidebar">
+  <nav>
+    <ul class="shop__sidebar-list">
+      <li class="shop__sidebar-item"><a href="<?= _A_::$app->router()->UrlTo('manufacturers/view', [], 'manufacturer')?>" class="shop__sidebar-link">Manufacturer</a></li>
+      <li class="shop__sidebar-item"><a href="<?= _A_::$app->router()->UrlTo('categories/view', [], 'type')?>" class="shop__sidebar-link">Type</a></li>
+      <li class="shop__sidebar-item"><a href="<?= _A_::$app->router()->UrlTo('patterns/view', [], 'pattern')?>" class="shop__sidebar-link">Pattern</a></li>
+      <li class="shop__sidebar-item"><a href="<?= _A_::$app->router()->UrlTo('colours/view', [], 'colour')?>" class="shop__sidebar-link">Colour</a></li>
+      <li class="shop__sidebar-item"><a href="#" class="shop__sidebar-link">Price</a></li>
+      <li class="shop__sidebar-item"><a href="#" class="shop__sidebar-link">Specially</a></li>
+    </ul>
+  </nav>
+</div>

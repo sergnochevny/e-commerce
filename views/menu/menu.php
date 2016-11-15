@@ -7,16 +7,8 @@
         <a data-waitloader data-link title="Home" href="<?= _A_::$app->router()->UrlTo('/') ?>">Home</a>
       </li>
       <li class="menu-item menu-item-type-post_type menu-item-object-page">
-        <a data-waitloader data-link title="Shop" aria-haspopup="true" class="has-submenu"
-           href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Shop<span class="caret"></span></a>
-        <?= isset($shop_menu) ? $shop_menu : ''; ?>
+        <a data-waitloader data-link title="Shop" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Shop</a>
       </li>
-      <!--<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown">
-          <a data-waitloader title="" href="#" class="has-submenu" id="sm-14556147971389604-1" aria-haspopup="true"
-             aria-controls="sm-14556147971389604-2" aria-expanded="false">Shop <span class="caret"></span></a>
-          <ul role="menu" class=" dropdown-menu" style="z-index: 101;">
-          </ul>
-      </li>-->
       <li class="menu-item menu-item-type-post_type menu-item-object-page">
         <a data-waitloader data-link title="Blog" aria-haspopup="true" class="has-submenu"
            href="<?= _A_::$app->router()->UrlTo('blog/view') ?>">Blog<span class="caret"></span></a>

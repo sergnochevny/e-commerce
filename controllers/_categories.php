@@ -16,6 +16,7 @@
     protected function build_search_filter(&$filter, $view = false) {
       $res = parent::build_search_filter($filter, $view);
       if($view) {
+        $this->per_page = 24;
         $filter = ['hidden' => ['view' => true, 'b.pvisible' => 1]];
       }
       return $res;
