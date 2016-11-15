@@ -3,6 +3,7 @@
   class Controller_Controller extends Controller_Base {
 
     protected $main;
+    protected $per_page = 12;
 
     public function __construct(Controller_Base $main = null) {
       $this->layouts = _A_::$app->config('layouts');
@@ -106,7 +107,7 @@
       $search_form = $this->build_search_filter($filter, $view);
       $this->build_order($sort, $view);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
-      $per_page = 12;
+      $per_page = $this->per_page;
       $total = forward_static_call([$this->model_name, 'get_total_count'], $filter);
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
       if($page <= 0) $page = 1;

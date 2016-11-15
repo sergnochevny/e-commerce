@@ -4,13 +4,6 @@
 
     protected static $table = 'blog_groups';
 
-    protected static function build_order(&$sort) {
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['a.name' => 'desc'];
-      }
-      return parent::build_order($sort);
-    }
-
     public static function get_by_id($id) {
       $response = [
         'id' => '',

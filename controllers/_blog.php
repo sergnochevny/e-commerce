@@ -6,6 +6,20 @@
     protected $form_title_add = 'WRITE NEW POST';
     protected $form_title_edit = 'EDIT POST';
 
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['post_date' => 'desc'];
+      }
+    }
+
+    protected function search_fields($view = false) {
+      return [
+        'a.post_date', 'a.post_title', 'a.post_status',
+        'b.group_id',
+      ];
+    }
+
     private function autop($pee, $br = true) {
       $pre_tags = [];
 
@@ -292,13 +306,6 @@
       $this->template->vars('destination', 'categories');
       $this->template->vars('title', 'Select Categories');
       $this->template->view_layout('filter/filter');
-    }
-
-    protected function search_fields($view = false) {
-      return [
-        'a.post_date', 'a.post_title', 'a.post_status',
-        'b.group_id',
-      ];
     }
 
     protected function before_save(&$data) {

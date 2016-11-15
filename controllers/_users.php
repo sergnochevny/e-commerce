@@ -6,6 +6,22 @@
     protected $form_title_add = 'NEW USER';
     protected $form_title_edit = 'MODIFY USER';
 
+    protected function search_fields($view = false) {
+      return [
+        'aid', 'email', 'full_name',
+        'organization', 'address',
+        'province', 'city', 'country',
+        'postal', 'phone', 'registered'
+      ];
+    }
+
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['full_name' => 'ASC'];
+      }
+    }
+
     private function list_countries($select = null) {
       $countries = Model_Address::get_countries_all();
       $this->template->vars('items', $countries);
@@ -213,15 +229,6 @@
       $this->template->vars('form', $form);
       if($is_user) exit($this->main->view('edit'));
       else exit($this->main->view_admin('edit'));
-    }
-
-    protected function search_fields($view = false) {
-      return [
-        'aid', 'email', 'full_name',
-        'organization', 'address',
-        'province', 'city', 'country',
-        'postal', 'phone', 'registered'
-      ];
     }
 
     protected function before_search_form_layout(&$search_data, $view = false) {

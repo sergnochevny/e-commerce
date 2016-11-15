@@ -4,13 +4,6 @@
 
     protected static $table = 'fabrix_accounts';
 
-    protected static function build_order(&$sort) {
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['full_name' => 'ASC'];
-      }
-      return parent::build_order($sort);
-    }
-
     protected static function build_where(&$filter) {
       $result = "";
       if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["email"]))))) . "%'";

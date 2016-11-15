@@ -6,6 +6,21 @@
     protected $form_title_add = 'NEW DISCOUNT';
     protected $form_title_edit = 'MODIFY DISCOUNT';
 
+    protected function search_fields($view = false) {
+      return [
+        'sid', 'promotion_type', 'user_type',
+        'discount_type', 'product_type', 'coupon_code',
+        'date_start', 'date_end'
+      ];
+    }
+
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['date_start' => 'desc'];
+      }
+    }
+
     private function generate_prod_filter($data) {
       $filter_products = $data['filter_products'];
       $product_type = $data['product_type'];
@@ -202,15 +217,6 @@
       }
       return true;
     }
-
-    protected function search_fields($view = false) {
-      return [
-        'sid', 'promotion_type', 'user_type',
-        'discount_type', 'product_type', 'coupon_code',
-        'date_start', 'date_end'
-      ];
-    }
-
 
     protected function detailed($back_url){
       $id = _A_::$app->get($this->id_name);

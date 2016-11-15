@@ -4,14 +4,6 @@
 
     protected static $table = 'fabrix_product_favorites';
 
-    protected static function build_order(&$sort) {
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['z.dt' => 'desc'];
-        $sort = ['a.pid' => 'desc'];
-      }
-      return parent::build_order($sort);
-    }
-
     public static function get_by_id($pid, $aid) {
       $data = null;
       $q = "select * from " . self::$table;
