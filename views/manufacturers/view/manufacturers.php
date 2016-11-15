@@ -8,7 +8,7 @@
       </div>
       <div class="col-sm-10 text-center">
         <div class="row">
-          <h3 class="page-title">Manufacturers</h3>
+          <h3 class="page-title">Manufacturer</h3>
         </div>
       </div>
     </div>
