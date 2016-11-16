@@ -5,7 +5,7 @@
 </div>
 <div class="col-xs-12">
   <div class="row products-wrap">
-    <div class="products">
+    <div class="products product_groups">
       <?= $list; ?>
     </div>
   </div>
