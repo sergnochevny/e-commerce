@@ -1,4 +1,5 @@
 'use strict';
+
 (function ($) {
 
   function postdata(this_, url, data) {

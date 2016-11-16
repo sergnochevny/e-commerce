@@ -1,14 +1,44 @@
 'use strict';
 
+var change_text = false;
+
 jQuery(document).ready(function ($) {
 
-  if ($(window).width() < 485) {
-    $.each($('[data-viewport]'),
-      function (idx, element) {
-        $(element).text($(element).attr('data-vp_change_content'))
+  $.extend({
+      change_button_text: function (force) {
+        if (force) change_text = false;
+        if ($(window).width() < 485) {
+          if (!change_text) {
+            $.each($('[data-viewport]'),
+              function (idx, element) {
+                change_text = true;
+                var old_text = $(element).text();
+                $(element).text($(element).attr('data-vp_change_content'));
+                $(element).attr('data-vp_change_content', old_text);
+              }
+            );
+          }
+        } else {
+          if (change_text) {
+            $.each($('[data-viewport]'),
+              function (idx, element) {
+                change_text = false;
+                var old_text = $(element).text();
+                $(element).text($(element).attr('data-vp_change_content'));
+                $(element).attr('data-vp_change_content', old_text);
+              }
+            );
+          }
+        }
       }
-    );
-  }
+    }
+  );
+
+  $.change_button_text();
+
+  $(window).on('resize', function () {
+    $.change_button_text();
+  });
 
   $('#menu-button').on('click', function () {
     $(document.body).toggleClass('menu-open');

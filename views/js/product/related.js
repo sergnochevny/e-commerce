@@ -204,4 +204,6 @@
     }
   );
 
+  change_text_button();
+
 })(jQuery);
