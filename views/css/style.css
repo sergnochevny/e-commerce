@@ -1926,7 +1926,6 @@ span[role=combobox].ui-button:active .ui-icon {
 
 .shop__sidebar {
     width: 100%;
-    float: left;
     background-color: rgba(102, 119, 0, 0.6);
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -1971,30 +1970,24 @@ span[role=combobox].ui-button:active .ui-icon {
     text-shadow: 1px 1px 0 #fff;
 }
 
-.main-content-shop .main-content-inner {
-    float: right;
-}
-
 .w_search {
     margin-top: -72px;
     position: relative;
-    margin-right: 0;
 }
 
 .wo_search {
     margin-top: -9px;
     position: relative;
-    margin-right: 0;
 }
 
-@media only screen and (max-width: 1199px) {
-}
+@media only screen and (min-width: 991px) {
+    .w_search {
+        margin-right: 0;
+    }
 
-.products {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: stretch;
+    .wo_search {
+        margin-right: 0;
+    }
 }
 
 .products .list-item .list-inner, .products .list-item .list-inner .item-name {
@@ -2008,17 +2001,10 @@ span[role=combobox].ui-button:active .ui-icon {
 @media only screen and (max-width: 991px) {
     .w_search {
         margin-top: 0;
-        padding-right: 0;
     }
 
     .wo_search {
         margin-top: 0;
-        margin-right: 0;
-    }
-
-    .main-content-shop .shop__sidebar + .main-content-inner {
-        width: 100%;
-        float: none;
     }
 
     .shop__sidebar {
@@ -2050,10 +2036,10 @@ span[role=combobox].ui-button:active .ui-icon {
         border-right: 2px solid #ccc;
     }
 
-    .main-content-shop .main-content-inner {
-        width: 100%;
-        float: none;
-    }
+    /*.main-content-shop .main-content-inner {*/
+        /*width: 100%;*/
+        /*float: none;*/
+    /*}*/
 
     .site-navigation .nav .menu-item:not(:last-child) a, .site-navigation .nav .menu-item:not(:last-child) a:visited {
         border-bottom: 1px solid #ccc;

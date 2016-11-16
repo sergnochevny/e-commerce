@@ -2,6 +2,14 @@
 
 jQuery(document).ready(function ($) {
 
+  if ($(window).width() < 485) {
+    $.each($('[data-viewport]'),
+      function (idx, element) {
+        $(element).text($(element).attr('data-vp_change_content'))
+      }
+    );
+  }
+
   $('#menu-button').on('click', function () {
     $(document.body).toggleClass('menu-open');
   });
@@ -9,7 +17,6 @@ jQuery(document).ready(function ($) {
   $(document).on('click', '.search-call', function () {
     $(this).children('form').toggleClass('hidden');
   });
-
 
   $(document).on('click', '[data-search] .panel-heading', function () {
     var body = $(this).next('.panel-body');
@@ -144,12 +151,12 @@ jQuery(document).ready(function ($) {
   });
 
   $(document).on('focus', 'input[type=text], input[type=textarea], textarea',
-    function(event){
+    function (event) {
       $(this).parent().addClass('focus')
     }
   );
   $(document).on('focusout', 'input[type=text], input[type=textarea], textarea',
-    function(event){
+    function (event) {
       $(this).parent().removeClass('focus')
     }
   );
