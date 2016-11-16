@@ -2036,11 +2036,6 @@ span[role=combobox].ui-button:active .ui-icon {
         border-right: 2px solid #ccc;
     }
 
-    /*.main-content-shop .main-content-inner {*/
-        /*width: 100%;*/
-        /*float: none;*/
-    /*}*/
-
     .site-navigation .nav .menu-item:not(:last-child) a, .site-navigation .nav .menu-item:not(:last-child) a:visited {
         border-bottom: 1px solid #ccc;
     }
@@ -2074,18 +2069,6 @@ span[role=combobox].ui-button:active .ui-icon {
     margin: 5px 0;
     padding-right: 0;
     margin-right: 0;
-}
-
-.products .list-item:nth-of-type(4n+1) {
-    padding-left: 0;
-    margin-left: 0;
-}
-
-@media only screen and (max-width: 768px) {
-    .products .list-item:nth-of-type(2n+1) {
-        padding-left: 0;
-        margin-left: 0;
-    }
 }
 
 .products .list-item .list-inner .item-name {
