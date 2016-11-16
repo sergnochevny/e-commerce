@@ -2119,4 +2119,21 @@ span[role=combobox].ui-button:active .ui-icon {
     color: #667700 !important;
 }
 
+/*Pagination*/
+
+@media only screen and (max-width: 991px) {
+    .paging-navigation ul.pagination li {
+        display: none;
+    }
+    .paging-navigation ul.pagination li:first-child,
+    .paging-navigation ul.pagination li:nth-last-child(2),
+    .paging-navigation ul.pagination li:nth-child(2),
+    .paging-navigation ul.pagination li:nth-last-child(3),
+    .paging-navigation ul.pagination li:nth-child(3),
+    .paging-navigation ul.pagination li:nth-last-child(4),
+    .paging-navigation ul.pagination li.active {
+        display: inline-block;
+    }
+}
+
 
