@@ -16,6 +16,7 @@
       $res = parent::build_search_filter($filter, $view);
 
       $filter['hidden']['a.pnumber'] = 'null';
+      $filter['hidden']['a.priceyard'] = '0.00';
       $filter['hidden']['a.pvisible'] = '1';
       $filter['hidden']['a.image1'] = 'null';
 

@@ -1570,6 +1570,14 @@ span.opa {
     min-height: 50px !important;
 }
 
+.just-slider-wrap .just-slides .just-slide {
+    background-size: cover;
+    background-position: center right;
+    background-color: rgba(255, 255, 255, 0.5);
+    background-blend-mode: hard-light;
+    background-repeat: no-repeat;
+}
+
 @media (max-width: 992px) {
     .search-result-list .reset {
         right: -20px;
@@ -2098,6 +2106,7 @@ span[role=combobox].ui-button:active .ui-icon {
         display: flex;
         flex-flow: row wrap;
     }
+
     .products-wrap .products .list-item {
         min-height: 60px;
     }
@@ -2108,9 +2117,11 @@ span[role=combobox].ui-button:active .ui-icon {
         display: flex;
         flex-flow: row wrap;
     }
+
     .products-wrap .products .list-item {
         min-height: 78px;
     }
+
     .products-wrap .products .list-item .list-inner .item-name {
         display: flex;
         align-items: center;
@@ -2118,29 +2129,35 @@ span[role=combobox].ui-button:active .ui-icon {
         text-align: center;
     }
 }
+
 @media only screen and (min-width: 768px) {
     .products-wrap .products .list-item:nth-child(4n+1) {
         padding-left: 0;
     }
 }
+
 @media only screen and (max-width: 768px) {
     .products-wrap .products .list-item {
         min-height: 60px;
     }
 }
+
 @media only screen and (max-width: 767px) {
     .products-wrap .products .list-item:nth-child(2n+1) {
         padding-left: 0;
     }
 }
+
 @media only screen and (max-width: 454px) {
     .products-wrap .products .list-item {
         min-height: 78px;
     }
+
     /*.products-wrap .products .list-item .list-inner .item-name {*/
     /*padding: 5px 5px;*/
     /*}*/
 }
+
 @media only screen and (max-width: 356px) {
     .products-wrap .products .list-item .list-inner .item-name {
         padding: 5px 5px;
@@ -2153,6 +2170,7 @@ span[role=combobox].ui-button:active .ui-icon {
     .paging-navigation ul.pagination li {
         display: none;
     }
+
     .paging-navigation ul.pagination li:first-child,
     .paging-navigation ul.pagination li:nth-last-child(2),
     .paging-navigation ul.pagination li:nth-child(2),
@@ -2162,10 +2180,12 @@ span[role=combobox].ui-button:active .ui-icon {
         display: inline-block;
     }
 }
+
 @media only screen and (max-width: 335px) {
     .paging-navigation ul.pagination li {
         display: none;
     }
+
     .paging-navigation ul.pagination li:first-child,
     .paging-navigation ul.pagination li:nth-last-child(2),
     .paging-navigation ul.pagination li:nth-child(2),

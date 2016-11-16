@@ -26,6 +26,7 @@
           $filter['active'] = true;
         }
       }
+      if(isset($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.priceyard"])) . "'";
       if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.pvisible"])) . "'";
       if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
       if(isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";

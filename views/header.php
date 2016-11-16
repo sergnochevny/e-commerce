@@ -9,7 +9,8 @@
           <ul class="nav navbar-nav navbar-right">
             <?php if(!isset($my_account_admin_menu)) { ?>
               <li class="dropdown">
-                <a href="#" rel="nofollow" class="dropdown-toggle search-call" style="padding-right: 0" data-toggle="dropdown">
+                <a href="#" rel="nofollow" class="dropdown-toggle search-call" style="padding-right: 0"
+                   data-toggle="dropdown">
                   <i class="fa fa-2x fa-search" aria-hidden="true"></i>
                   <form id="f_search" role="search" method="post" class="header-search hidden"
                         action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
@@ -20,6 +21,11 @@
                            title="Search for:"/>
                     <input id="b_search" type="button" value="Search"/>
                   </form>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" title="Ask a Question" href="mailto:info@iluvfabrix.com">
+                  <i class="fa fa-2x fa-question-circle" aria-hidden="true"></i>
                 </a>
               </li>
             <?php } ?>
@@ -37,8 +43,10 @@
           <div class="col-md-2 col-lg-2">
             <div class="navbar-header">
               <div class="navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
-                      data-target=".site-navigation .navbar-collapse" id="menu-button">
-                <div class="hamburger"><div class="inner"></div></div>
+                   data-target=".site-navigation .navbar-collapse" id="menu-button">
+                <div class="hamburger">
+                  <div class="inner"></div>
+                </div>
               </div>
               <a data-waitloader class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
                 <div class="site-with-image">
