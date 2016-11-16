@@ -204,6 +204,6 @@
     }
   );
 
-  change_text_button();
+  $.change_text_button();
 
 })(jQuery);
