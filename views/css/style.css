@@ -2155,7 +2155,6 @@ span[role=combobox].ui-button:active .ui-icon {
     .paging-navigation ul.pagination li:nth-last-child(2),
     .paging-navigation ul.pagination li:nth-child(2),
     .paging-navigation ul.pagination li:nth-last-child(3),
-    .paging-navigation ul.pagination li:nth-child(3),
     .paging-navigation ul.pagination li:nth-last-child(4),
     .paging-navigation ul.pagination li.active {
         display: inline-block;
