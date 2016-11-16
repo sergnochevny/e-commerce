@@ -2074,23 +2074,15 @@ span[role=combobox].ui-button:active .ui-icon {
     margin: 5px 0;
     padding-right: 0;
     margin-right: 0;
-}
-
-.products .list-item:nth-of-type(4n+1) {
-    padding-left: 0;
-    margin-left: 0;
-}
-
-@media only screen and (max-width: 768px) {
-    .products .list-item:nth-of-type(2n+1) {
-        padding-left: 0;
-        margin-left: 0;
-    }
+    min-height: 78px;
 }
 
 .products .list-item .list-inner .item-name {
     padding: 10px 15px;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     color: #222 !important;
     font-weight: bold;
     text-shadow: 1px 1px 0 #DDD;
@@ -2103,6 +2095,40 @@ span[role=combobox].ui-button:active .ui-icon {
 
 .products .list-item .list-inner .item-name:hover {
     color: #667700 !important;
+}
+
+@media only screen and (max-width: 1199px) {
+    .products {
+        display: flex;
+        flex-flow: row wrap;
+    }
+    .products .list-item {
+        min-height: 78px;
+    }
+    .products .list-item .list-inner .item-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .products .list-item {
+        min-height: 60px;
+    }
+}
+@media only screen and (max-width: 454px) {
+    .products .list-item {
+        min-height: 78px;
+    }
+    /*.products .list-item .list-inner .item-name {*/
+        /*padding: 5px 5px;*/
+    /*}*/
+}
+@media only screen and (max-width: 356px) {
+    .products .list-item .list-inner .item-name {
+        padding: 5px 5px;
+    }
 }
 
 /*Pagination*/
@@ -2119,6 +2145,18 @@ span[role=combobox].ui-button:active .ui-icon {
     .paging-navigation ul.pagination li:nth-last-child(4),
     .paging-navigation ul.pagination li.active {
         display: inline-block;
+    }
+}
+@media only screen and (max-width: 335px) {
+    .paging-navigation ul.pagination li {
+        display: none !important;
+    }
+    .paging-navigation ul.pagination li:first-child,
+    .paging-navigation ul.pagination li:nth-last-child(2),
+    .paging-navigation ul.pagination li:nth-child(2),
+    .paging-navigation ul.pagination li:nth-last-child(3),
+    .paging-navigation ul.pagination li.active {
+        display: inline-block !important;
     }
 }
 
