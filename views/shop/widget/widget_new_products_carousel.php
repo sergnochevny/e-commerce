@@ -5,7 +5,7 @@
         <?php
           $url_prms['pid'] = $row['pid'];
           $url_prms['back'] = '';
-          $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr']);
+          $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr','prc']);
         ?>
         <div class="product-price-box clearfix">
           <div class="price-header">

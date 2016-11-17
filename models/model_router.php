@@ -10,7 +10,7 @@ Class Model_Router extends Model_Base
         while (true) {
             $sql = "SELECT * from url_sef where sef = '" . mysql_real_escape_string($sef_url) . "'";
             $find_result = mysql_query($sql);
-            if (!mysql_num_rows($find_result)) {
+            if (!($res = mysql_fetch_assoc($find_result))) {
 //              $sql = "SELECT * from url_sef where $url = '" . mysql_real_escape_string($url) . "'";
 //              $find_result = mysql_query($sql);
 
@@ -19,7 +19,6 @@ Class Model_Router extends Model_Base
                 if (!$res) $sef_url = $url;
                 break;
             } else {
-                $res = mysql_fetch_assoc($find_result);
                 if ($res['url'] !== $url) {
                     $itherator += 1;
                     $sef_url = $_sef_url . '-' . $itherator;

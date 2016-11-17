@@ -62,6 +62,10 @@
         $filter['hidden']['c.id'] = $clr_id;
         $res['hidden']['c.id'] = $clr_id;
       }
+      if(!is_null(_A_::$app->get('prc'))) {
+        $this->template->vars('prc_from', isset($filter['hidden']['a.priceyard']['from'])?$filter['hidden']['a.priceyard']['from']:null);
+        $this->template->vars('prc_to', isset($filter['hidden']['a.priceyard']['to'])?$filter['hidden']['a.priceyard']['to']:null);
+      }
       if(isset($type)) {
         $filter['type'] = $type;
         $res['type'] = $type;
@@ -106,7 +110,7 @@
           $sort['fabrix_product_categories.display_order'] = 'asc';
         } else  {
           $sort['b.displayorder'] = 'asc';
-          $sort['fabrix_product_categories.displayorder'] = 'asc';
+          $sort['fabrix_product_categories.display_order'] = 'asc';
         };
       }
     }
