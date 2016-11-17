@@ -6,6 +6,7 @@
       'SITE_PATH' => function() {
         return str_replace(DIRECTORY_SEPARATOR, DS, realpath(dirname(__FILE__) . DS) . DS);
       },
+
       'FILTER_LIMIT' => 50,
       'DEFAULT_SHIPPING' => 3,
       'TITLE_MAX_CHARS' => 50,
@@ -60,6 +61,8 @@
       'MEDIUM_FABRIC' => 2,
       'HEAVY_FABRIC' => 3,
       'YRDS_FOR_MULTIPLIER' => 2.0,              #total yardage allowed before a mulitplier is added
+
+      'PRICE_GROUPS_COUNT' => 24,
     ],
     'ini_set' => [
       'display_errors' => 'On',

@@ -700,7 +700,7 @@ a img.aligncenter {
 
 .site-navigation .navbar-collapse {
     border: none;
-    padding-top: 25px;
+    /*padding-top: 25px;*/
 }
 
 @media (max-width: 991px) {

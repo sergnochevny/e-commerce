@@ -23,11 +23,6 @@
                   </form>
                 </a>
               </li>
-              <li class="dropdown">
-                <a class="dropdown-toggle" title="Ask a Question" href="mailto:info@iluvfabrix.com">
-                  <i class="fa fa-2x fa-question-circle" aria-hidden="true"></i>
-                </a>
-              </li>
             <?php } ?>
             <?= isset($my_account_admin_menu) ? $my_account_admin_menu : '' ?>
             <?= isset($my_account_user_menu) ? $my_account_user_menu : '' ?>
@@ -39,15 +34,9 @@
   <nav class="site-navigation navbar navbar-default " role="navigation" itemscope="itemscope">
     <div class="container">
       <div class="header-block">
-        <div class="row">
-          <div class="col-md-2 col-lg-2">
+        <div class="col-xs-2 col-md-2 col-lg-2">
+          <div class="row">
             <div class="navbar-header">
-              <div class="navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
-                   data-target=".site-navigation .navbar-collapse" id="menu-button">
-                <div class="hamburger">
-                  <div class="inner"></div>
-                </div>
-              </div>
               <a data-waitloader class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
                 <div class="site-with-image">
                   <img class="site-logo" src="<?= _A_::$app->router()->UrlTo('views/images/logo.png'); ?>" alt=""/>
@@ -55,8 +44,8 @@
               </a>
             </div>
           </div>
-          <?= $menu ?>
         </div>
+        <?= $menu ?>
       </div>
     </div>
   </nav>
