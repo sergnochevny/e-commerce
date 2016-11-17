@@ -1,14 +1,13 @@
-<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
   <div class="row">
-    <div class="col-xs-12">
-      <div class="row pull-right">
-        <a class="button" title="Ask a Question" href="mailto:info@iluvfabrix.com">
-          Ask a Question
-        </a>
-      </div>
-    </div>
+<!--    <div class="col-xs-8">-->
+<!--      <div class="pull-right">-->
+<!--        <a class="button" title="Ask a Question" href="mailto:info@iluvfabrix.com">-->
+<!--          Ask a Question-->
+<!--        </a>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="col-xs-12 navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
+    <div class="col-xs-8 col-xs-pull-8 navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
          data-target=".site-navigation .navbar-collapse" id="menu-button">
       <div class="row pull-right">
         <div class="hamburger">
@@ -17,7 +16,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12 pull-right navbar-collapse collapse navbar-collapse-top">
+    <div class="col-xs-12 navbar-collapse collapse navbar-collapse-top">
       <div class="row">
         <ul id="menu-header-menu" class="site-menu nav navbar-nav">
           <li
@@ -49,6 +48,12 @@
           </li>
         </ul>
       </div>
+    </div>
+    <div class="col-md-push-12 text-right button-ask">
+      <a class="button" title="Ask a Question" href="mailto:info@iluvfabrix.com">
+        <span>Ask a Question</span>
+        <i class="fa fa-question" aria-hidden="true"></i>
+      </a>
     </div>
   </div>
 </div>

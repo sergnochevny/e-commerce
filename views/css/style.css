@@ -1937,7 +1937,7 @@ span[role=combobox].ui-button:active .ui-icon {
     border-radius: 4px;
     box-shadow: 0 0 10px rgb(191, 191, 191);
     position: absolute;
-    top: 200px;
+    top: 180px;
 }
 
 .shop__sidebar .shop__sidebar-list {
@@ -2071,11 +2071,30 @@ span[role=combobox].ui-button:active .ui-icon {
 
 /*Manufacturers Style*/
 
+.products-wrap .product_groups {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #999;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #999;
+}
 
 .products-wrap .products .list-item {
-    margin: 5px 0;
+    /*margin: 5px 0;*/
     padding-right: 0;
     margin-right: 0;
+    border: 2px solid #999;
+    border-top: none;
+    border-left: none;
+}
+
+.products-wrap .products .list-item:nth-child(4n) {
+    border-right: none;
+}
+.products-wrap .products .list-item:nth-last-child(1),
+.products-wrap .products .list-item:nth-last-child(2),
+.products-wrap .products .list-item:nth-last-child(3),
+.products-wrap .products .list-item:nth-last-child(4) {
+    border-bottom: none;
 }
 
 .products-wrap .products .list-item .list-inner .item-name {
@@ -2088,10 +2107,7 @@ span[role=combobox].ui-button:active .ui-icon {
     font-weight: bold;
     text-shadow: 1px 1px 0 #DDD;
     transition: all .3s ease;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 2px solid #999;
-    border-radius: 4px;
-    box-shadow: 0 0 10px #999;
+
 }
 
 .products-wrap .products .list-item .list-inner .item-name:hover {
@@ -2142,6 +2158,18 @@ span[role=combobox].ui-button:active .ui-icon {
 @media only screen and (max-width: 767px) {
     .products-wrap .products .list-item:nth-child(2n+1) {
         padding-left: 0;
+    }
+    .products-wrap .products .list-item:nth-child(2n) {
+        border-right: none;
+    }
+    .products-wrap .products .list-item:nth-last-child(3),
+    .products-wrap .products .list-item:nth-last-child(4) {
+        border-bottom: 2px solid #999;
+    }
+
+    .products-wrap .products .list-item:nth-last-child(1),
+    .products-wrap .products .list-item:nth-last-child(2) {
+        border-bottom: none;
     }
 }
 
@@ -2207,4 +2235,74 @@ span[role=combobox].ui-button:active .ui-icon {
 .service .service__cont .service__cont-desc span {
     display: block;
     margin-bottom: 10px;
+}
+
+/*button like-question-matches*/
+
+@media only screen and (min-width: 480px) and (max-width: 992px) {
+    .button-small-width.no-offset-left {
+        padding-left: 2px !important;
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+    .button-small-width {
+        width: 50%;
+    }
+    .button-small-width.no-offset-left {
+        padding-left: 2px !important;
+    }
+
+}
+
+/*HEADER menu*/
+
+.header-block {
+    position: relative;
+}
+
+.navbar-nav {
+    margin: 15px 0 0;
+}
+.button-ask {
+    margin: 20px 15px 0 0;
+}
+.button-ask a {
+    padding: 10px;
+}
+
+@media only screen and (min-width: 992px) {
+    .button-ask i {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .button-ask {
+        margin: 22px 75px 0 0;
+    }
+    .button-ask span {
+        display: none;
+    }
+    .button-ask i {
+        font-size: 20px;
+    }
+    .button-ask a {
+        padding: 5px 10px;
+    }
+    #menu-button {
+        top: 20px;
+        right: 0;
+    }
+    .navbar-nav {
+        margin: 15px 15px 0;
+    }
+}
+
+/*products item*/
+
+@media only screen and (min-width: 520px) and (max-width: 767px) {
+    .products .product-item {
+        width: 50%;
+    }
 }
