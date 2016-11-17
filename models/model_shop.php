@@ -287,14 +287,14 @@
             " LEFT JOIN fabrix_product_categories c on a.cid = c.cid" .
             " LEFT JOIN fabrix_products b ON b.pid = c.pid" .
             " WHERE b.pvisible = '1' and b.image1 is not null" .
-            " ORDER BY a.displayorder";
+            " ORDER BY a.displayorder, c.displayorder";
           break;
         case 'new':
           $q = "SELECT distinct a.*" .
             " FROM (SELECT pid FROM fabrix_products WHERE pvisible = '1' and image1 is not null ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
             " LEFT JOIN fabrix_product_categories c ON b.pid = c.pid" .
             " LEFT JOIN fabrix_categories a on a.cid = c.cid" .
-            " ORDER BY a.displayorder";
+            " ORDER BY a.displayorder, c.displayorder";
           break;
         case 'manufacturer':
           $q = "SELECT distinct a.*" .

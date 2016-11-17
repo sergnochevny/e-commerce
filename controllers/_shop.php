@@ -104,7 +104,10 @@
       } else {
         if(!empty(_A_::$app->get('cat'))) {
           $sort['fabrix_product_categories.display_order'] = 'asc';
-        } else  $sort['a.pid'] = 'desc';
+        } else  {
+          $sort['b.displayorder'] = 'asc';
+          $sort['fabrix_product_categories.displayorder'] = 'asc';
+        };
       }
     }
 
