@@ -8,7 +8,8 @@
         <div class="col-md-8">
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" rel="nofollow" class="dropdown-toggle search-call" style="padding-right: 0" data-toggle="dropdown">
+              <a href="#" rel="nofollow" class="dropdown-toggle search-call" style="padding-right: 0"
+                 data-toggle="dropdown">
                 <i class="fa fa-2x fa-search" aria-hidden="true"></i>
                 <form id="f_search" role="search" method="post" class="header-search hidden"
                       action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
@@ -36,7 +37,9 @@
             <div class="navbar-header">
               <div class="navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
                    data-target=".site-navigation .navbar-collapse" id="menu-button">
-                <div class="hamburger"><div class="inner"></div></div>
+                <div class="hamburger">
+                  <div class="inner"></div>
+                </div>
               </div>
               <a data-waitloader data-link class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
                 <div class="site-with-image">

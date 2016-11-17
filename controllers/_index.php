@@ -19,6 +19,13 @@
     /**
      * @export
      */
+    public function estimate() {
+      $this->main->view('static/estimate');
+    }
+
+    /**
+     * @export
+     */
     public function newsletter() {
       $this->main->view('static/newsletter');
     }
