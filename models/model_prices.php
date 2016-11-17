@@ -47,8 +47,8 @@
         $limit = $limit + $start;
         if($limit > $res_count_rows) $limit = $res_count_rows;
         while($start < $limit) {
-          $min_price = number_format($start++ * $step, 2);
-          $max_price = number_format($start * $step, 2);
+          $min_price = round($start++ * $step, 2);
+          $max_price = round($start * $step, 2);
           $response[] = ['min_price' => $min_price, 'max_price' => $max_price];
         }
       }

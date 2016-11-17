@@ -60,6 +60,7 @@
       if(isset($fields)) {
         if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
         else  $search = _A_::$app->get('search');
+        $h_search = isset($search['hidden']) ? $search['hidden'] : null;
         if(isset($search)) {
           $search_form = array_filter($search, function($val) {
             if(is_array($val)) return true;
@@ -67,6 +68,15 @@
           });
           foreach($fields as $key) {
             if(isset($search_form[$key])) $filter[$key] = $search_form[$key];
+          }
+        }
+        if(isset($h_search)) {
+          $h_search_form = array_filter($h_search, function($val) {
+            if(is_array($val)) return true;
+            return (strlen(trim($val)) > 0);
+          });
+          foreach($fields as $key) {
+            if(isset($h_search_form[$key])) $h_filter[$key] = $h_search_form[$key];
           }
         }
       } else {
@@ -85,6 +95,7 @@
         if(isset($fields)) {
           if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
           else  $search = _A_::$app->get('search');
+          $h_search = isset($search['hidden']) ? $search['hidden'] : null;
           if(isset($search)) {
             $search = array_filter($search);
             foreach($search as $key => $item) {
@@ -98,8 +109,23 @@
               }
             }
           }
+          if(isset($h_search)) {
+            $h_search = array_filter($h_search);
+            foreach($h_search as $key => $item) {
+              if(preg_match($fields_pattern, $fields[$key]['Type'], $matches) !== false) {
+                if(count($matches) > 1) {
+                  if(is_array($item)) {
+                    $h_filter[$key] = [$fields_type[$matches[1]][1], $item];
+                  } else  $h_filter[$key] = [$fields_type[$matches[1]][0], $item];
+                }
+                $h_search_form[$key] = $item;
+              }
+            }
+          }
         }
       }
+      if(isset($h_search_form)) $search_form['hidden'] = $h_search_form;
+      if(isset($h_filter)) $filter['hidden'] = $h_filter;
       return $search_form;
     }
 

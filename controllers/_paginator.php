@@ -3,23 +3,25 @@
   class Controller_Paginator extends Controller_Controller {
 
     public function paginator($total_rows, $page, $url, $per_page = 12, $showbypage = 10) {
-      if($total_rows > $per_page){
+      if($total_rows > $per_page) {
+        $prms = null;
         if(!is_null(_A_::$app->get('cat'))) {
-          $cat_id = _A_::$app->get('cat');
-          $this->template->vars('cat_id', $cat_id);
+          $prms['cat'] = _A_::$app->get('cat');
         }
         if(!is_null(_A_::$app->get('mnf'))) {
-          $mnf_id = _A_::$app->get('mnf');
-          $this->template->vars('mnf_id', $mnf_id);
+          $prms['mnf'] = _A_::$app->get('mnf');
         }
         if(!is_null(_A_::$app->get('ptrn'))) {
-          $ptrn_id = _A_::$app->get('ptrn');
-          $this->template->vars('ptrn_id', $ptrn_id);
+          $prms['ptrn'] = _A_::$app->get('ptrn');
         }
         if(!is_null(_A_::$app->get('clr'))) {
-          $clr_id = _A_::$app->get('clr');
-          $this->template->vars('clr_id', $clr_id);
+          $prms['clr'] = _A_::$app->get('clr');
         }
+        if(!is_null(_A_::$app->get('prc'))) {
+          $prms['prc'] = _A_::$app->get('prc');
+        }
+
+        $this->template->vars('prms', $prms);
 
         $num_pages = ceil($total_rows / $per_page);
         $last_page = $num_pages;

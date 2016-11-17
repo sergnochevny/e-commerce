@@ -1,3 +1,12 @@
+<div class="col-xs-12 pull-right">
+  <div class="row afterhead-row">
+    <div class="col-sm-10 col-sm-offset-2 text-center">
+      <div class="row">
+        <h3 class="page-title">Manufacturer</h3>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="col-xs-12 search-result-header search-result-container text-right">
   <div class="row">
     <span class="search-result">Showing <?= $count_rows; ?> results</span>

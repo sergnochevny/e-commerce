@@ -6,7 +6,7 @@
       return [
         'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
         'a.piece', 'a.best', 'a.specials', 'b.cid',
-        'c.id', 'd.id', 'e.id'
+        'c.id', 'd.id', 'e.id', 'a.priceyard'
       ];
     }
 
@@ -16,7 +16,7 @@
       $res = parent::build_search_filter($filter, $view);
 
       $filter['hidden']['a.pnumber'] = 'null';
-      $filter['hidden']['a.priceyard'] = '0.00';
+      if(!isset($filter['hidden']['a.priceyard']) && !isset($filter['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
       $filter['hidden']['a.pvisible'] = '1';
       $filter['hidden']['a.image1'] = 'null';
 
@@ -127,7 +127,14 @@
       $search_data['colours'] = $colours;
       $search_data['manufacturers'] = $manufacturers;
       $type = isset($search_data['type']) ? $search_data['type'] : null;
+      if(!empty(_A_::$app->get('cat'))) $url_prms['cat'] = _A_::$app->get('cat');
+      if(!empty(_A_::$app->get('mnf'))) $url_prms['mnf'] = _A_::$app->get('mnf');
+      if(!empty(_A_::$app->get('ptrn'))) $url_prms['ptrn'] = _A_::$app->get('ptrn');
+      if(!empty(_A_::$app->get('clr'))) $url_prms['clr'] = _A_::$app->get('clr');
+      if(!empty(_A_::$app->get('prc'))) $url_prms['prc'] = _A_::$app->get('prc');
+
       if(isset($type)) $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller . DS . $type));
+      if(isset($url_prms)) $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller, $url_prms));
     }
 
     protected function after_get_list(&$rows, $view = false, $type = null) {
@@ -137,6 +144,7 @@
       if(!empty(_A_::$app->get('mnf'))) $url_prms['mnf'] = _A_::$app->get('mnf');
       if(!empty(_A_::$app->get('ptrn'))) $url_prms['ptrn'] = _A_::$app->get('ptrn');
       if(!empty(_A_::$app->get('clr'))) $url_prms['clr'] = _A_::$app->get('clr');
+      if(!empty(_A_::$app->get('prc'))) $url_prms['prc'] = _A_::$app->get('prc');
       if(isset($type)) $url_prms['back'] = $type;
       $this->template->vars('url_prms', $url_prms);
     }
