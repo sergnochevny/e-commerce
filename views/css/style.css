@@ -1937,7 +1937,7 @@ span[role=combobox].ui-button:active .ui-icon {
     border-radius: 4px;
     box-shadow: 0 0 10px rgb(191, 191, 191);
     position: absolute;
-    top: 180px;
+    top: 200px;
 }
 
 .shop__sidebar .shop__sidebar-list {
@@ -2044,6 +2044,7 @@ span[role=combobox].ui-button:active .ui-icon {
 
     .site-navigation .nav .menu-item:not(:last-child) a, .site-navigation .nav .menu-item:not(:last-child) a:visited {
         border-bottom: 1px solid #ccc;
+        box-shadow: 0 10px 50px -5px #ccc;
     }
 }
 
