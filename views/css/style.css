@@ -8,8 +8,6 @@ body {
     -webkit-font-smoothing: antialiased;
 
     background-image: url(../images/bg-body.jpg);
-    background-color: rgba(241, 241, 241, 0.9);
-    background-blend-mode: overlay;
 }
 
 a:focus {
@@ -1573,8 +1571,8 @@ span.opa {
 .just-slider-wrap .just-slides .just-slide {
     background-size: cover;
     background-position: center right;
-    background-color: rgba(255, 255, 255, 0.5);
-    background-blend-mode: hard-light;
+    /*background-color: rgba(255, 255, 255, 0.5);*/
+    /*background-blend-mode: hard-light;*/
     background-repeat: no-repeat;
 }
 
@@ -2193,4 +2191,21 @@ span[role=combobox].ui-button:active .ui-icon {
     .paging-navigation ul.pagination li.active {
         display: inline-block !important;
     }
+}
+
+/*service page*/
+
+.service .service__cont .service__cont-title, .service-title {
+    color: #667700 !important;
+    text-transform: capitalize;
+    font-weight: lighter;
+    text-shadow: 1px 1px 1px #000 !important;
+}
+.service .service__cont .service__cont-desc {
+    font-size: 14px;
+    line-height: 24px;
+}
+.service .service__cont .service__cont-desc span {
+    display: block;
+    margin-bottom: 10px;
 }
