@@ -2,8 +2,7 @@
 
 var change_text = false;
 
-jQuery(document).ready(function ($) {
-
+(function ($) {
   $.extend({
       change_button_text: function (force) {
         if (force) change_text = false;
@@ -33,6 +32,58 @@ jQuery(document).ready(function ($) {
       }
     }
   );
+
+  $.extend({
+    /*$.post function replacement*/
+    postdata: function (this_, url, data, callback) {
+      $('body').waitloader('show');
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          if (callback) {
+            $.when(callback.call(this_, data)).done(function () {
+              $('body').waitloader('remove');
+            });
+          } else {
+            $('body').waitloader('remove');
+          }
+        },
+        error: function (xhr, str) {
+          alert('Error: ' + xhr.responseCode);
+          $('body').waitloader('remove');
+        },
+      });
+    }
+  });
+
+  $.fn.extend({
+    waitloader: function (action) {
+      var wait_loader_fa = '<div class="ui-widget-overlay" id="wait_loader">' +
+        '<i class="fa fa-spinner fa-pulse fa-4x"></i>' +
+        '</div>';
+      switch (action) {
+        case 'show':
+          if ($('#wait_loader').length == 0) {
+            $(wait_loader_fa).appendTo(this).css('z-index', '9999');
+          }
+          break;
+        case 'remove':
+          if ($('#wait_loader').length > 0) {
+            $('#wait_loader').remove();
+          }
+          break;
+      }
+    }
+  });
+
+  $(document).on('click', '#b_search', function (event) {
+    $('#f_search').trigger('submit');
+  });
 
   $.change_button_text();
 
@@ -98,82 +149,17 @@ jQuery(document).ready(function ($) {
 
   /* Move cross-sell below cart totals on cart page */
   $('.woocommerce .cart-collaterals .cross-sells, .woocommerce-page .cart-collaterals .cross-sells').appendTo('.woocommerce .cart-collaterals, .woocommerce-page .cart-collaterals');
-});
 
-(function ($) {
-  $.extend({
-    /*$.post function replacement*/
-    postdata: function (this_, url, data, callback) {
-      $('body').waitloader('show');
-      $.ajax({
-        type: 'POST',
-        url: url,
-        data: data,
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function (data) {
-          if (callback) {
-            $.when(callback.call(this_, data)).done(function () {
-              $('body').waitloader('remove');
-            });
-          } else {
-            $('body').waitloader('remove');
-          }
-        },
-        error: function (xhr, str) {
-          alert('Error: ' + xhr.responseCode);
-          $('body').waitloader('remove');
-        },
-      });
-    }
-  });
-
-  $.fn.extend({
-    waitloader: function (action) {
-      var wait_loader_fa = '<div class="ui-widget-overlay" id="wait_loader">' +
-        '<i class="fa fa-spinner fa-pulse fa-4x"></i>' +
-        '</div>';
-      switch (action) {
-        case 'show':
-          if ($('#wait_loader').length == 0) {
-            $(wait_loader_fa).appendTo(this).css('z-index', '9999');
-          }
-          break;
-        case 'remove':
-          if ($('#wait_loader').length > 0) {
-            $('#wait_loader').remove();
-          }
-          break;
-      }
-    }
-  });
-
-  $(document).on('click', '#b_search', function (event) {
-    $('#f_search').trigger('submit');
-  });
-
-  $(function () {
-    //$("a.zoom").prettyPhoto({
-    //	hook: "data-rel",
-    //	social_tools: !1,
-    //	theme: "pp_woocommerce",
+  $("a[data-rel^='prettyPhoto']").prettyPhoto({
+    hook: "data-rel",
+    social_tools: '',
+    theme: "pp_woocommerce",
     //	horizontal_padding: 20,
     //	opacity: .8,
-    //	deeplinking: !1
-    //});
-
-    $("a[data-rel^='prettyPhoto']").prettyPhoto({
-      hook: "data-rel",
-      social_tools: '',
-      theme: "pp_woocommerce",
-      //	horizontal_padding: 20,
-      //	opacity: .8,
-      //	show_title: false,
-      //  allow_resize: true,
-      allow_expand: true,
-      default_width: 700
-    });
+    //	show_title: false,
+    //  allow_resize: true,
+    allow_expand: true,
+    default_width: 700
   });
 
   $(document).on('click', '[data-waitloader]', function (event) {

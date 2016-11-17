@@ -6,7 +6,7 @@
     ?>
     <div class="col-xs-6 col-sm-3 list-item">
       <div class="list-inner">
-        <a data-waitloader href="<?= _A_::$app->router()->UrlTo('shop', $prms, $row['manufacturer']); ?>">
+        <a data-waitloader data-sb href="<?= _A_::$app->router()->UrlTo('shop', $prms, $row['manufacturer']); ?>">
           <div class="item-name"><?= $row['manufacturer']; ?></div>
         </a>
       </div>
