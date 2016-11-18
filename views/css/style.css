@@ -2244,6 +2244,66 @@ span[role=combobox].ui-button:active .ui-icon {
 
 /*button like-question-matches*/
 
+.button-group-product {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+.button-group-product .button-small-width {
+    flex: 1 255px;
+    margin: 0 15px;
+    max-width: 255px;
+}
+.button-group-product .button-small-width:last-child {
+    margin: auto;
+}
+
+.product_details .table-bordered {
+    border: 2px solid #ddd;
+    box-shadow: 0 0 5px 0 #ccc;
+    background-color: #fff;
+}
+.product_details .table-bordered>tbody>tr>td {
+    border: 2px solid #ddd;
+}
+
+@media only screen and (max-width: 1199px) {
+    .button-group-product .button-small-width {
+        flex: 1 200px;
+    }
+}
+@media only screen and (max-width: 991px) {
+    .button-group-product .button-small-width {
+        flex: 1 345px;
+        max-width: 345px;
+    }
+}
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+    .button-group-product .button-small-width {
+        flex: 1 270px;
+        max-width: 360px;
+    }
+}
+@media only screen and (max-width: 599px) {
+    .button-group-product .button-small-width {
+        flex: 1 200px;
+        max-width: 269px;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .button-group-product .button-small-width {
+        max-width: 100%;
+    }
+    .button-group-product .button-small-width a {
+        width: 100%;
+    }
+    .button-group-product .button-small-width:last-child {
+        margin: 0 15px;
+    }
+}
+
+
+
 @media only screen and (min-width: 480px) and (max-width: 992px) {
     .button-small-width.no-offset-left {
         padding-left: 2px !important;
@@ -2303,7 +2363,12 @@ span[role=combobox].ui-button:active .ui-icon {
 
 @media only screen and (max-width: 991px) {
     .button-ask {
-        margin: 22px 75px 0 0;
+        margin: 22px -110px 0 0;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .button-ask {
+        margin: 22px 0px 0 0;
     }
 }
 @media only screen and (min-width: 991px) {

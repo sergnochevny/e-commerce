@@ -39,7 +39,7 @@
           <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('matches') ?>">Matches</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('estimate') ?>">Estimate</a>
+          <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('estimate') ?>">Estimator</a>
         </li>
       </ul>
     </div>

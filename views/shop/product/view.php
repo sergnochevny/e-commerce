@@ -154,9 +154,9 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                 <div class="row">
                   <div class="product-detail-view-actions" aria-label="...">
 
-                    <div class="row">
+                    <div class="row button-group-product">
                       <?php if($data['inventory'] > 0) { ?>
-                        <div class="<?= ($allowed_samples) ? 'col-sm-6 no-offset-right' : 'col-sm-12' ?> col-xs-12 button-small-width">
+                        <div class="button-small-width">
                           <a class="button col-xs-12" id="add_cart"
                              href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
                             Add to Cart
@@ -168,16 +168,15 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                         </div>
                       <?php } ?>
                       <?php if($data['inventory'] > 0 && $allowed_samples) { ?>
-                        <div class="col-sm-6 col-xs-12 no-offset-left button-small-width">
+                        <div class="button-small-width">
                           <a id="add_samples_cart" class="button col-xs-12"
                              href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
                             Add Samples
                           </a>
                         </div>
                       <?php } ?>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-6 col-xs-12 no-offset-right button-small-width">
+
+                      <div class="button-small-width">
                         <a class="button col-xs-12" id="view_favorites"
                            style="<?= (isset($in_favorites) && $in_favorites) ? '' : 'display:none'; ?>"
                            data-pid="<?= $data['pid'] ?>"
@@ -196,12 +195,13 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                         <?php if($data['img1_exists']) { ?>
                       </div>
 
-                      <div class="col-sm-6 col-xs-12 no-offset-left button-small-width">
+                      <div class="button-small-width">
                         <a class="button col-xs-12" id="add_matches"
                            href="<?= $mhref; ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? 'style="display: none;"' : ''; ?>>
 
                           Add to Matches
                         </a>
+
                         <a class="button col-xs-12" id="view_matches"
                            href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
 
@@ -210,9 +210,8 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                         <?php } ?>
                       </div>
 
-                      <div class="col-sm-6 col-xs-12 no-offset-right button-small-width">
+                      <div class="button-small-width">
                         <a class="button col-xs-12" href="<?= $ahref; ?>">
-
                           Ask a Question
                         </a>
                       </div>

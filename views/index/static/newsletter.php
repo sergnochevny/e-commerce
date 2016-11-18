@@ -30,6 +30,14 @@
           </article>
 
           <div class="newsletter__form">
+            <div class="newsletter__form-title">
+              <h4>Register for our newsletter to benefit from:</h4>
+              <ul>
+                <li>exclusive offers only given to members</li>
+                <li> first to know of any limited time fabric discounts</li>
+                <li>new features & website tools</li>
+              </ul>
+            </div>
             <form>
               <div class="form-group">
                 <div class="row">
