@@ -1,5 +1,5 @@
 <div class="row pull-right">
-  <div class="col-xs- col-xs-pull-8 navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
+  <div class="col-xs-8 col-xs-pull-8 navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
        data-target=".site-navigation .navbar-collapse" id="menu-button">
     <div class="row pull-right">
       <div class="hamburger">

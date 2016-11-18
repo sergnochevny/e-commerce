@@ -28,6 +28,43 @@
               <div class="vc_row-full-width"></div>
             </div>
           </article>
+
+          <div class="newsletter__form">
+            <form>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input type="text" data-custom-form-input class="form-control" id="FirstName" placeholder="First Name">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" data-custom-form-input class="form-control" id="LastName" placeholder="Last Name">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input type="password" data-custom-form-input class="form-control" id="Password" placeholder="Password">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="password" data-custom-form-input class="form-control" id="ConfirmPassword" placeholder="Confirm Password">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input type="email" data-custom-form-input class="form-control" id="Email" placeholder="Enter email">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 text-center">
+                  <button type="submit" class="btn button">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
