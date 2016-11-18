@@ -221,8 +221,8 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                 </div>
               </div>
             </div>
-            <div class="col-xs-12">
-              <div class="row">
+
+            <div class="row">
                 <div class="product_meta product_details">
                   <h3>DETAILS</h3>
                   <table class="table table-bordered table-striped">
@@ -254,7 +254,6 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                     </tbody>
                   </table>
                 </div>
-              </div>
             </div>
           </div>
         </div>

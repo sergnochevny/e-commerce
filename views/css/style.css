@@ -2254,17 +2254,34 @@ span[role=combobox].ui-button:active .ui-icon {
     margin: 0 15px;
     max-width: 255px;
 }
-.button-group-product .button-small-width:last-child {
+.button-group-product .button-small-width:nth-child(5) {
     margin: auto;
 }
 
-.product_details .table-bordered {
+.table-bordered {
     border: 2px solid #ddd;
     box-shadow: 0 0 5px 0 #ccc;
     background-color: #fff;
 }
-.product_details .table-bordered>tbody>tr>td {
+.table-bordered>tbody>tr>td {
     border: 2px solid #ddd;
+}
+
+@media only screen and (min-width: 1600px) {
+    .button-group-product .button-small-width {
+        flex: 1 255px;
+        margin: 0 15px;
+        max-width: 356px;
+    }
+    
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+    .button-group-product .button-small-width {
+        flex: 1 255px;
+        margin: 0 15px;
+        max-width: 255px;
+    }
 }
 
 @media only screen and (max-width: 1199px) {
@@ -2297,7 +2314,7 @@ span[role=combobox].ui-button:active .ui-icon {
     .button-group-product .button-small-width a {
         width: 100%;
     }
-    .button-group-product .button-small-width:last-child {
+    .button-group-product .button-small-width:nth-child(5) {
         margin: 0 15px;
     }
 }
@@ -2361,16 +2378,29 @@ span[role=combobox].ui-button:active .ui-icon {
     }
 }
 
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .navbar-header {
+        margin-top: 20px;
+    }
+    .navbar-nav {
+        margin: 0 15px 0;
+    }
+    .button-ask {
+        margin: 16px 15px 0 0;
+    }
+}
+
 @media only screen and (max-width: 991px) {
     .button-ask {
-        margin: 22px -110px 0 0;
+        margin: 22px -125px 0 0;
     }
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
     .button-ask {
-        margin: 22px 0px 0 0;
+        margin: 22px 0 0;
     }
 }
+
 @media only screen and (min-width: 991px) {
     .top-menu{
         display: inline-block!important;
@@ -2444,4 +2474,21 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 .estimate__cont .cont-item-wrap .desc-cont ul li {
     list-style-type: none;
+}
+
+/*newsletter page*/
+
+.newsletter__form h4 {
+    color: #667700;
+    text-transform: capitalize;
+    font-weight: lighter;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.newsletter__form-wrap {
+    margin-top: 30px;
+    border: 2px solid #ddd;
+    box-shadow: 0 0 5px 0 #ccc;
+    background-color: rgba(255, 255, 255, .5);
+    padding: 20px;
 }

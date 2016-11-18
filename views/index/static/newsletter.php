@@ -38,7 +38,7 @@
                 <li>new features & website tools</li>
               </ul>
             </div>
-            <form>
+            <form class="newsletter__form-wrap">
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-6">
