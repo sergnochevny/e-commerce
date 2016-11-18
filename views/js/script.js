@@ -166,12 +166,12 @@ var change_text = false;
     $('body').waitloader('show');
   });
 
-  $(document).on('focus', 'input[type=text], input[type=textarea], textarea',
+  $(document).on('focus', 'input[type=text], input[type=textarea], textarea, input[type=number], input[type=email], input[type=password], select',
     function (event) {
       $(this).parent().addClass('focus')
     }
   );
-  $(document).on('focusout', 'input[type=text], input[type=textarea], textarea',
+  $(document).on('focusout', '.focus',
     function (event) {
       $(this).parent().removeClass('focus')
     }

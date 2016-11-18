@@ -66,8 +66,8 @@
 
 .dragZoneTitle {
     background-color: #ddd;
-    border-bottom: 4px solid #fff;
-    color: #666;
+    color: #667700;
+    text-shadow: 2px 1px 0 #222;
     left: 0;
     text-transform: uppercase;
     padding: 10px 0;
@@ -75,6 +75,10 @@
     right: 0;
     font-size: 1.52em;
     text-align: center;
+    border-top-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    border-top-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
 }
 
 .deleteDragImg:before {
