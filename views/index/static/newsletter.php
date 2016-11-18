@@ -52,16 +52,6 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="password" data-custom-form-input class="form-control" id="Password" placeholder="Password">
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="password" data-custom-form-input class="form-control" id="ConfirmPassword" placeholder="Confirm Password">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-6">
                     <input type="email" data-custom-form-input class="form-control" id="Email" placeholder="Enter email">
                   </div>
                 </div>

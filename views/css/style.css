@@ -2488,8 +2488,53 @@ span[role=combobox].ui-button:active .ui-icon {
 
 .newsletter__form-wrap {
     margin-top: 30px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
     border: 2px solid #ddd;
     box-shadow: 0 0 5px 0 #ccc;
     background-color: rgba(255, 255, 255, .5);
     padding: 20px;
+}
+
+h4, h3, h2 {
+    color: #667700 !important;
+    text-transform: capitalize !important;
+    font-weight: lighter !important;
+    text-shadow: 1px 1px 1px #000 !important;
+}
+
+.newsletter__form-wrap-main {
+    margin-top: 30px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+    box-shadow: 0 0 5px 0 #ccc;
+    background-color: rgba(255, 255, 255, .5);
+}
+.newsletter__form-block-form {
+    background-color: rgba(238, 238, 238, .5);
+    padding: 10px;
+}
+.newsletter__form-title {
+    padding: 10px;
+}
+.newsletter__form-block-form input {
+    padding: 12px;
+    background-color: #fff!important;
+    border: 1px solid #DDD;
+}
+.newsletter__form-block-form input:focus,
+.newsletter__form-block-form input:active,
+.newsletter__form-block-form input:hover {
+    padding: 12px;
+    background-color: #fff!important;
+    border: 1px solid #DDD;
+    box-shadow: none;
+}
+input:focus,
+input:active,
+input:hover {
+    box-shadow: none;
 }
