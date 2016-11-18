@@ -394,6 +394,9 @@
       if((!empty(_A_::$app->get('clr')))) {
         $url_prms['clr'] = _A_::$app->get('clr');
       }
+      if((!empty(_A_::$app->get('prc')))) {
+        $url_prms['prc'] = _A_::$app->get('prc');
+      }
 
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');
