@@ -2393,12 +2393,12 @@ span[role=combobox].ui-button:active .ui-icon {
 
 @media only screen and (max-width: 991px) {
     .button-ask {
-        margin: 22px -125px 0 0;
+        margin: 22px 70px 0 0;
     }
 }
 @media only screen and (max-width: 767px) {
     .button-ask {
-        margin: 22px 0 0;
+        margin: 22px 70px 0;
     }
 }
 
