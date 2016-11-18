@@ -180,8 +180,8 @@
       $data['filename1'] = isset($data['filename1']) ? _A_::$app->router()->UrlTo($data['filename1']) : null;
       for($i = 2; $i < 6; $i++) {
         if(!empty($data['image' . $i])) {
-          $data['img' . $i . '_filename'] = 'upload/upload/' . $data['image' . $i];
-          $data['img' . $i . '_filename1'] = 'upload/upload/' . 'b_' . $data['image' . $i];
+          $data['img' . $i . '_filename'] = 'upload/upload/b_' . $data['image' . $i];
+          $data['img' . $i . '_filename1'] = 'upload/upload/b_' . $data['image' . $i];
           if(!(file_exists($data['img' . $i . '_filename']) && is_file($data['img' . $i . '_filename']) && is_readable($data['img' . $i . '_filename']))) {
             $data['img' . $i . '_filename'] = "upload/upload/not_image.jpg";
             $data['img' . $i . '_filename1'] = null;
