@@ -181,7 +181,7 @@
       if(!is_null(_A_::$app->post('method'))) {
         $method = _A_::$app->post('method');
         if($method !== 'filter') {
-          if(in_array($method, ['users', 'prod', 'cat', 'mnf'])) {
+          if(in_array($method, ['users', 'prod', 'cat', 'mnf', 'prc'])) {
             $filters = ($method == 'users') ? $data['users'] : $data['filter_products'];
             exit($this->select_filter($method, $filters));
           }
@@ -202,7 +202,7 @@
             if(!is_null(_A_::$app->post('down'))) $start = FILTER_LIMIT + (isset($start) ? $start : 0);
             if(!is_null(_A_::$app->post('up'))) $start = (isset($start) ? $start : 0) - FILTER_LIMIT;
             if(($start < 0) || (is_null(_A_::$app->post('down')) && is_null(_A_::$app->post('up')))) $start = 0;
-            if(in_array($method, ['users', 'prod', 'cat', 'mnf'])) {
+            if(in_array($method, ['users', 'prod', 'cat', 'mnf', 'prc'])) {
               $filters = ($method == 'users') ? (isset($data['users']) ? array_keys($data['users']) : null) : (isset($data['filter_products']) ? array_keys($data['filter_products']) : null);
               $this->select_filter($method, $filters, $start, $search);
             }

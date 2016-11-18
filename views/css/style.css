@@ -1975,6 +1975,11 @@ span[role=combobox].ui-button:active .ui-icon {
     color: #666 !important;
     text-shadow: 1px 1px 0 #fff;
 }
+.shop__sidebar .shop__sidebar-list .shop__sidebar-item .shop__sidebar-link.active {
+    color: #666 !important;
+    text-shadow: 1px 1px 0 #fff;
+}
+
 
 .w_search {
     margin-top: -72px;
@@ -1982,7 +1987,7 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 
 .wo_search {
-    margin-top: -9px;
+    margin-top: -64px;
     position: relative;
 }
 

@@ -16,6 +16,7 @@
 
     public function show_shop_menu() {
       ob_start();
+      $this->template->vars('idx', _A_::$app->get('idx'));
       $this->template->view_layout('shop_menu');
       $shop_menu = ob_get_contents();
       ob_end_clean();

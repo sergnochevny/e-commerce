@@ -26,7 +26,7 @@
           <?php }
             $url_prms['pid'] = $row[0];
             $url_prms['back'] = 'shop';
-            $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr']);
+            $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr','prc']);
           ?>
 
           <figcaption data-product>

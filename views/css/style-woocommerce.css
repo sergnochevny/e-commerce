@@ -34,7 +34,6 @@
 
 .button:hover {
     color: #333 !important;
-    font-weight: 600;
     text-shadow: 1px 1px 0 #fff;
     background: rgba(102, 119, 0, 0.7);
 }
@@ -505,6 +504,9 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     text-transform: uppercase;
     text-shadow: 1px 2px 0 #fff;
     font-size: 2.195em;
+}
+.main-content-shop .page-title.sb {
+    margin: 0;
 }
 
 .main-content-shop .term-description {

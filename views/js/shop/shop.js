@@ -4,6 +4,47 @@
 
   $(document).off('.basket');
 
+  $(document).on('click', '.shop__sidebar-list a[data-index]',
+    function (event) {
+      $('.shop__sidebar-list .active').removeClass('active');
+      $(this).addClass('active');
+    }
+  );
+
+  $(document).on('click', '[data-sb_prices]',
+    function (event) {
+      event.preventDefault();
+      var url = $(this).attr('href');
+      var data = new FormData();
+      $(this).addClass('active');
+      data.append('search[hidden][a.priceyard][from]', $(this).attr('data-prices_from'));
+      data.append('search[hidden][a.priceyard][to]', $(this).attr('data-prices_to'));
+      $.postdata(this, url, data,
+        function (data) {
+          $.when($('#content').html(data)).done(function () {
+            $('.shop__sidebar').animate({top: 191});
+          });
+        }
+      );
+    }
+  );
+
+  $(document).on('click', '[data-sb]',
+    function (event) {
+      event.preventDefault();
+      var url = $(this).attr('href');
+      var data = new FormData();
+      $(this).addClass('active');
+      $.postdata(this, url, data,
+        function (data) {
+          $.when($('#content').html(data)).done(function () {
+            $('.shop__sidebar').animate({top: 191});
+          });
+        }
+      );
+    }
+  );
+
   $(document).on('click.basket', '#to_basket',
     function (event) {
       event.preventDefault();

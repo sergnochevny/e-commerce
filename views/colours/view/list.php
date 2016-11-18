@@ -1,6 +1,6 @@
 <div class="col-xs-12 pull-right">
   <div class="row afterhead-row text-center">
-    <h3 class="page-title">Colour</h3>
+    <h3 class="page-title sb">Colour</h3>
   </div>
 </div>
 <div class="col-xs-12 search-result-header search-result-container text-right">

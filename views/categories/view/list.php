@@ -1,10 +1,6 @@
 <div class="col-xs-12 pull-right">
-  <div class="row afterhead-row">
-    <div class="col-sm-10 col-sm-offset-2 text-center">
-      <div class="row">
-        <h3 class="page-title">Type</h3>
-      </div>
-    </div>
+  <div class="row afterhead-row text-center">
+    <h3 class="page-title sb">Type</h3>
   </div>
 </div>
 <div class="col-xs-12 search-result-header search-result-container text-right">
