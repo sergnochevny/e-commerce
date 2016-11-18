@@ -2378,6 +2378,9 @@ span[role=combobox].ui-button:active .ui-icon {
     }
 }
 
+
+
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .navbar-header {
         margin-top: 25px;
