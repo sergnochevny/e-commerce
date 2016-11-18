@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-xs-8 col-xs-pull-8 navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
+<div class="row pull-right">
+  <div class="col-xs- col-xs-pull-8 navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
        data-target=".site-navigation .navbar-collapse" id="menu-button">
     <div class="row pull-right">
       <div class="hamburger">
@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <div class="col-xs-12 navbar-collapse collapse navbar-collapse-top">
+  <div class="col-xs-12 navbar-collapse collapse navbar-collapse-top top-menu">
     <div class="row">
       <ul id="menu-header-menu" class="site-menu nav navbar-nav">
         <li
@@ -44,7 +44,7 @@
       </ul>
     </div>
   </div>
-  <div class="col-md-push-12 text-right button-ask">
+  <div class="col-md-push-12 text-right button-ask top-menu">
     <a class="button" title="Ask a Question" href="mailto:info@iluvfabrix.com">
       <span>Ask a Question</span>
       <i class="fa fa-question" aria-hidden="true"></i>

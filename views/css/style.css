@@ -2262,7 +2262,7 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 
 .navbar-nav {
-    margin: 15px 0 0;
+    margin: 15px 15px 0;
 }
 .button-ask {
     margin: 20px 15px 0 0;
@@ -2271,16 +2271,13 @@ span[role=combobox].ui-button:active .ui-icon {
     padding: 10px;
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1199px) {
     .button-ask i {
         display: none;
     }
 }
 
-@media only screen and (max-width: 991px) {
-    .button-ask {
-        margin: 22px 75px 0 0;
-    }
+@media only screen and (max-width: 1199px) {
     .button-ask span {
         display: none;
     }
@@ -2296,6 +2293,17 @@ span[role=combobox].ui-button:active .ui-icon {
     }
     .navbar-nav {
         margin: 15px 15px 0;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .button-ask {
+        margin: 22px 75px 0 0;
+    }
+}
+@media only screen and (min-width: 991px) {
+    .top-menu{
+        display: inline-block!important;
     }
 }
 
