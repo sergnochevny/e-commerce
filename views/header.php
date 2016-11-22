@@ -33,12 +33,12 @@
   </div>
   <nav class="site-navigation navbar navbar-default " role="navigation" itemscope="itemscope">
     <div class="container">
-      <div class="header-block">
+      <div class="header-block<?= (isset($my_account_admin_menu))?' wo_button':''?>">
         <div class="col-xs-2 col-md-2 col-lg-2">
           <div class="row">
             <div class="navbar-header">
               <a data-waitloader class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
-                <div class="site-with-image<?= (isset($my_account_admin_menu))?' wo_button':''?>">
+                <div class="site-with-image">
                   <img class="site-logo" src="<?= _A_::$app->router()->UrlTo('views/images/logo.png'); ?>" alt=""/>
                 </div>
               </a>
