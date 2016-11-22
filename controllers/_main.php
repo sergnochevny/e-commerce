@@ -21,14 +21,14 @@
       }
 
       ob_start();
-      $this->template->view_layout('admin_menu', 'menu');
+      $this->template->view_layout('admin', 'menu');
       $menu = ob_get_contents();
       ob_end_clean();
       $this->template->vars('menu', $menu);
 
       if(Controller_Admin::is_logged()) {
         ob_start();
-        $this->template->view_layout('my_account_admin_menu', 'menu');
+        $this->template->view_layout('admin_account', 'menu');
         $my_account_admin_menu = ob_get_contents();
         ob_end_clean();
         $this->template->vars('my_account_admin_menu', $my_account_admin_menu);
@@ -156,7 +156,7 @@
         $this->template->vars('user_name', $user_name);
       }
       $this->template->vars('toggle', $toggle);
-      $this->template->view_layout('my_account_user_menu', 'menu');
+      $this->template->view_layout('user_account', 'menu');
       $my_account_user_menu = ob_get_contents();
       ob_end_clean();
       $this->template->vars('my_account_user_menu', $my_account_user_menu);

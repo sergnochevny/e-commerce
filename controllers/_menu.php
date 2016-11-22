@@ -17,7 +17,7 @@
     public function show_shop_menu() {
       ob_start();
       $this->template->vars('idx', _A_::$app->get('idx'));
-      $this->template->view_layout('shop_menu');
+      $this->template->view_layout('shop');
       $shop_menu = ob_get_contents();
       ob_end_clean();
 
@@ -35,14 +35,14 @@
         $href = _A_::$app->router()->UrlTo('blog/view', ['cat' => $item['group_id']], $name);
         $this->template->vars('href', $href, true);
         $this->template->vars('name', $name, true);
-        $this->template->view_layout('menu_item');
+        $this->template->view_layout('item');
       }
       $menu_blog_category = ob_get_contents();
       ob_end_clean();
 
       ob_start();
       $this->template->vars('menu_blog_category', $menu_blog_category);
-      $this->template->view_layout('blog_menu');
+      $this->template->view_layout('blog');
       $blog_menu = ob_get_contents();
       ob_end_clean();
 

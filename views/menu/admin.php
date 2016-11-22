@@ -35,15 +35,15 @@
               style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="On Home Page"
-                 href="<?= _A_::$app->router()->UrlTo('info/edit',['method'=>'home']); ?>">On Home Page</a>
+                 href="<?= _A_::$app->router()->UrlTo('info/edit', ['method' => 'home']); ?>">On Home Page</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="On Product Page"
-                 href="<?= _A_::$app->router()->UrlTo('info/edit',['method'=>'product']); ?>">On Product Page</a>
+                 href="<?= _A_::$app->router()->UrlTo('info/edit', ['method' => 'product']); ?>">On Product Page</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="On Cart"
-                 href="<?= _A_::$app->router()->UrlTo('info/edit',['method'=>'cart']); ?>">On Cart</a>
+                 href="<?= _A_::$app->router()->UrlTo('info/edit', ['method' => 'cart']); ?>">On Cart</a>
             </li>
           </ul>
         </li>
