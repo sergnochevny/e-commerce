@@ -28,7 +28,6 @@
               <div class="vc_row-full-width"></div>
             </div>
           </article>
-
           <div class="newsletter__form">
             <div class="newsletter__form-title">
               <h4>Register for our newsletter to benefit from:</h4>
@@ -38,30 +37,43 @@
                 <li>new features & website tools</li>
               </ul>
             </div>
-            <form class="newsletter__form-wrap">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <input type="text" data-custom-form-input class="form-control" id="FirstName" placeholder="First Name">
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text" data-custom-form-input class="form-control" id="LastName" placeholder="Last Name">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <input type="email" data-custom-form-input class="form-control" id="Email" placeholder="Enter email">
-                  </div>
-                </div>
-              </div>
+            <div class="col-xs-12">
               <div class="row">
-                <div class="col-xs-12 text-center">
-                  <button type="submit" class="btn button">Submit</button>
+                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                  <form class="newsletter__form-wrap">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <input type="text" data-custom-form-input class="form-control" id="FirstName"
+                                 placeholder="First Name">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <input type="text" data-custom-form-input class="form-control" id="LastName"
+                                 placeholder="Last Name">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <input type="email" data-custom-form-input class="form-control" id="Email"
+                                 placeholder="Enter email">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 text-center">
+                        <button type="submit" class="btn button">Submit</button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

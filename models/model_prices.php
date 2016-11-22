@@ -7,14 +7,8 @@
     protected static function build_where(&$filter) {
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $result = "";
-        if(isset($filter["colour"])) $result[] = "a.colour LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.colour"])) . "%'";
-        if(isset($filter["id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::sanitize($filter["a.id"])) . "'";
-        if(!empty($result) && (count($result) > 0)) {
-          if(strlen(trim(implode(" AND ", $result))) > 0) {
-            $filter['active'] = true;
-          }
-        }
-        if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["c.pvisible"])) . "'";
+        if(isset($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.priceyard"])) . "'";
+        if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.pvisible"])) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');
@@ -32,7 +26,7 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      $query = "SELECT MAX(a.priceyard) as max_price";
+      $query = "SELECT COUNT(a.pid) as count";
       $query .= " FROM " . static::$table . " a";
       $query .= static::build_where($filter);
       $query .= static::build_order($sort);
@@ -41,18 +35,49 @@
 
       if($result = mysql_query($query)) {
         $row = mysql_fetch_array($result);
-        $max_price = $row['max_price'];
-        $min_price = 0.00;
-        $step = ($max_price - $min_price) / ($res_count_rows - 1);
+        $count = $row['count'];
+        $step = ceil($count / $res_count_rows);
         $limit = $limit + $start;
         if($limit > $res_count_rows) $limit = $res_count_rows;
-        while($start < $limit) {
-          $min_price = round($start++ * $step, 2);
-          $max_price = round($start * $step, 2);
-          $response[] = ['min_price' => $min_price, 'max_price' => $max_price];
+//      true - Over UNION SELECT;
+        if(true) {
+          $query = '';
+          while($start < $limit) {
+            $from = $start++ * $step;
+            if(!empty($query)) $query .= " UNION ";
+            $query .= "SELECT MIN(s.priceyard) as min_price, MAX(s.priceyard) as max_price";
+            $query .= " FROM (";
+            $query .= "SELECT * FROM " . static::$table . " a";
+            $query .= static::build_where($filter);
+            $query .= " ORDER BY a.priceyard";
+            $query .= " LIMIT " . $from . "," . $step;
+            $query .= ") s";
+          }
+          if($result = mysql_query($query)) {
+            while($row = mysql_fetch_array($result)) {
+              $min_price = round($row['min_price']);
+              $max_price = round($row['max_price']);
+              $response[] = ['min_price' => $min_price, 'max_price' => $max_price];
+            }
+          }
+        } else {
+          while($start < $limit) {
+            $from = (int)$start++ * $step;
+            $query = "SELECT MIN(s.priceyard) as min_price, MAX(s.priceyard) as max_price";
+            $query .= " FROM (";
+            $query .= "SELECT * FROM " . static::$table . " a";
+            $query .= static::build_where($filter);
+            $query .= " ORDER BY a.priceyard";
+            $query .= " LIMIT " . $from . "," . $step;
+            $query .= ") s";
+            if($result = mysql_query($query)) {
+              $row = mysql_fetch_array($result);
+              $response[] = ['min_price' => $row['min_price'], 'max_price' => $row['max_price']];
+            }
+          }
         }
       }
-
       return $response;
     }
+
   }

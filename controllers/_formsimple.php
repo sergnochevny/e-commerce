@@ -6,7 +6,7 @@
       $this->template->vars('form_title', $title);
       $data = null;
       $this->load($data);
-      if($this->form_handling($data) && _A_::$app->request_is_post()) {
+      if(_A_::$app->request_is_post() && $this->form_handling($data)) {
         $this->save($data);
         exit($this->form($url, $data));
       }

@@ -662,10 +662,10 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
 			<a class="btn dropdown-toggle sorting-btn" data-toggle="dropdown" href="#"><i class="icon-signal"></i><span class="caret"></span></a>
 			<ul class="dropdown-menu pull-left sorting">
 				<li class="text-center"><strong><?= trans('Sorting') ?></strong></li>
-				<li><a class="sorter sort-name <?php if($sort_by=="name"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void('')" data-sort="name"><?= trans('Filename');?></a></li>
-				<li><a class="sorter sort-date <?php if($sort_by=="date"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void('')" data-sort="date"><?= trans('Date');?></a></li>
-				<li><a class="sorter sort-size <?php if($sort_by=="size"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void('')" data-sort="size"><?= trans('Size');?></a></li>
-				<li><a class="sorter sort-extension <?php if($sort_by=="extension"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void('')" data-sort="extension"><?= trans('Type');?></a></li>
+				<li><a class="sorter sort-name <?php if($sort_by=="name"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort="name"><?= trans('Filename');?></a></li>
+				<li><a class="sorter sort-date <?php if($sort_by=="date"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort="date"><?= trans('Date');?></a></li>
+				<li><a class="sorter sort-size <?php if($sort_by=="size"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort="size"><?= trans('Size');?></a></li>
+				<li><a class="sorter sort-extension <?php if($sort_by=="extension"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort="extension"><?= trans('Type');?></a></li>
 			</ul>
 		</div>
 	</li>
@@ -899,7 +899,7 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
 			$file_prevent_delete = isset($filePermissions[$file]['prevent_delete']) && $filePermissions[$file]['prevent_delete'];
 			}
 			?>		<figure data-name="<?= $file ?>" data-type="<?php if($is_img){ echo "img"; }else{ echo "file"; } ?>">
-				<a href="javascript:void('')" class="link" data-file="<?= $file;?>" data-function="<?= $apply;?>">
+				<a href="javascript:void(0)" class="link" data-file="<?= $file;?>" data-function="<?= $apply;?>">
 				<div class="img-precontainer">
 					<?php if($is_icon_thumb){ ?><div class="filetype"><?= $extension_lower ?></div><?php } ?>
 					<div class="img-container">
@@ -920,7 +920,7 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
 				<div class="cover"></div>
 				<?php } ?>
 				</a>
-				<a href="javascript:void('')" class="link" data-file="<?= $file;?>" data-function="<?= $apply;?>">
+				<a href="javascript:void(0)" class="link" data-file="<?= $file;?>" data-function="<?= $apply;?>">
 				<div class="box">
 				<h4 class="<?php if($ellipsis_title_after_first_row){ echo "ellipsis"; } ?>">
 				<?= $filename;?></h4>
@@ -938,7 +938,7 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
 					<input type="hidden" name="path" value="<?= $rfm_subfolder.$subdir?>"/>
 					<input type="hidden" class="name_download" name="name" value="<?= $file?>"/>
 
-					<a title="<?= trans('Download')?>" class="tip-right" href="javascript:void('')" onclick="$('#form<?= $nu;?>').submit();"><i class="icon-download"></i></a>
+					<a title="<?= trans('Download')?>" class="tip-right" href="javascript:void(0)" onclick="$('#form<?= $nu;?>').submit();"><i class="icon-download"></i></a>
 					<?php if($is_img && $src_thumb!="" && $extension_lower!="tiff" && $extension_lower!="tif"){ ?>
 					<a class="tip-right preview" title="<?= trans('Preview')?>" data-url="<?= $src;?>" data-toggle="lightbox" href="#previewLightbox"><i class=" icon-eye-open"></i></a>
 					<?php }elseif(($is_video || $is_audio) && in_array($extension_lower,$jplayer_ext)){ ?>

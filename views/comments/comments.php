@@ -8,7 +8,7 @@
 
 <div class="popup">
   <div class="fcheck"></div>
-  <a class="close" href="javascript:void('')" title="close"><i class="fa fa-times" aria-hidden="true"></i></a>
+  <a class="close" href="javascript:void(0)" title="close"><i class="fa fa-times" aria-hidden="true"></i></a>
 
   <div class="b_cap_cod_main">
     <p style="color: black;" class="text-center"><b>You confirm the removal?</b></p>
@@ -33,8 +33,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary save-data" href="javascript:void('')" data-dismiss="modal">Save</a>
-        <a class="btn btn-default" href="javascript:void('')" data-dismiss="modal">Cancel</a>
+        <a class="btn btn-primary save-data" href="javascript:void(0)" data-dismiss="modal">Save</a>
+        <a class="btn btn-default" href="javascript:void(0)" data-dismiss="modal">Cancel</a>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

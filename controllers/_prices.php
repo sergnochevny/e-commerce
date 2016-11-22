@@ -6,7 +6,7 @@
       $res = parent::build_search_filter($filter, $view);
       if($view) {
         $this->per_page = 24;
-        $filter = ['hidden' => ['view' => true, 'a.pvisible' => 1]];
+        $filter = ['hidden' => ['view' => true, 'a.pvisible' => 1, 'a.priceyard' => 0]];
       }
       return $res;
     }
