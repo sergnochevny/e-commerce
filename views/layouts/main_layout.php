@@ -61,13 +61,7 @@
 <div class="scroll">
   <div class="site-container">
     <div class="main-content main-content-shop">
-      <?php
-        if(!isset($my_account_admin_menu)) {
-          include "views/header.php";
-        } else {
-          include "views/admin_header.php";
-        }
-      ?>
+      <?php include "views/header.php"; ?>
       <?= isset($content) ? $content : ''; ?>
     </div>
   </div>
