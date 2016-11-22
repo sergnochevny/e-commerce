@@ -1,6 +1,14 @@
 <?php if(Controller_Admin::is_logged()): ?>
-  <div class="col-md-10 col-lg-10">
-    <div class="navbar-collapse collapse navbar-collapse-top">
+  <div class="col-xs-8 col-xs-pull-8 navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
+       data-target=".site-navigation .navbar-collapse" id="menu-button">
+    <div class="row pull-right">
+      <div class="hamburger">
+        <div class="inner"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="col-xs-12 pull-right navbar-collapse collapse navbar-collapse-top admin-menubar">
       <ul id="menu-header-menu" class="site-menu nav navbar-nav navbar-right">
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a title="Products" aria-haspopup="true" class="has-submenu" href="javascript:void(0);">Products<span
