@@ -377,7 +377,7 @@ a:focus {
     height: 50px;
 }
 
-.required-field:before {
+.required_field:before {
     content: "* ";
     color: red;
     margin-left: -10px;
@@ -1307,24 +1307,6 @@ form[data-search] > .row > .panel > .panel-heading {
 
 .table-list-header a:hover {
     color: #a6bd00;
-}
-
-.table-list-row {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #EEE;
-    margin-bottom: 2px;
-}
-
-.data-view > .table-list-row:last-child {
-    border-radius: 0 0 4px 4px;
-    margin-bottom: 0;
-}
-
-@media (max-width: 768px) {
-    .data-view > .table-list-row:last-child {
-        border-radius: 4px;
-    }
 }
 
 .helper-row {
@@ -2392,12 +2374,12 @@ span[role=combobox].ui-button:active .ui-icon {
 
 @media only screen and (max-width: 991px) {
     .button-ask {
-        margin: 22px -140px 0 0;
+        margin: 22px 60px 0 0;
     }
 }
 @media only screen and (max-width: 767px) {
     .button-ask {
-        margin: 22px -30px 0 0;
+        margin: 22px 60px 0 0;
     }
 }
 
@@ -2609,4 +2591,13 @@ input:hover {
     .wo_button .admin-menubar .navbar-nav {
         margin: 15px 0 0;
     }
+}
+
+.info_form{
+    background: rgba(255, 255, 255, 0.5);
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px #666;
 }

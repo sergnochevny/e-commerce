@@ -9,24 +9,13 @@
     }, 8000);
   }
 
-  $("#edit_form").on('submit', function (event) {
-    event.preventDefault();
-    var url = $(this).attr('action');
-    var data = new FormData(this);
-
-    $('body').waitloader('show');
-    $.postdata(this, url, data, function (data) {
-      $('#form_content').html(data);
-    });
-  });
-
   $('input[type=text]').textinput();
-  $('input[type=textarea]').textinput();
   $('input[type=number]').textinput();
   $('input[type=email]').textinput();
   $('input[type=password]').textinput();
 
-  $('textarea').textinput();
   $('select').selectmenu();
+
+  $(document).trigger('tiny_init');
 
 })(jQuery);

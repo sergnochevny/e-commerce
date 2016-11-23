@@ -142,22 +142,22 @@
             </div>
             <div class="col-md-12 panel panel-default"
                  style="padding-top: 10px; padding-bottom: 10px; border-color: #999;">
-              <label style="font-size: 12px;">
+              <label style="font-size: 12px; width: 100%;">
                 <input type="radio" id="user_type1" name="user_type" value="1"
                        class="input-checkbox" <?= $data['user_type'] == "1" ? 'checked' : ''; ?>>
                 All users
               </label>
-              <label style="font-size: 12px;">
+              <label style="font-size: 12px; width: 100%;">
                 <input type="radio" id="user_type2" name="user_type" value="2"
                        class="input-checkbox" <?= $data['user_type'] == "2" ? 'checked' : ''; ?>>
                 All new users
               </label>
-              <label style="font-size: 12px;">
+              <label style="font-size: 12px; width: 100%;">
                 <input type="radio" id="user_type3" name="user_type" value="3"
                        class="input-checkbox" <?= $data['user_type'] == "3" ? 'checked' : ''; ?>>
                 All registered users
               </label>
-              <label style="font-size: 12px;">
+              <label style="font-size: 12px; width: 100%;">
                 <input type="radio" id="user_type4" data-type="users" name="user_type" value="4"
                        class="input-checkbox" <?= $data['user_type'] == "4" ? 'checked' : ''; ?>>
                 All selected users (i.e. use the users selected below)
@@ -180,30 +180,30 @@
             </div>
             <div class="col-md-12 panel panel-default"
                  style="padding-top: 10px; padding-bottom: 10px; border-color: #999;">
-              <label style="font-size: 12px;">
+              <label style="font-size: 12px; width: 100%;">
                 <input type="radio" name="product_type" id="product_type1" value="1"
                        class="input-checkbox" <?= $data['product_type'] == "1" ? 'checked' : '' ?>>
                 All fabrics
               </label>
-              <label style="font-size: 12px;">
+              <label style="font-size: 12px; width: 100%;">
                 <input type="radio" name="product_type" id="product_type2" value="2"
                        data-type="filter_products"
                        class="input-checkbox" <?= $data['product_type'] == "2" ? 'checked' : '' ?>>
                 All selected fabrics *
               </label>
-              <label style="font-size: 12px;">
+              <label style="font-size: 12px; width: 100%;">
                 <input type="radio" name="product_type" id="product_type3" value="3"
                        data-type="filter_products"
                        class="input-checkbox" <?= $data['product_type'] == "3" ? 'checked' : '' ?>>
                 All selected categories *
               </label>
-              <label style="font-size: 12px;">
+              <label style="font-size: 12px; width: 100%;">
                 <input type="radio" name="product_type" id="product_type4" value="4"
                        data-type="filter_products"
                        class="input-checkbox" <?= $data['product_type'] == "4" ? 'checked' : '' ?>>
                 All selected manufacturers *
               </label>
-              <label style="font-size: 12px;">* - i.e. use the item selected below</label>
+              <label style="font-size: 12px; width: 100%;">* - i.e. use the item selected below</label>
               <div data-filter-panel-fabrics>
                 <?php if(isset($data['filter_products'])): ?>
                   <?= $data['filter_products']; ?>

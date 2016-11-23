@@ -1,222 +1,118 @@
-<div class="row">
-  <div class="col-xs-12">
-    <div class="row afterhead-row">
-      <div class="col-sm-2 back_button_container">
+<div class="col-xs-12">
+  <div class="row afterhead-row">
+    <div class="col-sm-2 back_button_container">
+      <div class="row">
         <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">Back</a>
       </div>
-      <div class="col-sm-8 text-center"><h3 class="page-title">PLEASE REVIEW AND CONFIRM ORDER</h3></div>
-      <div class="col-sm-2"></div>
     </div>
+    <div class="col-sm-8 text-center">
+      <div class="row">
+        <h4 class="page-title">PLEASE REVIEW AND CONFIRM ORDER</h4>
+      </div>
+    </div>
+    <div class="col-sm-2"></div>
   </div>
 </div>
 
-
-<div class="row">
-  <div class="col-xs-12 data-view">
-
+<div class="col-xs-12 cart-data-view">
+  <div class="row">
     <div class="col-xs-12 table-list-header hidden-xs">
-      <div class="row">
-        <div class="col-sm-6 col">
-          Product
+      <div class="col-sm-6 col">
+        <div class="row">
+          Products
         </div>
-        <div class="col-sm-2 col">
+      </div>
+      <div class="col-sm-2 col">
+        <div class="row">
           Sale Price
         </div>
-        <div class="col-sm-2 col">
+      </div>
+      <div class="col-sm-2 col">
+        <div class="row">
           Quantity
         </div>
-        <div class="col-sm-2 col">
-          SubTotal
+      </div>
+      <div class="col-sm-2 col">
+        <div class="row">
+          Total
         </div>
       </div>
     </div>
-
-    <?php
-      echo isset($cart_items) ? $cart_items : '';//products
-      echo isset($cart_samples_items) ? $cart_samples_items : '';//samples
-    ?>
-
-  </div>
-</div>
-
-<?php if (isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
-  <div class="row">
-    <div class="col-sm-12 inner-offset-vertical sample_item" data-row="samples">
-      <div data-title="Product" class="col-sm-4 product-name">
-        Samples cost
-      </div>
-      <div data-title="Price" class="col-sm-4 product-price">
-        <?= isset($sum_samples) ? $sum_samples : ''; ?>
-      </div>
-      <div data-title="Subtotal" class="col-sm-4 product-subtotal">
-        <span class="amount"><?= isset($sum_samples) ? $sum_samples : ''; ?></span>
+    <div class="col-xs-12 table-list-body">
+      <div class="row">
+        <?php
+          echo isset($cart_items) ? $cart_items : '';//products
+          echo isset($cart_samples_items) ? $cart_samples_items : '';//samples
+        ?>
+        <?php if(isset($cart_samples_items) && strlen($cart_samples_items) > 0) { ?>
+          <div class="col-xs-12 table-list-row" data-block="cart_item" data-pid="<?= $pid; ?>" data-row="items">
+            <div class="col-xs-12 col-sm-6 table-list-row-item">
+              <div class="row">
+                SAMPLES
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-2 col-sm-offset-4 table-list-row-item">
+              <div class="row">
+                <div class="col-xs-4 visible-xs">
+                  <div class="row"><b>Total:</b></div>
+                </div>
+                <div class="col-xs-8 col-sm-12">
+                  <div class="row"><span class="amount"><?= isset($sum_samples) ? $sum_samples : ''; ?></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php } ?>
+        <?= isset($shipping) ? $shipping : ''; ?>
       </div>
     </div>
   </div>
-<?php } ?>
-
-<div class="col-xs-12 data-view">
-  <div class="row table-list-row">
-    <?= isset($shipping) ? $shipping : ''; ?>
-  </div>
 </div>
 
-<div class="col-xs-12 data-view">
+<div class="col-xs-12 inner-offset-top">
   <div class="row">
     <?php
-      if ((isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0)) {
+      if((isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0)) {
         echo isset($total_proceed) ? $total_proceed : '';
       }
     ?>
   </div>
 </div>
 
-<div class="row row_bill_ship">
-  <article class="col-xs-12 page type-page status-publish entry">
-    <div class="col-xs-12">
+<div class="col-xs-12 row_bill_ship">
+  <div class="row">
+    <div class="col-xs-12 text-center afterhead-row">
+      <h3 class="page-title" style="font-size: 1.4em">PLEASE REVIEW AND CONFIRM YOUR DETAILS</h3>
+    </div>
+    <div data-block="proceed_bill_ship" class="col-xs-12 cart-data-view">
       <div class="row">
-        <div class="col-xs-12 text-center afterhead-row">
-          <h3 class="page-title" style="font-size: 1.4em">PLEASE REVIEW AND CONFIRM YOUR DETAILS</h3>
-        </div>
-        <div data-block="proceed_bill_ship" class="col-xs-12 data-view">
-          <?= isset($bill_ship_info) ? $bill_ship_info : '' ?>
+        <?= isset($bill_ship_info) ? $bill_ship_info : '' ?>
+
+        <div class="col-xs-12 text-center inner-offset-bottom inner-offset-top">
+          <div class="row">
+            <a data-block="change_user_data" class="checkout-button button alt wc-forward"
+               href="<?= $change_user_url; ?>">
+              Edit Billing or Shipping
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="col-xs-12 wc-change_user_data text-center inner-offset-bottom">
-      <div class="row">
-        <a data-block="change_user_data" class="checkout-button button alt wc-forward"
-           href="<?= $change_user_url; ?>">
-          Edit Billing or Shipping
-        </a>
-      </div>
-    </div>
-  </article>
-
-
-</div>
-
-<div class="row">
-  <div class="col-xs-12">
-    <div class="wc-proceed-to-checkout text-center">
-      <?php if (
-        (isset($cart_items) && strlen($cart_items) > 0) ||
-        (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
-      ) { ?>
-
-        <a data-block="proceed_agreem_button" style="margin-top: 15px" class="checkout-button button alt wc-forward"
-           href="<?= _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
-          Proceed to Agreement</a>
-      <?php } ?>
     </div>
   </div>
 </div>
 
-<?php if (isset($abc)) : ?>
-  <div class="row">
-    <div class="col-xs-12">
+<div class="col-xs-12">
+  <div class="row text-center">
+    <?php if(
+      (isset($cart_items) && strlen($cart_items) > 0) ||
+      (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
+    ) { ?>
 
-      <article class="page type-page status-publish entry" style="overflow:hidden;">
-        <br/>
-        <div class="entry-content">
-          <div class="woocommerce">
-            <div class="proceed_title">
-              <span>PLEASE REVIEW AND CONFIRM ORDER</span>
-            </div>
-            <!--<form method="post">-->
-            <table cellspacing="0" class="shop_table shop_table_responsive proceed">
-              <thead>
-              <tr>
-                <th class="product-name">Product</th>
-                <!--<th class="product-price">Price</th>
-                <th class="product-subtotal">Discount</th>-->
-                <th class="product-price">Sale Price</th>
-                <th class="product-quantity">Quantity</th>
-                <th class="product-subtotal">SubTotal</th>
-              </tr>
-              </thead>
-              <tbody data-block="product_in_cart">
-
-              <?php
-
-                echo isset($cart_items) ? $cart_items : '';//products
-                echo isset($cart_samples_items) ? $cart_samples_items : '';//samples
-                if (isset($cart_samples_items) && strlen($cart_samples_items) > 0) {
-                  ?>
-                  <tr class="sample_item" data-row="samples">
-                    <td data-title="Product" class="product-name" colspan="1" style="text-align: right">
-                      <a>Samples cost</a>
-                    </td>
-                    <td data-title="Price" class="product-price">
-                      <?= isset($sum_samples) ? $sum_samples : ''; ?>
-                    </td>
-                    <td></td>
-                    <td data-title="Subtotal" class="product-subtotal">
-                      <span class="amount"><?= isset($sum_samples) ? $sum_samples : ''; ?></span>
-                    </td>
-                  </tr>
-                <?php } ?>
-
-              <?= isset($shipping) ? $shipping : ''; ?>
-              </tbody>
-            </table>
-            <!--</form>-->
-
-            <div class="collaterals">
-              <div class="proceed_totals">
-                <?php if (
-                  (isset($cart_items) && strlen($cart_items) > 0) ||
-                  (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
-                ) { ?>
-                  <?= isset($total_proceed) ? $total_proceed : ''; ?>
-                <?php } ?>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
+      <a data-block="proceed_agreem_button" style="margin-top: 15px" class="checkout-button button alt wc-forward"
+         href="<?= _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
+        Proceed to Agreement</a>
+    <?php } ?>
   </div>
-
-
-  <div class="row row_bill_ship">
-    <div class="col-xs-12">
-
-      <article class="page type-page status-publish entry" style="overflow:hidden;">
-        <div class="row" style="margin: 0;">
-          <div class="woocommerce">
-            <div class="proceed_title">
-              <span>PLEASE REVIEW AND CONFIRM YOUR DETAILS</span>
-            </div>
-            <div data-block="proceed_bill_ship" class="collaterals">
-              <?= isset($bill_ship_info) ? $bill_ship_info : '' ?>
-            </div>
-          </div>
-        </div>
-        <div class="wc-change_user_data">
-          <a data-block="change_user_data" class="checkout-button button alt wc-forward"
-             href="<?= $change_user_url; ?>">
-            Edit Billing or Shipping
-          </a>
-        </div>
-      </article>
-      <hr>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="wc-proceed-to-checkout">
-        <?php if (
-          (isset($cart_items) && strlen($cart_items) > 0) ||
-          (isset($cart_samples_items) && strlen($cart_samples_items) > 0)
-        ) { ?>
-
-          <a data-block="proceed_agreem_button" style="margin-top: 15px" class="checkout-button button alt wc-forward"
-             href="<?= _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
-            Proceed to Agreement</a>
-        <?php } ?>
-      </div>
-    </div>
-  </div>
-<?php endif; ?>
+</div>
+<div data-load="<?= _A_::$app->router()->UrlTo('info/view',['method'=>'cart'])?>"></div>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/cart/checkout.js'); ?>'></script>

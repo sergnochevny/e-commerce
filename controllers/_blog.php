@@ -20,7 +20,7 @@
       ];
     }
 
-    private function autop($pee, $br = true) {
+    private static function autop($pee, $br = true) {
       $pre_tags = [];
 
       if(trim($pee) === '')
@@ -56,7 +56,7 @@
       $pee = preg_replace('!(<' . $allblocks . '[\s/>])!', "\n$1", $pee);
       $pee = preg_replace('!(</' . $allblocks . '>)!', "$1\n\n", $pee);
       $pee = str_replace(["\r\n", "\r"], "\n", $pee);
-      $pee = $this->replace_in_html_tags($pee, ["\n" => " <!-- wpnl --> "]);
+      $pee = static::replace_in_html_tags($pee, ["\n" => " <!-- wpnl --> "]);
       if(strpos($pee, '<option') !== false) {
         $pee = preg_replace('|\s*<option|', '<option', $pee);
         $pee = preg_replace('|</option>\s*|', '</option>', $pee);
@@ -89,7 +89,7 @@
       $pee = preg_replace('!<p>\s*(<' . $unaryblocks . '[^>]*/>)!', "$1", $pee);
       $pee = preg_replace('!(<' . $unaryblocks . '[^>]*/>)\s*</p>!', "$1", $pee);
       if($br) {
-        $pee = preg_replace_callback('/<(script|style).*?<\/\\1>/s', [$this, '_autop_newline_preservation_helper'], $pee);
+        $pee = preg_replace_callback('/<(script|style).*?<\/\\1>/s', ['static', '_autop_newline_preservation_helper'], $pee);
         $pee = str_replace(['<br>', '<br/>'], '<br />', $pee);
         $pee = preg_replace('|(?<!<br />)\s*\n|', "<br />\n", $pee);
         $pee = str_replace('<WPPreserveNewline />', "\n", $pee);
@@ -106,9 +106,9 @@
       return $pee;
     }
 
-    private function replace_in_html_tags($haystack, $replace_pairs) {
+    private static function replace_in_html_tags($haystack, $replace_pairs) {
       // Find all elements.
-      $textarr = $this->html_split($haystack);
+      $textarr = static::html_split($haystack);
       $changed = false;
       if(1 === count($replace_pairs)) {
         foreach($replace_pairs as $needle => $replace)
@@ -139,11 +139,11 @@
       return $haystack;
     }
 
-    private function html_split($input) {
-      return preg_split($this->html_split_regex(), $input, -1, PREG_SPLIT_DELIM_CAPTURE);
+    private static function html_split($input) {
+      return preg_split(static::html_split_regex(), $input, -1, PREG_SPLIT_DELIM_CAPTURE);
     }
 
-    private function html_split_regex() {
+    private static function html_split_regex() {
       static $regex;
 
       if(!isset($regex)) {
@@ -178,11 +178,11 @@
       return $regex;
     }
 
-    private function _autop_newline_preservation_helper($matches) {
+    private static function _autop_newline_preservation_helper($matches) {
       return str_replace("\n", "<WPPreserveNewline />", $matches[0]);
     }
 
-    private function convertation($txt) {
+    public static function convertation($txt) {
 
 //        $txt = preg_replace('#(\s*\[caption[^\]]+\]<a[^>]+><img[^>]+\/><\/a>)(.*?)(\[\/caption\]\s*)#i', '$1<p>$2</p>$3', $txt);
 //        $txt = preg_replace('#\[caption([^\]]+)\]#i', '<div$1 class="div_img">', $txt);
@@ -202,7 +202,7 @@
       $txt = str_replace('–', "-", $txt);
       $txt = preg_replace('#[^\x{00}-\x{7f}]#i', '', $txt);
 
-      $txt = $this->autop($txt);
+      $txt = static::autop($txt);
 
       return $txt;
     }
@@ -313,7 +313,7 @@
       $data['post_title'] = addslashes(trim(html_entity_decode(($data['post_title']))));
       $data['keywords'] = addslashes(trim(html_entity_decode(($data['keywords']))));
       $data['description'] = addslashes(trim(html_entity_decode(($data['description']))));
-      $data['post_content'] = addslashes(html_entity_decode($this->convertation(($data['post_content']))));
+      $data['post_content'] = addslashes(html_entity_decode(static::convertation(($data['post_content']))));
     }
 
     protected function form_handling(&$data = null) {
@@ -450,7 +450,6 @@
       if((!empty(_A_::$app->get('cat')))) $prms['cat'] = _A_::$app->get('cat');
       $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('blog/view', $prms));
       if(isset($data)) {
-        ob_start();
         $data['post_content'] = stripslashes($data['post_content']);
         $data['post_title'] = stripslashes($data['post_title']);
         $data['post_date'] = date('F jS, Y', strtotime($data['post_date']));

@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a data-waitloader id="continue" href="#" class="button pull-left">Continue Shopping</a>
+        <a data-waitloader id="continue" href="<?= _A_::$app->router()->UrlTo('shop');?>" class="button pull-left">Continue Shopping</a>
         <a class="button" href="<?= _A_::$app->router()->UrlTo('matches'); ?>">Matches</a>
       </div>
     </div>

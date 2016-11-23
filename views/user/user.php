@@ -15,12 +15,12 @@
                    value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
 
             <div class="form-row">
-              <label for="username" class="required-field">Email Address</label>
+              <label for="username" class="required_field">Email Address</label>
               <input type="text" class="input-text" name="login" id="username" value=""  autofocus/>
             </div>
 
             <div class="form-row">
-              <label for="password" class="required-field">Password</label>
+              <label for="password" class="required_field">Password</label>
               <input class="input-text" type="password" name="pass" id="password"/>
             </div>
 

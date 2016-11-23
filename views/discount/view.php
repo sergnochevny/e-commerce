@@ -24,7 +24,7 @@
         <div class="col-xs-12 table-list-header hidden-xs">
           <div class="row">
             <div class="col-sm-2 col">
-              Details <a href="#">
+              Details <a href="javascript:void(0);">
                 <small><i class="fa fa-chevron-down"></i></small>
               </a>
             </div>

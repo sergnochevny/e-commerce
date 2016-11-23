@@ -17,6 +17,17 @@
       return $result;
     }
 
+    public static function get_by_f1($f1) {
+      $data = null;
+      if(isset($f1)) {
+        $q = "select * from " . static::$table . " where f1 = '" . $f1 . "'";
+        $result = mysql_query($q);
+        if($result) {
+          $data = mysql_fetch_assoc($result);
+        }
+      }
+      return $data;
+    }
 
     public static function get_by_id($id) {
       $data = null;
@@ -62,15 +73,14 @@
       extract($data);
       $title = mysql_real_escape_string($title);
       $message = mysql_real_escape_string($message);
-      if(isset($id)) {
+      if(isset($f1)) {
         $q = "UPDATE " . static::$table .
           " SET" .
           " title='$title'," .
           " message='$message'," .
           " visible='$visible'," .
-          " f1='$f1'" .
           " f2='$f2'" .
-          " WHERE id ='$id'";
+          " WHERE f1 ='$f1'";
         $res = mysql_query($q);
       } else {
         $q = "INSERT INTO " . static::$table .
@@ -82,10 +92,9 @@
           " f2='$f2'";
 
         $res = mysql_query($q);
-        if($res) $id = mysql_insert_id();
       }
       if(!$res) throw new Exception(mysql_error());
-      return $id;
+      return $f1;
     }
 
     public static function delete($id) {

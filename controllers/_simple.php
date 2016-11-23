@@ -46,7 +46,7 @@
     protected function edit_add_handling($url, $title, $back_url = null) {
       $data = null;
       $this->load($data);
-      if($this->form_handling($data) && _A_::$app->request_is_post()) {
+      if(_A_::$app->request_is_post() && $this->form_handling($data)) {
         $this->save($data);
         $this->get_list();
       } else {

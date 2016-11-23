@@ -19,6 +19,7 @@
   <div id="form_content" class="row">
       <?= $form; ?>
   </div>
+  <input type="hidden" data-filemanager="<?= _A_::$app->router()->UrlTo('filemanager/') ?>">
 </div>
 <script src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit.js'); ?>' type="text/javascript"></script>

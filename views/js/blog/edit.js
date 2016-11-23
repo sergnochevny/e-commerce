@@ -1,7 +1,7 @@
 'use strict';
 
 (function ($) {
-
+  var filemanager_url = $('[data-filemanager]').attr('data-filemanager');
   $(document).on('tiny_init',
     function (event) {
       tinymce.init(
@@ -11,13 +11,13 @@
           plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks fullscreen",
-            "code",
+            "code link",
             "insertdatetime table contextmenu paste imagetools textcolor responsivefilemanager"
           ],
           toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
           toolbar2: "| responsivefilemanager  image | link unlink anchor | forecolor backcolor  | print preview code ",
           image_advtab: true,
-          external_filemanager_path: "<?= _A_::$app->router()->UrlTo('filemanager/') ?>",
+          external_filemanager_path: filemanager_url,
           relative_urls: false,
           remove_script_host: false,
           inline: true
@@ -34,8 +34,6 @@
       );
     }
   );
-
-
 
   $(document).on('click', '#pre_save',
     function (event) {

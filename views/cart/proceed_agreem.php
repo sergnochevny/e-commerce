@@ -174,3 +174,5 @@
     </div>
   </div>
 </div>
+<div data-load="<?= _A_::$app->router()->UrlTo('info/view',['method'=>'cart'])?>"></div>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/cart/checkout.js'); ?>'></script>

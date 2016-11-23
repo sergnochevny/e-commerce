@@ -2092,7 +2092,18 @@ ul.product_list_widget li dl dd p {
     float: left;
 }
 
+.cart-legend-view {
+    box-shadow: 0 0 15px #999;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
 @media (min-width: 767px) {
+    .cart-data-view {
+        box-shadow: 0 0 15px #999;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.5);
+    }
     .data-view {
         box-shadow: 0 0 15px #999;
         border-radius: 4px;
@@ -2118,16 +2129,61 @@ ul.product_list_widget li dl dd p {
 .table-list-row {
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: #EEE;
-    margin-bottom: 2px;
+}
+
+.table-list-row:last-of-type {
+    border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+}
+
+.cart-data-view .table-list-header {
+    background-color: rgba(221, 221, 221, 0.5);
+}
+.cart-data-view .table-list-row {
+    border-bottom: 2px solid #ddd;
+}
+
+.cart-data-view .table-list-row:last-child {
+    border: none;
 }
 
 @media (max-width: 768px) {
+    .table-list-row:last-child {
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+
     .data-view > .table-list-row {
         margin-bottom: 15px;
         box-shadow: 0 0 15px #999;
         border-radius: 4px;
     }
+
+    .cart-data-view .table-list-row{
+        margin-bottom: 15px;
+        box-shadow: 0 0 15px #999;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+    }
+
+    .cart-data-view .table-list-row.sm-half-xs-full .table-list-row-item{
+        margin-bottom: 15px;
+        box-shadow: 0 0 15px #999;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+    }
+    .cart-data-view .table-list-row.sm-half-xs-full{
+        margin-bottom: 0;
+        box-shadow: none;
+        border-radius: 0;
+        background: none;
+        border: none;
+    }
+
 
     .data-view > .table-list-row .table-list-row-item {
         font-size: 1.15em;
