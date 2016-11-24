@@ -3,19 +3,19 @@
     <div class="container">
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="row">
 
             <div class="col-xs-12 text-center afterhead-row">
               <h2 class="page-title half-inner-offset-bottom" style="margin-bottom: 15px">Contact</h2>
             </div>
 
-            <div class="col-sm-8 col-sm-offset-2 text-center">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 text-center">
               <hr>
             </div>
 
 
-            <div class="col-sm-8 col-sm-offset-2">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
               <div class="row">
                 <div class="col-xs-12">
                   <h4><p class="text-center">Leave us a message</p>

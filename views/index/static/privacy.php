@@ -3,7 +3,7 @@
   <div id="static">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <article class="page type-page status-publish entry">
             <div class="entry-content">
               <div class="vc_row wpb_row vc_row-fluid vc_custom_1439733758005">

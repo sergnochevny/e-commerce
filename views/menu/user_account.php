@@ -1,7 +1,8 @@
 <li class="dropdown my-account">
-  <a <?= (isset($toggle) && $toggle) ? '' : 'data-waitloader' ?> data-link
-                                                                 href="<?= _A_::$app->router()->UrlTo('authorization'); ?>" <?= (isset($toggle) && $toggle) ? 'class="dropdown-toggle" data-toggle="dropdown"' : '' ?>>
-    <i class="fa fa-2x fa-user-circle" aria-hidden="true"></i>
+  <a <?= (isset($toggle) && $toggle) ? '' : 'data-waitloader' ?>
+    data-link
+    href="<?= _A_::$app->router()->UrlTo('authorization'); ?>" <?= (isset($toggle) && $toggle) ? 'class="dropdown-toggle" data-toggle="dropdown"' : '' ?>>
+    <i class="fa fa-2x fa-user-circle visible-xs" aria-hidden="true"></i>
     <span class="topnav-label hidden-xs">My Account</span>
     <?php if(!empty($user_name{0})) { ?>
       <span class="user_name topnav-label hidden-xs"><?= $user_name; ?></span>

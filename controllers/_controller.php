@@ -4,6 +4,8 @@
 
     protected $main;
     protected $per_page = 12;
+    protected $_scenario = '';
+    protected $resolved_scenario = [''];
 
     public function __construct(Controller_Base $main = null) {
       $this->layouts = _A_::$app->config('layouts');
@@ -13,6 +15,13 @@
       } else {
         $this->main = new Controller_Main($this);
       }
+    }
+
+    protected function scenario($scenario = null) {
+      if(!empty($scenario) && in_array($scenario, $this->resolved_scenario)) {
+        $this->_scenario = $scenario;
+      }
+      return $this->_scenario;
     }
 
     protected function before_search_form_layout(&$search_data, $view = false) { }
@@ -160,6 +169,7 @@
      * @export
      */
     public function index($required_access = true) {
+      $this->scenario(_A_::$app->get('method'));
       if($required_access) $this->main->is_admin_authorized();
       ob_start();
       $this->get_list();
@@ -168,19 +178,20 @@
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
       if(Controller_Admin::is_logged()) $this->main->view_admin($this->controller);
-      else  $this->main->view($this->controller);
+      else  $this->main->view((!empty($this->scenario()) ? $this->scenario() . DS : '') . $this->controller);
     }
 
     /**
      * @export
      */
     public function view() {
+      $this->scenario(_A_::$app->get('method'));
       ob_start();
       $this->get_list(true);
       $list = ob_get_contents();
       ob_end_clean();
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
-      $this->main->view('view/' . $this->controller);
+      $this->main->view((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'view/' . $this->controller);
     }
   }

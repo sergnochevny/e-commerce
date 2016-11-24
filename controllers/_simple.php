@@ -35,16 +35,19 @@
       $this->before_form_layout($data);
       $prms = null;
       if(isset($id)) $prms[$this->id_name] = $id;
+      if(!is_null($this->scenario())) $prms['method'] = $this->scenario();
       if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
       $action = _A_::$app->router()->UrlTo($url, $prms);
       $this->template->vars($this->id_name, $id);
       $this->template->vars('data', $data);
+      $this->template->vars('scenario', $this->scenario());
       $this->template->vars('action', $action);
-      $this->main->view_layout('form');
+      $this->main->view_layout((!empty($this->scenario())?$this->scenario().DS:'').'form');
     }
 
     protected function edit_add_handling($url, $title, $back_url = null) {
       $data = null;
+      $this->scenario(_A_::$app->get('method'));
       $this->load($data);
       if(_A_::$app->request_is_post() && $this->form_handling($data)) {
         $this->save($data);
@@ -61,6 +64,7 @@
       if($this->validate($data, $error)) {
         try {
           $this->before_save($data);
+          $data['scenario'] = $this->scenario();
           $id = forward_static_call_array(['Model_' . ucfirst($this->controller), 'save'], [&$data]);
           $this->after_save($id, $data);
           $warning = [$this->save_warning];
@@ -87,13 +91,14 @@
      * @export
      */
     public function view() {
+      $this->scenario(_A_::$app->get('method'));
       if(!is_null(_A_::$app->get($this->id_name))) {
         $id = _A_::$app->get($this->id_name);
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
         $this->after_get_data_item_view($data);
         $this->template->vars('view_title', $this->view_title);
         $this->template->vars('data', $data);
-        $this->main->view_layout('view');
+        $this->main->view_layout((!empty($this->scenario())?$this->scenario().DS:'').'view');
       } else parent::view();
     }
 

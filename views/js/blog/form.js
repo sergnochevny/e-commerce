@@ -28,7 +28,7 @@
     );
   }
 
-  $('form#edit_form').on('submit',
+  $('form').on('submit',
     function (event, submit) {
       event.preventDefault();
       if (submit) {
@@ -36,48 +36,14 @@
         $('[name=post_content]').val(tinyMCE.get('editable_content').getContent());
         var data = new FormData(this);
         var url = $(this).attr('action');
-        postdata(this, url, data, $('#form_content'), function (data) {
+        var container = $(this).parents('[data-role=form_content]');
+        if (container.length = 0) container = $(this).parent();
+        postdata(this, url, data, container, function (data) {
           $(document).trigger('tiny_init');
         });
       }
     }
   );
-
-  // $(document).on('submit', '#blog_post',
-  //   function (event) {
-  //     event.preventDefault();
-  //     $('[name=title]').val(tinyMCE.get('editable_title').getContent());
-  //     $('[name=content]').val(tinyMCE.get('editable_content').getContent());
-  //     var msg = $(this).serialize(),
-  //       url = $(this).attr('action');
-  //     $.ajax({
-  //       type: 'POST',
-  //       url: url,
-  //       data: msg,
-  //       success: function (data) {
-  //         $.when(
-  //           $('#alert').html(data)
-  //         ).done(
-  //           function () {
-  //             var danger = $('.danger');
-  //             $(document).trigger('tiny_init');
-  //             if (danger.length) {
-  //               danger.css('display', 'block');
-  //               setTimeout(function () {
-  //                 $('.danger').remove();
-  //               }, 8000);
-  //             }
-  //           }
-  //         );
-  //
-  //       },
-  //       error: function (xhr, str) {
-  //         alert('Error: ' + xhr.responseCode);
-  //       }
-  //     });
-  //   }
-  // );
-
 
   $('#build_filter').on('click',
     function () {

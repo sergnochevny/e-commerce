@@ -2374,7 +2374,7 @@ span[role=combobox].ui-button:active .ui-icon {
 
 @media only screen and (max-width: 991px) {
     .button-ask {
-        margin: 22px -140px 0 0;
+        margin: 22px -115px 0 0;
     }
 }
 @media only screen and (max-width: 767px) {
@@ -2468,14 +2468,29 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 
 .newsletter__form-wrap {
+    float: left;
+    display: block;
     margin-top: 30px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border: 2px solid #ddd;
-    box-shadow: 0 0 5px 0 #ccc;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 0 #ccc;
     background-color: rgba(255, 255, 255, .5);
-    padding: 20px;
+    padding: 15px;
+}
+
+.index__form-wrap {
+    width: 100%;
+    float: left;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 0 #ccc;
+    background-color: rgba(255, 255, 255, .5);
+    padding: 15px;
 }
 
 h4, h3, h2 {
@@ -2600,4 +2615,12 @@ input:hover {
     border-radius: 4px;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px #666;
+}
+
+.w_search .title{
+    margin-top: 170px;
+}
+.w_search .title .row{
+    margin-right: -20px;
+    text-shadow: 2px 1px 0 #fff;
 }

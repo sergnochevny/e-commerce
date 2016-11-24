@@ -1,5 +1,5 @@
 <div class="filter_select_panel row form-row">
-  <div class="col-md-12 col-xs-12 search_panel">
+  <div class="col-xs-12 search_panel">
     <div class="row">
       <div class="col-md-10 col-xs-10">
         <input type="text" data-input_filter_search class="input-text" name="filter_select_search_<?= $filter_type; ?>"
@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 select_panel">
+  <div class="col-xs-12 select_panel">
     <?php if(isset($filter)): ?>
       <ul class="filter_sel sel_item">
         <?php if(isset($filter_data_start) && ($filter_data_start > 0)): ?>

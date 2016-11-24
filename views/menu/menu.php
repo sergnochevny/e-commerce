@@ -25,9 +25,7 @@
           <a data-waitloader data-link title="Shop" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Shop</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Blog" aria-haspopup="true" class="has-submenu"
-             href="<?= _A_::$app->router()->UrlTo('blog/view') ?>">Blog<span class="caret"></span></a>
-          <?= isset($blog_menu) ? $blog_menu : ''; ?>
+          <a data-waitloader data-link title="Blog" href="<?= _A_::$app->router()->UrlTo('blog/view') ?>">Blog</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="Newsletter" href="<?= _A_::$app->router()->UrlTo('newsletter') ?>">Newsletter</a>

@@ -3,8 +3,8 @@
         <th class="text-center table-comment title">
             <div class="container-fluid">
                 <div class="row" style="font-weight: normal">
-                    <div class="col-md-12 text-center table-comment-title" id="comment_title"><b><?= $comment['title'] ?></b></div>
-                    <div class="col-md-5 text-left" id="comment_user_name">
+                    <div class="col-xs-12 text-center table-comment-title" id="comment_title"><b><?= $comment['title'] ?></b></div>
+                    <div class="col-xs-5 text-left" id="comment_user_name">
                         <div class="row"><?= $comment['username'] ?></div>
                         <div class="row"><span id="comment_date"><?= $comment['dt']; ?></span></div>
                     </div>

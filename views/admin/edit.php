@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div id="form_content" class="row">
+    <div data-role="form_content" class="row">
       <?= $form; ?>
     </div>
   </div>

@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <div id="form_content" class="row">
+  <div data-role="form_content" class="row">
       <?= $form; ?>
   </div>
   <input type="hidden" data-filemanager="<?= _A_::$app->router()->UrlTo('filemanager/') ?>">

@@ -140,7 +140,7 @@
                 <div class="row"
                      data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'product']) ?>"></div>
                 <script type='text/javascript'
-                        src='<?= _A_::$app->router()->UrlTo('views/js/cart/load.js'); ?>'></script>
+                        src='<?= _A_::$app->router()->UrlTo('views/js/load.js'); ?>'></script>
               </div>
 
               <div class="col-xs-12">

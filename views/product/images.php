@@ -1,6 +1,6 @@
-<div class="col-sm-12 col-md-12 b_modify_images_main">
+<div class="col-xs-12 b_modify_images_main">
   <div class="row">
-    <div class="col-md-12 b_modify_images_1">
+    <div class="col-xs-12 b_modify_images_1">
       <div class="row">
         <label class="col-xs-12 no-offset-left no-offset-right">
           <input type="radio" name="images" class="images" value="1" style="display:none;"/>
@@ -18,7 +18,7 @@
         </label>
       </div>
     </div>
-    <div class="col-sm-12 col-md-12 b_modify_images_2">
+    <div class="col-xs-12 b_modify_images_2">
       <div class="row">
         <div class="col-xs-6 col-md-6">
           <div class="row">

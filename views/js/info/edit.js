@@ -15,9 +15,11 @@
         $('[name=message]').html(tinyMCE.get('editable_content').getContent());
         var data = new FormData(this);
         var url = $(this).attr('action');
+        var container = $(this).parents('[data-role=form_content]');
+        if (container.length == 0) container = $(this).parent();
         $.postdata(this, url, data, function (data) {
           tinyMCE.get('editable_content').remove();
-          $('#form_content').html(data)
+          container.html(data)
         });
       }
     }

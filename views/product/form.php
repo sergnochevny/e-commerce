@@ -179,8 +179,8 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-12 text-center" style="margin-top: 15px">
+        <div class="col-xs-12 text-center" style="margin-top: 15px">
+          <div class="row">
             <a id="upload" href="upload" class="button alt" style="cursor: pointer;">Upload file</a>
           </div>
         </div>
@@ -207,7 +207,7 @@
             <b>Hide regular price</b>
           </label>
         </div>
-        <div class="col-md-12 form-row">
+        <div class="col-xs-12 form-row">
           <div class="row">
             <hr style="margin: 15px 0">
           </div>
@@ -264,7 +264,7 @@
 
   <div data-submit_btn class="col-xs-12">
     <div class="text-center">
-      <a id="submit" href="save" class="button" style="width: 150px;">Save</a>
+      <input type="button" id="submit" class="button" style="width: 150px;" value="Save"/>
     </div>
   </div>
 

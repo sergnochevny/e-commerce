@@ -18,7 +18,7 @@
     </div>
 
     <div class="row">
-      <article class="col-md-12 text-justify">
+      <article class="col-xs-12 text-justify">
         <p><b>Please acknowledge you agree with our website Terms and Conditions.</b></p>
         <p><h6><b>Shipping</b></h6></p>
         <p>We ship Worldwide.</p>
@@ -101,7 +101,7 @@
 
 
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-xs-12">
         <label for="agreeterm" class="inline">
           <input type="checkbox" name="agreeterm" data-block="agreeterm"/>
           I have read and agreed to your website Terms and Conditions.
@@ -109,7 +109,7 @@
       </div>
     </div>
     <div class="row offset-top">
-      <div class="col-md-12">
+      <div class="col-xs-12">
         <div data-block="container_proceed_pay" class="wc-proceed-to-pay" style="display: none;">
           <form method="post" data-block="paypal_form" name="paypal_form" action="<?= $paypal['url'] ?>">
 

@@ -5,6 +5,7 @@
     protected function edit_add_handling($url, $title, $back_url = null) {
       $this->template->vars('form_title', $title);
       $data = null;
+      $this->scenario(_A_::$app->get('method'));
       $this->load($data);
       if(_A_::$app->request_is_post() && $this->form_handling($data)) {
         $this->save($data);
@@ -26,13 +27,14 @@
      * @export
      */
     public function view() {
+      $this->scenario(_A_::$app->get('method'));
       if(!is_null(_A_::$app->get($this->id_name))) {
         $id = _A_::$app->get($this->id_name);
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
         $this->after_get_data_item_view($data);
         $this->template->vars('view_title', $this->view_title);
         $this->template->vars('data', $data);
-        $this->main->view('view/detail');
+        $this->main->view((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'view/detail');
       } else Controller_Controller::view();
     }
 

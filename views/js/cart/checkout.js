@@ -14,9 +14,14 @@
     }, timeout);
   }
 
-  $('[data-load]').load($('[data-load]').attr('data-load'),
+  $.each($('[data-load]'),
     function () {
-      InitTimeout();
+      $(this).load($(this).attr('data-load'),
+        function () {
+          InitTimeout();
+        }
+      );
     }
   );
+
 })(jQuery);

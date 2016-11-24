@@ -864,11 +864,23 @@ a img.aligncenter {
 }
 
 .alert-danger {
-    background-color: #fc4d3c;
+    background-color: rgba(252,77,60,0.85);
     border: 0;
     border-top: 2px solid #db4436;
     color: #FFF;
 }
+
+.alert-danger pre{
+    color: red;
+    background-color: rgba(252,252,252,0.85);
+    font-size: 1em;
+}
+.alert-success pre{
+    color: green;
+    background-color: rgba(252,252,252,0.85);
+    font-size: 1em;
+}
+
 
 .entry .entry-header {
     margin-bottom: 50px;

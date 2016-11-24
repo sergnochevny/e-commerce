@@ -64,13 +64,15 @@
     });
   }
 
-  $('form#edit_form').on('submit',
+  $('form').on('submit',
     function (event, submitted) {
       event.preventDefault();
       if (submitted) {
         var data = new FormData(this);
         var url = $(this).attr('action');
-        postdata(this, url, data, $('#form_content'));
+        var container = $(this).parents('[data-role=form_content]');
+        if (container.length == 0) container = $(this).parent();
+        postdata(this, url, data, container);
       }
     }
   );

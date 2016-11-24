@@ -140,7 +140,7 @@
                 Users type <i class="fa fa-question-circle" data-promotion href="#users"></i>
               </label>
             </div>
-            <div class="col-md-12 panel panel-default"
+            <div class="col-xs-12 panel panel-default"
                  style="padding-top: 10px; padding-bottom: 10px; border-color: #999;">
               <label style="font-size: 12px; width: 100%;">
                 <input type="radio" id="user_type1" name="user_type" value="1"
@@ -178,7 +178,7 @@
                 <i class="fa fa-question-circle" data-promotion href="#fabrics"></i>
               </label>
             </div>
-            <div class="col-md-12 panel panel-default"
+            <div class="col-xs-12 panel panel-default"
                  style="padding-top: 10px; padding-bottom: 10px; border-color: #999;">
               <label style="font-size: 12px; width: 100%;">
                 <input type="radio" name="product_type" id="product_type1" value="1"
@@ -265,7 +265,7 @@
         </div>
 
         <div class="form-row">
-          <div class="col-md-12">
+          <div class="col-xs-12">
             <label for="discount_comment1">First Comment</label>
             <textarea name="discount_comment1" id="discount_comment1"><?= $data['discount_comment1'] ?></textarea>
             <small class="char-counter help-block">
@@ -276,7 +276,7 @@
         </div>
 
         <div class="form-row">
-          <div class="col-md-12">
+          <div class="col-xs-12">
             <label for="discount_comment2">Second Comment</label>
             <textarea name="discount_comment2" id="discount_comment2"><?= $data['discount_comment2'] ?></textarea>
             <small class="char-counter help-block">
@@ -287,7 +287,7 @@
         </div>
 
         <div class="form-row">
-          <div class="col-md-12">
+          <div class="col-xs-12">
             <label for="discount_comment3">Third Comment</label>
             <textarea name="discount_comment3" id="discount_comment3"><?= $data['discount_comment3'] ?></textarea>
             <small class="char-counter help-block">
@@ -298,10 +298,8 @@
         </div>
 
         <div class="form-row">
-          <div class="col-md-12 text-center">
-            <a id="submit" class="button" style="width: 150px;">
-              <?= isset($data['id']) ? 'Update' : 'Save'; ?>
-            </a>
+          <div class="col-xs-12 text-center">
+            <input type="button" id="submit" class="button" style="width: 150px;" value="<?= isset($data['id']) ? 'Update' : 'Save'; ?>"/>
             <div class="results" style="color: red;"></div>
           </div>
         </div>

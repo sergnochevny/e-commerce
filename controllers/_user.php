@@ -2,7 +2,8 @@
 
   Class Controller_User Extends Controller_Controller {
 
-    private function sendWelcomeEmail($email) {
+
+    public static function sendWelcomeEmail($email) {
       $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
       $subject = "Thank you for registering with iluvfabrix.com";
       $body = "Thank you for registering with iluvfabrix.com.\n";
@@ -101,7 +102,6 @@
       return !is_null(_A_::$app->session('_'));
     }
 
-
     /**
      * @export
      */
@@ -137,8 +137,8 @@
         }
         $back_url = _A_::$app->router()->UrlTo('authorization', $prms);
         (new Controller_Users())->user_handling($data, $action, $back_url, $title, true, true);
+        self::sendWelcomeEmail($data['email']);
         $this->template->view_layout('thanx');
-        $this->sendWelcomeEmail($data['email']);
       }
     }
 

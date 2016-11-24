@@ -171,7 +171,7 @@ var change_text = false;
       $(this).parent().addClass('focus')
     }
   );
-  $(document).on('focusout', '.focus',
+  $(document).on('focusout', '.focus input',
     function (event) {
       $(this).parent().removeClass('focus')
     }

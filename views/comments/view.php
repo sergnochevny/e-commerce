@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-md-12 modal-view" data-title="<?= $view_title ?>">
+  <div class="col-xs-12 modal-view" data-title="<?= $view_title ?>">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-xs-12 col-sm-6">
         <b>Title:</b><br>
         <?= $data['title'] ?>
       </div>
-      <div class="col-md-6">
+      <div class="col-xs-12 col-sm-6">
         <b>Status:</b><br>
         <?= $data['moderated'] == 1 ? 'published' : 'hidden' ?>
       </div>
@@ -14,7 +14,7 @@
       <br>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-xs-12">
         <b>Content:</b><br>
         <?= $data['data'] ?>
       </div>

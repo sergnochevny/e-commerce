@@ -3,7 +3,7 @@
     <div id="static">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-xs-12">
                     <div class="estimate">
                         <h3>Please use the table below to help to estimate the amount of fabric you will need.</h3>
                         <div class="estimate__cont">

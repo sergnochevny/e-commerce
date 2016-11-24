@@ -37,7 +37,7 @@
     <input type="hidden" name="post_content" value="">
     <input type="hidden" name="post_author" value="<?= $data['post_author']; ?>">
     <input type="hidden" name="post_date" value="<?= $data['post_date']; ?>">
-    <div class="col-md-12 col-xs-12">
+    <div class="col-xs-12">
       <div class="row">
         <div class="form-row">
           <label class="required_field"><strong>Post Categories:</strong></label>

@@ -17,7 +17,7 @@
           </textarea>
         </div>
       </div>
-      <?php if($data['scenario'] == 'cart'): ?>
+      <?php if($scenario == 'cart'): ?>
         <div class="col-sm-12">
           <div class="form-row">
             <label><b>Timeout (min):</b></label>
@@ -34,7 +34,7 @@
     </div>
     <div data-submit_btn class="col-xs-12">
       <div class="text-center">
-        <a id="submit" href="save" class="button" style="width: 150px;">Save</a>
+        <input type="button" id="submit" class="button" style="width: 150px;" value="Save"/>
       </div>
     </div>
   </div>

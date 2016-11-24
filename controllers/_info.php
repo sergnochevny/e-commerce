@@ -19,7 +19,6 @@
     }
 
     protected function load(&$data) {
-      $this->scenario(_A_::$app->get('method'));
       $data['title'] = _A_::$app->post('title') ? _A_::$app->post('title') : '';
       $data['message'] = _A_::$app->post('message') ? _A_::$app->post('message') : '';
       $data['visible'] = Model_Product::sanitize(_A_::$app->post('visible') ? _A_::$app->post('visible') : 0);
@@ -46,7 +45,6 @@
     protected function before_form_layout(&$data = null) {
       $this->template->vars('form_title', $this->title_scenario[$this->scenario()]);
       if(empty($data['f2'])) $data['f2'] = 10;
-      $data['scenario'] = $this->scenario();
 
       $data['title'] = stripslashes($data['title']);
       $data['message'] = stripslashes($data['message']);
@@ -60,7 +58,7 @@
         $this->form_after_get_data($data);
       }
       $this->before_form_layout($data);
-      $prms['method'] = $this->scenario();
+      if(!is_null($this->scenario())) $prms['method'] = $this->scenario();
       $action = _A_::$app->router()->UrlTo($url, $prms);
       $this->template->vars('data', $data);
       $this->template->vars('action', $action);

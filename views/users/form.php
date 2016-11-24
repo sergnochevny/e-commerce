@@ -3,7 +3,7 @@
   <div class="col-md-push-2 col-md-8 col-xs-12">
 
     <div class="row">
-      <div class="col-md-12 col-xs-12">
+      <div class="col-xs-12">
         <div class="form-row">
           <label class="required_field"><strong>Email Address:</strong></label>
           <input type="text" name="email" value="<?= $data['email'] ?>" class="input-text ">
@@ -45,7 +45,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-xs-12">
               <div class="row">
                 <div class="form-row">
                   <label><strong>Organization:</strong></label>
@@ -124,8 +124,8 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-md-12 col-xs-12">
+            <div class="col-xs-12">
+              <div class="row">
                 <div class="form-row">
                   <label><strong> Email:</strong></label>
                   <input type="text" name="bill_email" value="<?= $data['bill_email'] ?>" class="input-text ">
@@ -168,7 +168,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-12 col-xs-12">
+                <div class="col-xs-12">
                   <div class="form-row">
                       <label><strong> Organization:</strong></label>
                       <input type="text" name="ship_organization" value="<?= $data['ship_organization'] ?>"
@@ -178,7 +178,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-12 col-xs-12">
+                <div class="col-xs-12">
                   <div class="form-row">
                     <label class="required_field"><strong>Address:</strong></label>
                   </div>
@@ -247,7 +247,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-12 col-xs-12">
+                <div class="col-xs-12">
                   <div class="form-row">
                     <label><strong> Email:</strong></label>
                     <input type="text" name="ship_email" value="<?= $data['ship_email'] ?>" class="input-text ">

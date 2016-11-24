@@ -4,15 +4,15 @@
     <div class="form-row">
       <div class="panel panel-default">
         <div class="panel-body">
-          <div class="col-md-12">
+          <div class="col-xs-12">
             <label class="required_field"><strong>Login:</strong></label>
             <input type="text" name="login" value="<?= $data['login'] ?>" class="input-text "  autofocus/>
           </div>
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <label><strong>Password:</strong></label>
             <input type="password" name="create_password" class="input-text ">
           </div>
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <label><strong>Confirm Password:</strong></label>
             <input type="password" name="confirm_password" class="input-text ">
           </div>
