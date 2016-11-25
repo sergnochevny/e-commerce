@@ -195,7 +195,8 @@
           <div class="col-xs-12">
             <div class="form-row">
               <label class="required_field" for="p_yard"><b>Price:</b></label>
-              <input type="text" id="p_yard" name="priceyard" value="<?= $data['priceyard']; ?>" class="input-text ">
+              <input data-inputmask="'alias': 'currency', 'prefix': '', 'rightAlign': 'false'" type="text" id="p_yard"
+                     name="priceyard" value="<?= $data['priceyard']; ?>" class="input-text ">
             </div>
           </div>
         </div>
@@ -214,13 +215,15 @@
         </div>
         <div class="form-row">
           <label for="current_inv"><b>Current inventory:</b></label>
-          <input type="text" id="current_inv" name="inventory" value="<?= $data['inventory']; ?>"
+          <input data-inputmask="'mask': '9[9{2}].9[9]', 'greedy': 'false'" type="text" id="current_inv"
+                 name="inventory" value="<?= $data['inventory']; ?>"
                  class="input-text ">
         </div>
 
         <div class="form-row">
           <label><b>Width:</b></label>
-          <input type="text" id="m_width" name="width" value="<?= $data['width']; ?>" class="input-text ">
+          <input data-inputmask="'mask': '9[9].9[9]', 'greedy': 'false'" type="text" id="m_width" name="width"
+                 value="<?= $data['width']; ?>" class="input-text ">
         </div>
 
         <div class="form-row">
@@ -272,7 +275,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"
+                                                                                         aria-hidden="true"></i>
+          </button>
           <h4 id="modal-title" class="modal-title text-center"></h4>
         </div>
         <div class="modal-body" style="padding: 0;">

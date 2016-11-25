@@ -14,7 +14,7 @@
               </div>
               <?php if(is_array($value)): ?>
                 <div class="col-sm-3 col-xs-3">
-                  <input class="input-text" name="<?= $filter_type ?>[<?= $key; ?>]" type="number"
+                  <input class="input-text" name="<?= $filter_type ?>[<?= $key; ?>]" type="text"
                          value="<?= $value[1]; ?>">
                 </div>
               <?php endif; ?>

@@ -1,5 +1,3 @@
-<script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
-        type="text/javascript"></script>
 <script src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/info/edit.js'); ?>' type="text/javascript"></script>
 <div class="container">

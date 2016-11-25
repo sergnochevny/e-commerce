@@ -2,13 +2,9 @@
 
 (function ($) {
 
-  var danger = $('.danger');
-  if (danger.length) {
-    danger.css('display', 'block');
-    setTimeout(function () {
-      danger.css('display', 'none');
-    }, 8000);
-  }
+  $(":input").inputmask();
+
+  $.danger_remove(8000);
 
   $('#discount_comment1').charCounter({
     charsLimit: 255,
@@ -26,11 +22,7 @@
     outputNotificationBlock: '#discount_comment3_counter_notification'
   });
 
-  var discount_amount = document.getElementById('discount_amount'),
-    restrictions = document.getElementById('required_amount'),
-    float_type = '9[9].9[9]';
-
-  Inputmask({mask: float_type, greedy: false}).mask(discount_amount).mask(restrictions);
+  $(":input").inputmask();
 
   $('body').waitloader('remove');
 

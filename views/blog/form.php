@@ -89,7 +89,4 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </form>
-
-<script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
-        type="text/javascript"></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/blog/form.js'); ?>' type="text/javascript"></script>

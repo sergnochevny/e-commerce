@@ -21,8 +21,8 @@
       if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::sanitize($filter["c.id"])) . "'";
       if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::sanitize($filter["d.id"])) . "'";
       if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::sanitize($filter["e.id"])) . "'";
-      if(isset($filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::sanitize($filter["a.priceyard"]['from'])) . "'";
-      if(isset($filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . mysql_real_escape_string(static::sanitize($filter["a.priceyard"]['to'])) . "'";
+      if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::sanitize($filter["a.priceyard"]['from'])) . "'";
+      if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . mysql_real_escape_string(static::sanitize($filter["a.priceyard"]['to'])) . "'";
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
@@ -38,8 +38,8 @@
       if(isset($filter['hidden']["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["e.id"])) . "'";
       if(isset($filter['hidden']["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.best"])) . "'";
       if(isset($filter['hidden']["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.specials"])) . "'";
-      if(isset($filter['hidden']["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.priceyard"]['from'])) . "'";
-      if(isset($filter['hidden']["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.priceyard"]['to'])) . "'";
+      if(isset($filter['hidden']["a.priceyard"]['from']) && !empty((float)$filter['hidden']["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.priceyard"]['from'])) . "'";
+      if(isset($filter['hidden']["a.priceyard"]['to']) && !empty((float)$filter['hidden']["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.priceyard"]['to'])) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         $result = (!empty($result) ? " WHERE " . $result : '');

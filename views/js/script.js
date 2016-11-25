@@ -4,36 +4,41 @@ var change_text = false;
 
 (function ($) {
   $.extend({
-      change_button_text: function (force) {
-        if (force) change_text = false;
-        if ($(window).width() < 485) {
-          if (!change_text) {
-            $.each($('[data-viewport]'),
-              function (idx, element) {
-                change_text = true;
-                var old_text = $(element).text();
-                $(element).text($(element).attr('data-vp_change_content'));
-                $(element).attr('data-vp_change_content', old_text);
-              }
-            );
-          }
-        } else {
-          if (change_text) {
-            $.each($('[data-viewport]'),
-              function (idx, element) {
-                change_text = false;
-                var old_text = $(element).text();
-                $(element).text($(element).attr('data-vp_change_content'));
-                $(element).attr('data-vp_change_content', old_text);
-              }
-            );
-          }
+    danger_remove: function (timeout) {
+      var danger = $('.danger');
+      if (danger.length) {
+        danger.stop().show();
+        setTimeout(function () {
+          danger.remove();
+        }, timeout);
+      }
+    },
+    change_button_text: function (force) {
+      if (force) change_text = false;
+      if ($(window).width() < 485) {
+        if (!change_text) {
+          $.each($('[data-viewport]'),
+            function (idx, element) {
+              change_text = true;
+              var old_text = $(element).text();
+              $(element).text($(element).attr('data-vp_change_content'));
+              $(element).attr('data-vp_change_content', old_text);
+            }
+          );
+        }
+      } else {
+        if (change_text) {
+          $.each($('[data-viewport]'),
+            function (idx, element) {
+              change_text = false;
+              var old_text = $(element).text();
+              $(element).text($(element).attr('data-vp_change_content'));
+              $(element).attr('data-vp_change_content', old_text);
+            }
+          );
         }
       }
-    }
-  );
-
-  $.extend({
+    },
     /*$.post function replacement*/
     postdata: function (this_, url, data, callback) {
       $('body').waitloader('show');
@@ -78,6 +83,27 @@ var change_text = false;
           }
           break;
       }
+    },
+    restrict: function () {
+      return this.each(function () {
+        if ((this.type && 'number' === this.type.toLowerCase()) || (this.type && 'text' === this.type.toLowerCase())) {
+          $(this).on('change', function () {
+            var _self = this;
+            var v = parseFloat(_self.value);
+            var min = parseFloat(_self.min);
+            var max = parseFloat(_self.max);
+            if ($(_self).is('[relation-min]') && !isNaN(parseFloat($($(_self).attr('relation-min'))[0].value)))
+              min = parseFloat($($(_self).attr('relation-min'))[0].value);
+            if ($(_self).is('[relation-max]') && !isNaN(parseFloat($($(_self).attr('relation-max'))[0].value)))
+              max = parseFloat($($(_self).attr('relation-max'))[0].value);
+            if (v >= min && v <= max) {
+              _self.value = v;
+            } else {
+              _self.value = v < min ? min : max;
+            }
+          });
+        }
+      });
     }
   });
 

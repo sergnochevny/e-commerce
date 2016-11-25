@@ -1,6 +1,6 @@
 <?php include_once 'views/messages/alert-boxes.php'; ?>
 <form method="POST" id="edit_form" action="<?= $action; ?>" class="col-sm-12 col-md-8 col-md-offset-2">
-  
+
   <div class="row">
     <div class="col-xs-12 col-sm-12">
       <div class="row">
@@ -60,7 +60,8 @@
                 </label>
               </div>
               <div class="col-xs-4 col-md-4">
-                <input type="text" name="discount_amount" value="<?= $data['discount_amount'] ?>" id="discount_amount"
+                <input data-inputmask="'mask': '9[9].9[9]', 'greedy' : false" type="text"
+                       name="discount_amount" value="<?= $data['discount_amount'] ?>" id="discount_amount"
                        class="input-text ">
               </div>
               <div class="col-xs-2 col-md-2">
@@ -114,7 +115,8 @@
                 </label>
               </div>
               <div class="col-xs-6 col-md-4">
-                <input type="text" name="required_amount" id="required_amount" value="<?= $data['required_amount'] ?>"
+                <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                       name="required_amount" id="required_amount" value="<?= $data['required_amount'] ?>"
                        class="input-text ">
               </div>
               <div class="col-xs-6 col-md-8" style="padding-left: 0">
@@ -236,7 +238,8 @@
                        class="input-text ">
               </div>
               <div class="col-xs-6">
-                <label for="dateTo">End Date <i class="fa fa-question-circle" data-promotion href="#date_end"></i></label>
+                <label for="dateTo">End Date <i class="fa fa-question-circle" data-promotion
+                                                href="#date_end"></i></label>
                 <input type="text" name="date_end" value="<?= $data['date_end'] ?>" id="dateTo" class="input-text ">
               </div>
             </div>
@@ -250,7 +253,7 @@
                 <?= $data['enabled'] == "1" ? 'checked' : ''; ?>
                      class="input-checkbox">
               Enabled <i class="fa fa-question-circle" data-promotion=""
-                                     href="#enabled"></i>
+                         href="#enabled"></i>
             </label>
           </div>
           <div class="col-xs-12 col-sm-6">
@@ -299,7 +302,8 @@
 
         <div class="form-row">
           <div class="col-xs-12 text-center">
-            <input type="button" id="submit" class="button" style="width: 150px;" value="<?= isset($data['id']) ? 'Update' : 'Save'; ?>"/>
+            <input type="button" id="submit" class="button" style="width: 150px;"
+                   value="<?= isset($data['id']) ? 'Update' : 'Save'; ?>"/>
             <div class="results" style="color: red;"></div>
           </div>
         </div>
@@ -329,7 +333,5 @@
   </div><!-- /.modal -->
 
 </form>
-
 <script src="<?= _A_::$app->router()->UrlTo('views/js/char-counter.jquery.js'); ?>"></script>
-<script src="<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>"></script>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/discount/form.js'); ?>"></script>

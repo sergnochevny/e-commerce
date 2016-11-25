@@ -1264,7 +1264,8 @@ form[data-search] > .row > .panel > .panel-heading {
     padding: 0;
     font-size: 0.8em;
     position: absolute;
-    right: -40px;
+    right: -25px;
+    top: 1px;
     color: red;
     border: 0;
     background-color: transparent;

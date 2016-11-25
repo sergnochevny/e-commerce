@@ -1,13 +1,8 @@
 'use strict';
 (function ($) {
+  $(":input").inputmask();
 
-  var danger = $('.danger');
-  if (danger.length) {
-    danger.css('display', 'block');
-    setTimeout(function () {
-      danger.css('display', 'none');
-    }, 8000);
-  }
+  $.danger_remove(8000);
 
   $("form").on('submit', function (event) {
     event.preventDefault();

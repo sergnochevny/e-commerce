@@ -1,22 +1,8 @@
 (function ($) {
 
-  var danger = $('.danger');
-  var p_yard = document.getElementById('p_yard'),
-    m_width = document.getElementById('m_width'),
-    current_inv = document.getElementById('current_inv'),
-    float_type = '9[9].9[9]',
-    long_float_type = '9[9{2}].9[9]';
+  $(":input").inputmask();
 
-  Inputmask({alias: 'currency', prefix: "", rightAlign: false}).mask(p_yard);
-  Inputmask({mask: float_type, greedy: false}).mask(m_width);
-  Inputmask({mask: long_float_type, greedy: false}).mask(current_inv);
-
-  if (danger.length) {
-    danger.css('display', 'block');
-    setTimeout(function () {
-      $('.danger').css('display', 'none');
-    }, 8000);
-  }
+  $.danger_remove(8000);
 
   if ($('[data-related] .product-item').length) {
     $('[data-carousel]').owlCarousel(

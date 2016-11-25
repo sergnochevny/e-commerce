@@ -1,6 +1,5 @@
 (function ($) {
 
-
   $('#date-from').datepicker({
     dateFormat: 'mm/dd/yy',
     onSelect: function (dateText, inst) {
@@ -15,5 +14,7 @@
     }
   });
 
+  $('[data-restrict]').restrict();
+  $(":input").inputmask();
 
 })(jQuery);

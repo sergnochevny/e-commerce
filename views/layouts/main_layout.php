@@ -52,6 +52,8 @@
   <script type='text/javascript'
           src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.bootstrap.min.js'); ?>'></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.prettyPhoto.js'); ?>'></script>
+  <script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
+          type="text/javascript"></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/search/search.js'); ?>'></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
   <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">

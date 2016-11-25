@@ -187,12 +187,12 @@
         $controller = new $class();
         $call = null;
         $reflection = new ReflectionClass($controller);
-        if($reflection->hasMethod($this->action)){
-          if (boolval(preg_match('#(@export)#i', $reflection->getMethod($this->action)->getDocComment(), $export)))
-            if (is_callable([$controller, $this->action])) $call = $this->action;
-        } elseif(($this->controller == $this->action) && $reflection->hasMethod('index')){
-          if (boolval(preg_match('#(@export)#i', $reflection->getMethod('index')->getDocComment(), $export)))
-            if (is_callable([$controller, 'index'])) $call = 'index';
+        if($reflection->hasMethod($this->action)) {
+          if(boolval(preg_match('#(@export)#i', $reflection->getMethod($this->action)->getDocComment(), $export)))
+            if(is_callable([$controller, $this->action])) $call = $this->action;
+        } elseif(($this->controller == $this->action) && $reflection->hasMethod('index')) {
+          if(boolval(preg_match('#(@export)#i', $reflection->getMethod('index')->getDocComment(), $export)))
+            if(is_callable([$controller, 'index'])) $call = 'index';
         }
         if(!isset($call)) {
           $main = new Controller_Main($controller);
@@ -229,7 +229,11 @@
     }
 
     public function redirect($url) {
-      exit("<script>window.location='" . $url . "';</script>");
+      $redirect_script = '<script>' .
+        'window.location="' . $url . '";' .
+        'if(typeof $ !== "undefined") setTimeout(function(){$("body").waitloader("show");},50);' .
+        '</script>';
+      exit($redirect_script);
     }
 
     public function RefTo($path, $params = null) {

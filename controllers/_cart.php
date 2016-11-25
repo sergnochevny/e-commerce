@@ -225,18 +225,9 @@
             Model_Order::save_discount_usage($discountIds, $oid);
             $this->thanx_mail();
             _A_::$app->setSession('cart', null);
-          } else {
-            $url = _A_::$app->router()->UrlTo('shop');
-            $this->redirect($url);
-          }
-        } else {
-          $url = _A_::$app->router()->UrlTo('shop');
-          $this->redirect($url);
-        }
-      } else {
-        $url = _A_::$app->router()->UrlTo('shop');
-        $this->redirect($url);
-      }
+          } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
+        } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
+      } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
     }
 
     private function thanx_mail() {
@@ -995,57 +986,62 @@
 
       $user = _A_::$app->session('user');
       $email = trim($user['email']);
-      $this->template->vars('email', $email);
       $bill_firstname = trim($user['bill_firstname']);
-      $this->template->vars('bill_firstname', $bill_firstname);
       $bill_lastname = trim($user['bill_lastname']);
-      $this->template->vars('bill_lastname', $bill_lastname);
       $bill_organization = trim($user['bill_organization']);
-      $this->template->vars('bill_organization', $bill_organization);
       $bill_address1 = trim($user['bill_address1']);
-      $this->template->vars('bill_address1', $bill_address1);
       $bill_address2 = trim($user['bill_address2']);
-      $this->template->vars('bill_address2', $bill_address2);
       $bill_province = trim($user['bill_province']);
       $bill_city = trim($user['bill_city']);
-      $this->template->vars('bill_city', $bill_city);
       $bill_country = trim($user['bill_country']);
       $bill_postal = trim($user['bill_postal']);
-      $this->template->vars('bill_postal', $bill_postal);
       $bill_phone = trim($user['bill_phone']);
-      $this->template->vars('bill_phone', $bill_phone);
 
-      $bill_country = trim(Model_Address::get_country_by_id($bill_country));
-      $this->template->vars('bill_country', $bill_country);
-      $bill_province = trim(Model_Address::get_province_by_id($bill_province));
-      $this->template->vars('bill_province', $bill_province);
+      if(!empty($bill_postal)) {
+        $this->template->vars('email', $email);
+        $this->template->vars('bill_firstname', $bill_firstname);
+        $this->template->vars('bill_lastname', $bill_lastname);
+        $this->template->vars('bill_organization', $bill_organization);
+        $this->template->vars('bill_address1', $bill_address1);
+        $this->template->vars('bill_address2', $bill_address2);
+        $this->template->vars('bill_city', $bill_city);
+        $this->template->vars('bill_postal', $bill_postal);
+        $this->template->vars('bill_phone', $bill_phone);
+        $bill_country = trim(Model_Address::get_country_by_id($bill_country));
+        $this->template->vars('bill_country', $bill_country);
+        $bill_province = trim(Model_Address::get_province_by_id($bill_province));
+        $this->template->vars('bill_province', $bill_province);
 
-      $trid = uniqid();
-      $cart = _A_::$app->session('cart');
-      $cart['trid'] = $trid;
-      $cart['trdate'] = date('Y-m-d H:i');
-      _A_::$app->setSession('cart', $cart);
+        $trid = uniqid();
+        $cart = _A_::$app->session('cart');
+        $cart['trid'] = $trid;
+        $cart['trdate'] = date('Y-m-d H:i');
+        _A_::$app->setSession('cart', $cart);
 
-      if(DEMO == 1) {
-        $paypal['business'] = "sergnochevny-facilitator@gmail.com";
-        $paypal['url'] = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+        if(DEMO == 1) {
+          $paypal['business'] = "sergnochevny-facilitator@gmail.com";
+          $paypal['url'] = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+        } else {
+          $paypal['business'] = "info@iluvfabrix.com";
+          $paypal['url'] = "https://www.paypal.com/cgi-bin/webscr";
+        }
+
+        $paypal['cmd'] = "_xclick";
+        $paypal['image_url'] = _A_::$app->router()->UrlTo('/');
+        $paypal['return'] = _A_::$app->router()->UrlTo('cart', ['pay_ok' => true, 'trid' => $trid]);
+        $paypal['cancel_return'] = _A_::$app->router()->UrlTo("cart", ['pay_error' => true]);
+        $paypal['notify_url'] = _A_::$app->router()->UrlTo("ipn/ipn.php", ['pay_notify' => session_id()]);
+        $paypal['rm'] = "1";
+        $paypal['currency_code'] = "USD";
+        $paypal['lc'] = "US";
+        $paypal['bn'] = "toolkit-php";
+
+        $this->main->template->vars('paypal', $paypal);
+        $this->main->view_layout('proceed_agreem');
       } else {
-        $paypal['business'] = "info@iluvfabrix.com";
-        $paypal['url'] = "https://www.paypal.com/cgi-bin/webscr";
+        $this->template->vars('error', ['Fill in the Billing and Shipping Information!']);
+        $this->proceed_checkout();
       }
-
-      $paypal['cmd'] = "_xclick";
-      $paypal['image_url'] = _A_::$app->router()->UrlTo('/');
-      $paypal['return'] = _A_::$app->router()->UrlTo('cart', ['pay_ok' => true, 'trid' => $trid]);
-      $paypal['cancel_return'] = _A_::$app->router()->UrlTo("cart", ['pay_error' => true]);
-      $paypal['notify_url'] = _A_::$app->router()->UrlTo("ipn/ipn.php", ['pay_notify' => session_id()]);
-      $paypal['rm'] = "1";
-      $paypal['currency_code'] = "USD";
-      $paypal['lc'] = "US";
-      $paypal['bn'] = "toolkit-php";
-
-      $this->main->template->vars('paypal', $paypal);
-      $this->main->view_layout('proceed_agreem');
     }
 
     /**

@@ -1,5 +1,7 @@
 (function ($) {
 
+  $(":input").inputmask();
+
   $('#modal .save-data').on('click', function (event) {
     $('#modal .save-data').off();
     $('#edit_form').trigger('submit');

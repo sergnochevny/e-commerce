@@ -1,14 +1,9 @@
 'use strict';
 (function ($) {
 
-  var danger = $('.danger');
+  $(":input").inputmask();
 
-  if (danger.length) {
-    danger.css('display', 'block');
-    setTimeout(function () {
-      $('.danger').css('display', 'none');
-    }, 8000);
-  }
+  $.danger_remove(8000);
 
   setEvToFilter();
 

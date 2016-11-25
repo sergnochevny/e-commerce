@@ -2,15 +2,9 @@
 
 (function ($) {
 
-  if ($('.danger').length) {
-    $('.danger').stop().show();
-    setTimeout(
-      function () {
-        $('.danger').remove();
-      }
-      , 5000
-    );
-  }
+  $(":input").inputmask();
+
+  $.danger_remove(5000);
 
   $('#psw_form').on('submit',
     function (event) {

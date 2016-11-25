@@ -1,5 +1,6 @@
 'use strict';
 (function ($) {
+  $(":input").inputmask();
 
   var throwDangerAlert = function (notification) {
       $('.notification').text(notification).addClass('alert-danger').removeClass('hidden')

@@ -2,13 +2,7 @@
 
 (function ($) {
 
-  var danger = $('.danger');
-  if (danger.length) {
-    danger.css('display', 'block');
-    setTimeout(function () {
-      $('.danger').css('display', 'none');
-    }, 8000);
-  }
+  $.danger_remove(8000);
 
   $('#modal').on('hidden.bs.modal', function () {
     $(this).find('#modal_content').empty();

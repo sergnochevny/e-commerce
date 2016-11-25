@@ -2,23 +2,25 @@
 
 (function ($) {
 
+  $(":input").inputmask();
+
   $('#authorization').on('submit',
     function (event) {
       event.preventDefault();
       var data = new FormData(this);
       var url = $(this).attr('action');
+      var results = $('.results');
       $.postdata(this, url, data,
         function (data) {
-          var results = $('.results');
-          $.when(results.html(data)).done(function () {
-            if (results.children('script').length == 0) {
-              setTimeout(function () {
-                results.html('');
-              }, 3000);
-            } else {
-              $('body').waitloader('show');
+          $.when(results.html(data)).done(
+            function () {
+              if (results.children('script').length == 0) {
+                setTimeout(function () {
+                  results.html('');
+                }, 3000);
+              }
             }
-          });
+          );
         }
       );
     }

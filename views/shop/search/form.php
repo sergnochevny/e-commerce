@@ -25,23 +25,12 @@
                 <div class="label label-search-info">Manufacturer: <?= $search['manufacturers'][$search['e.id']] ?>
                 </div>
               <?php endif; ?>
-              <?php if(isset($search['a.pvisible'])): ?>
-                <div class="label label-search-info">
-                  Visibile: <?= isset($search['a.pvisible']) && $search['a.pvisible'] == 1 ? 'YES' : 'NO' ?>
-                </div>
-              <?php endif; ?>
-              <?php if(isset($search['a.best'])): ?>
-                <div class="label label-search-info">Best
-                  textile: <?= isset($search['a.best']) && $search['a.best'] == 1 ? 'YES' : 'NO' ?></div>
-              <?php endif; ?>
-              <?php if(isset($search['a.specials'])): ?>
-                <div class="label label-search-info">
-                  Specials: <?= isset($search['a.specials']) && $search['a.specials'] == 1 ? 'YES' : 'NO' ?></div>
-              <?php endif; ?>
               <?php if(isset($search['a.piece'])): ?>
                 <div class="label label-search-info">
                   Piece: <?= isset($search['a.piece']) && $search['a.piece'] == 1 ? 'YES' : 'NO' ?></div>
               <?php endif; ?>
+              <?= isset($search['a.priceyard']['from']) && !empty((float)$search['a.priceyard']['from']) ? '<div class="label label-search-info">Price from: ' . $search['a.priceyard']['from'] . '</div>' : '' ?>
+              <?= isset($search['a.priceyard']['to']) && !empty((float)$search['a.priceyard']['to']) ? '<div class="label label-search-info">Price to: ' . $search['a.priceyard']['to'] . '</div>' : '' ?>
               <?= isset($search['active']) ? '<a data-search_reset href="javascript:void(0)" title="Reset search" class="reset"><i class="fa fa-2x fa-times" aria-hidden="true"></i></a>' : '' ?>
             </div>
             <b class="sr-ds">
@@ -150,8 +139,37 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="form-row">
+              <label>Price ranges from:</label>
+              <input
+                data-restrict
+                relation-max="#price-to"
+                min="<?= isset($search['hidden']['a.priceyard']['from']) ? $search['hidden']['a.priceyard']['from'] : 0; ?>"
+                max="<?= isset($search['hidden']['a.priceyard']['to']) ? $search['hidden']['a.priceyard']['to'] : 9999999; ?>"
+                data-inputmask="'alias': 'currency', 'prefix': '', 'rightAlign': 'false'"
+                type="text" class="input-text" id="price-from" placeholder="Price ranges from"
+                name="search[a.priceyard][from]"
+                value="<?= isset($search['a.priceyard']['from']) ? $search['a.priceyard']['from'] : '' ?>">
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="form-row">
+              <label>Price ranges to:</label>
+              <input
+                data-restrict
+                relation-min="#price-from"
+                min="<?= isset($search['hidden']['a.priceyard']['from']) ? $search['hidden']['a.priceyard']['from'] : 0; ?>"
+                max="<?= isset($search['hidden']['a.priceyard']['to']) ? $search['hidden']['a.priceyard']['to'] : 9999999; ?>"
+                data-inputmask="'alias': 'currency', 'prefix': '', 'rightAlign': 'false'"
+                type="text" class="input-text" id="price-to" placeholder="Price ranges to"
+                name="search[a.priceyard][to]"
+                value="<?= isset($search['a.priceyard']['to']) ? $search['a.priceyard']['to'] : '' ?>">
+            </div>
+          </div>
+        </div>
       </div>
-
       <div class="panel-footer hidden">
         <div class="row">
           <div class="col-sm-12">
@@ -166,15 +184,14 @@
     if(isset($search['hidden'])):
       foreach($search['hidden'] as $field_name => $field_value):?>
         <?php if(is_array($field_value)): ?>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>][from]" value="<?=$field_value['from']?>"/>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>][to]" value="<?=$field_value['to']?>"/>
+          <input type="hidden" name="search[hidden][<?= $field_name ?>][from]" value="<?= $field_value['from'] ?>"/>
+          <input type="hidden" name="search[hidden][<?= $field_name ?>][to]" value="<?= $field_value['to'] ?>"/>
         <?php else: ?>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>]" value="<?=$field_value?>"/>
+          <input type="hidden" name="search[hidden][<?= $field_name ?>]" value="<?= $field_value ?>"/>
         <?php endif; ?>
         <?php
       endforeach;
     endif;
   ?>
-
 </form>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/search.js'); ?>"></script>

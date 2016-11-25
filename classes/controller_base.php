@@ -18,7 +18,6 @@
     }
 
     public function redirect($url) {
-      $router = $this->registry->get('router');
-      $router->redirect($url);
+      _A_::$app->router()->redirect($url);
     }
   }
