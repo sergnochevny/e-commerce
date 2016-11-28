@@ -186,7 +186,7 @@
             $handlingcost += RATE_HANDLING;
             $handling = 1;
           }
-          $oid = Model_Order::register_order($aid, $trid, $shipping, $shipcost, $on_roll, $express_samples, $handling, $shipDiscount, $couponDiscount, $discount, $taxes, $total);
+          $oid = Model_Orders::register_order($aid, $trid, $shipping, $shipcost, $on_roll, $express_samples, $handling, $shipDiscount, $couponDiscount, $discount, $taxes, $total);
           if(isset($oid)) {
             if(count($cart_items) > 0) {
               foreach($cart_items as $pid => $item) {
@@ -197,7 +197,7 @@
                 $price = $item['price'];
                 $discount = $item['discount'];
                 $sale_price = $item['saleprice'];
-                if(Model_Order::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price)) {
+                if(Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price)) {
                   $qty = $item['quantity'];
                   $inventory = $product['inventory'];
                   $remainder = $inventory - $qty;
@@ -213,16 +213,16 @@
                 $pnumber = $product['pnumber'];
                 $pname = $product['pname'];
                 $qty = 1;
-                $price = $item['Price'];
+                $price = $item['price'];
                 $discount = 0;
                 $sale_price = 0;
                 $is_sample = 1;
-                Model_Order::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price, $is_sample);
+                Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price, $is_sample);
               }
             }
 
             $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
-            Model_Order::save_discount_usage($discountIds, $oid);
+            Model_Orders::save_discount_usage($discountIds, $oid);
             $this->thanx_mail();
             _A_::$app->setSession('cart', null);
           } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
@@ -309,8 +309,8 @@
         if(count($cart_items) > 0) {
           foreach($cart_items as $key => $item) {
             $product = Model_Shop::get_product_params($key);
-            $pname = $product['Product_name'];
-            $pnumber = $product['Product_number'];
+            $pname = $product['pname'];
+            $pnumber = $product['pnumber'];
             $formatprice = $item['format_sale_price'];
             $qty = $item['quantity'];
             $subtotal = $item['format_subtotal'];
@@ -323,8 +323,8 @@
         if(count($cart_samples_items) > 0) {
           foreach($cart_samples_items as $key => $item) {
             $product = Model_Shop::get_product_params($key);
-            $pname = $product['Product_name'];
-            $pnumber = $product['Product_number'];
+            $pname = $product['pname'];
+            $pnumber = $product['pnumber'];
 
             $body .= "\nName: SAMPLE - $pname $pnumber\n";
           }
@@ -1095,14 +1095,14 @@
           if(!$item_added) {
 
             $pid = $pid;
-            $price = $product['Price'];
+            $price = $product['price'];
             $inventory = $product['inventory'];
             $piece = $product['piece'];
             $format_price = '';
             $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
             $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
-            $saleprice = $product['Price'];
+            $saleprice = $product['price'];
             $sDiscount = 0;
             $saleprice = round(Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds), 2);
             $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
@@ -1112,7 +1112,7 @@
             $discount = round(($price - $saleprice), 2);
             $format_discount = "$" . number_format($discount, 2);
 
-            $product['Price'] = $price;
+            $product['price'] = $price;
             $product['saleprice'] = $saleprice;
             $product['discount'] = $discount;
             $product['format_discount'] = $format_discount;
@@ -1158,7 +1158,7 @@
           $this->template->vars('SUM', $cart_sum);
 
           ob_start();
-          $message = 'The product ' . $product['Product_name'] . ' is unavailable. The product was not added.<br>';
+          $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
           $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
           $this->template->vars('message', $message);
           $this->main->view_layout('msg_add');
@@ -1232,7 +1232,7 @@
           $this->template->vars('SUM', $cart_sum);
 
           ob_start();
-          $message = 'The product ' . $product['Product_name'] . ' is unavailable. The product was not added.<br>';
+          $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
           $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
           $this->template->vars('message', $message);
           $this->main->view_layout('msg_add');
@@ -1280,7 +1280,7 @@
               $quantity = floor($quantity);
             }
             ob_start();
-            $message = 'The quantity for ' . $product['Product_name'] . ' must be a whole number. The order was adjusted.<br>';
+            $message = 'The quantity for ' . $product['pname'] . ' must be a whole number. The order was adjusted.<br>';
             $this->template->vars('message', $message);
             $this->main->view_layout('msg_add');
             $response['msg'] = ob_get_contents();
@@ -1293,7 +1293,7 @@
             } else {
               $cart_items[$pid]['quantity'] = $inventory;
               ob_start();
-              $message = 'The available inventory for ' . $cart_items[$pid]['Product_name'] . ' is ' . $inventory . '. The order was adjusted.<br>';
+              $message = 'The available inventory for ' . $cart_items[$pid]['pname'] . ' is ' . $inventory . '. The order was adjusted.<br>';
               $this->template->vars('message', $message);
               $this->main->view_layout('msg_add');
               $response['msg'] = ob_get_contents();

@@ -1,7 +1,7 @@
 'use strict';
 (function ($) {
 
-  $(":input").inputmask();
+  $("input").inputmask();
 
   $("#edit_form [name=ship_as_billing]").on('change',
     function (event) {

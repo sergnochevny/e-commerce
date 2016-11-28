@@ -1,6 +1,6 @@
 <?php
   $prms = null;
-  if (!is_null(_A_::$app->get('page'))) {
+  if(!is_null(_A_::$app->get('page'))) {
     $prms['page'] = _A_::$app->get('page');
   }
   include_once 'views/messages/alert-boxes.php';
@@ -31,9 +31,7 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <div class="data-view">
-      <?= $list; ?>
-    </div>
+    <?= $list; ?>
   </div>
 </div>
 

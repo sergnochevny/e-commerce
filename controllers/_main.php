@@ -138,8 +138,8 @@
       $cart->get();
 
       ob_start();
-      $toggle = Controller_User::is_logged();
-      if($toggle) {
+      $user_logged = Controller_User::is_logged();
+      if($user_logged) {
         $user = _A_::$app->session('user');
         $email = $user['email'];
         $firstname = ucfirst($user['bill_firstname']);
@@ -155,7 +155,7 @@
         }
         $this->template->vars('user_name', $user_name);
       }
-      $this->template->vars('toggle', $toggle);
+      $this->template->vars('user_logged', $user_logged);
       $this->template->view_layout('user_account', 'menu');
       $my_account_user_menu = ob_get_contents();
       ob_end_clean();

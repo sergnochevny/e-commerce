@@ -1,6 +1,9 @@
 <div class="container">
   <div id="content" class="main-content-inner" role="main">
-    <a href="<?= _A_::$app->router()->UrlTo('/'); ?>" class="button back_button">Back</a>
+    <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+      Back
+    </a>
     <div style="padding-top: 20px; margin: auto; width: 70%;">
       <div id="message">
         <p>

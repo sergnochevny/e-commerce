@@ -2,7 +2,7 @@
 
 (function ($) {
 
-  $(":input").inputmask();
+  $("input").inputmask();
 
   $.danger_remove(8000);
 
@@ -22,7 +22,7 @@
     outputNotificationBlock: '#discount_comment3_counter_notification'
   });
 
-  $(":input").inputmask();
+  $("input").inputmask();
 
   $('body').waitloader('remove');
 

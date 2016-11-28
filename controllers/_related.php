@@ -44,7 +44,8 @@
 
     protected function before_search_form_layout(&$search_data, $view = false) {
       $categories = [];
-      $rows = Model_Categories::get_list(0, 0, $res_count);
+      $filter = null; $sort = ['a.displayorder'=>'asc'];
+      $rows = Model_Categories::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
       $patterns = [];
       $rows = Model_Patterns::get_list(0, 0, $res_count);

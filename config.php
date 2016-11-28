@@ -61,7 +61,7 @@
       'MEDIUM_FABRIC' => 2,
       'HEAVY_FABRIC' => 3,
       'YRDS_FOR_MULTIPLIER' => 2.0,              #total yardage allowed before a mulitplier is added
-
+      'CAPTCHA_RELEVANT' => 300,
       'PRICE_GROUPS_COUNT' => 24,
     ],
     'ini_set' => [

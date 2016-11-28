@@ -209,10 +209,10 @@
 
       return [
         'pid' => $data['pid'],
-        'Product_name' => $data['pname'],
-        'Product_number' => $data['pnumber'],
-        'Price' => $data['priceyard'],
-        'Stock_number' => $data['stock_number'],
+        'pname' => $data['pname'],
+        'pnumber' => $data['pnumber'],
+        'price' => $data['priceyard'],
+        'stock_number' => $data['stock_number'],
         'quantity' => $quatity,
         'inventory' => $data['inventory'],
         'piece' => $data['piece'],

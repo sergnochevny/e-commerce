@@ -2,7 +2,7 @@
 
 (function ($) {
 
-  $(":input").inputmask();
+  $("input").inputmask();
 
   $.danger_remove(5000);
 

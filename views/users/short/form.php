@@ -29,6 +29,17 @@
         <input type="password" name="confirm_password" class="input-text" placeholder="Confirm Password">
       </div>
     </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6">
+        <img height="45" id="captcha_img" src="<?= _A_::$app->router()->UrlTo('captcha') ?>">
+        <a class="pull-right half-inner-offset-top" title="Refresh" id="captcha_refresh" href="javascript:void(0);">
+          <i class="fa fa-2x fa-refresh" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-6">
+        <input type="text" name="captcha" class="input-text" placeholder="Enter Text from image">
+      </div>
+    </div>
   </div>
   <div class="col-xs-12 text-center">
     <div class="row">
@@ -37,3 +48,4 @@
   </div>
 </form>
 <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.js'); ?>'></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/users/short.js'); ?>'></script>

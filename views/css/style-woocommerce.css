@@ -168,17 +168,18 @@ span#b_in_product {
     padding: 5px 10px 5px 20px !important;
 }
 
-.back_button {
-    padding-left: 22px !important;
+.back_button{
+    padding-left: 25px;
 }
 
-.back_button:after {
-    content: "\0276E";
+.back_button .fa{
+    font-size: 1.4em;
+    font-weight: bold;
+    left: 10px;
     position: absolute;
     top: 9px;
-    left: 9px;
-    font-weight: 600;
 }
+
 
 #apply_coupon {
     height: 36px;
@@ -505,7 +506,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     font-size: 2.195em;
 }
 .main-content-shop .page-title.sb {
-    margin: 0;
+    margin: 0 0 50px;
 }
 
 .main-content-shop .term-description {
@@ -518,6 +519,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     text-transform: uppercase;
     color: #222;
     margin: 0;
+    margin-top: 20px;
     padding-bottom: 1px;
     border-bottom: 1px solid #ddd;
     font-weight: bold;
@@ -2090,12 +2092,19 @@ ul.product_list_widget li dl dd p {
 
 .data-view {
     float: left;
+    width: 100%;
+}
+
+.cart-data-view {
+    float: left;
+    width: 100%;
 }
 
 .cart-legend-view {
     box-shadow: 0 0 15px #999;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.5);
+
 }
 
 @media (min-width: 767px) {
@@ -2129,12 +2138,14 @@ ul.product_list_widget li dl dd p {
 .table-list-row {
     padding-top: 10px;
     padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 .table-list-row:last-of-type {
     border-radius: 0 0 4px 4px;
     -moz-border-radius: 0 0 4px 4px;
     -webkit-border-radius: 0 0 4px 4px;
+    border:  none;
 }
 
 .cart-data-view .table-list-header {
@@ -2148,6 +2159,9 @@ ul.product_list_widget li dl dd p {
     border: none;
 }
 
+.search-result-container{
+    margin-top: 20px;
+}
 @media (max-width: 768px) {
     .table-list-row:last-child {
         border-radius: 4px;
@@ -2159,6 +2173,8 @@ ul.product_list_widget li dl dd p {
         margin-bottom: 15px;
         box-shadow: 0 0 15px #999;
         border-radius: 4px;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
     }
 
     .cart-data-view .table-list-row{

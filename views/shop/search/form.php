@@ -142,21 +142,22 @@
         <div class="row">
           <div class="col-xs-6">
             <div class="form-row">
-              <label>Price ranges from:</label>
+              <label>Price ranges from <?= isset($search['hidden']['a.priceyard']['from']) ? 'min = ' . number_format((float)$search['hidden']['a.priceyard']['from'],2) : ''; ?> <?= isset($search['hidden']['a.priceyard']['to']) ? 'max = ' . number_format($search['hidden']['a.priceyard']['to'],2) : ''; ?></label>
               <input
                 data-restrict
                 relation-max="#price-to"
                 min="<?= isset($search['hidden']['a.priceyard']['from']) ? $search['hidden']['a.priceyard']['from'] : 0; ?>"
                 max="<?= isset($search['hidden']['a.priceyard']['to']) ? $search['hidden']['a.priceyard']['to'] : 9999999; ?>"
                 data-inputmask="'alias': 'currency', 'prefix': '', 'rightAlign': 'false'"
-                type="text" class="input-text" id="price-from" placeholder="Price ranges from"
+                type="text" class="input-text" id="price-from"
+                placeholder="Price ranges from"
                 name="search[a.priceyard][from]"
                 value="<?= isset($search['a.priceyard']['from']) ? $search['a.priceyard']['from'] : '' ?>">
             </div>
           </div>
           <div class="col-xs-6">
             <div class="form-row">
-              <label>Price ranges to:</label>
+              <label>Price ranges to <?= isset($search['hidden']['a.priceyard']['from']) ? 'min = ' . number_format((float)$search['hidden']['a.priceyard']['from'],2) : ''; ?> <?= isset($search['hidden']['a.priceyard']['to']) ? 'max = ' . number_format($search['hidden']['a.priceyard']['to'],2) : ''; ?></label>
               <input
                 data-restrict
                 relation-min="#price-from"

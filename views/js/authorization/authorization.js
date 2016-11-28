@@ -2,7 +2,7 @@
 
 (function ($) {
 
-  $(":input").inputmask();
+  $("input").inputmask();
 
   $('#authorization').on('submit',
     function (event) {
@@ -26,7 +26,7 @@
     }
   );
 
-  $('#blogin').on('click',
+  $('#login').on('click',
     function (event) {
       event.preventDefault();
       var action = $(this).attr('href');

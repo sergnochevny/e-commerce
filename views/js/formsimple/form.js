@@ -1,6 +1,6 @@
 'use strict';
 (function ($) {
-  $(":input").inputmask();
+  $("input").inputmask();
 
   $.danger_remove(8000);
 

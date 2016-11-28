@@ -1,7 +1,7 @@
 <div class="col-xs-12 table-list-row" data-block="cart_item" data-pid="<?= $pid; ?>" data-row="items">
   <div class="col-xs-12 col-sm-6 table-list-row-item">
     <div class="row">
-      <?= $item['Product_name']; ?>
+      <?= $item['pname']; ?>
     </div>
   </div>
   <div class="col-xs-12 col-sm-2 table-list-row-item">

@@ -1,6 +1,6 @@
 <?php
   $prms = null;
-  if (!is_null(_A_::$app->get('page'))) {
+  if(!is_null(_A_::$app->get('page'))) {
     $prms['page'] = _A_::$app->get('page');
   }
 ?>
@@ -11,19 +11,17 @@
 
 <?= isset($search_form) ? $search_form : '' ?>
 
-    <div class="row">
-      <div class="col-sm-12 search-result-container text-right">
-        <span class="search-result">Showing <?= $count_rows; ?> results</span>
-      </div>
-    </div>
+<div class="row">
+  <div class="col-sm-12 search-result-container text-right">
+    <span class="search-result">Showing <?= $count_rows; ?> results</span>
+  </div>
+</div>
 
 <?php include_once 'views/messages/alert-boxes.php'; ?>
 
 <div class="row">
   <div class="col-xs-12">
-    <div class="data-view">
-      <?= $list; ?>
-    </div>
+    <?= $list; ?>
   </div>
 </div>
 

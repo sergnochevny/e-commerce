@@ -21,19 +21,19 @@
           <p class="woocommerce-result-count">
             <?php
               if(!empty(_A_::$app->get('cat'))) {
-                echo 'CATEGORY: ' . $category_name . '<br/>';
+                echo 'CATEGORY: ' . $category_name;
               }
               if(!empty(_A_::$app->get('mnf'))) {
-                echo 'MANUFACTURER: ' . $mnf_name . '<br/>';
+                echo 'MANUFACTURER: ' . $mnf_name;
               }
               if(!empty(_A_::$app->get('ptrn'))) {
-                echo 'PATTERN: ' . $ptrn_name . '<br/>';
+                echo 'PATTERN: ' . $ptrn_name;
               }
               if(!empty(_A_::$app->get('clr'))) {
-                echo 'COLOUR: ' . $colour_name . '<br/>';
+                echo 'COLOUR: ' . $colour_name;
               }
               if(!is_null(_A_::$app->get('prc'))) {
-                echo 'PRICE: ' . (isset($prc_from) ? ' $' . number_format($prc_from, 2) : ' $0.00') . (isset($prc_to) ? ' - $' . number_format($prc_to, 2) : '') . '<br/>';
+                echo 'PRICE: ' . ((isset($prc_from) && !empty($prc_from)) ? ' $' . number_format($prc_from, 2) : ' $0.00') . ((isset($prc_to) && !empty($prc_to))? ' - $' . number_format($prc_to, 2) : ' and above');
               }
             ?>
           </p>

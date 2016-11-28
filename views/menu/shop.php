@@ -38,7 +38,7 @@
       </li>
       <li class="shop__sidebar-item">
         <a data-waitloader data-index="5" title="Specials"
-           href="<?= _A_::$app->router()->UrlTo('shop/specials', ['idx' => 5], 'specialty') ?>"
+           href="<?= _A_::$app->router()->UrlTo('shop/specials', ['idx' => 5], 'specials') ?>"
            class="shop__sidebar-link">Specials</a>
       </li>
     </ul>

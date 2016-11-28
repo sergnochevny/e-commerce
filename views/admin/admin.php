@@ -26,7 +26,7 @@
               <div class="form-row">
                 <div class="col-xs-6">
                   <div class="row">
-                    <input data-link id="blogin" type="submit" class="button" value="Login"/>
+                    <input data-link id="login" type="submit" class="button" value="Login"/>
                   </div>
                 </div>
                 <div class="col-xs-6 text-right">

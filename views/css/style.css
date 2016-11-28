@@ -1256,7 +1256,7 @@ form[data-search] > .row > .panel > .panel-heading {
 }
 
 .search-result-header {
-    margin-top: 20px;
+    margin-top: 0;
     margin-bottom: 20px;
 }
 
@@ -2060,6 +2060,13 @@ span[role=combobox].ui-button:active .ui-icon {
 
 /*Manufacturers Style*/
 
+@media only screen and (min-width: 991px) {
+    .products-wrap{
+        min-height: 200px;
+    }
+}
+
+
 .products-wrap .product_groups {
     background-color: rgba(255, 255, 255, 0.8);
     border: 2px solid #999;
@@ -2334,6 +2341,7 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 .button-ask a {
     padding: 10px;
+    z-index: 2;
 }
 
 @media only screen and (min-width: 991px) {
@@ -2375,12 +2383,12 @@ span[role=combobox].ui-button:active .ui-icon {
 
 @media only screen and (max-width: 991px) {
     .button-ask {
-        margin: 22px -115px 0 0;
+        margin: 22px 60px 0 0;
     }
 }
 @media only screen and (max-width: 767px) {
     .button-ask {
-        margin: 22px -30px 0 0;
+        margin: 22px 60px 0 0;
     }
 }
 

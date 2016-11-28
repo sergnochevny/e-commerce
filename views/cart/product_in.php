@@ -1,8 +1,8 @@
-<?php $href = _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart'], $item['Product_name']); ?>
+<?php $href = _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart'], $item['pname']); ?>
 <div class="col-xs-12 table-list-row" data-block="cart_item" data-pid="<?= $pid; ?>" data-row="items">
   <div class="col-xs-12 col-sm-4 table-list-row-item">
     <div class="row">
-      <a href="<?= $href ?>"><?= $item['Product_name']; ?></a>
+      <a href="<?= $href ?>"><?= $item['pname']; ?></a>
     </div>
   </div>
   <div class="col-xs-12 col-sm-2 table-list-row-item">

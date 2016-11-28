@@ -35,4 +35,12 @@
       return true;
     }
 
+    /**
+     * @export
+     */
+    public function view() {
+      $this->template->vars('cart_enable', '_');
+      parent::view();
+    }
+
   }

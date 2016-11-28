@@ -120,7 +120,7 @@
 
                 ////////////
                 $pid = $product_id;
-                $price = $product['Price'];
+                $price = $product['price'];
                 $inventory = $product['inventory'];
                 $piece = $product['piece'];
 
@@ -130,7 +130,7 @@
                   $price = Model_Price::getPrintPrice($price, $format_price, $inventory, $piece);
 
                   $discountIds = [];
-                  $saleprice = $product['Price'];
+                  $saleprice = $product['price'];
                   $sDiscount = 0;
                   $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
                   $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
@@ -139,16 +139,16 @@
                   $discount = $price - $saleprice;
                   $format_discount = "$" . number_format($discount, 2);;
 
-                  $product['Price'] = $price;
+                  $product['price'] = $price;
                   $product['saleprice'] = $saleprice;
                   $product['discount'] = $discount;
                   $product['format_discount'] = $format_discount;
                   $product['format_price'] = $format_price;
                   $product['format_sale_price'] = $format_sale_price;
                   $cart_items[$product[$this->id_name]] = $product;
-                  $message .= 'The product ' . $product['Product_name'] . ' have been added to your Basket.<br>';
+                  $message .= 'The product ' . $product['pname'] . ' have been added to your Basket.<br>';
                 } else {
-                  $message .= 'The product ' . $product['Product_name'] . ' is unavailable. The product was not added.<br>';
+                  $message .= 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
                 }
               }
             }

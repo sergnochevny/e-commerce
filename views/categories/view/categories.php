@@ -1,6 +1,6 @@
 <div class="container">
   <div class="col-xs-12 col-md-2">
-    <div class="row wo_search">
+    <div class="row w_search">
       <?= isset($shop_menu) ? $shop_menu : ''; ?>
     </div>
   </div>

@@ -23,4 +23,12 @@
 
     public function edit($required_access = true) { }
 
+    /**
+     * @export
+     */
+    public function view() {
+      $this->template->vars('cart_enable', '_');
+      parent::view();
+    }
+
   }

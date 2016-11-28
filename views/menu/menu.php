@@ -25,7 +25,16 @@
           <a data-waitloader data-link title="Shop" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">Shop</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Blog" href="<?= _A_::$app->router()->UrlTo('blog/view') ?>">Blog</a>
+          <a data-waitloader data-link title="Specials" href="<?= _A_::$app->router()->UrlTo('shop/specials', [], 'specials') ?>">Specials</a>
+        </li>
+        <li class="menu-item menu-item-type-post_type menu-item-object-page">
+          <a data-waitloader data-link title="Clearance" href="javascript:void(0);">Clearance</a>
+        </li>
+        <li class="menu-item menu-item-type-post_type menu-item-object-page">
+          <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('estimate') ?>">Estimator</a>
+        </li>
+        <li class="menu-item menu-item-type-post_type menu-item-object-page">
+          <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('matches') ?>">Matches</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="Newsletter" href="<?= _A_::$app->router()->UrlTo('newsletter') ?>">Newsletter</a>
@@ -33,18 +42,24 @@
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="Service" href="<?= _A_::$app->router()->UrlTo('service') ?>">Service</a>
         </li>
+
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="About us" href="<?= _A_::$app->router()->UrlTo('about') ?>">About us</a>
+          <a title="About" aria-haspopup="true" class="has-submenu" href="javascript:void(0);">About<span
+              class="caret"></span></a>
+          <ul role="group" class="dropdown-menu" aria-hidden="true" aria-expanded="false"
+              style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
+            <li class="menu-item menu-item-type-post_type menu-item-object-page">
+              <a data-waitloader data-link title="About us" href="<?= _A_::$app->router()->UrlTo('about') ?>">About Uss</a>
+            </li>
+            <li class="menu-item menu-item-type-post_type menu-item-object-page">
+              <a data-waitloader data-link title="Contact Us" href="<?= _A_::$app->router()->UrlTo('contact') ?>">Contact Us</a>
+            </li>
+            <li class="menu-item menu-item-type-post_type menu-item-object-page">
+              <a data-waitloader data-link title="Blog" href="<?= _A_::$app->router()->UrlTo('blog/view') ?>">Blog</a>
+            </li>
+          </ul>
         </li>
-        <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Contact" href="<?= _A_::$app->router()->UrlTo('contact') ?>">Contact</a>
-        </li>
-        <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('matches') ?>">Matches</a>
-        </li>
-        <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('estimate') ?>">Estimator</a>
-        </li>
+
       </ul>
     </div>
   </div>

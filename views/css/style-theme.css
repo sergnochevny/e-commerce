@@ -523,6 +523,7 @@ a img.aligncenter {
     padding-bottom: 10px;
     padding-right: 0;
     background: none !important;
+    display: inline-block;
 }
 
 .header-topnav .navbar-nav .dropdown .dropdown-toggle:hover, .header-topnav .navbar-nav .dropdown .dropdown-toggle:focus {
@@ -536,7 +537,7 @@ a img.aligncenter {
 }
 
 .header-topnav .navbar-nav .dropdown .dropdown-toggle .topnav-label {
-    padding-left: 10px;
+    padding-left: 0;
     font-size: 16px;
 }
 
@@ -566,6 +567,10 @@ a img.aligncenter {
     width: 260px !important;
 }
 
+.header-topnav .navbar-nav .dropdown-menu.topnav-account-dropdown {
+    width: 260px !important;
+}
+
 .header-topnav .navbar-nav .dropdown-menu,
 .header-topnav .navbar-nav .open .dropdown-menu {
     position: absolute;
@@ -586,8 +591,8 @@ a img.aligncenter {
 .header-topnav .navbar-nav .dropdown-menu > li > a,
 .header-topnav .navbar-nav .open .dropdown-menu > li > a,
 .header-topnav .navbar-nav .open .dropdown-menu .dropdown-header {
-    padding: 5px 30px 5px 30px !important;
-    line-height: 20px !important;
+    padding: 5px 15px;
+    line-height: 20px;
     font-size: 11px;
     text-transform: uppercase;
     font-size: 14px;

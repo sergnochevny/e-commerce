@@ -15,6 +15,6 @@
   });
 
   $('[data-restrict]').restrict();
-  $(":input").inputmask();
+  $("input").inputmask();
 
 })(jQuery);

@@ -1,6 +1,6 @@
 (function ($) {
 
-  $(":input").inputmask();
+  $("input").inputmask();
 
   $('#modal .save-data').on('click', function (event) {
     $('#modal .save-data').off();

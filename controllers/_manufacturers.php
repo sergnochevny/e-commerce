@@ -5,6 +5,11 @@
     protected $form_title_add = 'NEW MANUFACTURER';
     protected $form_title_edit = 'MODIFY MANUFACTURER';
 
+    protected function search_fields($view = false) {
+      if($view) return ['a.manufacturer'];
+      else return null;
+    }
+
     protected function build_order(&$sort, $view = false) {
       parent::build_order($sort, $view);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
@@ -16,7 +21,8 @@
       $res = parent::build_search_filter($filter, $view);
       if($view) {
         $this->per_page = 24;
-        $filter = ['hidden' => ['view' => true, 'b.pvisible' => 1]];
+        $filter['hidden']['view'] = true;
+        $filter['hidden']['b.pvisible'] = 1;
       }
       return $res;
     }
@@ -32,6 +38,14 @@
         return false;
       }
       return true;
+    }
+
+    /**
+     * @export
+     */
+    public function view() {
+      $this->template->vars('cart_enable', '_');
+      parent::view();
     }
 
   }

@@ -3,7 +3,7 @@
   Class Router {
 
     private $path;
-    private $exclude_params = ['page', 'back'];
+    private $exclude_params = ['page', 'back', 'idx'];
     public $base_url;
     public $route;
     public $controller;

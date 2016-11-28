@@ -7,7 +7,7 @@
     protected static function build_where(&$filter) {
       if (isset($filter['hidden']['view']) && $filter['hidden']['view']){
         $result = "";
-        if(isset($filter["manufacturer"])) $result[] = "a.manufacturer LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.manufacturer"])) . "%'";
+        if(isset($filter["a.manufacturer"])) $result[] = "a.manufacturer LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.manufacturer"])) . "%'";
         if(isset($filter["id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::sanitize($filter["a.id"])) . "'";
         if(!empty($result) && (count($result) > 0)) {
           if(strlen(trim(implode(" AND ", $result))) > 0) {

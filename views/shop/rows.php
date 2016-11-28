@@ -24,7 +24,7 @@
           <?php if($row['bProductDiscount']) { ?>
             <span class="extra_discount">Extra Discount!</span>
           <?php }
-            $url_prms['pid'] = $row[0];
+            $url_prms['pid'] = $row['pid'];
             $url_prms['back'] = 'shop';
             $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr','prc']);
           ?>

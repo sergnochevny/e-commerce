@@ -1,7 +1,7 @@
 <div class="col-xs-12 table-list-row" data-block="sample_item" data-pid="<?= $pid; ?>" data-row="samples">
   <div class="col-xs-12 col-sm-6 table-list-row-item">
     <div class="row">
-      SAMPLE - <?= $item['Product_name']; ?>
+      SAMPLE - <?= $item['pname']; ?>
     </div>
   </div>
   <div class="col-xs-12 col-sm-2 col-sm-offset-2 table-list-row-item">
