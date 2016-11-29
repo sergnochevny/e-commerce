@@ -8,7 +8,7 @@
     }
   );
 
-  $(document).on('submit', "#edit_form",
+  $(document).on('submit', "form#edit_form",
     function (event, submit) {
       event.preventDefault();
       if (submit) {

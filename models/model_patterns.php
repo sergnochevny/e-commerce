@@ -7,8 +7,8 @@
     protected static function build_where(&$filter) {
       if (isset($filter['hidden']['view']) && $filter['hidden']['view']){
         $result = "";
-        if(isset($filter["pattern"])) $result[] = "a.pattern LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.pattern"])) . "%'";
-        if(isset($filter["id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::sanitize($filter["a.id"])) . "'";
+        if(isset($filter["a.pattern"])) $result[] = "a.pattern LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.pattern"])) . "%'";
+        if(isset($filter["a.id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::sanitize($filter["a.id"])) . "'";
         if(!empty($result) && (count($result) > 0)) {
           if(strlen(trim(implode(" AND ", $result))) > 0) {
             $filter['active'] = true;

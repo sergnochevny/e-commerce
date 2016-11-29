@@ -31,8 +31,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input id="confirm_action" type="button" value="Yes confirm" class="button"/>
-        <input id="confirm_no" type="button" value="No" class="button"/>
+        <input type="button" class="button save-data" href="save" data-dismiss="modal" value="Save"/>
+        <input type="button" class="button" data-dismiss="modal" value="Cancel"/>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

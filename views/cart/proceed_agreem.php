@@ -43,7 +43,7 @@
         </p>
         <p>
           Please
-          <a href="mailto:info@iluvfabrix.com?subject=Information%20on%20Fabric%20Samples" class="copyProducts">
+          <a href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>?subject=Information%20on%20Fabric%20Samples" class="copyProducts">
             contact us
           </a> for information on fabric sample purchases.
         </p>
@@ -71,7 +71,7 @@
           All special orders are final sale. No refunds. No cancellations. No returns.
         </p>
         <p>
-          <a href="mailto:info@iluvfabrix.com" class="copyProducts">info@iluvfabrix.com</a><br>
+          <a href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>" class="copyProducts"><?= _A_::$app->keyStorage()->system_info_email; ?></a><br>
           or phone at: (915) 587-0200
         </p>
         <p>
@@ -85,7 +85,7 @@
           United States<br>
 
           <br>
-          Email: <a href="mailto:info@iluvfabrix.com" class="copyProducts">info@iluvfabrix.com</a><br>
+          Email: <a href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>" class="copyProducts"><?= _A_::$app->keyStorage()->system_info_email; ?></a><br>
           Tel: (915) 587-0200<br>
         </p>
         <p>Privacy Policy</p>

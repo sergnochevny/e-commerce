@@ -1,7 +1,7 @@
 <?php
-define('DEMO',1);
-$paypal_url = "https://www.paypal.com/cgi-bin/webscr";
-if (DEMO == 1) $paypal_url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+//define('DEMO',1);
+//$paypal_url = "https://www.paypal.com/cgi-bin/webscr";
+//if (DEMO == 1) $paypal_url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
 
 if (isset($_GET['pay_notify'])){
     $s_id = $_GET['pay_notify'];

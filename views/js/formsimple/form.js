@@ -4,7 +4,7 @@
 
   $.danger_remove(8000);
 
-  $("form").on('submit', function (event) {
+  $("form#edit_form").on('submit', function (event) {
     event.preventDefault();
     var url = $(this).attr('action');
     var data = new FormData(this);

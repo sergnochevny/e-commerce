@@ -238,7 +238,7 @@
         $ship_firstname = trim($user['ship_firstname']);
         $ship_lastname = trim($user['ship_lastname']);
 
-        $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
+        $headers = "From: \"I Luv Fabrix\"<"._A_::$app->keyStorage()->system_info_email."\n";
         if(DEMO == 1) {
           $body = "                !!!THIS IS A TEST!!!                  \n\n";
           $body .= "Hi, $ship_firstname $ship_lastname ($email) \n\n";
@@ -264,13 +264,13 @@
           $headers = "From: Web Customer <$email>\n";
 
           if(DEMO == 1) {
-            mail("info@iluvfabrix.com", $subject, $body, $headers);
+            mail(_A_::$app->keyStorage()->system_info_email, $subject, $body, $headers);
             mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
             mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
             mail("max@maxportland.com", $subject, $body, $headers);
             mail("sergnochevny@studionovi.co", $subject, $body, $headers);
           } else {
-            mail("info@iluvfabrix.com", $subject, $body, $headers);
+            mail(_A_::$app->keyStorage()->system_info_email, $subject, $body, $headers);
             mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
             mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
             mail("max@maxportland.com", $subject, $body, $headers);
@@ -933,7 +933,7 @@
           $subject = "I Luv Fabrix purchase confirmation ";
         }
 
-        $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
+        $headers = "From: \"I Luv Fabrix\"<"._A_::$app->keyStorage()->system_info_email.">\n";
         $body = $body . "\n";
 
         $ma['headers'] = $headers;
@@ -948,11 +948,11 @@
 
           if(DEMO == 1) {
             mail("dev@9thsphere.com", $subject, $body, $headers);
-            mail("info@iluvfabrix.com", $subject, $body, $headers);
+            mail(_A_::$app->keyStorage()->system_info_email, $subject, $body, $headers);
             mail("max@maxportland.com", $subject, $body, $headers);
             mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
             mail("lanny1952@gmail.com", $subject, $body, $headers);
-            mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
+            mail(_A_::$app->keyStorage()->system_info_email, $subject, $body, $headers);
             mail("sergnochevny@studionovi.co", $subject, $body, $headers);
           } else {
             mail("dev@9thsphere.com", $subject, $body, $headers);
@@ -1018,19 +1018,21 @@
         $cart['trdate'] = date('Y-m-d H:i');
         _A_::$app->setSession('cart', $cart);
 
-        if(DEMO == 1) {
-          $paypal['business'] = "sergnochevny-facilitator@gmail.com";
-          $paypal['url'] = "https://www.sandbox.paypal.com/cgi-bin/webscr";
-        } else {
-          $paypal['business'] = "info@iluvfabrix.com";
-          $paypal['url'] = "https://www.paypal.com/cgi-bin/webscr";
-        }
+//        if(DEMO == 1) {
+//          $paypal['business'] = "sergnochevny-facilitator@gmail.com";
+//          $paypal['url'] = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+//        } else {
+//          $paypal['business'] = "info@iluvfabrix.com";
+//          $paypal['url'] = "https://www.paypal.com/cgi-bin/webscr";
+//        }
+        $paypal['business'] = _A_::$app->keyStorage()->paypal_business;
+        $paypal['url'] = _A_::$app->keyStorage()->paypal_url;
 
         $paypal['cmd'] = "_xclick";
         $paypal['image_url'] = _A_::$app->router()->UrlTo('/');
         $paypal['return'] = _A_::$app->router()->UrlTo('cart', ['pay_ok' => true, 'trid' => $trid]);
         $paypal['cancel_return'] = _A_::$app->router()->UrlTo("cart", ['pay_error' => true]);
-        $paypal['notify_url'] = _A_::$app->router()->UrlTo("ipn/ipn.php", ['pay_notify' => session_id()]);
+        $paypal['notify_url'] = _A_::$app->router()->UrlTo("ipn", ['pay_notify' => session_id()]);
         $paypal['rm'] = "1";
         $paypal['currency_code'] = "USD";
         $paypal['lc'] = "US";

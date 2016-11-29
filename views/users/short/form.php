@@ -48,4 +48,4 @@
   </div>
 </form>
 <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.js'); ?>'></script>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/users/short.js'); ?>'></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/captcha/captcha.js'); ?>'></script>

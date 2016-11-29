@@ -22,7 +22,8 @@
       $.postdata(this, url, data,
         function (data) {
           $.when($('#content').html(data)).done(function () {
-            $('.shop__sidebar').animate({top: 191});
+            $('.w_search').removeClass('w_search').addClass('ww_search');
+            $('.wo_search').removeClass('wo_search').addClass('ww_search');
           });
         }
       );
@@ -38,7 +39,8 @@
       $.postdata(this, url, data,
         function (data) {
           $.when($('#content').html(data)).done(function () {
-            $('.shop__sidebar').animate({top: 191});
+            $('.w_search').removeClass('w_search').addClass('ww_search');
+            $('.wo_search').removeClass('wo_search').addClass('ww_search');
           });
         }
       );
@@ -98,10 +100,6 @@
       );
     }
   );
-
-  $('#b_search_1').on('click', function (event) {
-    $('#f_search_1').trigger('submit');
-  });
 
   $(document).on('click', '[data-product]',
     function(event){

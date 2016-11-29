@@ -23,7 +23,7 @@
     );
   }
 
-  $('form').on('submit',
+  $('form#edit_form').on('submit',
     function (event, submit) {
       event.preventDefault();
       if (submit) {

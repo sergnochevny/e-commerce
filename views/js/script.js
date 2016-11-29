@@ -107,6 +107,21 @@ var change_text = false;
     }
   });
 
+  $(document).on('submit', '#f_search',
+    function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      var data = new FormData(this);
+      var url = $(this).attr('action');
+      $.postdata(this, url, data,
+        function (data) {
+          $('#slider').remove();
+          $('#content').html(data);
+        }
+      );
+    }
+  );
+
   $(document).on('click', '#b_search', function (event) {
     $('#f_search').trigger('submit');
   });
@@ -192,11 +207,17 @@ var change_text = false;
     $('body').waitloader('show');
   });
 
-  $(document).on('focus', 'input[type=text], input[type=textarea], textarea, input[type=number], input[type=email], input[type=password], select',
+  $(document).on('focus', 'input[type=text], input[type=textarea], input[type=number], input[type=email], input[type=password], select',
     function (event) {
       $(this).parent().addClass('focus')
     }
   );
+  $(document).on('focus', 'textarea',
+    function (event) {
+      $(this).addClass('focus')
+    }
+  );
+
   $(document).on('focusout', '.focus input',
     function (event) {
       $(this).parent().removeClass('focus')

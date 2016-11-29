@@ -8,7 +8,14 @@
     protected $view_title;
     protected $save_warning = "All Data saved successfully!";
 
-    protected abstract function load(&$data);
+    protected function load(&$data){
+      if(_A_::$app->request_is_post()){
+        $post = _A_::$app->post();
+        foreach ($post as $key => $value) {
+          $data[$key] = Model_Base::sanitize($value);
+        }
+      }
+    }
 
     protected abstract function validate(&$data, &$error);
 

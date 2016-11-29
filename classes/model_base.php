@@ -74,7 +74,10 @@
     }
 
     public static function sanitize($data) {
-      $data = stripslashes($data);
+      if(function_exists('get_magic_quotes_gpc') == true && get_magic_quotes_gpc() == 1) {
+        $data = stripslashes($data);
+      }
+//      $data = stripslashes($data);
       $data = htmlspecialchars($data);
       $data = trim($data);
       return $data;

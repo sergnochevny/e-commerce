@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.theme.default.min.css'); ?>">
 <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
 
-<div class="just-slider-wrap">
+<div id="slider" class="just-slider-wrap">
   <div class="just-slides just-slider-active owl-carousel owl-theme owl-loaded">
     <div class="just-slide"
          style="background-image:url(<?= _A_::$app->router()->UrlTo('views/images/slider/slide2.jpg'); ?>);">

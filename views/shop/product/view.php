@@ -4,7 +4,7 @@
         src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
 <?php
   $pid = $data['pid'];
-  $ahref = 'mailto:info@iluvfabrix.com?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
+  $ahref = 'mailto:'._A_::$app->keyStorage()->system_info_email.'?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
   $mhref = _A_::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
   $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
 ?>

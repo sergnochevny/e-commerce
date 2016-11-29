@@ -139,22 +139,6 @@
 
       ob_start();
       $user_logged = Controller_User::is_logged();
-      if($user_logged) {
-        $user = _A_::$app->session('user');
-        $email = $user['email'];
-        $firstname = ucfirst($user['bill_firstname']);
-        $lastname = ucfirst($user['bill_lastname']);
-        $user_name = '';
-        if(!empty($firstname{0}) || !empty($lastname{0})) {
-          if(!empty($firstname{0}))
-            $user_name = $firstname . ' ';
-          if(!empty($lastname{0}))
-            $user_name .= $lastname;
-        } else {
-          $user_name = $email;
-        }
-        $this->template->vars('user_name', $user_name);
-      }
       $this->template->vars('user_logged', $user_logged);
       $this->template->view_layout('user_account', 'menu');
       $my_account_user_menu = ob_get_contents();

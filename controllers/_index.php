@@ -65,6 +65,10 @@
       $this->main->error404();
     }
 
+    public function view() {}
+
+
+
 //    function show_break_img_count()
 //    {
 //        set_time_limit(14400);

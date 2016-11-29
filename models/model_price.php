@@ -3,13 +3,8 @@
   Class Model_Price extends Model_Base {
 
     public static function sysHideAllRegularPrices() {
-      $hideAllRegularPrices = false;
-      $sqlGetGlobalPrice = 'SELECT * FROM fabrix_system_master;';
-      $resultGetGlobalPrice = mysql_query($sqlGetGlobalPrice);
-      if($resultGetGlobalPrice) {
-        $rsgbp = mysql_fetch_assoc($resultGetGlobalPrice);
-        $hideAllRegularPrices = (bool)$rsgbp['hide_all_regular_prices'];
-      }
+      $hideAllRegularPrices = (bool)_A_::$app->keyStorage()->system_hide_all_regular_prices;
+      if(!isset($hideAllRegularPrices)) $hideAllRegularPrices = false;
       return $hideAllRegularPrices;
     }
 
@@ -392,12 +387,12 @@
           $amt = $rs['discount_amount'];
           if($rs['discount_amount_type'] == 1) {
             $type = '$';
-            if (strlen($discount)>0) $discount .= ' -> ';
+            if(strlen($discount) > 0) $discount .= ' -> ';
             $discount .= sprintf("%s%s", $type, $amt);
             $tempPrice = $tempPrice - $amt;
           } else {
             $type = '%';
-            if (strlen($discount)>0) $discount .= ' ; ';
+            if(strlen($discount) > 0) $discount .= ' ; ';
             $discount .= sprintf("%s%s", $amt, $type);
             $tempPrice = $tempPrice * (1 - ($amt / 100));
           }

@@ -40,7 +40,7 @@
                 <span>Please <a href="<?= _A_::$app->router()->UrlTo('contact'); ?>">contact</a> us for information on fabric sample purchases.</span>
                 <span>We are confident you'll find our products to be of the highest quality. If however your are not completely satisfied with a product, please contact us by email or phone and we will endeavor to rectify the problem.</span>
                 Should ILuvFabrix.com accept a return (at ILuvFabrix's sole discretion), it must be accompanied by a return authorization number. No fabric is to be returned without a Return Authorization Number. Any fabric returned without such a number will not be accepted. If a return is authorized by iluvfabrix or Michelle’s Fabrics, all return shipping costs and any customs duties or taxes are to be paid in their entirety by the purchaser, unless otherwise agreed to in advance of the return by iluvfabrix or Michelle’s Fabrics. Please examine your package immediately upon receipt so as to ensure the integrity of its contents. Please contact us by email at:
-                <span><a href="mailto:info@iluvfabrix.com">info@iluvfabrix.com</a> <br>
+                <span><a href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a> <br>
                 or phone at: <a href="tel:9155870200">(915) 587-0200</a></span>
               </p>
               <div class="row">
@@ -75,7 +75,7 @@
                     <span>United States</span>
                   </div>
                   <div class="col-sm-3">
-                    Email: <a href="mailto:info@iluvfabrix.com">info@iluvfabrix.com</a> <br>
+                    Email: <a href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a> <br>
                     Tel: <a href="tel:9155870200">(915) 587-0200</a>
                   </div>
                 </div>

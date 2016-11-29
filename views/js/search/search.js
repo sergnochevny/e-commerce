@@ -15,9 +15,13 @@
     event.stopPropagation();
     if (reset) {
       var data = new FormData();
+      $('#search').attr('value','');
     } else {
-      var data = new FormData(this),
-        sort = $('form[data-sort]');
+      if($('[name="search[a.pname]"]').length){
+        $('#search').attr('value',$('[name="search[a.pname]"]').attr('value'));
+      }
+      var data = new FormData(this);
+      var sort = $('form[data-sort]');
       if (sort.length) {
         (new FormData(sort[0])).forEach(function (value, key) {
           data.append(key, value);

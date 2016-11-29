@@ -1,8 +1,14 @@
-<?php if(isset($page_title)) { ?>
+<?php if(isset($page_title)) : ?>
   <div class="col-xs-12 text-center afterhead-row">
+    <?php if(!empty($user_name)) : ?>
+      <h3 class="welcome">
+        <span class="welcome-message">Welcome back,</span>
+        <span class="user_name"><?= $user_name; ?></span>
+      </h3>
+    <?php endif; ?>
     <h2 class="page-title"><?= $page_title; ?></h2>
   </div>
-<?php } ?>
+<?php endif; ?>
 
 <?= isset($search_form) ? $search_form : '' ?>
 
@@ -17,7 +23,8 @@
     <div class="row">
       <div class="col-sm-8">
         <?php if(!empty(_A_::$app->get('cat')) || !empty(_A_::$app->get('mnf')) ||
-          !empty(_A_::$app->get('ptrn')) || !empty(_A_::$app->get('clr')) || !is_null(_A_::$app->get('prc'))) : ?>
+          !empty(_A_::$app->get('ptrn')) || !empty(_A_::$app->get('clr')) || !is_null(_A_::$app->get('prc'))
+        ) : ?>
           <p class="woocommerce-result-count">
             <?php
               if(!empty(_A_::$app->get('cat'))) {
@@ -33,7 +40,7 @@
                 echo 'COLOUR: ' . $colour_name;
               }
               if(!is_null(_A_::$app->get('prc'))) {
-                echo 'PRICE: ' . ((isset($prc_from) && !empty($prc_from)) ? ' $' . number_format($prc_from, 2) : ' $0.00') . ((isset($prc_to) && !empty($prc_to))? ' - $' . number_format($prc_to, 2) : ' and above');
+                echo 'PRICE: ' . ((isset($prc_from) && !empty($prc_from)) ? ' $' . number_format($prc_from, 2) : ' $0.00') . ((isset($prc_to) && !empty($prc_to)) ? ' - $' . number_format($prc_to, 2) : ' and above');
               }
             ?>
           </p>

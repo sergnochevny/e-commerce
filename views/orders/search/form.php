@@ -44,10 +44,10 @@
                      value="<?= isset($search['a.trid']) ? $search['a.trid'] : '' ?>">
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6" <?= Controller_User::is_logged()?'disabled':''?>>
             <div class="form-row">
               <label>Customer:</label>
-              <input type="text" class="input-text" placeholder="Like ..." name="search[username]"
+              <input type="text" class="input-text" <?= Controller_User::is_logged()?'disabled':''?> placeholder="Like ..." name="search[username]"
                      value="<?= isset($search['username']) ? $search['username'] : '' ?>">
             </div>
           </div>

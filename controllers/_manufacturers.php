@@ -7,7 +7,7 @@
 
     protected function search_fields($view = false) {
       if($view) return ['a.manufacturer'];
-      else return null;
+      else return parent::search_fields($view);
     }
 
     protected function build_order(&$sort, $view = false) {

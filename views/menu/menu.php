@@ -1,6 +1,6 @@
 <div class="row menu-wrap">
-  <div class="pull-right text-right button-ask top-menu">
-    <a class="button" title="Ask a Question" href="mailto:info@iluvfabrix.com">
+  <div class="pull-right text-right button-ask top-menu <?= Controller_User::is_logged()?'':'login';?>">
+    <a class="button" title="Ask a Question" href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>">
       <span>Ask a Question</span>
       <i class="fa fa-question" aria-hidden="true"></i>
     </a>
@@ -49,7 +49,7 @@
           <ul role="group" class="dropdown-menu" aria-hidden="true" aria-expanded="false"
               style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-              <a data-waitloader data-link title="About us" href="<?= _A_::$app->router()->UrlTo('about') ?>">About Uss</a>
+              <a data-waitloader data-link title="About us" href="<?= _A_::$app->router()->UrlTo('about') ?>">About Us</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-page">
               <a data-waitloader data-link title="Contact Us" href="<?= _A_::$app->router()->UrlTo('contact') ?>">Contact Us</a>

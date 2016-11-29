@@ -7,8 +7,8 @@
     protected static function build_where(&$filter) {
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $result = "";
-        if(isset($filter["cname"])) $result[] = "a.cname LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.cname"])) . "%'";
-        if(isset($filter["cid"])) $result[] = "a.cid = '" . mysql_real_escape_string(static::sanitize($filter["a.cid"])) . "'";
+        if(isset($filter["a.cname"])) $result[] = "a.cname LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.cname"])) . "%'";
+        if(isset($filter["a.cid"])) $result[] = "a.cid = '" . mysql_real_escape_string(static::sanitize($filter["a.cid"])) . "'";
         if(!empty($result) && (count($result) > 0)) {
           if(strlen(trim(implode(" AND ", $result))) > 0) {
             $filter['active'] = true;
@@ -49,25 +49,6 @@
       $query .= " GROUP BY a.cid, a.cname";
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
-
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_array($result)) {
-          $response[] = $row;
-        }
-      }
-
-      return $response;
-    }
-
-    public static function get_used_list() {
-      $response = null;
-      $query = "SELECT a.*, count(b.pid) AS amount";
-      $query .= " FROM fabrix_categories a";
-      $query .= " LEFT JOIN";
-      $query .= " fabrix_product_categories b ON b.cid = a.cid";
-      $query .= " GROUP BY a.cid, a.cname";
-      $query .= " ORDER BY a.cname";
 
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);

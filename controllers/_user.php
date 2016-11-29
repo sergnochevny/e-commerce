@@ -4,7 +4,7 @@
 
 
     public static function sendWelcomeEmail($email) {
-      $headers = "From: \"I Luv Fabrix\"<info@iluvfabrix.com>\n";
+      $headers = "From: \"I Luv Fabrix\"<"._A_::$app->keyStorage()->system_info_email.">\n";
       $subject = "Thank you for registering with iluvfabrix.com";
       $body = "Thank you for registering with iluvfabrix.com.\n";
       $body .= "\n";

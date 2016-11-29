@@ -5,6 +5,11 @@
     protected $form_title_add = 'NEW COLOUR';
     protected $form_title_edit = 'MODIFY COLOUR';
 
+    protected function search_fields($view = false) {
+      if($view) return ['a.colour'];
+      else return parent::search_fields($view);
+    }
+
     protected function build_order(&$sort, $view = false) {
       parent::build_order($sort, $view);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
@@ -16,7 +21,8 @@
       $res = parent::build_search_filter($filter, $view);
       if($view) {
         $this->per_page = 24;
-        $filter = ['hidden' => ['view' => true, 'b.pvisible' => 1]];
+        $filter['hidden']['view'] = true;
+        $filter['hidden']['c.pvisible'] = 1;
       }
       return $res;
     }

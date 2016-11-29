@@ -123,7 +123,7 @@
               <div class="row cut-text-in-one-line"><?= $row['trid'] ?></div>
             </div>
           </div>
-          <?php if(!isset($user_id)): ?>
+          <?php if(!isset($user_id) && !Controller_User::is_logged()): ?>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
               <div class="col-xs-4 visible-xs">
                 <div class="row">Customer</div>

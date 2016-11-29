@@ -66,7 +66,7 @@
             </ol>
             <p>For questions or comments regarding
               this policy please contact us by <a
-                href="mailto:info@iluvfabrix.com">info@iluvfabrix.com</a>.
+                href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>.
             </p>
 
             <p>Additional information about <a target="_blank" href="http://www.privcom.gc.ca">Canada's

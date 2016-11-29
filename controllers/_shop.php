@@ -198,6 +198,21 @@
      */
     public function shop() {
       $this->template->vars('cart_enable', '_');
+      if(Controller_User::is_logged()) {
+        $user = _A_::$app->session('user');
+        $firstname = ucfirst($user['bill_firstname']);
+        $lastname = ucfirst($user['bill_lastname']);
+        $user_name = '';
+        if(!empty($firstname{0}) || !empty($lastname{0})) {
+          if(!empty($firstname{0}))
+            $user_name = $firstname . ' ';
+          if(!empty($lastname{0}))
+            $user_name .= $lastname;
+        } else {
+          $user_name = $user['email'];
+        }
+        $this->template->vars('user_name', $user_name);
+      }
       $this->main->template->vars('page_title', "Product Catalog");
       parent::index(false);
     }

@@ -31,7 +31,7 @@
                 211 Teramar Way<br/>
                 El Paso, Texas, 79922<br/>
                 United States</p>
-              <p><b>Email:</b> <a href="mailto:info@iluvfabrix.com">info@iluvfabrix.com</a><br/>
+              <p><b>Email:</b> <a href="mailto:<?=_A_::$app->keyStorage()->system_info_email;?>"><?=_A_::$app->keyStorage()->system_info_email;?></a><br/>
                 <b>Tel:</b> <a href="tel:9155870200">(915) 587-0200</a></p>
             </div>
           </aside>

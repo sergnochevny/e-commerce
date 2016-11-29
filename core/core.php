@@ -98,6 +98,10 @@
     }
 
     private function initSession() {
+      if (!is_null($this->get('pay_notify'))) {
+        $s_id = $this->get('pay_notify');
+        session_id($s_id);
+      }
       session_start();
       $this->session = array_filter($_SESSION);
     }

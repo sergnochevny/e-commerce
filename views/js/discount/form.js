@@ -56,7 +56,7 @@
     });
   }
 
-  $('form').on('submit',
+  $('form#edit_form').on('submit',
     function (event, submitted) {
       event.preventDefault();
       if (submitted) {

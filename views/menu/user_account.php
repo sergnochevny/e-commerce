@@ -1,8 +1,4 @@
 <li class="dropdown my-account">
-  <?php if(!empty($user_name)) { ?>
-    <span class="welcome-message topnav-label hidden-xs">Welcome back,</span>
-    <span class="user_name topnav-label hidden-xs"><?= $user_name; ?></span>
-  <?php } ?>
   <a <?= (isset($user_logged) && $user_logged) ? '' : 'data-waitloader' ?>
     data-link
     href="<?= _A_::$app->router()->UrlTo('authorization'); ?>" <?= (isset($user_logged) && $user_logged) ? 'class="dropdown-toggle" data-toggle="dropdown"' : '' ?>>
