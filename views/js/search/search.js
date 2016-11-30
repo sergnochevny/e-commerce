@@ -34,7 +34,7 @@
   $(document).on('click.search_action', '[data-search_reset]', function (event) {
     event.preventDefault();
     event.stopPropagation();
-    $('form[data-search]').trigger('submit', true);
+    $('form[data-search]').trigger('submit', [true]);
   });
 
   $(document).on('click.search_action', '[data-search_submit]', function (event) {

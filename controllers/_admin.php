@@ -51,6 +51,12 @@
 
     public function delete($required_access = true) { }
 
+    protected function build_back_url(&$back_url = null, &$prms = null) {
+      $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))):'';
+      $back_url = (strlen($url) > 0) ? $url : 'product';
+      $prms=null;
+    }
+
     /**
      * @export
      */
@@ -58,12 +64,7 @@
       $this->main->is_admin_authorized();
       $action = 'admin/change';
       $title = 'CHANGE DATA';
-      $url = '';
-      if(!is_null(_A_::$app->get('url'))) {
-        $url = base64_decode(urldecode(_A_::$app->get('url')));
-      }
-      $back_url = (strlen($url) > 0) ? $url : 'product';
-      $this->edit_add_handling($action, $title, $back_url);
+      $this->edit_add_handling($action, $title);
     }
 
     /**

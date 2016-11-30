@@ -19,7 +19,7 @@
   $('form input[data-role=submit]').on('click',
     function (event) {
       event.preventDefault();
-      $(this).parents('form').trigger('submit', true);
+      $(this).parents('form').trigger('submit', [true]);
     }
   );
 

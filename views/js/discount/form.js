@@ -144,7 +144,7 @@
   $('#submit').on('click',
     function (event) {
       event.preventDefault();
-      $(this).parents('form').trigger('submit', true);
+      $(this).parents('form').trigger('submit', [true]);
     }
   );
 
@@ -243,7 +243,7 @@
       mlt.checked = true;
       fbtAll.checked = true;
       if (!stop) {
-        $(fbtAll).trigger('change', true);
+        $(fbtAll).trigger('change', [true]);
       }
 
       toggleFabrics();
@@ -269,7 +269,7 @@
       chckMlt.checked = true;
       fbtAll.checked = true;
       if (!stop) {
-        $(fbtAll).trigger('change', true);
+        $(fbtAll).trigger('change', [true]);
       }
       toggleFabrics();
     }
@@ -294,8 +294,8 @@
       $(txtCoupon).val('');
       chckCoupon.checked = false;
       if (!stop) {
-        $(dtlSlct).trigger('change', true);
-        $(chckCoupon).trigger('change', true);
+        $(dtlSlct).trigger('change', [true]);
+        $(chckCoupon).trigger('change', [true]);
       }
     }
   }
@@ -310,8 +310,8 @@
       $(txtCoupon).val('');
       chckCoupon.checked = false;
       if (!stop) {
-        $(dtlSlct).trigger('change', true);
-        $(chckCoupon).trigger('change', true);
+        $(dtlSlct).trigger('change', [true]);
+        $(chckCoupon).trigger('change', [true]);
       }
     }
   }

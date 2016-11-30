@@ -12,7 +12,7 @@
   <?= isset($search_form) ? $search_form : '' ?>
 
   <div class="row">
-    <div class="col-xs-12 search-result-container text-right">
+    <div class="col-xs-12 search-result-header text-right">
       <span class="search-result">Showing <?= $count_rows; ?> results</span>
     </div>
   </div>

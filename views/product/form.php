@@ -254,14 +254,11 @@
     </div>
   </div>
 
-  <div data-related_block class="col-xs-12">
+  <div class="col-xs-12">
     <div class="col-xs-12 panel panel-default" style="padding-bottom: 30px">
       <div data-related class="row products">
         <?= isset($related) ? $related : ''; ?>
       </div>
-      <input data-related_get_list type="hidden"
-             value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
-      <div id="content" data-edit_related class="row products"></div>
     </div>
   </div>
 
@@ -292,4 +289,13 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </form>
+
+<div data-related_block class="col-xs-12" style="display: none;">
+  <div class="col-xs-12 panel panel-default" style="padding-bottom: 30px">
+    <input data-related_get_list type="hidden"
+           value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
+    <div id="content" data-edit_related class="row products"></div>
+  </div>
+</div>
+
 <script src='<?= _A_::$app->router()->UrlTo('views/js/product/form.js'); ?>' type="text/javascript"></script>

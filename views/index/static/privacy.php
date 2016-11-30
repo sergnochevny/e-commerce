@@ -1,28 +1,20 @@
 <?php include('views/index/main_gallery.php'); ?>
 
-  <div id="static">
-    <div class="container">
+  <div id="content" class="container">
+    <div class="col-xs-12">
       <div class="row">
+        <div class="col-xs-12 text-center afterhead-row">
+          <div class="row">
+            <h2 class="page-title">Privacy Policy</h2>
+          </div>
+        </div>
         <div class="col-xs-12">
-          <article class="page type-page status-publish entry">
-            <div class="entry-content">
-              <div class="vc_row wpb_row vc_row-fluid vc_custom_1439733758005">
-                <div class="wpb_column vc_column_container vc_col-sm-12">
-                  <div class="wpb_wrapper">
-                    <div class="just-divider text-left line-no icon-hide">
-                      <div class="divider-inner">
-                        <h3 class="just-section-title">Privacy Policy</h3>
+          <div class="row">
 
-                        <p class="paragraph">We are committed to providing our visitors with a
-                          web site that respects their privacy. This page summarizes the
-                          privacy policy and practices on iluvfabrix.com.</p>
+            <p class="paragraph">We are committed to providing our visitors with a
+              web site that respects their privacy. This page summarizes the
+              privacy policy and practices on iluvfabrix.com.</p>
 
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <ol>
               <li class="copyProducts">We do not automatically gather
                 any personal information from you, such as your name,
@@ -72,11 +64,17 @@
             <p>Additional information about <a target="_blank" href="http://www.privcom.gc.ca">Canada's
                 Privacy Act</a> can be found here.</p>
 
-            <h3>Security</h3>
-
-            <p>Our site is fully secure for online credit card payements.</p>
-          </article>
+          </div>
         </div>
+        <div class="col-xs-12">
+          <div class="row">
+            <h4>Security</h4>
+            <p>
+              Our site is fully secure for online credit card payements.
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

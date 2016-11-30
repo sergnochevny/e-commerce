@@ -151,7 +151,7 @@
 
   $("#save").on('click', function (event) {
     event.preventDefault();
-    $('#edit_form').trigger('submit', true);
+    $('#edit_form').trigger('submit', [true]);
   });
 
   $('input[type=text]').textinput();

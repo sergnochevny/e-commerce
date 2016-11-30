@@ -3,7 +3,6 @@
     <h3 class="page-title sb">Pattern Or Style</h3>
   </div>
 </div>
-</div>
 <?= isset($search_form) ? $search_form : '' ?>
 <div class="col-xs-12 search-result-header search-result-container text-right">
   <div class="row">

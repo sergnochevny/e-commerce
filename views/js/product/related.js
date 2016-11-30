@@ -1,9 +1,11 @@
 (function ($) {
 
+  $(document).off('.search_action');
   $(document).on('click', '[data-related_add_ok]',
     function (event) {
       event.preventDefault();
       $('[data-edit_related]').empty();
+      $('[data-related_block]').hide();
       $('[data-related-add]').show();
       $('[data-fields_block]').show();
       $('[data-submit_btn]').show();
@@ -20,13 +22,15 @@
         var style = $(this).parents('label').find('figure').attr('style');
 
         var element = '';
-        element += '  <div class="product-item" data-pid="' + pid + '">';
+        element += '  <div class="product-item product-related" data-pid="' + pid + '">';
         element += '    <div class="product-inner">';
         element += '      <figure class="product-image-box" style="' + style + '">';
         element += '        <input type="hidden" name="related[]" value="' + pid + '"/>';
         element += '      </figure>';
-        element += '      <span class="product-category">' + product_name + '</span>';
-        element += '      <a data-related_delete  href="delete" class="remove-related-product">×</a>';
+        element += '      <div class="product-description">';
+        element += '        <div class="product-name">' + product_name + '</div>';
+        element += '      </div>';
+        element += '      <a data-related_delete  href="jscript:void(0);" class="remove-related-product">×</a>';
         element += '    </div>';
         element += '  </div>';
 
@@ -68,6 +72,8 @@
 
   $(document).on('click', '[data-related_delete]',
     function (event) {
+      event.preventDefault();
+      event.stopPropagation();
       var owl = $('[data-carousel]').data('owl.carousel');
       var pid = $(this).parents('.product-item').attr('data-pid');
       $('.related_products input[data-pid=' + pid + ']').removeAttr('checked');
@@ -115,6 +121,7 @@
       event.preventDefault();
       if (reset) {
         var data = new FormData();
+        debugger;
       } else {
         var data = new FormData(this),
           search = $('[data-related_block] form[data-sort]');
@@ -132,7 +139,7 @@
     function (event) {
       event.preventDefault();
       event.stopPropagation();
-      $('[data-related_block] form[data-search]').trigger('submit', true);
+      $('[data-related_block] form[data-search]').trigger('submit', [true]);
     }
   );
 
@@ -186,6 +193,7 @@
       related.load(url, function () {
         $('[data-fields_block]').hide();
         $('[data-submit_btn]').hide();
+        $('[data-related_block]').show();
         var owl = $('[data-carousel]').data('owl.carousel');
         if (owl) {
           var owl_items = owl.items();

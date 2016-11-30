@@ -100,7 +100,7 @@
       ob_end_clean();
       $this->template->vars('count_rows', $res_count_rows);
       $this->template->vars('list', $rows);
-      (new Controller_Paginator($this->main))->paginator($total, $page, $this->controller, $per_page);
+      (new Controller_Paginator($this->main))->paginator($total, $page, $this->controller, null, $per_page);
       $this->before_list_layout($view);
       $this->main->view_layout('list');
     }

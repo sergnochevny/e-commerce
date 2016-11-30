@@ -6,21 +6,6 @@
     protected $form_title_add = 'NEW DISCOUNT';
     protected $form_title_edit = 'MODIFY DISCOUNT';
 
-    protected function search_fields($view = false) {
-      return [
-        'sid', 'promotion_type', 'user_type',
-        'discount_type', 'product_type', 'coupon_code',
-        'date_start', 'date_end'
-      ];
-    }
-
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['date_start' => 'desc'];
-      }
-    }
-
     private function generate_prod_filter($data) {
       $filter_products = $data['filter_products'];
       $product_type = $data['product_type'];
@@ -77,6 +62,21 @@
       }
     }
 
+    protected function search_fields($view = false) {
+      return [
+        'sid', 'promotion_type', 'user_type',
+        'discount_type', 'product_type', 'coupon_code',
+        'date_start', 'date_end'
+      ];
+    }
+
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['date_start' => 'desc'];
+      }
+    }
+
     protected function load(&$data) {
       $data[$this->id_name] = _A_::$app->get($this->id_name);
       $data['promotion_type'] = Model_Discount::sanitize(!is_null(_A_::$app->post('promotion_type')) ? _A_::$app->post('promotion_type') : '');
@@ -97,7 +97,7 @@
       $data['date_end'] = Model_Discount::sanitize(!is_null(_A_::$app->post('date_end')) ? _A_::$app->post('date_end') : '');
       $data['enabled'] = Model_Discount::sanitize(!is_null(_A_::$app->post('enabled')) ? _A_::$app->post('enabled') : 0);
       $data['countdown'] = Model_Discount::sanitize(!is_null(_A_::$app->post('countdown')) ? _A_::$app->post('countdown') : 0);
-      $data['discount_comment1'] =  Model_Discount::sanitize(!is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '');
+      $data['discount_comment1'] = Model_Discount::sanitize(!is_null(_A_::$app->post('discount_comment1')) ? _A_::$app->post('discount_comment1') : '');
       $data['discount_comment2'] = Model_Discount::sanitize(!is_null(_A_::$app->post('discount_comment2')) ? _A_::$app->post('discount_comment2') : '');
       $data['discount_comment3'] = Model_Discount::sanitize(!is_null(_A_::$app->post('discount_comment3')) ? _A_::$app->post('discount_comment3') : '');
       $data['date_end'] = strlen($data['date_end']) > 0 ? strtotime($data['date_end']) : 0;
@@ -218,33 +218,23 @@
       return true;
     }
 
-    protected function detailed($back_url){
-      $id = _A_::$app->get($this->id_name);
-
-      $discount = null;
-      $orders = null;
-
-      if(!isset($data)) {
-        $discount = Model_Discount::get_by_id($id);
-        $orders = Model_Orders::get_list_by_discount_id($id);
-      }
-      $prms = null;
-      if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
-      $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
-      $this->template->vars('back_url', $back_url);
-
-      $this->template->vars($this->id_name, $id);
-      $this->template->vars('discount', $discount);
-      $this->template->vars('orders', $orders);
-      $this->main->view_admin('view');
-    }
-
     /**
      * @export
      */
     public function view() {
       $this->main->is_admin_authorized();
-      $this->detailed($this->controller);
+      $id = _A_::$app->get($this->id_name);
+      $discount = null;
+      $orders = null;
+      if(isset($id)) {
+        $discount = Model_Discount::get_by_id($id);
+        $orders = Model_Orders::get_list_by_discount_id($id);
+      }
+      $this->set_back_url();
+      $this->template->vars($this->id_name, $id);
+      $this->template->vars('discount', $discount);
+      $this->template->vars('orders', $orders);
+      $this->main->view_admin('view');
     }
 
   }

@@ -2,9 +2,8 @@
 
   class Controller_Paginator extends Controller_Controller {
 
-    public function paginator($total_rows, $page, $url, $per_page = 12, $showbypage = 10) {
+    public function paginator($total_rows, $page, $url, $prms=null, $per_page = 12, $showbypage = 10) {
       if($total_rows > $per_page) {
-        $prms = null;
         if(!is_null(_A_::$app->get('cat'))) {
           $prms['cat'] = _A_::$app->get('cat');
         }

@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-xs-6">
       <div class="form-row">
-        <label >Phone</label>
+        <label>Phone</label>
         <input type="text" name="phone" class="input-text" value="<?= isset($data['phone']) ? $data['phone'] : '' ?>">
       </div>
     </div>
@@ -28,7 +28,8 @@
     <div class="col-xs-12">
       <div class="form-row">
         <label class="required_field">Subject</label>
-        <input type="text" name="subject" class="input-text" value="<?= isset($data['subject']) ? $data['subject'] : '' ?>">
+        <input type="text" name="subject" class="input-text"
+               value="<?= isset($data['subject']) ? $data['subject'] : '' ?>">
       </div>
     </div>
   </div>
@@ -36,9 +37,8 @@
     <div class="col-xs-12">
       <div class="form-row">
         <label class="required_field">Questions or comments</label>
-        <textarea name="comments" rows="10" cols="30" class="input-text">
-           <?= isset($data['comments']) ? $data['comments'] : '' ?>
-        </textarea>
+        <textarea name="comments" rows="10" cols="30"
+                  class="input-text"><?= isset($data['comments']) ? $data['comments'] : '' ?></textarea>
       </div>
     </div>
   </div>

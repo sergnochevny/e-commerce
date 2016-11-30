@@ -2,7 +2,7 @@
   $(document).ready(function (event) {
     setTimeout(function () {
       $('html,body').animate({
-        scrollTop: $('#static').offset().top
+        scrollTop: $('#content').offset().top
       }, 2000);
     }, 300);
   });

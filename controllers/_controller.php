@@ -6,6 +6,7 @@
     protected $per_page = 12;
     protected $_scenario = '';
     protected $resolved_scenario = [''];
+    protected $view_title;
 
     public function __construct(Controller_Base $main = null) {
       $this->layouts = _A_::$app->config('layouts');
@@ -41,8 +42,10 @@
     }
 
     protected function search_form($search_form, $view = false) {
-      $template = $view ? 'view/search/form' : 'search/form';
-      $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller . ($view ? '/view' : '')));
+      $template = $view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'search/form' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'search/form';
+      $prms = null;
+      if(!empty($this->scenario())) $prms['method'] = $this->scenario();
+      $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller . ($view ? '/view' : ''), $prms));
       $this->before_search_form_layout($search_form, $view);
       $this->template->vars('search', $search_form);
       $search_form = null;
@@ -60,6 +63,19 @@
 
     protected function search_fields($view = false) {
       return null;
+    }
+
+    protected function build_back_url(&$back_url = null, &$prms = null) {
+      $back_url = $this->controller;
+      $prms = null;
+      if(!is_null(_A_::$app->get('back'))) $back_url = _A_::$app->get('back');
+    }
+
+    protected function set_back_url($back_url = null) {
+      if(!isset($back_url)) $this->build_back_url($back_url, $prms);
+      if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
+      $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
+      $this->template->vars('back_url', $back_url);
     }
 
     protected function build_search_filter(&$filter, $view = false) {
@@ -143,6 +159,7 @@
       $this->build_order($sort, $view);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
       $per_page = $this->per_page;
+      $filter['scenario'] = $this->scenario();
       $total = forward_static_call([$this->model_name, 'get_total_count'], $filter);
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
       if($page <= 0) $page = 1;
@@ -155,14 +172,16 @@
       $this->template->vars('rows', $rows);
       $this->template->vars('sort', $sort);
       ob_start();
-      $this->template->view_layout($view ? 'view/rows' : 'rows');
+      $this->template->view_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows');
       $rows = ob_get_contents();
       ob_end_clean();
       $this->template->vars('count_rows', $res_count_rows);
       $this->template->vars('list', $rows);
-      (new Controller_Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $per_page);
+      $prms = !empty($this->scenario()) ? ['method' => $this->scenario()] : null;
+      (new Controller_Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $prms, $per_page);
+      $this->set_back_url();
       $this->before_list_layout($view);
-      $this->main->view_layout($view ? 'view/list' : 'list');
+      $this->main->view_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
     }
 
     /**
@@ -186,12 +205,13 @@
      */
     public function view() {
       $this->scenario(_A_::$app->get('method'));
+      $this->template->vars('view_title', $this->view_title);
       ob_start();
       $this->get_list(true);
       $list = ob_get_contents();
       ob_end_clean();
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
-      $this->main->view((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'view/' . $this->controller);
+      $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
     }
   }

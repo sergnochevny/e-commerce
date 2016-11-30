@@ -34,6 +34,10 @@
               <a data-waitloader data-link title="Patterns"
                  href="<?= _A_::$app->router()->UrlTo('patterns'); ?>">Patterns</a>
             </li>
+            <li class="menu-item menu-item-type-post_type menu-item-object-product">
+              <a data-waitloader data-link title="Patterns"
+                 href="<?= _A_::$app->router()->UrlTo('clearance'); ?>">Clearance</a>
+            </li>
           </ul>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
@@ -73,9 +77,6 @@
                  href="<?= _A_::$app->router()->UrlTo('blogcategory'); ?>">Categories</a>
             </li>
           </ul>
-        </li>
-        <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="" href="<?= _A_::$app->router()->UrlTo('comments/') ?>">Comments</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="" href="<?= _A_::$app->router()->UrlTo('orders'); ?>">Orders</a>

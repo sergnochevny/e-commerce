@@ -5,13 +5,12 @@
     protected $id_name = 'id';
     protected $form_title_add;
     protected $form_title_edit;
-    protected $view_title;
     protected $save_warning = "All Data saved successfully!";
 
-    protected function load(&$data){
-      if(_A_::$app->request_is_post()){
+    protected function load(&$data) {
+      if(_A_::$app->request_is_post()) {
         $post = _A_::$app->post();
-        foreach ($post as $key => $value) {
+        foreach($post as $key => $value) {
           $data[$key] = Model_Base::sanitize($value);
         }
       }
@@ -42,17 +41,17 @@
       $this->before_form_layout($data);
       $prms = null;
       if(isset($id)) $prms[$this->id_name] = $id;
-      if(!is_null($this->scenario())) $prms['method'] = $this->scenario();
+      if(!empty($this->scenario())) $prms['method'] = $this->scenario();
       if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
       $action = _A_::$app->router()->UrlTo($url, $prms);
       $this->template->vars($this->id_name, $id);
       $this->template->vars('data', $data);
       $this->template->vars('scenario', $this->scenario());
       $this->template->vars('action', $action);
-      $this->main->view_layout((!empty($this->scenario())?$this->scenario().DS:'').'form');
+      $this->main->view_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
     }
 
-    protected function edit_add_handling($url, $title, $back_url = null) {
+    protected function edit_add_handling($url, $title) {
       $data = null;
       $this->scenario(_A_::$app->get('method'));
       $this->load($data);
@@ -91,7 +90,7 @@
      */
     public function add($required_access = true) {
       if($required_access) $this->main->is_admin_authorized();
-      $this->edit_add_handling($this->controller . '/add', $this->form_title_add, $this->controller);
+      $this->edit_add_handling($this->controller . '/add', $this->form_title_add);
     }
 
     /**
@@ -103,9 +102,9 @@
         $id = _A_::$app->get($this->id_name);
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
         $this->after_get_data_item_view($data);
-        $this->template->vars('view_title', $this->view_title);
+        $this->set_back_url();
         $this->template->vars('data', $data);
-        $this->main->view_layout((!empty($this->scenario())?$this->scenario().DS:'').'view');
+        $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
       } else parent::view();
     }
 
@@ -114,7 +113,7 @@
      */
     public function edit($required_access = true) {
       if($required_access) $this->main->is_admin_authorized();
-      $this->edit_add_handling($this->controller . '/edit', $this->form_title_edit, $this->controller);
+      $this->edit_add_handling($this->controller . '/edit', $this->form_title_edit);
     }
 
     /**

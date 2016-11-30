@@ -182,7 +182,7 @@
       ob_end_clean();
       $this->template->vars('count_rows', $res_count_rows);
       $this->template->vars('list', $rows);
-      (new Controller_Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, $per_page);
+      (new Controller_Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, null, $per_page);
       $this->before_list_layout();
       $this->main->view_layout('list');
     }
@@ -343,6 +343,37 @@
       }
     }
 
+    protected function build_back_url(&$back_url = null, &$prms = null) {
+      $url_prms = null;
+      if((!empty(_A_::$app->get('cat')))) {
+        $url_prms['cat'] = _A_::$app->get('cat');
+      }
+      if((!empty(_A_::$app->get('mnf')))) {
+        $url_prms['mnf'] = _A_::$app->get('mnf');
+      }
+      if((!empty(_A_::$app->get('ptrn')))) {
+        $url_prms['ptrn'] = _A_::$app->get('ptrn');
+      }
+      if((!empty(_A_::$app->get('clr')))) {
+        $url_prms['clr'] = _A_::$app->get('clr');
+      }
+      if((!empty(_A_::$app->get('prc')))) {
+        $url_prms['prc'] = _A_::$app->get('prc');
+      }
+      if(!is_null(_A_::$app->get('back'))) {
+        $back = _A_::$app->get('back');
+        if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', '']))
+          $back_url = $back;
+        elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials'])) {
+          $back_url = 'shop' . DS . $back;
+        } else {
+          $back_url = base64_decode(urldecode($back));
+        }
+      } else {
+        $back_url = 'shop';
+      }
+    }
+
     /**
      * @export
      */
@@ -392,50 +423,16 @@
       $discount_info = ob_get_contents();
       ob_end_clean();
       $this->template->vars('discount_info', $discount_info);
-
-      $url_prms = null;
-      if(!empty(_A_::$app->get('page'))) {
-        $url_prms['page'] = _A_::$app->get('page');
-      }
-      if((!empty(_A_::$app->get('cat')))) {
-        $url_prms['cat'] = _A_::$app->get('cat');
-      }
-      if((!empty(_A_::$app->get('mnf')))) {
-        $url_prms['mnf'] = _A_::$app->get('mnf');
-      }
-      if((!empty(_A_::$app->get('ptrn')))) {
-        $url_prms['ptrn'] = _A_::$app->get('ptrn');
-      }
-      if((!empty(_A_::$app->get('clr')))) {
-        $url_prms['clr'] = _A_::$app->get('clr');
-      }
-      if((!empty(_A_::$app->get('prc')))) {
-        $url_prms['prc'] = _A_::$app->get('prc');
-      }
-
-      if(!is_null(_A_::$app->get('back'))) {
-        $back = _A_::$app->get('back');
-        if(in_array($back, ['matches', 'cart', 'shop', 'favorites', ''])) $back_url = _A_::$app->router()->UrlTo($back, $url_prms);
-        elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials'])) {
-          $back_url = _A_::$app->router()->UrlTo('shop' . DS . $back, $url_prms);
-        } else {
-          $back_url = _A_::$app->router()->UrlTo(base64_decode(urldecode($back)), $url_prms);;
-        }
-      } else {
-        $back_url = _A_::$app->router()->UrlTo('shop', $url_prms);
-      }
-
       if(!is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
         $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
         $this->main->template->vars('search_str', _A_::$app->post('s'));
       }
-
+      $this->set_back_url();
       $this->template->vars('in_favorites', Controller_Favorites::product_in($pid));
       $this->template->vars('data', $data);
       $allowed_samples = Model_Samples::allowedSamples($pid);
       $this->template->vars('allowed_samples', $allowed_samples);
       $this->template->vars('cart_enable', '_');
-      $this->template->vars('back_url', $back_url);
       $this->main->view('product/view');
     }
 

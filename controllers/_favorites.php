@@ -61,7 +61,7 @@
       $this->save_warning = $row['pname'] . " added to Favorite Fabrics!";
     }
 
-    protected function edit_add_handling($url, $title, $back_url = null) {
+    protected function edit_add_handling($url, $title) {
       $this->template->vars('form_title', $title);
       $data = null;
       $this->load($data);

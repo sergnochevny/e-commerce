@@ -1,0 +1,92 @@
+<?php
+
+  class Controller_Clearance extends Controller_FormSimple {
+
+    protected $id_name = 'id';
+    protected $view_title = 'Clearance';
+    protected $form_title_add = 'Add Product To Clearance';
+    protected $resolved_scenario = ['', 'add'];
+
+    protected function search_fields($view = false) {
+      if($view) {
+        $fields = [
+          'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
+          'a.piece', 'a.best', 'a.specials', 'b.cid',
+          'c.id', 'd.id', 'e.id', 'a.priceyard'
+        ];
+      } else {
+        $fields = [
+          'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
+          'a.piece', 'a.best', 'a.specials', 'b.cid',
+          'c.id', 'd.id', 'e.id'
+        ];
+      }
+      return $fields;
+    }
+
+    protected function load(&$data) {
+      $data['pid'] = _A_::$app->post('pid');
+    }
+
+    protected function validate(&$data, &$error) {
+      return true;
+    }
+
+    protected function build_search_filter(&$filter, $view = false) {
+      $res = parent::build_search_filter($filter, $view);
+      if($view) {
+        $filter['hidden']['a.pnumber'] = 'null';
+        if(!isset($filter['hidden']['a.priceyard']) && !isset($filter['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
+        $filter['hidden']['a.pvisible'] = '1';
+        $filter['hidden']['a.image1'] = 'null';
+        $filter['hidden']['view'] = true;
+      }
+      return $res;
+    }
+
+    protected function build_order(&$sort, $view = false) {
+      if($view) {
+        $sort['b.displayorder'] = 'asc';
+        $sort['fabrix_product_categories.display_order'] = 'asc';
+      } else {
+        if($this->scenario() == 'add') {
+          $sort = ['a.pid' => 'desc'];
+        } else {
+          $sort['z.id'] = 'asc';
+        }
+      }
+    }
+
+    protected function before_search_form_layout(&$search_data, $view = false) {
+      $categories = [];
+      $filter = null;
+      $sort = ['a.displayorder' => 'asc'];
+      $rows = Model_Categories::get_list(0, 0, $res_count, $filter, $sort);
+      foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
+      $patterns = [];
+      $rows = Model_Patterns::get_list(0, 0, $res_count);
+      foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
+      $colours = [];
+      $rows = Model_Colours::get_list(0, 0, $res_count);
+      foreach($rows as $row) $colours[$row['id']] = $row['colour'];
+      $manufacturers = [];
+      $rows = Model_Manufacturers::get_list(0, 0, $res_count);
+      foreach($rows as $row) $manufacturers[$row['id']] = $row['manufacturer'];
+
+      $search_data['categories'] = $categories;
+      $search_data['patterns'] = $patterns;
+      $search_data['colours'] = $colours;
+      $search_data['manufacturers'] = $manufacturers;
+    }
+
+    public function edit($required_access = true) { }
+
+    /**
+     * @export
+     */
+    public function view() {
+      $this->template->vars('cart_enable', '_');
+      parent::view();
+    }
+
+  }

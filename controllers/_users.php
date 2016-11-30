@@ -289,10 +289,7 @@
       $form = ob_get_contents();
       ob_end_clean();
       if($this->scenario() == 'short') exit($form);
-      $prms = null;
-      if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
-      $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
-      $this->template->vars('back_url', $back_url);
+      $this->set_back_url($back_url);
       $this->template->vars('form', $form);
       if($is_user) exit($this->main->view('edit'));
       else exit($this->main->view_admin('edit'));
