@@ -4,6 +4,16 @@ var change_text = false;
 
 (function ($) {
   $.extend({
+    init_input:function(){
+      $('input[type=text]').textinput();
+      $('input[type=textarea]').textinput();
+      $('input[type=number]').textinput();
+      $('input[type=email]').textinput();
+      $('input[type=password]').textinput();
+
+      $('textarea').textinput();
+      $('select').selectmenu();
+    },
     danger_remove: function (timeout) {
       var danger = $('.danger');
       if (danger.length) {

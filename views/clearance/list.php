@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-xs-6 action-button-add">
         <a href="<?= _A_::$app->router()->UrlTo('clearance/add', $prms); ?>" data-modify class="button">
-          ADD PRODUCT TO CLEARANCE
+          ADD TO CLEARANCE
         </a>
       </div>
       <div class="col-xs-6 search-result-container text-right">
@@ -48,5 +48,4 @@
 
   </div>
 </div>
-
 <script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.js'); ?>' type="text/javascript"></script>

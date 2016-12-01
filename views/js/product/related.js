@@ -121,7 +121,6 @@
       event.preventDefault();
       if (reset) {
         var data = new FormData();
-        debugger;
       } else {
         var data = new FormData(this),
           search = $('[data-related_block] form[data-sort]');

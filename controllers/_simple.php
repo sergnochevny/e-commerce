@@ -103,6 +103,7 @@
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
         $this->after_get_data_item_view($data);
         $this->set_back_url();
+        $this->template->vars('scenario', $this->scenario());
         $this->template->vars('data', $data);
         $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
       } else parent::view();
@@ -120,6 +121,7 @@
      * @export
      */
     public function delete($required_access = true) {
+      $this->scenario(_A_::$app->get('method'));
       if($required_access) $this->main->is_admin_authorized();
       if(_A_::$app->request_is_post() && _A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_name))) {
         try {

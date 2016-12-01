@@ -3,10 +3,16 @@
     <?php $prms['pid'] = $row['pid'];
     if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
     <div class="col-xs-12 col-sm-6  product-item">
-      <label class="product-block" style="font-weight: normal; margin-left: 0; height: auto">
-        <input data-related_chk data-pid="<?= $row['pid']; ?>" type="checkbox"
-               <?= (isset($related_selected) && in_array($row['pid'], $related_selected))?'checked':'';?>
-               name="related-select[<?= $row['pid']; ?>]" style="display: none;"/>
+      <label class="product-block<?= !empty($row['id']) ? ' checked' : ''; ?>" style="font-weight: normal; margin-left: 0; height: auto">
+        <input data-clearance_chk
+               type="checkbox" <?= !empty($row['id']) ? 'checked' : ''; ?>
+          <?php
+            $prms = !empty($row['id']) ? ['id' => $row['id']] : null;
+            if($scenario == 'add') $prms['method'] = $scenario;
+          ?>
+               data-action="<?= _A_::$app->router()->UrlTo('clearance' . DS . (!empty($row['id']) ? 'delete' : 'add'), (!empty($row['id']) ? $prms : null)); ?>"
+               data-pid="<?= $row['pid'];?>"
+               name="clearance-select[<?= $row['pid']; ?>]" style="display: none;"/>
         <div class="col-xs-3 col-sm-4 col-md-3 figure">
           <div class="row">
             <figure style="background-image: url(<?= $row['filename']; ?>)"></figure>

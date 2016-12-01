@@ -6,6 +6,7 @@
     protected $view_title = 'Clearance';
     protected $form_title_add = 'Add Product To Clearance';
     protected $resolved_scenario = ['', 'add'];
+    protected $save_warning = "The Fabric has been added to Clearance successfully!";
 
     protected function search_fields($view = false) {
       if($view) {

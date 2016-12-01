@@ -35,4 +35,3 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.js'); ?>' type="text/javascript"></script>

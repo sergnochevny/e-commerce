@@ -168,6 +168,7 @@
       $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, &$filter, &$sort]);
       $this->after_get_list($rows, $view);
       if(isset($filter['active'])) $search_form['active'] = $filter['active'];
+      $this->template->vars('scenario', $this->scenario());
       $this->search_form($search_form, $view);
       $this->template->vars('rows', $rows);
       $this->template->vars('sort', $sort);

@@ -2,89 +2,25 @@
 
   $(document).off('.search_action');
 
-  $(document).on('change', '[data-products_chk]',
+  $(document).on('change', '[data-clearance_chk]',
     function (event) {
-      var owl = $('[data-carousel]').data('owl.carousel');
-      var pid = $(this).attr('data-pid');
+      event.preventDefault();
+      event.stopPropagation();
+      var url = $(this).attr('data-action');
+      var data = new FormData();
       if (this.checked) {
-        $(this).parents('label').addClass('checked');
-        var product_name = $(this).parents('label').find('.product-desc').text();
-        var style = $(this).parents('label').find('figure').attr('style');
-
-        var element = '';
-        element += '  <div class="product-item" data-pid="' + pid + '">';
-        element += '    <div class="product-inner">';
-        element += '      <figure class="product-image-box" style="' + style + '">';
-        element += '        <input type="hidden" name="related[]" value="' + pid + '"/>';
-        element += '      </figure>';
-        element += '      <span class="product-category">' + product_name + '</span>';
-        element += '      <a data-related_delete  href="delete" class="remove-related-product">×</a>';
-        element += '    </div>';
-        element += '  </div>';
-
-        if (!owl) {
-          $('[data-carousel]').owlCarousel(
-            {
-              responsive: {0: {items: 1}, 520: {items: 2}, 820: {items: 3}, 990: {items: 4}},
-              margin: 15,
-              nav: true,
-              navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
-              autoplay: true,
-              loop: false,
-              rewind: true,
-              autoplayHoverPause: true,
-              dots: true
-            }
-          );
-          var owl = $('[data-carousel]').data('owl.carousel');
-        }
-
-        var idx = owl.add(element);
-        $(this).attr('data-carousel_idx', idx);
+        data.append('pid', $(this).attr('data-pid'));
+        var callback = function (data) {
+          $('[data-role=form_content]').html(data);
+        };
       } else {
-        $(this).parents('label').removeClass('checked');
-        var owl_items = owl.items();
-        $.each(owl_items,
-          function (idx, item) {
-            if ($(item).find('[data-pid=' + pid + ']').length) {
-              owl.remove(idx);
-              return false;
-            }
-          }
-        );
+        var callback = function (data) {
+          $('[data-edit_products]').html(data);
+        };
       }
-      if (!$('[data-related] .product-item').length) owl.destroy();
-      else  owl.refresh();
+      $.postdata(this, url, data, callback);
     }
   );
-
-  $(document).on('click', '[data-products_delete]',
-    function (event) {
-      var owl = $('[data-carousel]').data('owl.carousel');
-      var pid = $(this).parents('.product-item').attr('data-pid');
-      $('.clearance_products input[data-pid=' + pid + ']').removeAttr('checked');
-      $('.clearance_products input[data-pid=' + pid + ']').parents('label').removeClass('checked');
-      var owl_items = owl.items();
-      $.each(owl_items,
-        function (idx, item) {
-          if ($(item).find('[data-pid=' + pid + ']').length) {
-            owl.remove(idx);
-            return false;
-          }
-        }
-      );
-      if (!$('[data-related] .product-item').length) owl.destroy();
-      else  owl.refresh();
-    }
-  );
-
-  function _postdata(this_, url, data) {
-    $.postdata(this_, url, data,
-      function (data) {
-        $('[data-edit_products]').html(data);
-      }
-    );
-  }
 
   $(document).on('submit.search_action', '[data-products_block] form[data-search]',
     function (event, reset) {
@@ -152,7 +88,24 @@
     }
   );
 
-  $.change_button_text();
+  function LoadContent() {
+    debugger;
+    $('body').waitloader('show');
+    var products = $('[data-edit_products]');
+    var url = $('[data-products_get_list]').val();
+    products.load(url, function () {
+      $.init_input();
+      $('body').waitloader('remove');
+      $.danger_remove(5000);
+    });
+  }
 
+  $(document).on('load','[data-role=form_content]',
+    function(){
+      LoadContent();
+    }
+  );
+
+  $.change_button_text();
 
 })(jQuery);

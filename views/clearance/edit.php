@@ -1,5 +1,3 @@
-<script src='<?= _A_::$app->router()->UrlTo('views/js/clearance/products.js'); ?>' type="text/javascript"></script>
-
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
@@ -21,6 +19,7 @@
   </div>
 
   <div data-role="form_content" class="row">
-      <?= $form; ?>
+    <?= $form; ?>
   </div>
 </div>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/clearance/products.js'); ?>' type="text/javascript"></script>
