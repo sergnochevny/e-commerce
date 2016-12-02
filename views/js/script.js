@@ -50,8 +50,9 @@ var change_text = false;
       }
     },
     /*$.post function replacement*/
-    postdata: function (this_, url, data, callback) {
-      $('body').waitloader('show');
+    postdata: function (this_, url, data, callback, loader) {
+      if(typeof loader == 'undefined') loader = true;
+      if(loader) $('body').waitloader('show');
       $.ajax({
         type: 'POST',
         url: url,
@@ -62,15 +63,15 @@ var change_text = false;
         success: function (data) {
           if (callback) {
             $.when(callback.call(this_, data)).done(function () {
-              $('body').waitloader('remove');
+              if(loader) $('body').waitloader('remove');
             });
           } else {
-            $('body').waitloader('remove');
+            if(loader) $('body').waitloader('remove');
           }
         },
         error: function (xhr, str) {
           alert('Error: ' + xhr.responseCode);
-          $('body').waitloader('remove');
+          if(loader) $('body').waitloader('remove');
         },
       });
     }

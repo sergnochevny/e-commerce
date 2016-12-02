@@ -80,6 +80,16 @@
       $search_data['manufacturers'] = $manufacturers;
     }
 
+    protected function before_form_layout(&$data = null) {
+      if($this->scenario() !== 'add'){
+        _A_::$app->get('page', null);
+      } else {
+        $search_form = $this->build_search_filter($filter);
+        $this->search_form($search_form);
+      }
+      $this->scenario('');
+    }
+
     public function edit($required_access = true) { }
 
     /**

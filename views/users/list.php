@@ -20,6 +20,9 @@
         <a href="<?= _A_::$app->router()->UrlTo('users/add', $prms); ?>" data-modify class="button">
           REGISTER NEW USER
         </a>
+        <a href="<?= _A_::$app->router()->UrlTo('users', ['method'=>'csv']); ?>" class="button icon" title="Expost users list in csv">
+          <i class="fa fa-2x fa-floppy-o" aria-hidden="true"></i>
+        </a>
       </div>
       <div class="col-xs-6 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>

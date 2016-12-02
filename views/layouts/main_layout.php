@@ -76,10 +76,10 @@
     <a href="<?= _A_::$app->router()->UrlTo('cart'); ?>" id="cart" rel="nofollow" class="cart-subtotal">
       <i class="simple-icon-handbag"></i>
       <span class="topnav-label">
-            <span id="cart_amount" class="amount">
-                $0.00
-            </span>
-          </span>
+        <span id="cart_amount" class="amount">
+          $0.00
+        </span>
+      </span>
     </a>
     <script type="text/javascript">
       (function ($) {

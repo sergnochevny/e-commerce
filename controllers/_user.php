@@ -2,9 +2,8 @@
 
   Class Controller_User Extends Controller_Controller {
 
-
     public static function sendWelcomeEmail($email) {
-      $headers = "From: \"I Luv Fabrix\"<"._A_::$app->keyStorage()->system_info_email.">\n";
+      $headers = "From: \"I Luv Fabrix\"<" . _A_::$app->keyStorage()->system_info_email . ">\n";
       $subject = "Thank you for registering with iluvfabrix.com";
       $body = "Thank you for registering with iluvfabrix.com.\n";
       $body .= "\n";
@@ -87,11 +86,12 @@
      * @export
      */
     public function log_out() {
-      _A_::$app->setSession('_', null);
-      _A_::$app->setSession('user', null);
-      _A_::$app->setCookie('_r', null);
-      $url = _A_::$app->router()->UrlTo('shop');
-      $this->redirect($url);
+      if(self::is_logged()) {
+        _A_::$app->setSession('_', null);
+        _A_::$app->setSession('user', null);
+        _A_::$app->setCookie('_r', null);
+      }
+      $this->redirect(_A_::$app->router()->UrlTo('shop'));
     }
 
     public static function is_set_remember() {
@@ -106,20 +106,17 @@
      * @export
      */
     public function change() {
-      if(self::is_logged()) {
-        $user = self::get_from_session();
-        _A_::$app->get('aid', $user['aid']);
-        $action = 'user/change';
-        $title = 'CHANGE REGISTRATION DATA';
-        $url = '';
-        if(!is_null(_A_::$app->get('url'))) {
-          $url = base64_decode(urldecode(_A_::$app->get('url')));
-        }
-        $back_url = (strlen($url) > 0) ? $url : 'shop';
-        (new Controller_Users())->user_handling($data, $action, $back_url, $title, true);
-      } else {
-        $this->redirect(_A_::$app->router()->UrlTo('authorization'));
+      $this->main->is_user_authorized(true);
+      $user = self::get_from_session();
+      _A_::$app->get('aid', $user['aid']);
+      $action = 'user/change';
+      $title = 'CHANGE REGISTRATION DATA';
+      $url = '';
+      if(!is_null(_A_::$app->get('url'))) {
+        $url = base64_decode(urldecode(_A_::$app->get('url')));
       }
+      $back_url = (strlen($url) > 0) ? $url : 'shop';
+      (new Controller_Users())->user_handling($data, $action, $back_url, $title, true);
     }
 
     /**

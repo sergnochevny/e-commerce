@@ -380,8 +380,8 @@ a:focus {
 .required_field:before {
     content: "* ";
     color: red;
-    margin-left: -10px;
 }
+
 
 #wait_loader {
     display: block !important;
@@ -1473,6 +1473,17 @@ span.opa {
     width: 100%;
 }
 
+.button.icon{
+    margin-right: 5px;
+    padding: 5px 10px;
+    float: left;
+}
+@media (max-width: 531px) {
+    .button.icon{
+        margin-right: 0;
+        margin-top: 10px;
+    }
+}
 .button.icon-delete.add_to_cart_button.product_type_simple {
     width: 46px;
     display: inline-block !important;
@@ -2699,4 +2710,45 @@ input:hover {
     color: #222;
     font-weight: bold;
     text-shadow: 1px 1px 1px #666;
+}
+.legend{
+    margin-top: 15px;
+    font-weight: bold;
+    color: #667700;
+    text-shadow: 1px 1px 0 #ddd;
+}
+
+.register-panel{
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1em;
+    position: relative;
+    display: block;
+}
+
+.register-panel p{
+    line-height: 1.5em;
+}
+
+@media (min-width: 768px){
+    .register-panel{
+        height: 253px;
+    }
+    .register-panel .register-button{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        padding-bottom: 15px;
+    }
+}
+
+
+.authorize-panel{
+    margin-top: 25px;
+}
+
+.authorize-panel .rememberme{
+    float: right;
+    margin-left: 10px;
 }

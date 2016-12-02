@@ -1,18 +1,18 @@
 <?php
 
   class Controller_Captcha extends Controller_Controller {
-    protected $use_symbols = "abcdefghijklmnopqrstuvwxyz012345679";
+    protected $use_symbols = "abcdefghijklmnprtuvwxy23469";
     protected $use_symbols_len;
     protected $amplitude_min = 10;
     protected $amplitude_max = 25;
-    protected $font_width = 25;
-    protected $rand_bsimb_min = 3;
-    protected $rand_bsimb_max = 5;
+    protected $font_width = 35;
+    protected $rand_bsimb_min = 10;
+    protected $rand_bsimb_max = 15;
     protected $margin_left = 10;
-    protected $margin_top = 50;
-    protected $font_size = 30;
+    protected $margin_top = 45;
+    protected $font_size = 35;
     protected $jpeg_quality = 100;
-    protected $length = 6;
+    protected $length = 4;
     public $key = '';
 
     public function __construct(Controller_Base $main = null) {
@@ -26,8 +26,8 @@
       $im = imagecreatefromgif(dirname(__DIR__)."/views/images/captcha/back.gif");
       $width = imagesx($im);
       $height = imagesy($im);
-      $rc = mt_rand(120, 140);
-      $font_color = imagecolorresolve($im, $rc, $rc, $rc);
+      $rc = mt_rand(80, 100);
+      $font_color = imagecolorresolve($im, $rc, $rc, 0);
       $px = $this->margin_left;
       For($i = 0; $i < $this->length; $i++) {
         imagettftext($im, $this->font_size, 0, $px, $this->margin_top, $font_color, dirname(__DIR__)."/views/fonts/cartoon.ttf", $this->key[$i]);
@@ -48,7 +48,6 @@
       if($rand)
         $rand = -1; else $rand = 1;
       $this->wave_region($im, 0, 0, $width, $height, $rand * mt_rand($this->amplitude_min, $this->amplitude_max), mt_rand(30, 40));
-
       if(function_exists("imagejpeg")) {
         header("Content-Type: image/jpeg");
         imagejpeg($im, null, $this->jpeg_quality);

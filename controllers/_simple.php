@@ -53,8 +53,8 @@
 
     protected function edit_add_handling($url, $title) {
       $data = null;
-      $this->scenario(_A_::$app->get('method'));
       $this->load($data);
+      $this->set_back_url();
       if(_A_::$app->request_is_post() && $this->form_handling($data)) {
         $this->save($data);
         $this->get_list();
@@ -97,7 +97,6 @@
      * @export
      */
     public function view() {
-      $this->scenario(_A_::$app->get('method'));
       if(!is_null(_A_::$app->get($this->id_name))) {
         $id = _A_::$app->get($this->id_name);
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
@@ -121,7 +120,6 @@
      * @export
      */
     public function delete($required_access = true) {
-      $this->scenario(_A_::$app->get('method'));
       if($required_access) $this->main->is_admin_authorized();
       if(_A_::$app->request_is_post() && _A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_name))) {
         try {

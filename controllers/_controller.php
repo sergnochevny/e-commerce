@@ -18,13 +18,6 @@
       }
     }
 
-    protected function scenario($scenario = null) {
-      if(!empty($scenario) && in_array($scenario, $this->resolved_scenario)) {
-        $this->_scenario = $scenario;
-      }
-      return $this->_scenario;
-    }
-
     protected function before_search_form_layout(&$search_data, $view = false) { }
 
     protected function before_list_layout($view = false) { }
@@ -67,15 +60,18 @@
 
     protected function build_back_url(&$back_url = null, &$prms = null) {
       $back_url = $this->controller;
-      $prms = null;
+      if( $back_url == _A_::$app->router()->action) $back_url = null;
       if(!is_null(_A_::$app->get('back'))) $back_url = _A_::$app->get('back');
     }
 
     protected function set_back_url($back_url = null) {
+      $prms = null;
       if(!isset($back_url)) $this->build_back_url($back_url, $prms);
-      if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
-      $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
-      $this->template->vars('back_url', $back_url);
+      if(isset($back_url)){
+        if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
+        $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
+        $this->template->vars('back_url', $back_url);
+      }
     }
 
     protected function build_search_filter(&$filter, $view = false) {
@@ -185,11 +181,17 @@
       $this->main->view_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
     }
 
+    public function scenario($scenario = null) {
+      if(!is_null($scenario) && in_array($scenario, $this->resolved_scenario)) {
+        $this->_scenario = $scenario;
+      }
+      return $this->_scenario;
+    }
+
     /**
      * @export
      */
     public function index($required_access = true) {
-      $this->scenario(_A_::$app->get('method'));
       if($required_access) $this->main->is_admin_authorized();
       ob_start();
       $this->get_list();
@@ -205,7 +207,6 @@
      * @export
      */
     public function view() {
-      $this->scenario(_A_::$app->get('method'));
       $this->template->vars('view_title', $this->view_title);
       ob_start();
       $this->get_list(true);

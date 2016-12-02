@@ -344,21 +344,21 @@
     }
 
     protected function build_back_url(&$back_url = null, &$prms = null) {
-      $url_prms = null;
+      $prms = null;
       if((!empty(_A_::$app->get('cat')))) {
-        $url_prms['cat'] = _A_::$app->get('cat');
+        $prms['cat'] = _A_::$app->get('cat');
       }
       if((!empty(_A_::$app->get('mnf')))) {
-        $url_prms['mnf'] = _A_::$app->get('mnf');
+        $prms['mnf'] = _A_::$app->get('mnf');
       }
       if((!empty(_A_::$app->get('ptrn')))) {
-        $url_prms['ptrn'] = _A_::$app->get('ptrn');
+        $prms['ptrn'] = _A_::$app->get('ptrn');
       }
       if((!empty(_A_::$app->get('clr')))) {
-        $url_prms['clr'] = _A_::$app->get('clr');
+        $prms['clr'] = _A_::$app->get('clr');
       }
       if((!empty(_A_::$app->get('prc')))) {
-        $url_prms['prc'] = _A_::$app->get('prc');
+        $prms['prc'] = _A_::$app->get('prc');
       }
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');

@@ -21,12 +21,12 @@
         $('#search').attr('value',$('[name="search[a.pname]"]').attr('value'));
       }
       var data = new FormData(this);
-      var sort = $('form[data-sort]');
-      if (sort.length) {
-        (new FormData(sort[0])).forEach(function (value, key) {
-          data.append(key, value);
-        });
-      }
+    }
+    var sort = $('form[data-sort]');
+    if (sort.length) {
+      (new FormData(sort[0])).forEach(function (value, key) {
+        data.append(key, value);
+      });
     }
     postdata(this, $(this).attr('action'), data);
   });
@@ -51,8 +51,11 @@
       search.attr('action', $(this).attr('href')).trigger('submit');
     } else {
       var data =  new FormData();
-      if (search.length) {
-        data = new FormData(search[0]);
+      var sort = $('form[data-sort]');
+      if (sort.length) {
+        (new FormData(sort[0])).forEach(function (value, key) {
+          data.append(key, value);
+        });
       }
       postdata(this, $(this).attr('href'), data);
     }
@@ -66,6 +69,12 @@
       search.attr('action', $(this).attr('href')).trigger('submit');
     } else {
       var data = new FormData();
+      var sort = $('form[data-sort]');
+      if (sort.length) {
+        (new FormData(sort[0])).forEach(function (value, key) {
+          data.append(key, value);
+        });
+      }
       postdata(this, $(this).attr('href'), data);
     }
   });

@@ -6,7 +6,7 @@
     protected $form_title_add = 'NEW USER';
     protected $form_title_edit = 'MODIFY USER';
     protected $_scenario = '';
-    protected $resolved_scenario = ['', 'short'];
+    protected $resolved_scenario = ['', 'short', 'csv'];
 
     private function list_countries($select = null) {
       $countries = Model_Address::get_countries_all();
@@ -31,6 +31,87 @@
         ob_end_clean();
       }
       return $list;
+    }
+
+    protected function get_csv() {
+      $this->main->is_admin_authorized();
+      $this->build_order($sort);
+      $filter = null;
+      $csv_fields = _A_::$app->keyStorage()->system_csv_fields;
+      if(!empty($csv_fields)) $csv_fields = explode(';', $csv_fields);
+      if(!is_array($csv_fields) || (is_array($csv_fields) && (count($csv_fields) <= 0))) $csv_fields = ['email', 'bill_firstname', 'bill_lastname'];
+      $page = 1;
+      $per_page = 1000;
+      $total_rows = forward_static_call([$this->model_name, 'get_total_count']);
+      $last_page = ceil($total_rows / $per_page);
+      if($page > $last_page) $page = $last_page;
+      if(ob_get_level()) {
+        ob_end_clean();
+      }
+      header('Content-Description: File Transfer');
+      if(function_exists('gzopen') && (_A_::$app->keyStorage()->system_csv_use_gz == '1')) {
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="users.csv.gz"');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate');
+        header('Expires: 0');
+        header('Pragma: public');
+        $filename = sys_get_temp_dir() . DS . 'gz_' . uniqid();
+        $csv = gzopen($filename, 'w');
+        gzwrite($csv, implode(',', $csv_fields) . "\r\n");
+        while($page <= $last_page) {
+          $start = (($page - 1) * $per_page);
+          $res_count_rows = 0;
+          $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, &$filter, &$sort]);
+          if($res_count_rows > 0):
+            foreach($rows as $row):
+              $csv_row = '';
+              foreach($csv_fields as $field) {
+                if(isset($row[$field])) {
+                  $csv_row .= str_replace(',', '_', $row[$field]) . ',';
+                }
+              }
+              $csv_row = substr($csv_row, 0, -1) . "\r\n";
+              if(!empty($csv_row)) gzwrite($csv, $csv_row);
+            endforeach;
+          endif;
+          $page += 1;
+        }
+        gzclose($csv);
+        $size = filesize($filename);
+        header('Content-Length: ' . $size);
+        $csv = fopen($filename, 'rb');
+        while(!feof($csv)) {
+          echo fread($csv, 4096);
+        }
+        fclose($csv);
+        unlink($filename);
+      } else {
+        header('Content-Type: text/plain');
+        header('Content-Disposition: attachment; filename="users.csv"');
+        header('Cache-Control: must-revalidate');
+        header('Expires: 0');
+        header('Pragma: public');
+        echo implode(',', $csv_fields) . "\r\n";
+        while($page <= $last_page) {
+          $start = (($page - 1) * $per_page);
+          $res_count_rows = 0;
+          $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, &$filter, &$sort]);
+          if($res_count_rows > 0):
+            foreach($rows as $row):
+              $csv_row = '';
+              foreach($csv_fields as $field) {
+                if(isset($row[$field])) {
+                  $csv_row .= str_replace(',', '_', $row[$field]) . ',';
+                }
+              }
+              $csv_row = rtrim($csv_row, ',') . "\r\n";
+              if(!empty($csv_row)) echo $csv_row;
+            endforeach;
+          endif;
+          $page += 1;
+        }
+      }
     }
 
     protected function search_fields($view = false) {
@@ -191,7 +272,7 @@
               }
             }
           } else {
-            $verify = Controller_Captcha::check_captcha(isset($data['captcha'])?$data['captcha']:'', $error2);
+            $verify = Controller_Captcha::check_captcha(isset($data['captcha']) ? $data['captcha'] : '', $error2);
             if(($this->scenario() == 'short') && (
                 ((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password']))) ||
                 empty($data['bill_firstname']) ||
@@ -211,7 +292,7 @@
               if(empty($data['captcha']))
                 $error1[] = '&#9;Identify <b>Captcha</b> field!';
               if(!$verify)
-                $error1[] = '&#9;'.$error2[0];
+                $error1[] = '&#9;' . $error2[0];
               if(count($error1) > 0) {
                 if(count($error) > 0) $error[] = '';
                 $error = array_merge($error, $error1);
@@ -239,12 +320,13 @@
     protected function form_handling(&$data = null) {
       if(!empty($this->scenario())) {
         if($this->scenario() == 'get_province_list') exit($this->list_province(_A_::$app->get('country')));
+        if($this->scenario() == 'csv') exit($this->get_csv());
       }
       return true;
     }
 
     protected function before_form_layout(&$data = null) {
-      if($this->scenario() !== 'short'){
+      if($this->scenario() !== 'short') {
         $data['bill_list_countries'] = $this->list_countries($data['bill_country']);
         $data['ship_list_countries'] = $this->list_countries($data['ship_country']);
         $data['bill_list_province'] = $this->list_province($data['bill_country'], $data['bill_province']);

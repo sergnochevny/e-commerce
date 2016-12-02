@@ -58,6 +58,8 @@
       parent::index(false);
     }
 
+    public function index($required_access = true) { }
+
     /**
      * @export
      */

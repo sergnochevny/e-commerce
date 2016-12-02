@@ -122,13 +122,13 @@
       if (reset) {
         var data = new FormData();
       } else {
-        var data = new FormData(this),
-          search = $('[data-related_block] form[data-sort]');
-        if (search.length) {
-          (new FormData(search[0])).forEach(function (value, key) {
-            data.append(key, value);
-          });
-        }
+        var data = new FormData(this);
+      }
+      var sort = $('[data-related_block] form[data-sort]');
+      if (sort.length) {
+        (new FormData(sort[0])).forEach(function (value, key) {
+          data.append(key, value);
+        });
       }
       _postdata(this, $(this).attr('action'), data);
     }
@@ -159,8 +159,11 @@
         search.attr('action', $(this).attr('href')).trigger('submit');
       } else {
         var data = new FormData();
-        if (search.length) {
-          data = new FormData(search[0]);
+        var sort = $('[data-related_block] form[data-sort]');
+        if (sort.length) {
+          (new FormData(sort[0])).forEach(function (value, key) {
+            data.append(key, value);
+          });
         }
         _postdata(this, $(this).attr('href'), data);
       }
@@ -176,6 +179,12 @@
         search.attr('action', $(this).attr('href')).trigger('submit');
       } else {
         var data = new FormData();
+        var sort = $('[data-related_block] form[data-sort]');
+        if (sort.length) {
+          (new FormData(sort[0])).forEach(function (value, key) {
+            data.append(key, value);
+          });
+        }
         _postdata(this, $(this).attr('href'), data);
       }
     }

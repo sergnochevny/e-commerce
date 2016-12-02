@@ -63,6 +63,10 @@
           </a>
         </div>
       </div>
+      <form data-sort>
+        <input type="hidden" name="sort" value="<?= array_keys($sort)[0] ?>">
+        <input type="hidden" name="order" value="<?= array_values($sort)[0] ?>">
+      </form>
     </div>
 
     <?php foreach($rows as $row): ?>

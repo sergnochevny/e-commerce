@@ -11,7 +11,7 @@
       'cart' => 'Notice with timeout on Cart'
     ];
 
-    protected function scenario($scenario = null) {
+    public function scenario($scenario = null) {
       if(!empty($scenario) && in_array($scenario, array_keys($this->resolved_scenario))) {
         $this->_scenario = $scenario;
       }
@@ -89,7 +89,6 @@
      * @export
      */
     public function view() {
-      $this->scenario(_A_::$app->get('method'));
       if(_A_::$app->request_is_ajax()) {
         if(!is_null($this->scenario()) && in_array($this->scenario(), array_keys($this->resolved_scenario))) {
           $f1 = $this->resolved_scenario[$this->scenario()];

@@ -8,9 +8,10 @@
                type="checkbox" <?= !empty($row['id']) ? 'checked' : ''; ?>
           <?php
             $prms = !empty($row['id']) ? ['id' => $row['id']] : null;
+            if(!empty(_A_::$app->get('page')))$prms['page']=_A_::$app->get('page');
             if($scenario == 'add') $prms['method'] = $scenario;
           ?>
-               data-action="<?= _A_::$app->router()->UrlTo('clearance' . DS . (!empty($row['id']) ? 'delete' : 'add'), (!empty($row['id']) ? $prms : null)); ?>"
+               data-action="<?= _A_::$app->router()->UrlTo('clearance' . DS . (!empty($row['id']) ? 'delete' : 'add'), $prms); ?>"
                data-pid="<?= $row['pid'];?>"
                name="clearance-select[<?= $row['pid']; ?>]" style="display: none;"/>
         <div class="col-xs-3 col-sm-4 col-md-3 figure">

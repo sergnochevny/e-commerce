@@ -8,38 +8,40 @@
       $query = "";
       if(isset($filter)) { $where = "";
         foreach($filter as $key => $val) {
-          $where1 = "";
-          switch($val[0]) {
-            case 'like':
-              if(is_array($val[1])) {
-                foreach($val[1] as $like) {
-                  $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::sanitize($like)) . "%'";
+          if($key !== 'scenario'){
+            $where1 = "";
+            switch($val[0]) {
+              case 'like':
+                if(is_array($val[1])) {
+                  foreach($val[1] as $like) {
+                    $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::sanitize($like)) . "%'";
+                  }
+                } else {
+                  $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::sanitize($val[1])) . "%'";
                 }
-              } else {
-                $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::sanitize($val[1])) . "%'";
-              }
-              break;
-            case '=':
-              if(is_array($val[1])) {
-                foreach($val[1] as $like) {
-                  $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::sanitize($like)) . "'";
+                break;
+              case '=':
+                if(is_array($val[1])) {
+                  foreach($val[1] as $like) {
+                    $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::sanitize($like)) . "'";
+                  }
+                } else {
+                  $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::sanitize($val[1])) . "'";
                 }
-              } else {
-                $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::sanitize($val[1])) . "'";
-              }
-              break;
-            case 'between':
-              if(!empty($val[1]['from'])) {
-                $where1 = $key . " >= '" . mysql_real_escape_string(static::sanitize($val[1]['from'])) . "'";
-              }
-              if(!empty($val[1]['to'])) {
-                if(strlen($where1) > 0) $where1 .= " and ";
-                $where1 .= $key . " <= '" . mysql_real_escape_string(static::sanitize($val[1]['to'])) . "'";
-              }
-              break;
-          }
+                break;
+              case 'between':
+                if(!empty($val[1]['from'])) {
+                  $where1 = $key . " >= '" . mysql_real_escape_string(static::sanitize($val[1]['from'])) . "'";
+                }
+                if(!empty($val[1]['to'])) {
+                  if(strlen($where1) > 0) $where1 .= " and ";
+                  $where1 .= $key . " <= '" . mysql_real_escape_string(static::sanitize($val[1]['to'])) . "'";
+                }
+                break;
+            }
 
-          $where .= ((strlen($where1) > 0) ? ((strlen($where) > 0) ? " and (" : " (") . $where1 . ")" : '');
+            $where .= ((strlen($where1) > 0) ? ((strlen($where) > 0) ? " and (" : " (") . $where1 . ")" : '');
+          }
         }
         if(strlen($where) > 0) {
           $query = " WHERE " . $where;

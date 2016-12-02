@@ -10,11 +10,18 @@
         ['min_price' => 15, 'max_price' => 30, 'title' => '$15.01 to $30.00'],
         ['min_price' => 30, 'max_price' => 55, 'title' => '$30.01 to $55.00'],
         ['min_price' => 55, 'max_price' => 75, 'title' => '$55.01 to $75.00'],
-        ['min_price' => 75, 'max_price' => 100, 'title' => '$75.01 to $100.00'],
-        ['min_price' => 100, 'max_price' => 150, 'title' => '$100.01 to $150.00'],
-        ['min_price' => 150, 'max_price' => 200, 'title' => '$150.01 to $200.00'],
-        ['min_price' => 200, 'title' => '$200.01 and above'],
+        ['min_price' => 75, 'title' => '$75.01 and above'],
       ];
+//      [
+//        ['max_price' => 15, 'title' => '$15.00 and under'],
+//        ['min_price' => 15, 'max_price' => 30, 'title' => '$15.01 to $30.00'],
+//        ['min_price' => 30, 'max_price' => 55, 'title' => '$30.01 to $55.00'],
+//        ['min_price' => 55, 'max_price' => 75, 'title' => '$55.01 to $75.00'],
+//        ['min_price' => 75, 'max_price' => 100, 'title' => '$75.01 to $100.00'],
+//        ['min_price' => 100, 'max_price' => 150, 'title' => '$100.01 to $150.00'],
+//        ['min_price' => 150, 'max_price' => 200, 'title' => '$150.01 to $200.00'],
+//        ['min_price' => 200, 'title' => '$200.01 and above'],
+//      ];
 
     protected static function build_where(&$filter) {
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {

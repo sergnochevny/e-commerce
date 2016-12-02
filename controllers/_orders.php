@@ -98,14 +98,14 @@
           $sub_price_count = $sub_price_count + $sale_price;
           $sale_price = strlen(trim($sale_price)) > 0 && !$is_sample ? '$' . number_format((double)$sale_price, 2) : '';
           $total = strlen(trim($total)) > 0 ? '$' . number_format((double)$total, 2) : '';
-          $handling = strlen(trim($handling)) > 0 ? '$' . number_format((double)$handling, 2) : '';
-          $shipping_discount = strlen(trim($shipping_discount)) > 0 ? '$' . number_format((double)$shipping_discount, 2) : '';
-          $shipping_cost = strlen(trim($shipping_cost)) > 0 ? '$' . number_format((double)$shipping_cost, 2) : '';
+          $handling = !empty((double)$handling) ? '$' . number_format((double)$handling, 2) : '';
+          $shipping_discount = !empty((double)$shipping_discount) ? '$' . number_format((double)$shipping_discount, 2) : '';
+          $shipping_cost = !empty((double)$shipping_cost) ? '$' . number_format((double)$shipping_cost, 2) : '';
           $item_price = strlen(trim($price)) > 0 ? '$' . number_format((double)$price, 2) : '';
-          $taxes = strlen(trim($taxes)) > 0 ? '$' . number_format((double)$taxes, 2) : '';
+          $taxes = !empty((double)$taxes) ? '$' . number_format((double)$taxes, 2) : '';
           $status_code = $status;
           $status = ($status == 0 ? 'In process' : 'Completed');
-          $discount = strlen(trim($discount)) > 0 ? '$' . number_format((double)$discount, 2) : '';
+          $discount = !empty((double)$discount) ? '$' . number_format((double)$discount, 2) : '';
 
           if($is_sample == 1) {
             $length = array_fill(0, $quantity, 0);

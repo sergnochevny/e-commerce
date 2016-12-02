@@ -6,6 +6,13 @@
 ?>
 <div class="col-xs-12">
 
+  <div class="col-xs-12 ">
+    <p class="required_field legend">
+      Click an inactive Item to select it for Clearence. And click an active - to remove it.
+    </p>
+  </div>
+
+
   <?= isset($search_form) ? $search_form : '' ?>
 
   <div class="row">

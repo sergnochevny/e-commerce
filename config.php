@@ -40,22 +40,22 @@
       'SAMPLES_SHIPPING_DISCLAIMER' => 'I acknowledge that in rare cases samples may not arrive overnight due to circumstances beyond the control of iLuvFabrix.com. There are no guarantees or refunds given for this service.',
 
       'RATE_HANDLING' => 12.50,                #handling rate
-      'RATE_ROLL' => 30,                    #if a customer chooses to have in shipped on the roll
+      'RATE_ROLL' => 30.00,                    #if a customer chooses to have in shipped on the roll
       #define the shipping rates
       #base rate is the price for that shipping
       #multiplier is for order x to y yards they are charged the base plus the multiplier times the yardage
-      'RATE_EXPRESS_LIGHT' => '22.85',            #rate to ship light products via express
-      'RATE_EXPRESS_LIGHT_MULTIPLIER' => '3.25',
-      'RATE_EXPRESS_MEDIUM' => '27.85',            #rate to ship medium products via express
-      'RATE_EXPRESS_MEDIUM_MULTIPLIER' => '3.75',
-      'RATE_EXPRESS_HEAVY' => '27.85',            #rate to ship heavy products via express
-      'RATE_EXPRESS_HEAVY_MULTIPLIER' => '4.75',
-      'RATE_GROUND_LIGHT' => '20.95',            #rate to ship light products via ground
-      'RATE_GROUND_LIGHT_MULTIPLIER' => '3.00',
-      'RATE_GROUND_MEDIUM' => '20.95',            #rate to ship medium products via ground
-      'RATE_GROUND_MEDIUM_MULTIPLIER' => '3.35',
-      'RATE_GROUND_HEAVY' => '22.85',            #rate to ship heavy products via ground
-      'RATE_GROUND_HEAVY_MULTIPLIER' => '4.00',
+      'RATE_EXPRESS_LIGHT' => 22.85,            #rate to ship light products via express
+      'RATE_EXPRESS_LIGHT_MULTIPLIER' => 3.25,
+      'RATE_EXPRESS_MEDIUM' => 27.85,            #rate to ship medium products via express
+      'RATE_EXPRESS_MEDIUM_MULTIPLIER' => 3.75,
+      'RATE_EXPRESS_HEAVY' => 27.85,            #rate to ship heavy products via express
+      'RATE_EXPRESS_HEAVY_MULTIPLIER' => 4.75,
+      'RATE_GROUND_LIGHT' => 20.95,            #rate to ship light products via ground
+      'RATE_GROUND_LIGHT_MULTIPLIER' => 3.00,
+      'RATE_GROUND_MEDIUM' => 20.95,            #rate to ship medium products via ground
+      'RATE_GROUND_MEDIUM_MULTIPLIER' => 3.35,
+      'RATE_GROUND_HEAVY' => 22.85,            #rate to ship heavy products via ground
+      'RATE_GROUND_HEAVY_MULTIPLIER' => 4.00,
 
       'LIGHT_FABRIC' => 1,
       'MEDIUM_FABRIC' => 2,

@@ -2,6 +2,7 @@
 
   Class Router {
 
+    private $app = null;
     private $path;
     private $exclude_params = ['page', 'back', 'idx'];
     public $base_url;
@@ -9,6 +10,10 @@
     public $controller;
     public $action;
     public $args = [];
+
+    public function __construct($app = null) {
+      if(isset($app)) $this->app = $app;
+    }
 
     private function parse_request_url() {
       if($this->sef_enable()) {
@@ -198,6 +203,8 @@
           $main = new Controller_Main($controller);
           $main->error404();
         } else {
+          if(is_callable([$controller, 'scenario']) && isset($this->app))
+            call_user_func([$controller, 'scenario'], $this->app->get('method'));
           call_user_func([$controller, $call]);
         }
       } catch(Exception $e) {

@@ -78,6 +78,7 @@
 
     protected function get_list($view = false) {
       $c_product = new Controller_Product($this->main);
+      $c_product->scenario($this->scenario());
       $search_form = $c_product->build_search_filter($filter, $view);
       $c_product->build_order($sort, $view);
       $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;

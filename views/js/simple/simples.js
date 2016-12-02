@@ -20,8 +20,8 @@
         $("#confirm_dialog").removeClass('overlay_display');
 
         var search = $('form[data-search]');
-        if (search.length) var data = new FormData(search);
-        else var data = new FormData(search);
+        if (search.length) var data = new FormData(search[0]);
+        else var data = new FormData();
         var sort = $('form[data-sort]');
         if (sort.length) {
           (new FormData(sort[0])).forEach(function (value, key) {
