@@ -169,9 +169,9 @@
 
           <div class="col-xs-12 col-sm-1 text-right action-buttons">
             <?php if(Controller_Admin::is_logged()): ?>
-              <a class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-2x fa-pencil"></i></a>
+              <a title="Edit Order Parameters" class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-2x fa-pencil"></i></a>
             <?php endif; ?>
-            <a href="<?= $view_url ?>"><i class="fa fa-2x fa-eye"></i></a>
+            <a data-waitloader title="View Order Details" href="<?= $view_url ?>"><i class="fa fa-2x fa-eye"></i></a>
           </div>
         </div>
       </div>

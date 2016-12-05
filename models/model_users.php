@@ -16,8 +16,8 @@
         $result[] = "(bill_address1 LIKE '%" . mysql_real_escape_string(static::sanitize($filter["address"])) . "%'" .
           "OR bill_address2 LIKE '%" . mysql_real_escape_string(static::sanitize($filter["address"])) . "%')";
       if(isset($filter["registered"])) {
-        $where = (!empty($filter["registered"]['from']) ? "date_registered >= '" . mysql_real_escape_string(static::sanitize($filter["registered"]["from"])) . "'" : "") .
-          (!empty($filter["registered"]['to']) ? " AND date_registered <= '" . mysql_real_escape_string(static::sanitize($filter["registered"]["to"])) . "'" : "");
+        $where = (!empty($filter["registered"]['from']) ? "date_registered >= STR_TO_DATE('" . mysql_real_escape_string(static::sanitize($filter["registered"]["from"])) . "', '%m/%d/%Y')" : "") .
+          (!empty($filter["registered"]['to']) ? " AND date_registered <= STR_TO_DATE('" . mysql_real_escape_string(static::sanitize($filter["registered"]["to"])) . "', '%m/%d/%Y')" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
       if(isset($filter["country"])) $result[] = "bill_country = '" . mysql_real_escape_string(static::sanitize($filter["country"])) . "'";

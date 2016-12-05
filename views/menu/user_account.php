@@ -4,7 +4,7 @@
      class="dropdown-toggle"
      data-toggle="dropdown">
     <i class="fa fa-2x fa-user-circle visible-xs" aria-hidden="true"></i>
-    <span class="topnav-label hidden-xs"><?= $user_logged ? 'My Account' : 'Login'; ?></span>
+    <span class="topnav-label hidden-xs"><?= $user_logged ? 'My Account' : 'Login'; ?><span class="caret"></span></span>
   </a>
   <ul class="dropdown-menu topnav-account-dropdown">
     <li>

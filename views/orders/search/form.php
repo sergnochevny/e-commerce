@@ -65,7 +65,7 @@
             <div class="form-row">
               <label>Date ranges to:</label>
               <input type="text" class="input-text" id="date-to" placeholder="Chose end date"
-                     name="search[order_date][to]"
+                     name="search[a.order_date][to]"
                      value="<?= isset($search['a.order_date']['to']) ? $search['a.order_date']['to'] : '' ?>">
             </div>
           </div>

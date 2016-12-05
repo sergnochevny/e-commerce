@@ -147,7 +147,7 @@
             <div class="form-row">
               <label>Date ranges from:</label>
               <input type="text" class="input-text" id="date-from" placeholder="Chose start date"
-                     name="search[date_registered][from]"
+                     name="search[registered][from]"
                      value="<?= isset($search['registered']['from']) ? $search['registered']['from'] : '' ?>">
             </div>
           </div>
@@ -155,7 +155,7 @@
             <div class="form-row">
               <label>Date ranges to:</label>
               <input type="text" class="input-text" id="date-to" placeholder="Chose end date"
-                     name="search[date_registered][to]"
+                     name="search[registered][to]"
                      value="<?= isset($search['registered']['to']) ? $search['registered']['to'] : '' ?>">
             </div>
           </div>
