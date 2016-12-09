@@ -17,7 +17,7 @@ RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]
 </IfModule>
 
 <ifModule mod_headers.c>
-    <filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|swf|bmp)$">
+    <filesMatch ".(css|jpg|jpeg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|map)$">
         Header set Cache-Control "max-age=604800, public"
     </filesMatch>
     <filesMatch ".(css|js)$">
@@ -26,7 +26,7 @@ RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]
 </ifModule>
 
 <ifModule mod_headers.c>
-    <filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+    <filesMatch ".(css|jpg|jpeg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|map)$">
         Header unset ETag
         FileETag None
     </filesMatch>
