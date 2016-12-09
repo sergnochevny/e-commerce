@@ -1,6 +1,60 @@
 RewriteEngine on
 
+RewriteRule ^resources1/index.html / [L,QSA,R=301]
+RewriteRule ^resources2/index.html / [L,QSA,R=301]
+RewriteRule ^resources3/index.html / [L,QSA,R=301]
+RewriteRule ^resources4/index.html / [L,QSA,R=301]
+RewriteRule ^resources5/index.html / [L,QSA,R=301]
+RewriteRule ^resources6/index.html / [L,QSA,R=301]
+RewriteRule ^resources7/index.html / [L,QSA,R=301]
+
+RewriteRule ^designer-fabric/index.html /upholstery-fabric/designerfabric/13.htm [L,R=301]
+RewriteRule ^decor-fabric/index.html /upholstery-fabric/designerfabric/13.htm [L,R=301]
+RewriteRule ^furniture-fabric/index.html /products.php [L,R=301]
+RewriteRule ^tapestry-fabric/index.html / [L,R=301]
+RewriteRule ^drapery-fabric/index.html /products.php [L,R=301]
+RewriteRule ^wholesale-fabric/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^fabric-online/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^curtain-fabric/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^decorating-fabric/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^online-fabric-store/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^designer-fabrics-care/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^fabric-discount/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^drapery-fabrics/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^chenille-fabric/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^animal-print-fabric/index.html /products.php?submitted=submitted&thes=Patterned [L,R=301]
+RewriteRule ^print-fabric/index.html /products.php?submitted=submitted&thes=Patterned [L,R=301]
+RewriteRule ^cotton-fabric/index.html /products.php [L,R=301]
+RewriteRule ^more-discount-fabric/index.html /products.php [L,R=301]
+RewriteRule ^fabric-wholesale/index.html /products.php [L,R=301]
+RewriteRule ^linen-fabric/index.html /products.php [L,R=301]
+RewriteRule ^online-fabric/index.html /products.php [L,R=301]
+RewriteRule ^upholstery-fabric-history-2/index.html /products.php [L,R=301]
+RewriteRule ^upholstery-fabric-2/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^upholstery-fabric-history/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^chintz-fabric/index.html /upholstery-fabric/designer-fabric/13.htm [L,R=301]
+RewriteRule ^damask-fabric/index.html /upholstery-fabric/damaskfabric/7.htm [L,R=301]
+RewriteRule ^damask-fabrics/index.html /upholstery-fabric/damaskfabric/7.htm [L,R=301]
+RewriteRule ^Shabby-chic-fabric/index.html /products.php [L,R=301]
+RewriteRule ^iluvfabrix/index.html / [L,R=301]
+
+RewriteRule ^upholstery-fabric/specials/(.*)\.htm$ /specials?page=$1 [L]
+RewriteRule ^upholstery-fabric/out-of-stock/(.*)\.htm$ / [L]
+RewriteRule ^upholstery-fabric/(.*)/([0-9]+)\.htm$ index.php?redirect=shop&cat=$2 [L]
+RewriteRule ^upholstery-fabric/(.*)/([0-9]+)-([0-9]+)\.htm$ index.php?redirect=shop&cat=$2 [L]
+
+RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/favorites/$ /products/product.php?pid=$2&page=$3&sent=favorites [L]
+RewriteRule ^products/(.*)/([0-9]+)/recommendations/$ /products/product.php?pid=$2&sent=recommendations [L]
+RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/SR/(.*)/$ /products/product.php?pid=$2&page=$3&thes=$4 [L]
+RewriteRule ^products/(.*)/([0-9]+)/SR/(.*)/$ /products/product.php?pid=$2&thes=$3 [L]
+RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/(.*)/$ /products/product.php?pid=$2&page=$3&sp=true [L]
+RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/$ /products/product.php?pid=$2&page=$3 [L]
+RewriteRule ^products/(.*)/([0-9]+)/$ /products/product.php?pid=$2 [L]
+
+
 RewriteCond %{REQUEST_URI} !\.(css|jpg|jpeg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|map)$
+RewriteCond %{REQUEST_URI} !(index.php?redirect=)$
+RewriteCond %{REQUEST_URI} !(index.php?route=)$
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]

@@ -30,7 +30,17 @@
           _A_::$app->server('REQUEST_URI', $request_uri);
           _A_::$app->setGet($query);
         }
+        if(isset($query['redirect'])) {
+          $redirect_url = $query['redirect'];
+          unset($query['redirect']);
+          $this->redirect_301($this->UrlTo($redirect_url, $query));
+        }
       }
+    }
+
+    private function redirect_301($redirect_url) {
+      header('Location: ' . $redirect_url, true, 301);
+      exit;
     }
 
     private function sef_enable() {
@@ -265,7 +275,7 @@
           if(!(isset($params) && is_array($params))) $params = [];
           $params = array_merge($params, $_params);
         }
-        $sef_include_params = (isset($params) && (count($params)>0)) ? array_diff_key($params, array_flip($sef_exclude_params)) : [];
+        $sef_include_params = (isset($params) && (count($params) > 0)) ? array_diff_key($params, array_flip($sef_exclude_params)) : [];
         $_path = $this->http_build_url(trim($_path, DS), ['query' => http_build_query($sef_include_params)]);
         if(isset($to_sef)) {
           $path = $this->build_sef_url($to_sef, $_path);
