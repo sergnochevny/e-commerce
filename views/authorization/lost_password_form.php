@@ -38,4 +38,4 @@
     </div>
 
 </article>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/lost_password_form.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/lost_password_form.min.js'); ?>' type="text/javascript"></script>

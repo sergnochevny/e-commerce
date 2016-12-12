@@ -110,5 +110,5 @@
        value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bsells_horiz']); ?>">
 <?php include('views/index/block_footer.php'); ?>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/index/index.js'); ?>' type="text/javascript"></script>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.js'); ?>'></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/index/index.min.js'); ?>' type="text/javascript"></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>

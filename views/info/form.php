@@ -39,4 +39,4 @@
     </div>
   </div>
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/info/form.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/info/form.min.js'); ?>' type="text/javascript"></script>

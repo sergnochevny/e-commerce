@@ -51,4 +51,4 @@
        value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'new']) ?>">
 <input type="hidden" id="hidden_best_products"
        value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'best']) ?>">
-<script src='<?= _A_::$app->router()->UrlTo('views/js/index/block_footer.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/index/block_footer.min.js'); ?>' type="text/javascript"></script>

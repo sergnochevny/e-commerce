@@ -79,5 +79,5 @@
 
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.js'); ?>'
+<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
         type="text/javascript"></script>

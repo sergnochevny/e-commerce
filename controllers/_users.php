@@ -5,7 +5,6 @@
     protected $id_name = 'aid';
     protected $form_title_add = 'NEW USER';
     protected $form_title_edit = 'MODIFY USER';
-    protected $_scenario = '';
     protected $resolved_scenario = ['', 'short', 'csv'];
 
     private function list_countries($select = null) {

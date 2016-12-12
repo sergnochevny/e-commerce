@@ -162,5 +162,5 @@
       </div>
     </div>
   </div>
-  <script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.js'); ?>' type="text/javascript"></script>
+  <script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
 <?php include('views/index/block_footer.php'); ?>

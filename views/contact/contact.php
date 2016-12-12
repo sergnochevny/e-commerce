@@ -1,5 +1,5 @@
 <?php include('views/index/main_gallery.php'); ?>
-<div id="static">
+<div id="content">
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
@@ -35,4 +35,4 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>

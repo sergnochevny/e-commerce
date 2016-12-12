@@ -31,7 +31,7 @@
           <a data-waitloader data-link title="Clearance" href="<?= _A_::$app->router()->UrlTo('clearance/view') ?>">Clearance</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('estimate') ?>">Estimator</a>
+          <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('estimator') ?>">Estimator</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('matches') ?>">Matches</a>

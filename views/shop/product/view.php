@@ -143,7 +143,7 @@
                 <div class="row"
                      data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'product']) ?>"></div>
                 <script type='text/javascript'
-                        src='<?= _A_::$app->router()->UrlTo('views/js/load.js'); ?>'></script>
+                        src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
               </div>
 
               <div class="col-xs-12">
@@ -276,4 +276,4 @@
   </div>
 </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/shop/product.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/shop/product.min.js'); ?>' type="text/javascript"></script>

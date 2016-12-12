@@ -19,7 +19,7 @@
     /**
      * @export
      */
-    public function estimate() {
+    public function estimator() {
       $this->main->view('static/estimate');
     }
 
