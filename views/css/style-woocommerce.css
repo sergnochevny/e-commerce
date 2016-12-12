@@ -2348,4 +2348,54 @@ ul.product_list_widget li dl dd p {
     margin-right: 0;
 }
 
-.products .list-item
+div.tabs {
+    border-radius: 4px;
+    background: rgba(254, 254, 254, 0.5);
+    box-shadow: 0 0 10px #999;
+    padding: 15px;
+}
+
+div.container {
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+ul.tabNavigation {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.tabNavigation li {
+    display: inline;
+}
+
+ul.tabNavigation li a {
+    padding: 3px 9px;
+    background-color: #666;
+    color: #000;
+    text-decoration: none;
+}
+
+ul.tabNavigation li a.selected,
+ul.tabNavigation li a.selected:hover {
+    background: #FFF;
+    color: #000;
+}
+
+ul.tabNavigation li a:hover {
+    background: #ccc;
+    color: #000;
+}
+
+ul.tabNavigation li a:focus {
+    outline: 0;
+}
+
+div.tabs div {
+    padding: 5px;
+}
+
+div.tabs div h3 {
+    margin-top: -15px;
+}

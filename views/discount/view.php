@@ -32,27 +32,27 @@
               </a>
             </div>
             <div class="col-sm-2 col">
-              Enabled <a href="#">
+              Enabled <a href="javascript:void(0);">
                 <small><i class="fa fa-chevron-down"></i></small>
               </a>
             </div>
             <div class="col-sm-2 col">
-              Multiple <a href="#">
+              Multiple <a href="javascript:void(0);">
                 <small><i class="fa fa-chevron-down"></i></small>
               </a>
             </div>
             <div class="col-sm-2 col">
-              Coupon <a href="#">
+              Coupon <a href="javascript:void(0);">
                 <small><i class="fa fa-chevron-down"></i></small>
               </a>
             </div>
             <div class="col-sm-2 col">
-              Starts <a href="#">
+              Starts <a href="javascript:void(0);">
                 <small><i class="fa fa-chevron-down"></i></small>
               </a>
             </div>
             <div class="col-sm-2 col">
-              Ends <a href="#">
+              Ends <a href="javascript:void(0);">
                 <small><i class="fa fa-chevron-down"></i></small>
               </a>
             </div>
@@ -125,13 +125,13 @@
           <div class="row">
             <div class="col-xs-12 table-list-header hidden-xs">
               <div class="col-sm-4 col">
-                Order <a href="#">
+                Order <a href="javascript:void(0);">
                   <small><i class="fa fa-chevron-down"></i></small>
                 </a>
               </div>
               <?php if(Controller_Admin::is_logged()): ?>
                 <div class="col-sm-2 col">
-                  Customer <a href="#">
+                  Customer <a href="javascript:void(0);">
                     <small><i class="fa fa-chevron-down"></i></small>
                   </a>
                 </div>

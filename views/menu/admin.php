@@ -81,6 +81,9 @@
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="" href="<?= _A_::$app->router()->UrlTo('orders'); ?>">Orders</a>
         </li>
+        <li class="menu-item menu-item-type-post_type menu-item-object-page">
+          <a data-waitloader data-link title="" href="<?= _A_::$app->router()->UrlTo('settings/edit'); ?>">Settings</a>
+        </li>
       </ul>
     </div>
   </div>

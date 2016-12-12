@@ -15,4 +15,4 @@
     <?= $form; ?>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/settings/edit.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/settings/edit.js'); ?>' type="text/javascript"></script>
