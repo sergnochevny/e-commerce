@@ -14,8 +14,12 @@
           $res = mysql_query($q);
           if($res) {
             $row = mysql_fetch_assoc($res);
-            $this->storage[$key] = $row['value'];
-            return $row['value'];
+            if($row){
+              $this->storage[$key] = $row['value'];
+              return $row['value'];
+            } else {
+              return null;
+            }
           } else {
             throw new Exception(mysql_error());
           }

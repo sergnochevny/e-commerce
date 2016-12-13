@@ -70,7 +70,7 @@
 
     public static function get_filter_data(&$count, $start = 0, $search = null) {
       $filter = null;
-      $FILTER_LIMIT = FILTER_LIMIT;
+      $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
       $start = isset($start) ? $start : 0;
       $search = mysql_real_escape_string(static::sanitize($search));
       $q = "select count(id) from blog_groups";
@@ -85,7 +85,7 @@
         $q .= " where name like '%$search%'";
       }
       $q .= " order by name";
-      $q .= " limit $start, $FILTER_LIMIT";
+      $q .= " limit $start, $filter_limit";
       $results = mysql_query($q);
       while($row = mysql_fetch_array($results)) {
         $filter[] = [$row['id'], $row['name']];

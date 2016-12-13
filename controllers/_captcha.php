@@ -87,7 +87,8 @@
     public static function check_captcha($captcha, &$error = null){
       $res = false;
       if(!is_null(_A_::$app->session('captcha')) && !empty(_A_::$app->session('captcha'))){
-        if (CAPTCHA_RELEVANT > (time()-_A_::$app->session('captcha_time'))){
+        $captcha_relevant = (!is_null(_A_::$app->keyStorage()->system_captcha_time) ? _A_::$app->keyStorage()->system_captcha_time : CAPTCHA_RELEVANT);
+        if ($captcha_relevant > (time()-_A_::$app->session('captcha_time'))){
           $salt = Model_Auth::generatestr();
           $hash = Model_Auth::hash_($captcha, $salt, 12);
           if($hash == Model_Auth::check(_A_::$app->session('captcha'), $hash)) {

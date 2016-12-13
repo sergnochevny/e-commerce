@@ -173,7 +173,7 @@
     public static function get_filter_data($type, &$count, $start = 0, $search = null) {
       $search = mysql_real_escape_string($search);
       $filter = null;
-      $FILTER_LIMIT = FILTER_LIMIT;
+      $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
       $start = isset($start) ? $start : 0;
       $search = mysql_escape_string(static::sanitize($search));
       switch($type) {
@@ -192,7 +192,7 @@
             $q .= " or colour like '%$search%'";
           }
           $q .= " order by colour";
-          $q .= " limit $start, $FILTER_LIMIT";
+          $q .= " limit $start, $filter_limit";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
             $filter[] = [$row['id'], $row['colour']];
@@ -211,7 +211,7 @@
             $q .= " where pattern like '%$search%'";
           }
           $q .= " order by pattern";
-          $q .= " limit $start, $FILTER_LIMIT";
+          $q .= " limit $start, $filter_limit";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
             $filter[] = [$row['id'], $row['pattern']];
@@ -230,7 +230,7 @@
             $q .= " where cname like '%$search%'";
           }
           $q .= " order by cname";
-          $q .= " limit $start, $FILTER_LIMIT";
+          $q .= " limit $start, $filter_limit";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
             $filter[] = [$row['cid'], $row['cname']];

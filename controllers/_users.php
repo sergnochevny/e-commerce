@@ -36,7 +36,7 @@
       $this->main->is_admin_authorized();
       $this->build_order($sort);
       $filter = null;
-      $csv_fields = _A_::$app->keyStorage()->system_csv_fields;
+      $csv_fields = (!is_null(_A_::$app->keyStorage()->system_csv_fields) ? _A_::$app->keyStorage()->system_csv_fields : CSV_FIELDS);
       if(!empty($csv_fields)) $csv_fields = explode(';', $csv_fields);
       if(!is_array($csv_fields) || (is_array($csv_fields) && (count($csv_fields) <= 0))) $csv_fields = ['email', 'bill_firstname', 'bill_lastname'];
       $page = 1;
@@ -48,7 +48,8 @@
         ob_end_clean();
       }
       header('Content-Description: File Transfer');
-      if(function_exists('gzopen') && (_A_::$app->keyStorage()->system_csv_use_gz == '1')) {
+      $gz_use = (!is_null(_A_::$app->keyStorage()->system_csv_use_gz)?_A_::$app->keyStorage()->system_csv_use_gz:CSV_USE_GZ);
+      if(function_exists('gzopen') && ($gz_use == '1')) {
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="users.csv.gz"');
         header('Content-Transfer-Encoding: binary');

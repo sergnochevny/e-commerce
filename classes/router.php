@@ -44,7 +44,7 @@
     }
 
     private function sef_enable() {
-      $res = ENABLE_SEF && !Controller_Admin::is_logged();
+      $res = (!is_null(_A_::$app->keyStorage()->system_enable_sef) ? _A_::$app->keyStorage()->system_enable_sef : ENABLE_SEF) && !Controller_Admin::is_logged();
       return $res;
     }
 

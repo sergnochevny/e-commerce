@@ -10,6 +10,7 @@ var change_text = false;
       $('input[type=number]').textinput();
       $('input[type=email]').textinput();
       $('input[type=password]').textinput();
+      $('input[type=url]').textinput();
 
       $('textarea').textinput();
       $('select').selectmenu();

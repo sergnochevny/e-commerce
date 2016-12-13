@@ -42,7 +42,8 @@
           </li>
         <?php endforeach; ?>
         <?php
-          if(isset($filter_data_start) && isset($total) && !((ceil($filter_data_start / FILTER_LIMIT) + 1) >= ceil($total / FILTER_LIMIT))):?>
+          $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
+          if(isset($filter_data_start) && isset($total) && !((ceil($filter_data_start / $filter_limit) + 1) >= ceil($total / $filter_limit))):?>
             <li class="select_item">
               <div class="col-xs-12">
                 <div class="row text-center">

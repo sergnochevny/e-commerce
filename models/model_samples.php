@@ -46,7 +46,7 @@
     }
 
     public static function systemAllowSamplesExpressShipping() {
-      $result = _A_::$app->keyStorage()->system_allow_sample_express_shipping;
+      $result = (!is_null(_A_::$app->keyStorage()->system_allow_sample_express_shipping)?_A_::$app->keyStorage()->system_allow_sample_express_shipping:SAMPLE_EXPRESS_SHIPPING);
       if(!isset($result)) $result = false;
       return $result;
     }

@@ -345,7 +345,7 @@
 
     public static function get_filter_data($type, &$count, $start = 0, $search = null) {
       $filter = null;
-      $FILTER_LIMIT = FILTER_LIMIT;
+      $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
       $start = isset($start) ? $start : 0;
       $search = mysql_escape_string(self::sanitize($search));
       switch($type) {
@@ -366,7 +366,7 @@
             $q .= " or email like '%$search%'";
           }
           $q .= " order by email, bill_firstname, bill_lastname";
-          $q .= " limit $start, $FILTER_LIMIT";
+          $q .= " limit $start, $filter_limit";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
             $filter[] = [$row[0], $row[1] . ' - ' . $row[3] . ' ' . $row[4]];
@@ -387,7 +387,7 @@
             $q .= " or pname like '%$search%'";
           }
           $q .= " order by pnumber, pname";
-          $q .= " limit $start, $FILTER_LIMIT";
+          $q .= " limit $start, $filter_limit";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
             $filter[] = [$row[0], $row[2] . ' - ' . $row[1]];
@@ -406,7 +406,7 @@
             $q .= " where manufacturer like '%$search%'";
           }
           $q .= " order by manufacturer";
-          $q .= " limit $start, $FILTER_LIMIT";
+          $q .= " limit $start, $filter_limit";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
             $filter[] = [$row[0], $row[1]];
@@ -425,7 +425,7 @@
             $q .= " where cname like '%$search%'";
           }
           $q .= " order by cname";
-          $q .= " limit $start, $FILTER_LIMIT";
+          $q .= " limit $start, $filter_limit";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
             $filter[] = [$row[0], $row[1]];

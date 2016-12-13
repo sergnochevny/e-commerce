@@ -57,12 +57,17 @@
       'RATE_GROUND_HEAVY' => 22.85,            #rate to ship heavy products via ground
       'RATE_GROUND_HEAVY_MULTIPLIER' => 4.00,
 
+      'HIDE_REGULAR_PRICE' => 0,
+      'SAMPLE_EXPRESS_SHIPPING' => 1,
+      'CSV_USE_GZ' => 0,
+      'CSV_FIELDS' => 'email;bill_firstname;bill_lastname',
+      'CAPTCHA_RELEVANT' => 300,
+      'PRICE_GROUPS_COUNT' => 24,
+
       'LIGHT_FABRIC' => 1,
       'MEDIUM_FABRIC' => 2,
       'HEAVY_FABRIC' => 3,
       'YRDS_FOR_MULTIPLIER' => 2.0,              #total yardage allowed before a mulitplier is added
-      'CAPTCHA_RELEVANT' => 300,
-      'PRICE_GROUPS_COUNT' => 24,
     ],
     'ini_set' => [
       'display_errors' => 'On',
