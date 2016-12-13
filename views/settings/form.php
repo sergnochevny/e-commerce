@@ -18,9 +18,17 @@
           <div class="col-xs-12">
             <div class="row">
               <div class="form-row">
-                <div class="col-xs-12">
-                  <label for="generate_code">
-                    <input type="checkbox" name="system_enable_sef" id="generate_code" value="1"
+                <div class="col-xs-6">
+                  <label>
+                    <input type="checkbox" name="system_demo" value="1"
+                      <?= (isset($data['system_demo']) && $data['system_demo'] == '1') ? 'checked' : '' ?>
+                           class="input-checkbox">
+                    Demo mode.
+                  </label>
+                </div>
+                <div class="col-xs-6">
+                  <label>
+                    <input type="checkbox" name="system_enable_sef" value="1"
                       <?= (isset($data['system_enable_sef']) && $data['system_enable_sef'] == '1') ? 'checked' : '' ?>
                            class="input-checkbox">
                     Enable SEF.
@@ -66,7 +74,8 @@
                   <label class="required_field">
                     System information email
                   </label>
-                  <input type="email" name="system_info_email" class="input-text" value="<?= $data['system_info_email']; ?>"/>
+                  <input type="email" name="system_info_email" class="input-text"
+                         value="<?= $data['system_info_email']; ?>"/>
                 </div>
                 <div class="col-xs-12">
                   <label>
@@ -113,7 +122,8 @@
                     <label class="required_field">
                       PayPal Business Account
                     </label>
-                    <input type="email" name="paypal_business" class="input-text" value="<?= $data['paypal_business']; ?>"/>
+                    <input type="email" name="paypal_business" class="input-text"
+                           value="<?= $data['paypal_business']; ?>"/>
                   </div>
                   <div class="col-xs-12 col-sm-6">
                     <label class="required_field">

@@ -62,6 +62,7 @@
       'CSV_USE_GZ' => 0,
       'CSV_FIELDS' => 'email;bill_firstname;bill_lastname',
       'CAPTCHA_RELEVANT' => 300,
+
       'PRICE_GROUPS_COUNT' => 24,
 
       'LIGHT_FABRIC' => 1,

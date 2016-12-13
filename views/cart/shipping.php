@@ -1,3 +1,7 @@
+<?php
+  $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+  $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
+?>
 <div class="col-xs-12 table-list-row">
   <div class="row">
     <div class="col-xs-12 col-sm-4 table-list-row-item">
@@ -31,7 +35,7 @@
             </div>
           </div>
           <div class="col-xs-6 col-sm-6">
-            <b>NOTE: </b> This cost $<?= number_format(RATE_ROLL, 2); ?> USD
+            <b>NOTE: </b> This cost $<?= number_format($rate_roll, 2); ?> USD
           </div>
         </div>
       <?php endif; ?>
@@ -50,7 +54,7 @@
             <b>HANDLING</b>
           </div>
           <div class="col-xs-6 col-sm-6">
-            $<?= number_format(RATE_HANDLING, 2); ?> USD
+            $<?= number_format($rate_handling, 2); ?> USD
           </div>
         </div>
       <?php endif; ?>

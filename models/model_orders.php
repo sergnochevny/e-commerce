@@ -147,6 +147,9 @@
     public function register_order($aid, $trid, $shipping_type, $shipping_cost, $on_roll,
       $express_samples, $handling, $shipping_discount,
       $coupon_discount, $total_discount, $taxes, $total) {
+
+      $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+
       $q = "insert into fabrix_orders (" .
         "aid, trid, shipping_type, shipping_cost, on_roll," .
         " roll_cost, express_samples, on_handling, handling, shipping_discount," .
@@ -162,7 +165,7 @@
         " %01.2f)";
 
       $sSQL = sprintf($q, $aid, $trid, $shipping_type, str_replace(",", "", $shipping_cost), $on_roll, str_replace(",", "", RATE_ROLL),
-                      str_replace(",", "", $express_samples), $handling, str_replace(",", "", RATE_HANDLING), str_replace(",", "", $shipping_discount),
+                      str_replace(",", "", $express_samples), $handling, str_replace(",", "", $rate_handling), str_replace(",", "", $shipping_discount),
                       str_replace(",", "", $coupon_discount), str_replace(",", "", $total_discount), str_replace(",", "", $taxes),
                       str_replace(",", "", $total), time(), SAMPLES_PRICE_EXPRESS_SHIPPING, SAMPLES_PRICE_SINGLE,
                       SAMPLES_PRICE_MULTIPLE, SAMPLES_PRICE_ADDITIONAL, SAMPLES_PRICE_WITH_PRODUCTS, SAMPLES_QTY_MULTIPLE_MIN,

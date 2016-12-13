@@ -136,6 +136,10 @@
       $express_samples_cost = 0;
       $total = 0;
 
+      $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+      $samples_price_express_shipping = (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+      $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
+
       if(!is_null(_A_::$app->session('cart')) && isset(_A_::$app->session('cart')['trid']) && !is_null(_A_::$app->session('user')) && isset(_A_::$app->session('cart')['payment']) && (_A_::$app->session('cart')['payment'] == 1)) {
         if((!is_null(_A_::$app->get('trid')) && (_A_::$app->get('trid') == _A_::$app->session('cart')['trid'])) || (!is_null(_A_::$app->post('trid')) && (_A_::$app->session('trid') == _A_::$app->session('cart')['trid']))) {
 
@@ -173,17 +177,17 @@
 
           $on_roll = 0;
           if((count($cart_items) > 0) && ($bShipRoll)) {
-            $rollcost += RATE_ROLL;
+            $rollcost += $rate_roll;
             $on_roll = 1;
           }
           $express_samples = 0;
           if((count($cart_samples_items) > 0) && ($bExpressSamples) && !(count($cart_items) > 0)) {
-            $express_samples_cost += SAMPLES_PRICE_EXPRESS_SHIPPING;
+            $express_samples_cost += $samples_price_express_shipping;
             $express_samples = 1;
           }
           $handling = 0;
           if(count($cart_items) > 0) {
-            $handlingcost += RATE_HANDLING;
+            $handlingcost += $rate_handling;
             $handling = 1;
           }
           $oid = Model_Orders::register_order($aid, $trid, $shipping, $shipcost, $on_roll, $express_samples, $handling, $shipDiscount, $couponDiscount, $discount, $taxes, $total);
@@ -238,8 +242,9 @@
         $ship_firstname = trim($user['ship_firstname']);
         $ship_lastname = trim($user['ship_lastname']);
 
+        $demo = (!is_null(_A_::$app->keyStorage()->system_demo) ? _A_::$app->keyStorage()->system_demo : DEMO);
         $headers = "From: \"I Luv Fabrix\"<" . _A_::$app->keyStorage()->system_info_email . "\n";
-        if(DEMO == 1) {
+        if($demo == 1) {
           $body = "                !!!THIS IS A TEST!!!                  \n\n";
           $body .= "Hi, $ship_firstname $ship_lastname ($email) \n\n";
           $subject = "!!!THIS IS A TEST!!! I Luv Fabrix purchase confirmation ";
@@ -263,7 +268,7 @@
 
           $headers = "From: Web Customer <$email>\n";
 
-          if(DEMO == 1) {
+          if($demo == 1) {
             mail(_A_::$app->keyStorage()->system_info_email, $subject, $body, $headers);
             mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
             mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
@@ -287,6 +292,11 @@
       $headers = $ma['headers'];
       $subject = $ma['subject'];
       $body = $ma['body'];
+
+      $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+      $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
+      $samples_price_express_shipping = (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+
       if(!is_null(_A_::$app->session('cart')) && !is_null(_A_::$app->session('user'))) {
 
         $user = _A_::$app->session('user');
@@ -342,18 +352,18 @@
         $body .= "\nShipping:$" . number_format($shipcost, 2) . "\n";
 
         if((count($cart_items) > 0) && ($bShipRoll)) {
-          $rollcost += RATE_ROLL;
+          $rollcost += $rate_roll;
           $body .= "Ship my fabric on a roll: $" . number_format($rollcost, 2) . "\n";
         }
 
         if((count($cart_samples_items) > 0) && ($bExpressSamples) && !(count($cart_items) > 0)) {
-          $express_samples_cost += SAMPLES_PRICE_EXPRESS_SHIPPING;
+          $express_samples_cost += $samples_price_express_shipping;
           $body .= "Deliver my samples by Overnight Courier: $" . number_format($express_samples_cost, 2) . "\n";
         }
         $total = $total + $shipcost + (isset($rollcost) ? $rollcost : 0) + (isset($express_samples_cost) ? $express_samples_cost : 0);
         $body .= "\nSUB TOTAL with shipping:$" . number_format($total, 2) . "\n";
 
-        $handlingcost = RATE_HANDLING;
+        $handlingcost = $rate_handling;
         if(count($cart_items) > 0) {
           $body .= "Handling:$" . number_format($handlingcost, 2) . " \n";
         }
@@ -481,6 +491,10 @@
       $express_samples_cost = 0;
       $total = 0;
       $aPrds = [];
+
+      $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
+      $samples_price_express_shipping = (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+
       $cart = _A_::$app->session('cart');
       $cart_items = isset($cart['items']) ? $cart['items'] : [];
       $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
@@ -518,10 +532,10 @@
         }
       }
       if((count($cart_items) > 0) && ($bShipRoll)) {
-        $rollcost += RATE_ROLL;
+        $rollcost += $rate_roll;
       }
       if((count($cart_samples_items) > 0) && ($bExpressSamples) && !(count($cart_items) > 0)) {
-        $express_samples_cost += SAMPLES_PRICE_EXPRESS_SHIPPING;
+        $express_samples_cost += $samples_price_express_shipping;
       }
       $total = $total + $shipcost + (isset($rollcost) ? $rollcost : 0) + (isset($express_samples_cost) ? $express_samples_cost : 0);
 
@@ -563,6 +577,11 @@
       $total = 0;
       $couponDiscount = 0;
       $aPrds = [];
+
+      $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+      $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
+      $samples_price_express_shipping = (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+
       $cart = _A_::$app->session('cart');
       $cart_items = isset($cart['items']) ? $cart['items'] : [];
       $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
@@ -585,12 +604,12 @@
       $couponDiscount = $cart['coupon_discount'];
 
       if((count($cart_items) > 0) && ($bShipRoll))
-        $shipcost += RATE_ROLL;
+        $shipcost += $rate_roll;
       if((count($cart_samples_items) > 0) && ($bExpressSamples) && !(count($cart_items) > 0))
-        $shipcost += SAMPLES_PRICE_EXPRESS_SHIPPING;
+        $shipcost += $samples_price_express_shipping;
       $handlingcost = 0;
       if(count($cart_items) > 0) {
-        $handlingcost = RATE_HANDLING;
+        $handlingcost = $rate_handling;
         $total += $handlingcost;
       }
       $total = $total + $shipcost;
@@ -770,6 +789,10 @@
       $couponDiscount = 0;
       $aPrds = [];
 
+      $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+      $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
+      $samples_price_express_shipping = (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+
       $cart = _A_::$app->session('cart');
       $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
       $coupon_code = isset($cart['coupon']) ? $cart['coupon'] : '';
@@ -843,11 +866,11 @@
       $cart['coupon_discount'] = $couponDiscount;
 
       if((count($cart_items) > 0) && ($bShipRoll))
-        $shipcost += RATE_ROLL;
+        $shipcost += $rate_roll;
       if((count($cart_samples_items) > 0) && ($bExpressSamples) && !(count($cart_items) > 0))
-        $shipcost += SAMPLES_PRICE_EXPRESS_SHIPPING;
+        $shipcost += $samples_price_express_shipping;
       if(count($cart_items) > 0)
-        $total += RATE_HANDLING;
+        $total += $rate_handling;
       $total = $total + $shipcost;
       if($shipDiscount > 0)
         $total = round($total - $shipDiscount, 2);
@@ -919,12 +942,14 @@
     public function pay_mail() {
       if(!is_null(_A_::$app->session('cart')) && !is_null(_A_::$app->session('user'))) {
 
+        $demo = (!is_null(_A_::$app->keyStorage()->system_demo) ? _A_::$app->keyStorage()->system_demo : DEMO);
+
         $user = _A_::$app->session('user');
         $email = trim($user['email']);
         $ship_firstname = trim($user['ship_firstname']);
         $ship_lastname = trim($user['ship_lastname']);
 
-        if(DEMO == 1) {
+        if($demo == 1) {
           $body = "                !!!THIS IS A TEST!!!                  \n\n";
           $body .= "This email message was generated when $ship_firstname $ship_lastname ($email) viewed the confirmation page. At this point the transaction was not concluded.\n\n";
           $subject = "!!!THIS IS A TEST!!! I Luv Fabrix purchase confirmation ";
@@ -946,7 +971,7 @@
           $subject = $ma['subject'];
           $body = $ma['body'];
 
-          if(DEMO == 1) {
+          if($demo == 1) {
             mail("dev@9thsphere.com", $subject, $body, $headers);
             mail(_A_::$app->keyStorage()->system_info_email, $subject, $body, $headers);
             mail("max@maxportland.com", $subject, $body, $headers);

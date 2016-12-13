@@ -6,6 +6,7 @@
 
       $data = [
         'system_enable_sef' => (!is_null(_A_::$app->keyStorage()->system_enable_sef) ? _A_::$app->keyStorage()->system_enable_sef : ENABLE_SEF),
+        'system_demo' => (!is_null(_A_::$app->keyStorage()->system_demo) ? _A_::$app->keyStorage()->system_demo : DEMO),
         'system_captcha_time' => (!is_null(_A_::$app->keyStorage()->system_captcha_time) ? _A_::$app->keyStorage()->system_captcha_time : CAPTCHA_RELEVANT),
         'system_hide_all_regular_prices' => (!is_null(_A_::$app->keyStorage()->system_hide_all_regular_prices) ? _A_::$app->keyStorage()->system_hide_all_regular_prices : HIDE_REGULAR_PRICE),
         'system_filter_amount' => (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT),
@@ -15,83 +16,78 @@
         'paypal_url' => (!is_null(_A_::$app->keyStorage()->paypal_url) ? _A_::$app->keyStorage()->paypal_url : ''),
         'system_csv_fields' => (!is_null(_A_::$app->keyStorage()->system_csv_fields) ? _A_::$app->keyStorage()->system_csv_fields : CSV_FIELDS),
         'system_info_email' => (!is_null(_A_::$app->keyStorage()->system_info_email) ? _A_::$app->keyStorage()->system_info_email : ''),
+        
+        'shop_price_groups_count' => (!is_null(_A_::$app->keyStorage()->shop_price_groups_count) ? _A_::$app->keyStorage()->shop_price_groups_count : PRICE_GROUPS_COUNT),
+        'shop_rate_handling' => (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING),
+        'shop_rate_roll' => (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL),
+      
+        'shop_rate_express_light' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_light) ? _A_::$app->keyStorage()->shop_rate_express_light : RATE_EXPRESS_LIGHT),
+        'shop_rate_express_light_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_light_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_light_multiplier : RATE_EXPRESS_LIGHT_MULTIPLIER),
+        'shop_rate_express_medium' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_medium) ? _A_::$app->keyStorage()->shop_shop_rate_express_medium : RATE_EXPRESS_MEDIUM),
+        'shop_rate_express_medium_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_medium_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_medium_multiplier : RATE_EXPRESS_MEDIUM_MULTIPLIER),
+        'shop_rate_express_heavy' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_heavy) ? _A_::$app->keyStorage()->shop_rate_express_heavy : RATE_EXPRESS_HEAVY),
+        'shop_rate_express_heavy_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_heavy_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_heavy_multiplier : RATE_EXPRESS_HEAVY_MULTIPLIER),
+        'shop_rate_ground_light' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_light) ? _A_::$app->keyStorage()->shop_rate_ground_light : RATE_GROUND_LIGHT),
+        'shop_rate_ground_light_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_light_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_light_multiplier : RATE_GROUND_LIGHT_MULTIPLIER),
+        'shop_rate_ground_medium' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_medium) ? _A_::$app->keyStorage()->shop_rate_ground_medium : RATE_GROUND_MEDIUM),
+        'shop_rate_ground_medium_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_medium_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_medium_multiplier : RATE_GROUND_MEDIUM_MULTIPLIER),
+        'shop_rate_ground_heavy' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_heavy) ? _A_::$app->keyStorage()->shop_rate_ground_heavy : RATE_GROUND_HEAVY),
+        'shop_rate_ground_heavy_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_heavy_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_heavy_multiplier : RATE_GROUND_HEAVY_MULTIPLIER),
+
+        'shop_samples_price_express_shipping' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING),
+        'shop_samples_qty_multiple_min' => (!is_null(_A_::$app->keyStorage()->shop_samples_qty_multiple_min) ? _A_::$app->keyStorage()->shop_samples_qty_multiple_min : SAMPLES_QTY_MULTIPLE_MIN),
+        'shop_samples_qty_multiple_max' => (!is_null(_A_::$app->keyStorage()->shop_samples_qty_multiple_max) ? _A_::$app->keyStorage()->shop_samples_qty_multiple_max : SAMPLES_QTY_MULTIPLE_MAX),
+        'shop_samples_price_single' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_single) ? _A_::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE),
+        'shop_samples_price_multiple' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_multiple) ? _A_::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE),
+        'shop_samples_price_additional' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_additional) ? _A_::$app->keyStorage()->shop_samples_price_additional : SAMPLES_PRICE_ADDITIONAL),
+        'shop_samples_price_with_products' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_with_products) ? _A_::$app->keyStorage()->shop_samples_price_with_products : SAMPLES_PRICE_WITH_PRODUCTS),
+        'shop_yrds_for_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_yrds_for_multiplier) ? _A_::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER),
+
       ];
       return $data;
     }
 
     public static function save(&$data) {
       extract($data);
-      $discount_comment1 = mysql_real_escape_string($discount_comment1);
-      $discount_comment2 = mysql_real_escape_string($discount_comment2);
-      $discount_comment3 = mysql_real_escape_string($discount_comment3);
-      if(isset($sid)) {
-        $q = "UPDATE " . static::$table .
-          " SET" .
-          " coupon_code='$coupon_code'," .
-          " discount_amount='$discount_amount'," .
-          " discount_amount_type='$discount_amount_type'," .
-          " discount_type='$discount_type'," .
-          " user_type='$user_type'," .
-          " shipping_type='$shipping_type'," .
-          " product_type='$product_type'," .
-          " promotion_type='$promotion_type'," .
-          " required_amount='$required_amount'," .
-          " required_type='$required_type'," .
-          " allow_multiple='$allow_multiple'," .
-          " enabled='$enabled'," .
-          " countdown='$countdown'," .
-          " discount_comment1='$discount_comment1'," .
-          " discount_comment2='$discount_comment2'," .
-          " discount_comment3='$discount_comment3'," .
-          " date_start='$date_start'," .
-          " date_end='$date_end'" .
-          " WHERE sid ='$sid'";
-        $res = mysql_query($q);
-      } else {
-        $q = "INSERT INTO " . static::$table .
-          " SET" .
-          " coupon_code='$coupon_code'," .
-          " discount_amount='$discount_amount'," .
-          " discount_amount_type='$discount_amount_type'," .
-          " discount_type='$discount_type'," .
-          " user_type='$user_type'," .
-          " shipping_type='$shipping_type'," .
-          " product_type='$product_type'," .
-          " promotion_type='$promotion_type'," .
-          " required_amount='$required_amount'," .
-          " required_type='$required_type'," .
-          " allow_multiple='$allow_multiple'," .
-          " enabled='$enabled'," .
-          " countdown='$countdown'," .
-          " discount_comment1='$discount_comment1'," .
-          " discount_comment2='$discount_comment2'," .
-          " discount_comment3='$discount_comment3'," .
-          " date_start='$date_start'," .
-          " date_end='$date_end'";
+      _A_::$app->keyStorage()->system_enable_sef = $system_enable_sef;
+      _A_::$app->keyStorage()->system_demo = $system_demo;
+      _A_::$app->keyStorage()->system_captcha_time = $system_captcha_time;
+      _A_::$app->keyStorage()->system_hide_all_regular_prices = $system_hide_all_regular_prices;
+      _A_::$app->keyStorage()->system_filter_amount = $system_filter_amount;
+      _A_::$app->keyStorage()->system_allow_sample_express_shipping = $system_allow_sample_express_shipping;
+      _A_::$app->keyStorage()->system_csv_use_gz = $system_csv_use_gz;
+      _A_::$app->keyStorage()->paypal_business = $paypal_business;
+      _A_::$app->keyStorage()->paypal_url = $paypal_url;
+      _A_::$app->keyStorage()->system_csv_fields = $system_csv_fields;
+      _A_::$app->keyStorage()->system_info_email = $system_info_email;
 
-        $res = mysql_query($q);
-        if($res) $sid = mysql_insert_id();
-      }
-      if($res) {
-        $res = mysql_query("DELETE FROM fabrix_specials_users WHERE sid ='$sid'");
-        if($res && ($user_type == 4)) {
-          foreach($users as $aid) {
-            $res = mysql_query("INSERT INTO  fabrix_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
-            if(!$res) break;
-          }
-        }
-      }
-      if($res) {
-        $res = mysql_query("DELETE FROM fabrix_specials_products WHERE sid='$sid'");
-        if($res && isset($product_type) && ($product_type > 1)) {
-          foreach($filter_products as $pid) {
-            $res = mysql_query("INSERT INTO  fabrix_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
-            if(!$res) break;
-          }
-        }
-      }
-      if(!$res) throw new Exception(mysql_error());
-      return $sid;
+      _A_::$app->keyStorage()->shop_price_groups_count = $shop_price_groups_count;
+      _A_::$app->keyStorage()->shop_rate_handling = $shop_rate_handling;
+      _A_::$app->keyStorage()->shop_rate_roll = $shop_rate_roll;
+
+      _A_::$app->keyStorage()->shop_rate_express_light = $shop_rate_express_light;
+      _A_::$app->keyStorage()->shop_rate_express_light_multiplier = $shop_rate_express_light_multiplier;
+      _A_::$app->keyStorage()->shop_rate_express_medium = $shop_rate_express_medium;
+      _A_::$app->keyStorage()->shop_rate_express_medium_multiplier = $shop_rate_express_medium_multiplier;
+      _A_::$app->keyStorage()->shop_rate_express_heavy = $shop_rate_express_heavy;
+      _A_::$app->keyStorage()->shop_rate_express_heavy_multiplier = $shop_rate_express_heavy_multiplier;
+      _A_::$app->keyStorage()->shop_rate_ground_light = $shop_rate_ground_light;
+      _A_::$app->keyStorage()->shop_rate_ground_light_multiplier = $shop_rate_ground_light_multiplier;
+      _A_::$app->keyStorage()->shop_rate_ground_medium = $shop_rate_ground_medium;
+      _A_::$app->keyStorage()->shop_rate_ground_medium_multiplier = $shop_rate_ground_medium_multiplier;
+      _A_::$app->keyStorage()->shop_rate_ground_heavy = $shop_rate_ground_heavy;
+      _A_::$app->keyStorage()->shop_rate_ground_heavy_multiplier = $shop_rate_ground_heavy_multiplier;
+
+      _A_::$app->keyStorage()->shop_samples_price_express_shipping = $shop_samples_price_express_shipping;
+      _A_::$app->keyStorage()->shop_samples_qty_multiple_min = $shop_samples_qty_multiple_min;
+      _A_::$app->keyStorage()->shop_samples_qty_multiple_max = $shop_samples_qty_multiple_max;
+      _A_::$app->keyStorage()->shop_samples_price_single = $shop_samples_price_single;
+      _A_::$app->keyStorage()->shop_samples_price_multiple = $shop_samples_price_multiple;
+      _A_::$app->keyStorage()->shop_samples_price_additional = $shop_samples_price_additional;
+      _A_::$app->keyStorage()->shop_samples_price_with_products = $shop_samples_price_with_products;
+      _A_::$app->keyStorage()->shop_yrds_for_multiplier = $shop_yrds_for_multiplier;
+
+      return null;
     }
 
   }

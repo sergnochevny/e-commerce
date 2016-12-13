@@ -502,10 +502,13 @@
       //discount_type = 1 - total wo shipping	- default
       //discount_type = 2 - shipping
       //discount_type = 3 - total w/ shipping
+
+      $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+
       if($iDisType == 2) {
         $rRet = self::doDiscount($rShip, $rDis, $iDisAmntType);
       } else if($iDisType == 3) {
-        $rRet = self::doDiscount(($rTtl + $rShip + RATE_HANDLING), $rDis, $iDisAmntType);
+        $rRet = self::doDiscount(($rTtl + $rShip + $rate_handling), $rDis, $iDisAmntType);
       } else {
 
         if(($discount_category != DISCOUNT_CATEGORY_COUPON) && ($iDisAmntType == 1)) {    #$ amount

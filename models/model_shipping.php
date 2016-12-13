@@ -62,54 +62,66 @@ Class Model_Shipping extends Model_Base
             if ($ship == "1") {
                 switch ($iWid) {
                     case LIGHT_FABRIC:
-                        $iTtl = RATE_EXPRESS_LIGHT;
+                        $iTtl = (!is_null(_A_::$app->keyStorage()->shop_rate_express_light) ? _A_::$app->keyStorage()->shop_rate_express_light : RATE_EXPRESS_LIGHT);
                         break;
                     case HEAVY_FABRIC:
-                        $iTtl = RATE_EXPRESS_HEAVY;
+                        $iTtl = (!is_null(_A_::$app->keyStorage()->shop_rate_express_heavy) ? _A_::$app->keyStorage()->shop_rate_express_heavy : RATE_EXPRESS_HEAVY);
                         break;
                     case MEDIUM_FABRIC:
                     default:
-                        $iTtl = RATE_EXPRESS_MEDIUM;
+                        $iTtl = (!is_null(_A_::$app->keyStorage()->shop_rate_express_medium) ? _A_::$app->keyStorage()->shop_shop_rate_express_medium : RATE_EXPRESS_MEDIUM);
                         break;
                 }
                 if ($iQty > 2.0) {
                     switch ($iWid) {
                         case LIGHT_FABRIC:
-                            $iTtl += ($iQty - YRDS_FOR_MULTIPLIER) * RATE_EXPRESS_LIGHT_MULTIPLIER;
+                            $iTtl += ($iQty -
+                                (!is_null(_A_::$app->keyStorage()->shop_yrds_for_multiplier) ? _A_::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER)) *
+                              (!is_null(_A_::$app->keyStorage()->shop_rate_express_light_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_light_multiplier : RATE_EXPRESS_LIGHT_MULTIPLIER);
                             break;
                         case HEAVY_FABRIC:
-                            $iTtl += ($iQty - YRDS_FOR_MULTIPLIER) * RATE_EXPRESS_HEAVY_MULTIPLIER;
+                            $iTtl += ($iQty -
+                                (!is_null(_A_::$app->keyStorage()->shop_yrds_for_multiplier) ? _A_::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER)) *
+                              (!is_null(_A_::$app->keyStorage()->shop_rate_express_heavy_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_heavy_multiplier : RATE_EXPRESS_HEAVY_MULTIPLIER);
                             break;
                         case MEDIUM_FABRIC:
                         default:
-                            $iTtl += ($iQty - YRDS_FOR_MULTIPLIER) * RATE_EXPRESS_MEDIUM_MULTIPLIER;
+                            $iTtl += ($iQty -
+                                (!is_null(_A_::$app->keyStorage()->shop_yrds_for_multiplier) ? _A_::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER)) *
+                              (!is_null(_A_::$app->keyStorage()->shop_rate_express_medium_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_medium_multiplier : RATE_EXPRESS_MEDIUM_MULTIPLIER);
                             break;
                     }
                 }
             } else if ($ship == "3") {    #ship = 3 is ground shipping
                 switch ($iWid) {
                     case LIGHT_FABRIC:
-                        $iTtl = RATE_GROUND_LIGHT;
+                        $iTtl = (!is_null(_A_::$app->keyStorage()->shop_rate_ground_light) ? _A_::$app->keyStorage()->shop_rate_ground_light : RATE_GROUND_LIGHT);
                         break;
                     case HEAVY_FABRIC:
-                        $iTtl = RATE_GROUND_HEAVY;
+                        $iTtl = (!is_null(_A_::$app->keyStorage()->shop_rate_ground_heavy) ? _A_::$app->keyStorage()->shop_rate_ground_heavy : RATE_GROUND_HEAVY);
                         break;
                     case MEDIUM_FABRIC:
                     default:
-                        $iTtl = RATE_GROUND_MEDIUM;
+                        $iTtl = (!is_null(_A_::$app->keyStorage()->shop_rate_ground_medium) ? _A_::$app->keyStorage()->shop_rate_ground_medium : RATE_GROUND_MEDIUM);
                         break;
                 }
                 if ($iQty > 2.0) {
                     switch ($iWid) {
                         case LIGHT_FABRIC:
-                            $iTtl += ($iQty - YRDS_FOR_MULTIPLIER) * RATE_GROUND_LIGHT_MULTIPLIER;
+                            $iTtl += ($iQty -
+                                (!is_null(_A_::$app->keyStorage()->shop_yrds_for_multiplier) ? _A_::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER)) *
+                              (!is_null(_A_::$app->keyStorage()->shop_rate_ground_light_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_light_multiplier : RATE_GROUND_LIGHT_MULTIPLIER);
                             break;
                         case HEAVY_FABRIC:
-                            $iTtl += ($iQty - YRDS_FOR_MULTIPLIER) * RATE_GROUND_HEAVY_MULTIPLIER;
+                            $iTtl += ($iQty -
+                                (!is_null(_A_::$app->keyStorage()->shop_yrds_for_multiplier) ? _A_::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER)) *
+                              (!is_null(_A_::$app->keyStorage()->shop_rate_ground_heavy_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_heavy_multiplier : RATE_GROUND_HEAVY_MULTIPLIER);
                             break;
                         case MEDIUM_FABRIC:
                         default:
-                            $iTtl += ($iQty - YRDS_FOR_MULTIPLIER) * RATE_GROUND_MEDIUM_MULTIPLIER;
+                            $iTtl += ($iQty -
+                                (!is_null(_A_::$app->keyStorage()->shop_yrds_for_multiplier) ? _A_::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER)) *
+                              (!is_null(_A_::$app->keyStorage()->shop_rate_ground_medium_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_medium_multiplier : RATE_GROUND_MEDIUM_MULTIPLIER);
                             break;
                     }
                 }
