@@ -2,69 +2,56 @@
 
   class Controller_Settings extends Controller_FormSimple {
 
+    private $csv_fields_avail = [
+      'aid', 'email', 'bill_firstname', 'bill_lastname', 'bill_organization', 'bill_address1',
+      'bill_address2', 'bill_province', 'bill_city', 'bill_country', 'bill_postal', 'bill_phone',
+      'bill_fax', 'bill_email', 'ship_firstname', 'ship_lastname', 'ship_organization', 'ship_address1',
+      'ship_address2', 'ship_city', 'ship_province', 'ship_country', 'ship_postal', 'ship_phone', 'ship_fax',
+      'ship_email', 'date_registered'
+    ];
     protected $form_title_edit = 'MODIFY SETTINGS';
 
     protected function load(&$data) {
-      if($this->scenario() !== 'short') {
-        $ship_as_billing = _A_::$app->post('ship_as_billing');
-        $data = [
-          'aid' => _A_::$app->get('aid'),
-          'email' => Model_Users::sanitize(_A_::$app->post('email')),
-          'bill_firstname' => Model_Users::sanitize(_A_::$app->post('bill_firstname')),
-          'bill_lastname' => Model_Users::sanitize(_A_::$app->post('bill_lastname')),
-          'bill_organization' => Model_Users::sanitize(_A_::$app->post('bill_organization')),
-          'bill_address1' => Model_Users::sanitize(_A_::$app->post('bill_address1')),
-          'bill_address2' => Model_Users::sanitize(_A_::$app->post('bill_address2')),
-          'bill_province' => Model_Users::sanitize(_A_::$app->post('bill_province')),
-          'bill_city' => Model_Users::sanitize(_A_::$app->post('bill_city')),
-          'bill_country' => Model_Users::sanitize(_A_::$app->post('bill_country')),
-          'bill_postal' => Model_Users::sanitize(_A_::$app->post('bill_postal')),
-          'bill_phone' => Model_Users::sanitize(_A_::$app->post('bill_phone')),
-          'bill_fax' => Model_Users::sanitize(_A_::$app->post('bill_fax')),
-          'bill_email' => Model_Users::sanitize(_A_::$app->post('bill_email')),
-          'ship_firstname' => Model_Users::sanitize(_A_::$app->post('ship_firstname')),
-          'ship_lastname' => Model_Users::sanitize(_A_::$app->post('ship_lastname')),
-          'ship_organization' => Model_Users::sanitize(_A_::$app->post('ship_organization')),
-          'ship_address1' => Model_Users::sanitize(_A_::$app->post('ship_address1')),
-          'ship_address2' => Model_Users::sanitize(_A_::$app->post('ship_address2')),
-          'ship_city' => Model_Users::sanitize(_A_::$app->post('ship_city')),
-          'ship_province' => Model_Users::sanitize(_A_::$app->post('ship_province')),
-          'ship_country' => Model_Users::sanitize(_A_::$app->post('ship_country')),
-          'ship_postal' => Model_Users::sanitize(_A_::$app->post('ship_postal')),
-          'ship_phone' => Model_Users::sanitize(_A_::$app->post('ship_phone')),
-          'ship_fax' => Model_Users::sanitize(_A_::$app->post('ship_fax')),
-          'ship_email' => Model_Users::sanitize(_A_::$app->post('ship_email')),
-        ];
+      $data = [
+        'system_enable_sef' => (!is_null(_A_::$app->keyStorage()->system_enable_sef) ? _A_::$app->keyStorage()->system_enable_sef : ENABLE_SEF),
+        'system_demo' => (!is_null(_A_::$app->keyStorage()->system_demo) ? _A_::$app->keyStorage()->system_demo : DEMO),
+        'system_captcha_time' => (!is_null(_A_::$app->keyStorage()->system_captcha_time) ? _A_::$app->keyStorage()->system_captcha_time : CAPTCHA_RELEVANT),
+        'system_hide_all_regular_prices' => (!is_null(_A_::$app->keyStorage()->system_hide_all_regular_prices) ? _A_::$app->keyStorage()->system_hide_all_regular_prices : HIDE_REGULAR_PRICE),
+        'system_filter_amount' => (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT),
+        'system_allow_sample_express_shipping' => (!is_null(_A_::$app->keyStorage()->system_allow_sample_express_shipping) ? _A_::$app->keyStorage()->system_allow_sample_express_shipping : SAMPLE_EXPRESS_SHIPPING),
+        'system_csv_use_gz' => (!is_null(_A_::$app->keyStorage()->system_csv_use_gz) ? _A_::$app->keyStorage()->system_csv_use_gz : CSV_USE_GZ),
+        'paypal_business' => (!is_null(_A_::$app->keyStorage()->paypal_business) ? _A_::$app->keyStorage()->paypal_business : ''),
+        'paypal_url' => (!is_null(_A_::$app->keyStorage()->paypal_url) ? _A_::$app->keyStorage()->paypal_url : ''),
+        'system_csv_fields' => (!is_null(_A_::$app->keyStorage()->system_csv_fields) ? _A_::$app->keyStorage()->system_csv_fields : CSV_FIELDS),
+        'system_info_email' => (!is_null(_A_::$app->keyStorage()->system_info_email) ? _A_::$app->keyStorage()->system_info_email : ''),
+        'system_csv_fields_dlm' => (!is_null(_A_::$app->keyStorage()->system_csv_fields_dlm) ? _A_::$app->keyStorage()->system_csv_fields_dlm : ','),
 
-        $data['create_password'] = Model_User::sanitize(!is_null(_A_::$app->post('create_password')) ? _A_::$app->post('create_password') : '');
-        $data['confirm_password'] = Model_User::sanitize(!is_null(_A_::$app->post('confirm_password')) ? _A_::$app->post('confirm_password') : '');
-        $data['ship_as_billing'] = $ship_as_billing;
-        if($ship_as_billing == 1) {
-          $data['ship_firstname'] = $data['bill_firstname'];
-          $data['ship_lastname'] = $data['bill_lastname'];
-          $data['ship_organization'] = $data['bill_organization'];
-          $data['ship_address1'] = $data['bill_address1'];
-          $data['ship_address2'] = $data['bill_address2'];
-          $data['ship_city'] = $data['bill_city'];
-          $data['ship_province'] = $data['bill_province'];
-          $data['ship_country'] = $data['bill_country'];
-          $data['ship_postal'] = $data['bill_postal'];
-          $data['ship_phone'] = $data['bill_phone'];
-          $data['ship_fax'] = $data['bill_fax'];
-          $data['ship_email'] = $data['bill_email'];
-        }
-      } else {
-        $data = [
-          'aid' => _A_::$app->get('aid'),
-          'email' => Model_Users::sanitize(_A_::$app->post('email')),
-          'bill_firstname' => Model_Users::sanitize(_A_::$app->post('bill_firstname')),
-          'bill_lastname' => Model_Users::sanitize(_A_::$app->post('bill_lastname')),
-        ];
+        'shop_price_groups_count' => (!is_null(_A_::$app->keyStorage()->shop_price_groups_count) ? _A_::$app->keyStorage()->shop_price_groups_count : PRICE_GROUPS_COUNT),
+        'shop_rate_handling' => (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING),
+        'shop_rate_roll' => (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL),
 
-        $data['create_password'] = Model_User::sanitize(!is_null(_A_::$app->post('create_password')) ? _A_::$app->post('create_password') : '');
-        $data['confirm_password'] = Model_User::sanitize(!is_null(_A_::$app->post('confirm_password')) ? _A_::$app->post('confirm_password') : '');
-        $data['captcha'] = Model_User::sanitize(!is_null(_A_::$app->post('captcha')) ? _A_::$app->post('captcha') : '');
-      }
+        'shop_rate_express_light' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_light) ? _A_::$app->keyStorage()->shop_rate_express_light : RATE_EXPRESS_LIGHT),
+        'shop_rate_express_light_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_light_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_light_multiplier : RATE_EXPRESS_LIGHT_MULTIPLIER),
+        'shop_rate_express_medium' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_medium) ? _A_::$app->keyStorage()->shop_shop_rate_express_medium : RATE_EXPRESS_MEDIUM),
+        'shop_rate_express_medium_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_medium_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_medium_multiplier : RATE_EXPRESS_MEDIUM_MULTIPLIER),
+        'shop_rate_express_heavy' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_heavy) ? _A_::$app->keyStorage()->shop_rate_express_heavy : RATE_EXPRESS_HEAVY),
+        'shop_rate_express_heavy_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_heavy_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_heavy_multiplier : RATE_EXPRESS_HEAVY_MULTIPLIER),
+        'shop_rate_ground_light' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_light) ? _A_::$app->keyStorage()->shop_rate_ground_light : RATE_GROUND_LIGHT),
+        'shop_rate_ground_light_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_light_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_light_multiplier : RATE_GROUND_LIGHT_MULTIPLIER),
+        'shop_rate_ground_medium' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_medium) ? _A_::$app->keyStorage()->shop_rate_ground_medium : RATE_GROUND_MEDIUM),
+        'shop_rate_ground_medium_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_medium_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_medium_multiplier : RATE_GROUND_MEDIUM_MULTIPLIER),
+        'shop_rate_ground_heavy' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_heavy) ? _A_::$app->keyStorage()->shop_rate_ground_heavy : RATE_GROUND_HEAVY),
+        'shop_rate_ground_heavy_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_heavy_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_heavy_multiplier : RATE_GROUND_HEAVY_MULTIPLIER),
+
+        'shop_samples_price_express_shipping' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING),
+        'shop_samples_qty_multiple_min' => (!is_null(_A_::$app->keyStorage()->shop_samples_qty_multiple_min) ? _A_::$app->keyStorage()->shop_samples_qty_multiple_min : SAMPLES_QTY_MULTIPLE_MIN),
+        'shop_samples_qty_multiple_max' => (!is_null(_A_::$app->keyStorage()->shop_samples_qty_multiple_max) ? _A_::$app->keyStorage()->shop_samples_qty_multiple_max : SAMPLES_QTY_MULTIPLE_MAX),
+        'shop_samples_price_single' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_single) ? _A_::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE),
+        'shop_samples_price_multiple' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_multiple) ? _A_::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE),
+        'shop_samples_price_additional' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_additional) ? _A_::$app->keyStorage()->shop_samples_price_additional : SAMPLES_PRICE_ADDITIONAL),
+        'shop_samples_price_with_products' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_with_products) ? _A_::$app->keyStorage()->shop_samples_price_with_products : SAMPLES_PRICE_WITH_PRODUCTS),
+        'shop_yrds_for_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_yrds_for_multiplier) ? _A_::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER),
+      ];
     }
 
     protected function validate(&$data, &$error) {
@@ -177,6 +164,16 @@
         }
       }
       return false;
+    }
+
+    protected function before_form_layout(&$data = null) {
+      $csv_fields_dlm = (!is_null(_A_::$app->keyStorage()->system_csv_fields_dlm) ? _A_::$app->keyStorage()->system_csv_fields_dlm : ',');
+      $data['system_csv_fields'] = explode($csv_fields_dlm, $data['system_csv_fields']);
+      $data['system_csv_fields_avail'] = array_diff($this->csv_fields_avail, $data['system_csv_fields']);
+    }
+
+    protected function before_save(&$data) {
+      $data['system_csv_fields'] = implode($data['system_csv_fields_dlm'], $data['system_csv_fields']);
     }
 
     public function view() { }

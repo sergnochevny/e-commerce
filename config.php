@@ -60,7 +60,7 @@
       'HIDE_REGULAR_PRICE' => 0,
       'SAMPLE_EXPRESS_SHIPPING' => 1,
       'CSV_USE_GZ' => 0,
-      'CSV_FIELDS' => 'email;bill_firstname;bill_lastname',
+      'CSV_FIELDS' => 'email,bill_firstname,bill_lastname',
       'CAPTCHA_RELEVANT' => 300,
 
       'PRICE_GROUPS_COUNT' => 24,

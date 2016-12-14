@@ -16,8 +16,8 @@
 
   $.change_button_text();
 
-    var tabContainers = $('div.tabs div[data-role=tab]');
-    tabContainers.hide().filter(':first').show();
+  var tabContainers = $('div.tabs div[data-role=tab]');
+  tabContainers.hide().filter(':first').show();
 
   $(document).on('click', 'div.tabs ul.tabNavigation a',
     function() {

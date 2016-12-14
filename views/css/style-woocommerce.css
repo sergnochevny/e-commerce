@@ -168,18 +168,17 @@ span#b_in_product {
     padding: 5px 10px 5px 20px !important;
 }
 
-.back_button{
+.back_button {
     padding-left: 25px;
 }
 
-.back_button .fa{
+.back_button .fa {
     font-size: 1.4em;
     font-weight: bold;
     left: 10px;
     position: absolute;
     top: 9px;
 }
-
 
 #apply_coupon {
     height: 36px;
@@ -503,6 +502,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     text-transform: uppercase;
     font-size: 2.195em;
 }
+
 .main-content-shop .page-title.sb {
     margin: 0 0 50px;
 }
@@ -521,7 +521,8 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     padding-bottom: 1px;
     border-bottom: 1px solid #ddd;
     font-weight: bold;
-    text-shadow: 2px 1px 0 #fff;}
+    text-shadow: 2px 1px 0 #fff;
+}
 
 @media (max-width: 580px) {
     .woocommerce-result-count, .woocommerce-result-count {
@@ -2119,6 +2120,7 @@ ul.product_list_widget li dl dd p {
         border-radius: 4px;
         background: rgba(255, 255, 255, 0.5);
     }
+
     .data-view {
         box-shadow: 0 0 15px #999;
         border-radius: 4px;
@@ -2151,12 +2153,13 @@ ul.product_list_widget li dl dd p {
     border-radius: 0 0 4px 4px;
     -moz-border-radius: 0 0 4px 4px;
     -webkit-border-radius: 0 0 4px 4px;
-    border:  none;
+    border: none;
 }
 
 .cart-data-view .table-list-header {
     background-color: rgba(221, 221, 221, 0.5);
 }
+
 .cart-data-view .table-list-row {
     border-bottom: 2px solid #ddd;
 }
@@ -2165,9 +2168,10 @@ ul.product_list_widget li dl dd p {
     border: none;
 }
 
-.search-result-container{
+.search-result-container {
     margin-top: 20px;
 }
+
 @media (max-width: 768px) {
     .table-list-row:last-child {
         border-radius: 4px;
@@ -2183,7 +2187,7 @@ ul.product_list_widget li dl dd p {
         border: none;
     }
 
-    .cart-data-view .table-list-row{
+    .cart-data-view .table-list-row {
         margin-bottom: 15px;
         box-shadow: 0 0 15px #999;
         border-radius: 4px;
@@ -2191,21 +2195,21 @@ ul.product_list_widget li dl dd p {
         border: none;
     }
 
-    .cart-data-view .table-list-row.sm-half-xs-full .table-list-row-item{
+    .cart-data-view .table-list-row.sm-half-xs-full .table-list-row-item {
         margin-bottom: 15px;
         box-shadow: 0 0 15px #999;
         border-radius: 4px;
         background: rgba(255, 255, 255, 0.5);
         border: none;
     }
-    .cart-data-view .table-list-row.sm-half-xs-full{
+
+    .cart-data-view .table-list-row.sm-half-xs-full {
         margin-bottom: 0;
         box-shadow: none;
         border-radius: 0;
         background: none;
         border: none;
     }
-
 
     .data-view > .table-list-row .table-list-row-item {
         font-size: 1.15em;
@@ -2348,6 +2352,17 @@ ul.product_list_widget li dl dd p {
     margin-right: 0;
 }
 
+div.box {
+    border-radius: 4px;
+    background: rgba(254, 254, 254, 0.5);
+    box-shadow: 0 0 10px #999;
+    width: 100%;
+    display: block;
+    float: left;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
 div.tabs {
     border-radius: 4px;
     background: rgba(254, 254, 254, 0.5);
@@ -2392,10 +2407,93 @@ ul.tabNavigation li a:focus {
     outline: 0;
 }
 
-div.tabs div {
-    padding: 5px;
+div.tabs div h3 {
+    margin-top: 0;
+    margin-bottom: 30px;
 }
 
-div.tabs div h3 {
-    margin-top: -15px;
+ul.sortable {
+    list-style-type: none;
+    border-radius: 4px;
+    border: 1px solid #999999;
+    margin: 0;
+    min-height: 68px;
+    padding: 0;
+}
+
+ul.sortable li{
+    border-radius: 4px;
+    box-shadow: 0 0 10px #999;
+    background: rgba(254, 254, 254, 0.5);
+    margin: 10px;
+    min-height: 10px;
+    padding: 10px;
+}
+ul.sortable li.ui-selected{
+    background: rgb(183, 183, 183);
+    color: white;
+    box-shadow: none;
+}
+ul.sortable li.ui-selected label{
+    color: white;
+}
+.sortable_item, .sortable_item label{
+    cursor:-webkit-grab;
+}
+.sortable_item .dd-sortable{
+    font-size: 0.9em;
+    margin: 0;
+    vertical-align: middle;
+}
+.sortable_item .dd-sortable:hover, .sortable_item .dd-action:hover{
+    color: #667700;
+    text-shadow: 1px 1px 0 #999;
+}
+.selected_fields .fa-long-arrow-left{
+    display:none;
+}
+.available_fields .fa-arrows-v{
+    display:none;
+}
+.selected_fields .fa-plus{
+    display:none;
+}
+.available_fields .fa-minus{
+    display:none;
+}
+.sortable_item .dd-action{
+    font-size: 0.9em;
+    cursor:pointer;
+}
+.sortable_item label{
+    width: 78%;
+    font-weight: bold;
+}
+.sortable_item .field_name{
+    font-size: 14px;
+    line-height: 1.6em;
+}
+
+.sortable_item .move-arrows{
+    cursor: pointer;
+}
+.sortable_item .move-arrows i{
+    display: block;
+}
+.sortable_item:last-of-type .move-arrows i:last-child, .sortable_item:first-of-type .move-arrows i:first-child{
+    display: none;
+}
+
+.sortable_item .move-arrows i:hover{
+    color: #667700;
+    text-shadow: 1px 1px 0 #999;
+}
+
+@media (min-width: 768px){
+    .col-sm-halfoffset-right{
+        padding-right: 7px;
+    }
+    .col-sm-halfoffset-left{
+        padding-left: 7px;
+    }
 }

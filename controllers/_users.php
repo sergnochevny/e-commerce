@@ -36,8 +36,9 @@
       $this->main->is_admin_authorized();
       $this->build_order($sort);
       $filter = null;
+      $csv_fields_dlm = (!is_null(_A_::$app->keyStorage()->system_csv_fields_dlm) ? _A_::$app->keyStorage()->system_csv_fields_dlm : ',');
       $csv_fields = (!is_null(_A_::$app->keyStorage()->system_csv_fields) ? _A_::$app->keyStorage()->system_csv_fields : CSV_FIELDS);
-      if(!empty($csv_fields)) $csv_fields = explode(';', $csv_fields);
+      if(!empty($csv_fields)) $csv_fields = explode($csv_fields_dlm, $csv_fields);
       if(!is_array($csv_fields) || (is_array($csv_fields) && (count($csv_fields) <= 0))) $csv_fields = ['email', 'bill_firstname', 'bill_lastname'];
       $page = 1;
       $per_page = 1000;
@@ -58,7 +59,7 @@
         header('Pragma: public');
         $filename = sys_get_temp_dir() . DS . 'gz_' . uniqid();
         $csv = gzopen($filename, 'w');
-        gzwrite($csv, implode(',', $csv_fields) . "\r\n");
+        gzwrite($csv, implode($csv_fields_dlm, $csv_fields) . "\r\n");
         while($page <= $last_page) {
           $start = (($page - 1) * $per_page);
           $res_count_rows = 0;
@@ -68,7 +69,7 @@
               $csv_row = '';
               foreach($csv_fields as $field) {
                 if(isset($row[$field])) {
-                  $csv_row .= str_replace(',', '_', $row[$field]) . ',';
+                  $csv_row .= str_replace($csv_fields_dlm, '_', $row[$field]) . $csv_fields_dlm;
                 }
               }
               $csv_row = substr($csv_row, 0, -1) . "\r\n";
@@ -92,7 +93,7 @@
         header('Cache-Control: must-revalidate');
         header('Expires: 0');
         header('Pragma: public');
-        echo implode(',', $csv_fields) . "\r\n";
+        echo implode($csv_fields_dlm, $csv_fields) . "\r\n";
         while($page <= $last_page) {
           $start = (($page - 1) * $per_page);
           $res_count_rows = 0;
@@ -102,7 +103,7 @@
               $csv_row = '';
               foreach($csv_fields as $field) {
                 if(isset($row[$field])) {
-                  $csv_row .= str_replace(',', '_', $row[$field]) . ',';
+                  $csv_row .= str_replace($csv_fields_dlm, '_', $row[$field]) . $csv_fields_dlm;
                 }
               }
               $csv_row = rtrim($csv_row, ',') . "\r\n";
