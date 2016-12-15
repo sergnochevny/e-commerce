@@ -30,11 +30,11 @@
           _A_::$app->server('REQUEST_URI', $request_uri);
           _A_::$app->setGet($query);
         }
-        if(isset($query['redirect'])) {
-          $redirect_url = $query['redirect'];
-          unset($query['redirect']);
-          $this->redirect_301($this->UrlTo($redirect_url, $query));
-        }
+      }
+      if(isset($query['redirect'])) {
+        $redirect_url = $query['redirect'];
+        unset($query['redirect']);
+        $this->redirect_301($this->UrlTo($redirect_url, $query));
       }
     }
 
@@ -83,15 +83,10 @@
     }
 
     private function setBaseUrl() {
-      $end_uri = explode(DS, _A_::$app->server('REQUEST_URI'));
-      $end_get = explode(DS, _A_::$app->get('route'));
-      array_pop($end_uri);
-      $end_uri = array_filter(array_diff($end_uri, $end_get));
-      if($this->action == 'post')
-        array_pop($end_uri);
       $this->base_url = strtolower(explode(DS, _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://" . _A_::$app->server('SERVER_NAME') . (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT'));
-      if(count($end_uri))
-        $this->base_url .= DS . implode(DS, $end_uri);
+      $this->base_url = trim($this->base_url,'/\\');
+      if(strlen(trim(dirname(_A_::$app->server('SCRIPT_NAME')),'/\\')))
+        $this->base_url .= DS . trim(dirname(_A_::$app->server('SCRIPT_NAME')),'/\\');
       define('BASE_URL', $this->base_url);
     }
 
@@ -180,6 +175,7 @@
         define('HTTP_URL_STRIP_ALL', 1024);            // Strip anything but scheme and host
       }
 
+      $this->setBaseUrl();
       $this->parse_request_url();
       $this->route = (empty(_A_::$app->get('route'))) ? '' : _A_::$app->get('route');
       if(empty($this->route))
@@ -193,7 +189,6 @@
 
       $file = null;
       $this->getController();
-      $this->setBaseUrl();
       try {
         $class = 'Controller_' . $this->controller;
         _A_::$app->registry()->set('controller', $this->controller);
