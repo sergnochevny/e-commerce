@@ -861,9 +861,9 @@ a img.aligncenter {
 }
 
 .alert-success {
-    background-color: #78a955;
+    background-color: rgba(120, 169, 85, 0.9);
     border: 0;
-    border-top: 2px solid #618a45;
+    border-top: 2px solid rgba(97, 138, 69, 0.9);
     color: #FFF;
 }
 

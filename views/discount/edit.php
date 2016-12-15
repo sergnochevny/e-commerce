@@ -43,7 +43,7 @@
   </div>
 
 </div>
-</div>
+
 <div id="promotion" class="overlay"></div>
 <div class="popup" style="z-index: 99999999; font-size: 12px; color: black; max-width: 700px;">
   <h2>promotion</h2>

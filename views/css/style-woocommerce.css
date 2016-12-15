@@ -238,7 +238,7 @@ span#b_in_product {
 
 .form-row label {
     color: #222222;
-    font-weight: normal;
+    font-weight: bold;
 }
 
 .ui-input-text {
@@ -2367,7 +2367,21 @@ div.tabs {
     border-radius: 4px;
     background: rgba(254, 254, 254, 0.5);
     box-shadow: 0 0 10px #999;
+    padding: 25px 0 0 0;
+}
+
+div.tabs_content {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top: 2px solid #ddd;
+    background: rgba(254, 254, 254, 0.7);
     padding: 15px;
+    margin-top: 5px;
+}
+
+div.tabs li {
+    z-index: 10;
+    position: relative;
 }
 
 div.container {
@@ -2377,7 +2391,7 @@ div.container {
 
 ul.tabNavigation {
     list-style: none;
-    margin: 0;
+    margin: 0 15px 0 15px;
     padding: 0;
 }
 
@@ -2386,21 +2400,37 @@ ul.tabNavigation li {
 }
 
 ul.tabNavigation li a {
-    padding: 3px 9px;
-    background-color: #666;
-    color: #000;
+    color: #666;
     text-decoration: none;
 }
 
-ul.tabNavigation li a.selected,
-ul.tabNavigation li a.selected:hover {
-    background: #FFF;
-    color: #000;
+ul.tabNavigation li {
+    padding: 10px 10px 5px 10px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top: 2px solid #ddd;
+    border-left: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+}
+ul.tabNavigation li.selected {
+    border-bottom: 2px solid rgba(254,254,254,0.95);
+    z-index: 10;
+    position: relative;
+    background: rgba(254, 254,254, 0.7);
+}
+
+
+ul.tabNavigation li.selected a,
+ul.tabNavigation li.selected a:hover {
+    color: #667700;
+    text-shadow: 1px 1px 0 #ddd;
+    font-weight: bold;
 }
 
 ul.tabNavigation li a:hover {
-    background: #ccc;
     color: #000;
+    text-shadow: 1px 1px 0 #999;
+    font-weight: bold;
 }
 
 ul.tabNavigation li a:focus {
@@ -2421,7 +2451,7 @@ ul.sortable {
     padding: 0;
 }
 
-ul.sortable li{
+ul.sortable li {
     border-radius: 4px;
     box-shadow: 0 0 10px #999;
     background: rgba(254, 254, 254, 0.5);
@@ -2429,71 +2459,99 @@ ul.sortable li{
     min-height: 10px;
     padding: 10px;
 }
-ul.sortable li.ui-selected{
+
+ul.sortable li.ui-selected {
     background: rgb(183, 183, 183);
     color: white;
     box-shadow: none;
 }
-ul.sortable li.ui-selected label{
+
+ul.sortable li.ui-selected label {
     color: white;
 }
-.sortable_item, .sortable_item label{
-    cursor:-webkit-grab;
+
+.sortable_item, .sortable_item label {
+    cursor: -webkit-grab;
 }
-.sortable_item .dd-sortable{
+
+.sortable_item .dd-sortable {
     font-size: 0.9em;
     margin: 0;
     vertical-align: middle;
 }
-.sortable_item .dd-sortable:hover, .sortable_item .dd-action:hover{
+
+.sortable_item .dd-sortable:hover, .sortable_item .dd-action:hover {
     color: #667700;
     text-shadow: 1px 1px 0 #999;
 }
-.selected_fields .fa-long-arrow-left{
-    display:none;
+
+.selected_fields .fa-long-arrow-left {
+    display: none;
 }
-.available_fields .fa-arrows-v{
-    display:none;
+
+.available_fields .fa-arrows-v {
+    display: none;
 }
-.selected_fields .fa-plus{
-    display:none;
+
+.selected_fields .fa-plus {
+    display: none;
 }
-.available_fields .fa-minus{
-    display:none;
+
+.available_fields .fa-minus {
+    display: none;
 }
-.sortable_item .dd-action{
+
+.sortable_item .dd-action {
     font-size: 0.9em;
-    cursor:pointer;
+    cursor: pointer;
 }
-.sortable_item label{
+
+.sortable_item label {
     width: 78%;
     font-weight: bold;
 }
-.sortable_item .field_name{
+
+.sortable_item .field_name {
     font-size: 14px;
     line-height: 1.6em;
 }
 
-.sortable_item .move-arrows{
+.sortable_item .move-arrows {
     cursor: pointer;
 }
-.sortable_item .move-arrows i{
+
+.sortable_item .move-arrows i {
     display: block;
 }
-.sortable_item:last-of-type .move-arrows i:last-child, .sortable_item:first-of-type .move-arrows i:first-child{
+
+.sortable_item:last-of-type .move-arrows i:last-child, .sortable_item:first-of-type .move-arrows i:first-child {
     display: none;
 }
 
-.sortable_item .move-arrows i:hover{
+.sortable_item .move-arrows i:hover {
     color: #667700;
     text-shadow: 1px 1px 0 #999;
 }
 
-@media (min-width: 768px){
-    .col-sm-halfoffset-right{
+@media (min-width: 768px) {
+    .col-sm-halfoffset-right {
         padding-right: 7px;
     }
-    .col-sm-halfoffset-left{
+
+    .col-sm-halfoffset-left {
         padding-left: 7px;
     }
+}
+@media (min-width: 991px) {
+    .content{
+        min-height: 400px;
+    }
+}
+
+small.hint{
+    color: #999;
+    font-weight: normal;
+}
+i[data-promotion]{
+    cursor: pointer;
 }

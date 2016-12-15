@@ -76,14 +76,13 @@
     }
 
     public static function sanitize($data) {
-      if(function_exists('get_magic_quotes_gpc') == true && get_magic_quotes_gpc() == 1) {
-        $data = stripslashes($data);
+      if (is_string($data)){
+        if(function_exists('get_magic_quotes_gpc') == true && get_magic_quotes_gpc() == 1) {
+          $data = stripslashes($data);
+        }
+        $data = htmlspecialchars($data);
+        $data = trim($data);
       }
-//      $data = stripslashes($data);
-      $data = htmlspecialchars($data);
-      $data = trim($data);
       return $data;
     }
   }
-
-?>

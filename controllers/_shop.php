@@ -63,8 +63,8 @@
         $res['hidden']['c.id'] = $clr_id;
       }
       if(!is_null(_A_::$app->get('prc'))) {
-        $this->template->vars('prc_from', isset($filter['hidden']['a.priceyard']['from'])?$filter['hidden']['a.priceyard']['from']:null);
-        $this->template->vars('prc_to', isset($filter['hidden']['a.priceyard']['to'])?$filter['hidden']['a.priceyard']['to']:null);
+        $this->template->vars('prc_from', isset($filter['hidden']['a.priceyard']['from']) ? $filter['hidden']['a.priceyard']['from'] : null);
+        $this->template->vars('prc_to', isset($filter['hidden']['a.priceyard']['to']) ? $filter['hidden']['a.priceyard']['to'] : null);
       }
       if(isset($type)) {
         $filter['type'] = $type;
@@ -108,7 +108,7 @@
       } else {
         if(!empty(_A_::$app->get('cat'))) {
           $sort['fabrix_product_categories.display_order'] = 'asc';
-        } else  {
+        } else {
           $sort['b.displayorder'] = 'asc';
           $sort['fabrix_product_categories.display_order'] = 'asc';
         };
@@ -117,16 +117,21 @@
 
     protected function before_search_form_layout(&$search_data, $view = false) {
       $categories = [];
-      $rows = Model_Categories::get_list(0, 0, $res_count);
+      $filter = null;
+      $sort = ['a.cname' => 'asc'];
+      $rows = Model_Categories::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
       $patterns = [];
-      $rows = Model_Patterns::get_list(0, 0, $res_count);
+      $sort = ['a.pattern' => 'asc'];
+      $rows = Model_Patterns::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
       $colours = [];
-      $rows = Model_Colours::get_list(0, 0, $res_count);
+      $sort = ['a.colour' => 'asc'];
+      $rows = Model_Colours::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $colours[$row['id']] = $row['colour'];
       $manufacturers = [];
-      $rows = Model_Manufacturers::get_list(0, 0, $res_count);
+      $sort = ['a.manufacturer' => 'asc'];
+      $rows = Model_Manufacturers::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $manufacturers[$row['id']] = $row['manufacturer'];
 
       $search_data['categories'] = $categories;
@@ -191,6 +196,37 @@
       $rows = Model_Shop::get_widget_list_by_type($type, $start, $limit, $row_count);
       $this->template->vars('rows', $rows);
       $this->template->view_layout('widget/' . $layout);
+    }
+
+    protected function build_back_url(&$back_url = null, &$prms = null) {
+      $prms = null;
+      if((!empty(_A_::$app->get('cat')))) {
+        $prms['cat'] = _A_::$app->get('cat');
+      }
+      if((!empty(_A_::$app->get('mnf')))) {
+        $prms['mnf'] = _A_::$app->get('mnf');
+      }
+      if((!empty(_A_::$app->get('ptrn')))) {
+        $prms['ptrn'] = _A_::$app->get('ptrn');
+      }
+      if((!empty(_A_::$app->get('clr')))) {
+        $prms['clr'] = _A_::$app->get('clr');
+      }
+      if((!empty(_A_::$app->get('prc')))) {
+        $prms['prc'] = _A_::$app->get('prc');
+      }
+      if(!is_null(_A_::$app->get('back'))) {
+        $back = _A_::$app->get('back');
+        if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', '']))
+          $back_url = $back;
+        elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials'])) {
+          $back_url = 'shop' . DS . $back;
+        } else {
+          $back_url = base64_decode(urldecode($back));
+        }
+      } else {
+        $back_url = 'shop';
+      }
     }
 
     /**
@@ -280,21 +316,6 @@
       $this->main->view('shop');
     }
 
-    /**
-     * @export
-     */
-    public function bestsellers() {
-      $this->template->vars('cart_enable', '_');
-      $this->main->template->vars('page_title', 'Best Sellers');
-      ob_start();
-      $this->get_list_by_type('bestsellers', 360);
-      $list = ob_get_contents();
-      ob_end_clean();
-      if(_A_::$app->request_is_ajax()) exit($list);
-      $this->template->vars('list', $list);
-      $this->main->view('shop');
-    }
-
 //    public function modify_products_images() {
 //      $c_image = new Controller_Image();
 //      $per_page = 12;
@@ -321,6 +342,21 @@
     /**
      * @export
      */
+    public function bestsellers() {
+      $this->template->vars('cart_enable', '_');
+      $this->main->template->vars('page_title', 'Best Sellers');
+      ob_start();
+      $this->get_list_by_type('bestsellers', 360);
+      $list = ob_get_contents();
+      ob_end_clean();
+      if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('list', $list);
+      $this->main->view('shop');
+    }
+
+    /**
+     * @export
+     */
     public function widget() {
       switch(_A_::$app->get('type')) {
         case 'popular':
@@ -340,37 +376,6 @@
           break;
         case 'bsells_horiz':
           $this->widget_products('bestsellers', 0, 6, 'widget_bsells_products_horiz');
-      }
-    }
-
-    protected function build_back_url(&$back_url = null, &$prms = null) {
-      $prms = null;
-      if((!empty(_A_::$app->get('cat')))) {
-        $prms['cat'] = _A_::$app->get('cat');
-      }
-      if((!empty(_A_::$app->get('mnf')))) {
-        $prms['mnf'] = _A_::$app->get('mnf');
-      }
-      if((!empty(_A_::$app->get('ptrn')))) {
-        $prms['ptrn'] = _A_::$app->get('ptrn');
-      }
-      if((!empty(_A_::$app->get('clr')))) {
-        $prms['clr'] = _A_::$app->get('clr');
-      }
-      if((!empty(_A_::$app->get('prc')))) {
-        $prms['prc'] = _A_::$app->get('prc');
-      }
-      if(!is_null(_A_::$app->get('back'))) {
-        $back = _A_::$app->get('back');
-        if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', '']))
-          $back_url = $back;
-        elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials'])) {
-          $back_url = 'shop' . DS . $back;
-        } else {
-          $back_url = base64_decode(urldecode($back));
-        }
-      } else {
-        $back_url = 'shop';
       }
     }
 

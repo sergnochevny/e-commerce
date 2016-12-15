@@ -6,21 +6,6 @@
     protected $form_title_add = 'NEW PRODUCT';
     protected $form_title_edit = 'MODIFY PRODUCT';
 
-    protected function search_fields($view = false) {
-      return [
-        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
-        'a.piece', 'a.best', 'a.specials', 'b.cid',
-        'c.id', 'd.id', 'e.id'
-      ];
-    }
-
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['a.pid' => 'desc'];
-      }
-    }
-
     private function select_filter($method, $filters, $start = null, $search = null) {
       $selected = isset($filters) ? $filters : [];
       $filter = Model_Product::get_filter_data($method, $count, $start, $search);
@@ -137,12 +122,12 @@
 
     private function generate_related($data) {
       $pid = $data['pid'];
-      if(isset($pid)){
+      if(isset($pid)) {
         $filter['hidden']['view'] = true;
         $filter['hidden']['a.pid'] = $pid;
         $filter['hidden']['b.image1'] = 'null';
         $res_count_rows = 0;
-        $rows = Model_Related::get_list(0,0,$res_count_rows, $filter);
+        $rows = Model_Related::get_list(0, 0, $res_count_rows, $filter);
         $this->template->vars('rows', $rows);
         ob_start();
         $this->template->view_layout('related/rows');
@@ -150,6 +135,21 @@
         ob_end_clean();
         $this->template->vars('list', $rows);
         $this->main->view_layout('related/list');
+      }
+    }
+
+    protected function search_fields($view = false) {
+      return [
+        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
+        'a.piece', 'a.best', 'a.specials', 'b.cid',
+        'c.id', 'd.id', 'e.id'
+      ];
+    }
+
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['a.pid' => 'desc'];
       }
     }
 
@@ -189,7 +189,6 @@
       $data['inventory'] = !is_null(_A_::$app->post('inventory')) ? _A_::$app->post('inventory') : 0;
       $data['related'] = !is_null(_A_::$app->post('related')) ? _A_::$app->post('related') : [];
       $data['related_select'] = !is_null(_A_::$app->post('related_select')) ? _A_::$app->post('related_select') : [];
-
     }
 
     protected function validate(&$data, &$error) {
@@ -252,17 +251,21 @@
 
     protected function before_search_form_layout(&$search_data, $view = false) {
       $categories = [];
-      $filter = null; $sort = ['a.displayorder'=>'asc'];
+      $filter = null;
+      $sort = ['a.cname' => 'asc'];
       $rows = Model_Categories::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
       $patterns = [];
-      $rows = Model_Patterns::get_list(0, 0, $res_count);
+      $sort = ['a.pattern' => 'asc'];
+      $rows = Model_Patterns::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
       $colours = [];
-      $rows = Model_Colours::get_list(0, 0, $res_count);
+      $sort = ['a.colour' => 'asc'];
+      $rows = Model_Colours::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $colours[$row['id']] = $row['colour'];
       $manufacturers = [];
-      $rows = Model_Manufacturers::get_list(0, 0, $res_count);
+      $sort = ['a.manufacturer' => 'asc'];
+      $rows = Model_Manufacturers::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $manufacturers[$row['id']] = $row['manufacturer'];
 
       $search_data['categories'] = $categories;

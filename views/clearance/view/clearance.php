@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="col-xs-12 col-md-10 main-content-inner" role="main">
-    <div id="content" class="row">
+    <div id="content" class="content row">
       <?=$list;?>
     </div>
   </div>

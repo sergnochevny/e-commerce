@@ -241,7 +241,9 @@
 
     public static function get_manufacturers() {
       $data = [];
-      $rows = Model_Manufacturers::get_list(0,0,$res_count);
+      $filter = null;
+      $sort = ['a.manufacturer' => 'asc'];
+      $rows = Model_Manufacturers::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) {
         $data[$row['id']] = $row['manufacturer'];
       }

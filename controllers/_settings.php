@@ -12,157 +12,118 @@
     protected $form_title_edit = 'MODIFY SETTINGS';
 
     protected function load(&$data) {
-      $data = [
-        'system_enable_sef' => (!is_null(_A_::$app->keyStorage()->system_enable_sef) ? _A_::$app->keyStorage()->system_enable_sef : ENABLE_SEF),
-        'system_demo' => (!is_null(_A_::$app->keyStorage()->system_demo) ? _A_::$app->keyStorage()->system_demo : DEMO),
-        'system_captcha_time' => (!is_null(_A_::$app->keyStorage()->system_captcha_time) ? _A_::$app->keyStorage()->system_captcha_time : CAPTCHA_RELEVANT),
-        'system_hide_all_regular_prices' => (!is_null(_A_::$app->keyStorage()->system_hide_all_regular_prices) ? _A_::$app->keyStorage()->system_hide_all_regular_prices : HIDE_REGULAR_PRICE),
-        'system_filter_amount' => (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT),
-        'system_allow_sample_express_shipping' => (!is_null(_A_::$app->keyStorage()->system_allow_sample_express_shipping) ? _A_::$app->keyStorage()->system_allow_sample_express_shipping : SAMPLE_EXPRESS_SHIPPING),
-        'system_csv_use_gz' => (!is_null(_A_::$app->keyStorage()->system_csv_use_gz) ? _A_::$app->keyStorage()->system_csv_use_gz : CSV_USE_GZ),
-        'paypal_business' => (!is_null(_A_::$app->keyStorage()->paypal_business) ? _A_::$app->keyStorage()->paypal_business : ''),
-        'paypal_url' => (!is_null(_A_::$app->keyStorage()->paypal_url) ? _A_::$app->keyStorage()->paypal_url : ''),
-        'system_csv_fields' => (!is_null(_A_::$app->keyStorage()->system_csv_fields) ? _A_::$app->keyStorage()->system_csv_fields : CSV_FIELDS),
-        'system_info_email' => (!is_null(_A_::$app->keyStorage()->system_info_email) ? _A_::$app->keyStorage()->system_info_email : ''),
-        'system_csv_fields_dlm' => (!is_null(_A_::$app->keyStorage()->system_csv_fields_dlm) ? _A_::$app->keyStorage()->system_csv_fields_dlm : ','),
 
-        'shop_price_groups_count' => (!is_null(_A_::$app->keyStorage()->shop_price_groups_count) ? _A_::$app->keyStorage()->shop_price_groups_count : PRICE_GROUPS_COUNT),
-        'shop_rate_handling' => (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING),
-        'shop_rate_roll' => (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL),
+      if(_A_::$app->request_is_post()) {
+        $data = [
+          'system_enable_sef' => Model_Settings::sanitize(_A_::$app->post('system_enable_sef')),
+          'system_demo' => Model_Settings::sanitize(_A_::$app->post('system_demo')),
+          'system_captcha_time' => Model_Settings::sanitize(_A_::$app->post('system_captcha_time')),
+          'system_hide_all_regular_prices' => Model_Settings::sanitize(_A_::$app->post('system_hide_all_regular_prices')),
+          'system_filter_amount' => Model_Settings::sanitize(_A_::$app->post('system_filter_amount')),
+          'system_allow_sample_express_shipping' => Model_Settings::sanitize(_A_::$app->post('system_allow_sample_express_shipping')),
+          'system_csv_use_gz' => Model_Settings::sanitize(_A_::$app->post('system_csv_use_gz')),
+          'paypal_business' => Model_Settings::sanitize(_A_::$app->post('paypal_business')),
+          'paypal_url' => Model_Settings::sanitize(_A_::$app->post('paypal_url')),
+          'system_csv_fields' => Model_Settings::sanitize(_A_::$app->post('system_csv_fields')),
+          'system_info_email' => Model_Settings::sanitize(_A_::$app->post('system_info_email')),
+          'system_csv_fields_dlm' => Model_Settings::sanitize(_A_::$app->post('system_csv_fields_dlm')),
 
-        'shop_rate_express_light' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_light) ? _A_::$app->keyStorage()->shop_rate_express_light : RATE_EXPRESS_LIGHT),
-        'shop_rate_express_light_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_light_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_light_multiplier : RATE_EXPRESS_LIGHT_MULTIPLIER),
-        'shop_rate_express_medium' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_medium) ? _A_::$app->keyStorage()->shop_shop_rate_express_medium : RATE_EXPRESS_MEDIUM),
-        'shop_rate_express_medium_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_medium_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_medium_multiplier : RATE_EXPRESS_MEDIUM_MULTIPLIER),
-        'shop_rate_express_heavy' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_heavy) ? _A_::$app->keyStorage()->shop_rate_express_heavy : RATE_EXPRESS_HEAVY),
-        'shop_rate_express_heavy_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_express_heavy_multiplier) ? _A_::$app->keyStorage()->shop_rate_express_heavy_multiplier : RATE_EXPRESS_HEAVY_MULTIPLIER),
-        'shop_rate_ground_light' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_light) ? _A_::$app->keyStorage()->shop_rate_ground_light : RATE_GROUND_LIGHT),
-        'shop_rate_ground_light_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_light_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_light_multiplier : RATE_GROUND_LIGHT_MULTIPLIER),
-        'shop_rate_ground_medium' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_medium) ? _A_::$app->keyStorage()->shop_rate_ground_medium : RATE_GROUND_MEDIUM),
-        'shop_rate_ground_medium_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_medium_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_medium_multiplier : RATE_GROUND_MEDIUM_MULTIPLIER),
-        'shop_rate_ground_heavy' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_heavy) ? _A_::$app->keyStorage()->shop_rate_ground_heavy : RATE_GROUND_HEAVY),
-        'shop_rate_ground_heavy_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_rate_ground_heavy_multiplier) ? _A_::$app->keyStorage()->shop_rate_ground_heavy_multiplier : RATE_GROUND_HEAVY_MULTIPLIER),
+          'shop_price_groups_count' => Model_Settings::sanitize(_A_::$app->post('shop_price_groups_count')),
+          'shop_rate_handling' => Model_Settings::sanitize(_A_::$app->post('shop_rate_handling')),
+          'shop_rate_roll' => Model_Settings::sanitize(_A_::$app->post('shop_rate_roll')),
 
-        'shop_samples_price_express_shipping' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING),
-        'shop_samples_qty_multiple_min' => (!is_null(_A_::$app->keyStorage()->shop_samples_qty_multiple_min) ? _A_::$app->keyStorage()->shop_samples_qty_multiple_min : SAMPLES_QTY_MULTIPLE_MIN),
-        'shop_samples_qty_multiple_max' => (!is_null(_A_::$app->keyStorage()->shop_samples_qty_multiple_max) ? _A_::$app->keyStorage()->shop_samples_qty_multiple_max : SAMPLES_QTY_MULTIPLE_MAX),
-        'shop_samples_price_single' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_single) ? _A_::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE),
-        'shop_samples_price_multiple' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_multiple) ? _A_::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE),
-        'shop_samples_price_additional' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_additional) ? _A_::$app->keyStorage()->shop_samples_price_additional : SAMPLES_PRICE_ADDITIONAL),
-        'shop_samples_price_with_products' => (!is_null(_A_::$app->keyStorage()->shop_samples_price_with_products) ? _A_::$app->keyStorage()->shop_samples_price_with_products : SAMPLES_PRICE_WITH_PRODUCTS),
-        'shop_yrds_for_multiplier' => (!is_null(_A_::$app->keyStorage()->shop_yrds_for_multiplier) ? _A_::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER),
-      ];
+          'shop_rate_express_light' => Model_Settings::sanitize(_A_::$app->post('shop_rate_express_light')),
+          'shop_rate_express_light_multiplier' => Model_Settings::sanitize(_A_::$app->post('shop_rate_express_light_multiplier')),
+          'shop_rate_express_medium' => Model_Settings::sanitize(_A_::$app->post('shop_rate_express_medium')),
+          'shop_rate_express_medium_multiplier' => Model_Settings::sanitize(_A_::$app->post('shop_rate_express_medium_multiplier')),
+          'shop_rate_express_heavy' => Model_Settings::sanitize(_A_::$app->post('shop_rate_express_heavy')),
+          'shop_rate_express_heavy_multiplier' => Model_Settings::sanitize(_A_::$app->post('shop_rate_express_heavy_multiplier')),
+          'shop_rate_ground_light' => Model_Settings::sanitize(_A_::$app->post('shop_rate_ground_light')),
+          'shop_rate_ground_light_multiplier' => Model_Settings::sanitize(_A_::$app->post('shop_rate_ground_light_multiplier')),
+          'shop_rate_ground_medium' => Model_Settings::sanitize(_A_::$app->post('shop_rate_ground_medium')),
+          'shop_rate_ground_medium_multiplier' => Model_Settings::sanitize(_A_::$app->post('shop_rate_ground_medium_multiplier')),
+          'shop_rate_ground_heavy' => Model_Settings::sanitize(_A_::$app->post('shop_rate_ground_heavy')),
+          'shop_rate_ground_heavy_multiplier' => Model_Settings::sanitize(_A_::$app->post('shop_rate_ground_heavy_multiplier')),
+
+          'shop_samples_price_express_shipping' => Model_Settings::sanitize(_A_::$app->post('shop_samples_price_express_shipping')),
+          'shop_samples_qty_multiple_min' => Model_Settings::sanitize(_A_::$app->post('shop_samples_qty_multiple_min')),
+          'shop_samples_qty_multiple_max' => Model_Settings::sanitize(_A_::$app->post('shop_samples_qty_multiple_max')),
+          'shop_samples_price_single' => Model_Settings::sanitize(_A_::$app->post('shop_samples_price_single')),
+          'shop_samples_price_multiple' => Model_Settings::sanitize(_A_::$app->post('shop_samples_price_multiple')),
+          'shop_samples_price_additional' => Model_Settings::sanitize(_A_::$app->post('shop_samples_price_additional')),
+          'shop_samples_price_with_products' => Model_Settings::sanitize(_A_::$app->post('shop_samples_price_with_products')),
+          'shop_yrds_for_multiplier' => Model_Settings::sanitize(_A_::$app->post('shop_yrds_for_multiplier')),
+        ];
+        if(!is_null(_A_::$app->post('current_tab'))) $data['current_tab'] = _A_::$app->post('current_tab');
+        $data['system_csv_fields'] = implode((!empty($data['system_csv_fields_dlm']) ? $data['system_csv_fields_dlm'] : ','), $data['system_csv_fields']);
+      }
     }
 
     protected function validate(&$data, &$error) {
 
-      if(empty($data['email'])) {
-        $error = ["Email can't be blank!"];
-      } else {
-        if(Model_User::exist($data['email'], $data['aid'])) {
-          $error[] = 'User with such email already exists!';
-        } else {
-          if(($this->scenario() !== 'short') && (
-              ((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password']))) ||
-              empty($data['bill_firstname']) ||
-              empty($data['bill_lastname']) ||
-              (empty($data['bill_address1']) && empty($data['bill_address2'])) ||
-              empty($data['bill_country']) ||
-              empty($data['bill_postal']) ||
-              empty($data['bill_phone']) ||
-              ((isset($data['ship_as_billing'])) &&
-                (empty($data['ship_firstname']) ||
-                  empty($data['ship_lastname']) ||
-                  (empty($data['ship_address1']) && empty($data['ship_address2'])) ||
-                  empty($data['ship_country']) || empty($data['ship_postal']))))
-          ) {
+      $data['system_enable_sef'] = !empty($data['system_enable_sef']) ? $data['system_enable_sef'] : 0;
+      $data['system_demo'] = !empty($data['system_demo']) ? $data['system_demo'] : 0;
+      $data['system_captcha_time'] = !empty($data['system_captcha_time']) ? $data['system_captcha_time'] : CAPTCHA_RELEVANT;
+      $data['system_hide_all_regular_prices'] = !empty($data['system_hide_all_regular_prices']) ? $data['system_hide_all_regular_prices'] : 0;
+      $data['system_filter_amount'] = !empty($data['system_filter_amount']) ? $data['system_filter_amount'] : FILTER_LIMIT;
+      $data['system_allow_sample_express_shipping'] = !empty($data['system_allow_sample_express_shipping']) ? $data['system_allow_sample_express_shipping'] : SAMPLE_EXPRESS_SHIPPING;
+      $data['system_csv_use_gz'] = !empty($data['system_csv_use_gz']) ? $data['system_csv_use_gz'] : 0;
 
-            $error = ['Please fill in all required fields (marked with * )'];
-            $error1 = [];
-            $error2 = [];
+      $data['system_csv_fields'] = !empty($data['system_csv_fields']) ? $data['system_csv_fields'] : CSV_FIELDS;
+      $data['system_csv_fields_dlm'] = !empty($data['system_csv_fields_dlm']) ? $data['system_csv_fields_dlm'] : ',';
 
-            if((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password'])))
-              $error[] = '&#9;Identify <b>Create Password</b> and <b>Confirm Password</b> field!';
-            if(empty($data['bill_firstname']))
-              $error1[] = '&#9;Identify <b>First Name</b> field!';
-            if(empty($data['bill_lastname']))
-              $error1[] = '&#9;Identify <b>Last Name</b> field!';
-            if((empty($data['bill_address1']) && empty($data['bill_address2'])))
-              $error1[] = '&#9;Identify <b>Address</b> field!';
-            if(empty($data['bill_country']{0}))
-              $error1[] = '&#9;Identify <b>Country</b> field!';
-            if(empty($data['bill_postal']))
-              $error1[] = '&#9;Identify <b>Postal/Zip Code</b> field!';
-            if(empty($data['bill_phone']))
-              $error1[] = '&#9;Identify <b>Telephone</b> field!';
-            if(count($error1) > 0) {
-              if(count($error) > 0) $error[] = '<br>';
-              $error[] = 'BILLING INFORMATION:';
-              $error = array_merge($error, $error1);
-            }
-            if(isset($data['ship_as_billing'])) {
+      $data['shop_price_groups_count'] = !empty($data['shop_price_groups_count']) ? $data['shop_price_groups_count'] : PRICE_GROUPS_COUNT;
+      $data['shop_rate_handling'] = !empty($data['shop_rate_handling']) ? $data['shop_rate_handling'] : RATE_HANDLING;
+      $data['shop_rate_roll'] = !empty($data['shop_rate_roll']) ? $data['shop_rate_roll'] : RATE_ROLL;
 
-              if(empty($data['ship_firstname']))
-                $error2[] = '&#9;Identify <b>First Name</b> field!';
-              if(empty($data['ship_lastname']))
-                $error2[] = '&#9;Identify <b>Last Name</b> field!';
-              if((empty($data['ship_address1']) && empty($data['ship_address2'])))
-                $error2[] = '&#9;Identify <b>Address</b> field!';
-              if(empty($data['ship_country']{0}))
-                $error2[] = '&#9;Identify <b>Country</b> field!';
-              if(empty($data['ship_postal']))
-                $error2[] = '&#9;Identify <b>Postal/Zip Code</b> field!';
+      $data['shop_rate_express_light'] = !empty($data['shop_rate_express_light']) ? $data['shop_rate_express_light'] : RATE_EXPRESS_LIGHT;
+      $data['shop_rate_express_light_multiplier'] = !empty($data['shop_rate_express_light_multiplier']) ? $data['shop_rate_express_light_multiplier'] : RATE_EXPRESS_LIGHT_MULTIPLIER;
+      $data['shop_rate_express_medium'] = !empty($data['shop_rate_express_medium']) ? $data['shop_rate_express_medium'] : RATE_EXPRESS_MEDIUM;
+      $data['shop_rate_express_medium_multiplier'] = !empty($data['shop_rate_express_medium_multiplier']) ? $data['shop_rate_express_medium_multiplier'] : RATE_EXPRESS_MEDIUM_MULTIPLIER;
+      $data['shop_rate_express_heavy'] = !empty($data['shop_rate_express_heavy']) ? $data['shop_rate_express_heavy'] : RATE_EXPRESS_HEAVY;
+      $data['shop_rate_express_heavy_multiplier'] = !empty($data['shop_rate_express_heavy_multiplier']) ? $data['shop_rate_express_heavy_multiplier'] : RATE_EXPRESS_HEAVY_MULTIPLIER;
+      $data['shop_rate_ground_light'] = !empty($data['shop_rate_ground_light']) ? $data['shop_rate_ground_light'] : RATE_GROUND_LIGHT;
+      $data['shop_rate_ground_light_multiplier'] = !empty($data['shop_rate_ground_light_multiplier']) ? $data['shop_rate_ground_light_multiplier'] : RATE_GROUND_LIGHT_MULTIPLIER;
+      $data['shop_rate_ground_medium'] = !empty($data['shop_rate_ground_medium']) ? $data['shop_rate_ground_medium'] : RATE_GROUND_MEDIUM;
+      $data['shop_rate_ground_medium_multiplier'] = !empty($data['shop_rate_ground_medium_multiplier']) ? $data['shop_rate_ground_medium_multiplier'] : RATE_GROUND_MEDIUM_MULTIPLIER;
+      $data['shop_rate_ground_heavy'] = !empty($data['shop_rate_ground_heavy']) ? $data['shop_rate_ground_heavy'] : RATE_GROUND_HEAVY;
+      $data['shop_rate_ground_heavy_multiplier'] = !empty($data['shop_rate_ground_heavy_multiplier']) ? $data['shop_rate_ground_heavy_multiplier'] : RATE_GROUND_HEAVY_MULTIPLIER;
 
-              if(count($error2) > 0) {
-                if(count($error) > 0)
-                  $error[] = '';
-                $error[] = 'SHIPPING INFORMATION:';
-                $error = array_merge($error, $error2);
-              }
-            }
-          } else {
-            $verify = Controller_Captcha::check_captcha(isset($data['captcha']) ? $data['captcha'] : '', $error2);
-            if(($this->scenario() == 'short') && (
-                ((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password']))) ||
-                empty($data['bill_firstname']) ||
-                empty($data['bill_lastname']) ||
-                empty($data['captcha']) || !$verify
-              )
-            ) {
-              $error = ['Please fill in all required fields:'];
-              $error1 = [];
+      $data['shop_samples_price_express_shipping'] = !empty($data['shop_samples_price_express_shipping']) ? $data['shop_samples_price_express_shipping'] : SAMPLES_PRICE_EXPRESS_SHIPPING;
+      $data['shop_samples_qty_multiple_min'] = !empty($data['shop_samples_qty_multiple_min']) ? $data['shop_samples_qty_multiple_min'] : SAMPLES_QTY_MULTIPLE_MIN;
+      $data['shop_samples_qty_multiple_max'] = !empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX;
+      $data['shop_samples_price_single'] = !empty($data['shop_samples_price_single']) ? $data['shop_samples_price_single'] : SAMPLES_PRICE_SINGLE;
+      $data['shop_samples_price_multiple'] = !empty($data['shop_samples_price_multiple']) ? $data['shop_samples_price_multiple'] : SAMPLES_PRICE_MULTIPLE;
+      $data['shop_samples_price_additional'] = !empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL;
+      $data['shop_samples_price_with_products'] = !empty($data['shop_samples_price_with_products']) ? $data['shop_samples_price_with_products'] : SAMPLES_PRICE_WITH_PRODUCTS;
+      $data['shop_yrds_for_multiplier'] = !empty($data['shop_yrds_for_multiplier']) ? $data['shop_yrds_for_multiplier'] : YRDS_FOR_MULTIPLIER;
 
-              if((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password'])))
-                $error1[] = '&#9;Identify <b>Password</b> and <b>Confirm Password</b> field!';
-              if(empty($data['bill_firstname']))
-                $error1[] = '&#9;Identify <b>First Name</b> field!';
-              if(empty($data['bill_lastname']))
-                $error1[] = '&#9;Identify <b>Last Name</b> field!';
-              if(empty($data['captcha']))
-                $error1[] = '&#9;Identify <b>Captcha</b> field!';
-              if(!$verify)
-                $error1[] = '&#9;' . $error2[0];
-              if(count($error1) > 0) {
-                if(count($error) > 0) $error[] = '';
-                $error = array_merge($error, $error1);
-              }
-            } else {
-              if(!empty($data['create_password'])) {
-                $salt = Model_Auth::generatestr();
-                $password = Model_Auth::hash_($data['create_password'], $salt, 12);
-                $check = Model_Auth::check($data['confirm_password'], $password);
-              } else $password = null;
+      if(
+        empty($data['paypal_business']) ||
+        empty($data['paypal_url']) ||
+        empty($data['system_info_email'])
+      ) {
 
-              if(is_null($password) || (isset($check) && ($password == $check))) {
-                $data['password'] = $password;
-                return true;
-              } else {
-                $error[] = 'Confirm password doesn\'t match';
-              }
-            }
-          }
+        $error = ['Please fill in all required fields (marked with * )'];
+        $error1 = [];
+        $error2 = [];
+
+        if(empty($data['system_info_email']))
+          $error1[] = 'PANEL SYSTEM:<br>&#9;Identify <b>System Information Email</b> field!';
+        $error = array_merge($error, $error1);
+
+        $error_ = '';
+        if(empty($data['paypal_url']))
+          $error_ .= '&#9;Identify <b>PayPal preceed URI</b> field!';
+        if(empty($data['paypal_business'])){
+          if(!empty($error_)) $error_ .= '<br>';
+          $error_ .= '&#9;Identify <b>PayPal Business Account</b> field!';
         }
-      }
+        if(!empty($error_)) {
+          $error2[] = 'TAB SHOP:<br>'.$error_;
+        }
+        $error = array_merge($error, $error2);
+      } else return true;
       return false;
     }
 
@@ -170,10 +131,6 @@
       $csv_fields_dlm = (!is_null(_A_::$app->keyStorage()->system_csv_fields_dlm) ? _A_::$app->keyStorage()->system_csv_fields_dlm : ',');
       $data['system_csv_fields'] = explode($csv_fields_dlm, $data['system_csv_fields']);
       $data['system_csv_fields_avail'] = array_diff($this->csv_fields_avail, $data['system_csv_fields']);
-    }
-
-    protected function before_save(&$data) {
-      $data['system_csv_fields'] = implode($data['system_csv_fields_dlm'], $data['system_csv_fields']);
     }
 
     public function view() { }
