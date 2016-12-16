@@ -46,6 +46,7 @@
      */
     public function view() {
       $this->template->vars('cart_enable', '_');
+      _A_::$app->setSession('sidebar_idx', 3);
       parent::view();
     }
 

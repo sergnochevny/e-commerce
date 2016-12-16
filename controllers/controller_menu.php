@@ -4,7 +4,7 @@
 
     public function show_menu() {
       ob_start();
-      $this->template->vars('idx', _A_::$app->get('idx'));
+      $this->template->vars('idx', !is_null(_A_::$app->session('sidebar_idx')) ? _A_::$app->session('sidebar_idx') : 0);
       $this->template->view_layout('shop');
       $shop_menu = ob_get_contents();
       ob_end_clean();

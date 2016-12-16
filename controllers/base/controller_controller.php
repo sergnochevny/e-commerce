@@ -75,7 +75,7 @@
 
     protected function load_search_filter(&$filter, $view = false) {
       //  Implementation save the search context
-      $idx = (isset($filter['type']) ? $filter['type'] : '') . '_' . (!empty($this->scenario()) ? $this->scenario() : '');
+      $idx = (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
       $idx = !empty($idx) ? $idx : 0;
       if(_A_::$app->request_is_post()) {
 
@@ -110,10 +110,10 @@
 
     protected function build_search_filter(&$filter, $view = false) {
       $search_form = null;
-      $filter = null;
       $fields = $this->search_fields($view);
+      $search = $this->load_search_filter($filter, $view);
+      $filter = null;
       if(isset($fields)) {
-        $search = $this->load_search_filter($filter, $view);
         $h_search = isset($search['hidden']) ? $search['hidden'] : null;
         if(isset($search)) {
           $search_form = array_filter($search, function($val) {
@@ -147,8 +147,6 @@
         $fields_pattern = '#\b[\S]*(int|string|text|char|float|double|decimal|timestamp)[\S]*\b#';
         $fields = forward_static_call([$this->model_name, 'get_fields']);
         if(isset($fields)) {
-          if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
-          else  $search = _A_::$app->get('search');
           $h_search = isset($search['hidden']) ? $search['hidden'] : null;
           if(isset($search)) {
             $search = array_filter($search);
@@ -187,7 +185,7 @@
       $search_form = $this->build_search_filter($filter, $view);
       $this->build_order($sort, $view);
       $pages = _A_::$app->session('pages');
-      $idx = (isset($filter['type']) ? $filter['type'] : '') . '_' . (!empty($this->scenario()) ? $this->scenario() : '');
+      $idx = (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
       $idx = !empty($idx) ? $idx : 0;
       $page = !empty($pages[Controller_AdminBase::is_logged()][$view][$this->controller][$idx]) ? $pages[Controller_AdminBase::is_logged()][$view][$this->controller][$idx] : 1;
       $per_page = $this->per_page;

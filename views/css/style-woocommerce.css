@@ -2539,7 +2539,7 @@ ul.sortable li.ui-selected label {
 }
 @media (min-width: 991px) {
     .content{
-        min-height: 400px;
+        min-height: 450px;
     }
 }
 

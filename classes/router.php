@@ -270,8 +270,9 @@
           if(!(isset($params) && is_array($params))) $params = [];
           $params = array_merge($params, $_params);
         }
-        $sef_include_params = (isset($params) && (count($params) > 0)) ? array_diff_key($params, array_flip($sef_exclude_params)) : [];
-        $_path = $this->http_build_url(trim($_path, DS), ['query' => http_build_query($sef_include_params)]);
+        $sef_include_params = (isset($params) && (count($params) > 0)) ? array_diff_key($params, array_flip($sef_exclude_params)) : null;
+        if(isset($sef_include_params)) $_path = $this->http_build_url(trim($_path, DS), ['query' => http_build_query($sef_include_params)]);
+        else $_path = $this->http_build_url(trim($_path, DS));
         if(isset($to_sef)) {
           $path = $this->build_sef_url($to_sef, $_path);
         } else {

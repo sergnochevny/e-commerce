@@ -1,6 +1,6 @@
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $key => $row): ?>
-    <?php $prms = ['prc' => $key]; ?>
+    <?php $prms = ['prc' => $key, 'method' => 'prc']; ?>
     <div class="col-xs-6 col-sm-3 list-item">
       <div class="list-inner">
         <a data-waitloader data-sb_prices

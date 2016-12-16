@@ -14,7 +14,7 @@
       $search = null;
       $type = isset($filter['type']) ? $filter['type'] : null;
       $res = parent::build_search_filter($filter, $view);
-
+      _A_::$app->setSession('sidebar_idx', 0);
       $filter['hidden']['a.pnumber'] = 'null';
       if(!isset($filter['hidden']['a.priceyard']) && !isset($filter['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
       $filter['hidden']['a.pvisible'] = '1';
@@ -26,6 +26,16 @@
         $res['a.pname'] = _A_::$app->post('s');
         $filter['a.pname'] = $search;
       }
+      if(!empty(_A_::$app->get('mnf'))) {
+        $mnf_id = _A_::$app->get('mnf');
+        if($mnf = Model_Manufacturers::get_by_id($mnf_id)) $mnf_name = $mnf['manufacturer'];
+        $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
+        unset($filter['e.id']);
+        unset($res['e.id']);
+        $filter['hidden']['e.id'] = $mnf_id;
+        $res['hidden']['e.id'] = $mnf_id;
+        _A_::$app->setSession('sidebar_idx', 1);
+      }
       if(!empty(_A_::$app->get('cat'))) {
         $cid = _A_::$app->get('cat');
         if($category = Model_Categories::get_by_id($cid)) $category_name = $category['cname'];
@@ -34,6 +44,7 @@
         unset($res['b.cid']);
         $filter['hidden']['b.cid'] = $cid;
         $res['hidden']['b.cid'] = $cid;
+        _A_::$app->setSession('sidebar_idx', 2);
       }
       if(!empty(_A_::$app->get('ptrn'))) {
         $ptrn_id = _A_::$app->get('ptrn');
@@ -43,15 +54,7 @@
         unset($res['d.id']);
         $filter['hidden']['d.id'] = $ptrn_id;
         $res['hidden']['d.id'] = $ptrn_id;
-      }
-      if(!empty(_A_::$app->get('mnf'))) {
-        $mnf_id = _A_::$app->get('mnf');
-        if($mnf = Model_Manufacturers::get_by_id($mnf_id)) $mnf_name = $mnf['manufacturer'];
-        $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
-        unset($filter['e.id']);
-        unset($res['e.id']);
-        $filter['hidden']['e.id'] = $mnf_id;
-        $res['hidden']['e.id'] = $mnf_id;
+        _A_::$app->setSession('sidebar_idx', 3);
       }
       if(!empty(_A_::$app->get('clr'))) {
         $clr_id = _A_::$app->get('clr');
@@ -61,10 +64,12 @@
         unset($res['c.id']);
         $filter['hidden']['c.id'] = $clr_id;
         $res['hidden']['c.id'] = $clr_id;
+        _A_::$app->setSession('sidebar_idx', 4);
       }
       if(!is_null(_A_::$app->get('prc'))) {
         $this->template->vars('prc_from', isset($filter['hidden']['a.priceyard']['from']) ? $filter['hidden']['a.priceyard']['from'] : null);
         $this->template->vars('prc_to', isset($filter['hidden']['a.priceyard']['to']) ? $filter['hidden']['a.priceyard']['to'] : null);
+        _A_::$app->setSession('sidebar_idx', 5);
       }
       if(isset($type)) {
         $filter['type'] = $type;
@@ -81,6 +86,10 @@
             unset($res['a.specials']);
             $filter['hidden']['a.specials'] = '1';
             $res['hidden']['a.specials'] = '1';
+            _A_::$app->setSession('sidebar_idx', 6);
+            break;
+          case 'prices':
+            _A_::$app->setSession('sidebar_idx', 5);
             break;
         }
       }
@@ -166,9 +175,9 @@
       $search_form = $this->build_search_filter($filter);
       $this->build_order($sort);
       $pages = _A_::$app->session('pages');
-      $idx = (isset($filter['type']) ? $filter['type'] : '') . '_' . (!empty($this->scenario()) ? $this->scenario() : '');
+      $idx = (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
       $idx = !empty($idx) ? $idx : 0;
-      $page = !empty($pages[Controller_AdminBase::is_logged()][true][$this->controller][$idx]) ? $pages[Controller_AdminBase::is_logged()][true][$this->controller][$idx] : 1;
+      $page = !empty($pages[Controller_AdminBase::is_logged()][false][$this->controller][$idx]) ? $pages[Controller_AdminBase::is_logged()][false][$this->controller][$idx] : 1;
       $per_page = $this->per_page;
       $total = Model_Shop::get_total_count($filter);
       if($total > $max_count_items) $total = $max_count_items;
@@ -202,21 +211,11 @@
 
     protected function build_back_url(&$back_url = null, &$prms = null) {
       $prms = null;
-      if((!empty(_A_::$app->get('cat')))) {
-        $prms['cat'] = _A_::$app->get('cat');
-      }
-      if((!empty(_A_::$app->get('mnf')))) {
-        $prms['mnf'] = _A_::$app->get('mnf');
-      }
-      if((!empty(_A_::$app->get('ptrn')))) {
-        $prms['ptrn'] = _A_::$app->get('ptrn');
-      }
-      if((!empty(_A_::$app->get('clr')))) {
-        $prms['clr'] = _A_::$app->get('clr');
-      }
-      if((!empty(_A_::$app->get('prc')))) {
-        $prms['prc'] = _A_::$app->get('prc');
-      }
+      if((!empty(_A_::$app->get('cat')))) $prms['cat'] = _A_::$app->get('cat');
+      if((!empty(_A_::$app->get('mnf')))) $prms['mnf'] = _A_::$app->get('mnf');
+      if((!empty(_A_::$app->get('ptrn')))) $prms['ptrn'] = _A_::$app->get('ptrn');
+      if((!empty(_A_::$app->get('clr')))) $prms['clr'] = _A_::$app->get('clr');
+      if((!empty(_A_::$app->get('prc')))) $prms['prc'] = _A_::$app->get('prc');
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');
         if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', '']))

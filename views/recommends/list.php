@@ -1,6 +1,6 @@
 <?php if(isset($page_title)) { ?>
   <div class="col-xs-12 text-center afterhead-row">
-    <h2 class="page-title"><?= $page_title; ?></h2>
+    <h3 class="page-title"><?= $page_title; ?></h3>
   </div>
 <?php } ?>
 

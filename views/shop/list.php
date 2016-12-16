@@ -6,7 +6,7 @@
         <span class="user_name"><?= $user_name; ?></span>
       </h3>
     <?php endif; ?>
-    <h2 class="page-title"><?= $page_title; ?></h2>
+    <h2 class="page-title<?= !empty($user_name)?'' : ' sb'?>"><?= $page_title; ?></h2>
   </div>
 <?php endif; ?>
 
