@@ -26,7 +26,7 @@
       ob_end_clean();
       $this->template->vars('menu', $menu);
 
-      if(Controller_Admin::is_logged()) {
+      if(Controller_AdminBase::is_logged()) {
         ob_start();
         $this->template->view_layout('admin_account', 'menu');
         $my_account_admin_menu = ob_get_contents();
@@ -52,15 +52,13 @@
       if(isset($data)) {
         $this->template->vars('data', $data);
       }
-
       $this->meta_page();
       $this->template->vars('controller', $this);
-
       $this->template->view_layout($page);
     }
 
     public function is_user_authorized($redirect_to_url = false) {
-      $user = new Controller_User($this->main);
+      $user = new Controller_UserBase($this->main);
       if(!$user->is_authorized()) {
         if($redirect_to_url) {
           $redirect = strtolower(explode('/', _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://";
@@ -78,7 +76,7 @@
     }
 
     public function is_admin_authorized($redirect_to_url = true) {
-      $admin = new Controller_Admin($this->main);
+      $admin = new Controller_AdminBase($this->main);
       if(!$admin->is_authorized()) {
         if($redirect_to_url) {
           $redirect = strtolower(explode('/', _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://";
@@ -96,7 +94,7 @@
     }
 
     public function is_any_authorized($redirect = null) {
-      if(!Controller_Admin::is_logged() && !Controller_User::is_logged()) {
+      if(!Controller_AdminBase::is_logged() && !Controller_UserBase::is_logged()) {
         $prms = [];
         if(isset($redirect)) {
           $prms = ['url' => urlencode(base64_encode(_A_::$app->router()->UrlTo($redirect)))];
@@ -104,8 +102,8 @@
           $url = _A_::$app->router()->UrlTo('authorization', $prms);
           $this->redirect($url);
       } else {
-        if (Controller_Admin::is_logged()) return 'admin';
-        if (Controller_User::is_logged()) return 'user';
+        if (Controller_AdminBase::is_logged()) return 'admin';
+        if (Controller_UserBase::is_logged()) return 'user';
       }
     }
 
@@ -120,12 +118,12 @@
           $back_url = _A_::$app->router()->UrlTo('user', $prms);
           $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!';
         } elseif($msg == 'remind_expired') {
-
           $back_url = _A_::$app->router()->UrlTo('/');
           $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
         }
         $this->template->vars('message', $message);
-        if (Controller_Admin::is_logged()) $this->view_admin('message');
+        $this->template->vars('back_url', $back_url);
+        if (Controller_AdminBase::is_logged()) $this->view_admin('message');
         else $this->view('message');
       }
     }
@@ -157,7 +155,7 @@
       header("Status: 404 Not Found");
       $this->template->controller = 'main';
 
-      if (Controller_Admin::is_logged()) $this->view_admin('404/error');
+      if (Controller_AdminBase::is_logged()) $this->view_admin('404/error');
       else $this->view('404/error');
     }
   }

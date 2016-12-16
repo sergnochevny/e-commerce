@@ -2384,11 +2384,6 @@ div.tabs li {
     position: relative;
 }
 
-div.container {
-    margin: auto;
-    margin-bottom: 10px;
-}
-
 ul.tabNavigation {
     list-style: none;
     margin: 0 15px 0 15px;

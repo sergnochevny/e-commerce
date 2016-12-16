@@ -36,8 +36,7 @@
       include($pathLayout);
     }
 
-    public
-    function view_layout($name, $controller = null) {
+    public function view_layout($name, $controller = null) {
       if(!isset($controller)) $controller = $this->controller;
       if(is_string($controller) && (strlen($controller) > 0)) $contentPage = SITE_PATH . 'views' . DS . $controller . DS . $name . '.php';
       else $contentPage = SITE_PATH . 'views' . DS . $name . '.php';
@@ -45,4 +44,5 @@
       extract($this->vars);
       include($contentPage);
     }
+
   }

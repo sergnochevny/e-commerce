@@ -1,6 +1,6 @@
 <?php
 
-  Abstract Class Controller_Base {
+  abstract Class Controller_Base {
 
     protected $layouts;
     public $registry;

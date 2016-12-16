@@ -1,6 +1,6 @@
 <?php
 
-  class Controller_Controller extends Controller_Base {
+  abstract class Controller_Controller extends Controller_Base {
 
     protected $main;
     protected $per_page = 12;
@@ -60,18 +60,34 @@
 
     protected function build_back_url(&$back_url = null, &$prms = null) {
       $back_url = $this->controller;
-      if( $back_url == _A_::$app->router()->action) $back_url = null;
+      if($back_url == _A_::$app->router()->action) $back_url = null;
       if(!is_null(_A_::$app->get('back'))) $back_url = _A_::$app->get('back');
     }
 
     protected function set_back_url($back_url = null) {
       $prms = null;
       if(!isset($back_url)) $this->build_back_url($back_url, $prms);
-      if(isset($back_url)){
+      if(isset($back_url)) {
         if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
         $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
         $this->template->vars('back_url', $back_url);
       }
+    }
+
+    protected function load_search_filter() {
+      //  Implementation save the search context
+      if(_A_::$app->request_is_post()) {
+        $search = _A_::$app->post('search');
+        $filters = _A_::$app->session('filters');
+        $filters[$this->controller] = $search;
+        _A_::$app->session('filters', $filters);
+      } else {
+        $filters = _A_::$app->session('filters');
+        if(isset($filters[$this->controller])) {
+          $search = $filters[$this->controller];
+        } else return null;
+      }
+      return $search;
     }
 
     protected function build_search_filter(&$filter, $view = false) {
@@ -79,8 +95,7 @@
       $filter = null;
       $fields = $this->search_fields($view);
       if(isset($fields)) {
-        if(_A_::$app->request_is_post()) $search = _A_::$app->post('search');
-        else  $search = _A_::$app->get('search');
+        $search = $this->load_search_filter();
         $h_search = isset($search['hidden']) ? $search['hidden'] : null;
         if(isset($search)) {
           $search_form = array_filter($search, function($val) {

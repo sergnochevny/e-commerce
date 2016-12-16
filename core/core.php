@@ -98,7 +98,7 @@
     }
 
     private function initSession() {
-      if (!is_null($this->get('pay_notify'))) {
+      if(!is_null($this->get('pay_notify'))) {
         $s_id = $this->get('pay_notify');
         session_id($s_id);
       }
@@ -242,23 +242,26 @@
     static function autoload($className) {
       $filename = strtolower($className) . '.php';
       $expArr = explode('_', $className);
-      if(empty($expArr[1]) OR $expArr[1] == 'Base') {
-        $folder = 'classes';
-      } else {
-        switch(strtolower($expArr[0])) {
-          case 'controller':
-            if(count($expArr) > 1) $filename = '_' . strtolower($expArr[1]) . '.php';
-            $folder = 'controllers';
-            break;
-
-          case 'model':
-            $folder = 'models';
-            break;
-
-          default:
-            $folder = 'classes';
-            break;
-        }
+      $folder = 'classes';
+      if(file_exists(SITE_PATH . $folder . DS . $filename)) {
+        include_once(SITE_PATH . $folder . DS . $filename);
+        return true;
+      }
+      switch(strtolower($expArr[0])) {
+        case 'controller':
+          $folder = 'controllers/base';
+          if(file_exists(SITE_PATH . $folder . DS . $filename)) {
+            include_once(SITE_PATH . $folder . DS . $filename);
+            return true;
+          }
+          $folder = 'controllers';
+          break;
+        case 'model':
+          $folder = 'models';
+          break;
+        default:
+          $folder = 'classes';
+          break;
       }
       $file = SITE_PATH . $folder . DS . $filename;
       if(file_exists($file)) {
@@ -273,4 +276,5 @@
       self::$app = new Application();
       self::$app->run();
     }
+
   }

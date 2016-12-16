@@ -207,7 +207,7 @@
                                       <div class="col-xs-1 text-center">
                                         <div class="row">
                                           <i class="fa fa-2x fa-arrows-v" aria-hidden="true"></i>
-                                          <i class="fa fa-2x fa-long-arrow-left" aria-hidden="true"></i>
+                                          <i class="fa fa-2x fa-long-arrow-left hidden-xs" aria-hidden="true"></i>
                                         </div>
                                       </div>
                                       <div class="col-xs-9">

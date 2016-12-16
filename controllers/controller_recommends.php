@@ -11,7 +11,6 @@
     }
 
     protected function build_search_filter(&$filter, $view = false) {
-      $search = null;
       $res = parent::build_search_filter($filter, $view);
 
       $filter['hidden']["fabrix_orders.aid"] = Controller_User::get_from_session()['aid'];
@@ -20,12 +19,6 @@
       $filter['hidden']['a.pvisible'] = '1';
       $filter['hidden']['a.image1'] = 'null';
 
-      if(!isset($res['pname']) && !is_null(_A_::$app->post('s')) && (!empty(_A_::$app->post('s')))) {
-        $search = strtolower(htmlspecialchars(trim(_A_::$app->post('s'))));
-        $this->main->template->vars('search_str', _A_::$app->post('s'));
-        $res['a.pname'] = _A_::$app->post('s');
-        $filter['a.pname'] = $search;
-      }
       return $res;
     }
 
