@@ -15,6 +15,7 @@
 
       if(_A_::$app->request_is_post()) {
         $data = [
+          'system_site_name' => Model_Settings::sanitize(_A_::$app->post('system_site_name')),
           'system_enable_sef' => Model_Settings::sanitize(_A_::$app->post('system_enable_sef')),
           'system_demo' => Model_Settings::sanitize(_A_::$app->post('system_demo')),
           'system_captcha_time' => Model_Settings::sanitize(_A_::$app->post('system_captcha_time')),
@@ -61,6 +62,7 @@
 
     protected function validate(&$data, &$error) {
 
+      $data['system_site_name'] = !empty($data['system_site_name']) ? $data['system_site_name'] : '';
       $data['system_enable_sef'] = !empty($data['system_enable_sef']) ? $data['system_enable_sef'] : 0;
       $data['system_demo'] = !empty($data['system_demo']) ? $data['system_demo'] : 0;
       $data['system_captcha_time'] = !empty($data['system_captcha_time']) ? $data['system_captcha_time'] : CAPTCHA_RELEVANT;
@@ -101,17 +103,25 @@
       if(
         empty($data['paypal_business']) ||
         empty($data['paypal_url']) ||
-        empty($data['system_info_email'])
+        empty($data['system_info_email']) ||
+        empty($data['system_site_name'])
       ) {
 
         $error = ['Please fill in all required fields (marked with * )'];
         $error1 = [];
         $error2 = [];
 
-        if(empty($data['system_info_email']))
-          $error1[] = 'PANEL SYSTEM:<br>&#9;Identify <b>System Information Email</b> field!';
+        $error_ = '';
+        if(empty($data['system_site_name']))
+          $error_ .= '<br>&#9;Identify <b>Site Name</b> field!';
+        if(empty($data['system_info_email'])){
+          if(!empty($error_)) $error_ .= '<br>';
+          $error_ .= '<br>&#9;Identify <b>System Information Email</b> field!';
+        }
+        if(!empty($error_)) {
+          $error1[] = 'PANEL SYSTEM:<br>'.$error_;
+        }
         $error = array_merge($error, $error1);
-
         $error_ = '';
         if(empty($data['paypal_url']))
           $error_ .= '&#9;Identify <b>PayPal preceed URI</b> field!';

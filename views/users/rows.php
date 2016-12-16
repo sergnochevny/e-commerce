@@ -1,7 +1,4 @@
 <?php if(sizeof($rows) > 0): ?>
-  <?php
-  if(!is_null(_A_::$app->get('page'))) $order['page'] = _A_::$app->get('page');
-  ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
       <div class="row">
@@ -91,8 +88,8 @@
         <input type="hidden" name="order" value="<?= array_values($sort)[0] ?>">
       </form>
     </div>
-    <?php foreach($rows as $row): ?><?php $prms['aid'] = $row['aid'];
-      if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
+    <?php foreach($rows as $row): ?>
+      <?php $prms['aid'] = $row['aid']; ?>
       <div class="col-xs-12 table-list-row">
         <div class="row">
           <div class="col-xs-12 col-sm-1 table-list-row-item">

@@ -141,4 +141,4 @@
   <h2 class="text-center">Disable sale countdown</h2>
   <p>Checking this will not include it in the sale countdown on the product list, and product details page.</p>
 </div>
-<script src="<?= _A_::$app->router()->UrlTo('views/js/discount/modal_rules.min.js'); ?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('views/js/hints.min.js'); ?>"></script>

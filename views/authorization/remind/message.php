@@ -2,9 +2,9 @@
       class="js_active vc_desktop vc_transform vc_transform wf-montserrat-n4-active wf-montserrat-n7-active wf-playfairdisplay-n4-active wf-playfairdisplay-n7-active wf-active">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Upholstery Fabric</title>
-  <meta name="KeyWords" content="Upholstery Fabric">
-  <meta name="Description" content="Upholstery Fabric">
+  <title><?= _A_::$app->keyStorage()->system_site_name;?></title>
+  <meta name="KeyWords" content="<?= _A_::$app->keyStorage()->system_site_name;?>">
+  <meta name="Description" content="<?= _A_::$app->keyStorage()->system_site_name;?>">
   <link charset="UTF-8" rel="icon" href="<?= _A_::$app->router()->UrlTo('/views/images/lf-logo.png') ?>">
   <link charset="UTF-8" rel="shortcut icon" href="<?= _A_::$app->router()->UrlTo('/views/images/lf-logo.png') ?>">
   <link charset="UTF-8" rel="apple-touch-icon" href="<?= _A_::$app->router()->UrlTo('/views/images/lf-logo.png') ?>">

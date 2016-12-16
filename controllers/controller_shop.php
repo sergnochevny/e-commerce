@@ -151,7 +151,6 @@
 
     protected function after_get_list(&$rows, $view = false, $type = null) {
       $url_prms = null;
-      if(!empty(_A_::$app->get('page'))) $url_prms['page'] = _A_::$app->get('page');
       if(!empty(_A_::$app->get('cat'))) $url_prms['cat'] = _A_::$app->get('cat');
       if(!empty(_A_::$app->get('mnf'))) $url_prms['mnf'] = _A_::$app->get('mnf');
       if(!empty(_A_::$app->get('ptrn'))) $url_prms['ptrn'] = _A_::$app->get('ptrn');
@@ -166,7 +165,10 @@
       $sort['type'] = $type;
       $search_form = $this->build_search_filter($filter);
       $this->build_order($sort);
-      $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
+      $pages = _A_::$app->session('pages');
+      $idx = (isset($filter['type']) ? $filter['type'] : '') . '_' . (!empty($this->scenario()) ? $this->scenario() : '');
+      $idx = !empty($idx) ? $idx : 0;
+      $page = !empty($pages[Controller_AdminBase::is_logged()][true][$this->controller][$idx]) ? $pages[Controller_AdminBase::is_logged()][true][$this->controller][$idx] : 1;
       $per_page = $this->per_page;
       $total = Model_Shop::get_total_count($filter);
       if($total > $max_count_items) $total = $max_count_items;

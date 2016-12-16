@@ -131,7 +131,6 @@
     <?php foreach($rows as $row): ?>
       <?php
       $prms['sid'] = $row['sid'];
-      if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
       $row['date_start'] = gmdate("m/j/y", $row['date_start']);
       $row['date_end'] = gmdate("m/j/y", $row['date_end']);
       $row['enabled'] = $row['enabled'] == "1" ? "YES" : "NO";

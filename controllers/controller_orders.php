@@ -61,22 +61,17 @@
     public function view() {
 
       $this->main->is_any_authorized('orders');
-      $page = !is_null(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
+
       $oid = !is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null;
-      $prms['page'] = $page;
 
       if(!is_null(_A_::$app->get('orders_search_query'))) {
         $prms['orders_search_query'] = _A_::$app->get('orders_search_query');
-      }
-      if(!is_null(_A_::$app->get('page'))) {
-        $prms['page'] = _A_::$app->get('page');
       }
       if(!is_null(_A_::$app->get('user_id'))) {
         $prms['user_id'] = _A_::$app->get('user_id');
       }
       if(!is_null(_A_::$app->get('oid'))) {
         $prms['d_id'] = _A_::$app->get('d_id');
-        unset($prms['page']);
       }
 
       $back_url = '';

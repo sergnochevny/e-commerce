@@ -1,10 +1,4 @@
-<?php
-  $prms = null;
-  if(!is_null(_A_::$app->get('page'))) {
-    $prms['page'] = _A_::$app->get('page');
-  }
-  include_once 'views/messages/alert-boxes.php';
-?>
+<?php include_once 'views/messages/alert-boxes.php';?>
 
 <div class="col-xs-12 text-center afterhead-row">
   <h3 class="page-title">Categories</h3>
@@ -17,7 +11,7 @@
 
     <div class="row">
       <div class="col-xs-6 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('categories/add', $prms); ?>" data-modify class="button">
+        <a href="<?= _A_::$app->router()->UrlTo('categories/add'); ?>" data-modify class="button">
           ADD NEW CATEGORY
         </a>
       </div>

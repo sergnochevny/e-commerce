@@ -21,6 +21,16 @@
             </div>
             <div class="col-xs-12">
               <div class="row">
+                <div class="col-xs-12">
+                  <label class="required_field">
+                    Site Name (Title)
+                  </label>
+                  <i class="fa fa-question-circle" data-promotion="" href="#system_site_name"></i>
+                  <div class="form-row">
+                    <input type="email" name="system_site_name" class="input-text"
+                           value="<?= $data['system_site_name']; ?>"/>
+                  </div>
+                </div>
                 <div class="col-xs-6">
                   <div class="form-row">
                     <label>

@@ -226,7 +226,7 @@
           array_shift($parts);
           continue;
         }
-        if(is_file($cmd_path . '_' . $part . '.php')) {
+        if(is_file($cmd_path . 'controller_' . $part . '.php')) {
           $this->controller = $part;
           array_shift($parts);
           break;

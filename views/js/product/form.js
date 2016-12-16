@@ -126,14 +126,6 @@
       }
     );
 
-    $('input[data-input_filter_search]').on('change',
-      function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        $(this).parents('.row').find('[data-filter-search]').trigger('click');
-      }
-    );
-
     $('li.select_item input').on('change',
       function (event) {
         if (!this.checked) {

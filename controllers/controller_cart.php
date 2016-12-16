@@ -12,7 +12,7 @@
         }
         $_cart = _A_::$app->session('cart');
         $_cart['items'] = $cart_items;
-        _A_::$app->session('cart', $_cart);
+        _A_::$app->setSession('cart', $_cart);
       }
     }
 

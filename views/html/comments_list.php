@@ -1,7 +1,4 @@
-<?php
-    $opt['id'] = $row['id'];
-    $opt['page'] = $page;
-?>
+<?php $opt['id'] = $row['id'];?>
 <div class="col-xs-12 table-list-row">
     <div class="row">
         <div class="col-xs-12 col-sm-4 table-list-row-item">

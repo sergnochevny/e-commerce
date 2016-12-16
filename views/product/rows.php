@@ -1,7 +1,6 @@
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
-    <?php $prms['pid'] = $row['pid'];
-    if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
+    <?php $prms['pid'] = $row['pid'];?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">
       <div class="product-inner">
         <div class="product-price-box clearfix">

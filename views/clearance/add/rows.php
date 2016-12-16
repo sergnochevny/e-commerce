@@ -1,14 +1,12 @@
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
-    <?php $prms['pid'] = $row['pid'];
-    if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
+    <?php $prms['pid'] = $row['pid']; ?>
     <div class="col-xs-12 col-sm-6  product-item">
       <label class="product-block<?= !empty($row['id']) ? ' checked' : ''; ?>" style="font-weight: normal; margin-left: 0; height: auto">
         <input data-clearance_chk
                type="checkbox" <?= !empty($row['id']) ? 'checked' : ''; ?>
           <?php
             $prms = !empty($row['id']) ? ['id' => $row['id']] : null;
-            if(!empty(_A_::$app->get('page')))$prms['page']=_A_::$app->get('page');
             if($scenario == 'add') $prms['method'] = $scenario;
           ?>
                data-action="<?= _A_::$app->router()->UrlTo('clearance' . DS . (!empty($row['id']) ? 'delete' : 'add'), $prms); ?>"

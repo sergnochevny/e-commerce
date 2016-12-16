@@ -93,6 +93,16 @@
       $this->scenario('');
     }
 
+    protected function after_get_list(&$rows, $view = false, $type = null) {
+      $url_prms = null;
+      if($view){
+        $url_prms['back'] = urlencode(base64_encode('clearance/view'));
+      }else{
+        $url_prms['back'] = 'clearance';
+      }
+      $this->template->vars('url_prms', $url_prms);
+    }
+
     public function edit($required_access = true) { }
 
     /**

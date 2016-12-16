@@ -447,7 +447,6 @@
 
     protected function after_get_data_item_view(&$data) {
       $prms=null;
-      if(!empty(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
       if((!empty(_A_::$app->get('cat')))) $prms['cat'] = _A_::$app->get('cat');
       $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('blog/view', $prms));
       if(isset($data)) {

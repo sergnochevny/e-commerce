@@ -1,10 +1,3 @@
-<?php
-  $prms = null;
-  if (!is_null(_A_::$app->get('page'))) {
-    $prms['page'] = _A_::$app->get('page');
-  }
-?>
-
 <div class="col-xs-12 text-center afterhead-row">
   <h3 class="page-title">Products</h3>
 </div>
@@ -16,7 +9,7 @@
 
     <div class="row">
       <div class="col-xs-6 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('product/add', $prms); ?>" data-modify class="button">
+        <a href="<?= _A_::$app->router()->UrlTo('product/add'); ?>" data-modify class="button">
           ADD NEW PRODUCT
         </a>
       </div>

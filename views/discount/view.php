@@ -151,7 +151,6 @@
               $prms['oid'] = $order[0];
               $prms['sid'] = _A_::$app->get('sid');
               $prms['discount'] = true;
-              if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
               $edit_url = _A_::$app->router()->UrlTo('orders/edit', $prms);
               $view_url = _A_::$app->router()->UrlTo('orders/view', $prms);
               ?>

@@ -95,12 +95,8 @@
 
     public function is_any_authorized($redirect = null) {
       if(!Controller_AdminBase::is_logged() && !Controller_UserBase::is_logged()) {
-        $prms = [];
-        if(isset($redirect)) {
-          $prms = ['url' => urlencode(base64_encode(_A_::$app->router()->UrlTo($redirect)))];
-        }
-          $url = _A_::$app->router()->UrlTo('authorization', $prms);
-          $this->redirect($url);
+        $prms =isset($redirect) ? ['url' => urlencode(base64_encode(_A_::$app->router()->UrlTo($redirect)))] : null;
+        $this->redirect(_A_::$app->router()->UrlTo('authorization', $prms));
       } else {
         if (Controller_AdminBase::is_logged()) return 'admin';
         if (Controller_UserBase::is_logged()) return 'user';
@@ -112,9 +108,7 @@
         $msg = _A_::$app->get()['msg'];
         if($msg == 'remind_sent') {
           $prms = null;
-          if(!is_null(_A_::$app->get('url'))) {
-            $prms['url'] = _A_::$app->get('url');
-          }
+          if(!is_null(_A_::$app->get('url'))) $prms['url'] = _A_::$app->get('url');
           $back_url = _A_::$app->router()->UrlTo('user', $prms);
           $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!';
         } elseif($msg == 'remind_expired') {

@@ -1,11 +1,4 @@
-<?php
-  $prms = null;
-  if(!is_null(_A_::$app->get('page'))) {
-    $prms['page'] = _A_::$app->get('page');
-  }
-  include_once 'views/messages/alert-boxes.php';
-?>
-
+<?php  include_once 'views/messages/alert-boxes.php';?>
 <div class="col-xs-12 text-center afterhead-row">
   <h3 class="page-title">Manufacturers</h3>
 </div>
@@ -17,7 +10,7 @@
 
     <div class="row">
       <div class="col-xs-6 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('manufacturers/add', $prms); ?>" data-modify class="button">
+        <a href="<?= _A_::$app->router()->UrlTo('manufacturers/add'); ?>" data-modify class="button">
           ADD NEW MANUFACTURER
         </a>
       </div>

@@ -68,23 +68,41 @@
       $prms = null;
       if(!isset($back_url)) $this->build_back_url($back_url, $prms);
       if(isset($back_url)) {
-        if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
         $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
         $this->template->vars('back_url', $back_url);
       }
     }
 
-    protected function load_search_filter() {
+    protected function load_search_filter(&$filter, $view = false) {
       //  Implementation save the search context
+      $idx = (isset($filter['type']) ? $filter['type'] : '') . '_' . (!empty($this->scenario()) ? $this->scenario() : '');
+      $idx = !empty($idx) ? $idx : 0;
       if(_A_::$app->request_is_post()) {
+
+        if(!empty(_A_::$app->get('page'))) {
+          $pages = _A_::$app->session('pages');
+          $pages[Controller_AdminBase::is_logged()][$view][$this->controller][$idx] = _A_::$app->get('page');
+          _A_::$app->setSession('pages', $pages);
+        } else {
+          $pages = _A_::$app->session('pages');
+          if(isset($pages[Controller_AdminBase::is_logged()][$view][$this->controller][$idx])) {
+            unset($pages[Controller_AdminBase::is_logged()][$view][$this->controller][$idx]);
+            _A_::$app->setSession('pages', $pages);
+          }
+        }
+
         $search = _A_::$app->post('search');
         $filters = _A_::$app->session('filters');
-        $filters[$this->controller] = $search;
-        _A_::$app->session('filters', $filters);
+        if(isset($search)) {
+          $filters[Controller_AdminBase::is_logged()][$view][$this->controller][$idx] = $search;
+        } else {
+          unset($filters[Controller_AdminBase::is_logged()][$view][$this->controller][$idx]);
+        }
+        _A_::$app->setSession('filters', $filters);
       } else {
         $filters = _A_::$app->session('filters');
-        if(isset($filters[$this->controller])) {
-          $search = $filters[$this->controller];
+        if(isset($filters[Controller_AdminBase::is_logged()][$view][$this->controller][$idx])) {
+          $search = $filters[Controller_AdminBase::is_logged()][$view][$this->controller][$idx];
         } else return null;
       }
       return $search;
@@ -95,7 +113,7 @@
       $filter = null;
       $fields = $this->search_fields($view);
       if(isset($fields)) {
-        $search = $this->load_search_filter();
+        $search = $this->load_search_filter($filter, $view);
         $h_search = isset($search['hidden']) ? $search['hidden'] : null;
         if(isset($search)) {
           $search_form = array_filter($search, function($val) {
@@ -168,7 +186,10 @@
     protected function get_list($view = false) {
       $search_form = $this->build_search_filter($filter, $view);
       $this->build_order($sort, $view);
-      $page = !empty(_A_::$app->get('page')) ? _A_::$app->get('page') : 1;
+      $pages = _A_::$app->session('pages');
+      $idx = (isset($filter['type']) ? $filter['type'] : '') . '_' . (!empty($this->scenario()) ? $this->scenario() : '');
+      $idx = !empty($idx) ? $idx : 0;
+      $page = !empty($pages[Controller_AdminBase::is_logged()][$view][$this->controller][$idx]) ? $pages[Controller_AdminBase::is_logged()][$view][$this->controller][$idx] : 1;
       $per_page = $this->per_page;
       $filter['scenario'] = $this->scenario();
       $total = forward_static_call([$this->model_name, 'get_total_count'], $filter);

@@ -25,7 +25,6 @@
             <span class="extra_discount">Extra Discount!</span>
           <?php }
             $url_prms['pid'] = $row['pid'];
-            $url_prms['back'] = urldecode(base64_decode('clearance/view'));
             $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr','prc']);
           ?>
 

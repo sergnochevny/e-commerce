@@ -1,9 +1,3 @@
-<?php
-  $prms = null;
-  if(!is_null(_A_::$app->get('page'))) {
-    $prms['page'] = _A_::$app->get('page');
-  }
-?>
 <div class="col-xs-12">
   <div class="col-xs-12 text-center">
     <div class="h3" style="padding-bottom: 15px">Select Related Fabrics</div>

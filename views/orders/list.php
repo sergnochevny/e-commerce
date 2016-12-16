@@ -1,13 +1,6 @@
 <?php
   $user_id = _A_::$app->get('aid');
   $is_admin = Controller_Admin::is_logged();
-//  $prms = null;
-//  if(!is_null(_A_::$app->get('page'))) {
-//    $prms['page'] = _A_::$app->get('page');
-//  }
-//  if(!is_null(_A_::$app->get('back'))) {
-//    $back_url = _A_::$app->router()->UrlTo(_A_::$app->get('back'), $prms);
-//  }
   include_once 'views/messages/alert-boxes.php';
 ?>
 

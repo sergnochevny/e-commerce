@@ -58,6 +58,7 @@
         $this->form_after_get_data($data);
       }
       $this->before_form_layout($data);
+      $prms = null;
       if(!is_null($this->scenario())) $prms['method'] = $this->scenario();
       $action = _A_::$app->router()->UrlTo($url, $prms);
       $this->template->vars('scenario', $this->scenario());

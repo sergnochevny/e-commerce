@@ -42,7 +42,6 @@
       $prms = null;
       if(isset($id)) $prms[$this->id_name] = $id;
       if(!empty($this->scenario())) $prms['method'] = $this->scenario();
-      if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
       $action = _A_::$app->router()->UrlTo($url, $prms);
       $this->template->vars($this->id_name, $id);
       $this->template->vars('data', $data);

@@ -16,11 +16,11 @@
       <ul class="filter_sel sel_item">
         <?php if(isset($filter_data_start) && ($filter_data_start > 0)): ?>
           <li class="select_item">
-            <div class="col-xs-122">
+            <div class="col-xs-12">
               <div class="row text-center">
                 <a href="filter" data-filter-type="<?= $filter_type; ?>" data-move="up"
-                   data-filter-search class="button-move"
-                   title="back..."
+                   data-filter-search class="button-move move-up"
+                   title="previous..."
                    data-destination="<?= $destination; ?>">
                   <i class="fa fa-chevron-up" aria-hidden="true"></i>
                 </a>
@@ -48,8 +48,8 @@
               <div class="col-xs-12">
                 <div class="row text-center">
                   <a href="filter" data-filter-type="<?= $filter_type; ?>" data-move="down"
-                     data-filter-search class="button-move"
-                     title="more..."
+                     data-filter-search class="button-move move-down"
+                     title="next..."
                      data-destination="<?= $destination; ?>">
                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                   </a>
@@ -62,4 +62,5 @@
   </div>
   <input type="hidden" name="filter_start_<?= $filter_type; ?>" value="<?= $filter_data_start; ?>">
 </div>
+<div class="clearfix"></div>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/ui.min.js'); ?>' type="text/javascript"></script>

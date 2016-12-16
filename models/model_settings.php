@@ -4,6 +4,7 @@
 
     public static function get_by_id($id) {
       $data = [
+        'system_site_name' => (!is_null(_A_::$app->keyStorage()->system_site_name) ? _A_::$app->keyStorage()->system_site_name : ''),
         'system_enable_sef' => (!is_null(_A_::$app->keyStorage()->system_enable_sef) ? _A_::$app->keyStorage()->system_enable_sef : ENABLE_SEF),
         'system_demo' => (!is_null(_A_::$app->keyStorage()->system_demo) ? _A_::$app->keyStorage()->system_demo : DEMO),
         'system_captcha_time' => (!is_null(_A_::$app->keyStorage()->system_captcha_time) ? _A_::$app->keyStorage()->system_captcha_time : CAPTCHA_RELEVANT),

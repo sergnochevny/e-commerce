@@ -1,5 +1,4 @@
 <?php
-  if(!empty(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page');
   if((!empty(_A_::$app->get('cat')))) $prms['cat'] = _A_::$app->get('cat');
 
   if(count($rows) > 0): ?>

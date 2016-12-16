@@ -2,8 +2,7 @@
   <section class="just-posts-grid">
     <div class="just-post-row row">
       <?php foreach($rows as $row): ?>
-        <?php $prms['id'] = $row['id'];
-        if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
+        <?php $prms['id'] = $row['id'];?>
 
         <div class="just-post col-xs-12 col-sm-6 col-md-4">
           <div class="just-post-image just-post-image-admin">

@@ -1,10 +1,3 @@
-<?php
-  $prms = null;
-  if(!is_null(_A_::$app->get('page'))) {
-    $prms['page'] = _A_::$app->get('page');
-  }
-?>
-
 <div class="col-xs-12 text-center afterhead-row">
   <h3 class="page-title">Comments</h3>
 </div>

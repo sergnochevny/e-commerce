@@ -49,8 +49,7 @@
       </form>
     </div>
     <?php foreach($rows as $row): ?>
-      <?php $prms['cid'] = $row['cid'];
-      if(!is_null(_A_::$app->get('page'))) $prms['page'] = _A_::$app->get('page'); ?>
+      <?php $prms['cid'] = $row['cid'];?>
       <div class="col-xs-12 table-list-row">
         <div class="row">
           <div class="col-xs-12 col-sm-8 table-list-row-item">
