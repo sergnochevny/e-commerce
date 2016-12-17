@@ -84,30 +84,41 @@
       //  Implementation save the search context
       $idx = $this->load_search_filter_get_idx($filter, $view);
       if(_A_::$app->request_is_post()) {
-
-        if(!empty(_A_::$app->get('page'))) {
-          $pages = _A_::$app->session('pages');
-          $pages[$this->controller][$idx] = _A_::$app->get('page');
-          _A_::$app->setSession('pages', $pages);
-        } else {
-          $pages = _A_::$app->session('pages');
-          if(isset($pages[$this->controller][$idx])) {
-            unset($pages[$view][$this->controller][$idx]);
-            _A_::$app->setSession('pages', $pages);
-          }
-        }
         $search = _A_::$app->post('search');
-        $filters = _A_::$app->session('filters');
-        if(isset($search)) {
-          $filters[$this->controller][$idx] = $search;
-        } else {
-          unset($filters[$this->controller][$idx]);
+        if(isset($search)){
+          if(isset($search['hidden'])) unset($search['hidden']);
+          if((is_array($search) && !count($search)) || !is_array($search)) $search = null;
         }
-        _A_::$app->setSession('filters', $filters);
+        if(isset($search)){
+          if(!empty(_A_::$app->get('page'))) {
+            $pages = _A_::$app->session('pages');
+            $pages[$this->controller][$idx] = _A_::$app->get('page');
+            _A_::$app->setSession('pages', $pages);
+          } else {
+            $pages = _A_::$app->session('pages');
+            if(isset($pages[$this->controller][$idx])) {
+              unset($pages[$this->controller][$idx]);
+              _A_::$app->setSession('pages', $pages);
+            }
+          }
+          $search = _A_::$app->post('search');
+          $filters = _A_::$app->session('filters');
+          if(isset($search)) {
+            $filters[$this->controller][$idx] = $search;
+          } else {
+            unset($filters[$this->controller][$idx]);
+          }
+          _A_::$app->setSession('filters', $filters);
+        } else {
+          $filters = _A_::$app->session('filters');
+          if(isset($filters[$this->controller][$idx])) {
+            $search = $filters[$this->controller][$idx];
+          } else return null;
+        }
       } else {
         $filters = _A_::$app->session('filters');
         if(isset($filters[$this->controller][$idx])) {
-          $search = $filters[$view][$this->controller][$idx];
+          $search = $filters[$this->controller][$idx];
         } else return null;
       }
       return $search;
