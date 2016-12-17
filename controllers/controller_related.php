@@ -86,9 +86,8 @@
       $search_form = $c_product->build_search_filter($filter, $view);
       $c_product->build_order($sort, $view);
       $pages = _A_::$app->session('pages');
-      $idx = (isset($filter['type']) ? $filter['type'] : '') . '_' . (!empty($this->scenario()) ? $this->scenario() : '');
-      $idx = !empty($idx) ? $idx : 0;
-      $page = !empty($pages[Controller_AdminBase::is_logged()][$view][$this->controller][$idx]) ? $pages[Controller_AdminBase::is_logged()][$view][$this->controller][$idx] : 1;
+      $idx = $this->load_search_filter_get_idx($filter, $view);
+      $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
       $per_page = $this->per_page;
       $total = Model_Product::get_total_count($filter);
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);

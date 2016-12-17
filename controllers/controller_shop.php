@@ -67,9 +67,14 @@
         _A_::$app->setSession('sidebar_idx', 4);
       }
       if(!is_null(_A_::$app->get('prc'))) {
-        $this->template->vars('prc_from', isset($filter['hidden']['a.priceyard']['from']) ? $filter['hidden']['a.priceyard']['from'] : null);
-        $this->template->vars('prc_to', isset($filter['hidden']['a.priceyard']['to']) ? $filter['hidden']['a.priceyard']['to'] : null);
-        _A_::$app->setSession('sidebar_idx', 5);
+       $prc_id = _A_::$app->get('prc');
+        if($prc = Model_Prices::get_by_id($prc_id)){
+          unset($filter['hidden']['a.priceyard']);
+          $filter['hidden']['a.priceyard']['from'] = (isset($prc['min_price']) ? $prc['min_price'] : null);
+          $filter['hidden']['a.priceyard']['to'] = (isset($prc['max_price']) ? $prc['max_price'] : null);
+          $this->template->vars('prc_from', isset($filter['hidden']['a.priceyard']['from']) ? $filter['hidden']['a.priceyard']['from'] : null);
+          $this->template->vars('prc_to', isset($filter['hidden']['a.priceyard']['to']) ? $filter['hidden']['a.priceyard']['to'] : null);
+        };
       }
       if(isset($type)) {
         $filter['type'] = $type;
@@ -87,9 +92,6 @@
             $filter['hidden']['a.specials'] = '1';
             $res['hidden']['a.specials'] = '1';
             _A_::$app->setSession('sidebar_idx', 6);
-            break;
-          case 'prices':
-            _A_::$app->setSession('sidebar_idx', 5);
             break;
         }
       }
@@ -180,7 +182,7 @@
       $page = !empty($pages[Controller_AdminBase::is_logged()][false][$this->controller][$idx]) ? $pages[Controller_AdminBase::is_logged()][false][$this->controller][$idx] : 1;
       $per_page = $this->per_page;
       $total = Model_Shop::get_total_count($filter);
-      if($total > $max_count_items) $total = $max_count_items;
+      if(($total > $max_count_items) && ($max_count_items > 0)) $total = $max_count_items;
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
       if($page <= 0) $page = 1;
       $start = (($page - 1) * $per_page);
@@ -228,6 +230,18 @@
       } else {
         $back_url = 'shop';
       }
+    }
+
+    protected function load_search_filter_get_idx($filter, $view = false){
+      $idx = Controller_AdminBase::is_logged() . '_' . $view;
+      if((!empty(_A_::$app->get('cat')))) $idx .= '_cat_';
+      if((!empty(_A_::$app->get('mnf')))) $idx .= '_mnf_';
+      if((!empty(_A_::$app->get('ptrn')))) $idx .= '_ptrn_';
+      if((!empty(_A_::$app->get('clr')))) $idx .= '_clr_';
+      if((!empty(_A_::$app->get('prc')))) $idx .= '_prc_';
+      $idx .= (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
+      $idx = !empty($idx) ? $idx : 0;
+      return $idx;
     }
 
     /**
