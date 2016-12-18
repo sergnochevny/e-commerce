@@ -49,6 +49,7 @@
 
     public static function save(&$data) {
       extract($data);
+      _A_::$app->keyStorage()->system_site_name = $system_site_name;
       _A_::$app->keyStorage()->system_enable_sef = $system_enable_sef;
       _A_::$app->keyStorage()->system_demo = $system_demo;
       _A_::$app->keyStorage()->system_captcha_time = $system_captcha_time;

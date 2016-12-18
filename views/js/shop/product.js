@@ -6,7 +6,7 @@
   var related = $('[data-related]');
 
   if (related.length) {
-    $('body').waitloader('show');
+    $(related).waitloader('show');
     var url = $('[data-href_related]').val();
     related.load(url,
       function () {
@@ -20,8 +20,6 @@
           autoplayHoverPause: false,
           dots: true
         });
-
-        $('body').waitloader('remove');
       }
     );
   }

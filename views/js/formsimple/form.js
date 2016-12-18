@@ -10,7 +10,7 @@
     var data = new FormData(this);
     var container = $(this).parents('[data-role=form_content]');
     if (container.length == 0) container = $(this).parent();
-    $('body').waitloader('show');
+    $(container).waitloader('show');
     $.postdata(this, url, data, function (data) {
       container.html(data);
     });

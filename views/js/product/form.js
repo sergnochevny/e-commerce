@@ -23,18 +23,15 @@
   setEvToFilter();
 
   function postdata(this_, url, data, context, callback) {
-    $('body').waitloader('show');
     $.postdata(this_, url, data, function (data) {
       if (context !== undefined && context !== null) {
         $.when(context.html(data)).done(
           function () {
             if (callback) callback.call(this_, data);
-            $('body').waitloader('remove');
           }
         );
       } else {
         if (callback) callback.call(this_, data);
-        $('body').waitloader('remove');
       }
     });
   }
@@ -174,12 +171,11 @@
     if (!$(this).is('.disabled')) {
       var href = $(this).attr('href');
       $("#confirm_action").on('click.confirm_action', function (event) {
-        $('body').waitloader('show');
+        $('#content').waitloader('show');
         event.preventDefault();
         $("#confirm_dialog").removeClass('overlay_display');
         $('#content').load(href);
         $("#confirm_action").off('click.confirm_action');
-        $('body').waitloader('remove');
       });
       $("#confirm_dialog").addClass('overlay_display');
     }

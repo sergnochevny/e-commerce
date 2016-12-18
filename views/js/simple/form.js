@@ -13,7 +13,7 @@
 
   $('#edit_form').on('submit', function (event) {
     event.preventDefault();
-    $('body').waitloader('show');
+    $('#content').waitloader('show');
     var url = $(this).attr('action');
     var data = new FormData(this);
     $.postdata(this, url, data, function (data) {

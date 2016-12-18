@@ -15,7 +15,7 @@
       var href = $(this).attr('href');
       $("#confirm_action").on('click.confirm_action', function (event) {
         event.preventDefault();
-        $('body').waitloader('show');
+        $('#content').waitloader('show');
         $("#confirm_action").off('click.confirm_action');
         $("#confirm_dialog").removeClass('overlay_display');
 
@@ -31,7 +31,6 @@
         $.postdata(this, href, data,
           function (data) {
             $('#content').html(data);
-            $('body').waitloader('remove');
           }
         );
 
