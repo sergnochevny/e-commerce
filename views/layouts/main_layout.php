@@ -25,7 +25,6 @@
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/offsets.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/bootstrap.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/font-awesome.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/js_composer.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/webfont.css'); ?>'/>
   <link rel='stylesheet' type="text/css"
@@ -55,7 +54,7 @@
   <script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
           type="text/javascript"></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/search/search.min.js'); ?>'></script>
-  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.min.js'); ?>'></script>
+  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
   <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
 
 </head>

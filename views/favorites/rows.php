@@ -34,7 +34,7 @@
                 include('views/cart/basket.php');
               } else {
                 ?>
-                <a class="button add-to-basket" href="<?= $href; ?>">View Details</a>
+                <a data-waitloader class="button add-to-basket" href="<?= $href; ?>">View Details</a>
                 <?php
               }
             ?>

@@ -3,8 +3,9 @@
 var change_text = false;
 
 (function ($) {
+
   $.extend({
-    init_input:function(){
+    init_input: function () {
       $('input[type=text]').textinput();
       $('input[type=textarea]').textinput();
       $('input[type=number]').textinput();
@@ -52,8 +53,8 @@ var change_text = false;
     },
     /*$.post function replacement*/
     postdata: function (this_, url, data, callback, loader) {
-      if(typeof loader == 'undefined') loader = true;
-      if(loader) $('body').waitloader('show');
+      if (typeof loader == 'undefined') loader = true;
+      if (loader) $('body').waitloader('show');
       $.ajax({
         type: 'POST',
         url: url,
@@ -64,15 +65,15 @@ var change_text = false;
         success: function (data) {
           if (callback) {
             $.when(callback.call(this_, data)).done(function () {
-              if(loader) $('body').waitloader('remove');
+              if (loader) $('body').waitloader('remove');
             });
           } else {
-            if(loader) $('body').waitloader('remove');
+            if (loader) $('body').waitloader('remove');
           }
         },
         error: function (xhr, str) {
           alert('Error: ' + xhr.responseCode);
-          if(loader) $('body').waitloader('remove');
+          if (loader) $('body').waitloader('remove');
         },
       });
     }
@@ -86,13 +87,11 @@ var change_text = false;
       switch (action) {
         case 'show':
           if ($('#wait_loader').length == 0) {
-            $(wait_loader_fa).appendTo(this).css('z-index', '9999');
+            $(wait_loader_fa).appendTo(this).css('z-index', '999999999');
           }
           break;
         case 'remove':
-          if ($('#wait_loader').length > 0) {
-            $('#wait_loader').remove();
-          }
+          $('#wait_loader').remove();
           break;
       }
     },
@@ -125,6 +124,7 @@ var change_text = false;
       event.stopPropagation();
       var data = new FormData(this);
       var url = $(this).attr('action');
+      $('#content').waitloader('show');
       $.postdata(this, url, data,
         function (data) {
           $('#slider').remove();
@@ -230,10 +230,17 @@ var change_text = false;
     }
   );
 
-  $(document).on('focusout', '.focus input',
+  $(document).on('focusout', '.focus input , textarea.focus',
     function (event) {
       $(this).parent().removeClass('focus')
     }
   );
+  $(document).on('focusout', 'textarea.focus',
+    function (event) {
+      $(this).removeClass('focus')
+    }
+  );
+
+  body.waitloader('remove');
 
 })(jQuery);

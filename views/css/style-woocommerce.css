@@ -262,7 +262,7 @@ span#b_in_product {
 }
 
 .ui-input-text input {
-    background-color: rgba(255, 255, 255, 0);;
+    background-color: rgba(255, 255, 255, 0);
     /*border: 1px solid #DDD;*/
     border-radius: 2px !important;
     -webkit-border-radius: 2px !important;
@@ -614,7 +614,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     margin: 0;
     width: 100%;
     display: inline-block;
-    background-position: top center;;
+    background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 250px;
@@ -1946,7 +1946,7 @@ ul.product_list_widget li dl dd p {
     width: 100px;
     height: 100px;
     display: inline-block;
-    background-position: top center;;
+    background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
     -webkit-transition: all .2s ease-in;

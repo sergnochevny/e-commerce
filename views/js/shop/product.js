@@ -4,10 +4,10 @@
   var base_url = $('#base_url').val();
   var back_url = $('#back_url').attr('href');
   var related = $('[data-related]');
-
-  if (related.length) {
+  var related_href = $('[data-href_related]');
+  if (related_href.length) {
     $(related).waitloader('show');
-    var url = $('[data-href_related]').val();
+    var url = related_href.val();
     related.load(url,
       function () {
         $('[data-carousel]').owlCarousel({

@@ -1113,6 +1113,8 @@ a.button-move:focus, a.button-move:hover {
 .footer-block {
     display: flex;
     flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: baseline;
 }
 
 .b_modify_image_pic {
@@ -1656,20 +1658,12 @@ span.opa {
         height: 340px !important;
     }
 
-    .vc_custom_1439733758005 {
-        padding-top: 50px !important;
-    }
-
     .woocommerce ul.products li.product, .woocommerce-page ul.products li.product, .woocommerce-page[class*=columns-] ul.products li.product, .woocommerce[class*=columns-] ul.products li.product {
         margin-bottom: 1em;
     }
 
     .just-cta .just-cta-title {
         font-size: 40px;
-    }
-
-    .vc_custom_1439734618195 {
-        padding-top: 50px !important;
     }
 
     .just-cta a.just-cta-button {

@@ -1,5 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      class="js_active vc_desktop vc_transform vc_transform wf-montserrat-n4-active wf-montserrat-n7-active wf-playfairdisplay-n4-active wf-playfairdisplay-n7-active wf-active">
+      class="js_active">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title><?= _A_::$app->keyStorage()->system_site_name;?></title>
@@ -27,9 +27,6 @@
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/font-awesome.min.scss') ?>"
         type="text/css"
         media="all">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/js_composer.min.css') ?>"
-        type="text/css"
-        media="all">
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/simple-line-icons.css') ?>"
         type="text/css"
         media="all">
@@ -55,7 +52,7 @@
 </head>
 
 <body
-  class="page page-template-default woocommerce-account woocommerce-page header-large ltr wpb-js-composer js-comp-ver-4.8.1 vc_responsive">
+  class="page page-template-default woocommerce-account woocommerce-page header-large ltr">
 <div class="site-container">
   <header class="site-header">
     <div class="header-topnav">
