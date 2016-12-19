@@ -2,10 +2,10 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title><?= isset($meta['page_Name']) ? $meta['page_Name'] : ''; ?></title>
+  <title><?= isset($meta['title']) ? $meta['title'] : ''; ?></title>
 
-  <meta name="KeyWords" content="<?= isset($meta['page_KeyWords']) ? $meta['page_KeyWords'] : ''; ?>">
-  <meta name="Description" content="<?= isset($meta['page_Description']) ? $meta['page_Description'] : ''; ?>">
+  <meta name="KeyWords" content="<?= isset($meta['keywords']) ? $meta['keywords'] : ''; ?>">
+  <meta name="Description" content="<?= isset($meta['description']) ? $meta['description'] : ''; ?>">
 
   <link rel="icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
   <link rel="shortcut icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>

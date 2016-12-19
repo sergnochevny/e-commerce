@@ -50,12 +50,11 @@
       return $res;
     }
 
-    public static function meta_page($route_control) {
+    public static function meta_page() {
       $page_Description = '';
       $page_KeyWords = '';
       $page_Name = '';
 
-      $route_control = explode('/', $route_control)[0];
       if(_A_::$app->router()->controller == 'blog' && _A_::$app->router()->action == 'view') {
         $post_id = !is_null(_A_::$app->get('id')) ? _A_::$app->get('id') : null;
         if(isset($post_id)) {
@@ -71,7 +70,7 @@
             $page_KeyWords = stripslashes($row['keywords']);
           }
         }
-      } elseif($route_control == "product") {
+      } elseif(_A_::$app->router()->controller == 'shop' && _A_::$app->router()->action == "product") {
         $pid = _A_::$app->get('pid');
         $result = mysql_query("select * from fabrix_products WHERE pid='$pid'");
         $row = mysql_fetch_array($result);
@@ -79,7 +78,7 @@
         $page_KeyWords = $row['metakeywords'];
         $page_Name = $row['pname'];
       } else {
-        $result = mysql_query("SELECT * FROM page_title WHERE control LIKE '$route_control'");
+        $result = mysql_query("SELECT * FROM page_title WHERE control LIKE '" . _A_::$app->router()->controller . "'");
         $row = mysql_fetch_array($result);
         if(!empty($row['id'])) {
           $page_Name = $row['name_page'];
@@ -95,7 +94,7 @@
         array_unshift($keywords, strtolower(_A_::$app->keyStorage()->system_site_name));
         $page_KeyWords = implode(',', $keywords);
       }
-      return ['page_KeyWords' => $page_KeyWords, 'page_Description' => $page_Description, 'page_Name' => $page_Name];
+      return ['keywords' => $page_KeyWords, 'description' => $page_Description, 'title' => $page_Name];
     }
 
   }

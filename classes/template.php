@@ -5,6 +5,7 @@
     private $template;
     private $layouts;
     private $vars = [];
+    private $meta = null;
     public $controller;
 
     public function __construct($layouts, $controllerName) {
@@ -45,4 +46,12 @@
       include($contentPage);
     }
 
+    public function setMeta($key, $value) {
+      $this->meta[$key] = $value;
+    }
+
+    public function getMeta($key = null) {
+      if(isset($key)) return isset($this->meta[$key]) ? $this->meta[$key] : null;
+      return $this->meta;
+    }
   }

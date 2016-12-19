@@ -224,6 +224,7 @@
     public static function get_product($pid) {
       self::inc_popular($pid);
       $row = Model_Product::get_by_id($pid);
+      if(!$row) throw new Exception('The Required Fabric do not exist!!');
       $sys_hide_price = Model_Price::sysHideAllRegularPrices();
       $cart = _A_::$app->session('cart');
       $response = self::prepare_layout_product_detail($row, $cart, $sys_hide_price);

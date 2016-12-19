@@ -1111,10 +1111,6 @@ a.button-move:focus, a.button-move:hover {
 }
 
 .footer-block {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-end;
-    align-items: baseline;
 }
 
 .b_modify_image_pic {

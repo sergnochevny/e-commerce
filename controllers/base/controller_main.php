@@ -39,12 +39,8 @@
     }
 
     public function meta_page() {
-      $route = _A_::$app->server('QUERY_STRING');
-      $route = substr($route, 6);
-      $route = trim($route, '/\\');
-      $route = explode('&', $route);
-      $route_control = $route[0];
-      $meta = Model_Tools::meta_page($route_control);
+      $meta = $this->template->getMeta();
+      if (empty($meta) || !is_array($meta)) $meta = Model_Tools::meta_page();
       $this->template->vars('meta', $meta);
     }
 

@@ -67,8 +67,8 @@
         _A_::$app->setSession('sidebar_idx', 4);
       }
       if(!is_null(_A_::$app->get('prc'))) {
-       $prc_id = _A_::$app->get('prc');
-        if($prc = Model_Prices::get_by_id($prc_id)){
+        $prc_id = _A_::$app->get('prc');
+        if($prc = Model_Prices::get_by_id($prc_id)) {
           unset($filter['hidden']['a.priceyard']);
           $filter['hidden']['a.priceyard']['from'] = (isset($prc['min_price']) ? $prc['min_price'] : null);
           $filter['hidden']['a.priceyard']['to'] = (isset($prc['max_price']) ? $prc['max_price'] : null);
@@ -232,7 +232,7 @@
       }
     }
 
-    protected function load_search_filter_get_idx($filter, $view = false){
+    protected function load_search_filter_get_idx($filter, $view = false) {
       $idx = Controller_AdminBase::is_logged() . '_' . $view;
       if((!empty(_A_::$app->get('cat')))) $idx .= '_cat_';
       if((!empty(_A_::$app->get('mnf')))) $idx .= '_mnf_';
@@ -400,6 +400,13 @@
     public function product() {
       $pid = _A_::$app->get('pid');
       $data = Model_Shop::get_product($pid);
+
+      if(!empty($data['metadescription']) && !empty($row['metakeywords']) && !empty($row['pname'])) {
+        $this->template->setMeta('description', $data['metadescription']);
+        $this->template->setMeta('keywords', $data['metakeywords']);
+        $this->template->setMeta('title', $data['pname']);
+      }
+
       ob_start();
       if($data['rSystemDiscount'] > 0) {
         $field_name = "Sale price:";

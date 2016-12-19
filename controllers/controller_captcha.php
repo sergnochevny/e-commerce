@@ -90,7 +90,7 @@
         $captcha_relevant = (!is_null(_A_::$app->keyStorage()->system_captcha_time) ? _A_::$app->keyStorage()->system_captcha_time : CAPTCHA_RELEVANT);
         if ($captcha_relevant > (time()-_A_::$app->session('captcha_time'))){
           $salt = Model_Auth::generatestr();
-          $hash = Model_Auth::hash_($captcha, $salt, 12);
+          $hash = Model_Auth::hash_(strtolower($captcha), $salt, 12);
           if($hash == Model_Auth::check(_A_::$app->session('captcha'), $hash)) {
             $res = true;
           } else {$error[] = 'Invalid Captcha verification!';}
