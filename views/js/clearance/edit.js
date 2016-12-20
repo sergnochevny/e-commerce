@@ -3,7 +3,7 @@
   function _postdata(this_, url, data, callback) {
     $.postdata(this_, url, data,
       function (data) {
-        $.when($('[data-edit_products]').html(data)).done(
+        $.when($('[data-products_block]').html(data)).done(
           function(){
             if(callback) callback.call(this_);
           }
@@ -55,7 +55,7 @@
         };
       } else {
         var callback = function (data) {
-          $('[data-edit_products]').html(data);
+          $('[data-products_block]').html(data);
           $('body').waitloader('remove');
         };
       }
@@ -69,6 +69,7 @@
       event.preventDefault();
       if (reset) {
         var data = new FormData();
+        data.append('search[reset]', true);
       } else {
         var data = new FormData(this);
       }

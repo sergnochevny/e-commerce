@@ -1,6 +1,6 @@
 <link rel='stylesheet' charset="UTF-8"
       href='<?php echo _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>' type='text/css' media='all'/>
-<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/matches.css'); ?>'
+<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('views/css/matches.min.css'); ?>'
       type='text/css' media='all'/>
 <div id="content" class="container">
   <div class="entry-content">

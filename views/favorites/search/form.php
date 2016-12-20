@@ -42,7 +42,7 @@
                 <div class="label label-search-info">
                   Piece: <?= isset($search['a.piece']) && $search['a.piece'] == 1 ? 'YES' : 'NO' ?></div>
               <?php endif; ?>
-              <?= isset($search['active']) ? '<a data-search_reset  href="javascript:void(\'\')" title="Reset search" class="button reset"><i class="fa fa-2x fa-times" aria-hidden="true"></i></a>' : '' ?>
+              <?= isset($search['active']) ? '<a data-search_reset  href="javascript:void(0)" title="Reset search" class="button reset"><i class="fa fa-2x fa-times" aria-hidden="true"></i></a>' : '' ?>
             </div>
             <b class="sr-ds">
               <i class="fa fa-2x fa-chevron-right"></i>

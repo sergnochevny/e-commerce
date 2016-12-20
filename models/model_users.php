@@ -6,22 +6,22 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["email"]))))) . "%'";
-      if(isset($filter["full_name"])) $result[] = "CONCAT(bill_firstname, ' ', bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["full_name"]))))) . "%'";
-      if(isset($filter["organization"])) $result[] = "bill_organization LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["organization"]))))) . "%'";
-      if(isset($filter["postal"])) $result[] = "bill_postal LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["postal"]))))) . "%'";
-      if(isset($filter["phone"])) $result[] = "bill_phone LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["phone"]))))) . "%'";
-      if(isset($filter["city"])) $result[] = "bill_city LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["city"]))))) . "%'";
+      if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["email"])))))) . "%'";
+      if(isset($filter["full_name"])) $result[] = "CONCAT(bill_firstname, ' ', bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["full_name"])))))) . "%'";
+      if(isset($filter["organization"])) $result[] = "bill_organization LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["organization"])))))) . "%'";
+      if(isset($filter["postal"])) $result[] = "bill_postal LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["postal"])))))) . "%'";
+      if(isset($filter["phone"])) $result[] = "bill_phone LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["phone"])))))) . "%'";
+      if(isset($filter["city"])) $result[] = "bill_city LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["city"])))))) . "%'";
       if(isset($filter["address"]))
-        $result[] = "(bill_address1 LIKE '%" . mysql_real_escape_string(static::sanitize($filter["address"])) . "%'" .
-          "OR bill_address2 LIKE '%" . mysql_real_escape_string(static::sanitize($filter["address"])) . "%')";
+        $result[] = "(bill_address1 LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["address"]))) . "%'" .
+          "OR bill_address2 LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["address"]))) . "%')";
       if(isset($filter["registered"])) {
-        $where = (!empty($filter["registered"]['from']) ? "date_registered >= STR_TO_DATE('" . mysql_real_escape_string(static::sanitize($filter["registered"]["from"])) . "', '%m/%d/%Y')" : "") .
-          (!empty($filter["registered"]['to']) ? " AND date_registered <= STR_TO_DATE('" . mysql_real_escape_string(static::sanitize($filter["registered"]["to"])) . "', '%m/%d/%Y')" : "");
+        $where = (!empty($filter["registered"]['from']) ? "date_registered >= STR_TO_DATE('" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["registered"]["from"]))) . "', '%m/%d/%Y')" : "") .
+          (!empty($filter["registered"]['to']) ? " AND date_registered <= STR_TO_DATE('" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["registered"]["to"]))) . "', '%m/%d/%Y')" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["country"])) $result[] = "bill_country = '" . mysql_real_escape_string(static::sanitize($filter["country"])) . "'";
-      if(isset($filter["province"])) $result[] = "bill_province = '" . mysql_real_escape_string(static::sanitize($filter["province"])) . "'";
+      if(isset($filter["country"])) $result[] = "bill_country = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["country"]))) . "'";
+      if(isset($filter["province"])) $result[] = "bill_province = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["province"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0) {

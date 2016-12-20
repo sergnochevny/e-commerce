@@ -18,16 +18,19 @@
 //        }
 
       #check if the number of samples is larger then the multiple minimum
-      if($numberSamples < SAMPLES_QTY_MULTIPLE_MIN) {
-        return SAMPLES_PRICE_SINGLE;
+      if($numberSamples < !empty($data['shop_samples_qty_multiple_min']) ? $data['shop_samples_qty_multiple_min'] : SAMPLES_QTY_MULTIPLE_MIN) {
+        return (!is_null(_A_::$app->keyStorage()->shop_samples_price_single) ? _A_::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE);
       }
 
-      if(($numberSamples >= SAMPLES_QTY_MULTIPLE_MIN) && ($numberSamples <= SAMPLES_QTY_MULTIPLE_MAX)) {
-        return SAMPLES_PRICE_MULTIPLE;
+      if(($numberSamples >= !empty($data['shop_samples_qty_multiple_min']) ? $data['shop_samples_qty_multiple_min'] : SAMPLES_QTY_MULTIPLE_MIN) &&
+        ($numberSamples <= !empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX)) {
+        return (!is_null(_A_::$app->keyStorage()->shop_samples_price_multiple) ? _A_::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE);
       }
 
-      if($numberSamples > SAMPLES_QTY_MULTIPLE_MAX) {
-        return SAMPLES_PRICE_MULTIPLE + (($numberSamples - SAMPLES_QTY_MULTIPLE_MAX) * SAMPLES_PRICE_ADDITIONAL);
+      if($numberSamples > !empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX) {
+        return ((!is_null(_A_::$app->keyStorage()->shop_samples_price_multiple) ? _A_::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE)) +
+          (($numberSamples - (!empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX)) *
+            (!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL));
       }
     }
 

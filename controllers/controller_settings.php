@@ -17,7 +17,6 @@
         $data = [
           'system_site_name' => Model_Settings::sanitize(_A_::$app->post('system_site_name')),
           'system_enable_sef' => Model_Settings::sanitize(_A_::$app->post('system_enable_sef')),
-          'system_demo' => Model_Settings::sanitize(_A_::$app->post('system_demo')),
           'system_captcha_time' => Model_Settings::sanitize(_A_::$app->post('system_captcha_time')),
           'system_hide_all_regular_prices' => Model_Settings::sanitize(_A_::$app->post('system_hide_all_regular_prices')),
           'system_filter_amount' => Model_Settings::sanitize(_A_::$app->post('system_filter_amount')),
@@ -64,7 +63,6 @@
 
       $data['system_site_name'] = !empty($data['system_site_name']) ? $data['system_site_name'] : '';
       $data['system_enable_sef'] = !empty($data['system_enable_sef']) ? $data['system_enable_sef'] : 0;
-      $data['system_demo'] = !empty($data['system_demo']) ? $data['system_demo'] : 0;
       $data['system_captcha_time'] = !empty($data['system_captcha_time']) ? $data['system_captcha_time'] : CAPTCHA_RELEVANT;
       $data['system_hide_all_regular_prices'] = !empty($data['system_hide_all_regular_prices']) ? $data['system_hide_all_regular_prices'] : 0;
       $data['system_filter_amount'] = !empty($data['system_filter_amount']) ? $data['system_filter_amount'] : FILTER_LIMIT;

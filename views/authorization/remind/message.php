@@ -22,24 +22,24 @@
         type="text/css"
         media="all">
   <link charset="UTF-8" rel="stylesheet" id="just-smartmenu-css"
-        href="<?= _A_::$app->router()->UrlTo('/views/css/jquery.smartmenus.bootstrap.css') ?>" type="text/css"
+        href="<?= _A_::$app->router()->UrlTo('/views/css/jquery.smartmenus.bootstrap.min.css') ?>" type="text/css"
         media="all">
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/font-awesome.min.scss') ?>"
         type="text/css"
         media="all">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/simple-line-icons.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/simple-line-icons.min.css') ?>"
         type="text/css"
         media="all">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/webfont.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/webfont.min.css') ?>"
         type="text/css"
         media="all">
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/style-theme.css') ?>"
         type="text/css"
         media="all">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/style-woocommerce.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/style-woocommerce.min.css') ?>"
 <!--        type="text/css"-->
 <!--        media="all">-->
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/style-shortcodes.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/style-shortcodes.min.css') ?>"
         type="text/css"
         media="all">
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('/views/css/prettyPhoto.min.css') ?>"
@@ -47,7 +47,7 @@
         media="all">
 
   <link charset="UTF-8" rel="stylesheet" id="just-style-css"
-        href="<?= _A_::$app->router()->UrlTo('/views/css/style.css') ?>"
+        href="<?= _A_::$app->router()->UrlTo('/views/css/style.min.css') ?>"
         type="text/css" media="all">
 </head>
 

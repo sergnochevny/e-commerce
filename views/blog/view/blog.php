@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/blog.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/blog.min.css'); ?>">
 <?php include('views/index/main_gallery.php'); ?>
 <div class="container">
   <div id="blog" class="main-content-inner" role="main">

@@ -6,24 +6,24 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["a.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::sanitize($filter['a.aid']))."'";
-      if(isset($filter['username'])) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["username"]))))) . "%'";
-      if(isset($filter["a.status"])) $result[] = "a.status = '" . mysql_real_escape_string(static::sanitize($filter["a.status"]))."'";
+      if(isset($filter["a.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['a.aid'])))."'";
+      if(isset($filter['username'])) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["username"])))))) . "%'";
+      if(isset($filter["a.status"])) $result[] = "a.status = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.status"])))."'";
       if(isset($filter["a.order_date"])) {
-        $where = (!empty($filter["a.order_date"]['from']) ? "a.order_date >= '" . strtotime(mysql_real_escape_string(static::sanitize($filter["a.order_date"]["from"]))) . "'" : "") .
-          (!empty($filter["a.order_date"]['to']) ? " AND a.order_date <= '" . strtotime(mysql_real_escape_string(static::sanitize($filter["a.order_date"]["to"]))) . "'" : "");
+        $where = (!empty($filter["a.order_date"]['from']) ? "a.order_date >= '" . strtotime(mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.order_date"]["from"])))) . "'" : "") .
+          (!empty($filter["a.order_date"]['to']) ? " AND a.order_date <= '" . strtotime(mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.order_date"]["to"])))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.trid"])) $result[] = "a.trid LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["a.trid"]))))) . "%'";
-      if(isset($filter["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::sanitize($filter["c.sid"])) . "'";
+      if(isset($filter["a.trid"])) $result[] = "a.trid LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.trid"])))))) . "%'";
+      if(isset($filter["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["c.sid"]))) . "'";
 
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']["a.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::sanitize($filter['hidden']['a.aid']))."'";
-      if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["c.sid"])) . "'";
+      if(isset($filter['hidden']["a.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']['a.aid'])))."'";
+      if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["c.sid"]))) . "'";
 
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
@@ -167,9 +167,14 @@
       $sSQL = sprintf($q, $aid, $trid, $shipping_type, str_replace(",", "", $shipping_cost), $on_roll, str_replace(",", "", RATE_ROLL),
                       str_replace(",", "", $express_samples), $handling, str_replace(",", "", $rate_handling), str_replace(",", "", $shipping_discount),
                       str_replace(",", "", $coupon_discount), str_replace(",", "", $total_discount), str_replace(",", "", $taxes),
-                      str_replace(",", "", $total), time(), SAMPLES_PRICE_EXPRESS_SHIPPING, SAMPLES_PRICE_SINGLE,
-                      SAMPLES_PRICE_MULTIPLE, SAMPLES_PRICE_ADDITIONAL, SAMPLES_PRICE_WITH_PRODUCTS, SAMPLES_QTY_MULTIPLE_MIN,
-                      SAMPLES_QTY_MULTIPLE_MAX);
+                      str_replace(",", "", $total), time(),
+        (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING),
+        (!is_null(_A_::$app->keyStorage()->shop_samples_price_single) ? _A_::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE),
+        (!is_null(_A_::$app->keyStorage()->shop_samples_price_multiple) ? _A_::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE),
+        (!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL),
+        (!empty($data['shop_samples_price_with_products']) ? $data['shop_samples_price_with_products'] : SAMPLES_PRICE_WITH_PRODUCTS),
+        (!empty($data['shop_samples_qty_multiple_min']) ? $data['shop_samples_qty_multiple_min'] : SAMPLES_QTY_MULTIPLE_MIN),
+        (!empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX));
 
       $res = mysql_query($sSQL);
       if($res) return mysql_insert_id();

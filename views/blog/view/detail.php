@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/blog.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/blog.min.css'); ?>">
 <div class="container">
   <div class="row">
     <div class="col-xs-12">

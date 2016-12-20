@@ -6,7 +6,6 @@
       $data = [
         'system_site_name' => (!is_null(_A_::$app->keyStorage()->system_site_name) ? _A_::$app->keyStorage()->system_site_name : ''),
         'system_enable_sef' => (!is_null(_A_::$app->keyStorage()->system_enable_sef) ? _A_::$app->keyStorage()->system_enable_sef : ENABLE_SEF),
-        'system_demo' => (!is_null(_A_::$app->keyStorage()->system_demo) ? _A_::$app->keyStorage()->system_demo : DEMO),
         'system_captcha_time' => (!is_null(_A_::$app->keyStorage()->system_captcha_time) ? _A_::$app->keyStorage()->system_captcha_time : CAPTCHA_RELEVANT),
         'system_hide_all_regular_prices' => (!is_null(_A_::$app->keyStorage()->system_hide_all_regular_prices) ? _A_::$app->keyStorage()->system_hide_all_regular_prices : HIDE_REGULAR_PRICE),
         'system_filter_amount' => (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT),
@@ -51,7 +50,6 @@
       extract($data);
       _A_::$app->keyStorage()->system_site_name = $system_site_name;
       _A_::$app->keyStorage()->system_enable_sef = $system_enable_sef;
-      _A_::$app->keyStorage()->system_demo = $system_demo;
       _A_::$app->keyStorage()->system_captcha_time = $system_captcha_time;
       _A_::$app->keyStorage()->system_hide_all_regular_prices = $system_hide_all_regular_prices;
       _A_::$app->keyStorage()->system_filter_amount = $system_filter_amount;

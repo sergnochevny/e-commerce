@@ -6,21 +6,21 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.pname"])) . "%'";
-      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::sanitize($filter["a.pvisible"]))."'";
-      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::sanitize($filter["a.piece"]))."'";
+      if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pname"]))) . "%'";
+      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pvisible"])))."'";
+      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.piece"])))."'";
       if(isset($filter["a.dt"])) {
-        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::sanitize($filter["a.dt"]["from"])) . "'" : "") .
-          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::sanitize($filter["a.dt"]["to"])) . "'" : "");
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.pnumber"])) . "%'";
-      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::sanitize($filter["a.best"])) . "'";
-      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::sanitize($filter["a.specials"])) . "'";
-      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::sanitize($filter["b.cid"])) . "'";
-      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::sanitize($filter["c.id"])) . "'";
-      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::sanitize($filter["d.id"])) . "'";
-      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::sanitize($filter["e.id"])) . "'";
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.best"]))) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["c.id"]))) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["d.id"]))) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["e.id"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0){

@@ -35,13 +35,17 @@
                  href="<?= _A_::$app->router()->UrlTo('patterns'); ?>">Patterns</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
-              <a data-waitloader data-link title="Patterns"
+              <a data-waitloader data-link title="Clearance"
                  href="<?= _A_::$app->router()->UrlTo('clearance'); ?>">Clearance</a>
+            </li>
+            <li class="menu-item menu-item-type-post_type menu-item-object-product">
+              <a data-waitloader data-link title="Synonyms"
+                 href="<?= _A_::$app->router()->UrlTo('synonyms'); ?>">Synonyms</a>
             </li>
           </ul>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a title="Products" aria-haspopup="true" class="has-submenu" href="javascript:void(0);">Notice<span
+          <a title="Notice" aria-haspopup="true" class="has-submenu" href="javascript:void(0);">Notice<span
               class="caret"></span></a>
           <ul role="group" class="dropdown-menu" aria-hidden="true" aria-expanded="false"
               style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
@@ -60,10 +64,10 @@
           </ul>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="" href="<?= _A_::$app->router()->UrlTo('discount'); ?>">Discounts</a>
+          <a data-waitloader data-link title="Discounts" href="<?= _A_::$app->router()->UrlTo('discount'); ?>">Discounts</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="" href="<?= _A_::$app->router()->UrlTo('users'); ?>">Users</a>
+          <a data-waitloader data-link title="Users" href="<?= _A_::$app->router()->UrlTo('users'); ?>">Users</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a title="Blog" aria-haspopup="true" class="has-submenu" href="javascript:void(0);">Blog<span class="caret"></span></a>
@@ -79,10 +83,10 @@
           </ul>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="" href="<?= _A_::$app->router()->UrlTo('orders'); ?>">Orders</a>
+          <a data-waitloader data-link title="All Orders" href="<?= _A_::$app->router()->UrlTo('orders'); ?>">Orders</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="" href="<?= _A_::$app->router()->UrlTo('settings/edit'); ?>">Settings</a>
+          <a data-waitloader data-link title="System Settings" href="<?= _A_::$app->router()->UrlTo('settings/edit'); ?>">Settings</a>
         </li>
       </ul>
     </div>

@@ -21,22 +21,26 @@
         href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-smallscreen.css'); ?>'
         media='only screen and (max-width: 768px)'/>
 
-  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/font-face.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/offsets.css'); ?>'/>
+  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/font-face.min.css'); ?>'/>
+  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/offsets.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/bootstrap.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/font-awesome.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/webfont.css'); ?>'/>
   <link rel='stylesheet' type="text/css"
-        href='<?= _A_::$app->router()->UrlTo('views/css/jquery.smartmenus.bootstrap.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/style-theme.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/style-woocommerce.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/style-shortcodes.css'); ?>'/>
+        href='<?= _A_::$app->router()->UrlTo('views/css/simple-line-icons.min.css'); ?>'/>
+  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/webfont.min.css'); ?>'/>
+  <link rel='stylesheet' type="text/css"
+        href='<?= _A_::$app->router()->UrlTo('views/css/jquery.smartmenus.bootstrap.min.css'); ?>'/>
+  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/style-theme.min.css'); ?>'/>
+  <link rel='stylesheet' type="text/css"
+        href='<?= _A_::$app->router()->UrlTo('views/css/style-woocommerce.min.css'); ?>'/>
+  <link rel='stylesheet' type="text/css"
+        href='<?= _A_::$app->router()->UrlTo('views/css/style-shortcodes.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/prettyPhoto.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>'
         media='all'/>
-
-  <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css'); ?>'/>
+  <link rel="stylesheet" type="text/css"
+        href="<?= _A_::$app->router()->UrlTo('views/css/tooltipster.bundle.min.css'); ?>"/>
+  <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.min.css'); ?>'/>
 
   <script type='text/javascript'
           src='<?= _A_::$app->router()->UrlTo('views/js/jquery2/jquery-2.2.4.min.js'); ?>'></script>
@@ -50,11 +54,14 @@
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.min.js'); ?>'></script>
   <script type='text/javascript'
           src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.bootstrap.min.js'); ?>'></script>
-  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.prettyPhoto.min.js'); ?>'></script>
+  <script type='text/javascript'
+          src='<?= _A_::$app->router()->UrlTo('views/js/jquery.prettyPhoto.min.js'); ?>'></script>
   <script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
           type="text/javascript"></script>
+  <script type="text/javascript"
+          src="<?= _A_::$app->router()->UrlTo('views/js/tooltipster.bundle.min.js'); ?>"></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/search/search.min.js'); ?>'></script>
-  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
+  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.min.js'); ?>'></script>
   <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
 
 </head>
@@ -67,7 +74,7 @@
     </div>
   </div>
 
-  <footer class="site-footer" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
+  <footer class="site-footer">
     <?php include('views/footer.php') ?>
     <?php include('views/copyright.php') ?>
   </footer>

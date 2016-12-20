@@ -6,14 +6,14 @@
 
     protected static function build_where(&$filter) {
       $result = '';
-      if(isset($filter['a.title'])) $result[] = "a.post_title LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter['a.post_title']))))) . "%'";
+      if(isset($filter['a.title'])) $result[] = "a.post_title LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter['a.post_title'])))))) . "%'";
       if(isset($filter['a.dt'])) {
-        $where = (!empty($filter['a.dt']['from']) ? "a.dt >= '" . mysql_real_escape_string(static::sanitize($filter['a.dt']['from'])) . "'" : "") .
-          (!empty($filter['a.dt']['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::sanitize($filter['a.dt']['to'])) . "'" : "");
+        $where = (!empty($filter['a.dt']['from']) ? "a.dt >= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['a.dt']['from']))) . "'" : "") .
+          (!empty($filter['a.dt']['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['a.dt']['to']))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter['b.email'])) $result[] = "b.email LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter['b.email']))))) . "%'";
-      if(isset($filter['a.moderated'])) $result[] = "a.moderated = '" . mysql_real_escape_string(static::sanitize($filter['a.moderated'])) . "'";
+      if(isset($filter['b.email'])) $result[] = "b.email LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter['b.email'])))))) . "%'";
+      if(isset($filter['a.moderated'])) $result[] = "a.moderated = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['a.moderated']))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0){

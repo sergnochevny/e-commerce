@@ -26,8 +26,8 @@
     protected static function build_where(&$filter) {
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $result = "";
-        if(isset($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.priceyard"])) . "'";
-        if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["a.pvisible"])) . "'";
+        if(isset($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]))) . "'";
+        if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.pvisible"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');

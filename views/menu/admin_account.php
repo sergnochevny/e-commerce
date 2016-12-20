@@ -1,5 +1,5 @@
 <li class="dropdown">
-    <a data-link href="<?= _A_::$app->router()->UrlTo('admin');?>" class="dropdown-toggle" data-toggle="dropdown" rel="nofollow">
+    <a title="My Account Menu" data-link href="<?= _A_::$app->router()->UrlTo('admin');?>" class="dropdown-toggle" data-toggle="dropdown" rel="nofollow">
       <i class="fa fa-2x fa-user-circle visible-xs" aria-hidden="true"></i>
       <span class="topnav-label hidden-xs">My Account<span class="caret"></span></span>
     </a>

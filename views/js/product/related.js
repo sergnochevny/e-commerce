@@ -121,6 +121,7 @@
       event.preventDefault();
       if (reset) {
         var data = new FormData();
+        data.append('search[reset]', true);
       } else {
         var data = new FormData(this);
       }

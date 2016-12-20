@@ -6,14 +6,18 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["a.post_title"])) $result[] = "a.post_title LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::sanitize($filter["a.post_title"]))))) . "%'";
-      if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . mysql_real_escape_string(static::sanitize($filter["a.post_status"])) . "'";
+      if(Controller_Admin::is_logged()) {
+        if(isset($filter["a.post_title"])) $result[] = "a.post_title LIKE '%" . implode('%', array_filter(explode(' ', mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.post_title"])))))) . "%'";
+      } else {
+        if(isset($filter["a.post_title"])) $result[] = Model_Synonyms::build_synonyms_like("a.post_title", $filter["a.post_title"]);
+      }
+      if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.post_status"]))) . "'";
       if(isset($filter["a.post_date"])) {
-        $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date >= '" . mysql_real_escape_string(static::sanitize($filter["a.post_date"]["from"])) . "'" : "") .
-          (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . mysql_real_escape_string(static::sanitize($filter["a.post_date"]["to"])) . "'" : "");
+        $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date >= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.post_date"]["from"]))) . "'" : "") .
+          (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.post_date"]["to"]))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["b.group_id"])) $result[] = "b.group_id = '" . mysql_real_escape_string(static::sanitize($filter["b.group_id"])) . "'";
+      if(isset($filter["b.group_id"])) $result[] = "b.group_id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["b.group_id"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0) {
@@ -72,7 +76,7 @@
       $filter = null;
       $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
       $start = isset($start) ? $start : 0;
-      $search = mysql_real_escape_string(static::sanitize($search));
+      $search = mysql_real_escape_string(static::strip_data(static::sanitize($search)));
       $q = "select count(id) from blog_groups";
       if(isset($search) && (strlen($search) > 0)) {
         $q .= " where name like '%$search%'";
@@ -129,10 +133,10 @@
         'post_author' => '',
         'post_date' => '',
         'post_content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore" .
-              " et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " .
-              " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " .
-              "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui " .
-              "officia deserunt mollit anim id est laborum...",
+          " et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " .
+          " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " .
+          "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui " .
+          "officia deserunt mollit anim id est laborum...",
         'post_title' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
         'post_status' => '',
       ];

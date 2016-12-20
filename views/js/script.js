@@ -138,13 +138,11 @@ var change_text = false;
     $('#f_search').trigger('submit');
   });
 
-  $.change_button_text();
-
   $(window).on('resize', function () {
     $.change_button_text();
   });
 
-  $('#menu-button').on('click', function () {
+  $(document).on('click', '#menu-button', function () {
     $(document.body).toggleClass('menu-open');
   });
 
@@ -167,52 +165,6 @@ var change_text = false;
       $(this).addClass('collapsed');
       $(this).find('.sr-ds').children('.fa').addClass('fa-rotate-90');
     }
-  });
-
-  var body = $('body');
-  /* Keyboard image navigation */
-  if (body.hasClass('attachment-jpg') ||
-    body.hasClass('attachment-jpeg') ||
-    body.hasClass('attachment-jpe') ||
-    body.hasClass('attachment-gif') ||
-    body.hasClass('attachment-png')
-  ) {
-    $(document).keydown(function (e) {
-      var url = false;
-      if (e.which === 37) {  // Left arrow key code
-        url = $('.image-navigation .nav-previous a').attr('href');
-      }
-      else if (e.which === 39) {  // Right arrow key code
-        url = $('.image-navigation .nav-next a').attr('href');
-      }
-      if (url && ( !$('textarea, input').is(':focus') )) {
-        window.location = url;
-      }
-    });
-  }
-
-  /* Style Comments */
-  $('#commentsubmit').addClass('button btn-primary');
-
-  /* Style WordPress Default Widgets */
-  $('.widget select').addClass('form-control');
-  $('.widget table#wp-calendar').addClass('table table-bordered').unwrap().find('th, td').addClass('text-center');
-  $('.widget-title .rsswidget img').stop().hide();
-  $('.widget-title .rsswidget:first-child').append('<i class="fa fa-rss pull-right">');
-
-  /* Move cross-sell below cart totals on cart page */
-  $('.woocommerce .cart-collaterals .cross-sells, .woocommerce-page .cart-collaterals .cross-sells').appendTo('.woocommerce .cart-collaterals, .woocommerce-page .cart-collaterals');
-
-  $("a[data-rel^='prettyPhoto']").prettyPhoto({
-    hook: "data-rel",
-    social_tools: '',
-    theme: "pp_woocommerce",
-    //	horizontal_padding: 20,
-    //	opacity: .8,
-    //	show_title: false,
-    //  allow_resize: true,
-    allow_expand: true,
-    default_width: 700
   });
 
   $(document).on('click', '[data-waitloader]', function (event) {
@@ -241,6 +193,57 @@ var change_text = false;
     }
   );
 
-  body.waitloader('remove');
+  $(document).ready(function () {
+
+    var body = $('body');
+    /* Keyboard image navigation */
+    if (body.hasClass('attachment-jpg') ||
+      body.hasClass('attachment-jpeg') ||
+      body.hasClass('attachment-jpe') ||
+      body.hasClass('attachment-gif') ||
+      body.hasClass('attachment-png')
+    ) {
+      $(document).keydown(function (e) {
+        var url = false;
+        if (e.which === 37) {  // Left arrow key code
+          url = $('.image-navigation .nav-previous a').attr('href');
+        }
+        else if (e.which === 39) {  // Right arrow key code
+          url = $('.image-navigation .nav-next a').attr('href');
+        }
+        if (url && ( !$('textarea, input').is(':focus') )) {
+          window.location = url;
+        }
+      });
+    }
+
+    /* Style Comments */
+    $('#commentsubmit').addClass('button btn-primary');
+
+    /* Style WordPress Default Widgets */
+    $('.widget select').addClass('form-control');
+    $('.widget table#wp-calendar').addClass('table table-bordered').unwrap().find('th, td').addClass('text-center');
+    $('.widget-title .rsswidget img').stop().hide();
+    $('.widget-title .rsswidget:first-child').append('<i class="fa fa-rss pull-right">');
+
+    /* Move cross-sell below cart totals on cart page */
+    $('.woocommerce .cart-collaterals .cross-sells, .woocommerce-page .cart-collaterals .cross-sells').appendTo('.woocommerce .cart-collaterals, .woocommerce-page .cart-collaterals');
+
+    $("a[data-rel^='prettyPhoto']").prettyPhoto({
+      hook: "data-rel",
+      social_tools: '',
+      theme: "pp_woocommerce",
+      //	horizontal_padding: 20,
+      //	opacity: .8,
+      //	show_title: false,
+      //  allow_resize: true,
+      allow_expand: true,
+      default_width: 700
+    });
+
+    $.change_button_text();
+    $('[title]').tooltipster();
+    body.waitloader('remove');
+  });
 
 })(jQuery);

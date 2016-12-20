@@ -15,13 +15,14 @@
 .button {
     position: relative;
     text-transform: uppercase;
+    text-align: center;
     background: rgba(102, 119, 0, 0.5);
     color: #fff;
-    text-shadow: 2px 1px 0 #666;
+    text-shadow: 1px 1px 0 #222;
     font-size: 13px;
     display: inline-block;
     padding: 10px 15px;
-    font-weight: 400;
+    font-weight: 600;
     -webkit-transition: all .3s cubic-bezier(.2, 1, .25, 1);
     -moz-transition: all .3s cubic-bezier(.2, 1, .25, 1);
     -o-transition: all .3s cubic-bezier(.2, 1, .25, 1);
@@ -33,7 +34,8 @@
 }
 
 .button:hover {
-    color: #333 !important;
+    font-weight: 600;
+    color: #222 !important;
     text-shadow: 1px 1px 0 #fff;
     background: rgba(102, 119, 0, 0.7);
 }
@@ -604,7 +606,9 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 
 .owl-prev:hover,
 .owl-next:hover {
-    background-color: black;
+    color: #222;
+    font-weight: 600;
+    text-shadow: 0 1px 1px #fff;
 }
 
 .products .owl-item .product-item .product-image-box,
@@ -801,7 +805,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 .products .owl-item .product-item .product-image-box figcaption a.button.add_to_cart_button,
 .products .product-item .product-image-box figcaption a.button.add_to_cart_button,
 .just-post-image-admin a.button.add_to_cart_button {
-    background: #222222;
+    background: rgba(34, 34, 34, 0.51);
     font-size: 24px;
     padding: 0 7px;
     line-height: 50px;
@@ -823,10 +827,18 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     line-height: inherit;
     display: inline-block;
     font-weight: 300;
-    color: #667700;
+    text-shadow: 2px 1px 0 #222;
+    color: #ddd;
     content: "\e04f";
     font-family: 'Simple-Line-Icons';
 }
+
+.products .owl-item .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before,
+.products .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before{
+    color: #667700;
+    text-shadow: 1px 1px 0 #fff;
+}
+
 
 .just-post-image img {
     border-radius: 2px;
@@ -857,7 +869,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 .just-post-image-admin a.button.product-button {
     position: relative;
     top: 41%;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
     font-size: 24px;
     padding: 0 14px;
     line-height: 50px;
@@ -881,7 +893,15 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     line-height: inherit;
     display: inline-block;
     font-weight: 300;
+    color: #eee;
+    text-shadow: 2px 1px 0 #666;
+}
+
+.products .owl-item .product-item .product-image-box figcaption a.button.product-button:hover:before,
+.products .product-item .product-image-box figcaption a.button.product-button:hover:before,
+.just-post-image-admin a.button.product-button:hover:before {
     color: #667700;
+    text-shadow: 1px 1px 0 #fff;
 }
 
 .products .owl-item .product-item .product-image-box figcaption a.button.product-button:after,
@@ -2549,4 +2569,7 @@ small.hint{
 }
 i[data-promotion]{
     cursor: pointer;
+}
+.hint{
+    z-index: 99999999;
 }

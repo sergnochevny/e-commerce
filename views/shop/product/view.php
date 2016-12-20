@@ -39,12 +39,12 @@
           <div class="col-xs-12 col-md-6">
             <div class="row">
               <a <?= isset($data['filename1']) ? 'href="' . $data['filename1'] . '"' : ''; ?>
-                itemprop="image" class="product-main-image zoom" title=""
+                itemprop="image" class="product-main-image zoom" title="Product Main Image"
                 <?= isset($data['filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                 <?= isset($data['filename1']) ? 'data-img = "' . $data['filename1'] . '"' : '' ?>>
                 <img width="100%"
                      src="<?= isset($data['filename1']) ? $data['filename1'] : $data['filename']; ?>"
-                     class="attachment-shop_single size-shop_single wp-post-image" alt="" title=""/>
+                     class="attachment-shop_single size-shop_single wp-post-image" alt="" />
               </a>
               <div class="thumbnails col-sm-12">
                 <div class="row">
@@ -60,11 +60,10 @@
                           if(!empty($data['image2'])) { ?>
                             <a <?= isset($data['img2_filename1']) ? 'href="' . $data['img2_filename1'] . '"' : ''; ?>
                               class="col-xs-6 zoom"
-                              title=""
                               <?= isset($data['img2_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                               <?= isset($data['img2_filename1']) ? 'data-img = "' . $data['img2_filename1'] . '"' : '' ?>>
                               <img width="100%" src="<?= $data['img2_filename']; ?>"
-                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" />
                             </a>
                             <?php
                           }
@@ -72,33 +71,30 @@
                           if(!empty($data['image3'])) { ?>
                             <a <?= isset($data['img3_filename1']) ? 'href="' . $data['img3_filename1'] . '"' : ''; ?>
                               class="col-xs-6 zoom"
-                              title=""
                               <?= isset($data['img3_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                               <?= isset($data['img3_filename1']) ? 'data-img = "' . $data['img3_filename1'] . '"' : '' ?>>
                               <img width="100%" src="<?= $data['img3_filename']; ?>"
-                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" />
                             </a>
                             <?php
                           }
                           if(!empty($data['image4'])) { ?>
                             <a <?= isset($data['img4_filename1']) ? 'href="' . $data['img4_filename1'] . '"' : ''; ?>
                               class="zoom col-xs-6"
-                              title=""
                               <?= isset($data['img4_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                               <?= isset($data['img4_filename1']) ? 'data-img = "' . $data['img4_filename1'] . '"' : '' ?>>
                               <img width="100%" src="<?= $data['img4_filename']; ?>"
-                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" />
                             </a>
                             <?php
                           }
                           if(!empty($data['image5'])) { ?>
                             <a <?= isset($data['img5_filename1']) ? 'href="' . $data['img5_filename1'] . '"' : ''; ?>
                               class="zoom col-xs-6"
-                              title=""
                               <?= isset($data['img5_filename1']) ? 'data-rel="prettyPhoto[product-gallery]"' : ''; ?>
                               <?= isset($data['img5_filename1']) ? 'data-img = "' . $data['img5_filename1'] . '"' : '' ?>>
                               <img width="100%" src="<?= $data['img5_filename']; ?>"
-                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" title=""/>
+                                   class="attachment-shop_thumbnail size-shop_thumbnail" alt="" />
                             </a>
                             <?php
                           }

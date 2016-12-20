@@ -5,16 +5,20 @@
     protected static $table = 'fabrix_colour';
 
     protected static function build_where(&$filter) {
-      if (isset($filter['hidden']['view']) && $filter['hidden']['view']){
+      if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $result = "";
-        if(isset($filter["a.colour"])) $result[] = "a.colour LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.colour"])) . "%'";
-        if(isset($filter["a.id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::sanitize($filter["a.id"])) . "'";
+        if(Controller_Admin::is_logged()) {
+          if(isset($filter["a.colour"])) $result[] = "a.colour LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.colour"]))) . "%'";
+        } else {
+          if(isset($filter["a.colour"])) $result[] = Model_Synonyms::build_synonyms_like("a.colour", $filter["a.colour"]);
+        }
+        if(isset($filter["a.id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.id"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           if(strlen(trim(implode(" AND ", $result))) > 0) {
             $filter['active'] = true;
           }
         }
-        if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["c.pvisible"])) . "'";
+        if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["c.pvisible"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');
@@ -41,7 +45,7 @@
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
-      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view'])? " INNER" : " LEFT";
+      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
       $query .= " JOIN fabrix_product_colours b ON b.colourId = a.id";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.prodId" : '';
       $query .= static::build_where($filter);
@@ -55,13 +59,13 @@
       $response = null;
       $query = "SELECT a.id, a.colour, count(b.prodId) AS amount";
       $query .= " FROM " . static::$table . " a";
-      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view'])? " INNER" : " LEFT";
+      $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
       $query .= " JOIN fabrix_product_colours b ON b.colourId = a.id";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.prodId" : '';
       $query .= static::build_where($filter);
       $query .= " GROUP BY a.id, a.colour";
       $query .= static::build_order($sort);
-      if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
+      if($limit != 0) $query .= " LIMIT $start, $limit";
 
       if($result = mysql_query($query)) {
         $res_count_rows = mysql_num_rows($result);

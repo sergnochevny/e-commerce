@@ -1836,7 +1836,7 @@ span.opa {
     border-radius: 4px;
     -webkit-border-adius: 4px;
     -moz-border-radius: 4px;
-    box-shadow: 0 0 10px #ddd;
+    box-shadow: 0 0 7px #666;
 
 }
 
@@ -2457,8 +2457,38 @@ span[role=combobox].ui-button:active .ui-icon {
 /*products item*/
 
 @media only screen and (min-width: 520px) and (max-width: 767px) {
+    .products.product_list_widget .product-item {
+        width: 100%;
+    }
     .products .product-item {
         width: 50%;
+    }
+    .footer-widgets-top-inner > div{
+        width: 50%;
+    }
+    .footer-widget-row {
+        margin-left: 0;
+    }
+}
+
+@media only screen and (min-width: 1200px){
+    .footer-widget-row-lg {
+        margin-left: 0;
+    }
+    .alone-widget .col-xs-12{
+        width: 33.333333%
+    }
+    .alone-widget .row.footer-widget-row{
+        margin-left: -15px;
+    }
+    .alone-widget .row.footer-widget-row .product-item:nth-of-type(3n) > .row,
+    .alone-widget .row.footer-widget-row .product-item:nth-of-type(2n) > .row
+    {
+        margin-left: 0px;
+    }
+    .alone-widget .row.footer-widget-row .product-item:nth-of-type(3n+1) > .row
+    {
+        margin-left: -15px;
     }
 }
 

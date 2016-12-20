@@ -6,14 +6,14 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["sid"])) $result[] = "sid = '" . mysql_real_escape_string(static::sanitize($filter["sid"])) . "'";
-      if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . mysql_real_escape_string(static::sanitize($filter["promotion_type"])) . "'";
-      if(isset($filter["user_type"])) $result[] = "user_type = '" . mysql_real_escape_string(static::sanitize($filter["user_type"])) . "'";
-      if(isset($filter["discount_type"])) $result[] = "discount_type = '" . mysql_real_escape_string(static::sanitize($filter["discount_type"])) . "'";
-      if(isset($filter["product_type"])) $result[] = "product_type = '" . mysql_real_escape_string(static::sanitize($filter["product_type"])) . "'";
-      if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', mysql_real_escape_string(static::sanitize($filter["coupon_code"]))))) . "%'";
-      if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(mysql_real_escape_string(static::sanitize($filter['date_start']))) . "'" : "");
-      if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(mysql_real_escape_string(static::sanitize($filter['date_end']))) . "'" : "");
+      if(isset($filter["sid"])) $result[] = "sid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["sid"]))) . "'";
+      if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["promotion_type"]))) . "'";
+      if(isset($filter["user_type"])) $result[] = "user_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["user_type"]))) . "'";
+      if(isset($filter["discount_type"])) $result[] = "discount_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["discount_type"]))) . "'";
+      if(isset($filter["product_type"])) $result[] = "product_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["product_type"]))) . "'";
+      if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', mysql_real_escape_string(static::strip_data(static::sanitize($filter["coupon_code"])))))) . "%'";
+      if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(mysql_real_escape_string(static::strip_data(static::sanitize($filter['date_start'])))) . "'" : "");
+      if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(mysql_real_escape_string(static::strip_data(static::sanitize($filter['date_end'])))) . "'" : "");
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0) {

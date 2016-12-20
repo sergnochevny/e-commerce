@@ -85,11 +85,11 @@
       $idx = $this->load_search_filter_get_idx($filter, $view);
       if(_A_::$app->request_is_post()) {
         $search = _A_::$app->post('search');
-        if(isset($search)){
+        if(isset($search)) {
           if(isset($search['hidden'])) unset($search['hidden']);
           if((is_array($search) && !count($search)) || !is_array($search)) $search = null;
         }
-        if(isset($search)){
+        if(isset($search)) {
           if(!empty(_A_::$app->get('page'))) {
             $pages = _A_::$app->session('pages');
             $pages[$this->controller][$idx] = _A_::$app->get('page');
@@ -103,7 +103,7 @@
           }
           $search = _A_::$app->post('search');
           $filters = _A_::$app->session('filters');
-          if(isset($search)) {
+          if(!isset($search['reset'])) {
             $filters[$this->controller][$idx] = $search;
           } else {
             unset($filters[$this->controller][$idx]);
@@ -167,14 +167,16 @@
           if(isset($search)) {
             $search = array_filter($search);
             foreach($search as $key => $item) {
-              if(preg_match($fields_pattern, $fields[$key]['Type'], $matches) !== false) {
-                if(count($matches) > 1) {
-                  if(is_array($item)) {
-                    $filter[$key] = [$fields_type[$matches[1]][1], $item];
-                  } else  $filter[$key] = [$fields_type[$matches[1]][0], $item];
+              if(!in_array($key, Model_Base::$filter_exclude_keys)) {
+                if(preg_match($fields_pattern, $fields[$key]['Type'], $matches) !== false) {
+                  if(count($matches) > 1) {
+                    if(is_array($item)) {
+                      $filter[$key] = [$fields_type[$matches[1]][1], $item];
+                    } else  $filter[$key] = [$fields_type[$matches[1]][0], $item];
+                  }
+                  $search_form[$key] = $item;
                 }
-                $search_form[$key] = $item;
-              }
+              } else $filter[$key] = $item;
             }
           }
           if(isset($h_search)) {

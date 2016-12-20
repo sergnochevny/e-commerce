@@ -15,6 +15,7 @@
     event.stopPropagation();
     if (reset) {
       var data = new FormData();
+      data.append('search[reset]', true);
       $('#search').attr('value','');
     } else {
       if($('[name="search[a.pname]"]').length){

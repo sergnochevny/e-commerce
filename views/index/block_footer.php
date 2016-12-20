@@ -2,7 +2,7 @@
   <div class="container">
     <div class="col-xs-12 inner-offset-top">
       <div class="row footer-widgets-top-inner">
-        <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
           <div class="row">
             <h4 class="section-title">Best Sellers Products</h4>
             <aside id="woocommerce_products-5" class="widget woocommerce widget_products">
@@ -11,7 +11,7 @@
             </aside>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
           <div class="row footer-widget-row">
             <h4 class="section-title">Popular Textile</h4>
             <aside id="woocommerce_products-2" class="widget woocommerce widget_products">
@@ -20,8 +20,8 @@
             </aside>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6">
-          <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <div class="row footer-widget-row-lg">
             <h4 class="section-title">New Products</h4>
             <aside id="woocommerce_products-3" class="widget woocommerce widget_products">
               <div id="new_products" class="products product_list_widget">
@@ -29,7 +29,7 @@
             </aside>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-12 alone-widget">
           <div class="row footer-widget-row">
             <h4 class="section-title">Featured Products</h4>
             <aside id="woocommerce_products-4" class="widget woocommerce widget_products">

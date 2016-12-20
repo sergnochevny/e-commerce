@@ -47,6 +47,7 @@
           </div>
         </div>
       </div>
+      <div class="clearfix"></div>
     </div>
   <?php endforeach; ?>
 <?php else: ?>

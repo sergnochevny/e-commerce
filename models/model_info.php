@@ -6,10 +6,10 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter['hidden']['id']) && !is_array($filter['hidden']['priceyard'])) $result[] = "a.id = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["id"])) . "'";
-      if(isset($filter['hidden']['visible'])) $result[] = "visible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["visible"])) . "'";
-      if(isset($filter['hidden']["f1"])) $result[] = "f1 = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["f1"])) . "'";
-      if(isset($filter['hidden']["f2"])) $result[] = "f2 = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["f2"])) . "'";
+      if(isset($filter['hidden']['id']) && !is_array($filter['hidden']['priceyard'])) $result[] = "a.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["id"]))) . "'";
+      if(isset($filter['hidden']['visible'])) $result[] = "visible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["visible"]))) . "'";
+      if(isset($filter['hidden']["f1"])) $result[] = "f1 = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["f1"]))) . "'";
+      if(isset($filter['hidden']["f2"])) $result[] = "f2 = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["f2"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         $result = (!empty($result) ? " WHERE " . $result : '');

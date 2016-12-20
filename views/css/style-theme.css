@@ -305,21 +305,6 @@ a img.aligncenter {
 }
 
 /* Bootstrap button style */
-.btn {
-    padding: 0 20px;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 12px;
-    background: none;
-    border: 2px solid #222222;
-    color: #222222;
-}
-
-.btn:hover {
-    background: none;
-    border-color: #cacaca;
-    color: #cacaca;
-}
 
 .btn-default {
     margin-bottom: 5px;

@@ -7,14 +7,18 @@
     protected static function build_where(&$filter) {
       if (isset($filter['hidden']['view']) && $filter['hidden']['view']){
         $result = "";
-        if(isset($filter["a.manufacturer"])) $result[] = "a.manufacturer LIKE '%" . mysql_real_escape_string(static::sanitize($filter["a.manufacturer"])) . "%'";
-        if(isset($filter["id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::sanitize($filter["a.id"])) . "'";
+        if(Controller_Admin::is_logged()) {
+          if(isset($filter["a.manufacturer"])) $result[] = "a.manufacturer LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.manufacturer"]))) . "%'";
+        } else {
+          if(isset($filter["a.manufacturer"])) $result[] = Model_Synonyms::build_synonyms_like("a.manufacturer", $filter["a.manufacturer"]);
+        }
+        if(isset($filter["id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.id"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           if(strlen(trim(implode(" AND ", $result))) > 0) {
             $filter['active'] = true;
           }
         }
-        if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . mysql_real_escape_string(static::sanitize($filter['hidden']["b.pvisible"])) . "'";
+        if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["b.pvisible"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');
