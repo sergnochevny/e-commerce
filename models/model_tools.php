@@ -51,9 +51,9 @@
     }
 
     public static function meta_page() {
-      $page_Description = '';
-      $page_KeyWords = '';
-      $page_Name = '';
+      $description = '';
+      $keywords = '';
+      $title = '';
 
       if(_A_::$app->router()->controller == 'blog' && _A_::$app->router()->action == 'view') {
         $post_id = !is_null(_A_::$app->get('id')) ? _A_::$app->get('id') : null;
@@ -61,40 +61,45 @@
           $result = mysql_query("select post_title from blog_posts WHERE id='$post_id'");
           if($result && mysql_num_rows($result) > 0) {
             $row = mysql_fetch_assoc($result);
-            $page_Name = $row['post_title'];
+            $title = $row['post_title'];
           }
           $result = mysql_query("select * from blog_post_keys_descriptions WHERE post_id='$post_id'");
           if($result && mysql_num_rows($result) > 0) {
             $row = mysql_fetch_assoc($result);
-            $page_Description = stripslashes($row['description']);
-            $page_KeyWords = stripslashes($row['keywords']);
+            $description = stripslashes($row['description']);
+            $keywords = stripslashes($row['keywords']);
           }
         }
       } elseif(_A_::$app->router()->controller == 'shop' && _A_::$app->router()->action == "product") {
         $pid = _A_::$app->get('pid');
         $result = mysql_query("select * from fabrix_products WHERE pid='$pid'");
         $row = mysql_fetch_array($result);
-        $page_Description = $row['metadescription'];
-        $page_KeyWords = $row['metakeywords'];
-        $page_Name = $row['pname'];
-      } else {
-        $result = mysql_query("SELECT * FROM page_title WHERE control LIKE '" . _A_::$app->router()->controller . "'");
+        $description = $row['metadescription'];
+        $keywords = $row['metakeywords'];
+        $title = $row['pname'];
+      }
+      if (empty($title) && empty($description) && empty($keywords)) {
+        $q = "SELECT * FROM page_meta WHERE controller = '" . _A_::$app->router()->controller . "'";
+        if(!empty(_A_::$app->router()->action) && (_A_::$app->router()->controller !== _A_::$app->router()->action))
+          $q .= " AND action = '" . _A_::$app->router()->action . "'";
+        else $q .= " AND action is null";
+        $result = mysql_query($q);
         $row = mysql_fetch_array($result);
         if(!empty($row['id'])) {
-          $page_Name = $row['name_page'];
-          $page_Description = $row['m_desc'];
-          $page_KeyWords = $row['m_key'];
+          $title = $row['title'];
+          $description = $row['description'];
+          $keywords = $row['keywords'];
         }
       }
 
-      if(empty($page_Name)) $page_Name = _A_::$app->keyStorage()->system_site_name;
-      if(empty($page_Description)) $page_Description = _A_::$app->keyStorage()->system_site_name;
-      if(empty($page_KeyWords)) {
+      if(empty($title)) $title = _A_::$app->keyStorage()->system_site_name;
+      if(empty($description)) $description = _A_::$app->keyStorage()->system_site_name;
+      if(empty($keywords)) {
         $keywords = array_filter(explode(' ', strtolower(_A_::$app->keyStorage()->system_site_name)));
         array_unshift($keywords, strtolower(_A_::$app->keyStorage()->system_site_name));
-        $page_KeyWords = implode(',', $keywords);
+        $keywords = implode(',', $keywords);
       }
-      return ['keywords' => $page_KeyWords, 'description' => $page_Description, 'title' => $page_Name];
+      return ['keywords' => $keywords, 'description' => $description, 'title' => $title];
     }
 
   }
