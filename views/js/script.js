@@ -1,5 +1,12 @@
 'use strict';
 
+window.addEventListener('pagehide', function (event) {
+  var loader = document.getElementById('wait_loader');
+  if (loader) {
+    loader.parentNode.removeChild(loader);
+  }
+}, false);
+
 var change_text = false;
 
 (function ($) {
@@ -243,7 +250,6 @@ var change_text = false;
 
     $.change_button_text();
     $('[title]').tooltipster();
-    body.waitloader('remove');
   });
 
 })(jQuery);
