@@ -5,9 +5,8 @@
 
         <div class="col-xs-12">
           <div class="row text-center afterhead-row">
-            <h2 class="page-title">
-              Estimator</br>
-              <small>Please use the table below to help to estimate the amount of fabric youwill need.</small>
+            <h1 class="page-title">Fabric and Upholstery Estimator</h1>
+            <h2 class="page-title"><small>Please use the table below to help to estimate the amount of fabric you will need.</small>
             </h2>
           </div>
         </div>

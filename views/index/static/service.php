@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-xs-12 text-center afterhead-row">
           <div class="row">
-            <h2 class="page-title">Customer service</h2>
+            <h1 class="page-title" style="margin-bottom: 35px!important;">Customer service</h1>
           </div>
         </div>
 

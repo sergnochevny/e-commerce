@@ -264,7 +264,7 @@
         }
         $this->template->vars('user_name', $user_name);
       }
-      $this->main->template->vars('page_title', "Product Catalog");
+      $this->main->template->vars('page_title', "Online Fabric Store");
       parent::index(false);
     }
 
@@ -288,7 +288,7 @@
      */
     public function specials() {
       $this->template->vars('cart_enable', '_');
-      $page_title = "Limited time Specials.";
+      $page_title = "Discount Decorator and Designer Fabrics";
       $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates.<br>All items available on a FIRST COME, FIRST SERVED basis only.';
       $this->main->template->vars('page_title', $page_title);
       $this->main->template->vars('annotation', $annotation);

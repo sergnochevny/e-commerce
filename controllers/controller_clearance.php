@@ -3,7 +3,7 @@
   class Controller_Clearance extends Controller_FormSimple {
 
     protected $id_name = 'id';
-    protected $view_title = 'Clearance';
+    protected $view_title = 'Clearance Decorator and Designer Fabrics Online';
     protected $form_title_add = 'Add Product To Clearance';
     protected $resolved_scenario = ['', 'add'];
     protected $save_warning = "The Fabric has been added to Clearance successfully!";

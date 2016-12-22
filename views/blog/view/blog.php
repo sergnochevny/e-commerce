@@ -6,7 +6,7 @@
       <div class="col-xs-12">
         <article class="page type-page status-publish entry">
           <div class="col-xs-12 text-center afterhead-row">
-            <h3 class="page-title">I Luv Fabrix Blog</h3>
+            <h1 class="page-title" style="margin-bottom: 35px!important;">Blog</h1>
           </div>
           <div id="content" class="entry-content">
             <?=$list?>
