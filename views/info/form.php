@@ -5,7 +5,7 @@
       <div class="col-sm-12">
         <div class="form-row">
           <label class="required_field"><b>Title:</b></label>
-          <input type="text" name="title" value="<?= $data['title']; ?>" class="input-text"
+          <input type="text" name="title" value="<?= $rows['title']; ?>" class="input-text"
                  placeholder="Title"/>
         </div>
       </div>
@@ -13,7 +13,7 @@
         <div class="form-row">
           <label class="required_field"><b>Content:</b></label>
           <textarea id="editable_content" name="message" class="input-text" placeholder="Content">
-            <?= $data['message']; ?>
+            <?= $rows['message']; ?>
           </textarea>
         </div>
       </div>
@@ -21,14 +21,14 @@
         <div class="col-sm-12">
           <div class="form-row">
             <label><b>Timeout (min):</b></label>
-            <input type="number" value="<?= $data['f2']; ?>" name="f2" class="input-text "/>
+            <input type="number" value="<?= $rows['f2']; ?>" name="f2" class="input-text "/>
           </div>
         </div>
       <?php endif; ?>
       <div class="col-sm-12">
         <div class="form-row">
           <label><b>Publish:</b></label>
-          <input type="checkbox" name="visible" value="1" <?= ($data['visible']) ? 'checked' : ''; ?>/>
+          <input type="checkbox" name="visible" value="1" <?= ($rows['visible']) ? 'checked' : ''; ?>/>
         </div>
       </div>
     </div>

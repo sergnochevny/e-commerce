@@ -2,6 +2,8 @@
 
   abstract class Controller_Controller extends Controller_Base {
 
+    protected $id_field = '';
+    protected $name_field = '';
     protected $main;
     protected $per_page = 12;
     protected $_scenario = '';
@@ -232,6 +234,24 @@
       $this->main->view_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
     }
 
+    protected function sitemap_get_list($page = 0, $view = false, $per_page = 1000) {
+      $this->build_search_filter($filter, $view);
+      $this->build_order($sort, $view);
+      $filter['scenario'] = $this->scenario();
+      if($page <= 0) $page = 1;
+      $start = (($page - 1) * $per_page);
+      $res_count_rows = 0;
+      $rows = forward_static_call_array([$this->model_name, 'get_list'], [$start, $per_page, &$res_count_rows, &$filter, &$sort]);
+      return ($res_count_rows > 0) ? $rows : null;
+    }
+
+    protected function build_sitemap_url($row, $view) {
+      $prms = [$this->id_field, $row[$this->id_field]];
+      $url = $this->controller . ($view ? DS . 'view' : '');
+      $sef = $row[$this->name_field];
+      return _A_::$app->router()->UrlTo($url, $prms, $sef);
+    }
+
     public static function urlto_sef_ignore_prms() {
       return null;
     }
@@ -271,4 +291,24 @@
       $this->template->vars('list', $list);
       $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
     }
+
+    public static function sitemap_order() { return null; }
+
+    public function sitemap(Closure $function, $view = false) {
+      $data = null;
+      $page = 1;
+      while($rows = $this->sitemap_get_list($page++)) {
+        foreach($rows as $row) {
+          $loc = $this->build_sitemap_url($row, $view);
+          $data[] =
+            [
+              'loc' => $loc,
+              'changefreq' => 'monthly',
+              'priority' => 0.5,
+            ];
+        }
+        $function->__invoke($data);
+      }
+    }
+
   }

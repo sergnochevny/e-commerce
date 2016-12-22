@@ -2,7 +2,7 @@
 
   class Controller_Product extends Controller_FormSimple {
 
-    protected $id_name = 'pid';
+    protected $id_field = 'pid';
     protected $form_title_add = 'NEW PRODUCT';
     protected $form_title_edit = 'MODIFY PRODUCT';
 

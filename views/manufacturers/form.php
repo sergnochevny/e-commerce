@@ -3,7 +3,7 @@
     <div class="col-xs-12">
       <div class="form-row">
         <label class="required_field"><strong>Manufacturer Name:</strong></label>
-        <input type="text" name="manufacturer" value="<?= $data['manufacturer'] ?>" class="input-text ">
+        <input type="text" name="manufacturer" value="<?= $rows['manufacturer'] ?>" class="input-text ">
       </div>
     </div>
   </div>

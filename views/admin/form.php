@@ -6,7 +6,7 @@
         <div class="panel-body">
           <div class="col-xs-12">
             <label class="required_field"><strong>Login:</strong></label>
-            <input type="text" name="login" value="<?= $data['login'] ?>" class="input-text "  autofocus/>
+            <input type="text" name="login" value="<?= $rows['login'] ?>" class="input-text " autofocus/>
           </div>
           <div class="col-sm-6">
             <label><strong>Password:</strong></label>

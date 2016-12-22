@@ -2,7 +2,7 @@
 
   class Controller_Orders extends Controller_Simple {
 
-    protected $id_name = 'oid';
+    protected $id_field = 'oid';
     protected $form_title_edit = 'MODIFY ORDER STATUS';
 
     protected function search_fields($view = false) {

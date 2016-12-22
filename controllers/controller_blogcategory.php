@@ -2,7 +2,7 @@
 
   class Controller_BlogCategory extends Controller_Simple  {
 
-    protected $id_name = 'id';
+    protected $id_field = 'id';
     protected $form_title_add = 'ADD NEW CATEGORY';
     protected $form_title_edit = 'EDIT CATEGORY';
 
@@ -15,7 +15,7 @@
 
     protected function load(&$data) {
       $data = [
-        $this->id_name => _A_::$app->get($this->id_name),
+        $this->id_field => _A_::$app->get($this->id_field),
         'name' => Model_Blogcategory::sanitize(_A_::$app->post('name')),
       ];
     }

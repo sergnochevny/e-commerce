@@ -2,6 +2,7 @@
 
   class Controller_Manufacturers extends Controller_Simple {
 
+    protected $name_field = 'manufacturer';
     protected $form_title_add = 'NEW MANUFACTURER';
     protected $form_title_edit = 'MODIFY MANUFACTURER';
 
@@ -40,6 +41,13 @@
       return true;
     }
 
+    protected function build_sitemap_url($row, $view) {
+      $prms = ['mnf' => $row[$this->id_field]];
+      $url = 'shop';
+      $sef = $row[$this->name_field];
+      return _A_::$app->router()->UrlTo($url, $prms, $sef);
+    }
+
     /**
      * @export
      */
@@ -48,5 +56,7 @@
       _A_::$app->setSession('sidebar_idx', 1);
       parent::view();
     }
+
+    public static function sitemap_order() { return 2; }
 
   }

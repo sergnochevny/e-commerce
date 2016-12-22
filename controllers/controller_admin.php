@@ -37,7 +37,7 @@
     }
 
     protected function form($url, $data = null) {
-      _A_::$app->get($this->id_name, self::get_from_session());
+      _A_::$app->get($this->id_field, self::get_from_session());
       parent::form($url, $data);
     }
 

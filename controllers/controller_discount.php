@@ -2,7 +2,7 @@
 
   class Controller_Discount extends Controller_FormSimple {
 
-    protected $id_name = 'sid';
+    protected $id_field = 'sid';
     protected $form_title_add = 'NEW DISCOUNT';
     protected $form_title_edit = 'MODIFY DISCOUNT';
 
@@ -78,7 +78,7 @@
     }
 
     protected function load(&$data) {
-      $data[$this->id_name] = _A_::$app->get($this->id_name);
+      $data[$this->id_field] = _A_::$app->get($this->id_field);
       $data['promotion_type'] = Model_Discount::sanitize(!is_null(_A_::$app->post('promotion_type')) ? _A_::$app->post('promotion_type') : '');
       $data['coupon_code'] = Model_Discount::sanitize(!is_null(_A_::$app->post('coupon_code')) ? _A_::$app->post('coupon_code') : '');
       $data['generate_code'] = Model_Discount::sanitize(!is_null(_A_::$app->post('generate_code')) ? _A_::$app->post('generate_code') : false);
@@ -114,7 +114,7 @@
       if($data['user_type'] != 4) $data['users'] = [];
 
       if($data['generate_code'] == 1) {
-        $data['coupon_code'] = Model_Discount::generateCouponCode($data[$this->id_name]);
+        $data['coupon_code'] = Model_Discount::generateCouponCode($data[$this->id_field]);
         $data['allow_multiple'] = 1;
         $data['product_type'] = 1;
         $data['filter_products'] = [];
@@ -125,7 +125,7 @@
       if(
         ($data['discount_type'] == 2 && $data['shipping_type'] == 0) ||
         (($data['generate_code'] == 0) && (strlen($data['coupon_code']) > 0) &&
-          Model_Discount::checkCouponCode($data[$this->id_name], $data['coupon_code'])) ||
+          Model_Discount::checkCouponCode($data[$this->id_field], $data['coupon_code'])) ||
         (!isset($data['users']) && ($data['user_type'] == 4)) ||
         (!isset($data['filter_products']) && ($data['product_type'] != 1)) ||
         ($data['date_start'] == 0) || ($data['date_end'] == 0) ||
@@ -224,7 +224,7 @@
      */
     public function view() {
       $this->main->is_admin_authorized();
-      $id = _A_::$app->get($this->id_name);
+      $id = _A_::$app->get($this->id_field);
       $discount = null;
       $orders = null;
       if(isset($id)) {
@@ -232,7 +232,7 @@
         $orders = Model_Orders::get_list_by_discount_id($id);
       }
       $this->set_back_url();
-      $this->template->vars($this->id_name, $id);
+      $this->template->vars($this->id_field, $id);
       $this->template->vars('discount', $discount);
       $this->template->vars('orders', $orders);
       $this->main->view_admin('view');

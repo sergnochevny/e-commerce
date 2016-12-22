@@ -2,7 +2,8 @@
 
   abstract class Controller_Simple extends Controller_Controller {
 
-    protected $id_name = 'id';
+    protected $id_field = 'id';
+    protected $name_field = 'name';
     protected $form_title_add;
     protected $form_title_edit;
     protected $save_warning = "All Data saved successfully!";
@@ -33,17 +34,17 @@
     protected function after_get_data_item_view(&$data) { }
 
     protected function form($url, $data = null) {
-      $id = _A_::$app->get($this->id_name);
+      $id = _A_::$app->get($this->id_field);
       if(!isset($data)) {
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
         $this->form_after_get_data($data);
       }
       $this->before_form_layout($data);
       $prms = null;
-      if(isset($id)) $prms[$this->id_name] = $id;
+      if(isset($id)) $prms[$this->id_field] = $id;
       if(!empty($this->scenario())) $prms['method'] = $this->scenario();
       $action = _A_::$app->router()->UrlTo($url, $prms);
-      $this->template->vars($this->id_name, $id);
+      $this->template->vars($this->id_field, $id);
       $this->template->vars('data', $data);
       $this->template->vars('scenario', $this->scenario());
       $this->template->vars('action', $action);
@@ -96,8 +97,8 @@
      * @export
      */
     public function view() {
-      if(!is_null(_A_::$app->get($this->id_name))) {
-        $id = _A_::$app->get($this->id_name);
+      if(!is_null(_A_::$app->get($this->id_field))) {
+        $id = _A_::$app->get($this->id_field);
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
         $this->after_get_data_item_view($data);
         $this->set_back_url();
@@ -120,7 +121,7 @@
      */
     public function delete($required_access = true) {
       if($required_access) $this->main->is_admin_authorized();
-      if(_A_::$app->request_is_post() && _A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_name))) {
+      if(_A_::$app->request_is_post() && _A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_field))) {
         try {
           forward_static_call(['Model_' . ucfirst($this->controller), 'delete'], $id);
           $this->after_delete($id);

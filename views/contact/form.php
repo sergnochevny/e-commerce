@@ -4,7 +4,7 @@
     <div class="col-xs-12">
       <div class="form-row">
         <label class="required_field">Your Name</label>
-        <input type="text" name="name" class="input-text" value="<?= isset($data['name']) ? $data['name'] : '' ?>">
+        <input type="text" name="name" class="input-text" value="<?= isset($rows['name']) ? $rows['name'] : '' ?>">
       </div>
     </div>
   </div>
@@ -12,14 +12,14 @@
     <div class="col-xs-6">
       <div class="form-row">
         <label>Phone</label>
-        <input type="text" name="phone" class="input-text" value="<?= isset($data['phone']) ? $data['phone'] : '' ?>">
+        <input type="text" name="phone" class="input-text" value="<?= isset($rows['phone']) ? $rows['phone'] : '' ?>">
       </div>
     </div>
 
     <div class="col-xs-6">
       <div class="form-row">
         <label class="required_field">Your Email</label>
-        <input type="email" name="email" class="input-text" value="<?= isset($data['email']) ? $data['email'] : '' ?>">
+        <input type="email" name="email" class="input-text" value="<?= isset($rows['email']) ? $rows['email'] : '' ?>">
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@
       <div class="form-row">
         <label class="required_field">Subject</label>
         <input type="text" name="subject" class="input-text"
-               value="<?= isset($data['subject']) ? $data['subject'] : '' ?>">
+               value="<?= isset($rows['subject']) ? $rows['subject'] : '' ?>">
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
       <div class="form-row">
         <label class="required_field">Questions or comments</label>
         <textarea name="comments" rows="10" cols="30"
-                  class="input-text"><?= isset($data['comments']) ? $data['comments'] : '' ?></textarea>
+                  class="input-text"><?= isset($rows['comments']) ? $rows['comments'] : '' ?></textarea>
       </div>
     </div>
   </div>

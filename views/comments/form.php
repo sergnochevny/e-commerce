@@ -3,13 +3,13 @@
     <div class="col-xs-12">
       <div class="form-row">
         <label class="required_field"><strong>Title:</strong></label>
-        <input type="text" name="title" value="<?= $data['title'] ?>" class="input-text ">
+        <input type="text" name="title" value="<?= $rows['title'] ?>" class="input-text ">
       </div>
     </div>
     <div class="col-xs-12">
       <div class="form-row">
         <label class="required_field"><strong>Content:</strong></label>
-        <textarea name="data" class="input-text" style="height: 180px"><?= $data['data'] ?></textarea>
+        <textarea name="data" class="input-text" style="height: 180px"><?= $rows['data'] ?></textarea>
       </div>
     </div>
     <div class="col-sm-6">
@@ -17,8 +17,8 @@
         <label class="required_field"><strong>Moderated:</strong></label>
         <select name="moderated" id="">
           <option value="null">Please, moderate the comment</option>
-          <option value="1" <?= $data['moderated'] == 1 ? 'selected' : '' ?>>Published</option>
-          <option value="0" <?= $data['moderated'] == 0 ? 'selected' : '' ?>>Hidden</option>
+          <option value="1" <?= $rows['moderated'] == 1 ? 'selected' : '' ?>>Published</option>
+          <option value="0" <?= $rows['moderated'] == 0 ? 'selected' : '' ?>>Hidden</option>
         </select>
       </div>
     </div>

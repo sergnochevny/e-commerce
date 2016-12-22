@@ -23,7 +23,7 @@
       <div class="col-sm-6">2) Samples 2 - 5:</div>
       <div class="col-sm-6"><?= '$' . number_format((!is_null(_A_::$app->keyStorage()->shop_samples_price_multiple) ? _A_::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE), 2); ?></div>
       <div class="col-sm-6">3) Samples 6 & over:</div>
-      <div class="col-sm-6"><?= '$' . number_format(!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL, 2); ?> / sample</div>
+      <div class="col-sm-6"><?= '$' . number_format(!empty($rows['shop_samples_price_additional']) ? $rows['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL, 2); ?> / sample</div>
       <?php if(!(isset($cart_items) && strlen($cart_items) > 0)): ?>
         <div class="col-sm-6">4) Courier delivery surcharge:</div>
         <div class="col-sm-6"><?= '$' . number_format((!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), 2); ?></div>

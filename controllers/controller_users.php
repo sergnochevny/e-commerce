@@ -2,7 +2,7 @@
 
   class Controller_Users extends Controller_FormSimple {
 
-    protected $id_name = 'aid';
+    protected $id_field = 'aid';
     protected $form_title_add = 'NEW USER';
     protected $form_title_edit = 'MODIFY USER';
     protected $resolved_scenario = ['', 'short', 'csv'];

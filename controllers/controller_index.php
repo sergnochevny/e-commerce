@@ -2,6 +2,98 @@
 
   Class Controller_Index Extends Controller_Controller {
 
+    protected function build_sitemap_url($row, $view) {
+      return $row['loc'];
+    }
+
+    protected function sitemap_get_list($page = 0, $view = false, $per_page = 1000) {
+      $data = [
+        [
+          'loc' => _A_::$app->router()->UrlTo(''),
+          'changefreq' => 'monthly',
+          'priority' => 0.9,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('shop'),
+          'changefreq' => 'daily',
+          'priority' => 0.7,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('service'),
+          'changefreq' => 'monthly',
+          'priority' => 0.7,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('estimator'),
+          'changefreq' => 'monthly',
+          'priority' => 0.7,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('newsletter'),
+          'changefreq' => 'monthly',
+          'priority' => 0.7,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('privacy'),
+          'changefreq' => 'monthly',
+          'priority' => 0.5,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('about'),
+          'changefreq' => 'monthly',
+          'priority' => 0.5,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('contact'),
+          'changefreq' => 'monthly',
+          'priority' => 0.5,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('shop/specials'),
+          'changefreq' => 'daily',
+          'priority' => 0.6,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('clearance'),
+          'changefreq' => 'daily',
+          'priority' => 0.6,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('blog/view'),
+          'changefreq' => 'daily',
+          'priority' => 0.6,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('prices/view'),
+          'changefreq' => 'daily',
+          'priority' => 0.6,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('colours/view'),
+          'changefreq' => 'daily',
+          'priority' => 0.6,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('categories/view'),
+          'changefreq' => 'daily',
+          'priority' => 0.6,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('patterns/view'),
+          'changefreq' => 'daily',
+          'priority' => 0.6,
+        ],
+        [
+          'loc' => _A_::$app->router()->UrlTo('manufacturers/view'),
+          'changefreq' => 'daily',
+          'priority' => 0.6,
+        ],
+      ];
+      return ($page > 1) ? null : $data;
+    }
+
+    public static function sitemap_order() { return 0; }
+
     /**
      * @export
      */
@@ -40,13 +132,6 @@
     /**
      * @export
      */
-    public function contact() {
-      $this->main->view('static/contact');
-    }
-
-    /**
-     * @export
-     */
     public function about() {
       $this->main->view('static/about');
     }
@@ -65,7 +150,7 @@
       $this->main->error404();
     }
 
-    public function view() {}
+    public function view() { }
 
 
 
@@ -142,6 +227,5 @@
 //        }
 //        echo $total . ' | ' . $total_break . ' | ' . $total_break_p . ' | ' . $total_break_v;
 //    }
-
 
   }

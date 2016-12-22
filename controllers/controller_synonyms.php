@@ -2,7 +2,7 @@
 
   class Controller_Synonyms extends Controller_Simple {
 
-    protected $id_name = 'id';
+    protected $id_field = 'id';
     protected $form_title_add = 'NEW SYNONYMS';
     protected $form_title_edit = 'MODIFY SYNONYMS';
 
@@ -15,7 +15,7 @@
 
     protected function load(&$data) {
       $data = [
-        $this->id_name => _A_::$app->get($this->id_name),
+        $this->id_field => _A_::$app->get($this->id_field),
         'keywords' => trim(Model_Synonyms::sanitize(_A_::$app->post('keywords'))),
         'synonyms' => trim(Model_Synonyms::sanitize(_A_::$app->post('synonyms')))
       ];

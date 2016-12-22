@@ -2,7 +2,7 @@
 
   class Controller_Blog extends Controller_FormSimple {
 
-    protected $id_name = 'id';
+    protected $id_field = 'id';
     protected $form_title_add = 'WRITE NEW POST';
     protected $form_title_edit = 'EDIT POST';
 
@@ -285,7 +285,7 @@
     }
 
     protected function before_save(&$data) {
-      if(!isset($data[$this->id_name])) $data['post_author'] = Controller_Admin::get_from_session();
+      if(!isset($data[$this->id_field])) $data['post_author'] = Controller_Admin::get_from_session();
       $data['post_title'] = addslashes(trim(html_entity_decode(($data['post_title']))));
       $data['keywords'] = addslashes(trim(html_entity_decode(($data['keywords']))));
       $data['description'] = addslashes(trim(html_entity_decode(($data['description']))));
@@ -303,10 +303,10 @@
     }
 
     protected function form_after_get_data(&$data = null) {
-      $desckeys = Model_Blog::get_desc_keys($data[$this->id_name]);
+      $desckeys = Model_Blog::get_desc_keys($data[$this->id_field]);
       $data['description'] = $desckeys['description'];
       $data['keywords'] = $desckeys['keywords'];
-      $data['img'] = Model_Blog::get_img($data[$this->id_name]);
+      $data['img'] = Model_Blog::get_img($data[$this->id_field]);
     }
 
     protected function before_form_layout(&$data = null) {
@@ -367,7 +367,7 @@
     }
 
     protected function load(&$data) {
-      $data['id'] = _A_::$app->get($this->id_name);
+      $data['id'] = _A_::$app->get($this->id_field);
       $data['categories'] = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
       $data['keywords'] = !is_null(_A_::$app->post('keywords')) ? _A_::$app->post('keywords') : '';
       $data['post_title'] = !is_null(_A_::$app->post('post_title')) ? _A_::$app->post('post_title') : '';
@@ -440,8 +440,8 @@
         $data['img'] = _A_::$app->router()->UrlTo($img);
 
         if(!empty($data['post_title'])) $this->template->setMeta('title', $data['post_title']);
-        if(isset($data[$this->id_name])) {
-          $desckeys = Model_Blog::get_desc_keys($data[$this->id_name]);
+        if(isset($data[$this->id_field])) {
+          $desckeys = Model_Blog::get_desc_keys($data[$this->id_field]);
           if(!empty($desckeys['description'])) $this->template->setMeta('description', $desckeys['description']);
           if(!empty($desckeys['keywords'])) $this->template->setMeta('keywords', $desckeys['keywords']);
         }

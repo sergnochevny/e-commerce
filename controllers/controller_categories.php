@@ -2,7 +2,8 @@
 
   class Controller_Categories extends Controller_Simple {
 
-    protected $id_name = 'cid';
+    protected $id_field = 'cid';
+    protected $name_field = 'cname';
     protected $form_title_add = 'NEW CATEGORY';
     protected $form_title_edit = 'MODIFY CATEGORY';
 
@@ -30,7 +31,7 @@
 
     protected function load(&$data) {
       $data = [
-        $this->id_name => _A_::$app->get($this->id_name),
+        $this->id_field => _A_::$app->get($this->id_field),
         'cname' => Model_Categories::sanitize(_A_::$app->post('cname')),
         'displayorder' => Model_Categories::sanitize(_A_::$app->post('displayorder'))
       ];
@@ -47,6 +48,13 @@
       return true;
     }
 
+    protected function build_sitemap_url($row, $view) {
+      $prms = ['cat' => $row[$this->id_field]];
+      $url = 'shop';
+      $sef = $row[$this->name_field];
+      return _A_::$app->router()->UrlTo($url, $prms, $sef);
+    }
+
     /**
      * @export
      */
@@ -55,5 +63,7 @@
       _A_::$app->setSession('sidebar_idx', 2);
       parent::view();
     }
+
+    public static function sitemap_order() { return 3; }
 
   }

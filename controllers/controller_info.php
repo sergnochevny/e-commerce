@@ -2,7 +2,7 @@
 
   class Controller_Info extends Controller_FormSimple {
 
-    protected $id_name = 'id';
+    protected $id_field = 'id';
     protected $_scenario = 'home';
     protected $resolved_scenario = ['home' => 1, 'product' => 2, 'cart' => 3];
     protected $title_scenario = [
@@ -68,7 +68,7 @@
     }
 
     protected function before_save(&$data) {
-      if(!isset($data[$this->id_name])) $data['post_author'] = Controller_Admin::get_from_session();
+      if(!isset($data[$this->id_field])) $data['post_author'] = Controller_Admin::get_from_session();
       $data['title'] = addslashes(trim(html_entity_decode(($data['title']))));
       $data['message'] = addslashes(html_entity_decode(Controller_Blog::convertation(($data['message']))));
     }

@@ -2,16 +2,16 @@
 
   class Controller_Matches extends Controller_FormSimple {
 
-    protected $id_name = 'pid';
+    protected $id_field = 'pid';
 
     protected function load(&$data) {
-      $data[$this->id_name] = _A_::$app->get($this->id_name);
+      $data[$this->id_field] = _A_::$app->get($this->id_field);
     }
 
     protected function after_save($id, &$data) {
       $data['message'] = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
       if(!$id) {
-        $data['message'] = empty($data[$this->id_name]) ? 'Error with added fabric to Matches.' : 'Error with adding fabric to Matches.<br> Main image of the fabric is empty.';
+        $data['message'] = empty($data[$this->id_field]) ? 'Error with added fabric to Matches.' : 'Error with adding fabric to Matches.<br> Main image of the fabric is empty.';
       }
       $data['res'] = $id ? 1 : 0;
     }
@@ -72,7 +72,7 @@
      * @export
      */
     public function delete($required_access = true) {
-      if(_A_::$app->request_is_post() && _A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_name))) {
+      if(_A_::$app->request_is_post() && _A_::$app->request_is_ajax() && ($id = _A_::$app->get($this->id_field))) {
         try {
           forward_static_call(['Model_' . ucfirst($this->controller), 'delete'], $id);
           $this->after_delete($id);
@@ -112,7 +112,7 @@
               $item_added = false;
 
               foreach($cart_items as $key => $item) {
-                if($item[$this->id_name] == $product_id) {
+                if($item[$this->id_field] == $product_id) {
                   // $cart_items[$key]['quantity'] += 1;
                   $item_added = true;
                 }
@@ -147,7 +147,7 @@
                   $product['format_discount'] = $format_discount;
                   $product['format_price'] = $format_price;
                   $product['format_sale_price'] = $format_sale_price;
-                  $cart_items[$product[$this->id_name]] = $product;
+                  $cart_items[$product[$this->id_field]] = $product;
                   $message .= 'The product ' . $product['pname'] . ' have been added to your Basket.<br>';
                 } else {
                   $message .= 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
