@@ -2604,7 +2604,7 @@ input:hover {
     box-shadow: none;
 }
 
-h4, h3, h2 {
+h4, h3, h2,h1 {
     color: #667700;
     text-transform: capitalize;
     text-shadow: 1px 1px 1px #000;
@@ -2751,4 +2751,8 @@ input:hover {
 .authorize-panel .rememberme{
     float: right;
     margin-left: 10px;
+}
+
+h1 {
+    margin-bottom: 0 !important;
 }

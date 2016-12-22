@@ -4,8 +4,8 @@
     <div class="row">
       <div class="col-xs-12 text-center afterhead-row">
         <div class="row">
-          <h2 class="page-title">Newsletter<br>
-            <small>DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</small>
+          <h1 class="page-title">I Luv Fabrix Newsletter</h1>
+          <h2 class="page-title"><small>DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</small>
           </h2>
         </div>
       </div>

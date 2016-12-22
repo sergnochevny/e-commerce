@@ -5,8 +5,8 @@
 
         <div class="col-xs-12 text-center afterhead-row">
           <div class="row">
-            <h2 class="page-title">About Us <br>
-              <small>25 Years Selling Designer Fabrics</small>
+            <h1 class="page-title">About Us</h1>
+              <h2 class="page-title"><small>25 Years Selling Designer Fabrics</small>
             </h2>
           </div>
         </div>

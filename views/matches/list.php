@@ -1,4 +1,5 @@
 <section class="just-posts-grid">
+  <h1 class="page-title" style="margin: 25px 0 35px !important; text-align: center;">Fabric Pattern Tool</h1>
   <div class="note afterhead-row">
     <div class="matches-note text-bold">
       <small>
