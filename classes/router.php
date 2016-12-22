@@ -84,9 +84,9 @@
 
     private function setBaseUrl() {
       $this->base_url = strtolower(explode(DS, _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://" . _A_::$app->server('SERVER_NAME') . (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT'));
-      $this->base_url = trim($this->base_url,'/\\');
-      if(strlen(trim(dirname(_A_::$app->server('SCRIPT_NAME')),'/\\')))
-        $this->base_url .= DS . trim(dirname(_A_::$app->server('SCRIPT_NAME')),'/\\');
+      $this->base_url = trim($this->base_url, '/\\');
+      if(strlen(trim(dirname(_A_::$app->server('SCRIPT_NAME')), '/\\')))
+        $this->base_url .= DS . trim(dirname(_A_::$app->server('SCRIPT_NAME')), '/\\');
       define('BASE_URL', $this->base_url);
     }
 
@@ -249,13 +249,19 @@
     }
 
     public function RefTo($path, $params = null) {
-      $url = http_build_url($path, ['query', http_build_query($params)]);
+      if(!is_null($params) && is_array($params) && (count($params) > 0))
+        $url = $this->http_build_url($path, ['query' => http_build_query($params)]);
+      else $url = $this->http_build_url($path);
       return $url;
     }
 
-    public function UrlTo($path, $params = null, $to_sef = null, $sef_exclude_params = []) {
+    public function UrlTo($path, $params = null, $to_sef = null, $sef_exclude_params = null, $canonical = false) {
       if($this->sef_enable()) {
-        $sef_exclude_params = array_merge($this->exclude_params, $sef_exclude_params);
+        $sef_exclude_params = isset($sef_exclude_params) ? $sef_exclude_params : [];
+        $exclude_params = forward_static_call(['Controller_' . ucfirst($this->controller), 'urlto_sef_ignore_prms']);
+        if(!isset($exclude_params)) $exclude_params = [];
+        else $exclude_params = isset($exclude_params[$this->action]) ? $exclude_params[$this->action] : [];
+        $sef_exclude_params = array_merge($this->exclude_params, $sef_exclude_params, $exclude_params);
         $path = rtrim(trim($path), DS);
         if(strpos($path, '{base_url}') !== false) {
           $path = str_replace('{base_url}', $this->base_url, $path);
@@ -281,8 +287,9 @@
         $params = isset($params) ? array_intersect_key($params, array_flip($sef_exclude_params)) : [];
         if(strpos($path, $this->base_url) == false)
           $path = $this->base_url . DS . $path;
-        if(!is_null($params) && is_array($params) && (count($params) > 0))
-          $url = $this->http_build_url($path, ['query' => http_build_query($params)]); else $url = $this->http_build_url($path);
+        if(!$canonical && !is_null($params) && is_array($params) && (count($params) > 0))
+          $url = $this->http_build_url($path, ['query' => http_build_query($params)]);
+        else $url = $this->http_build_url($path);
       } else {
         $path = rtrim(trim($path), DS);
         if(strpos($path, '{base_url}') !== false) {
@@ -293,7 +300,8 @@
         }
 
         if(!is_null($params))
-          $url = $this->http_build_url($path, ['query' => http_build_query($params)]); else $url = $this->http_build_url($path);
+          $url = $this->http_build_url($path, ['query' => http_build_query($params)]);
+        else $url = $this->http_build_url($path);
       }
       return $url;
     }

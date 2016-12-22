@@ -162,11 +162,52 @@
 
     protected function after_get_list(&$rows, $view = false, $type = null) {
       $url_prms = null;
-      if(!empty(_A_::$app->get('cat'))) $url_prms['cat'] = _A_::$app->get('cat');
-      if(!empty(_A_::$app->get('mnf'))) $url_prms['mnf'] = _A_::$app->get('mnf');
-      if(!empty(_A_::$app->get('ptrn'))) $url_prms['ptrn'] = _A_::$app->get('ptrn');
-      if(!empty(_A_::$app->get('clr'))) $url_prms['clr'] = _A_::$app->get('clr');
-      if(!empty(_A_::$app->get('prc'))) $url_prms['prc'] = _A_::$app->get('prc');
+      if(!empty(_A_::$app->get('cat'))) {
+        $url_prms['cat'] = _A_::$app->get('cat');
+        $data = Model_Categories::get_by_id(_A_::$app->get('cat'));
+        if(!empty($data['cname'])) {
+          $this->template->setMeta('description', $data['cname']);
+          $this->template->setMeta('keywords', strtolower($data['cname']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['cname'])))));
+          $this->template->setMeta('title', $data['cname']);
+        }
+      };
+      if(!empty(_A_::$app->get('mnf'))) {
+        $url_prms['mnf'] = _A_::$app->get('mnf');
+        $data = Model_Manufacturers::get_by_id(_A_::$app->get('mnf'));
+        if(!empty($data['manufacturer'])) {
+          $this->template->setMeta('description', $data['manufacturer']);
+          $this->template->setMeta('keywords', strtolower($data['manufacturer']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['manufacturer'])))));
+          $this->template->setMeta('title', $data['manufacturer']);
+        }
+      }
+      if(!empty(_A_::$app->get('ptrn'))) {
+        $url_prms['ptrn'] = _A_::$app->get('ptrn');
+        $data = Model_Patterns::get_by_id(_A_::$app->get('ptrn'));
+        if(!empty($data['pattern'])) {
+          $this->template->setMeta('description', $data['pattern']);
+          $this->template->setMeta('keywords', implode(',', strtolower($data['pattern']) . ',' . array_filter(explode(' ', strtolower($data['pattern'])))));
+          $this->template->setMeta('title', $data['pattern']);
+        }
+      }
+      if(!empty(_A_::$app->get('clr'))) {
+        $url_prms['clr'] = _A_::$app->get('clr');
+        $data = Model_Colours::get_by_id(_A_::$app->get('clr'));
+        if(!empty($data['colour'])) {
+          $this->template->setMeta('description', $data['colour']);
+          $this->template->setMeta('keywords', strtolower($data['colour']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['colour'])))));
+          $this->template->setMeta('title', $data['colour']);
+        }
+      }
+      if(!empty(_A_::$app->get('prc'))) {
+        $url_prms['prc'] = _A_::$app->get('prc');
+        $data = Model_Prices::get_by_id(_A_::$app->get('prc'));
+        if(!empty($data['title'])) {
+          $title = 'Fabrics Prices Range ' . $data['title'];
+          $this->template->setMeta('description', $title);
+          $this->template->setMeta('keywords', strtolower($title) . ',' . implode(',', array_filter(explode(' ', strtolower($title)))));
+          $this->template->setMeta('title', $title);
+        }
+      }
       if(isset($type)) $url_prms['back'] = $type;
       $this->template->vars('url_prms', $url_prms);
     }
@@ -234,14 +275,26 @@
 
     protected function load_search_filter_get_idx($filter, $view = false) {
       $idx = Controller_AdminBase::is_logged() . '_' . $view;
-      if((!empty(_A_::$app->get('cat')))) $idx .= '_cat_';
-      if((!empty(_A_::$app->get('mnf')))) $idx .= '_mnf_';
-      if((!empty(_A_::$app->get('ptrn')))) $idx .= '_ptrn_';
-      if((!empty(_A_::$app->get('clr')))) $idx .= '_clr_';
-      if((!empty(_A_::$app->get('prc')))) $idx .= '_prc_';
+      if((!empty(_A_::$app->get('cat')))) $idx .= '_cat_' . _A_::$app->get('cat') . '_';
+      if((!empty(_A_::$app->get('mnf')))) $idx .= '_mnf_' . _A_::$app->get('mnf') . '_';
+      if((!empty(_A_::$app->get('ptrn')))) $idx .= '_ptrn_' . _A_::$app->get('ptrn') . '_';
+      if((!empty(_A_::$app->get('clr')))) $idx .= '_clr_' . _A_::$app->get('clr') . '_';
+      if((!empty(_A_::$app->get('prc')))) $idx .= '_prc_' . _A_::$app->get('prc') . '_';
       $idx .= (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
       $idx = !empty($idx) ? $idx : 0;
       return $idx;
+    }
+
+    public static function urlto_sef_ignore_prms() {
+      return [
+        'product' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
+        'specials' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
+        'last' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
+        'popular' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
+        'best' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
+        'bestsellers' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
+        'widget' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
+      ];
     }
 
     /**
