@@ -6,20 +6,6 @@
     protected $form_title_add = 'WRITE NEW POST';
     protected $form_title_edit = 'EDIT POST';
 
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['post_date' => 'desc'];
-      }
-    }
-
-    protected function search_fields($view = false) {
-      return [
-        'a.post_date', 'a.post_title', 'a.post_status',
-        'b.group_id',
-      ];
-    }
-
     private static function autop($pee, $br = true) {
       $pre_tags = [];
 
@@ -182,31 +168,6 @@
       return str_replace("\n", "<WPPreserveNewline />", $matches[0]);
     }
 
-    public static function convertation($txt) {
-
-//        $txt = preg_replace('#(\s*\[caption[^\]]+\]<a[^>]+><img[^>]+\/><\/a>)(.*?)(\[\/caption\]\s*)#i', '$1<p>$2</p>$3', $txt);
-//        $txt = preg_replace('#\[caption([^\]]+)\]#i', '<div$1 class="div_img">', $txt);
-//        $txt = preg_replace('#\[\/caption\]#i', '</div>', $txt);
-//        $txt = preg_replace('#<a[^>]+>(<img[^>]+\/>)<\/a>#i', '$1', $txt);
-//        $txt = preg_replace('#\s*<a[^>]+href ?= ?"http:\/\/www.iluvfabrix[^><]+>(.*)<\/a>\s*#isU', '$1', $txt);
-//        $txt = str_replace('http://iluvfabrix.com/blog/wp-content/uploads', '{base_url}/img', $txt);
-//        $txt = str_replace('http://www.iluvfabrix.com/blog/wp-content/uploads', '{base_url}/img', $txt);
-//        $txt = str_replace('http://iluvfabrix.com', '{base_url}', $txt);
-
-      $txt = str_replace(_A_::$app->router()->UrlTo('/'), '{base_url}', $txt);
-      $txt = str_replace('http://www.iluvfabrix.com', '{base_url}', $txt);
-      $txt = preg_replace('#[^ \.]*\.iluvfabrix\.com#i', '{base_url}', $txt);
-      $txt = str_replace('{base_url}/', '{base_url}', $txt);
-      $txt = str_replace(['‘', '’'], "'", $txt);
-      $txt = str_replace(" ", " ", $txt);
-      $txt = str_replace('–', "-", $txt);
-      $txt = preg_replace('#[^\x{00}-\x{7f}]#i', '', $txt);
-
-      $txt = static::autop($txt);
-
-      return $txt;
-    }
-
     private function select_filter($filters, $start = null, $search = null) {
       $selected = isset($filters) ? $filters : [];
       $filter = Model_Blog::get_filter_data($count, $start, $search);
@@ -309,6 +270,20 @@
       $this->template->view_layout('filter/filter');
     }
 
+    protected function build_order(&$sort, $view = false) {
+      parent::build_order($sort, $view);
+      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+        $sort = ['post_date' => 'desc'];
+      }
+    }
+
+    protected function search_fields($view = false) {
+      return [
+        'a.post_date', 'a.post_title', 'a.post_status',
+        'b.group_id',
+      ];
+    }
+
     protected function before_save(&$data) {
       if(!isset($data[$this->id_name])) $data['post_author'] = Controller_Admin::get_from_session();
       $data['post_title'] = addslashes(trim(html_entity_decode(($data['post_title']))));
@@ -367,7 +342,7 @@
     }
 
     protected function after_get_list(&$rows, $view = false) {
-      if (isset($rows)){
+      if(isset($rows)) {
         foreach($rows as $key => $row) {
           $rows[$key]['post_title'] = stripslashes($row['post_title']);
           $rows[$key]['post_date'] = date('F jS, Y', strtotime($row['post_date']));
@@ -433,6 +408,11 @@
     protected function before_list_layout($view = false) {
       if(!empty(_A_::$app->get('cat'))) {
         $category_name = Model_Blogcategory::get_by_id(_A_::$app->get('cat'))['name'];
+        if(!empty($category_name)) {
+          $this->template->setMeta('description', $category_name);
+          $this->template->setMeta('keywords', strtolower($category_name) . ',' . implode(',', array_filter(explode(' ', strtolower($category_name)))));
+          $this->template->setMeta('title', $category_name);
+        }
       }
       $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
     }
@@ -446,7 +426,7 @@
     }
 
     protected function after_get_data_item_view(&$data) {
-      $prms=null;
+      $prms = null;
       if((!empty(_A_::$app->get('cat')))) $prms['cat'] = _A_::$app->get('cat');
       $this->main->template->vars('back_url', _A_::$app->router()->UrlTo('blog/view', $prms));
       if(isset($data)) {
@@ -458,7 +438,39 @@
         $img = str_replace('{base_url}/', '', Model_Blog::get_img($data['id']));
         if(!(file_exists($img) && is_file($img))) $img = 'upload/upload/not_image.jpg';
         $data['img'] = _A_::$app->router()->UrlTo($img);
+
+        if(!empty($data['post_title'])) $this->template->setMeta('title', $data['post_title']);
+        if(isset($data[$this->id_name])) {
+          $desckeys = Model_Blog::get_desc_keys($data[$this->id_name]);
+          if(!empty($desckeys['description'])) $this->template->setMeta('description', $desckeys['description']);
+          if(!empty($desckeys['keywords'])) $this->template->setMeta('keywords', $desckeys['keywords']);
+        }
       }
+    }
+
+    public static function convertation($txt) {
+
+//        $txt = preg_replace('#(\s*\[caption[^\]]+\]<a[^>]+><img[^>]+\/><\/a>)(.*?)(\[\/caption\]\s*)#i', '$1<p>$2</p>$3', $txt);
+//        $txt = preg_replace('#\[caption([^\]]+)\]#i', '<div$1 class="div_img">', $txt);
+//        $txt = preg_replace('#\[\/caption\]#i', '</div>', $txt);
+//        $txt = preg_replace('#<a[^>]+>(<img[^>]+\/>)<\/a>#i', '$1', $txt);
+//        $txt = preg_replace('#\s*<a[^>]+href ?= ?"http:\/\/www.iluvfabrix[^><]+>(.*)<\/a>\s*#isU', '$1', $txt);
+//        $txt = str_replace('http://iluvfabrix.com/blog/wp-content/uploads', '{base_url}/img', $txt);
+//        $txt = str_replace('http://www.iluvfabrix.com/blog/wp-content/uploads', '{base_url}/img', $txt);
+//        $txt = str_replace('http://iluvfabrix.com', '{base_url}', $txt);
+
+      $txt = str_replace(_A_::$app->router()->UrlTo('/'), '{base_url}', $txt);
+      $txt = str_replace('http://www.iluvfabrix.com', '{base_url}', $txt);
+      $txt = preg_replace('#[^ \.]*\.iluvfabrix\.com#i', '{base_url}', $txt);
+      $txt = str_replace('{base_url}/', '{base_url}', $txt);
+      $txt = str_replace(['‘', '’'], "'", $txt);
+      $txt = str_replace(" ", " ", $txt);
+      $txt = str_replace('–', "-", $txt);
+      $txt = preg_replace('#[^\x{00}-\x{7f}]#i', '', $txt);
+
+      $txt = static::autop($txt);
+
+      return $txt;
     }
 
   }

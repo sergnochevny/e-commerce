@@ -55,30 +55,7 @@
       $keywords = '';
       $title = '';
 
-      if(_A_::$app->router()->controller == 'blog' && _A_::$app->router()->action == 'view') {
-        $post_id = !is_null(_A_::$app->get('id')) ? _A_::$app->get('id') : null;
-        if(isset($post_id)) {
-          $result = mysql_query("select post_title from blog_posts WHERE id='$post_id'");
-          if($result && mysql_num_rows($result) > 0) {
-            $row = mysql_fetch_assoc($result);
-            $title = $row['post_title'];
-          }
-          $result = mysql_query("select * from blog_post_keys_descriptions WHERE post_id='$post_id'");
-          if($result && mysql_num_rows($result) > 0) {
-            $row = mysql_fetch_assoc($result);
-            $description = stripslashes($row['description']);
-            $keywords = stripslashes($row['keywords']);
-          }
-        }
-      } elseif(_A_::$app->router()->controller == 'shop' && _A_::$app->router()->action == "product") {
-        $pid = _A_::$app->get('pid');
-        $result = mysql_query("select * from fabrix_products WHERE pid='$pid'");
-        $row = mysql_fetch_array($result);
-        $description = $row['metadescription'];
-        $keywords = $row['metakeywords'];
-        $title = $row['pname'];
-      }
-      if (empty($title) && empty($description) && empty($keywords)) {
+      if(empty($title) && empty($description) && empty($keywords)) {
         $q = "SELECT * FROM page_meta WHERE controller = '" . _A_::$app->router()->controller . "'";
         if(!empty(_A_::$app->router()->action) && (_A_::$app->router()->controller !== _A_::$app->router()->action))
           $q .= " AND action = '" . _A_::$app->router()->action . "'";

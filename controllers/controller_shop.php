@@ -455,8 +455,8 @@
       $data = Model_Shop::get_product($pid);
 
       if(!empty($data['metadescription'])) $this->template->setMeta('description', $data['metadescription']);
-      if(!empty($row['metakeywords']))$this->template->setMeta('keywords', $data['metakeywords']);
-      if(!empty($row['pname']))$this->template->setMeta('title', $data['pname']);
+      if(!empty($data['metakeywords']))$this->template->setMeta('keywords', $data['metakeywords']);
+      if(!empty($data['pname']))$this->template->setMeta('title', $data['pname']);
 
       ob_start();
       if($data['rSystemDiscount'] > 0) {
