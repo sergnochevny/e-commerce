@@ -4,7 +4,7 @@
 
   function postdata(this_, url, data) {
     $.postdata(this_, url, data,
-      function(data){
+      function (data) {
         $('#content').html(data);
       }
     );
@@ -16,10 +16,10 @@
     if (reset) {
       var data = new FormData();
       data.append('search[reset]', true);
-      $('#search').attr('value','');
+      $('#search').attr('value', '');
     } else {
-      if($('[name="search[a.pname]"]').length){
-        $('#search').attr('value',$('[name="search[a.pname]"]').attr('value'));
+      if ($('[name="search[a.pname]"]').length) {
+        $('#search').attr('value', $('[name="search[a.pname]"]').attr('value'));
       }
       var data = new FormData(this);
     }
@@ -51,7 +51,8 @@
     if (search.length) {
       search.attr('action', $(this).attr('href')).trigger('submit');
     } else {
-      var data =  new FormData();
+      var data = new FormData();
+      data.append('search[null]', 'null');
       var sort = $('form[data-sort]');
       if (sort.length) {
         (new FormData(sort[0])).forEach(function (value, key) {
@@ -70,6 +71,7 @@
       search.attr('action', $(this).attr('href')).trigger('submit');
     } else {
       var data = new FormData();
+      data.append('search[null]', 'null');
       var sort = $('form[data-sort]');
       if (sort.length) {
         (new FormData(sort[0])).forEach(function (value, key) {

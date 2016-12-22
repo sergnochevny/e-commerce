@@ -32,9 +32,9 @@
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/webfont.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css"
         href='<?= _A_::$app->router()->UrlTo('views/css/jquery.smartmenus.bootstrap.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/style-theme.min.css'); ?>'/>
+  <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/style-theme.css'); ?>'/>
   <link rel='stylesheet' type="text/css"
-        href='<?= _A_::$app->router()->UrlTo('views/css/style-woocommerce.min.css'); ?>'/>
+        href='<?= _A_::$app->router()->UrlTo('views/css/style-woocommerce.css'); ?>'/>
   <link rel='stylesheet' type="text/css"
         href='<?= _A_::$app->router()->UrlTo('views/css/style-shortcodes.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/prettyPhoto.min.css'); ?>'/>
@@ -42,7 +42,7 @@
         media='all'/>
   <link rel="stylesheet" type="text/css"
         href="<?= _A_::$app->router()->UrlTo('views/css/tooltipster.bundle.min.css'); ?>"/>
-  <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.min.css'); ?>'/>
+  <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.css'); ?>'/>
 
   <script type='text/javascript'
           src='<?= _A_::$app->router()->UrlTo('views/js/jquery2/jquery-2.2.4.min.js'); ?>'></script>

@@ -1978,17 +1978,17 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 
 .w_search {
-    margin-top: -58px;
+    margin-top: -49px;
     position: relative;
 }
 
 .wo_search {
-    margin-top: -35px;
+    margin-top: -26px;
     position: relative;
 }
 
 .ww_search {
-    margin-top: -23px;
+    margin-top: 0;
     position: relative;
 }
 
@@ -2635,7 +2635,7 @@ input:hover {
     box-shadow: none;
 }
 
-h4, h3, h2,h1 {
+h4, h3, h2, h1 {
     color: #667700;
     text-transform: capitalize;
     text-shadow: 1px 1px 1px #000;
@@ -2782,8 +2782,4 @@ input:hover {
 .authorize-panel .rememberme{
     float: right;
     margin-left: 10px;
-}
-
-h1 {
-    margin-bottom: 0 !important;
 }

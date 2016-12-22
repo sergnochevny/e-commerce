@@ -499,6 +499,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 
 .main-content-shop .page-title {
+    min-height: 76px;
     margin: 0 0 35px;
     line-height: normal;
     text-transform: uppercase;
@@ -506,7 +507,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 
 .main-content-shop .page-title.sb {
-    margin: 0 0 50px;
+    margin: 0 0 20px;
 }
 
 .main-content-shop .term-description {
