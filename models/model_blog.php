@@ -110,7 +110,7 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      $query = "SELECT * ";
+      $query = "SELECT DISTINCT a.* ";
       $query .= " FROM " . static::$table . " a";
       $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
       $query .= static::build_where($filter);
@@ -192,8 +192,8 @@
 
     public static function delete($id) {
       if(isset($id)) {
-        $res = mysql_query("DELETE FROM " . static::$table . " WHERE aid = $id");
-        if($res) $res = mysql_query("delete from blog_group_posts where object_id = $id");
+        $res = mysql_query("DELETE FROM " . static::$table . " WHERE id = $id");
+        if($res) $res = mysql_query("delete from blog_group_posts where post_id = $id");
         if($res) $res = mysql_query("delete from blog_post_keys_descriptions where post_id = $id");
         if($res) static::delete_img(static::get_img($id));
         if($res) $res = mysql_query("delete from blog_post_img where post_id = $id");
