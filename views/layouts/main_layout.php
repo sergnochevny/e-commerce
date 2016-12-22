@@ -3,10 +3,12 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title><?= isset($meta['title']) ? $meta['title'] : ''; ?></title>
-
-  <meta name="KeyWords" content="<?= isset($meta['keywords']) ? $meta['keywords'] : ''; ?>">
   <meta name="Description" content="<?= isset($meta['description']) ? $meta['description'] : ''; ?>">
+  <meta name="KeyWords" content="<?= isset($meta['keywords']) ? $meta['keywords'] : ''; ?>">
 
+  <?php if(isset($canonical_url)):?>
+  <link rel="canonical" href="<?=$canonical_url?>" />
+  <?php endif;?>
   <link rel="icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
   <link rel="shortcut icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
   <link rel="apple-touch-icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>

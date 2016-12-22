@@ -232,6 +232,10 @@
       $this->main->view_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
     }
 
+    public static function urlto_sef_ignore_prms() {
+      return null;
+    }
+
     public function scenario($scenario = null) {
       if(!is_null($scenario) && in_array($scenario, $this->resolved_scenario)) {
         $this->_scenario = $scenario;

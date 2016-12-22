@@ -5,7 +5,7 @@
     protected $main;
 
     public function __construct($main = null) {
-      if( isset($main) && (explode('_', get_class($main))[0] == 'Controller')) {
+      if(isset($main) && (explode('_', get_class($main))[0] == 'Controller')) {
         $this->main = $main;
         $this->registry = _A_::$app->registry();
         $this->template = $main->template;
@@ -13,6 +13,13 @@
         $this->layouts = _A_::$app->config('layouts');
         parent::__construct();
       }
+    }
+
+    protected function build_canonical_url() {
+      $prms = _A_::$app->get();
+      $url = array_shift($prms);
+      $url = _A_::$app->router()->UrlTo($url, $prms, null, null, true);
+      $this->template->vars('canonical_url', $url);
     }
 
     public function view_admin($page, $data = null) {
@@ -40,7 +47,7 @@
 
     public function meta_page() {
       $meta = $this->template->getMeta();
-      if (empty($meta) || !is_array($meta)) $meta = Model_Tools::meta_page();
+      if(empty($meta) || !is_array($meta)) $meta = Model_Tools::meta_page();
       $this->template->vars('meta', $meta);
     }
 
@@ -91,11 +98,11 @@
 
     public function is_any_authorized($redirect = null) {
       if(!Controller_AdminBase::is_logged() && !Controller_UserBase::is_logged()) {
-        $prms =isset($redirect) ? ['url' => urlencode(base64_encode(_A_::$app->router()->UrlTo($redirect)))] : null;
+        $prms = isset($redirect) ? ['url' => urlencode(base64_encode(_A_::$app->router()->UrlTo($redirect)))] : null;
         $this->redirect(_A_::$app->router()->UrlTo('authorization', $prms));
       } else {
-        if (Controller_AdminBase::is_logged()) return 'admin';
-        if (Controller_UserBase::is_logged()) return 'user';
+        if(Controller_AdminBase::is_logged()) return 'admin';
+        if(Controller_UserBase::is_logged()) return 'user';
       }
     }
 
@@ -113,12 +120,13 @@
         }
         $this->template->vars('message', $message);
         $this->template->vars('back_url', $back_url);
-        if (Controller_AdminBase::is_logged()) $this->view_admin('message');
+        if(Controller_AdminBase::is_logged()) $this->view_admin('message');
         else $this->view('message');
       }
     }
 
     public function view($page, $data = null) {
+      $this->build_canonical_url();
       if(isset($data)) {
         $this->template->vars('data', $data);
       }
@@ -145,7 +153,7 @@
       header("Status: 404 Not Found");
       $this->template->controller = 'main';
 
-      if (Controller_AdminBase::is_logged()) $this->view_admin('404/error');
+      if(Controller_AdminBase::is_logged()) $this->view_admin('404/error');
       else $this->view('404/error');
     }
   }
