@@ -2,6 +2,10 @@
 
   class Controller_Shop extends Controller_Controller {
 
+    protected $id_field = 'pid';
+    protected $name_field = 'pname';
+    protected $data_field = 'dt';
+
     protected function search_fields($view = false) {
       return [
         'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
@@ -58,8 +62,8 @@
       }
       if(!empty(_A_::$app->get('clr'))) {
         $clr_id = _A_::$app->get('clr');
-        if($clr = Model_Colours::get_by_id($clr_id)) $colour_name = $clr['colour'];
-        $this->template->vars('colour_name', isset($colour_name) ? $colour_name : null);
+        if($clr = Model_Colors::get_by_id($clr_id)) $color_name = $clr['color'];
+        $this->template->vars('color_name', isset($color_name) ? $color_name : null);
         unset($filter['c.id']);
         unset($res['c.id']);
         $filter['hidden']['c.id'] = $clr_id;
@@ -136,10 +140,10 @@
       $sort = ['a.pattern' => 'asc'];
       $rows = Model_Patterns::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
-      $colours = [];
-      $sort = ['a.colour' => 'asc'];
-      $rows = Model_Colours::get_list(0, 0, $res_count, $filter, $sort);
-      foreach($rows as $row) $colours[$row['id']] = $row['colour'];
+      $colors = [];
+      $sort = ['a.color' => 'asc'];
+      $rows = Model_Colors::get_list(0, 0, $res_count, $filter, $sort);
+      foreach($rows as $row) $colors[$row['id']] = $row['color'];
       $manufacturers = [];
       $sort = ['a.manufacturer' => 'asc'];
       $rows = Model_Manufacturers::get_list(0, 0, $res_count, $filter, $sort);
@@ -147,7 +151,7 @@
 
       $search_data['categories'] = $categories;
       $search_data['patterns'] = $patterns;
-      $search_data['colours'] = $colours;
+      $search_data['colors'] = $colors;
       $search_data['manufacturers'] = $manufacturers;
       $type = isset($search_data['type']) ? $search_data['type'] : null;
       if(!empty(_A_::$app->get('cat'))) $url_prms['cat'] = _A_::$app->get('cat');
@@ -191,11 +195,11 @@
       }
       if(!empty(_A_::$app->get('clr'))) {
         $url_prms['clr'] = _A_::$app->get('clr');
-        $data = Model_Colours::get_by_id(_A_::$app->get('clr'));
-        if(!empty($data['colour'])) {
-          $this->template->setMeta('description', $data['colour']);
-          $this->template->setMeta('keywords', strtolower($data['colour']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['colour'])))));
-          $this->template->setMeta('title', $data['colour']);
+        $data = Model_Colors::get_by_id(_A_::$app->get('clr'));
+        if(!empty($data['color'])) {
+          $this->template->setMeta('description', $data['color']);
+          $this->template->setMeta('keywords', strtolower($data['color']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['color'])))));
+          $this->template->setMeta('title', $data['color']);
         }
       }
       if(!empty(_A_::$app->get('prc'))) {
@@ -517,5 +521,20 @@
     public function index($required_access = true) { }
 
     public function view() { }
+
+    protected function build_sitemap_url($row, $view) {
+    }
+
+    protected function build_sitemap_item($row, $view) {
+      $prms = [$this->id_field => $row[$this->id_field]];
+      $url = 'shop/product';
+      $sef = $row[$this->name_field];
+      $loc = _A_::$app->router()->UrlTo($url, $prms, $sef);
+      $item = ['loc' => $loc, 'changefreq' => 'daily', 'priority' => 0.5,];
+      if(!empty($this->data_field)) $item['lastmod'] = date('Y-m-d', strtotime($row[$this->data_field]));
+      return $item;
+    }
+
+    public static function sitemap_order() { return 6; }
 
   }

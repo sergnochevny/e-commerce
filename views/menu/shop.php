@@ -27,9 +27,9 @@
            class="shop__sidebar-link<?= (isset($idx) && ($idx == 3)) ? ' active' : '' ?>">Pattern</a>
       </li>
       <li class="shop__sidebar-item">
-        <a data-waitloader data-index="3" title="Filter by Colour"
-           href="<?= _A_::$app->router()->UrlTo('colours/view', null, 'colour') ?>"
-           class="shop__sidebar-link<?= (isset($idx) && ($idx == 4)) ? ' active' : '' ?>">Colour</a>
+        <a data-waitloader data-index="3" title="Filter by Color"
+           href="<?= _A_::$app->router()->UrlTo('colors/view', null, 'color') ?>"
+           class="shop__sidebar-link<?= (isset($idx) && ($idx == 4)) ? ' active' : '' ?>">Color</a>
       </li>
       <li class="shop__sidebar-item">
         <a data-waitloader data-index="4" title="Filter by Price"

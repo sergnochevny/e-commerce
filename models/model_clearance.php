@@ -55,8 +55,8 @@
       }
       $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
       $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
-      $query .= " LEFT JOIN fabrix_colour c ON fabrix_product_colours.colourId = c.id";
+      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
       $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
@@ -79,8 +79,8 @@
       }
       $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
       $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
-      $query .= " LEFT JOIN fabrix_colour c ON fabrix_product_colours.colourId = c.id";
+      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
       $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";

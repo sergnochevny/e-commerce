@@ -3,8 +3,8 @@
     <?php $prms['clr'] = $row['id'];?>
     <div class="col-xs-6 col-sm-3 list-item">
       <div class="list-inner">
-        <a data-sb data-waitloader href="<?= _A_::$app->router()->UrlTo('shop', $prms, $row['colour']); ?>">
-          <div class="item-name"><?= $row['colour']; ?></div>
+        <a data-sb data-waitloader href="<?= _A_::$app->router()->UrlTo('shop', $prms, $row['color']); ?>">
+          <div class="item-name"><?= $row['color']; ?></div>
         </a>
       </div>
     </div>

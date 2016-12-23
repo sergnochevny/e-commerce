@@ -27,8 +27,8 @@
                  href="<?= _A_::$app->router()->UrlTo('manufacturers'); ?>">Manufacturers</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
-              <a data-waitloader data-link title="Colours"
-                 href="<?= _A_::$app->router()->UrlTo('colours'); ?>">Colours</a>
+              <a data-waitloader data-link title="Colors"
+                 href="<?= _A_::$app->router()->UrlTo('colors'); ?>">Colors</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Patterns"

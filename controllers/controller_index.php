@@ -69,7 +69,7 @@
           'priority' => 0.6,
         ],
         [
-          'loc' => _A_::$app->router()->UrlTo('colours/view'),
+          'loc' => _A_::$app->router()->UrlTo('colors/view'),
           'changefreq' => 'daily',
           'priority' => 0.6,
         ],

@@ -16,7 +16,7 @@
                 <div class="label label-search-info">Category: <?= $search['categories'][$search['b.cid']] ?></div>
               <?php endif; ?>
               <?php if(isset($search['c.id'])): ?>
-                <div class="label label-search-info">Colour: <?= $search['colours'][$search['c.id']] ?></div>
+                <div class="label label-search-info">Color: <?= $search['colors'][$search['c.id']] ?></div>
               <?php endif; ?>
               <?php if(isset($search['d.id'])): ?>
                 <div class="label label-search-info">Pattern: <?= $search['patterns'][$search['d.id']] ?></div>
@@ -96,11 +96,11 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="form-row">
-              <label <?= isset($search['hidden']['c.id']) ? 'disabled' : '' ?>>In specific colour</label>
+              <label <?= isset($search['hidden']['c.id']) ? 'disabled' : '' ?>>In specific color</label>
               <select name="search[c.id]" <?= isset($search['hidden']['c.id']) ? 'disabled' : '' ?>>
                 <option value="" <?= isset($search['c.id']) ? '' : 'selected' ?>>Any</option>
-                <?php if(isset($search['colours'])):
-                  foreach($search['colours'] as $key => $val):?>
+                <?php if(isset($search['colors'])):
+                  foreach($search['colors'] as $key => $val):?>
                     <option
                       value="<?= $key ?>" <?= (isset($search['c.id']) && ($key == $search['c.id'])) ? 'selected' : '' ?>>
                       <?= $val ?>

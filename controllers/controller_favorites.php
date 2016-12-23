@@ -44,10 +44,10 @@
       $sort = ['a.pattern' => 'asc'];
       $rows = Model_Patterns::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
-      $colours = [];
-      $sort = ['a.colour' => 'asc'];
-      $rows = Model_Colours::get_list(0, 0, $res_count, $filter, $sort);
-      foreach($rows as $row) $colours[$row['id']] = $row['colour'];
+      $colors = [];
+      $sort = ['a.color' => 'asc'];
+      $rows = Model_Colors::get_list(0, 0, $res_count, $filter, $sort);
+      foreach($rows as $row) $colors[$row['id']] = $row['color'];
       $manufacturers = [];
       $sort = ['a.manufacturer' => 'asc'];
       $rows = Model_Manufacturers::get_list(0, 0, $res_count, $filter, $sort);
@@ -55,7 +55,7 @@
 
       $search_data['categories'] = $categories;
       $search_data['patterns'] = $patterns;
-      $search_data['colours'] = $colours;
+      $search_data['colors'] = $colors;
       $search_data['manufacturers'] = $manufacturers;
       if(isset($type)) $this->template->vars('action', _A_::$app->router()->UrlTo($this->controller));
     }

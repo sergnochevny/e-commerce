@@ -2,6 +2,7 @@
 
   class Controller_Patterns extends Controller_Simple {
 
+    protected $name_field = 'pattern';
     protected $form_title_add = 'NEW PATTERN';
     protected $form_title_edit = 'MODIFY PATTERN';
 
@@ -41,6 +42,13 @@
       return true;
     }
 
+    protected function build_sitemap_url($row, $view) {
+      $prms = ['ptrn' => $row[$this->id_field]];
+      $url = 'shop';
+      $sef = $row[$this->name_field];
+      return _A_::$app->router()->UrlTo($url, $prms, $sef);
+    }
+
     /**
      * @export
      */
@@ -49,5 +57,7 @@
       _A_::$app->setSession('sidebar_idx', 3);
       parent::view();
     }
+
+    public static function sitemap_order() { return 3; }
 
   }

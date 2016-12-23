@@ -2,18 +2,18 @@
 
   class Controller_Prices extends Controller_Simple {
 
-    protected function build_search_filter(&$filter, $view = false) {
-      $res = parent::build_search_filter($filter, $view);
-      if($view) {
-        $this->per_page = 24;
-        $filter = ['hidden' => ['view' => true, 'a.pvisible' => 1, 'a.priceyard' => 0]];
-      }
-      return $res;
-    }
+    protected $name_field = 'title';
 
     protected function load(&$data) { }
 
     protected function validate(&$data, &$error) { }
+
+    protected function build_sitemap_url($row, $view) {
+      $prms = ['prc' => $row[$this->id_field]];
+      $url = 'shop';
+      $sef = $row[$this->name_field];
+      return _A_::$app->router()->UrlTo($url, $prms, $sef);
+    }
 
     public function index($required_access = true) { }
 
@@ -32,4 +32,5 @@
       parent::view();
     }
 
+    public static function sitemap_order() { return 5; }
   }

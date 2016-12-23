@@ -1,6 +1,6 @@
 <div class="col-xs-12 pull-right">
   <div class="row afterhead-row text-center">
-    <h3 class="page-title sb">Colour</h3>
+    <h3 class="page-title sb">Color</h3>
   </div>
 </div>
 <?= isset($search_form) ? $search_form : '' ?>

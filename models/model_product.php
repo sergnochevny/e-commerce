@@ -49,22 +49,22 @@
       $id = $data['pid'];
       $filters = [];
       switch($type) {
-        case 'colours':
-          $colours = isset($data['colours']) ? array_keys($data['colours']) : [];
-          if(isset($data['colours_select']) || isset($data['colours']))
-            $select = implode(',', array_merge(isset($data['colours_select']) ? $data['colours_select'] : [], $colours));
+        case 'colors':
+          $colors = isset($data['colors']) ? array_keys($data['colors']) : [];
+          if(isset($data['colors_select']) || isset($data['colors']))
+            $select = implode(',', array_merge(isset($data['colors_select']) ? $data['colors_select'] : [], $colors));
           else {
-            $data['colours'] = self::get_filter_selected_data($type, $id);
-            $select = implode(',', isset($data['colours']) ? array_keys($data['colours']) : []);
+            $data['colors'] = self::get_filter_selected_data($type, $id);
+            $select = implode(',', isset($data['colors']) ? array_keys($data['colors']) : []);
           }
           if(strlen($select) > 0) {
             $results = mysql_query(
-              "select * from fabrix_colour" .
+              "select * from fabrix_color" .
               " where id in ($select)" .
-              " order by colour"
+              " order by color"
             );
             while($row = mysql_fetch_array($results)) {
-              $filters[$row['id']] = $row['colour'];
+              $filters[$row['id']] = $row['color'];
             }
           }
           break;
@@ -131,16 +131,16 @@
               $data[$row['id']] = $row['pattern'];
             }
           break;
-        case 'colours':
+        case 'colors':
           $results = mysql_query(
-            "select a.* from fabrix_product_colours b" .
-            " inner join fabrix_colour a on b.colourId=a.id " .
+            "select a.* from fabrix_product_colors b" .
+            " inner join fabrix_color a on b.colorId=a.id " .
             " where b.prodId='$id'" .
-            " order by a.colour"
+            " order by a.color"
           );
           if($results)
             while($row = mysql_fetch_array($results)) {
-              $data[$row['id']] = $row['colour'];
+              $data[$row['id']] = $row['color'];
             }
           break;
         case 'categories':
@@ -177,25 +177,25 @@
       $start = isset($start) ? $start : 0;
       $search = mysql_escape_string(static::sanitize($search));
       switch($type) {
-        case 'colours':
-          $q = "select count(id) from fabrix_colour";
+        case 'colors':
+          $q = "select count(id) from fabrix_color";
           if(isset($search) && (strlen($search) > 0)) {
-            $q .= " where colour like '%$search%'";
-            $q .= " or colour like '%$search%'";
+            $q .= " where color like '%$search%'";
+            $q .= " or color like '%$search%'";
           }
           $results = mysql_query($q);
           $row = mysql_fetch_array($results);
           $count = $row[0];
-          $q = "select * from fabrix_colour";
+          $q = "select * from fabrix_color";
           if(isset($search) && (strlen($search) > 0)) {
-            $q .= " where colour like '%$search%'";
-            $q .= " or colour like '%$search%'";
+            $q .= " where color like '%$search%'";
+            $q .= " or color like '%$search%'";
           }
-          $q .= " order by colour";
+          $q .= " order by color";
           $q .= " limit $start, $filter_limit";
           $results = mysql_query($q);
           while($row = mysql_fetch_array($results)) {
-            $filter[] = [$row['id'], $row['colour']];
+            $filter[] = [$row['id'], $row['color']];
           }
           break;
         case 'patterns':
@@ -255,8 +255,8 @@
       $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
       $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
       $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
-      $query .= " LEFT JOIN fabrix_colour c ON fabrix_product_colours.colourId = c.id";
+      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
       $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
@@ -273,8 +273,8 @@
       $query .= " FROM " . static::$table . " a";
       $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
       $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colours ON a.pid = fabrix_product_colours.prodId";
-      $query .= " LEFT JOIN fabrix_colour c ON fabrix_product_colours.colourId = c.id";
+      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
       $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
@@ -476,10 +476,10 @@
             if(!$res) break;
           }
         }
-        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_colours WHERE prodID='$pid'");
-        if($res && (count($colours) > 0)) {
-          foreach($colours as $colourId) {
-            $res = $res && mysql_query("REPLACE INTO fabrix_product_colours SET prodID='$pid', colourId='$colourId'");
+        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_colors WHERE prodID='$pid'");
+        if($res && (count($colors) > 0)) {
+          foreach($colors as $colorId) {
+            $res = $res && mysql_query("REPLACE INTO fabrix_product_colors SET prodID='$pid', colorId='$colorId'");
             if(!$res) break;
           }
         }
@@ -516,7 +516,7 @@
         if($res) $res = mysql_query($query);
         $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
         if($res) $res = mysql_query($query);
-        $query = "DELETE FROM fabrix_product_colours WHERE prodId = $id";
+        $query = "DELETE FROM fabrix_product_colors WHERE prodId = $id";
         if($res) $res = mysql_query($query);
         $query = "DELETE FROM fabrix_product_patterns WHERE prodId = $id";
         if($res) $res = mysql_query($query);

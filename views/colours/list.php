@@ -1,7 +1,7 @@
 <?php  include_once 'views/messages/alert-boxes.php'; ?>
 
 <div class="col-xs-12 text-center afterhead-row">
-  <h3 class="page-title">Colours</h3>
+  <h3 class="page-title">Colors</h3>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>
@@ -12,7 +12,7 @@
     <div class="row">
       <div class="col-xs-6 action-button-add">
         <a href="<?= _A_::$app->router()->UrlTo('categories/add'); ?>" data-modify class="button">
-          ADD NEW COLOUR
+          ADD NEW COLOR
         </a>
       </div>
       <div class="col-xs-6 search-result-container text-right">

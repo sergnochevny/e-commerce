@@ -16,7 +16,7 @@
 
       $this_ = $this;
 
-      $build_sitemap_rows = function ($data) use ($this_){
+      $build_sitemap_rows = function($data) use ($this_) {
         if(isset($data) && is_array($data)) {
           $rows = [];
           foreach($data as $row) {
@@ -40,14 +40,19 @@
             $controller = str_replace('.php', '', strtolower(basename($file)));
             if(is_callable([$controller, 'sitemap']) && is_callable([$controller, 'sitemap_order'])) {
               $idx = forward_static_call([$controller, 'sitemap_order']);
-              if (isset($idx)) $controllers[$idx] = $controller;
+              $view = forward_static_call([$controller, 'sitemap_view']);
+              if(isset($idx)) $controllers[$idx] = [$controller, $view];
             }
           }
         }
         ksort($controllers);
-        foreach($controllers as $class){
+        foreach($controllers as $item) {
+          list($class, $view) = $item;
           $controller = new $class();
-          forward_static_call([$controller, 'sitemap'], $build_sitemap_rows);
+          if(is_array($view)) {
+            foreach($view as $view_item)
+              forward_static_call([$controller, 'sitemap'], $build_sitemap_rows, $view_item);
+          } else forward_static_call([$controller, 'sitemap'], $build_sitemap_rows, $view);
           unset($controller);
         }
       } catch(Exception $e) {

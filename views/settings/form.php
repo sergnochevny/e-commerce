@@ -336,7 +336,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Rate Express Havy
+                      Rate Express Heavy
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_heavy"></i>
                     <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
@@ -369,7 +369,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Rate Ground Havy
+                      Rate Ground Heavy
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_heavy"></i>
                     <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
@@ -402,7 +402,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Rate Eexpress Heavy Multiplier
+                      Rate Express Heavy Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_heavy_multiplier"></i>
                     <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"

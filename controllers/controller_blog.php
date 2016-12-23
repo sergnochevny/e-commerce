@@ -3,6 +3,9 @@
   class Controller_Blog extends Controller_FormSimple {
 
     protected $id_field = 'id';
+    protected $name_field = 'post_title';
+    protected $data_field = 'dt';
+
     protected $form_title_add = 'WRITE NEW POST';
     protected $form_title_edit = 'EDIT POST';
 
@@ -447,6 +450,17 @@
         }
       }
     }
+
+    protected function build_sitemap_url($row, $view) {
+      $prms = [$this->id_field => $row[$this->id_field]];
+      $url = 'blog/view';
+      $sef = $row[$this->name_field];
+      return _A_::$app->router()->UrlTo($url, $prms, $sef);
+    }
+
+    public static function sitemap_view() { return true; }
+
+    public static function sitemap_order() { return 7; }
 
     public static function convertation($txt) {
 

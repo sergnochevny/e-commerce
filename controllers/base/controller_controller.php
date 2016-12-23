@@ -4,6 +4,7 @@
 
     protected $id_field = '';
     protected $name_field = '';
+    protected $data_field = '';
     protected $main;
     protected $per_page = 12;
     protected $_scenario = '';
@@ -246,15 +247,20 @@
     }
 
     protected function build_sitemap_url($row, $view) {
-      $prms = [$this->id_field, $row[$this->id_field]];
+      $prms = [$this->id_field => $row[$this->id_field]];
       $url = $this->controller . ($view ? DS . 'view' : '');
       $sef = $row[$this->name_field];
       return _A_::$app->router()->UrlTo($url, $prms, $sef);
     }
 
-    public static function urlto_sef_ignore_prms() {
-      return null;
+    protected function build_sitemap_item($row, $view) {
+      $loc = $this->build_sitemap_url($row, $view);
+      $item = ['loc' => $loc, 'changefreq' => 'monthly', 'priority' => 0.5,];
+      if(!empty($this->data_field)) $item['lastmod'] = date('Y-m-d', strtotime($row[$this->data_field]));
+      return $item;
     }
+
+    public static function urlto_sef_ignore_prms() { return null; }
 
     public function scenario($scenario = null) {
       if(!is_null($scenario) && in_array($scenario, $this->resolved_scenario)) {
@@ -294,19 +300,13 @@
 
     public static function sitemap_order() { return null; }
 
+    public static function sitemap_view() { return false; }
+
     public function sitemap(Closure $function, $view = false) {
       $data = null;
       $page = 1;
       while($rows = $this->sitemap_get_list($page++)) {
-        foreach($rows as $row) {
-          $loc = $this->build_sitemap_url($row, $view);
-          $data[] =
-            [
-              'loc' => $loc,
-              'changefreq' => 'monthly',
-              'priority' => 0.5,
-            ];
-        }
+        foreach($rows as $row) $data[] = $this->build_sitemap_item($row, $view);
         $function->__invoke($data);
       }
     }

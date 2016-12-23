@@ -30,7 +30,7 @@
                 echo 'PATTERN: ' . $ptrn_name;
               }
               if(!empty(_A_::$app->get('clr'))) {
-                echo 'COLOUR: ' . $colour_name;
+                echo 'COLOR: ' . $color_name;
               }
               if(!is_null(_A_::$app->get('prc'))) {
                 echo 'PRICE: ' . ((isset($prc_from) && !empty($prc_from)) ? ' $' . number_format($prc_from, 2) : ' $0.00') . ((isset($prc_to) && !empty($prc_to))? ' - $' . number_format($prc_to, 2) : ' and above');

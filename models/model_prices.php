@@ -45,8 +45,9 @@
 
     public static function get_by_id($id) {
       $response = null;
-      if(isset(static::$price_parceling[$id])){
+      if(isset(static::$price_parceling[$id])) {
         $response = array_filter(static::$price_parceling[$id]);
+        $response['id'] = $id;
       }
       return $response;
     }
@@ -54,6 +55,7 @@
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $res_count_rows = count(static::$price_parceling);
       $response = array_slice(static::$price_parceling, $start, $limit, true);
+      foreach($response as $key => $row) $response[$key]['id'] = $key;
       return $response;
     }
 

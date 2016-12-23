@@ -1,16 +1,16 @@
 <?php
 
-  Class Model_Colours extends Model_Base {
+  Class Model_Colors extends Model_Base {
 
-    protected static $table = 'fabrix_colour';
+    protected static $table = 'fabrix_color';
 
     protected static function build_where(&$filter) {
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $result = "";
         if(Controller_Admin::is_logged()) {
-          if(isset($filter["a.colour"])) $result[] = "a.colour LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.colour"]))) . "%'";
+          if(isset($filter["a.color"])) $result[] = "a.color LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.color"]))) . "%'";
         } else {
-          if(isset($filter["a.colour"])) $result[] = Model_Synonyms::build_synonyms_like("a.colour", $filter["a.colour"]);
+          if(isset($filter["a.color"])) $result[] = Model_Synonyms::build_synonyms_like("a.color", $filter["a.color"]);
         }
         if(isset($filter["a.id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.id"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
@@ -32,7 +32,7 @@
     public static function get_by_id($id) {
       $response = [
         'id' => $id,
-        'colour' => ''
+        'color' => ''
       ];
       if(isset($id)) {
         $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
@@ -46,7 +46,7 @@
       $response = 0;
       $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
-      $query .= " JOIN fabrix_product_colours b ON b.colourId = a.id";
+      $query .= " JOIN fabrix_product_colors b ON b.colorId = a.id";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.prodId" : '';
       $query .= static::build_where($filter);
       if($result = mysql_query($query)) {
@@ -57,13 +57,13 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      $query = "SELECT a.id, a.colour, count(b.prodId) AS amount";
+      $query = "SELECT a.id, a.color, count(b.prodId) AS amount";
       $query .= " FROM " . static::$table . " a";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
-      $query .= " JOIN fabrix_product_colours b ON b.colourId = a.id";
+      $query .= " JOIN fabrix_product_colors b ON b.colorId = a.id";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.prodId" : '';
       $query .= static::build_where($filter);
-      $query .= " GROUP BY a.id, a.colour";
+      $query .= " GROUP BY a.id, a.color";
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
 
@@ -80,11 +80,11 @@
     public static function save(&$data) {
       extract($data);
       if(isset($id)) {
-        $query = 'UPDATE ' . static::$table . ' SET colour ="' . $colour . '" WHERE id =' . $id;
+        $query = 'UPDATE ' . static::$table . ' SET color ="' . $color . '" WHERE id =' . $id;
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
       } else {
-        $query = 'INSERT INTO ' . static::$table . '(colour) VALUE ("' . $colour . '")';
+        $query = 'INSERT INTO ' . static::$table . '(color) VALUE ("' . $color . '")';
         $res = mysql_query($query);
         if(!$res) throw new Exception(mysql_error());
         $id = mysql_insert_id();
@@ -94,7 +94,7 @@
 
     public static function delete($id) {
       if(isset($id)) {
-        $query = "SELECT COUNT(*) FROM fabrix_product_colours WHERE colourId = $id";
+        $query = "SELECT COUNT(*) FROM fabrix_product_colors WHERE colorId = $id";
         $res = mysql_query($query);
         if($res) {
           $amount = mysql_fetch_array($res)[0];

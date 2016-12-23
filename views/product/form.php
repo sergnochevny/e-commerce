@@ -86,8 +86,8 @@
         <div class="row" style="margin-bottom: 10px">
           <div class="col-sm-12">
             <div class="form-row">
-              <label><b>Colours: </b></label>
-              <?= $rows['colours']; ?>
+              <label><b>Colors: </b></label>
+              <?= $rows['colors']; ?>
             </div>
           </div>
         </div>

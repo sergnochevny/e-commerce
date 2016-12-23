@@ -69,7 +69,7 @@
     private function filters_handling(&$data = null) {
       $method = _A_::$app->post('method');
       if($method !== 'filter') {
-        if(in_array($method, ['categories', 'colours', 'patterns'])) {
+        if(in_array($method, ['categories', 'colors', 'patterns'])) {
           $this->select_filter($method, array_keys($data[$method]));
         }
       } else {
@@ -91,7 +91,7 @@
           if(!is_null(_A_::$app->post('down'))) $start = $filter_limit + (isset($start) ? $start : 0);
           if(!is_null(_A_::$app->post('up'))) $start = (isset($start) ? $start : 0) - $filter_limit;
           if(($start < 0) || (is_null(_A_::$app->post('down')) && is_null(_A_::$app->post('up')))) $start = 0;
-          if(in_array($method, ['colours', 'patterns', 'categories'])) {
+          if(in_array($method, ['colors', 'patterns', 'categories'])) {
             $this->select_filter($method, $filters, $start, $search);
           }
           $resporse[1] = ob_get_contents();
@@ -169,8 +169,8 @@
       $data['sdesc'] = Model_Product::sanitize(_A_::$app->post('sdesc') ? _A_::$app->post('sdesc') : '');
       $data['ldesc'] = Model_Product::sanitize(_A_::$app->post('ldesc') ? _A_::$app->post('ldesc') : '');;
       $data['weight_id'] = Model_Product::sanitize(_A_::$app->post('weight_id') ? _A_::$app->post('weight_id') : '');
-      $data['colours'] = !is_null(_A_::$app->post('colours')) ? _A_::$app->post('colours') : [];
-      $data['colours_select'] = !is_null(_A_::$app->post('colours_select')) ? _A_::$app->post('colours_select') : [];
+      $data['colors'] = !is_null(_A_::$app->post('colors')) ? _A_::$app->post('colors') : [];
+      $data['colors_select'] = !is_null(_A_::$app->post('colors_select')) ? _A_::$app->post('colors_select') : [];
       $data['categories'] = !is_null(_A_::$app->post('categories')) ? _A_::$app->post('categories') : [];
       $data['categories_select'] = !is_null(_A_::$app->post('categories_select')) ? _A_::$app->post('categories_select') : [];
       $data['patterns'] = !is_null(_A_::$app->post('patterns')) ? _A_::$app->post('patterns') : [];
@@ -221,7 +221,7 @@
     protected function before_form_layout(&$data = null) {
 
       $data['manufacturers'] = Model_Product::get_manufacturers();
-      foreach(['categories', 'colours', 'patterns'] as $type) {
+      foreach(['categories', 'colors', 'patterns'] as $type) {
         ob_start();
         Model_Product::get_filter_selected($type, $data);
         $this->generate_filter($data, $type);
@@ -259,10 +259,10 @@
       $sort = ['a.pattern' => 'asc'];
       $rows = Model_Patterns::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
-      $colours = [];
-      $sort = ['a.colour' => 'asc'];
-      $rows = Model_Colours::get_list(0, 0, $res_count, $filter, $sort);
-      foreach($rows as $row) $colours[$row['id']] = $row['colour'];
+      $colors = [];
+      $sort = ['a.color' => 'asc'];
+      $rows = Model_Colors::get_list(0, 0, $res_count, $filter, $sort);
+      foreach($rows as $row) $colors[$row['id']] = $row['color'];
       $manufacturers = [];
       $sort = ['a.manufacturer' => 'asc'];
       $rows = Model_Manufacturers::get_list(0, 0, $res_count, $filter, $sort);
@@ -270,7 +270,7 @@
 
       $search_data['categories'] = $categories;
       $search_data['patterns'] = $patterns;
-      $search_data['colours'] = $colours;
+      $search_data['colors'] = $colors;
       $search_data['manufacturers'] = $manufacturers;
     }
   }

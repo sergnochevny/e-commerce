@@ -4,20 +4,20 @@
       <div class="row">
         <div class="col-sm-8 col">
           <?php
-            if(isset($sort['a.colour'])) {
-              $order['sort'] = 'a.colour';
-              $order['order'] = ($sort['a.colour'] == 'desc' ? 'asc' : 'desc');
+            if(isset($sort['a.color'])) {
+              $order['sort'] = 'a.color';
+              $order['order'] = ($sort['a.color'] == 'desc' ? 'asc' : 'desc');
             } else {
-              $order['sort'] = 'a.colour';
+              $order['sort'] = 'a.color';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('colours', $order);
+            $sort_url = _A_::$app->router()->UrlTo('colors', $order);
           ?>
           <a data-sort href="<?= $sort_url ?>">
             Name
-            <?php if(isset($sort['a.colour'])) : ?>
+            <?php if(isset($sort['a.color'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.colour'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['a.color'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -31,7 +31,7 @@
               $order['sort'] = 'amount';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('colours', $order);
+            $sort_url = _A_::$app->router()->UrlTo('colors', $order);
           ?>
           <a data-sort href="<?= $sort_url ?>">
             Products
@@ -69,10 +69,10 @@
             </div>
           </div>
           <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
-            <a data-modify href="<?= _A_::$app->router()->UrlTo('colours/edit', $prms) ?>">
+            <a data-modify href="<?= _A_::$app->router()->UrlTo('colors/edit', $prms) ?>">
               <i class="fa fa-2x fa-pencil"></i>
             </a>
-            <a href="<?= _A_::$app->router()->UrlTo('colours/delete', $prms) ?>" data-delete rel="nofollow"
+            <a href="<?= _A_::$app->router()->UrlTo('colors/delete', $prms) ?>" data-delete rel="nofollow"
                class="text-danger <?= ($row[2] > 0) ? 'disabled' : '' ?>">
               <i class=" fa fa-2x fa-trash-o"></i>
             </a>
