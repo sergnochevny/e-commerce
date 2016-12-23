@@ -4,7 +4,7 @@
     <div class="just-post-row">
       <div class="col-sm-12 col-md-10 col-md-offset-1 text-center">
         <h3 id="editable_title">
-          <b><?= $rows['post_title']; ?></b>
+          <b><?= $data['post_title']; ?></b>
         </h3>
       </div>
       <div id="image" class="col-sm-12 col-md-10 col-md-offset-1">
@@ -15,11 +15,11 @@
         <div class="just-post-detail">
           <div class="just-divider text-center line-yes icon-hide">
             <div class="divider-inner">
-              <span class="post-date"><?= $rows['post_date'] ?></span>
+              <span class="post-date"><?= $data['post_date'] ?></span>
             </div>
           </div>
           <div id="editable_content" class="text-justify empty-post-area">
-            <?= !empty($rows['post_content']) ? $rows['post_content'] : ''; ?>
+            <?= !empty($data['post_content']) ? $data['post_content'] : ''; ?>
           </div>
         </div>
       </div>
@@ -35,29 +35,29 @@
   <div id="dialog" class="col-md-10 col-md-offset-1 hidden">
     <input type="hidden" name="post_title" value="">
     <input type="hidden" name="post_content" value="">
-    <input type="hidden" name="post_author" value="<?= $rows['post_author']; ?>">
-    <input type="hidden" name="post_date" value="<?= $rows['post_date']; ?>">
+    <input type="hidden" name="post_author" value="<?= $data['post_author']; ?>">
+    <input type="hidden" name="post_date" value="<?= $data['post_date']; ?>">
     <div class="col-xs-12">
       <div class="row">
         <div class="form-row">
           <label class="required_field"><strong>Post Categories:</strong></label>
           <div>
-            <?= $rows['categories']; ?>
+            <?= $data['categories']; ?>
           </div>
         </div>
         <div class="form-row">
           <label class="required_field" for="ed_f_desc"><strong>Description:</strong></label>
           <textarea class="input-text" id="ed_f_desc" cols="5" rows="2"
-                    name="description"><?= $rows['description']; ?></textarea>
+                    name="description"><?= $data['description']; ?></textarea>
         </div>
         <div class="form-row">
           <label class="required_field" for="ed_f_keyw"><strong>Keywords:</strong></label>
-          <input type="text" name="keywords" id="ed_f_keyw" value="<?= $rows['keywords']; ?>" class="input-text">
+          <input type="text" name="keywords" id="ed_f_keyw" value="<?= $data['keywords']; ?>" class="input-text">
         </div>
         <div class="form-row">
           <label><strong>Publish:</strong></label>
           <input
-            type="checkbox" <?= (isset($rows['post_status']) && ($rows['post_status'] == "publish")) ? 'checked' : ''; ?>
+            type="checkbox" <?= (isset($data['post_status']) && ($data['post_status'] == "publish")) ? 'checked' : ''; ?>
             name="post_status" value="publish" class="input-checkbox">
         </div>
         <div class="col-xs-12">

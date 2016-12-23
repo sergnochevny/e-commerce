@@ -16,29 +16,29 @@
 
             <div class="col-sm-8 text-center">
               <div class="row">
-                <h3 class="page-title"><?= $rows['post_title']; ?></h3>
+                <h3 class="page-title"><?= $data['post_title']; ?></h3>
               </div>
             </div>
             <div class="col-sm-2"></div>
 
           </div>
-          <?php if (isset($rows['img']) && !$rows['img'] == _A_::$app->router()->UrlTo('upload/upload/not_image.jpg')) { ?>
+          <?php if (isset($data['img']) && !$data['img'] == _A_::$app->router()->UrlTo('upload/upload/not_image.jpg')) { ?>
             <div class="row">
-              <div class="just-post-image" style="background-image: url('<?= $rows['img']; ?>'); height: 220px"></div>
+              <div class="just-post-image" style="background-image: url('<?= $data['img']; ?>'); height: 220px"></div>
             </div>
           <?php } ?>
           <div class="row">
             <div class="col-xs-12 ">
               <div class="just-divider text-center line-yes icon-hide">
                 <div class="divider-inner">
-                  <span class="post-date"><?= $rows['post_date']; ?></span>
+                  <span class="post-date"><?= $data['post_date']; ?></span>
                 </div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12 text-justify just-post-detail">
-              <?= $rows['post_content']; ?>
+              <?= $data['post_content']; ?>
             </div>
           </div>
 

@@ -1,4 +1,4 @@
-<?php if(sizeof($rows) > 0): ?>
+<?php if(sizeof($data) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
       <div class="row">
@@ -48,7 +48,7 @@
         <input type="hidden" name="order" value="<?= array_values($sort)[0] ?>">
       </form>
     </div>
-    <?php foreach($rows as $row): ?>
+    <?php foreach($data as $row): ?>
       <?php $prms['cid'] = $row['cid'];?>
       <div class="col-xs-12 table-list-row">
         <div class="row">

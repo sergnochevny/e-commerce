@@ -15,7 +15,7 @@
           </div>
           <div class="col-sm-8 text-center">
             <div class="row">
-              <h3 class="page-title"><?= isset($user_id) && !$is_admin ? $rows[0]['username'] : '' ?>
+              <h3 class="page-title"><?= isset($user_id) && !$is_admin ? $data[0]['username'] : '' ?>
                 Order details</h3>
             </div>
           </div>

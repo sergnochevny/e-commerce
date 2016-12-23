@@ -1,7 +1,7 @@
-<?php if(sizeof($rows) > 0): ?>
+<?php if(sizeof($data) > 0): ?>
   <section class="just-posts-grid">
     <div class="just-post-row row">
-      <?php foreach($rows as $row): ?>
+      <?php foreach($data as $row): ?>
         <?php $prms['id'] = $row['id'];?>
 
         <div class="just-post col-xs-12 col-sm-6 col-md-4">

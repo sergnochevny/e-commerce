@@ -1,5 +1,5 @@
-<?php if(count($rows) > 0): ?>
-  <?php foreach($rows as $row): ?>
+<?php if(count($data) > 0): ?>
+  <?php foreach($data as $row): ?>
     <?php $prms['pid'] = $row['pid']; ?>
     <div class="col-xs-12 col-sm-6  product-item">
       <label class="product-block<?= !empty($row['id']) ? ' checked' : ''; ?>" style="font-weight: normal; margin-left: 0; height: auto">

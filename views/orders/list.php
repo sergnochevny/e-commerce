@@ -18,7 +18,7 @@
       <div class="col-sm-8 text-center">
         <div class="row">
           <h3
-            class="page-title"><?= (isset($user_id) && !$is_admin) ? $rows[0]['username'] : ((!$is_admin) ? 'My' : '') ?>
+            class="page-title"><?= (isset($user_id) && !$is_admin) ? $data[0]['username'] : ((!$is_admin) ? 'My' : '') ?>
             Orders</h3>
         </div>
       </div>
@@ -27,7 +27,7 @@
   </div>
 <?php else: ?>
   <div class="col-xs-12 text-center afterhead-row">
-    <h3 class="page-title"><?= (isset($user_id) && !$is_admin) ? $rows[0]['username'] : ((!$is_admin) ? 'My' : '') ?>
+    <h3 class="page-title"><?= (isset($user_id) && !$is_admin) ? $data[0]['username'] : ((!$is_admin) ? 'My' : '') ?>
       Orders</h3>
   </div>
 <?php endif; ?>

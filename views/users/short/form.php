@@ -4,20 +4,20 @@
     <div class="col-xs-12">
       <div class="row">
         <input type="text" name="bill_firstname"
-               value="<?= isset($rows['bill_firstname']) ? $rows['bill_firstname'] : ''; ?>" class="input-text"
+               value="<?= isset($data['bill_firstname']) ? $data['bill_firstname'] : ''; ?>" class="input-text"
                placeholder="First Name">
       </div>
     </div>
     <div class="col-xs-12">
       <div class="row">
         <input type="text" name="bill_lastname"
-               value="<?= isset($rows['bill_lastname']) ? $rows['bill_lastname'] : ''; ?>" class="input-text"
+               value="<?= isset($data['bill_lastname']) ? $data['bill_lastname'] : ''; ?>" class="input-text"
                placeholder="Last Name">
       </div>
     </div>
     <div class="col-xs-12">
       <div class="row">
-        <input type="email" name="email" value="<?= isset($rows['email']) ? $rows['email'] : ''; ?>" class="input-text"
+        <input type="email" name="email" value="<?= isset($data['email']) ? $data['email'] : ''; ?>" class="input-text"
                placeholder="Enter Email">
       </div>
     </div>

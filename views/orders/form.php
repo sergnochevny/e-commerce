@@ -5,7 +5,7 @@
         <input type="text"
                id="track_code"
                style="width: 100%"
-               value="<?= $rows['track_code'] ?>"
+               value="<?= $data['track_code'] ?>"
                name="track_code"
                class="input-text"
                placeholder="Add track code">
@@ -14,8 +14,8 @@
     <div class="col-xs-4">
       <div class="form-row">
         <select id="status_select" style="width: 100%; margin: 0; padding: 6px 10px" size="1" name="status">
-          <option value="0" <?= $rows['status'] == 0 ? 'selected' : '' ?>>In process</option>
-          <option value="1" <?= $rows['status'] == 1 ? 'selected' : '' ?>>Completed</option>
+          <option value="0" <?= $data['status'] == 0 ? 'selected' : '' ?>>In process</option>
+          <option value="1" <?= $data['status'] == 1 ? 'selected' : '' ?>>Completed</option>
         </select>
       </div>
     </div>
@@ -25,7 +25,7 @@
                style="width: 100%; padding-left: 15px; padding-right: 15px"
                name="end_date"
                id="dateFrom"
-               value="<?= !is_null($rows['end_date']) ? date("m/d/Y", strtotime($rows['end_date'])) : '' ?>"
+               value="<?= !is_null($data['end_date']) ? date("m/d/Y", strtotime($data['end_date'])) : '' ?>"
                placeholder="Chose end date"
                class="input-text ">
       </div>

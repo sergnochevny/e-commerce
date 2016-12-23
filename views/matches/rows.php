@@ -1,5 +1,5 @@
-<?php if(count($rows) > 0): ?>
-  <?php foreach($rows as $row): ?>
+<?php if(count($data) > 0): ?>
+  <?php foreach($data as $row): ?>
     <img id="product_img_holder"
          data-id="<?= $row['pid']; ?>"
          data-detail_url="<?= _A_::$app->router()->UrlTo('shop/product', ['pid' => $row['pid'], 'back' => 'matches'], $row['pname'], ['cat', 'mnf', 'ptrn', 'clr', 'prc']); ?>"

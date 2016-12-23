@@ -1,5 +1,5 @@
-<?php if(count($rows) > 0): ?>
-  <?php foreach($rows as $row): ?>
+<?php if(count($data) > 0): ?>
+  <?php foreach($data as $row): ?>
     <?php $prms['id'] = $row['id'];
     $url_prms['pid'] = $row['pid'];
     ?>

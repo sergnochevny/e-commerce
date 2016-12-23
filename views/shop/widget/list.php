@@ -1,5 +1,5 @@
-<?php if(count($rows) > 0): ?>
-  <?php foreach($rows as $row): ?>
+<?php if(count($data) > 0): ?>
+  <?php foreach($data as $row): ?>
     <div class="col-xs-12 product-item">
       <div class="row">
         <div class="widget-info-container">

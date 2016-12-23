@@ -3,7 +3,7 @@
     <div class="col-xs-12">
       <div class="form-row">
         <label class="required_field"><strong>Color Name:</strong></label>
-        <input type="text" name="color" value="<?= $rows['color'] ?>" class="input-text ">
+        <input type="text" name="color" value="<?= $data['color'] ?>" class="input-text ">
       </div>
     </div>
   </div>

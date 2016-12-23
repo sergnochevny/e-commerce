@@ -1,4 +1,4 @@
-<?php if(isset($rows) && count($rows) > 0): ?>
+<?php if(isset($data) && count($data) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
       <div class="row">
@@ -112,7 +112,7 @@
       </form>
 
     </div>
-    <?php foreach($rows as $row): ?>
+    <?php foreach($data as $row): ?>
       <?php
       $prms['oid'] = $row['oid'];
       $edit_url = _A_::$app->router()->UrlTo('orders/edit', $prms);

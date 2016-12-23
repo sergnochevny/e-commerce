@@ -9,13 +9,13 @@
     <div class="col-xs-12">
       <div class="form-row">
         <label class="required_field"><strong>Keywords:</strong></label>
-        <textarea name="keywords" class="input-text"><?= $rows['keywords'] ?></textarea>
+        <textarea name="keywords" class="input-text"><?= $data['keywords'] ?></textarea>
       </div>
     </div>
     <div class="col-xs-12">
       <div class="form-row">
         <label class="required_field"><strong>Synonyms:</strong></label>
-        <textarea name="synonyms" class="input-text"><?= $rows['synonyms'] ?></textarea>
+        <textarea name="synonyms" class="input-text"><?= $data['synonyms'] ?></textarea>
       </div>
     </div>
   </div>
