@@ -222,7 +222,7 @@
 
       <div class="panel-footer hidden">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <a data-search_submit class="button pull-right" href="<?= $action ?>">Search</a>
           </div>
         </div>

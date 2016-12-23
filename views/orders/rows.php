@@ -177,7 +177,7 @@
     <?php endforeach; ?>
   </div>
 <?php else: ?>
-  <div class="col-sm-12 offset-top text-center">
+  <div class="col-xs-12 offset-top text-center">
     <h2 class="offset-top">No results found</h2>
   </div>
 <?php endif; ?>

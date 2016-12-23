@@ -815,7 +815,7 @@ td.product-subtotal {
     padding-bottom: 0 !important;
 }
 
-.sel_panel > .col-sm-12 {
+.sel_panel > .col-xs-12 {
     padding-right: 0;
     padding-left: 0;
     border: 1px solid #DDD;

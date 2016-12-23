@@ -5,7 +5,7 @@
 ?>
 
 <?php if(isset($back_url)): ?>
-  <div class="col-sm-12">
+  <div class="col-xs-12">
     <div class="row afterhead-row">
       <div class="col-sm-2 back_button_container">
         <div class="row">

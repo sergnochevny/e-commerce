@@ -2,7 +2,7 @@
   <div class="col-xs-12">
 
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-xs-12">
         <div class="row afterhead-row">
           <div class="col-sm-2 back_button_container">
             <div class="row">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-12 text-center" style="margin-bottom: 15px">
+      <div class="col-xs-12 text-center" style="margin-bottom: 15px">
         <small style="color: black; font-size: 12px;">
           Use this form to add/update discounts to the system. <br/>
         </small>

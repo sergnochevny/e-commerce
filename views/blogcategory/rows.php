@@ -55,7 +55,7 @@
     <?php endforeach; ?>
   </div>
 <?php else: ?>
-  <div class="col-sm-12 text-center offset-top">
+  <div class="col-xs-12 text-center offset-top">
     <h2 class="offset-top">No results found</h2>
   </div>
 <?php endif; ?>

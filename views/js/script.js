@@ -24,11 +24,13 @@ var change_text = false;
       $('select').selectmenu();
     },
     danger_remove: function (timeout) {
+      var alert_container = $('.alert-container');
       var danger = $('.danger');
       if (danger.length) {
         danger.stop().show();
         setTimeout(function () {
           danger.remove();
+          alert_container.remove();
         }, timeout);
       }
     },

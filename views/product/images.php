@@ -120,7 +120,7 @@
     </div>
   </div>
 </div>
-<div id="status" class="col-sm-12 col-md-12 text-center red">
+<div id="status" class="col-xs-12 text-center red">
   <?= isset($img_error) ? $img_error : '' ?>
 </div>
 <input type="file" id="uploadfile" name="uploadfile" style="position: absolute; margin: -5px 0px 0px -175px; padding: 0px; width: 220px; height: 30px; font-size: 14px; opacity: 0; cursor: pointer; display: block; z-index: 2147483583; top: 3165px; left: 380px;">

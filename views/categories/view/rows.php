@@ -10,7 +10,7 @@
     </div>
   <?php endforeach; ?>
 <?php else: ?>
-  <div class="col-sm-12 text-center inner-offset-vertical">
+  <div class="col-xs-12 text-center inner-offset-vertical">
     <span class="h3">No results found</span>
   </div>
 <?php endif; ?>

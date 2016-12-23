@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label class="required_field"><b>Product name:</b></label>
               <input type="text" name="pname" value="<?= $data['pname']; ?>" class="input-text"
@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label class="required_field"><b>Product number:</b></label>
               <input type="text" name="pnumber" value="<?= $data['pnumber']; ?>" class="input-text"
@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label><b>Mfg. & Stock number:</b></label>
               <input type="text" name="stock_number" value="<?= $data['stock_number']; ?>" class="input-text ">
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label><b>Short description:</b></label>
               <input type="text" value="<?= $data['sdesc']; ?>" name="sdesc" class="input-text ">
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label><b>Long description:</b></label>
               <textarea class="input-text " style="height: 117px"
@@ -47,7 +47,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label><b>Meta Description:</b></label>
               <input type="text" name="metadescription"
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label><b>Meta Keywords:</b></label>
               <input type="text" name="metakeywords" value="<?= $data['metakeywords']; ?>" class="input-text"
@@ -66,7 +66,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label><b>Manufacturer:</b></label>
               <select name="manufacturerId">
@@ -76,7 +76,7 @@
           </div>
         </div>
         <div class="row" style="margin-bottom: 10px">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label><b>Categories:</b></label>
               <?= $data['categories']; ?>
@@ -84,7 +84,7 @@
           </div>
         </div>
         <div class="row" style="margin-bottom: 10px">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label><b>Colors: </b></label>
               <?= $data['colors']; ?>
@@ -92,7 +92,7 @@
           </div>
         </div>
         <div class="row" style="margin-bottom: 10px;">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <label><b>Pattern Types:</b></label>
               <?= $data['patterns']; ?>
@@ -100,7 +100,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <div class="form-row">
               <div class="row">
                 <div class="col-xs-12 col-sm-4">
@@ -148,7 +148,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12 visible-sm">
+          <div class="col-xs-12 visible-sm">
             <hr style="margin-top: 5px">
           </div>
         </div>
@@ -159,7 +159,7 @@
           <div class="col-xs-12">
             <div class="form-row">
               <label><b>Main images:</b></label>
-              <div class="col-sm-12 col-md-12">
+              <div class="col-xs-12">
                 <div id="images" class="row">
                   <?= $images; ?>
                 </div>

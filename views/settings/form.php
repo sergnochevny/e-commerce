@@ -1,5 +1,5 @@
 <?php include_once 'views/messages/alert-boxes.php'; ?>
-<form method="POST" id="edit_form" action="<?= $action; ?>" class="col-sm-12 col-md-10 col-md-offset-1"
+<form method="POST" id="edit_form" action="<?= $action; ?>" class="col-xs-12 col-md-10 col-md-offset-1"
       xmlns="http://www.w3.org/1999/html">
   <div class="tabs col-xs-12">
 
@@ -540,7 +540,7 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-12 col-sm-12 text-center offset-top">
+    <div class="col-xs-12 text-center offset-top">
       <input type="button" data-role="submit" id="submit" class="button" style="width: 150px;" value="Save"/>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <?php if(isset($filters)): ?>
   <div class="panel panel-default form-row sel_panel" data-filter="<?= $destination; ?>">
-    <div class="col-sm-12">
+    <div class="col-xs-12">
       <div class="panel-body">
         <ul class="sel_item">
           <?php foreach($filters as $key => $value): ?>
