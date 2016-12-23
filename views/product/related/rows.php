@@ -1,5 +1,5 @@
-<?php if(count($data) > 0): ?>
-  <?php foreach($data as $row): ?>
+<?php if(count($rows) > 0): ?>
+  <?php foreach($rows as $row): ?>
     <div class="product-item product-related" data-pid="<?= $row['pid'];?>">
       <div class="product-inner">
         <figure class="product-image-box" style="background-image:url(<?= $row['filename']; ?>)">

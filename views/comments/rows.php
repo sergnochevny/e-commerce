@@ -1,4 +1,4 @@
-<?php if(sizeof($data) > 0): ?>
+<?php if(sizeof($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
       <div class="row">
@@ -69,7 +69,7 @@
       </form>
     </div>
 
-    <?php foreach($data as $row): ?>
+    <?php foreach($rows as $row): ?>
       <?php
       $prms['id'] = (int)$row['id'];
       $prms['action'] = $row['moderated'] == '1' ? '0' : '1';

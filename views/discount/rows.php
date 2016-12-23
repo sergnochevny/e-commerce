@@ -1,4 +1,4 @@
-<?php if(sizeof($data) > 0): ?>
+<?php if(sizeof($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
       <div class="row">
@@ -128,7 +128,7 @@
         <input type="hidden" name="order" value="<?= array_values($sort)[0] ?>">
       </form>
     </div>
-    <?php foreach($data as $row): ?>
+    <?php foreach($rows as $row): ?>
       <?php
       $prms['sid'] = $row['sid'];
       $row['date_start'] = gmdate("m/j/y", $row['date_start']);

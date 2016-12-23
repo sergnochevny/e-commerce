@@ -1,5 +1,5 @@
-<?php if(count($data) > 0): ?>
-  <?php foreach($data as $key => $row): ?>
+<?php if(count($rows) > 0): ?>
+  <?php foreach($rows as $key => $row): ?>
     <?php $prms = ['prc' => $key]; ?>
     <div class="col-xs-6 col-sm-3 list-item">
       <div class="list-inner">

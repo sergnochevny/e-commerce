@@ -1,5 +1,5 @@
-<?php if(count($data) > 0): ?>
-  <?php foreach($data as $row): ?>
+<?php if(count($rows) > 0): ?>
+  <?php foreach($rows as $row): ?>
     <?php $prms['pid'] = $row['pid'];?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">
       <div class="product-inner">
