@@ -86,7 +86,7 @@
       $data['discount_amount_type'] = Model_Discount::sanitize(_A_::$app->post('discount_amount_type'));
       $data['discount_type'] = Model_Discount::sanitize(_A_::$app->post('discount_type'));
       $data['shipping_type'] = !is_null(_A_::$app->post('shipping_type')) ? _A_::$app->post('shipping_type') : 0;
-      $data['required_amount'] = Model_Discount::sanitize(!is_null(_A_::$app->post('required_amount')) ? _A_::$app->post('required_amount') : 0);
+      $data['required_amount'] = Model_Discount::sanitize(!is_null(_A_::$app->post('required_amount')) ? _A_::$app->post('required_amount') : '0.00');
       $data['required_type'] = Model_Discount::sanitize(_A_::$app->post('required_type'));
       $data['user_type'] = Model_Discount::sanitize(_A_::$app->post('user_type'));
       $data['users'] = !is_null(_A_::$app->post('users')) ? _A_::$app->post('users') : null;
@@ -135,12 +135,12 @@
       ) {
         $error = [];
 
-        if($data['discount_type'] == 2 && $data['shipping_type'] == 0) $error[] = "The shipping type is required.";
+        if($data['discount_type'] == 2 && $data['shipping_type'] == 0) $error[] = "The Shipping Type is required.";
         if(($data['generate_code'] == 0) && (strlen($data['coupon_code']) > 0)
           && Model_Discount::checkCouponCode(0, $data['coupon_code'])
         ) $error[] = "The coupon code is in use.";
-        if(empty($data['required_amount'])) $error[] = "Identify 'required_amount' field";
-        if($data['promotion_type'] == 0) $error[] = "Identify 'promotion' field";
+        if(empty($data['required_amount'])) $error[] = "Identify Restrictions field";
+        if($data['promotion_type'] == 0) $error[] = "Identify Promotion field";
         if(empty($data['discount_amount']) ||
           $data['discount_amount'] == '' ||
           $data['discount_amount'] == '0.00' ||

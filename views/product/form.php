@@ -215,14 +215,14 @@
         </div>
         <div class="form-row">
           <label for="current_inv"><b>Current inventory:</b></label>
-          <input data-inputmask="'mask': '9[9{2}].9[9]', 'greedy': 'false'" type="text" id="current_inv"
+          <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"  type="text" id="current_inv"
                  name="inventory" value="<?= $data['inventory']; ?>"
                  class="input-text ">
         </div>
 
         <div class="form-row">
           <label><b>Width:</b></label>
-          <input data-inputmask="'mask': '9[9].9[9]', 'greedy': 'false'" type="text" id="m_width" name="width"
+          <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text" id="m_width" name="width"
                  value="<?= $data['width']; ?>" class="input-text ">
         </div>
 

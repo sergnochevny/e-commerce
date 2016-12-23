@@ -295,7 +295,7 @@
                       Rate Handling
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_handling"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_handling" class="input-text"
                            value="<?= number_format($data['shop_rate_handling'], 2); ?>"/>
                   </div>
@@ -306,7 +306,7 @@
                       Rate Roll
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_roll"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_roll" class="input-text"
                            value="<?= number_format($data['shop_rate_roll'], 2); ?>"/>
                   </div>
@@ -317,7 +317,7 @@
                       Rate Express Light
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_light"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_express_light" class="input-text"
                            value="<?= number_format($data['shop_rate_express_light'], 2); ?>"/>
                   </div>
@@ -328,7 +328,7 @@
                       Rate Express Medium
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_medium"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_express_medium" class="input-text"
                            value="<?= number_format($data['shop_rate_express_medium'], 2); ?>"/>
                   </div>
@@ -339,7 +339,7 @@
                       Rate Express Heavy
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_heavy"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_express_heavy" class="input-text"
                            value="<?= number_format($data['shop_rate_express_heavy'], 2); ?>"/>
                   </div>
@@ -350,7 +350,7 @@
                       Rate Ground Light
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_light"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_ground_light" class="input-text"
                            value="<?= number_format($data['shop_rate_ground_light'], 2); ?>"/>
                   </div>
@@ -361,7 +361,7 @@
                       Rate Ground Medium
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_medium"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_ground_medium" class="input-text"
                            value="<?= number_format($data['shop_rate_ground_medium'], 2); ?>"/>
                   </div>
@@ -372,7 +372,7 @@
                       Rate Ground Heavy
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_heavy"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_ground_heavy" class="input-text"
                            value="<?= number_format($data['shop_rate_ground_heavy'], 2); ?>"/>
                   </div>
@@ -383,7 +383,7 @@
                       Rate Express Light Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_light_multiplier"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_express_light_multiplier" class="input-text"
                            value="<?= number_format($data['shop_rate_express_light_multiplier'], 2); ?>"/>
                   </div>
@@ -394,7 +394,7 @@
                       Rate Express Medium Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_medium_multiplier"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_express_medium_multiplier" class="input-text"
                            value="<?= number_format($data['shop_rate_express_medium_multiplier'], 2); ?>"/>
                   </div>
@@ -405,7 +405,7 @@
                       Rate Express Heavy Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_heavy_multiplier"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_express_heavy_multiplier" class="input-text"
                            value="<?= number_format($data['shop_rate_express_heavy_multiplier'], 2); ?>"/>
                   </div>
@@ -416,7 +416,7 @@
                       Rate Ground Light Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_light_multiplier"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_ground_light_multiplier" class="input-text"
                            value="<?= number_format($data['shop_rate_ground_light_multiplier'], 2); ?>"/>
                   </div>
@@ -427,7 +427,7 @@
                       Rate Ground Medium Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_medium_multiplier"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_ground_medium_multiplier" class="input-text"
                            value="<?= number_format($data['shop_rate_ground_medium_multiplier'], 2); ?>"/>
                   </div>
@@ -438,7 +438,7 @@
                       Rate Ground Heavy Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_heavy_multiplier"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_rate_ground_heavy_multiplier" class="input-text"
                            value="<?= number_format($data['shop_rate_ground_heavy_multiplier'], 2); ?>"/>
                   </div>
@@ -449,7 +449,7 @@
                       Samples Price Express Shipping
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_express_shipping"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_samples_price_express_shipping" class="input-text"
                            value="<?= number_format($data['shop_samples_price_express_shipping'], 2); ?>"/>
                   </div>
@@ -460,7 +460,7 @@
                       Samples Qty Multiple Min
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_qty_multiple_min"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_samples_qty_multiple_min" class="input-text"
                            value="<?= number_format($data['shop_samples_qty_multiple_min'], 2); ?>"/>
                   </div>
@@ -471,7 +471,7 @@
                       Samples Qty Multiple Max
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_qty_multiple_max"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_samples_qty_multiple_max" class="input-text"
                            value="<?= number_format($data['shop_samples_qty_multiple_max'], 2); ?>"/>
                   </div>
@@ -482,7 +482,7 @@
                       Samples Price Single
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_single"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_samples_price_single" class="input-text"
                            value="<?= number_format($data['shop_samples_price_single'], 2); ?>"/>
                   </div>
@@ -493,7 +493,7 @@
                       Samples Price Multiple
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_multiple"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_samples_price_multiple" class="input-text"
                            value="<?= number_format($data['shop_samples_price_multiple'], 2); ?>"/>
                   </div>
@@ -504,7 +504,7 @@
                       Samples Price Additional
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_additional"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_samples_price_additional" class="input-text"
                            value="<?= number_format($data['shop_samples_price_additional'], 2); ?>"/>
                   </div>
@@ -515,7 +515,7 @@
                       Samples Price With Products
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_with_products"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_samples_price_with_products" class="input-text"
                            value="<?= number_format($data['shop_samples_price_with_products'], 2); ?>"/>
                   </div>
@@ -526,7 +526,7 @@
                       Yrds for Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_yrds_for_multiplier"></i>
-                    <input data-inputmask="'mask': '9[9{3}].9[9]', 'greedy' : false" type="text"
+                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
                            name="shop_yrds_for_multiplier" class="input-text"
                            value="<?= number_format($data['shop_yrds_for_multiplier'], 2); ?>"/>
                   </div>
