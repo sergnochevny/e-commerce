@@ -222,9 +222,8 @@
       $search_form = $this->build_search_filter($filter);
       $this->build_order($sort);
       $pages = _A_::$app->session('pages');
-      $idx = (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
-      $idx = !empty($idx) ? $idx : 0;
-      $page = !empty($pages[Controller_AdminBase::is_logged()][false][$this->controller][$idx]) ? $pages[Controller_AdminBase::is_logged()][false][$this->controller][$idx] : 1;
+      $idx = $this->load_search_filter_get_idx($filter);
+      $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
       $per_page = $this->per_page;
       $total = Model_Shop::get_total_count($filter);
       if(($total > $max_count_items) && ($max_count_items > 0)) $total = $max_count_items;
