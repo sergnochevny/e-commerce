@@ -55,8 +55,6 @@
       if(isset($data)) {
         $this->template->vars('data', $data);
       }
-      $this->meta_page();
-      $this->template->vars('controller', $this);
       $this->template->view_layout($page);
     }
 

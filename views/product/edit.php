@@ -2,7 +2,6 @@
 <script src='<?= _A_::$app->router()->UrlTo('views/js/product/images.min.js'); ?>' type="text/javascript"></script>
 <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.carousel.css'); ?>">
 <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.theme.default.min.css'); ?>">
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/product/related.min.js'); ?>' type="text/javascript"></script>
 
 <div class="container">

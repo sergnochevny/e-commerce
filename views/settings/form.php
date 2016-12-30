@@ -547,5 +547,5 @@
   <input type="hidden" name="current_tab" value="<?= (isset($data['current_tab']) ? $data['current_tab'] : 1) ?>">
 </form>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/char-counter.jquery.min.js'); ?>"></script>
-<script src="<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.min.js'); ?>"></script>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/settings/form.min.js'); ?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.min.js'); ?>"></script>

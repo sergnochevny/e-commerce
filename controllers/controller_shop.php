@@ -189,7 +189,7 @@
         $data = Model_Patterns::get_by_id(_A_::$app->get('ptrn'));
         if(!empty($data['pattern'])) {
           $this->template->setMeta('description', $data['pattern']);
-          $this->template->setMeta('keywords', implode(',', strtolower($data['pattern']) . ',' . array_filter(explode(' ', strtolower($data['pattern'])))));
+          $this->template->setMeta('keywords', strtolower($data['pattern']) . ',' .implode(',', array_filter(explode(' ', strtolower($data['pattern'])))));
           $this->template->setMeta('title', $data['pattern']);
         }
       }

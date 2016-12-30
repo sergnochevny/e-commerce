@@ -63,5 +63,5 @@
     </div>
   </div>
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.min.js'); ?>' type="text/javascript"></script>
 <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/captcha/captcha.min.js'); ?>'></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.min.js'); ?>' type="text/javascript"></script>

@@ -23,7 +23,7 @@
     private function gen_captcha() {
       for($i = 0; $i < $this->length; $i++)
         $this->key .= $this->use_symbols{mt_rand(0, $this->use_symbols_len - 1)};
-      $im = imagecreatefromgif(dirname(__DIR__)."/views/images/captcha/back.gif");
+      $im = imagecreatefrompng(dirname(__DIR__)."/views/images/captcha/back.png");
       $width = imagesx($im);
       $height = imagesy($im);
       $rc = mt_rand(80, 100);
@@ -48,15 +48,15 @@
       if($rand)
         $rand = -1; else $rand = 1;
       $this->wave_region($im, 0, 0, $width, $height, $rand * mt_rand($this->amplitude_min, $this->amplitude_max), mt_rand(30, 40));
-      if(function_exists("imagejpeg")) {
+      if(function_exists("imagepng")) {
+        header("Content-Type: image/x-png");
+        imagepng($im);
+      } else if(function_exists("imagejpeg")) {
         header("Content-Type: image/jpeg");
         imagejpeg($im, null, $this->jpeg_quality);
       } else if(function_exists("imagegif")) {
         header("Content-Type: image/gif");
         imagegif($im);
-      } else if(function_exists("imagepng")) {
-        header("Content-Type: image/x-png");
-        imagepng($im);
       }
     }
 

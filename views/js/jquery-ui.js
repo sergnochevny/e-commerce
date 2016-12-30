@@ -13997,6 +13997,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 	},
 
 	_refreshMenu: function() {
+		debugger;
 		var item,
 			options = this.element.find( "option" );
 

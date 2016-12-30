@@ -5,19 +5,17 @@
   <title><?= isset($meta['title']) ? $meta['title'] : ''; ?></title>
   <meta name="Description" content="<?= isset($meta['description']) ? $meta['description'] : ''; ?>">
   <meta name="KeyWords" content="<?= isset($meta['keywords']) ? $meta['keywords'] : ''; ?>">
-
-  <?php if(isset($canonical_url)):?>
-  <link rel="canonical" href="<?=$canonical_url?>" />
-  <?php endif;?>
-  <link rel="icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
-  <link rel="shortcut icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
-  <link rel="apple-touch-icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
-  <link rel="apple-touch-icon-precomposed" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
-
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <?php if(isset($canonical_url)): ?>
+    <link rel="canonical" href="<?= $canonical_url ?>"/>
+  <?php endif; ?>
+  <link rel="icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
+  <link rel="shortcut icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
+  <link rel="apple-touch-icon" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
+  <link rel="apple-touch-icon-precomposed" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
   <link rel="apple-touch-startup-image" href="<?= _A_::$app->router()->UrlTo('views/images/lf-logo.png'); ?>"/>
   <link rel='stylesheet' type="text/css"
         href='<?= _A_::$app->router()->UrlTo('views/css/woocommerce-smallscreen.css'); ?>'
@@ -62,11 +60,13 @@
   <script type='text/javascript'
           src="<?= _A_::$app->router()->UrlTo('views/js/jqmobile/jquery.mobile.custom.min.js'); ?>"></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/search/search.min.js'); ?>'></script>
-  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.min.js'); ?>'></script>
+  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.js'); ?>'></script>
   <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
 
 </head>
 <body class="woocommerce woocommerce-page">
+<input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
+
 <div class="scroll">
   <div class="site-container">
     <div class="main-content main-content-shop">

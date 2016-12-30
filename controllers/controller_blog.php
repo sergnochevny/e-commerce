@@ -453,9 +453,14 @@
 
     protected function build_sitemap_url($row, $view) {
       $prms = [$this->id_field => $row[$this->id_field]];
-      $url = 'blog/view';
+      $url = 'blog' . ($view ? '/view' : '');
       $sef = $row[$this->name_field];
       return _A_::$app->router()->UrlTo($url, $prms, $sef);
+    }
+
+    protected function build_back_url(&$back_url = null, &$prms = null) {
+      parent::build_back_url($back_url, $prms);
+      $back_url .= (!Controller_Admin::is_logged()) ? '/view' : '';
     }
 
     public static function sitemap_view() { return true; }

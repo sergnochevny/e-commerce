@@ -8,7 +8,7 @@
       var destination = $(this).attr('data-destination');
       var country = $(this).val();
       $('body').waitloader('show');
-      $.get(
+      $.post(
         url,
         {
           method: 'get_province_list',
@@ -16,6 +16,8 @@
         },
         function (data) {
           $('select[name="' + destination + '"]').html(data);
+          if ($('select[name="' + destination + '"]').selectmenu && $('select[name="' + destination + '"]').selectmenu('instance'))
+            $('select[name="' + destination + '"]').selectmenu('refresh');
           $('body').waitloader('remove');
         }
       )

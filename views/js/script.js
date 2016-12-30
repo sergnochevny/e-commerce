@@ -13,15 +13,121 @@ var change_text = false;
 
   $.extend({
     init_input: function () {
-      $('input[type=text]').textinput();
-      $('input[type=textarea]').textinput();
-      $('input[type=number]').textinput();
-      $('input[type=email]').textinput();
-      $('input[type=password]').textinput();
-      $('input[type=url]').textinput();
+      $('input[type=text]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+      $('input[type=textarea]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+      $('input[type=number]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+      $('input[type=email]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+      $('input[type=password]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options);
+        });
+      $('input[type=url]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
 
-      $('textarea').textinput();
-      $('select').selectmenu();
+      $('textarea').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+      $('select').each(
+        function () {
+          console.log($(this).css('z-index'));
+          var options = {appendTo: $(this).parent()};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).selectmenu(options);
+        }
+      );
     },
     danger_remove: function (timeout) {
       var alert_container = $('.alert-container');
@@ -33,7 +139,9 @@ var change_text = false;
           alert_container.remove();
         }, timeout);
       }
-    },
+    }
+
+    ,
     change_button_text: function (force) {
       if (force) change_text = false;
       if ($(window).width() < 485) {
@@ -59,7 +167,8 @@ var change_text = false;
           );
         }
       }
-    },
+    }
+    ,
     /*$.post function replacement*/
     postdata: function (this_, url, data, callback, loader) {
       if (typeof loader == 'undefined') loader = true;

@@ -319,8 +319,8 @@
     }
 
     protected function form_handling(&$data = null) {
+      if (_A_::$app->request_is_post() && (_A_::$app->post('method') == 'get_province_list')) exit($this->list_province(_A_::$app->post('country')));
       if(!empty($this->scenario())) {
-        if($this->scenario() == 'get_province_list') exit($this->list_province(_A_::$app->get('country')));
         if($this->scenario() == 'csv') exit($this->get_csv());
       }
       return true;
