@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.carousel.css'); ?>">
-<link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.theme.default.min.css'); ?>">
 <?php
   $pid = $data['pid'];
   $ahref = 'mailto:'._A_::$app->keyStorage()->system_info_email.'?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);

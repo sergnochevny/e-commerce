@@ -38,6 +38,8 @@
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/prettyPhoto.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('views/css/jquery-ui.min.css'); ?>'
         media='all'/>
+  <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.carousel.css'); ?>">
+  <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('views/css/owlcarousel/owl.theme.default.min.css'); ?>">
   <link rel="stylesheet" type="text/css"
         href="<?= _A_::$app->router()->UrlTo('views/css/tooltipster.bundle.min.css'); ?>"/>
   <link rel='stylesheet' id='just-style-css' href='<?= _A_::$app->router()->UrlTo('views/css/style.min.css'); ?>'/>
@@ -55,6 +57,8 @@
           src='<?= _A_::$app->router()->UrlTo('views/js/jquery.prettyPhoto.min.js'); ?>'></script>
   <script src='<?= _A_::$app->router()->UrlTo('views/js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
           type="text/javascript"></script>
+  <script type='text/javascript'
+          src='<?= _A_::$app->router()->UrlTo('views/js/owlcarousel/owl.carousel.min.js'); ?>'></script>
   <script type="text/javascript"
           src="<?= _A_::$app->router()->UrlTo('views/js/tooltipster.bundle.min.js'); ?>"></script>
   <script type='text/javascript'
