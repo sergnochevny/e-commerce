@@ -43,7 +43,7 @@
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']["z.aid"])) $result[] = "a.aid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["z.zid"]))) . "'";
+      if(isset($filter['hidden']["z.aid"])) $result[] = "z.aid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["z.aid"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
       }

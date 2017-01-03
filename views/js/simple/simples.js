@@ -10,6 +10,7 @@
   });
 
   $(document).on('click', '[data-delete]', function (event) {
+    debugger;
     event.preventDefault();
     if (!$(this).is('.disabled')) {
       var href = $(this).attr('href');

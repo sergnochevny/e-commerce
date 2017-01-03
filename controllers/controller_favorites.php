@@ -29,7 +29,13 @@ class Controller_Favorites extends Controller_Simple
         $data['aid'] = Controller_User::get_from_session()['aid'];
     }
 
-    protected function validate(&$data, &$error)
+  protected function build_search_filter(&$filter, $view = false) {
+    $res = parent::build_search_filter($filter, $view);
+    $filter['hidden']['z.aid'] = Controller_User::get_from_session()['aid'];
+    return $res;
+  }
+
+  protected function validate(&$data, &$error)
     {
         if (empty($data['pid'])) {
             $error[] = 'Select Product to append to Favorites!';
