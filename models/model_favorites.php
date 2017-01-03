@@ -71,7 +71,7 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      $query = "SELECT DISTINCT a.* FROM " . static::$table . " z";
+      $query = "SELECT DISTINCT z.id, a.* FROM " . static::$table . " z";
       $query .= " LEFT JOIN fabrix_products a ON a.pid = z.pid";
       $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
       $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
