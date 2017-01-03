@@ -17,15 +17,13 @@
       return $result;
     }
 
-    public static function get_by_f1($f1) {
+    public static function get_by_f1($filter) {
       $data = null;
-      if(isset($f1)) {
-        $q = "select * from " . static::$table . " where f1 = '" . $f1 . "'";
-        $result = mysql_query($q);
-        if($result) {
-          $data = mysql_fetch_assoc($result);
-        }
-      }
+      $q = "SELECT * FROM " . static::$table;
+      $q .= self::build_where($filter);
+      $q .= ' LIMIT 0, 1';
+      $result = mysql_query($q);
+      if($result) $data = mysql_fetch_assoc($result);
       return $data;
     }
 
@@ -89,7 +87,7 @@
           " message='$message'," .
           " visible='$visible'," .
           " f1='$f1'";
-          " f2='$f2'";
+        " f2='$f2'";
 
         $res = mysql_query($q);
       }
