@@ -146,6 +146,6 @@
     $('#edit_form').trigger('submit', [true]);
   });
 
-  $.init_input();
+  $('form#edit_form').init_input();
 
 })(jQuery);

@@ -2,6 +2,6 @@
 (function ($) {
 
   $.danger_remove(8000);
-  $.init_input();
+  $('body').init_input();
 
 })(jQuery);

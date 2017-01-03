@@ -12,123 +12,6 @@ var change_text = false;
 (function ($) {
 
   $.extend({
-    init_input: function () {
-      $('input[type=text]').each(
-        function () {
-          var options = {};
-          $.each($(this).data('events'),
-            function (name, event) {
-              options[name] = function (ev, ui) {
-                $.each(event, function (key, item) {
-                  item.handler.call(ev.target, ev);
-                });
-              }
-            }
-          );
-          $(this).textinput(options)
-        });
-      $('input[type=textarea]').each(
-        function () {
-          var options = {};
-          $.each($(this).data('events'),
-            function (name, event) {
-              options[name] = function (ev, ui) {
-                $.each(event, function (key, item) {
-                  item.handler.call(ev.target, ev);
-                });
-              }
-            }
-          );
-          $(this).textinput(options)
-        });
-      $('input[type=number]').each(
-        function () {
-          var options = {};
-          $.each($(this).data('events'),
-            function (name, event) {
-              options[name] = function (ev, ui) {
-                $.each(event, function (key, item) {
-                  item.handler.call(ev.target, ev);
-                });
-              }
-            }
-          );
-          $(this).textinput(options)
-        });
-      $('input[type=email]').each(
-        function () {
-          var options = {};
-          $.each($(this).data('events'),
-            function (name, event) {
-              options[name] = function (ev, ui) {
-                $.each(event, function (key, item) {
-                  item.handler.call(ev.target, ev);
-                });
-              }
-            }
-          );
-          $(this).textinput(options)
-        });
-      $('input[type=password]').each(
-        function () {
-          var options = {};
-          $.each($(this).data('events'),
-            function (name, event) {
-              options[name] = function (ev, ui) {
-                $.each(event, function (key, item) {
-                  item.handler.call(ev.target, ev);
-                });
-              }
-            }
-          );
-          $(this).textinput(options);
-        });
-      $('input[type=url]').each(
-        function () {
-          var options = {};
-          $.each($(this).data('events'),
-            function (name, event) {
-              options[name] = function (ev, ui) {
-                $.each(event, function (key, item) {
-                  item.handler.call(ev.target, ev);
-                });
-              }
-            }
-          );
-          $(this).textinput(options)
-        });
-
-      $('textarea').each(
-        function () {
-          var options = {};
-          $.each($(this).data('events'),
-            function (name, event) {
-              options[name] = function (ev, ui) {
-                $.each(event, function (key, item) {
-                  item.handler.call(ev.target, ev);
-                });
-              }
-            }
-          );
-          $(this).textinput(options)
-        });
-      $('select').each(
-        function () {
-          console.log($(this).css('z-index'));
-          var options = {appendTo: $(this).parent()};
-          $.each($(this).data('events'),
-            function (name, event) {
-              options[name] = function (ev, ui) {
-                $.each(event, function (key, item) {
-                  item.handler.call(ev.target, ev);
-                });
-              }
-            }
-          );
-          $(this).selectmenu(options);
-        }
-      );
-    },
     danger_remove: function (timeout) {
       var alert_container = $('.alert-container');
       var danger = $('.danger');
@@ -198,6 +81,124 @@ var change_text = false;
   });
 
   $.fn.extend({
+    init_input: function () {
+      $(this).find('input[type=text]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+      $(this).find('input[type=textarea]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+      $(this).find('input[type=number]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+      $(this).find('input[type=email]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+      $(this).find('input[type=password]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options);
+        });
+      $(this).find('input[type=url]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        });
+
+      $(this).find('textarea').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).textinput(options)
+        }
+      );
+      $(this).find('select').each(
+        function () {
+          console.log($(this).css('z-index'));
+          var options = {appendTo: $(this).parent()};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).selectmenu(options);
+        }
+      );
+    },
     waitloader: function (action) {
       var wait_loader_fa = '<div class="ui-widget-overlay" id="wait_loader">' +
         '<i class="fa fa-spinner fa-pulse fa-4x"></i>' +

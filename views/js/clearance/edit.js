@@ -24,7 +24,7 @@
     }
     _postdata(this, url, data,
       function () {
-        $.init_input();
+        $('body').init_input();
         $('body').waitloader('remove');
         $.danger_remove(3000);
       }

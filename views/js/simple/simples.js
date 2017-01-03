@@ -19,15 +19,7 @@
         $("#confirm_action").off('click.confirm_action');
         $("#confirm_dialog").removeClass('overlay_display');
 
-        var search = $('form[data-search]');
-        if (search.length) var data = new FormData(search[0]);
-        else var data = new FormData();
-        var sort = $('form[data-sort]');
-        if (sort.length) {
-          (new FormData(sort[0])).forEach(function (value, key) {
-            data.append(key, value);
-          });
-        }
+        var data = new FormData();
         $.postdata(this, href, data,
           function (data) {
             $('#content').html(data);

@@ -30,6 +30,4 @@
 
   $(document).on('click', '[data-product] > a', function(event){event.stopPropagation();});
 
-  $.init_input();
-
 })(jQuery);

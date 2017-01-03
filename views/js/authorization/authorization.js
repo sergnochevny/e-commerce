@@ -34,6 +34,6 @@
     }
   );
 
-  $.init_input();
+  $('#authorization').init_input();
 
 })(jQuery);

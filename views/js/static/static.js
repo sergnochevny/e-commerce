@@ -7,6 +7,6 @@
     }, 300);
   });
 
-  $.init_input();
+  $('body').init_input();
 
 })(jQuery);

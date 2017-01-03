@@ -24,6 +24,6 @@
     }
   );
 
-  $.init_input();
+  $('#psw_form').init_input();
 
 })(jQuery);

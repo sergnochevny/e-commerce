@@ -23,6 +23,6 @@
     $('#lost_password_form').trigger('submit');
   });
 
-  $.init_input();
+  $('body').init_input();
 
 })(jQuery);

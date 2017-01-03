@@ -220,9 +220,9 @@
       $filter['type'] = $type;
       $sort['type'] = $type;
       $search_form = $this->build_search_filter($filter);
-      $this->build_order($sort);
-      $pages = _A_::$app->session('pages');
       $idx = $this->load_search_filter_get_idx($filter);
+      $pages = _A_::$app->session('pages');
+      $sort = $this->load_sort($filter);
       $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
       $per_page = $this->per_page;
       $total = Model_Shop::get_total_count($filter);

@@ -1,3 +1,5 @@
+<?php include_once 'views/messages/alert-boxes.php';?>
+
 <?php if (isset($page_title)) { ?>
   <div class="col-xs-12 text-center afterhead-row">
     <h3 class="page-title"><?= $page_title; ?></h3>
@@ -36,3 +38,5 @@
     </nav>
   </div>
 </div>
+
+<script src='<?= _A_::$app->router()->UrlTo('views/js/simple/list.min.js'); ?>' type="text/javascript"></script>

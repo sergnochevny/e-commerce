@@ -1,5 +1,5 @@
 'use srict';
 
 (function ($) {
-  $.init_input();
+  $('body').init_input();
 })(jQuery);

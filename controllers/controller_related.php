@@ -83,10 +83,10 @@
     protected function get_list($view = false) {
       $c_product = new Controller_Product($this->main);
       $c_product->scenario($this->scenario());
-      $search_form = $c_product->build_search_filter($filter, $view);
-      $c_product->build_order($sort, $view);
-      $pages = _A_::$app->session('pages');
+      $search_form = $this->build_search_filter($filter, $view);
       $idx = $this->load_search_filter_get_idx($filter, $view);
+      $pages = _A_::$app->session('pages');
+      $sort = $this->load_sort($filter, $view);
       $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
       $per_page = $this->per_page;
       $total = Model_Product::get_total_count($filter);

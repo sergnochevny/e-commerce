@@ -202,11 +202,25 @@
       return $search_form;
     }
 
+    protected function load_sort($filter, $view = false) {
+      $idx = $this->load_search_filter_get_idx($filter, $view);
+      $sorts = _A_::$app->session('sorts');
+      $sort = null;
+      if(is_null(_A_::$app->get('sort')) && is_null(_A_::$app->post('sort')))
+        $sort = !empty($sorts[$this->controller][$idx]) ? $sorts[$this->controller][$idx] : null;
+      if(empty($sort)) $this->build_order($sort, $view);
+      if(!empty($sort)) {
+        $sorts[$this->controller][$idx] = $sort;
+        _A_::$app->setSession('sorts', $sorts);
+      }
+      return $sort;
+    }
+
     protected function get_list($view = false) {
       $search_form = $this->build_search_filter($filter, $view);
-      $this->build_order($sort, $view);
-      $pages = _A_::$app->session('pages');
       $idx = $this->load_search_filter_get_idx($filter, $view);
+      $pages = _A_::$app->session('pages');
+      $sort = $this->load_sort($filter, $view);
       $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
       $per_page = $this->per_page;
       $filter['scenario'] = $this->scenario();
