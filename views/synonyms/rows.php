@@ -17,7 +17,7 @@
             Keywords
             <?php if(isset($sort['keywords'])) : ?>
               <small>
-                <i class="fa <?= ($sort['keywords'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['keywords'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -37,7 +37,7 @@
             Synonyms
             <?php if(isset($sort['synonyms'])) : ?>
               <small>
-                <i class="fa <?= ($sort['synonyms'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['synonyms'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>

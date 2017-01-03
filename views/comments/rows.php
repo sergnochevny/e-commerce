@@ -17,7 +17,7 @@
             Email
             <?php if(isset($sort['email'])) : ?>
               <small>
-                <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($order['order'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -37,7 +37,7 @@
             Title
             <?php if(isset($sort['title'])) : ?>
               <small>
-                <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($order['order'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -57,7 +57,7 @@
             Date
             <?php if(isset($sort['dt'])) : ?>
               <small>
-                <i class="fa <?= ($order['order'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($order['order'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>

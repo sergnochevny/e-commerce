@@ -184,7 +184,6 @@ var change_text = false;
       );
       $(this).find('select').each(
         function () {
-          console.log($(this).css('z-index'));
           var options = {appendTo: $(this).parent()};
           $.each($(this).data('events'),
             function (name, event) {

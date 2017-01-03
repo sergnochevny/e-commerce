@@ -25,7 +25,7 @@
   function postdata(this_, url, data, context, callback) {
     $.postdata(this_, url, data, function (data) {
       if (context !== undefined && context !== null) {
-        $.when(context.html(data)).done(
+        $.when($(context[0]).html(data)).done(
           function () {
             if (callback) callback.call(this_, data);
           }
@@ -58,6 +58,7 @@
       data.append('type', $(this).attr('data-destination'));
       postdata(this, url, data, destination,
         function (data) {
+          $(destination).init_input();
           $('#modal').modal('hide');
           setEvToFilter();
         }
@@ -105,7 +106,9 @@
     var title = $(this).attr('data-title');
     postdata(this, url, data, $('#modal_content'),
       function () {
+        $('#modal_content').init_input();
         $('#modal-title').html(title);
+        $('#modal-title').init_input();
         $('#build_filter').attr('data-destination', destination);
         $('[data-filter-search]').attr('data-destination', destination);
         setEvToFilterSearch();

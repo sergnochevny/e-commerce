@@ -17,7 +17,7 @@
             Manufacturer
             <?php if(isset($sort['a.manufacturer'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.manufacturer'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['a.manufacturer'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -37,7 +37,7 @@
             Products
             <?php if(isset($sort['amount'])) : ?>
               <small>
-                <i class="fa <?= ($sort['amount'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['amount'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>

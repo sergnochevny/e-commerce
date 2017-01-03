@@ -17,7 +17,7 @@
             Name
             <?php if(isset($sort['a.cname'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.cname'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['a.cname'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -37,7 +37,7 @@
             Display Order
             <?php if(isset($sort['a.displayorder'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.displayorder'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['a.displayorder'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>

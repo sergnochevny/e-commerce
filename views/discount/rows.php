@@ -17,7 +17,7 @@
             Details
             <?php if(isset($sort['discount_amount'])) : ?>
               <small>
-                <i class="fa <?= ($sort['discount_amount'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['discount_amount'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -37,7 +37,7 @@
             On
             <?php if(isset($sort['enabled'])) : ?>
               <small>
-                <i class="fa <?= ($sort['enabled'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['enabled'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -57,7 +57,7 @@
             Multiple
             <?php if(isset($sort['allow_multiple'])) : ?>
               <small>
-                <i class="fa <?= ($sort['allow_multiple'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['allow_multiple'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -77,7 +77,7 @@
             Coupon
             <?php if(isset($sort['coupon_code'])) : ?>
               <small>
-                <i class="fa <?= ($sort['coupon_code'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['coupon_code'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -97,7 +97,7 @@
             Starts
             <?php if(isset($sort['date_start'])) : ?>
               <small>
-                <i class="fa <?= ($sort['date_start'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['date_start'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -117,7 +117,7 @@
             Ends
             <?php if(isset($sort['date_end'])) : ?>
               <small>
-                <i class="fa <?= ($sort['date_end'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['date_end'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>

@@ -131,7 +131,7 @@
       $data = [
         'id' => $id,
         'post_author' => '',
-        'post_date' => '',
+        'post_date' => date('m/d/Y', time()),
         'post_content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore" .
           " et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " .
           " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " .
@@ -210,7 +210,7 @@
       $post_content = mysql_real_escape_string($post_content);
 
       if(!isset($id)) {
-        $date['post_date'] = $post_date = time();
+        $date['post_date'] = $post_date = date('Y-m-d H:i:s', time());
         $q = "INSERT INTO " . static::$table . " (post_author, post_date, post_content, post_title, post_status)" .
           " VALUES ('$post_author', '$post_date', '$post_content', '$post_title', '$post_status')";
       } else {
@@ -222,6 +222,7 @@
         $q .= "' WHERE id = $id;";
       }
       $result = mysql_query($q);
+      if($result && !isset($id)) $id = mysql_insert_id();
       if($result) $result = mysql_query("DELETE FROM blog_group_posts WHERE post_id = '$id'");
       if($result) {
         foreach($categories as $group) {
@@ -233,7 +234,6 @@
       if($result) $result = mysql_query("INSERT INTO blog_post_keys_descriptions(post_id, keywords, description) values('$id', '$keywords', '$description')");
       if($result) $result = static::update_image($id, $data);
       if(!$result) throw new Exception(mysql_error());
-      if(!isset($id)) $id = mysql_insert_id();
       return $id;
     }
 

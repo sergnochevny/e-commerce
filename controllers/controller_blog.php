@@ -273,6 +273,20 @@
       $this->template->view_layout('filter/filter');
     }
 
+    private function path_img($img) {
+      $img = trim(str_replace('{base_url}', '', $img), '/\\');
+      if(basename($img) == $img) {
+        if(file_exists('img/blog/' . $img) && is_file('img/blog/' . $img) && is_readable('img/blog/' . $img))
+          $img = 'img/blog/' . $img;
+        else $img = 'upload/upload/not_image.jpg';
+      } else {
+        if(!(file_exists($img) && is_file($img) && is_readable($img))) {
+          $img = 'upload/upload/not_image.jpg';
+        }
+      }
+      return $img;
+    }
+
     protected function build_order(&$sort, $view = false) {
       parent::build_order($sort, $view);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
@@ -360,11 +374,7 @@
           }
           $rows[$key]['description'] = $data;
           $img = Model_Blog::get_img($row['id']);
-          $filename = str_replace('{base_url}/', '', $img);
-          if(!(file_exists($filename) && is_file($filename))) {
-            $img = 'upload/upload/not_image.jpg';
-          }
-          $rows[$key]['img'] = _A_::$app->router()->UrlTo($img);
+          $rows[$key]['img'] = _A_::$app->router()->UrlTo($this->path_img($img));
         }
       }
     }
@@ -397,10 +407,10 @@
         if(count($data['categories']) == 0) {
           $error[] = 'Select at least one category!!!';
         }
-        if(!isset($data['img'])) {
+        if(empty($data['img'])) {
           $error[] = 'Identity Image!!';
         }
-        if(empty($data['postcontent'])) {
+        if(empty($data['post_content'])) {
           $error[] = 'Identity Content Field!!';
         }
         return false;
@@ -438,10 +448,8 @@
         $data['post_date'] = date('F jS, Y', strtotime($data['post_date']));
         $data['post_content'] = str_replace('{base_url}', _A_::$app->router()->UrlTo('/'), $data['post_content']);
         $data['post_content'] = preg_replace('#(style="[^>]*")#U', '', $data['post_content']);
-        $img = str_replace('{base_url}/', '', Model_Blog::get_img($data['id']));
-        if(!(file_exists($img) && is_file($img))) $img = 'upload/upload/not_image.jpg';
-        $data['img'] = _A_::$app->router()->UrlTo($img);
-
+        $img = Model_Blog::get_img($data['id']);
+        $data['img'] = _A_::$app->router()->UrlTo($this->path_img($img));
         if(!empty($data['post_title'])) $this->template->setMeta('title', $data['post_title']);
         if(isset($data[$this->id_field])) {
           $desckeys = Model_Blog::get_desc_keys($data[$this->id_field]);

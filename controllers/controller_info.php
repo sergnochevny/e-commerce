@@ -21,13 +21,17 @@
 
     protected function validate(&$data, &$error) {
       if(empty($data['title']) || empty($data['message']) ||
-        (empty($data['f2']) && ($this->scenario() == 'cart'))
+        (empty($data['f2']) && ($this->scenario() == 'cart')) ||
+        ((!empty($data['f2']) && ((float) $data['f2'] <= 0)) && ($this->scenario() == 'cart'))
       ) {
         $error = [];
-        if(empty($data['title'])) $error[] = 'Identify Title field !';
-        if(empty($data['message'])) $error[] = 'Identify Content field !';
-        if(empty($data['f2']) && ($this->_scenario == 'cart')) {
-          $error[] = 'Identify Timeout field !';
+        if(empty($data['title'])) $error[] = 'Identify <b>Title</b> field !';
+        if(empty($data['message'])) $error[] = 'Identify <b>Content</b> field !';
+        if(empty($data['f2']) && ($this->scenario() == 'cart')) {
+          $error[] = 'Identify <b>Timeout</b> field !';
+        }
+        if((!empty($data['f2']) && ((float) $data['f2'] <= 0)) && ($this->scenario() == 'cart')) {
+          $error[] = 'The field <b>Timeout</b> value must be greater than zero';
         }
         $this->template->vars('error', $error);
         return false;

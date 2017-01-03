@@ -17,7 +17,7 @@
             Name
             <?php if(isset($sort['a.pattern'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.pattern'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['a.pattern'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -37,7 +37,7 @@
             Products
             <?php if(isset($sort['amount'])) : ?>
               <small>
-                <i class="fa <?= ($sort['amount'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['amount'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>

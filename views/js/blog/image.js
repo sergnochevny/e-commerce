@@ -15,7 +15,7 @@
     $.postdata(this_, url,data,
       function (data) {
         if (context !== undefined && context !== null) {
-          $.when(context.html(data)).done(
+          $.when($(context[0]).html(data)).done(
             function () {
               if (callback) callback.call(this_, data);
             }

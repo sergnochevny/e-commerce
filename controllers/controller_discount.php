@@ -130,8 +130,12 @@
         (!isset($data['filter_products']) && ($data['product_type'] != 1)) ||
         ($data['date_start'] == 0) || ($data['date_end'] == 0) ||
         ($data['promotion_type'] == '0') ||
-        (!isset($data['discount_amount']) || $data['discount_amount'] == '' || $data['discount_amount'] == '0.00' || $data['discount_type'] == '0') ||
-        ($data['required_amount'] == '')
+        (empty($data['discount_amount']) || $data['discount_amount'] == '0.00' || $data['discount_type'] == '0') ||
+        (empty((float)$data['discount_amount'])) ||
+        (!empty((float)$data['discount_amount']) && ((float)$data['discount_amount'] < 0)) ||
+        (empty($data['required_amount'])) ||
+        (!empty((float)$data['required_amount']) && ((float)$data['required_amount'] < 0)) ||
+        (($data['discount_amount_type'] == 2) && !empty((float)$data['discount_amount']) && ((float)$data['discount_amount'] > 100))
       ) {
         $error = [];
 
@@ -140,12 +144,18 @@
           && Model_Discount::checkCouponCode(0, $data['coupon_code'])
         ) $error[] = "The coupon code is in use.";
         if(empty($data['required_amount'])) $error[] = "Identify Restrictions field";
+        if(!empty($data['required_amount']) &&
+          ((float)$data['required_amount'] < 0)
+        ) $error[] = "The field 'Restrictions' value must be greater than zero or equal";
         if($data['promotion_type'] == 0) $error[] = "Identify Promotion field";
-        if(empty($data['discount_amount']) ||
-          $data['discount_amount'] == '' ||
-          $data['discount_amount'] == '0.00' ||
-          $data['discount_type'] == 0
-        ) $error[] = "Identify 'discount details' fields";
+        if(empty($data['discount_amount'])) $error[] = "Identify 'Discount details' fields";
+        if(!empty($data['discount_amount']) &&
+          (empty((float)$data['discount_amount']) || ((float)$data['discount_amount'] <= 0))
+        ) $error[] = "The field 'Discount details' value must be greater than zero";
+        if((($data['discount_amount_type'] == 2) &&
+          !empty((float)$data['discount_amount']) &&
+          ((float)$data['discount_amount'] > 100))
+        ) $error[] = "The field 'Discount details' value must be less than 100 for this a discount type";
         if($data['date_start'] == 0) $error[] = "Identify 'start date' field";
         if($data['date_end'] == 0) $error[] = "Identify 'end date' field";
         if(!isset($data['users']) && ($data['user_type'] == 4))
@@ -156,7 +166,8 @@
           $error[] = "Set the option 'All selected categories'. Select at least one category from the list, in this case!";
         if(!isset($data['filter_products']) && ($data['product_type'] == 4))
           $error[] = "Set the option 'All selected manufacturers'. Select at least one manufacture from the list , in this case!";
-      } else return true;
+      } else
+        return true;
       return false;
     }
 

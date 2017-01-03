@@ -17,7 +17,7 @@
             Order
             <?php if(isset($sort['a.trid'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.trid'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['a.trid'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -38,7 +38,7 @@
               Customer
               <?php if(isset($sort['username'])) : ?>
                 <small>
-                  <i class="fa <?= ($sort['username'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                  <i class="fa <?= ($sort['username'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
                 </small>
               <?php endif; ?>
             </a>
@@ -59,7 +59,7 @@
             Date
             <?php if(isset($sort['a.order_date'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.order_date'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['a.order_date'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -79,7 +79,7 @@
             Status
             <?php if(isset($sort['a.status'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.status'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['a.status'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
@@ -99,7 +99,7 @@
             Total
             <?php if(isset($sort['a.total'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.total'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+                <i class="fa <?= ($sort['a.total'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>

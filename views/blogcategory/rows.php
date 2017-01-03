@@ -16,7 +16,7 @@
           <a data-sort href="<?= $sort_url ?>">
             Name
             <small>
-              <i class="fa <?= ($sort['a.name'] == 'desc') ? 'fa-chevron-down' : 'fa-chevron-up' ?>"></i>
+              <i class="fa <?= ($sort['a.name'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
             </small>
           </a>
         </div>

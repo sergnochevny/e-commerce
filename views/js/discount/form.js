@@ -43,7 +43,7 @@
   function postdata(this_, url, data, context, callback) {
     $.postdata(this_, url, data, function (data) {
       if (context !== undefined && context !== null) {
-        $.when(context.html(data)).done(
+        $.when($(context[0]).html(data)).done(
           function () {
             if (callback) callback.call(this_, data);
             $('body').waitloader('remove');
@@ -77,7 +77,9 @@
     var title = $(this).attr('data-title');
     postdata(this, url, data, $('#modal_content'),
       function () {
+        $('#modal_content').init_input();
         $('#modal-title').html(title);
+        $('#modal-title').init_input();
         $('#build_filter').attr('data-destination', destination);
         $('[data-filter-search]').attr('data-destination', destination);
         setEvToFilterSearch();
@@ -320,6 +322,6 @@
     $('[data-filter-panel-users]').empty();
   }
 
-  $.init_input();
+  $('form#edit_form').init_input();
 
 })(jQuery);
