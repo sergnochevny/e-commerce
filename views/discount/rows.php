@@ -133,8 +133,8 @@
       $prms['sid'] = $row['sid'];
       $row['date_start'] = gmdate("m/j/y", $row['date_start']);
       $row['date_end'] = gmdate("m/j/y", $row['date_end']);
-      $row['enabled'] = $row['enabled'] == "1" ? "YES" : "NO";
-      $row['allow_multiple'] = $row['allow_multiple'] == "1" ? "YES" : "NO";
+      $row['enabled'] = $row['enabled'] == "1" ? "Yes" : "No";
+      $row['allow_multiple'] = $row['allow_multiple'] == "1" ? "Yes" : "No";
       ?>
       <div class="col-xs-12 table-list-row">
         <div class="row">
@@ -187,7 +187,7 @@
               <div class="row"><?= $row['date_end']; ?></div>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-2 col-md-2 text-right action-buttons">
+          <div class="col-xs-12 col-sm-2 col-md-2 col-lg-1 text-right action-buttons">
             <a data-waitloader rel="nofollow" title="Edit" href="<?= _A_::$app->router()->UrlTo('discount/edit', $prms); ?>">
               <i class="fa fa-2x fa-pencil"></i>
             </a>
@@ -207,8 +207,8 @@
     <?php endforeach; ?>
   </div>
 <?php else: ?>
-  <div class="col-xs-12 offset-top">
-    <h2 class="offset-top">No results found</h2>
+  <div class="col-xs-12 text-center inner-offset-vertical">
+    <span class="h3">No results found</span>
   </div>
 <?php endif; ?>
 

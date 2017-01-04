@@ -58,10 +58,10 @@
     /**
      * @export
      */
-    public function view() {
+    public function view($partial = false, $required_access = false) {
       $this->template->vars('cart_enable', '_');
       _A_::$app->setSession('sidebar_idx', 2);
-      parent::view();
+      parent::view($partial, $required_access);
     }
 
     public static function sitemap_order() { return 3; }

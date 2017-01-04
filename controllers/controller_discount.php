@@ -5,6 +5,7 @@
     protected $id_field = 'sid';
     protected $form_title_add = 'NEW DISCOUNT';
     protected $form_title_edit = 'MODIFY DISCOUNT';
+    protected $resolved_scenario = ['', 'orders'];
 
     private function generate_prod_filter($data) {
       $filter_products = $data['filter_products'];
@@ -63,6 +64,7 @@
     }
 
     protected function search_fields($view = false) {
+      if($view && $this->scenario() == 'orders') return ['c.sid'];
       return [
         'sid', 'promotion_type', 'user_type',
         'discount_type', 'product_type', 'coupon_code',
@@ -70,10 +72,24 @@
       ];
     }
 
+    protected function build_search_filter(&$filter, $view = false) {
+      $res = parent::build_search_filter($filter, $view);
+      if($view && ($this->scenario() == 'orders')) {
+        $this->per_page = 24;
+        $filter['hidden']['c.sid'] = _A_::$app->get('sid');
+      }
+      return $res;
+    }
+
     protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-        $sort = ['date_start' => 'desc'];
+      if($view && $this->scenario() == 'orders') {
+        parent::build_order($sort, $view);
+        if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) $sort = ['a.order_date' => 'desc'];
+      } else {
+        parent::build_order($sort, $view);
+        if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+          $sort = ['date_start' => 'desc'];
+        }
       }
     }
 
@@ -233,20 +249,20 @@
     /**
      * @export
      */
-    public function view() {
-      $this->main->is_admin_authorized();
-      $id = _A_::$app->get($this->id_field);
-      $discount = null;
-      $orders = null;
-      if(isset($id)) {
-        $discount = Model_Discount::get_by_id($id);
-        $orders = Model_Orders::get_list_by_discount_id($id);
-      }
+    public function view($partial = true, $required_access = true) {
+      ob_start();
+      parent::view($partial, $required_access);
+      $discount = ob_get_contents();
+      ob_end_clean();
+      ob_start();
+      $this->scenario('orders');
+      Controller_Controller::view($partial, $required_access);
+      $orders = ob_get_contents();
+      ob_end_clean();
       $this->set_back_url();
-      $this->template->vars($this->id_field, $id);
       $this->template->vars('discount', $discount);
       $this->template->vars('orders', $orders);
-      $this->main->view_admin('view');
+      $this->main->view_admin('view' . DS . $this->controller);
     }
 
   }

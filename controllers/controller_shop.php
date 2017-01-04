@@ -189,7 +189,7 @@
         $data = Model_Patterns::get_by_id(_A_::$app->get('ptrn'));
         if(!empty($data['pattern'])) {
           $this->template->setMeta('description', $data['pattern']);
-          $this->template->setMeta('keywords', strtolower($data['pattern']) . ',' .implode(',', array_filter(explode(' ', strtolower($data['pattern'])))));
+          $this->template->setMeta('keywords', strtolower($data['pattern']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['pattern'])))));
           $this->template->setMeta('title', $data['pattern']);
         }
       }
@@ -288,6 +288,19 @@
       return $idx;
     }
 
+    protected function build_sitemap_url($row, $view) {
+    }
+
+    protected function build_sitemap_item($row, $view) {
+      $prms = [$this->id_field => $row[$this->id_field]];
+      $url = 'shop/product';
+      $sef = $row[$this->name_field];
+      $loc = _A_::$app->router()->UrlTo($url, $prms, $sef);
+      $item = ['loc' => $loc, 'changefreq' => 'daily', 'priority' => 0.5,];
+      if(!empty($this->data_field)) $item['lastmod'] = date('Y-m-d', strtotime($row[$this->data_field]));
+      return $item;
+    }
+
     public static function urlto_sef_ignore_prms() {
       return [
         'product' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
@@ -357,6 +370,29 @@
       $this->main->view('shop');
     }
 
+//    public function modify_products_images() {
+//      $c_image = new Controller_Image();
+//      $per_page = 12;
+//      $page = 1;
+//
+//      $total = Model_Shop::get_total_count();
+//      $count = 0;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Shop::get_list($start, $per_page);
+//        foreach($rows as $row) {
+//          for($i = 1; $i < 5; $i++) {
+//            $fimage = $row['image' . $i];
+//            if(isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
+//              $c_image->modify_products($fimage);
+//            }
+//          }
+//        }
+//        $count += count($rows);
+//        echo $count;
+//      }
+//    }
+
     /**
      * @export
      */
@@ -386,29 +422,6 @@
       $this->template->vars('list', $list);
       $this->main->view('shop');
     }
-
-//    public function modify_products_images() {
-//      $c_image = new Controller_Image();
-//      $per_page = 12;
-//      $page = 1;
-//
-//      $total = Model_Shop::get_total_count();
-//      $count = 0;
-//      while($page <= ceil($total / $per_page)) {
-//        $start = (($page++ - 1) * $per_page);
-//        $rows = Model_Shop::get_list($start, $per_page);
-//        foreach($rows as $row) {
-//          for($i = 1; $i < 5; $i++) {
-//            $fimage = $row['image' . $i];
-//            if(isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
-//              $c_image->modify_products($fimage);
-//            }
-//          }
-//        }
-//        $count += count($rows);
-//        echo $count;
-//      }
-//    }
 
     /**
      * @export
@@ -458,8 +471,9 @@
       $data = Model_Shop::get_product($pid);
 
       if(!empty($data['metadescription'])) $this->template->setMeta('description', $data['metadescription']);
-      if(!empty($data['metakeywords']))$this->template->setMeta('keywords', $data['metakeywords']);
-      if(!empty($data['pname']))$this->template->setMeta('title', $data['pname']);
+      if(!empty($data['metakeywords'])) $this->template->setMeta('keywords', $data['metakeywords']);
+      if(!empty($data['metatitle'])) $this->template->setMeta('title', $data['metatitle']);
+      elseif(!empty($data['pname'])) $this->template->setMeta('title', $data['pname']);
 
       ob_start();
       if($data['rSystemDiscount'] > 0) {
@@ -519,20 +533,7 @@
 
     public function index($required_access = true) { }
 
-    public function view() { }
-
-    protected function build_sitemap_url($row, $view) {
-    }
-
-    protected function build_sitemap_item($row, $view) {
-      $prms = [$this->id_field => $row[$this->id_field]];
-      $url = 'shop/product';
-      $sef = $row[$this->name_field];
-      $loc = _A_::$app->router()->UrlTo($url, $prms, $sef);
-      $item = ['loc' => $loc, 'changefreq' => 'daily', 'priority' => 0.5,];
-      if(!empty($this->data_field)) $item['lastmod'] = date('Y-m-d', strtotime($row[$this->data_field]));
-      return $item;
-    }
+    public function view($partial = false, $required_access = false) { }
 
     public static function sitemap_order() { return 6; }
 

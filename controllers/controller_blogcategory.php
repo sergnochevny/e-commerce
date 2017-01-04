@@ -1,6 +1,6 @@
 <?php
 
-  class Controller_BlogCategory extends Controller_Simple  {
+  class Controller_BlogCategory extends Controller_Simple {
 
     protected $id_field = 'id';
     protected $form_title_add = 'ADD NEW CATEGORY';

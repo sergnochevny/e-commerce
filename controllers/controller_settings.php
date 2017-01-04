@@ -254,7 +254,7 @@
       $data['system_csv_fields_avail'] = array_diff($this->csv_fields_avail, $data['system_csv_fields']);
     }
 
-    public function view() { }
+    public function view($partial = false, $required_access = false) { }
 
     public function delete($required_access = true) { }
 

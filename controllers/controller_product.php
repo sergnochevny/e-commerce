@@ -195,6 +195,7 @@
     protected function validate(&$data, &$error) {
 
       if(
+        empty($data['ldesc']) ||
         empty($data['pnumber']) || empty($data['pname']) ||
         empty($data['priceyard']) ||
         (!empty($data['priceyard']) && empty((float)$data['priceyard'])) ||
@@ -202,6 +203,7 @@
         empty($data['image1'])
       ) {
         $error = [];
+        if(empty($data['ldesc'])) $error[] = 'Identify Long Description field !';
         if(empty($data['pnumber'])) $error[] = 'Identify Product Number field !';
         if(empty($data['pname'])) $error[] = 'Identify Product Name field !';
         if(empty($data['priceyard'])) $error[] = 'Identify Price field !';
@@ -212,6 +214,13 @@
         return false;
       }
       return true;
+    }
+
+    protected function before_save(&$data) {
+      if(empty($data['sdesc'])) $data['sdesc'] = trim($data['ldesc']);
+      if(empty($data['metadescription'])) $data['metadescription'] = $data['sdesc'];
+      if(empty($data['metatitle'])) $data['metatitle'] = $data['pname'];
+      if(empty($data['metakeywords'])) $data['metakeywords'] = strtolower(implode(',', array_filter(array_map('trim', explode(',', $data['metadescription'])))));
     }
 
     protected function form_handling(&$data = null) {

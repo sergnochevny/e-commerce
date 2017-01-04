@@ -134,7 +134,7 @@
     <?php endforeach; ?>
   </div>
 <?php else: ?>
-  <div class="col-sm-12 offset-top">
-    <h2 class="offset-top">No results found</h2>
+  <div class="col-xs-12 text-center inner-offset-vertical">
+    <span class="h3">No results found</span>
   </div>
 <?php endif; ?>

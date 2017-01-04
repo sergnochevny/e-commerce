@@ -69,8 +69,8 @@
       $error = null;
       if($this->validate($data, $error)) {
         try {
-          $this->before_save($data);
           $data['scenario'] = $this->scenario();
+          $this->before_save($data);
           $id = forward_static_call_array(['Model_' . ucfirst($this->controller), 'save'], [&$data]);
           $this->after_save($id, $data);
           $warning = [$this->save_warning];
@@ -96,7 +96,8 @@
     /**
      * @export
      */
-    public function view() {
+    public function view($partial = false, $required_access = false) {
+      if($required_access) $this->main->is_admin_authorized();
       if(!is_null(_A_::$app->get($this->id_field))) {
         $id = _A_::$app->get($this->id_field);
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
@@ -104,8 +105,10 @@
         $this->set_back_url();
         $this->template->vars('scenario', $this->scenario());
         $this->template->vars('data', $data);
-        $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
-      } else parent::view();
+        if($partial) $this->main->view_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
+        elseif($required_access) $this->main->view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
+        else $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
+      } else parent::view($partial);
     }
 
     /**

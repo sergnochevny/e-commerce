@@ -40,7 +40,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="form-row">
-              <label><b>Long description:</b></label>
+              <label class="required_field"><b>Long description:</b></label>
               <textarea class="input-text " style="height: 117px"
                         name="ldesc"><?= trim($data['ldesc']); ?></textarea>
             </div>
@@ -158,7 +158,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="form-row">
-              <label><b>Main images:</b></label>
+              <label class="required_field"><b>Main image:</b></label>
               <div class="col-xs-12">
                 <div id="images" class="row">
                   <?= $images; ?>

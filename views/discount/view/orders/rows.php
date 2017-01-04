@@ -11,7 +11,8 @@
               $order['sort'] = 'trid';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+            $order['sid'] = _A_::$app->get('sid');
+            $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Order
@@ -31,7 +32,8 @@
             $order['sort'] = 'username';
             $order['order'] = 'desc';
           }
-          $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+          $order['sid'] = _A_::$app->get('sid');
+          $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
           ?>
           <div class="col-sm-2 col">
             <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -53,7 +55,8 @@
               $order['sort'] = 'a.order_date';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+            $order['sid'] = _A_::$app->get('sid');
+            $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Date
@@ -73,7 +76,8 @@
               $order['sort'] = 'a.status';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+            $order['sid'] = _A_::$app->get('sid');
+            $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Status
@@ -93,7 +97,8 @@
               $order['sort'] = 'a.total';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+            $order['sid'] = _A_::$app->get('sid');
+            $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Total
@@ -112,18 +117,11 @@
       </form>
 
     </div>
-    <?php
-      $edit = true;
-      if(!is_null(_A_::$app->get('aid'))) {
-        $prms['aid'] = _A_::$app->get('aid');
-        $prms['user'] = 1;
-        $edit = false;
-      }
-    ?>
     <?php foreach($rows as $row): ?>
       <?php
       $prms['oid'] = $row['oid'];
-      $edit_url = _A_::$app->router()->UrlTo('orders/edit', $prms);
+      $prms['sid'] = _A_::$app->get('sid');
+      $prms['discount'] = true;
       $view_url = _A_::$app->router()->UrlTo('orders/view', $prms);
       ?>
       <div class="col-xs-12 table-list-row">
@@ -174,11 +172,8 @@
             </div>
           </div>
 
-          <div class="col-xs-12 col-sm-1 text-right action-buttons">
-            <?php if(Controller_Admin::is_logged() && $edit): ?>
-              <a title="Edit Order Parameters" class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-2x fa-pencil"></i></a>
-            <?php endif; ?>
-            <a class="<?= (Controller_Admin::is_logged() && $edit)?'no-float':''; ?>" data-waitloader title="View Order Details" href="<?= $view_url ?>"><i class="fa fa-2x fa-file-text"></i></a>
+          <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 text-center action-buttons">
+            <a class="no-float" data-waitloader title="View Order Details" href="<?= $view_url ?>"><i class="fa fa-2x fa-file-text"></i></a>
           </div>
         </div>
       </div>

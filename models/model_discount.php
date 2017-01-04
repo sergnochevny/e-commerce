@@ -6,19 +6,27 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["sid"])) $result[] = "sid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["sid"]))) . "'";
-      if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["promotion_type"]))) . "'";
-      if(isset($filter["user_type"])) $result[] = "user_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["user_type"]))) . "'";
-      if(isset($filter["discount_type"])) $result[] = "discount_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["discount_type"]))) . "'";
-      if(isset($filter["product_type"])) $result[] = "product_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["product_type"]))) . "'";
-      if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', mysql_real_escape_string(static::strip_data(static::sanitize($filter["coupon_code"])))))) . "%'";
-      if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(mysql_real_escape_string(static::strip_data(static::sanitize($filter['date_start'])))) . "'" : "");
-      if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(mysql_real_escape_string(static::strip_data(static::sanitize($filter['date_end'])))) . "'" : "");
-      if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        if(strlen(trim($result)) > 0) {
-          $result = " WHERE " . $result;
-          $filter['active'] = true;
+      if(isset($filter["scenario"]) && ($filter["scenario"] == 'orders')){
+        if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["c.sid"]))) . "'";
+        if(!empty($result) && (count($result) > 0)) {
+          $result = implode(" AND ", $result);
+          $result = (!empty($result) ? " WHERE " . $result : '');
+        }
+      } else {
+        if(isset($filter["sid"])) $result[] = "sid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["sid"]))) . "'";
+        if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["promotion_type"]))) . "'";
+        if(isset($filter["user_type"])) $result[] = "user_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["user_type"]))) . "'";
+        if(isset($filter["discount_type"])) $result[] = "discount_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["discount_type"]))) . "'";
+        if(isset($filter["product_type"])) $result[] = "product_type = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["product_type"]))) . "'";
+        if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', mysql_real_escape_string(static::strip_data(static::sanitize($filter["coupon_code"])))))) . "%'";
+        if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(mysql_real_escape_string(static::strip_data(static::sanitize($filter['date_start'])))) . "'" : "");
+        if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(mysql_real_escape_string(static::strip_data(static::sanitize($filter['date_end'])))) . "'" : "");
+        if(!empty($result) && (count($result) > 0)) {
+          $result = implode(" AND ", $result);
+          if(strlen(trim($result)) > 0) {
+            $result = " WHERE " . $result;
+            $filter['active'] = true;
+          }
         }
       }
       return $result;
@@ -91,7 +99,12 @@
 
     public static function get_total_count($filter = null) {
       $res = 0;
-      $q = "SELECT COUNT(sid) FROM " . static::$table;
+      if(isset($filter['scenario']) &&($filter['scenario'] == 'orders')){
+        $q = "SELECT COUNT(DISTINCT a.oid)";
+        $q .= " from fabrix_orders a";
+        $q .= " left join fabrix_accounts b on a.aid = b.aid";
+        $q .= " left join fabrix_specials_usage c on a.oid = c.oid";
+      } else $q = "SELECT COUNT(sid) FROM " . static::$table;
       $q .= self::build_where($filter);
       $result = mysql_query($q);
       if($result) {
@@ -103,7 +116,13 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $res = null;
-      $q = "SELECT * FROM " . static::$table;
+      if(isset($filter['scenario']) &&($filter['scenario'] == 'orders')){
+        $q = "select";
+        $q .= " DISTINCT a.*, CONCAT(b.bill_firstname,' ',b.bill_lastname) as username";
+        $q .= " from fabrix_orders a";
+        $q .= " left join fabrix_accounts b on a.aid = b.aid";
+        $q .= " left join fabrix_specials_usage c on a.oid = c.oid";
+      } else $q = "SELECT * FROM " . static::$table;
       $q .= self::build_where($filter);
       $q .= static::build_order($sort);
       if($limit != 0) $q .= " LIMIT $start, $limit";

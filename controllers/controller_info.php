@@ -97,7 +97,7 @@
     /**
      * @export
      */
-    public function view() {
+    public function view($partial = false, $required_access = false) {
       if(_A_::$app->request_is_ajax()) {
         if(!is_null($this->scenario()) && in_array($this->scenario(), array_keys($this->resolved_scenario))) {
           $filter['hidden']['visible'] = 1;
@@ -106,10 +106,8 @@
           $this->after_get_data_item_view($data);
           $this->template->vars('data', $data);
           $this->main->view_layout('view/' . $this->scenario());
-        } else Controller_Controller::view();
-      } else {
-        parent::view();
-      }
+        } else Controller_Controller::view($partial, $required_access);
+      } else parent::view($partial, $required_access);
     }
 
   }

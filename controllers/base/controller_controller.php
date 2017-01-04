@@ -301,15 +301,19 @@
     /**
      * @export
      */
-    public function view() {
+    public function view($partial = false, $required_access = false) {
+      if($required_access) $this->main->is_admin_authorized();
       $this->template->vars('view_title', $this->view_title);
       ob_start();
       $this->get_list(true);
       $list = ob_get_contents();
       ob_end_clean();
       if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('scenario', $this->scenario());
       $this->template->vars('list', $list);
-      $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+      if($partial) $this->main->view_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+      elseif ($required_access) $this->main->view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+      else $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
     }
 
     public static function sitemap_order() { return null; }

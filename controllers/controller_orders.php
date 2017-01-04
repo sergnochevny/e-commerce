@@ -58,28 +58,25 @@
      * @export
      */
 
-    public function view() {
+    public function view($partial = false, $required_access = false) {
 
       $this->main->is_any_authorized('orders');
 
       $oid = !is_null(_A_::$app->get('oid')) ? _A_::$app->get('oid') : null;
-
-      if(!is_null(_A_::$app->get('orders_search_query'))) {
-        $prms['orders_search_query'] = _A_::$app->get('orders_search_query');
-      }
-      if(!is_null(_A_::$app->get('user_id'))) {
-        $prms['user_id'] = _A_::$app->get('user_id');
-      }
-      if(!is_null(_A_::$app->get('oid'))) {
-        $prms['d_id'] = _A_::$app->get('d_id');
-      }
+      if(!is_null(_A_::$app->get('orders_search_query'))) $prms['orders_search_query'] = _A_::$app->get('orders_search_query');
+      if(!is_null(_A_::$app->get('user_id'))) $prms['user_id'] = _A_::$app->get('user_id');
+//      if(!is_null(_A_::$app->get('oid'))) $prms['d_id'] = _A_::$app->get('d_id');
 
       $back_url = '';
       if(!is_null(_A_::$app->get('discount'))) {
         $prms['sid'] = _A_::$app->get('sid');
         $back_url = _A_::$app->router()->UrlTo('discount/view', $prms);
-      } else {
+      } elseif(!is_null(_A_::$app->get('user'))) {
+        $prms['aid'] = _A_::$app->get('aid');
+        $prms['back'] = 'users';
         $back_url = _A_::$app->router()->UrlTo('orders', $prms);
+      } else{
+        $back_url = _A_::$app->router()->UrlTo('orders');
       }
 
       $config = ['oid' => (int)$oid];
@@ -116,7 +113,7 @@
           $this->main->template->vars('item_price', $item_price);
           $this->template->view_layout('detail_info');
         }
-        $end_date = $end_date ? date('d/m/Y', strtotime($end_date)) : '';
+        $end_date = $end_date ? date('/m/d/Y', strtotime($end_date)) : '';
         $total_discount = strlen(trim($total_discount)) > 0 ? '$' . number_format((double)$total_discount, 2) : '';
 
         $sub_price_count = $sub_price_count + $order['shipping_cost'];

@@ -147,20 +147,19 @@
         $ship_fax = mysql_real_escape_string($ship_fax);
         $ship_email = mysql_real_escape_string($ship_email);
 
-        $timestamp = time();
         if(!isset($aid)) {
           $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname ," .
             " bill_organization , bill_address1 , bill_address2 , bill_province ," .
             " bill_city , bill_country , bill_postal , bill_phone , bill_fax , bill_email , " .
             "ship_firstname , ship_lastname , ship_organization , ship_address1 , ship_address2 , " .
             "ship_city , ship_province , ship_country , ship_postal , " .
-            "ship_phone , ship_fax , ship_email , get_newsletter , date_registered , login_counter)" .
+            "ship_phone , ship_fax , ship_email , get_newsletter , login_counter)" .
             " VALUES ('$email', '$password', '$bill_firstname', '$bill_lastname'," .
             " '$bill_organization', '$bill_address1', '$bill_address2', '$bill_province', " .
             " '$bill_city', '$bill_country', '$bill_postal', '$bill_phone', '$bill_fax', '$bill_email', " .
             " '$ship_firstname', '$ship_lastname', '$ship_organization', '$ship_address1', '$ship_address2', " .
             " '$ship_city', '$ship_province', '$ship_country', '$ship_postal', " .
-            " '$ship_phone', '$ship_fax', '$ship_email', '1', '$timestamp', '0')";
+            " '$ship_phone', '$ship_fax', '$ship_email', '1', '0')";
         } else {
           $q = "UPDATE " . static::$table . " SET " .
             " email = '" . $email .
@@ -198,10 +197,9 @@
         $bill_firstname = mysql_real_escape_string($bill_firstname);
         $bill_lastname = mysql_real_escape_string($bill_lastname);
 
-        $timestamp = time();
         if(!isset($aid)) {
-          $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname, date_registered)" .
-            " VALUES ('$email', '$password', '$bill_firstname', '$bill_lastname', '$timestamp')";
+          $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname)" .
+            " VALUES ('$email', '$password', '$bill_firstname', '$bill_lastname')";
         } else {
           $q = "UPDATE " . static::$table . " SET " .
             " email = '" . $email .

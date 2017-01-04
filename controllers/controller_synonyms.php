@@ -43,6 +43,6 @@
       return true;
     }
 
-    public function view() { }
+    public function view($partial = false, $required_access = false) { }
 
   }

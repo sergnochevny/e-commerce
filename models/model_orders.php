@@ -216,16 +216,5 @@
       return false;
     }
 
-    public static function update_order_detail_info($status, $status, $track_code, $end_date, $order_id) {
-      $request = "UPDATE fabrix_orders SET 
-                    status = '" . $status . "', 
-                    track_code = '" . $track_code . "', 
-                    end_date = STR_TO_DATE('" . $end_date . "', '%m/%d/%Y') WHERE oid = '" . $order_id . "'";
-      return mysql_query($request);
-    }
-
-    public static function get_user_by_order($order_id) {
-      return mysql_query('SELECT aid FROM fabrix_orders WHERE oid =' . $order_id);
-    }
 
   }

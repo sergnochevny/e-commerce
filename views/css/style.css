@@ -2784,3 +2784,12 @@ input:hover {
     float: right;
     margin-left: 10px;
 }
+
+div.no-float,a.no-float,
+div.no-float:last-child,div.no-float:first-child,
+div.no-float:last-of-type,div.no-float:first-of-type,
+a.no-float:last-child,a.no-float:first-child,
+a.no-float:last-of-type,a.no-float:first-of-type,
+.no-float{
+    float: none;
+}

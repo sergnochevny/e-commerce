@@ -108,9 +108,9 @@
     /**
      * @export
      */
-    public function view() {
+    public function view($partial = false, $required_access = false) {
       $this->template->vars('cart_enable', '_');
-      parent::view();
+      parent::view($partial, $required_access);
     }
 
   }

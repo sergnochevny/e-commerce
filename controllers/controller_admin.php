@@ -1,6 +1,6 @@
 <?php
 
-  Class Controller_Admin Extends Controller_AdminBase {
+  class Controller_Admin Extends Controller_AdminBase {
 
     protected function load(&$data) {
       $data = [
@@ -41,17 +41,17 @@
       parent::form($url, $data);
     }
 
+    protected function build_back_url(&$back_url = null, &$prms = null) {
+      $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : '';
+      $back_url = (strlen($url) > 0) ? $url : 'product';
+      $prms = null;
+    }
+
     public function add($required_access = true) { }
 
     public function edit($required_access = true) { }
 
     public function delete($required_access = true) { }
-
-    protected function build_back_url(&$back_url = null, &$prms = null) {
-      $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))):'';
-      $back_url = (strlen($url) > 0) ? $url : 'product';
-      $prms=null;
-    }
 
     /**
      * @export

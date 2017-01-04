@@ -115,7 +115,7 @@
     /**
      * @export
      */
-    public function view() {
+    public function view($partial = false, $required_access = false) {
       if(_A_::$app->request_is_ajax()) Controller_Controller::get_list(true);
       else throw new Exception('No Related Products');
     }

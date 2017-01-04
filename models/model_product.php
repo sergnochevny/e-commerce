@@ -411,6 +411,7 @@
     public static function save(&$data) {
       extract($data);
 
+      $metatitle = mysql_real_escape_string($metatitle);
       $metadescription = mysql_real_escape_string($metadescription);
       $metakeywords = mysql_real_escape_string($metakeywords);
       $pname = mysql_real_escape_string($pname);
@@ -423,7 +424,7 @@
         if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
         $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
         $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
-        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metakeywords='$metakeywords',";
+        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
         $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
         $sql .= " piece='$piece', whole = '$whole'  WHERE pid ='$pid'";
         $result = mysql_query($sql);
@@ -432,7 +433,7 @@
         if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
         $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
         $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
-        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metakeywords='$metakeywords',";
+        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
         $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
         $sql .= " piece='$piece', whole = '$whole'";
         $result = mysql_query($sql);

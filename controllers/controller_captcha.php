@@ -1,6 +1,7 @@
 <?php
 
   class Controller_Captcha extends Controller_Controller {
+
     protected $use_symbols = "abcdefghijklmnprtuvwxy23469";
     protected $use_symbols_len;
     protected $amplitude_min = 10;
@@ -23,14 +24,14 @@
     private function gen_captcha() {
       for($i = 0; $i < $this->length; $i++)
         $this->key .= $this->use_symbols{mt_rand(0, $this->use_symbols_len - 1)};
-      $im = imagecreatefrompng(dirname(__DIR__)."/views/images/captcha/back.png");
+      $im = imagecreatefrompng(dirname(__DIR__) . "/views/images/captcha/back.png");
       $width = imagesx($im);
       $height = imagesy($im);
       $rc = mt_rand(80, 100);
       $font_color = imagecolorresolve($im, $rc, $rc, 0);
       $px = $this->margin_left;
       For($i = 0; $i < $this->length; $i++) {
-        imagettftext($im, $this->font_size, 0, $px, $this->margin_top, $font_color, dirname(__DIR__)."/views/fonts/cartoon.ttf", $this->key[$i]);
+        imagettftext($im, $this->font_size, 0, $px, $this->margin_top, $font_color, dirname(__DIR__) . "/views/fonts/cartoon.ttf", $this->key[$i]);
         $px += $this->font_width + mt_rand($this->rand_bsimb_min, $this->rand_bsimb_max);
       }
 
@@ -84,16 +85,18 @@
       }
     }
 
-    public static function check_captcha($captcha, &$error = null){
+    public static function check_captcha($captcha, &$error = null) {
       $res = false;
-      if(!is_null(_A_::$app->session('captcha')) && !empty(_A_::$app->session('captcha'))){
+      if(!is_null(_A_::$app->session('captcha')) && !empty(_A_::$app->session('captcha'))) {
         $captcha_relevant = (!is_null(_A_::$app->keyStorage()->system_captcha_time) ? _A_::$app->keyStorage()->system_captcha_time : CAPTCHA_RELEVANT);
-        if ($captcha_relevant > (time()-_A_::$app->session('captcha_time'))){
+        if($captcha_relevant > (time() - _A_::$app->session('captcha_time'))) {
           $salt = Model_Auth::generatestr();
           $hash = Model_Auth::hash_(strtolower($captcha), $salt, 12);
           if($hash == Model_Auth::check(_A_::$app->session('captcha'), $hash)) {
             $res = true;
-          } else {$error[] = 'Invalid Captcha verification!';}
+          } else {
+            $error[] = 'Invalid Captcha verification!';
+          }
         } else $error[] = 'Captcha time is expired!';
       }
       return $res;

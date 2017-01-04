@@ -386,7 +386,7 @@
       parent::index();
     }
 
-    public function view() { }
+    public function view($partial = false, $required_access = false) { }
 
     public function index($required_access = true) { }
 
