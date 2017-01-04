@@ -122,20 +122,21 @@
 
     private function generate_related($data) {
       $pid = $data['pid'];
+      $rows = null;
       if(isset($pid)) {
         $filter['hidden']['view'] = true;
         $filter['hidden']['a.pid'] = $pid;
         $filter['hidden']['b.image1'] = 'null';
         $res_count_rows = 0;
         $rows = Model_Related::get_list(0, 0, $res_count_rows, $filter);
-        $this->template->vars('rows', $rows);
-        ob_start();
-        $this->template->view_layout('related/rows');
-        $rows = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('list', $rows);
-        $this->main->view_layout('related/list');
       }
+      $this->template->vars('rows', $rows);
+      ob_start();
+      $this->template->view_layout('related/rows');
+      $rows = ob_get_contents();
+      ob_end_clean();
+      $this->template->vars('list', $rows);
+      $this->main->view_layout('related/list');
     }
 
     protected function search_fields($view = false) {
@@ -194,14 +195,19 @@
     protected function validate(&$data, &$error) {
 
       if(
-        empty($data['pnumber']) || empty($data['pname']) || empty($data['priceyard']) ||
+        empty($data['pnumber']) || empty($data['pname']) ||
+        empty($data['priceyard']) ||
+        (!empty($data['priceyard']) && empty((float)$data['priceyard'])) ||
+        (!empty($data['priceyard']) && ((float)$data['priceyard'] < 0)) ||
         empty($data['image1'])
       ) {
         $error = [];
         if(empty($data['pnumber'])) $error[] = 'Identify Product Number field !';
         if(empty($data['pname'])) $error[] = 'Identify Product Name field !';
-        if(empty($data['priceyard']) || ($data['priceyard'] == 0)) $error[] = 'Identify Price field !';
+        if(empty($data['priceyard'])) $error[] = 'Identify Price field !';
         if(empty($data['image1'])) $error[] = 'Identify Main Image!';
+        if((!empty($data['priceyard']) && empty((float)$data['priceyard'])) ||
+        (!empty($data['priceyard']) && ((float)$data['priceyard'] < 0))) $error[] = "The field 'Price' value must be greater than zero!";
         $this->template->vars('error', $error);
         return false;
       }

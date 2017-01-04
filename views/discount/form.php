@@ -60,10 +60,12 @@
                 </label>
               </div>
               <div class="col-xs-4 col-md-4">
-                <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                       name="discount_amount" value="<?= $data['discount_amount'] ?>"
-                       id="discount_amount"
-                       class="input-text ">
+                <input
+                    data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                    type="text"
+                    name="discount_amount" value="<?= $data['discount_amount'] ?>"
+                    id="discount_amount"
+                    class="input-text ">
               </div>
               <div class="col-xs-2 col-md-2">
                 <div class="row">
@@ -116,10 +118,12 @@
                 </label>
               </div>
               <div class="col-xs-6 col-md-4">
-                <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                       name="required_amount" id="required_amount"
-                       value="<?= $data['required_amount'] ?>"
-                       class="input-text ">
+                <input
+                    data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                    type="text"
+                    name="required_amount" id="required_amount"
+                    value="<?= $data['required_amount'] ?>"
+                    class="input-text ">
               </div>
               <div class="col-xs-6 col-md-8" style="padding-left: 0">
                 <select name="required_type">
@@ -328,12 +332,11 @@
         </div>
         <div class="modal-footer">
           <button id="build_filter" href="filter" class="button" data-dismiss="modal">Ok</button>
-          <button class="btn btn-default" data-dismiss="modal">Close</button>
+          <button class="button" data-dismiss="modal">Close</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-
 </form>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/char-counter.jquery.min.js'); ?>"></script>
 <script src="<?= _A_::$app->router()->UrlTo('views/js/discount/form.min.js'); ?>"></script>

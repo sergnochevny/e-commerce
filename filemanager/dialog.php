@@ -662,10 +662,10 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
 			<a class="btn dropdown-toggle sorting-btn" data-toggle="dropdown" href="#"><i class="icon-signal"></i><span class="caret"></span></a>
 			<ul class="dropdown-menu pull-left sorting">
 				<li class="text-center"><strong><?= trans('Sorting') ?></strong></li>
-				<li><a class="sorter sort-name <?php if($sort_by=="name"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort="name"><?= trans('Filename');?></a></li>
-				<li><a class="sorter sort-date <?php if($sort_by=="date"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort="date"><?= trans('Date');?></a></li>
-				<li><a class="sorter sort-size <?php if($sort_by=="size"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort="size"><?= trans('Size');?></a></li>
-				<li><a class="sorter sort-extension <?php if($sort_by=="extension"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort="extension"><?= trans('Type');?></a></li>
+				<li><a class="sorter sort-name <?php if($sort_by=="name"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort title="Click to sort by this column"="name"><?= trans('Filename');?></a></li>
+				<li><a class="sorter sort-date <?php if($sort_by=="date"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort title="Click to sort by this column"="date"><?= trans('Date');?></a></li>
+				<li><a class="sorter sort-size <?php if($sort_by=="size"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort title="Click to sort by this column"="size"><?= trans('Size');?></a></li>
+				<li><a class="sorter sort-extension <?php if($sort_by=="extension"){ echo ($descending) ?"descending" : "ascending"; } ?>" href="javascript:void(0)" data-sort title="Click to sort by this column"="extension"><?= trans('Type');?></a></li>
 			</ul>
 		</div>
 	</li>
@@ -691,11 +691,11 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
 		<?php if($show_sorting_bar){ ?>
 		<!-- sorter -->
 		<div class="sorter-container <?= "list-view".$view;?>">
-		<div class="file-name"><a class="sorter sort-name <?php if($sort_by=="name"){ echo ($descending)?"descending":"ascending"; } ?>" href="javascript:void('')" data-sort="name"><?= trans('Filename');?></a></div>
-		<div class="file-date"><a class="sorter sort-date <?php if($sort_by=="date"){ echo ($descending)?"descending":"ascending"; } ?>" href="javascript:void('')" data-sort="date"><?= trans('Date');?></a></div>
-		<div class="file-size"><a class="sorter sort-size <?php if($sort_by=="size"){ echo ($descending)?"descending":"ascending"; } ?>" href="javascript:void('')" data-sort="size"><?= trans('Size');?></a></div>
+		<div class="file-name"><a class="sorter sort-name <?php if($sort_by=="name"){ echo ($descending)?"descending":"ascending"; } ?>" href="javascript:void('')" data-sort title="Click to sort by this column"="name"><?= trans('Filename');?></a></div>
+		<div class="file-date"><a class="sorter sort-date <?php if($sort_by=="date"){ echo ($descending)?"descending":"ascending"; } ?>" href="javascript:void('')" data-sort title="Click to sort by this column"="date"><?= trans('Date');?></a></div>
+		<div class="file-size"><a class="sorter sort-size <?php if($sort_by=="size"){ echo ($descending)?"descending":"ascending"; } ?>" href="javascript:void('')" data-sort title="Click to sort by this column"="size"><?= trans('Size');?></a></div>
 		<div class='img-dimension'><?= trans('Dimension');?></div>
-		<div class='file-extension'><a class="sorter sort-extension <?php if($sort_by=="extension"){ echo ($descending)?"descending":"ascending"; } ?>" href="javascript:void('')" data-sort="extension"><?= trans('Type');?></a></div>
+		<div class='file-extension'><a class="sorter sort-extension <?php if($sort_by=="extension"){ echo ($descending)?"descending":"ascending"; } ?>" href="javascript:void('')" data-sort title="Click to sort by this column"="extension"><?= trans('Type');?></a></div>
 		<div class='file-operations'><?= trans('Operations');?></div>
 		</div>
 		<?php } ?>

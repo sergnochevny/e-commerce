@@ -13,7 +13,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('discount', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Details
             <?php if(isset($sort['discount_amount'])) : ?>
               <small>
@@ -33,7 +33,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('discount', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             On
             <?php if(isset($sort['enabled'])) : ?>
               <small>
@@ -53,7 +53,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('discount', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Multiple
             <?php if(isset($sort['allow_multiple'])) : ?>
               <small>
@@ -73,7 +73,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('discount', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Coupon
             <?php if(isset($sort['coupon_code'])) : ?>
               <small>
@@ -93,7 +93,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('discount', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Starts
             <?php if(isset($sort['date_start'])) : ?>
               <small>
@@ -113,7 +113,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('discount', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Ends
             <?php if(isset($sort['date_end'])) : ?>
               <small>
@@ -123,7 +123,7 @@
           </a>
         </div>
       </div>
-      <form data-sort>
+      <form data-sort title="Click to sort by this column">
         <input type="hidden" name="sort" value="<?= array_keys($sort)[0] ?>">
         <input type="hidden" name="order" value="<?= array_values($sort)[0] ?>">
       </form>
@@ -188,14 +188,16 @@
             </div>
           </div>
           <div class="col-xs-12 col-sm-2 col-md-2 text-right action-buttons">
-            <a data-waitloader rel="nofollow" href="<?= _A_::$app->router()->UrlTo('discount/edit', $prms); ?>">
+            <a data-waitloader rel="nofollow" title="Edit" href="<?= _A_::$app->router()->UrlTo('discount/edit', $prms); ?>">
               <i class="fa fa-2x fa-pencil"></i>
             </a>
             <a data-waitloader class="text-success" rel="nofollow"
+               title="View Details"
                href="<?= _A_::$app->router()->UrlTo('discount/view', $prms); ?>">
-              <i class="fa fa-2x fa-check-circle"></i>
+              <i class="fa fa-2x fa-file-text"></i>
             </a>
             <a data-delete class="text-danger" rel="nofollow"
+               title="Delete"
                href="<?= _A_::$app->router()->UrlTo('discount/delete', $prms); ?>">
               <i class=" fa fa-2x fa-trash-o"></i>
             </a>

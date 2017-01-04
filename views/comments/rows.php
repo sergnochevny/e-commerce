@@ -13,7 +13,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('comments', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Email
             <?php if(isset($sort['email'])) : ?>
               <small>
@@ -33,7 +33,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('comments', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Title
             <?php if(isset($sort['title'])) : ?>
               <small>
@@ -53,7 +53,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('comments', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Date
             <?php if(isset($sort['dt'])) : ?>
               <small>
@@ -63,7 +63,7 @@
           </a>
         </div>
       </div>
-      <form data-sort>
+      <form data-sort title="Click to sort by this column">
         <input type="hidden" name="sort" value="<?= array_keys($sort)[0] ?>">
         <input type="hidden" name="order" value="<?= array_values($sort)[0] ?>">
       </form>

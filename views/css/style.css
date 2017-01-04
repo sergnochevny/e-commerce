@@ -1075,6 +1075,7 @@ select {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     height: 25px;
+    line-height: 2em;
 }
 
 a.button-move {

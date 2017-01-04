@@ -13,7 +13,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('users', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Id
             <?php if(isset($sort['aid'])) : ?>
               <small>
@@ -33,7 +33,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('users', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Email
             <?php if(isset($sort['email'])) : ?>
               <small>
@@ -53,7 +53,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('users', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Name
             <?php if(isset($sort['full_name'])): ?>
               <small>
@@ -73,7 +73,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('users', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Registered
             <?php if(isset($sort['date_registered'])) : ?>
               <small>
@@ -83,7 +83,7 @@
           </a>
         </div>
       </div>
-      <form data-sort>
+      <form data-sort title="Click to sort by this column">
         <input type="hidden" name="sort" value="<?= array_keys($sort)[0] ?>">
         <input type="hidden" name="order" value="<?= array_values($sort)[0] ?>">
       </form>
@@ -129,13 +129,14 @@
             <a title="Edit" data-waitloader data-modify href="<?= _A_::$app->router()->UrlTo('users/edit', $prms) ?>">
               <i class="fa fa-2x fa-2x fa-pencil"></i>
             </a>
-            <a title="Delete" data-delete class="text-danger" href="<?= _A_::$app->router()->UrlTo('users/delete', $prms) ?>">
+            <a title="Delete" data-delete class="text-danger"
+               href="<?= _A_::$app->router()->UrlTo('users/delete', $prms) ?>">
               <i class=" fa fa-2x fa-2x fa-trash-o"></i>
             </a>
             <a data-waitloader class="text-success"
                title="Orders"
                href="<?= _A_::$app->router()->UrlTo('orders', array_merge($prms, ['back' => 'users'])) ?>"><i
-                class="fa fa-2x fa-2x fa-file-text"></i></a>
+                  class="fa fa-2x fa-2x fa-file-text"></i></a>
           </div>
         </div>
       </div>

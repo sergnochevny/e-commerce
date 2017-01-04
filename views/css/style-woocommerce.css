@@ -316,7 +316,6 @@ select:focus {
 }
 
 .form-row {
-    float: left;
     width: 100%;
     margin-bottom: 10px;
 }
@@ -833,7 +832,9 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     content: "\e04f";
     font-family: 'Simple-Line-Icons';
 }
-
+.products .owl-item .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before,
+.products .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before,
+.just-post-image-admin a.button.add_to_cart_button:hover:before,
 .products .owl-item .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before,
 .products .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before{
     color: #667700;

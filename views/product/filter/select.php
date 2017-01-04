@@ -63,4 +63,4 @@
   <input type="hidden" name="filter_start_<?= $filter_type; ?>" value="<?= $filter_data_start; ?>">
 </div>
 <div class="clearfix"></div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/ui.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/select.ui.min.js'); ?>' type="text/javascript"></script>

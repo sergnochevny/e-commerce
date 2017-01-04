@@ -436,7 +436,10 @@
         $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
         $sql .= " piece='$piece', whole = '$whole'";
         $result = mysql_query($sql);
-        if($result) $pid = mysql_insert_id();
+        if($result) {
+          $pid = mysql_insert_id();
+          $data['pid'] = $pid;
+        }
       }
       if($result) $result = static::update_images($pid, $data);
       if($result) {

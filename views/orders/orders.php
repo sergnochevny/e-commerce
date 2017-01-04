@@ -17,12 +17,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-primary save-data" data-dismiss="modal">
-          Save
-        </button>
-        <button type="button" class="btn-default" data-dismiss="modal">
-          Cancel
-        </button>
+        <input type="button" class="button save-data" href="save" data-dismiss="modal" value="Save"/>
+        <input type="button" class="button" data-dismiss="modal" value="Cancel"/>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

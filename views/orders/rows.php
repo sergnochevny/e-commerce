@@ -13,7 +13,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Order
             <?php if(isset($sort['a.trid'])) : ?>
               <small>
@@ -34,7 +34,7 @@
           $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
           <div class="col-sm-2 col">
-            <a data-sort href="<?= $sort_url ?>">
+            <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
               Customer
               <?php if(isset($sort['username'])) : ?>
                 <small>
@@ -55,7 +55,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Date
             <?php if(isset($sort['a.order_date'])) : ?>
               <small>
@@ -75,7 +75,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Status
             <?php if(isset($sort['a.status'])) : ?>
               <small>
@@ -95,7 +95,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Total
             <?php if(isset($sort['a.total'])) : ?>
               <small>
@@ -106,7 +106,7 @@
         </div>
       </div>
 
-      <form data-sort>
+      <form data-sort title="Click to sort by this column">
         <input type="hidden" name="sort" value="<?= array_keys($sort)[0] ?>">
         <input type="hidden" name="order" value="<?= array_values($sort)[0] ?>">
       </form>

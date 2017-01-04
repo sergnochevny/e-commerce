@@ -13,7 +13,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('categories', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Name
             <?php if(isset($sort['a.cname'])) : ?>
               <small>
@@ -33,7 +33,7 @@
             }
             $sort_url = _A_::$app->router()->UrlTo('categories', $order);
           ?>
-          <a data-sort href="<?= $sort_url ?>">
+          <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Display Order
             <?php if(isset($sort['a.displayorder'])) : ?>
               <small>
@@ -43,7 +43,7 @@
           </a>
         </div>
       </div>
-      <form data-sort>
+      <form data-sort title="Click to sort by this column">
         <input type="hidden" name="sort" value="<?= array_keys($sort)[0] ?>">
         <input type="hidden" name="order" value="<?= array_values($sort)[0] ?>">
       </form>

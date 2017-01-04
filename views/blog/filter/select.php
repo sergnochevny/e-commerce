@@ -1,16 +1,14 @@
 <div class="filter_select_panel row form-row">
   <div class="col-xs-12 search_panel">
-    <div class="row">
-      <div class="col-md-10 col-xs-10">
-        <input type="text" data-input_filter_search class="input-text" name="filter_select_search_<?= $filter_type; ?>"
-               placeholder="Type for search ..." value="<?= isset($search) ? $search : ''; ?>">
-      </div>
-      <div class="col-md-2 col-xs-2 text-right">
-        <a href="filter" data-filter-type="<?= $filter_type; ?>" data-filter-search class="button"
+    <div class="input-group">
+      <input type="text" data-input_filter_search class="input-text" name="filter_select_search_<?= $filter_type; ?>"
+             placeholder="Type for search ..." value="<?= isset($search) ? $search : ''; ?>">
+      <span class="input-group-btn">
+        <a href="filter" data-filter-type="<?= $filter_type; ?>" data-filter-search class="btn button"
            data-destination="<?= $destination; ?>">
           <i class="fa fa-search" aria-hidden="true"></i>
         </a>
-      </div>
+      </span>
     </div>
   </div>
   <div class="col-xs-12 select_panel">
@@ -18,11 +16,11 @@
       <ul class="filter_sel sel_item">
         <?php if(isset($filter_data_start) && ($filter_data_start > 0)): ?>
           <li class="select_item">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-12">
               <div class="row text-center">
                 <a href="filter" data-filter-type="<?= $filter_type; ?>" data-move="up"
-                   data-filter-search class="button-move"
-                   title="back..."
+                   data-filter-search class="button-move move-up"
+                   title="previous..."
                    data-destination="<?= $destination; ?>">
                   <i class="fa fa-chevron-up" aria-hidden="true"></i>
                 </a>
@@ -32,7 +30,7 @@
         <?php endif; ?>
         <?php foreach($filter as $row): ?>
           <li class="select_item">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-12">
               <div class="row">
                 <label>
                   <input name="<?= $type; ?>[]" type="checkbox"
@@ -47,11 +45,11 @@
           $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
           if(isset($filter_data_start) && isset($total) && !((ceil($filter_data_start / $filter_limit) + 1) >= ceil($total / $filter_limit))):?>
             <li class="select_item">
-              <div class="col-xs-12 col-sm-12 col-md-12">
+              <div class="col-xs-12">
                 <div class="row text-center">
                   <a href="filter" data-filter-type="<?= $filter_type; ?>" data-move="down"
-                     data-filter-search class="button-move"
-                     title="more..."
+                     data-filter-search class="button-move move-down"
+                     title="next..."
                      data-destination="<?= $destination; ?>">
                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                   </a>
@@ -64,4 +62,5 @@
   </div>
   <input type="hidden" name="filter_start_<?= $filter_type; ?>" value="<?= $filter_data_start; ?>">
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/ui.min.js'); ?>' type="text/javascript"></script>
+<div class="clearfix"></div>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/select.ui.min.js'); ?>' type="text/javascript"></script>
