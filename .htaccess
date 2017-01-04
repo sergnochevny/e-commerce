@@ -66,6 +66,16 @@ RewriteCond %{REQUEST_URI} !(index.php)$
 RewriteCond %{REQUEST_URI} !(products.php)$
 RewriteRule ^([^\/]*)\.(htm|html|php)$ $1 [L,QSA,R=301]
 
+RewriteRule ^blog/2015/11/iluvfabrix-scandinavian-design-one-sumptuous-colour/$	/one-sumptuous-colour [L,R=301]
+RewriteRule ^blog/2015/09/mohair-velvet-chaise-originally-upholstered-in-1920s-our-fabric-9497007n/$ /mohair-velvet-chaise-originally-upholstered-in-1920-s-our-fabric-9497007n [L,R=301]
+RewriteRule ^blog/2015/06/velvet-fabric-one-of-the-worlds-most-beautiful-fabric-types-of-upholstery-fabric/$ /velvet-fabric-one-of-the-world-s-most-beautiful-types-of-upholstery-fabric [L,R=301]
+RewriteRule ^blog/2015/04/have-a-look-at-one-of-the-grandest-fabrics-of-them-all-le-tigre-from-scalamandre/$ /grand-fabric-le-tigre-from-scalamandre [L,R=301]
+RewriteRule ^blog/2015/04/upholstery-fabric-versus-apparel-fabric/$	/upholstery-fabric-versus-apparel-fabric [L,R=301]
+RewriteRule ^blog/2015/03/fabric-spotlight-linen-fabrics/$ /fabric-spotlight-linen-fabrics [L,R=301]
+RewriteRule ^blog/2015/03/fabric-spotlight-jacquard-fabric/$ /fabric-spotlight-jacquard-fabric [L,R=301]
+RewriteRule ^blog/2015/02/fabric-spotlight-damask-fabrics/$	/fabric-spotlight-damask-fabrics [L,R=301]
+RewriteRule ^blog/2014/11/we-are-well-known-for-having-the-best-prices-anywhere-on-the-worlds-best-mohair-velvet/$ /we-are-well-known-for-having-the-best-prices-anywhere-on-the-world-s-best-mohair-velvet [L,R=301]
+
 RewriteRule ^upholstery-fabric/specials/(.*)\.htm$ index.php?redirect=specials?page=$1 [L]
 RewriteRule ^upholstery-fabric/(.*)/([0-9]+)\.htm$ index.php?redirect=shop&cat=$2 [L]
 RewriteRule ^upholstery-fabric/(.*)/([0-9]+)-([0-9]+)\.htm$ index.php?redirect=shop&cat=$2 [L]
