@@ -10,6 +10,7 @@
     protected $_scenario = '';
     protected $resolved_scenario = [''];
     protected $view_title;
+    protected $page_title;
 
     public function __construct(Controller_Base $main = null) {
       $this->layouts = _A_::$app->config('layouts');
@@ -217,6 +218,7 @@
     }
 
     protected function get_list($view = false) {
+      $this->main->template->vars('page_title', $this->page_title);
       $search_form = $this->build_search_filter($filter, $view);
       $idx = $this->load_search_filter_get_idx($filter, $view);
       $pages = _A_::$app->session('pages');

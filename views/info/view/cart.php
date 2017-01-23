@@ -8,7 +8,7 @@
           </button>
           <h4 id="modal-title" class="modal-title text-center"><?= $data['title']; ?></h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body clearfix">
           <div id="modal_content">
             <?= $data['message']; ?>
           </div>

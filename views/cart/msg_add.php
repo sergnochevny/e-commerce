@@ -5,8 +5,8 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
         <h4 id="modal-title" class="modal-title">Add To Cart</h4>
       </div>
-      <div class="modal-body">
-        <div id="modal_content" style="display: inline-block;">
+      <div class="modal-body clearfix">
+        <div id="modal_content">
           <div class="form-row" style="color: red; text-align: center; font-weight: bold;">
             <div class="col-xs-12 text-center">
                 <?= $message;?>
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a data-waitloader id="continue" href="<?= _A_::$app->router()->UrlTo('shop');?>" class="button pull-left">Continue Shopping</a>
+        <a data-waitloader title="Go to Shop Page" id="continue" href="<?= _A_::$app->router()->UrlTo('shop');?>" class="button pull-left">Continue Shopping</a>
         <a class="button" href="<?= _A_::$app->router()->UrlTo('cart'); ?>">Go to cart</a>
       </div>
     </div>

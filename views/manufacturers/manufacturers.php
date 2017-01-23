@@ -17,7 +17,6 @@
     </div>
   </div>
 </div>
-
 <div id="modal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -25,7 +24,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
         <h4 id="modal-title" class="modal-title text-center"></h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body clearfix">
         <div id="modal_content">
 
         </div>

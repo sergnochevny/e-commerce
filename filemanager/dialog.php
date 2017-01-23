@@ -1008,7 +1008,7 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
 		<h3><?= trans('Preview');?></h3>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body clearfix">
 		<div class="row-fluid body-preview">
 				</div>
 	</div>
