@@ -23,7 +23,7 @@
               <div class="row">
                 <div class="col-xs-12">
                   <label class="required_field">
-                    Site Name (Title)
+                    Site Name
                   </label>
                   <i class="fa fa-question-circle" data-promotion="" href="#system_site_name"></i>
                   <div class="form-row">
@@ -37,7 +37,7 @@
                       <input type="checkbox" name="system_enable_sef" value="1"
                         <?= (isset($data['system_enable_sef']) && $data['system_enable_sef'] == '1') ? 'checked' : '' ?>
                              class="input-checkbox">
-                      Enable SEF.
+                      Enable SEF
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#system_enable_sef"></i>
                   </div>
@@ -98,13 +98,13 @@
                     <input type="checkbox" name="system_csv_use_gz" value="1"
                       <?= (isset($data['system_csv_use_gz']) && $data['system_csv_use_gz'] == '1') ? 'checked' : '' ?>
                            class="input-checkbox">
-                    Export Users CSV, use gz compression.
+                    Export Users CSV, use gz compression
                   </label>
                   <i class="fa fa-question-circle" data-promotion="" href="#system_csv_use_gz"></i>
                 </div>
                 <div class="col-xs-6">
                   <label class="required_field">
-                    Export Users CSV, fields delimiter.
+                      Export Users CSV, fields delimiter
                   </label>
                   <i class="fa fa-question-circle" data-promotion="" href="#system_csv_fields_dlm"></i>
                   <div class="form-row">
@@ -124,7 +124,7 @@
 
                 <div class="col-xs-12">
                   <label class="required_field">
-                    Export Users CSV fields.
+                      Export Users CSV fields
                   </label>
                   <i class="fa fa-question-circle" data-promotion="" href="#system_csv_fields"></i>
                   <small class="hint">(drag the field box and place it in
@@ -252,7 +252,7 @@
                       <input type="checkbox" name="system_allow_sample_express_shipping" value="1"
                         <?= (isset($data['system_allow_sample_express_shipping']) && $data['system_allow_sample_express_shipping'] == '1') ? 'checked' : '' ?>
                              class="input-checkbox">
-                      Allow Sample EXPRESS SHIPPING.
+                        Allow Sample EXPRESS SHIPPING
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#system_allow_sample_express_shipping"></i>
                   </div>
@@ -380,7 +380,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Rate Express Light Multiplier
+                        Light Express Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_light_multiplier"></i>
                     <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
@@ -391,7 +391,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Rate Express Medium Multiplier
+                        Medium Express Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_medium_multiplier"></i>
                     <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
@@ -402,7 +402,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Rate Express Heavy Multiplier
+                        Heavy Express Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_heavy_multiplier"></i>
                     <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
@@ -413,7 +413,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Rate Ground Light Multiplier
+                        Light Ground Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_light_multiplier"></i>
                     <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
@@ -424,7 +424,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Rate Ground Medium Multiplier
+                        Medium Ground Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_medium_multiplier"></i>
                     <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
@@ -435,7 +435,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Rate Ground Heavy Multiplier
+                        Heavy Ground Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_heavy_multiplier"></i>
                     <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
@@ -446,7 +446,7 @@
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                      Samples Price Express Shipping
+                        Samples Express Shipping Price
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_express_shipping"></i>
                     <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
