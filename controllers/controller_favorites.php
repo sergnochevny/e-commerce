@@ -3,6 +3,7 @@
   class Controller_Favorites extends Controller_Simple {
 
     protected $form_title_add = 'Add Favorite Fabrics';
+    protected $page_title = 'My Favorite Fabrics';
 
     protected function search_fields($view = false) {
       return [
@@ -93,7 +94,6 @@
     public function favorites() {
       $this->main->is_user_authorized(true);
       $this->template->vars('cart_enable', '_');
-      $this->main->template->vars('page_title', "My Favorite Fabrics");
       $this->index(false);
     }
 
@@ -118,12 +118,14 @@
 
     public static function product_in($pid) {
       $res = false;
-      $aid = Controller_User::get_from_session()['aid'];
-      try {
-        $res = Model_Favorites::get_by_id($pid, $aid);
-        $res = (isset($res) && is_array($res) && (count($res) > 0));
-      } catch(Exception $e) {
-      };
+      $aid = !empty(Controller_User::get_from_session()['aid']) ? Controller_User::get_from_session()['aid'] : null;
+      if(!empty($aid)) {
+        try {
+          $res = Model_Favorites::get_by_id($pid, $aid);
+          $res = (isset($res) && is_array($res) && (count($res) > 0));
+        } catch(Exception $e) {
+        };
+      }
       return $res;
     }
 

@@ -5,6 +5,7 @@
     protected $id_field = 'pid';
     protected $name_field = 'pname';
     protected $data_field = 'dt';
+    protected $page_title = "Online Fabric Store";
 
     protected function search_fields($view = false) {
       return [
@@ -133,6 +134,7 @@
     protected function before_search_form_layout(&$search_data, $view = false) {
       $categories = [];
       $filter = null;
+      $res_count = 0;
       $sort = ['a.cname' => 'asc'];
       $rows = Model_Categories::get_list(0, 0, $res_count, $filter, $sort);
       foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
@@ -217,6 +219,7 @@
     }
 
     protected function get_list_by_type($type = 'last', $max_count_items = 50) {
+      $this->template->vars('page_title', $this->page_title);
       $filter['type'] = $type;
       $sort['type'] = $type;
       $search_form = $this->build_search_filter($filter);
@@ -333,7 +336,6 @@
         }
         $this->template->vars('user_name', $user_name);
       }
-      $this->main->template->vars('page_title', "Online Fabric Store");
       parent::index(false);
     }
 
@@ -342,7 +344,7 @@
      */
     public function last() {
       $this->template->vars('cart_enable', '_');
-      $this->main->template->vars('page_title', "What's New");
+      $this->page_title = "What's New";
       ob_start();
       $this->get_list_by_type('last', 50);
       $list = ob_get_contents();
@@ -357,9 +359,8 @@
      */
     public function specials() {
       $this->template->vars('cart_enable', '_');
-      $page_title = "Discount Decorator and Designer Fabrics";
+      $this->page_title = "Discount Decorator and Designer Fabrics";
       $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates.<br>All items available on a FIRST COME, FIRST SERVED basis only.';
-      $this->main->template->vars('page_title', $page_title);
       $this->main->template->vars('annotation', $annotation);
       ob_start();
       $this->get_list_by_type('specials', 360);
@@ -398,7 +399,7 @@
      */
     public function popular() {
       $this->template->vars('cart_enable', '_');
-      $this->main->template->vars('page_title', 'Popular Textile');
+      $this->page_title = 'Popular Textile';
       ob_start();
       $this->get_list_by_type('popular', 360);
       $list = ob_get_contents();
@@ -413,7 +414,7 @@
      */
     public function best() {
       $this->template->vars('cart_enable', '_');
-      $this->main->template->vars('page_title', 'Best Textile');
+      $this->page_title = 'Best Textile';
       ob_start();
       $this->get_list_by_type('best', 360);
       $list = ob_get_contents();
@@ -428,7 +429,7 @@
      */
     public function bestsellers() {
       $this->template->vars('cart_enable', '_');
-      $this->main->template->vars('page_title', 'Best Sellers');
+      $this->page_title = 'Best Sellers';
       ob_start();
       $this->get_list_by_type('bestsellers', 360);
       $list = ob_get_contents();

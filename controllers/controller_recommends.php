@@ -2,6 +2,8 @@
 
   class Controller_Recommends extends Controller_Controller {
 
+    protected $page_title = "Recommendations for You";
+
     protected function search_fields($view = false) {
       return [
         'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
@@ -64,7 +66,6 @@
     public function recommends() {
       $this->main->is_user_authorized(true);
       $this->template->vars('cart_enable', '_');
-      $this->main->template->vars('page_title', "Recommendations for You");
       parent::index(false);
     }
 

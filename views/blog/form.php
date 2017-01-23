@@ -77,7 +77,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
           <h4 id="modal-title" class="modal-title text-center"></h4>
         </div>
-        <div class="modal-body" style="padding: 0;">
+        <div class="modal-body clearfix" style="padding: 0;">
           <div id="modal_content">
           </div>
         </div>

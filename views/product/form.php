@@ -267,7 +267,6 @@
       <input type="button" id="submit" class="button" style="width: 150px;" value="Save"/>
     </div>
   </div>
-
   <div id="modal" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -277,7 +276,7 @@
           </button>
           <h4 id="modal-title" class="modal-title text-center"></h4>
         </div>
-        <div class="modal-body" style="padding: 0;">
+        <div class="modal-body clearfix" style="padding: 0;">
           <div id="modal_content">
           </div>
         </div>

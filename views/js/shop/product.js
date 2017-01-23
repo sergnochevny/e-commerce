@@ -36,7 +36,8 @@
     $.get(url, {}, function (answer) {
       var data = JSON.parse(answer);
       $.when(
-        $(data.msg).appendTo('#content')
+        $(data.msg).appendTo('#content'),
+        $('span#cart_amount').html(data.sum)
       ).done(function () {
 
         $('#add_cart').stop().hide().addClass('visible-item');
@@ -63,10 +64,11 @@
     $.get(url, {}, function (answer) {
       var data = JSON.parse(answer);
       $.when(
-        $(data.msg).appendTo('#content')
+        $(data.msg).appendTo('#content'),
+        $('span#cart_amount').html(data.sum)
       ).done(function () {
 
-        $('#add_samples_cart').stop().hide().addClass('visible-item')
+        $('#add_samples_cart').stop().hide().addClass('visible-item');
 
         $('#modal').on('hidden.bs.modal',
           function () {
@@ -129,6 +131,9 @@
       $.when(
         $(data).appendTo('#content')
       ).done(function () {
+
+        $('#add_favorites').stop().hide();
+        $('#view_favorites').stop().show().addClass('btn-row');
 
         $('#modal').on('hidden.bs.modal',
           function () {
