@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a data-waitloader title="Go to Shop Page" id="continue" href="<?= _A_::$app->router()->UrlTo('shop');?>" class="button pull-left">Continue Shopping</a>
+        <button data-dismiss="modal" aria-hidden="true" title="Go to Shop Page" class="button pull-left">Continue Shopping</button>
         <a class="button" href="<?= _A_::$app->router()->UrlTo('cart'); ?>">Go to cart</a>
       </div>
     </div>
