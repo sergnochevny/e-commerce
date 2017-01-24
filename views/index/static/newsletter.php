@@ -5,18 +5,23 @@
       <div class="col-xs-12 text-center afterhead-row">
         <div class="row">
           <h1 class="page-title">I Luv Fabrix Newsletter</h1>
-          <h2 class="page-title"><small>DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</small>
+          <h2 class="page-title">
+            <small>DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</small>
           </h2>
         </div>
       </div>
       <div class="col-xs-12">
         <div class="row">
-          <p><a href="index">Fabrics start at $10.00 <sup>per yard</sup>. PLUS FREE SHIPPING.* Click to shop.</a>
+          <p class="h4">
+            <a href="<?= _A_::$app->UrlTo('shop') ?>">
+              Designer upholstery / drapery fabrics with FREE SHIPPING.* Click to shop.
+            </a>
           </p>
-
-          <p>*(Free Ground Shipping in the Contiguous United States Only. Faster Shipping available at
-            moderate rates, Worldwide, if necessary)</p><br/><br/>
-
+          <p>
+            *(Free Ground Shipping in the Contiguous United States Only. Faster Shipping available at
+            moderate rates, Worldwide, if necessary)
+          </p>
+          <br/><br/>
         </div>
       </div>
 
