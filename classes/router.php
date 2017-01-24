@@ -255,12 +255,12 @@
       return $url;
     }
 
-    public function UrlTo($path, $params = null, $to_sef = null, $sef_exclude_params = null, $canonical = false) {
+    public function UrlTo($path, $params = null, $to_sef = null, $sef_exclude_params = null, $canonical = false, $no_ctrl_ignore = false) {
       if($this->sef_enable()) {
         $sef_exclude_params = isset($sef_exclude_params) ? $sef_exclude_params : [];
-        if(is_callable(['Controller_' . ucfirst($this->controller), 'urlto_sef_ignore_prms']))
+        if(!$no_ctrl_ignore && is_callable(['Controller_' . ucfirst($this->controller), 'urlto_sef_ignore_prms']))
           $exclude_params = forward_static_call(['Controller_' . ucfirst($this->controller), 'urlto_sef_ignore_prms']);
-        if(!isset($exclude_params)) $exclude_params = [];
+        if( !isset($exclude_params)) $exclude_params = [];
         else $exclude_params = isset($exclude_params[$this->action]) ? $exclude_params[$this->action] : [];
         $sef_exclude_params = array_merge($this->exclude_params, $sef_exclude_params, $exclude_params);
         $path = rtrim(trim($path), DS);

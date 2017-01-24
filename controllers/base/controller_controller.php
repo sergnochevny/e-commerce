@@ -72,7 +72,7 @@
       $prms = null;
       if(!isset($back_url)) $this->build_back_url($back_url, $prms);
       if(isset($back_url)) {
-        $back_url = _A_::$app->router()->UrlTo($back_url, $prms);
+        $back_url = _A_::$app->router()->UrlTo($back_url, $prms, null, null, false, true);
         $this->template->vars('back_url', $back_url);
       }
     }

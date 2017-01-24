@@ -10086,7 +10086,6 @@ $.widget( "mobile.selectmenu", $.extend( {
 
 		// Events on native select
 		this.select.change(function() {
-			debugger;
 			self.refresh();
 
 			if ( !!options.nativeMenu ) {
@@ -10164,12 +10163,10 @@ $.widget( "mobile.selectmenu", $.extend( {
 	},
 
 	selected: function() {
-		debugger;
 		return this._selectOptions().filter( ":selected" );
 	},
 
 	selectedIndices: function() {
-		debugger;
 		var self = this;
 
 		return this.selected().map(function() {
