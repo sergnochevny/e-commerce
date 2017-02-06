@@ -12,11 +12,13 @@
     ];
 
     protected function load(&$data) {
-      $data['title'] = _A_::$app->post('title') ? _A_::$app->post('title') : '';
-      $data['message'] = _A_::$app->post('message') ? _A_::$app->post('message') : '';
-      $data['visible'] = Model_Product::sanitize(_A_::$app->post('visible') ? _A_::$app->post('visible') : 0);
-      $data['f1'] = $this->resolved_scenario[$this->scenario()];
-      $data['f2'] = Model_Product::sanitize(_A_::$app->post('f2')) ? _A_::$app->post('f2') : '';
+      if(_A_::$app->request_is_post()){
+        $data['title'] = _A_::$app->post('title') ? _A_::$app->post('title') : '';
+        $data['message'] = _A_::$app->post('message') ? _A_::$app->post('message') : '';
+        $data['visible'] = Model_Product::sanitize(_A_::$app->post('visible') ? _A_::$app->post('visible') : 0);
+        $data['f1'] = $this->resolved_scenario[$this->scenario()];
+        $data['f2'] = Model_Product::sanitize(_A_::$app->post('f2')) ? _A_::$app->post('f2') : '';
+      }
     }
 
     protected function validate(&$data, &$error) {
