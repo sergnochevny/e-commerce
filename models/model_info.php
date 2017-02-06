@@ -17,9 +17,11 @@
       return $result;
     }
 
-    public static function get_by_f1($f1) {
+    public static function get_by_f1($filter) {
       $data = null;
-      $q = "SELECT * FROM " . static::$table . " where f1 = '" . $f1 . "'"; ;
+      $q = "SELECT * FROM " . static::$table;
+      $q .= self::build_where($filter);
+      $q .= ' LIMIT 1';
       $result = mysql_query($q);
       if($result) $data = mysql_fetch_assoc($result);
       return $data;

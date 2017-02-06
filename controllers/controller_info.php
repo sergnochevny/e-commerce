@@ -12,7 +12,7 @@
     ];
 
     protected function load(&$data) {
-      if(_A_::$app->request_is_post()){
+      if(_A_::$app->request_is_post()) {
         $data['title'] = _A_::$app->post('title') ? _A_::$app->post('title') : '';
         $data['message'] = _A_::$app->post('message') ? _A_::$app->post('message') : '';
         $data['visible'] = Model_Product::sanitize(_A_::$app->post('visible') ? _A_::$app->post('visible') : 0);
@@ -24,7 +24,7 @@
     protected function validate(&$data, &$error) {
       if(empty($data['title']) || empty($data['message']) ||
         (empty($data['f2']) && ($this->scenario() == 'cart')) ||
-        ((!empty($data['f2']) && ((float) $data['f2'] <= 0)) && ($this->scenario() == 'cart'))
+        ((!empty($data['f2']) && ((float)$data['f2'] <= 0)) && ($this->scenario() == 'cart'))
       ) {
         $error = [];
         if(empty($data['title'])) $error[] = 'Identify <b>Title</b> field !';
@@ -32,7 +32,7 @@
         if(empty($data['f2']) && ($this->scenario() == 'cart')) {
           $error[] = 'Identify <b>Timeout</b> field !';
         }
-        if((!empty($data['f2']) && ((float) $data['f2'] <= 0)) && ($this->scenario() == 'cart')) {
+        if((!empty($data['f2']) && ((float)$data['f2'] <= 0)) && ($this->scenario() == 'cart')) {
           $error[] = 'The field <b>Timeout</b> value must be greater than zero';
         }
         $this->template->vars('error', $error);
@@ -55,7 +55,8 @@
 
     protected function form($url, $data = null) {
       if(!isset($data)) {
-        $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_f1'], $this->resolved_scenario[$this->scenario()]);
+        $filter = ['hidden' => ['f1' => $this->resolved_scenario[$this->scenario()]]];
+        $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_f1'], $filter);
         $this->form_after_get_data($data);
       }
       $this->before_form_layout($data);
