@@ -48,6 +48,7 @@
       </div>
       <div class="col-sm-4 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
+        <?= isset($show_by) ? $show_by : ''; ?>
       </div>
     </div>
   </div>

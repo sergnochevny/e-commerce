@@ -11,9 +11,9 @@
         } else {
           $q = "select value from key_storage";
           $q .= "  where `key` = '" . $key . "'";
-          $res = mysql_query($q);
+          $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
           if($res) {
-            $row = mysql_fetch_assoc($res);
+            $row = mysqli_fetch_assoc($res);
             if($row){
               $this->storage[$key] = $row['value'];
               return $row['value'];
@@ -21,7 +21,7 @@
               return null;
             }
           } else {
-            throw new Exception(mysql_error());
+            throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix'), _A_::$app->getDBConnection('iluvfabrix')));
           }
         }
       }
@@ -31,11 +31,11 @@
     protected function set($key, $value) {
 
       if(isset($key) && isset($value)) {
-        $value = mysql_real_escape_string(Model_Base::sanitize($value));
+        $value = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), Model_Base::sanitize($value));
         $q = "replace into key_storage set `key` = '" . $key . "', `value` = '" . $value . "'";
-        $res = mysql_query($q);
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
         if(!$res)
-          throw new Exception(mysql_error());
+          throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix'), _A_::$app->getDBConnection('iluvfabrix')));
 
         $this->storage[$key] = $value;
       }
@@ -43,13 +43,13 @@
 
     public function init() {
       $q = "select value from key_storage";
-      $res = mysql_query($q);
+      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
       if($res) {
-        while($row = mysql_fetch_row($res)) {
+        while($row = mysqli_fetch_row($res)) {
           $this->storage[$row['key']] = $row['value'];
         }
       } else {
-        throw new Exception(mysql_error());
+        throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix'), _A_::$app->getDBConnection('iluvfabrix')));
       }
     }
 

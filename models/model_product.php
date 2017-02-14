@@ -6,21 +6,21 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pname"]))) . "%'";
-      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pvisible"])))."'";
-      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.piece"])))."'";
+      if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.pname"]))) . "%'";
+      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.pvisible"])))."'";
+      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.piece"])))."'";
       if(isset($filter["a.dt"])) {
-        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
-          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
-      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.best"]))) . "'";
-      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
-      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
-      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["c.id"]))) . "'";
-      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["d.id"]))) . "'";
-      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["e.id"]))) . "'";
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.best"]))) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["c.id"]))) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["d.id"]))) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["e.id"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0){
@@ -58,12 +58,12 @@
             $select = implode(',', isset($data['colors']) ? array_keys($data['colors']) : []);
           }
           if(strlen($select) > 0) {
-            $results = mysql_query(
+            $results = mysqli_query(
               "select * from fabrix_color" .
               " where id in ($select)" .
               " order by color"
             );
-            while($row = mysql_fetch_array($results)) {
+            while($row = mysqli_fetch_array($results)) {
               $filters[$row['id']] = $row['color'];
             }
           }
@@ -77,12 +77,12 @@
             $select = implode(',', isset($data['patterns']) ? array_keys($data['patterns']) : []);
           }
           if(strlen($select) > 0) {
-            $results = mysql_query(
+            $results = mysqli_query(
               "select * from fabrix_patterns" .
               " where id in ($select)" .
               " order by pattern"
             );
-            while($row = mysql_fetch_array($results)) {
+            while($row = mysqli_fetch_array($results)) {
               $filters[$row['id']] = $row['pattern'];
             }
           }
@@ -101,14 +101,14 @@
             }
           }
           if(strlen($select) <= 0) $select = '1';
-          $results = mysql_query(
+          $results = mysqli_query(
             "select a.cid, a.cname, (max(b.display_order)+1) as pos from fabrix_categories a" .
             " left join fabrix_product_categories b on b.cid = a.cid" .
             " where a.cid in ($select)" .
             " group by a.cid, a.cname" .
             " order by a.cname"
           );
-          while($row = mysql_fetch_array($results)) {
+          while($row = mysqli_fetch_array($results)) {
             $filters[$row['cid']] = [$row['cname'], isset($categories[$row['cid']]) ? $categories[$row['cid']] : $row['pos']];
           }
           break;
@@ -120,49 +120,49 @@
       $data = [];
       switch($type) {
         case 'patterns':
-          $results = mysql_query(
+          $results = mysqli_query(
             "select a.* from fabrix_product_patterns b" .
             " inner join fabrix_patterns a on b.patternId=a.id " .
             " where b.prodId='$id'" .
             " order by a.pattern"
           );
           if($results)
-            while($row = mysql_fetch_array($results)) {
+            while($row = mysqli_fetch_array($results)) {
               $data[$row['id']] = $row['pattern'];
             }
           break;
         case 'colors':
-          $results = mysql_query(
+          $results = mysqli_query(
             "select a.* from fabrix_product_colors b" .
             " inner join fabrix_color a on b.colorId=a.id " .
             " where b.prodId='$id'" .
             " order by a.color"
           );
           if($results)
-            while($row = mysql_fetch_array($results)) {
+            while($row = mysqli_fetch_array($results)) {
               $data[$row['id']] = $row['color'];
             }
           break;
         case 'categories':
-          $results = mysql_query(
+          $results = mysqli_query(
             "select a.cid, a.cname, b.display_order from fabrix_product_categories b" .
             " inner join fabrix_categories a on b.cid=a.cid " .
             " where b.pid='$id'" .
             " order by a.cname"
           );
           if($results)
-            while($row = mysql_fetch_array($results)) {
+            while($row = mysqli_fetch_array($results)) {
               $data[$row['cid']] = [$row['cname'], $row['display_order']];
             }
           break;
         case 'manufacturers':
-          $results = mysql_query(
+          $results = mysqli_query(
             "select a.cid, a.manufacturer" .
             " from fabrix_manufacturers a" .
             " order by a.manufacturer"
           );
           if($results)
-            while($row = mysql_fetch_array($results)) {
+            while($row = mysqli_fetch_array($results)) {
               $data[$row['id']] = $row['manufacturer'];
             }
           break;
@@ -171,11 +171,11 @@
     }
 
     public static function get_filter_data($type, &$count, $start = 0, $search = null) {
-      $search = mysql_real_escape_string($search);
+      $search = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $search);
       $filter = null;
       $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
       $start = isset($start) ? $start : 0;
-      $search = mysql_escape_string(static::sanitize($search));
+      $search = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::sanitize($search));
       switch($type) {
         case 'colors':
           $q = "select count(id) from fabrix_color";
@@ -183,8 +183,8 @@
             $q .= " where color like '%$search%'";
             $q .= " or color like '%$search%'";
           }
-          $results = mysql_query($q);
-          $row = mysql_fetch_array($results);
+          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+          $row = mysqli_fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_color";
           if(isset($search) && (strlen($search) > 0)) {
@@ -193,8 +193,8 @@
           }
           $q .= " order by color";
           $q .= " limit $start, $filter_limit";
-          $results = mysql_query($q);
-          while($row = mysql_fetch_array($results)) {
+          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+          while($row = mysqli_fetch_array($results)) {
             $filter[] = [$row['id'], $row['color']];
           }
           break;
@@ -203,8 +203,8 @@
           if(isset($search) && (strlen($search) > 0)) {
             $q .= " where pattern like '%$search%'";
           }
-          $results = mysql_query($q);
-          $row = mysql_fetch_array($results);
+          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+          $row = mysqli_fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_patterns";
           if(isset($search) && (strlen($search) > 0)) {
@@ -212,8 +212,8 @@
           }
           $q .= " order by pattern";
           $q .= " limit $start, $filter_limit";
-          $results = mysql_query($q);
-          while($row = mysql_fetch_array($results)) {
+          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+          while($row = mysqli_fetch_array($results)) {
             $filter[] = [$row['id'], $row['pattern']];
           }
           break;
@@ -222,8 +222,8 @@
           if(isset($search) && (strlen($search) > 0)) {
             $q .= " where cname like '%$search%'";
           }
-          $results = mysql_query($q);
-          $row = mysql_fetch_array($results);
+          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+          $row = mysqli_fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_categories";
           if(isset($search) && (strlen($search) > 0)) {
@@ -231,8 +231,8 @@
           }
           $q .= " order by cname";
           $q .= " limit $start, $filter_limit";
-          $results = mysql_query($q);
-          while($row = mysql_fetch_array($results)) {
+          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+          while($row = mysqli_fetch_array($results)) {
             $filter[] = [$row['cid'], $row['cname']];
           }
       }
@@ -261,8 +261,8 @@
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if($result = mysql_query($query)) {
-        $response = mysql_fetch_row($result)[0];
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $response = mysqli_fetch_row($result)[0];
       }
       return $response;
     }
@@ -282,9 +282,9 @@
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
 
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_array($result)) {
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $res_count_rows = mysqli_num_rows($result);
+        while($row = mysqli_fetch_array($result)) {
           $filename = 'upload/upload/b_' . $row['image1'];
           if(!(file_exists($filename) && is_file($filename))) {
             $filename = 'upload/upload/not_image.jpg';
@@ -340,9 +340,9 @@
       ];
       if(isset($id)) {
         $q = "select * from " . static::$table . " where pid = '" . $id . "'";
-        $result = mysql_query($q);
+        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
         if($result) {
-          $data = mysql_fetch_assoc($result);
+          $data = mysqli_fetch_assoc($result);
         }
       }
       return $data;
@@ -398,7 +398,7 @@
       $q = "update " . static::$table . " set" .
         " image1='$image1', image2='$image2', image3='$image3'," .
         " image4='$image4', image5='$image5' where pid = '$pid'";
-      return mysql_query($q);
+      return mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
     }
 
     public static function delete_images(&$data) {
@@ -411,13 +411,13 @@
     public static function save(&$data) {
       extract($data);
 
-      $metatitle = mysql_real_escape_string($metatitle);
-      $metadescription = mysql_real_escape_string($metadescription);
-      $metakeywords = mysql_real_escape_string($metakeywords);
-      $pname = mysql_real_escape_string($pname);
-      $sdesc = mysql_real_escape_string($sdesc);
-      $ldesc = mysql_real_escape_string($ldesc);;
-      $stock_number = mysql_real_escape_string($stock_number);
+      $metatitle = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $metatitle);
+      $metadescription = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $metadescription);
+      $metakeywords = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $metakeywords);
+      $pname = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $pname);
+      $sdesc = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $sdesc);
+      $ldesc = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ldesc);;
+      $stock_number = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $stock_number);
 
       if(isset($pid)) {
         $sql = "update " . static::$table . " set";
@@ -427,7 +427,7 @@
         $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
         $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
         $sql .= " piece='$piece', whole = '$whole'  WHERE pid ='$pid'";
-        $result = mysql_query($sql);
+        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sql);
       } else {
         $sql = "insert into " . static::$table . " set";
         if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
@@ -436,9 +436,9 @@
         $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
         $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
         $sql .= " piece='$piece', whole = '$whole'";
-        $result = mysql_query($sql);
+        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sql);
         if($result) {
-          $pid = mysql_insert_id();
+          $pid = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix')) ;
           $data['pid'] = $pid;
         }
       }
@@ -446,12 +446,12 @@
       if($result) {
         $res = true;
         if($res && (count($categories) > 0)) {
-          $res = mysql_query("select * from fabrix_product_categories  where pid='$pid'");
+          $res = mysqli_query("select * from fabrix_product_categories  where pid='$pid'");
           if($res) {
             $result = $res;
-            while($category = mysql_fetch_assoc($res)) {
-              $result = $result && mysql_query("DELETE FROM fabrix_product_categories WHERE pid = " . $category['pid'] . " and cid = " . $category['cid']);
-              $result = $result && mysql_query("update fabrix_product_categories SET display_order=display_order-1 where display_order > " . $category['display_order'] . " and cid=" . $category['cid']);
+            while($category = mysqli_fetch_assoc($res)) {
+              $result = $result && mysqli_query("DELETE FROM fabrix_product_categories WHERE pid = " . $category['pid'] . " and cid = " . $category['cid']);
+              $result = $result && mysqli_query("update fabrix_product_categories SET display_order=display_order-1 where display_order > " . $category['display_order'] . " and cid=" . $category['cid']);
               if(!$result) {
                 $res = $result;
                 break;
@@ -460,14 +460,14 @@
           }
         } elseif($res) {
           if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
-            mysql_query("DELETE FROM fabrix_product_categories WHERE pid = $pid");
+            mysqli_query("DELETE FROM fabrix_product_categories WHERE pid = $pid");
             $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" .
               " from fabrix_categories a" .
               " left join fabrix_product_categories b on a.cid = b.cid" .
               " where a.cid = 1";
-            $res = mysql_query($q);
+            $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
             if($res) {
-              $row = mysql_fetch_array($res, MYSQL_NUM);
+              $row = mysqli_fetch_array($res, mysqli_NUM);
               $categories = [$row['cid'] => $row['pos']];
               $data['categories'] = $categories;
             }
@@ -475,35 +475,35 @@
         }
         if($res) {
           foreach($categories as $cid => $category) {
-            $res = $res && mysql_query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
-            $res = $res && mysql_query("REPLACE INTO fabrix_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
+            $res = $res && mysqli_query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
+            $res = $res && mysqli_query("REPLACE INTO fabrix_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
             if(!$res) break;
           }
         }
-        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_colors WHERE prodID='$pid'");
+        if($res) $res = $res && mysqli_query("DELETE FROM fabrix_product_colors WHERE prodID='$pid'");
         if($res && (count($colors) > 0)) {
           foreach($colors as $colorId) {
-            $res = $res && mysql_query("REPLACE INTO fabrix_product_colors SET prodID='$pid', colorId='$colorId'");
+            $res = $res && mysqli_query("REPLACE INTO fabrix_product_colors SET prodID='$pid', colorId='$colorId'");
             if(!$res) break;
           }
         }
-        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_patterns WHERE prodID='$pid'");
+        if($res) $res = $res && mysqli_query("DELETE FROM fabrix_product_patterns WHERE prodID='$pid'");
         if($res && (count($patterns) > 0)) {
           foreach($patterns as $patternId) {
-            $res = $res && mysql_query("REPLACE INTO fabrix_product_patterns SET prodID='$pid', patternId='$patternId'");
+            $res = $res && mysqli_query("REPLACE INTO fabrix_product_patterns SET prodID='$pid', patternId='$patternId'");
             if(!$res) break;
           }
         }
-        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_related WHERE pid='$pid'");
+        if($res) $res = $res && mysqli_query("DELETE FROM fabrix_product_related WHERE pid='$pid'");
         if($res && (count($related) > 0)) {
           foreach($related as $r_pid) {
-            $res = $res && mysql_query("REPLACE INTO fabrix_product_related SET pid='$pid', r_pid='$r_pid'");
+            $res = $res && mysqli_query("REPLACE INTO fabrix_product_related SET pid='$pid', r_pid='$r_pid'");
             if(!$res) break;
           }
         }
         $result = $result && $res;
       }
-      if(!$result) throw new Exception(mysql_error());
+      if(!$result) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
       return $pid;
     }
 
@@ -511,22 +511,22 @@
       if(isset($id)) {
         $data = static::get_by_id($id);
         $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
-        $res = mysql_query($query);
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         $query = "DELETE FROM fabrix_product_related WHERE pid = $id or r_pid = $id";
-        if($res) $res = mysql_query($query);
+        if($res) $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         $query = "DELETE FROM fabrix_clearance WHERE pid = $id";
-        if($res) $res = mysql_query($query);
+        if($res) $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         $query = "DELETE FROM fabrix_product_favorites WHERE pid = $id";
-        if($res) $res = mysql_query($query);
+        if($res) $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
-        if($res) $res = mysql_query($query);
+        if($res) $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         $query = "DELETE FROM fabrix_product_colors WHERE prodId = $id";
-        if($res) $res = mysql_query($query);
+        if($res) $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         $query = "DELETE FROM fabrix_product_patterns WHERE prodId = $id";
-        if($res) $res = mysql_query($query);
+        if($res) $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         $query = "DELETE FROM fabrix_specials_products WHERE pid = $id";
-        if($res) $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
+        if($res) $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
         static::delete_images($data);
       }
     }

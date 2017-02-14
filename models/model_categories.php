@@ -8,17 +8,17 @@
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $result = "";
         if(Controller_Admin::is_logged()) {
-          if(isset($filter["a.cname"])) $result[] = "a.cname LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.cname"]))) . "%'";
+          if(isset($filter["a.cname"])) $result[] = "a.cname LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.cname"]))) . "%'";
         } else {
           if(isset($filter["a.cname"])) $result[] = Model_Synonyms::build_synonyms_like("a.cname", $filter["a.cname"]);
         }
-        if(isset($filter["a.cid"])) $result[] = "a.cid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.cid"]))) . "'";
+        if(isset($filter["a.cid"])) $result[] = "a.cid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.cid"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           if(strlen(trim(implode(" AND ", $result))) > 0) {
             $filter['active'] = true;
           }
         }
-        if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["c.pvisible"]))) . "'";
+        if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["c.pvisible"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');
@@ -36,8 +36,8 @@
       $query .= " JOIN fabrix_product_categories b ON b.cid = a.cid";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.pid" : '';
       $query .= static::build_where($filter);
-      if($result = mysql_query($query)) {
-        $response = mysql_fetch_row($result)[0];
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $response = mysqli_fetch_row($result)[0];
       }
       return $response;
     }
@@ -54,9 +54,9 @@
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
 
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_array($result)) {
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $res_count_rows = mysqli_num_rows($result);
+        while($row = mysqli_fetch_array($result)) {
           $response[] = $row;
         }
       }
@@ -71,15 +71,15 @@
         'displayorder' => ''
       ];
       if(!isset($id)) {
-        $result = mysql_query("select max(displayorder)+1 from fabrix_categories");
+        $result = mysqli_query("select max(displayorder)+1 from fabrix_categories");
         if($result) {
-          $row = mysql_fetch_array($result);
+          $row = mysqli_fetch_array($result);
           $data['displayorder'] = $row[0];
         }
       } else {
-        $result = mysql_query("select * from fabrix_categories WHERE cid='$id'");
+        $result = mysqli_query("select * from fabrix_categories WHERE cid='$id'");
         if($result) {
-          $data = mysql_fetch_array($result);
+          $data = mysqli_fetch_array($result);
         }
       }
       return $data;
@@ -87,24 +87,24 @@
 
     public static function save(&$data) {
       extract($data);
-      $cname = mysql_real_escape_string($cname);
+      $cname = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $cname);
       if(!empty($cid)) {
-        $res = mysql_query("select * from fabrix_categories WHERE cid='$cid'");
+        $res = mysqli_query("select * from fabrix_categories WHERE cid='$cid'");
         if($res) {
-          $row = mysql_fetch_array($res);
+          $row = mysqli_fetch_array($res);
           $_displayorder = $row['displayorder'];
           if($_displayorder != $displayorder) {
-            if($res) $res = mysql_query("update fabrix_categories set displayorder=displayorder-1 WHERE displayorder > $_displayorder");
-            if($res) $res = mysql_query("update fabrix_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
+            if($res) $res = mysqli_query("update fabrix_categories set displayorder=displayorder-1 WHERE displayorder > $_displayorder");
+            if($res) $res = mysqli_query("update fabrix_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
           }
-          if($res) $res = mysql_query("update fabrix_categories set cname='$cname', displayorder='$displayorder' WHERE cid ='$cid'");
+          if($res) $res = mysqli_query("update fabrix_categories set cname='$cname', displayorder='$displayorder' WHERE cid ='$cid'");
         }
       } else {
-        $res = mysql_query("update fabrix_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
-        if($res) $res = mysql_query("insert fabrix_categories set cname='$cname', displayorder='$displayorder'");
-        if($res) $cid = mysql_insert_id();
+        $res = mysqli_query("update fabrix_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
+        if($res) $res = mysqli_query("insert fabrix_categories set cname='$cname', displayorder='$displayorder'");
+        if($res) $cid = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix')) ;
       }
-      if(!$res) throw new Exception(mysql_error());
+      if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
 
       return $cid;
     }
@@ -112,19 +112,19 @@
     public static function delete($id) {
       if(isset($id)) {
         $query = "select count(*) from fabrix_product_categories where cid = $id";
-        $res = mysql_query($query);
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         if($res) {
-          $amount = mysql_fetch_array($res)[0];
+          $amount = mysqli_fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
         $query = "delete from fabrix_product_categories WHERE cid = $id";
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
         $query = "DELETE FROM fabrix_categories WHERE cid = $id";
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
       }
     }
   }

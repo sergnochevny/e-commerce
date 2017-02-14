@@ -8,8 +8,8 @@
       $response = 0;
       $query = "SELECT COUNT(*) FROM " . static::$table;
       $query .= static::build_where($filter);
-      if($result = mysql_query($query)) {
-        $response = mysql_fetch_row($result)[0];
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $response = mysqli_fetch_row($result)[0];
       }
       return $response;
     }
@@ -22,9 +22,9 @@
       $query .= static::build_order($sort);
       if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
 
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_array($result)) {
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $res_count_rows = mysqli_num_rows($result);
+        while($row = mysqli_fetch_array($result)) {
           $response[] = $row;
         }
       }
@@ -34,7 +34,7 @@
 
     public static function delete($id) {
       $strSQL = "DELETE FROM " . static::$table . " WHERE id = $id";
-      mysql_query($strSQL);
+      mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $strSQL);
     }
 
     public static function exist($login = null, $id = null) {
@@ -45,11 +45,11 @@
       if(isset($id)) $q .= " id <> '$id'";
       if(isset($login)) {
         if(isset($id)) $q .= " and";
-        $q .= " login = '" . mysql_real_escape_string($login) . "'";
+        $q .= " login = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $login) . "'";
       }
-      $result = mysql_query($q);
+      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
 
-      return (!$result || mysql_num_rows($result) > 0);
+      return (!$result || mysqli_num_rows($result) > 0);
     }
 
     public static function get_by_id($id) {
@@ -59,21 +59,25 @@
       ];
       if(isset($id)) {
         $strSQL = "select * from " . static::$table . " where id = '" . $id . "'";
-        $result = mysql_query($strSQL);
+        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $strSQL);
         if($result) {
-          $data = mysql_fetch_assoc($result);
+          $data = mysqli_fetch_assoc($result);
         }
       }
       return $data;
     }
 
     public static function update_password($password, $id) {
-      $result = mysql_query("UPDATE " . static::$table . " SET password =  '$password' WHERE  id =$id;");
-      if(!$result) throw new Exception(mysql_error());
+      $result = mysqli_query("UPDATE " . static::$table . " SET password =  '$password' WHERE  id =$id;");
+      if(!$result) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
     }
 
     public static function save(&$data) {
       extract($data);
+      /**
+       * @var string $login
+       * @var string $password
+       */
       if(!isset($id)) {
         $q = "INSERT INTO  " . static::$table .
           "(id ,login ,password)" .
@@ -86,10 +90,10 @@
         }
         $q .= "' WHERE  id = $id";
       }
-      $result = mysql_query($q);
-      if(!$result) throw new Exception(mysql_error());
+      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      if(!$result) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
       if(!isset($admin_id)) {
-        $id = mysql_insert_id();
+        $id = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix')) ;
       }
       return $id;
     }

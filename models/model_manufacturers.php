@@ -8,17 +8,17 @@
       if (isset($filter['hidden']['view']) && $filter['hidden']['view']){
         $result = "";
         if(Controller_Admin::is_logged()) {
-          if(isset($filter["a.manufacturer"])) $result[] = "a.manufacturer LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.manufacturer"]))) . "%'";
+          if(isset($filter["a.manufacturer"])) $result[] = "a.manufacturer LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.manufacturer"]))) . "%'";
         } else {
           if(isset($filter["a.manufacturer"])) $result[] = Model_Synonyms::build_synonyms_like("a.manufacturer", $filter["a.manufacturer"]);
         }
-        if(isset($filter["id"])) $result[] = "a.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.id"]))) . "'";
+        if(isset($filter["id"])) $result[] = "a.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.id"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           if(strlen(trim(implode(" AND ", $result))) > 0) {
             $filter['active'] = true;
           }
         }
-        if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["b.pvisible"]))) . "'";
+        if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["b.pvisible"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');
@@ -36,8 +36,8 @@
       ];
       if(isset($id)) {
         $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
-        $result = mysql_query($query);
-        if($result) $response = mysql_fetch_assoc($result);
+        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if($result) $response = mysqli_fetch_assoc($result);
       }
       return $response;
     }
@@ -48,8 +48,8 @@
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view'])? " INNER" : " LEFT";
       $query .= " JOIN fabrix_products b ON b.manufacturerId = a.id";
       $query .= static::build_where($filter);
-      if($result = mysql_query($query)) {
-        $response = mysql_fetch_row($result)[0];
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $response = mysqli_fetch_row($result)[0];
       }
       return $response;
     }
@@ -65,9 +65,9 @@
       $query .= static::build_order($sort);
       if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
 
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_array($result)) {
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $res_count_rows = mysqli_num_rows($result);
+        while($row = mysqli_fetch_array($result)) {
           $response[] = $row;
         }
       }
@@ -79,13 +79,13 @@
       extract($data);
       if(isset($id)) {
         $query = "UPDATE " . static::$table . " SET manufacturer ='" . $manufacturer . "' WHERE id =" . $id;
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
       } else {
         $query = "INSERT INTO " . static::$table . " (manufacturer) VALUE ('" . $manufacturer . "')";
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
-        $id = mysql_insert_id();
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+        $id = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix')) ;
       }
       return $id;
     }
@@ -93,16 +93,16 @@
     public static function delete($id) {
       if(isset($id)) {
         $query = "select count(*) from fabrix_products where manufacturerId = $id";
-        $res = mysql_query($query);
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         if($res) {
-          $amount = mysql_fetch_array($res)[0];
+          $amount = mysqli_fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
         $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
       }
     }
 

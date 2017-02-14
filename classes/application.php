@@ -6,10 +6,10 @@
 
     protected function init() {
       parent::init();
+      $this->SelectDB('iluvfabrix');
       $this->router = new Router($this);
       $this->keystorage = new KeyStorage();
       $this->registry()->set('router', $this->router);
-      $this->SelectDB('iluvfabrix');
     }
 
     public function run() {

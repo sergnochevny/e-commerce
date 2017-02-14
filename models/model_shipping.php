@@ -24,8 +24,8 @@ Class Model_Shipping extends Model_Base
             }
             #grab the default cids or the weight_ids from the products
             $sSQL = sprintf("SELECT weight_id, cid FROM fabrix_products WHERE pid IN (%s);", $sPds);
-            $result = mysql_query($sSQL) or die(mysql_error());
-            while ($rs = mysql_fetch_assoc($result)) {
+            $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sSQL) or die(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+            while ($rs = mysqli_fetch_assoc($result)) {
                 $iTmpWid = 0;
                 if ((int)$rs['weight_id'] > 0) {
                     $iTmpWid = (int)$rs['weight_id'];
@@ -57,7 +57,7 @@ Class Model_Shipping extends Model_Base
                     break;
                 }
             }
-            mysql_free_result($result);
+            mysqli_free_result($result);
             #ship = 1 is express shipping
             if ($ship == "1") {
                 switch ($iWid) {

@@ -91,4 +91,5 @@
       ]
     ],
     'layouts' => "main_layout",
+    'per_page_items' => ['6', '12', '24'],
   ];

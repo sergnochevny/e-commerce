@@ -5,27 +5,27 @@
     protected static $table = 'fabrix_accounts';
 
     public static function get_by_email($email) {
-      $email = mysql_real_escape_string($email);
+      $email = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $email);
       $user = null;
       $strSQL = "select * from " . static::$table . " where email = '" . $email . "'";
-      $result = mysql_query($strSQL);
+      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $strSQL);
       if($result) {
-        $user = mysql_fetch_assoc($result);
+        $user = mysqli_fetch_assoc($result);
       }
       return $user;
     }
 
     public static function set_remind_for_change_pass($remind, $date, $user_id) {
-      $remind = mysql_real_escape_string($remind);
+      $remind = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $remind);
       $q = "update " . static::$table . " set remind = '" . $remind . "', remind_time = '" . $date . "' where aid = " . $user_id;
-      $res = mysql_query($q);
-      return ($res && mysql_affected_rows());
+      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      return ($res && mysqli_affected_rows());
     }
 
     public static function clean_remind($user_id) {
       $q = "update " . static::$table . " set remind = NULL, remind_time = NULL where aid = " . $user_id;
-      $res = mysql_query($q);
-      return ($res && mysql_affected_rows());
+      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      return ($res && mysqli_affected_rows());
     }
 
     public static function exist($email = null, $id = null) {
@@ -36,32 +36,32 @@
       if(isset($id)) $q .= " aid <> '$id'";
       if(isset($email)) {
         if(isset($id)) $q .= " and";
-        $q .= " email = '" . mysql_real_escape_string($email) . "'";
+        $q .= " email = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $email) . "'";
       }
-      $result = mysql_query($q);
+      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
 
-      return (!$result || mysql_num_rows($result) > 0);
+      return (!$result || mysqli_num_rows($result) > 0);
     }
 
     public static function remind_exist($remind) {
-      $q = "select * from " . static::$table . " where remind = '" . mysql_real_escape_string($remind) . "'";
-      $result = mysql_query($q);
-      return (!$result || mysql_num_rows($result) > 0);
+      $q = "select * from " . static::$table . " where remind = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $remind) . "'";
+      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      return (!$result || mysqli_num_rows($result) > 0);
     }
 
     public static function get_by_remind($remind) {
       $user = null;
-      $strSQL = "select * from " . static::$table . " where remind = '" . mysql_real_escape_string($remind) . "'";
-      $result = mysql_query($strSQL);
+      $strSQL = "select * from " . static::$table . " where remind = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $remind) . "'";
+      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $strSQL);
       if($result) {
-        $user = mysql_fetch_assoc($result);
+        $user = mysqli_fetch_assoc($result);
       }
       return $user;
     }
 
     public static function update_password($password, $user_id) {
-      $result = mysql_query("UPDATE " . static::$table . " SET password =  '$password' WHERE  aid =$user_id;");
-      if(!$result) throw new Exception(mysql_error());
+      $result = mysqli_query("UPDATE " . static::$table . " SET password =  '$password' WHERE  aid =$user_id;");
+      if(!$result) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
     }
 
   }

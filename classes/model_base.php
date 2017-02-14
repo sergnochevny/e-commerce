@@ -17,29 +17,29 @@
                 if(is_array($val[1])) {
                   foreach($val[1] as $like) {
                     if(strlen($where1) > 0) $where1 .= ' or ';
-                    $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::strip_data(static::sanitize($like))) . "%'";
+                    $where1 .= $key . " " . $val[0] . " '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($like))) . "%'";
                   }
                 } else {
-                  $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::strip_data(static::sanitize($val[1]))) . "%'";
+                  $where1 .= $key . " " . $val[0] . " '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($val[1]))) . "%'";
                 }
                 break;
               case '=':
                 if(is_array($val[1])) {
                   foreach($val[1] as $like) {
                     if(strlen($where1) > 0) $where1 .= ' or ';
-                    $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::strip_data(static::sanitize($like))) . "'";
+                    $where1 .= $key . " " . $val[0] . " '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($like))) . "'";
                   }
                 } else {
-                  $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::strip_data(static::sanitize($val[1]))) . "'";
+                  $where1 .= $key . " " . $val[0] . " '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($val[1]))) . "'";
                 }
                 break;
               case 'between':
                 if(!empty($val[1]['from'])) {
-                  $where1 = $key . " >= '" . mysql_real_escape_string(static::strip_data(static::sanitize($val[1]['from']))) . "'";
+                  $where1 = $key . " >= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($val[1]['from']))) . "'";
                 }
                 if(!empty($val[1]['to'])) {
                   if(strlen($where1) > 0) $where1 .= " and ";
-                  $where1 .= $key . " <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($val[1]['to']))) . "'";
+                  $where1 .= $key . " <= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($val[1]['to']))) . "'";
                 }
                 break;
             }
@@ -70,9 +70,9 @@
     public static function get_fields() {
       $response = null;
       $query = "DESCRIBE " . static::$table;
-      $result = mysql_query($query);
+      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
       if($result) {
-        while($row = mysql_fetch_assoc($result)) {
+        while($row = mysqli_fetch_assoc($result)) {
           $response[$row['Field']] = $row;
         }
       }
@@ -86,7 +86,7 @@
       $text = trim(strip_tags($text));
       $text = str_replace($quotes, '', $text);
       $text = str_replace($goodquotes, $repquotes, $text);
-      $text = ereg_replace(" +", " ", $text);
+      $text = preg_replace("/ +/i", " ", $text);
 
       return $text;
     }

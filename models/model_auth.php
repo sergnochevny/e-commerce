@@ -32,11 +32,11 @@
     }
 
     public static function is_user_remember($remember) {
-      $q = "select * from fabrix_accounts where remember='" . mysql_real_escape_string($remember) . "'";
-      $res = mysql_query($q);
+      $q = "select * from fabrix_accounts where remember='" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $remember) . "'";
+      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
       if($res) {
-        self::$user = mysql_fetch_assoc($res);
-        if(mysql_num_rows($res) > 0) {
+        self::$user = mysqli_fetch_assoc($res);
+        if(mysqli_num_rows($res) > 0) {
           $mail = self::$user['email'];
           $hash = self::$user['password'];
           $hash = md5($mail) . $hash;
@@ -53,28 +53,28 @@
 
     public static function is_user($mail) {
       $res = false;
-      $q = "select * from fabrix_accounts where email='" . mysql_real_escape_string($mail) . "'";
-      $res = mysql_query($q);
-      $res = $res && (mysql_num_rows($res) > 0);
+      $q = "select * from fabrix_accounts where email='" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $mail) . "'";
+      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      $res = $res && (mysqli_num_rows($res) > 0);
       return $res;
     }
 
     public static function user_authorize($mail, $password) {
-      $mail = mysql_real_escape_string($mail);
-      $password = mysql_real_escape_string($password);
+      $mail = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $mail);
+      $password = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $password);
       $q = "select * from fabrix_accounts where email='$mail'";
-      $res = mysql_query($q);
+      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
       if($res) {
-        if(mysql_num_rows($res) > 0) {
-          self::$user = mysql_fetch_assoc($res);
+        if(mysqli_num_rows($res) > 0) {
+          self::$user = mysqli_fetch_assoc($res);
           $hash = self::$user['password'];
           if($hash == self::check($password, $hash)) {
             if(!is_null(_A_::$app->post('rememberme')) && _A_::$app->post('rememberme') == 1) {
               $hash = md5($mail) . $hash;
               $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
               $hash = self::hash_($hash, $salt, self::$cost);
-              $q = "update fabrix_accounts set remember = '" . mysql_real_escape_string($hash) . "' where aid = " . self::$user['aid'];
-              if(mysql_query($q)) setcookie('_r', $hash, time() + 60 * 60 * 24 * 30);
+              $q = "update fabrix_accounts set remember = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $hash) . "' where aid = " . self::$user['aid'];
+              if(mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q)) setcookie('_r', $hash, time() + 60 * 60 * 24 * 30);
             }
             return true;
           }
@@ -84,11 +84,11 @@
     }
 
     public static function is_admin_remember($remember) {
-      $q = "select * from fabrix_admins where rememberme ='" . mysql_real_escape_string($remember) . "'";
-      $res = mysql_query($q);
+      $q = "select * from fabrix_admins where rememberme ='" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $remember) . "'";
+      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
       if($res) {
-        self::$admin = mysql_fetch_assoc($res);
-        if(mysql_num_rows($res) > 0) {
+        self::$admin = mysqli_fetch_assoc($res);
+        if(mysqli_num_rows($res) > 0) {
           $login = self::$admin['login'];
           $hash = self::$admin['password'];
           $hash = md5($login) . $hash;
@@ -105,28 +105,28 @@
 
     public static function is_admin($login) {
       $res = false;
-      $q = "select * from fabrix_admins where login='" . mysql_real_escape_string($login) . "'";
-      $res = mysql_query($q);
-      $res = $res && (mysql_num_rows($res) > 0);
+      $q = "select * from fabrix_admins where login='" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $login) . "'";
+      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      $res = $res && (mysqli_num_rows($res) > 0);
       return $res;
     }
 
     public static function admin_authorize($login, $password) {
-      $login = mysql_real_escape_string($login);
-      $password = mysql_real_escape_string($password);
+      $login = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $login);
+      $password = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $password);
       $q = "select * from fabrix_admins where login='$login'";
-      $res = mysql_query($q);
+      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
       if($res) {
-        self::$admin = mysql_fetch_assoc($res);
-        if(mysql_num_rows($res) > 0) {
+        self::$admin = mysqli_fetch_assoc($res);
+        if(mysqli_num_rows($res) > 0) {
           $hash = self::$admin['password'];
           if($hash == self::check($password, $hash)) {
             if(!is_null(_A_::$app->post('rememberme')) && _A_::$app->post('rememberme') == 1) {
               $hash = md5($login) . $hash;
               $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
               $hash = self::hash_($hash, $salt, self::$cost);
-              $q = "update fabrix_admins set rememberme = '" . mysql_real_escape_string($hash) . "' where id = " . self::$admin['id'];
-              if(mysql_query($q)) setcookie('_ar', $hash, time() + 60 * 60 * 24 * 30);
+              $q = "update fabrix_admins set rememberme = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $hash) . "' where id = " . self::$admin['id'];
+              if(mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q)) setcookie('_ar', $hash, time() + 60 * 60 * 24 * 30);
             }
             return true;
           }

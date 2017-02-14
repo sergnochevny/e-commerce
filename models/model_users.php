@@ -6,22 +6,22 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["email"])))))) . "%'";
-      if(isset($filter["full_name"])) $result[] = "CONCAT(bill_firstname, ' ', bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["full_name"])))))) . "%'";
-      if(isset($filter["organization"])) $result[] = "bill_organization LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["organization"])))))) . "%'";
-      if(isset($filter["postal"])) $result[] = "bill_postal LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["postal"])))))) . "%'";
-      if(isset($filter["phone"])) $result[] = "bill_phone LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["phone"])))))) . "%'";
-      if(isset($filter["city"])) $result[] = "bill_city LIKE '%" . implode('%',array_filter(explode(' ',mysql_real_escape_string(static::strip_data(static::sanitize($filter["city"])))))) . "%'";
+      if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["email"])))))) . "%'";
+      if(isset($filter["full_name"])) $result[] = "CONCAT(bill_firstname, ' ', bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["full_name"])))))) . "%'";
+      if(isset($filter["organization"])) $result[] = "bill_organization LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["organization"])))))) . "%'";
+      if(isset($filter["postal"])) $result[] = "bill_postal LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["postal"])))))) . "%'";
+      if(isset($filter["phone"])) $result[] = "bill_phone LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["phone"])))))) . "%'";
+      if(isset($filter["city"])) $result[] = "bill_city LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["city"])))))) . "%'";
       if(isset($filter["address"]))
-        $result[] = "(bill_address1 LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["address"]))) . "%'" .
-          "OR bill_address2 LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["address"]))) . "%')";
+        $result[] = "(bill_address1 LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["address"]))) . "%'" .
+          "OR bill_address2 LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["address"]))) . "%')";
       if(isset($filter["registered"])) {
-        $where = (!empty($filter["registered"]['from']) ? "date_registered >= STR_TO_DATE('" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["registered"]["from"]))) . "', '%m/%d/%Y')" : "") .
-          (!empty($filter["registered"]['to']) ? " AND date_registered <= STR_TO_DATE('" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["registered"]["to"]))) . "', '%m/%d/%Y')" : "");
+        $where = (!empty($filter["registered"]['from']) ? "date_registered >= STR_TO_DATE('" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["registered"]["from"]))) . "', '%m/%d/%Y')" : "") .
+          (!empty($filter["registered"]['to']) ? " AND date_registered <= STR_TO_DATE('" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["registered"]["to"]))) . "', '%m/%d/%Y')" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["country"])) $result[] = "bill_country = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["country"]))) . "'";
-      if(isset($filter["province"])) $result[] = "bill_province = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["province"]))) . "'";
+      if(isset($filter["country"])) $result[] = "bill_country = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["country"]))) . "'";
+      if(isset($filter["province"])) $result[] = "bill_province = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["province"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         if(strlen(trim($result)) > 0) {
@@ -36,8 +36,8 @@
       $response = 0;
       $query = "SELECT COUNT(*) FROM " . static::$table;
       $query .= static::build_where($filter);
-      if($result = mysql_query($query)) {
-        $response = mysql_fetch_row($result)[0];
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $response = mysqli_fetch_row($result)[0];
       }
       return $response;
     }
@@ -50,9 +50,9 @@
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
 
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_array($result)) {
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $res_count_rows = mysqli_num_rows($result);
+        while($row = mysqli_fetch_array($result)) {
           $response[] = $row;
         }
       }
@@ -91,9 +91,9 @@
       ];
       if(isset($id)) {
         $strSQL = "select * from " . static::$table . " where aid = '" . $id . "'";
-        $result = mysql_query($strSQL);
+        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $strSQL);
         if($result) {
-          $data = mysql_fetch_assoc($result);
+          $data = mysqli_fetch_assoc($result);
         }
       }
       return $data;
@@ -102,50 +102,50 @@
     public static function delete($id) {
       if(isset($id)) {
         $query = "select count(*) from fabrix_special_users where aid = $id";
-        $res = mysql_query($query);
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
         if($res) {
-          $amount = mysql_fetch_array($res)[0];
+          $amount = mysqli_fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
 //        $query = "delete from fabrix_special_users WHERE aid = $id";
-//        $res = mysql_query($query);
-//        if(!$res) throw new Exception(mysql_error());
+//        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+//        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
         $query = "DELETE FROM " . static::$table . " WHERE aid = $id";
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
       }
     }
 
     public static function save(&$data) {
       extract($data);
       if(isset($data['scenario']) && ($data['scenario'] !== 'short')){
-        $email = mysql_real_escape_string($email);
-        $bill_firstname = mysql_real_escape_string($bill_firstname);
-        $bill_lastname = mysql_real_escape_string($bill_lastname);
-        $bill_organization = mysql_real_escape_string($bill_organization);
-        $bill_address1 = mysql_real_escape_string($bill_address1);
-        $bill_address2 = mysql_real_escape_string($bill_address2);
-        $bill_province = mysql_real_escape_string($bill_province);
-        $bill_city = mysql_real_escape_string($bill_city);
-        $bill_country = mysql_real_escape_string($bill_country);
-        $bill_postal = mysql_real_escape_string($bill_postal);
-        $bill_phone = mysql_real_escape_string($bill_phone);
-        $bill_fax = mysql_real_escape_string($bill_fax);
-        $bill_email = mysql_real_escape_string($bill_email);
-        $ship_firstname = mysql_real_escape_string($ship_firstname);
-        $ship_lastname = mysql_real_escape_string($ship_lastname);
-        $ship_organization = mysql_real_escape_string($ship_organization);
-        $ship_address1 = mysql_real_escape_string($ship_address1);
-        $ship_address2 = mysql_real_escape_string($ship_address2);
-        $ship_city = mysql_real_escape_string($ship_city);
-        $ship_province = mysql_real_escape_string($ship_province);
-        $ship_country = mysql_real_escape_string($ship_country);
-        $ship_postal = mysql_real_escape_string($ship_postal);
-        $ship_phone = mysql_real_escape_string($ship_phone);
-        $ship_fax = mysql_real_escape_string($ship_fax);
-        $ship_email = mysql_real_escape_string($ship_email);
+        $email = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $email);
+        $bill_firstname = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_firstname);
+        $bill_lastname = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_lastname);
+        $bill_organization = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_organization);
+        $bill_address1 = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_address1);
+        $bill_address2 = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_address2);
+        $bill_province = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_province);
+        $bill_city = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_city);
+        $bill_country = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_country);
+        $bill_postal = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_postal);
+        $bill_phone = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_phone);
+        $bill_fax = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_fax);
+        $bill_email = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_email);
+        $ship_firstname = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_firstname);
+        $ship_lastname = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_lastname);
+        $ship_organization = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_organization);
+        $ship_address1 = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_address1);
+        $ship_address2 = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_address2);
+        $ship_city = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_city);
+        $ship_province = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_province);
+        $ship_country = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_country);
+        $ship_postal = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_postal);
+        $ship_phone = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_phone);
+        $ship_fax = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_fax);
+        $ship_email = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $ship_email);
 
         if(!isset($aid)) {
           $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname ," .
@@ -193,9 +193,9 @@
           $q .= "' WHERE  aid = $aid;";
         }
       } else {
-        $email = mysql_real_escape_string($email);
-        $bill_firstname = mysql_real_escape_string($bill_firstname);
-        $bill_lastname = mysql_real_escape_string($bill_lastname);
+        $email = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $email);
+        $bill_firstname = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_firstname);
+        $bill_lastname = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $bill_lastname);
 
         if(!isset($aid)) {
           $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname)" .
@@ -211,10 +211,10 @@
           $q .= "' WHERE  aid = $aid;";
         }
       }
-      $result = mysql_query($q);
-      if(!$result) throw new Exception(mysql_error());
+      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      if(!$result) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
       if(!isset($aid)) {
-        $aid = mysql_insert_id();
+        $aid = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix')) ;
       }
       return $aid;
     }

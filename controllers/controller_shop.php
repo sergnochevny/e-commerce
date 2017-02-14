@@ -225,9 +225,10 @@
       $search_form = $this->build_search_filter($filter);
       $idx = $this->load_search_filter_get_idx($filter);
       $pages = _A_::$app->session('pages');
+      $per_pages = _A_::$app->session('per_pages');
       $sort = $this->load_sort($filter);
       $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
-      $per_page = $this->per_page;
+      $per_page = !empty($per_pages[$this->controller][$idx]) ? $per_pages[$this->controller][$idx] : $this->per_page;
       $total = Model_Shop::get_total_count($filter);
       if(($total > $max_count_items) && ($max_count_items > 0)) $total = $max_count_items;
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);

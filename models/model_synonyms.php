@@ -22,10 +22,10 @@
           }
         }
       }
-      $result = $field . " LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($value))) . "%'";
+      $result = $field . " LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($value))) . "%'";
       if(isset($synonyms)) {
         foreach($synonyms as $synonym) {
-          $result .= " OR " . $field . " LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($synonym))) . "%'";
+          $result .= " OR " . $field . " LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($synonym))) . "%'";
         }
       }
       $result = "(" . $result . ")";
@@ -36,8 +36,8 @@
       $response = 0;
       $query = "SELECT COUNT(DISTINCT id) FROM " . self::$table;
       $query .= static::build_where($filter);
-      if($result = mysql_query($query)) {
-        $response = mysql_fetch_row($result)[0];
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $response = mysqli_fetch_row($result)[0];
       }
       return $response;
     }
@@ -49,9 +49,9 @@
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
 
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_assoc($result)) {
+      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        $res_count_rows = mysqli_num_rows($result);
+        while($row = mysqli_fetch_assoc($result)) {
           $response[] = $row;
         }
       }
@@ -66,9 +66,9 @@
         'synonyms' => ''
       ];
       if(!empty($id)) {
-        $result = mysql_query("select * from " . self::$table . " WHERE id='$id'");
+        $result = mysqli_query("select * from " . self::$table . " WHERE id='$id'");
         if($result) {
-          $data = mysql_fetch_assoc($result);
+          $data = mysqli_fetch_assoc($result);
         }
       }
       return $data;
@@ -76,15 +76,20 @@
 
     public static function save(&$data) {
       extract($data);
+      /**
+       * @var string $keywords
+       * @var string $synonyms
+       * @var $keywords
+       */
       if(isset($id)) {
         $query = "UPDATE " . static::$table . " SET keywords ='" . $keywords . "', synonyms ='" . $synonyms . "'  WHERE id = " . $id;
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
       } else {
         $query = "INSERT INTO " . static::$table . " (keywords, synonyms) VALUE ('" . $keywords . "','" . $synonyms . "')";
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
-        $id = mysql_insert_id();
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+        $id = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix'));
       }
       return $id;
     }
@@ -92,8 +97,8 @@
     public static function delete($id) {
       if(isset($id)) {
         $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
+        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
       }
     }
   }

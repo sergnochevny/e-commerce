@@ -28,8 +28,8 @@
       $data['synonyms'] = preg_replace("/\r/i", ",", $data['synonyms']);
       $data['keywords'] = preg_replace("/\n/i", ",", $data['keywords']);
       $data['synonyms'] = preg_replace("/\n/i", ",", $data['synonyms']);
-      $data['keywords'] = mysql_real_escape_string(implode(',', array_filter(array_map('trim', explode(',', $data['keywords'])))));
-      $data['synonyms'] = mysql_real_escape_string(implode(',', array_filter(array_map('trim', explode(',', $data['synonyms'])))));
+      $data['keywords'] = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), implode(',', array_filter(array_map('trim', explode(',', $data['keywords'])))));
+      $data['synonyms'] = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), implode(',', array_filter(array_map('trim', explode(',', $data['synonyms'])))));
     }
 
     protected function validate(&$data, &$error) {

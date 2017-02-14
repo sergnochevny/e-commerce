@@ -63,7 +63,7 @@
           src="<?= _A_::$app->router()->UrlTo('views/js/tooltipster.bundle.min.js'); ?>"></script>
   <script type='text/javascript'
           src="<?= _A_::$app->router()->UrlTo('views/js/jqmobile/jquery.mobile.custom.min.js'); ?>"></script>
-  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/search/search.min.js'); ?>'></script>
+  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/search/search.js'); ?>'></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/script.min.js'); ?>'></script>
   <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
 
