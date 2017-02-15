@@ -15,6 +15,7 @@
       </div>
       <div class="col-xs-6 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
+        <?= isset($show_by) ? $show_by : ''; ?>
       </div>
     </div>
 

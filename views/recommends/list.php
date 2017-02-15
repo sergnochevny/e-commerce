@@ -15,7 +15,7 @@
 <div class="row">
   <div class="col-xs-12 search-result-header">
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-6">
         <?php if(!empty(_A_::$app->get('cat')) || !empty(_A_::$app->get('mnf')) ||
           !empty(_A_::$app->get('ptrn')) || !empty(_A_::$app->get('clr')) || !is_null(_A_::$app->get('prc'))) : ?>
           <p class="woocommerce-result-count">
@@ -39,8 +39,9 @@
           </p>
         <?php endif; ?>
       </div>
-      <div class="col-sm-4 search-result-container text-right">
+      <div class="col-sm-6 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
+        <?= isset($show_by) ? $show_by : ''; ?>
       </div>
     </div>
   </div>

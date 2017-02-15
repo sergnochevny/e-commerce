@@ -7,8 +7,12 @@
     protected static function build_where(&$filter) {
       $result = "";
       if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["email"])))))) . "%'";
-      if(isset($filter["full_name"])) $result[] = "CONCAT(bill_firstname, ' ', bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["full_name"])))))) . "%'";
-      if(isset($filter["organization"])) $result[] = "bill_organization LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["organization"])))))) . "%'";
+      if (!empty($filter["full_name"]))
+        foreach (array_filter(explode(' ', $filter["full_name"])) as $item)
+          if (!empty($item)) $result[] = "CONCAT(bill_firstname, ' ', bill_lastname) LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($item))) . "%'";
+      if (!empty($filter["organization"]))
+        foreach (array_filter(explode(' ', $filter["organization"])) as $item)
+          if (!empty($item)) $result[] = "bill_organization LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($item))) . "%'";
       if(isset($filter["postal"])) $result[] = "bill_postal LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["postal"])))))) . "%'";
       if(isset($filter["phone"])) $result[] = "bill_phone LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["phone"])))))) . "%'";
       if(isset($filter["city"])) $result[] = "bill_city LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["city"])))))) . "%'";

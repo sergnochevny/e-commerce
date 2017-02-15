@@ -7,7 +7,9 @@
     protected static function build_where(&$filter) {
       $result = "";
       if(Controller_Admin::is_logged()) {
-        if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.pname"]))) . "%'";
+        if (!empty($filter["a.pname"]))
+          foreach (array_filter(explode(' ', $filter["a.pname"])) as $item)
+            if (!empty($item)) $result[] = "a.pname LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($item))) . "%'";
       } else {
         if(isset($filter["a.pname"])) $result[] = Model_Synonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
       }

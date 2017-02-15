@@ -6,9 +6,11 @@
  * Time: 12:51
  */
 if (!empty($per_page_items)): ?>
-<select id="per_page" data-limit class="showby">
-  <?php foreach ($per_page_items as $item): ?>
-    <option value="<?= $item ?>" <?= ($per_page == $item ? 'selected' : '') ?>><?= $item ?></option>
-  <?php endforeach; ?>
-</select>
+  <div class="pull-right outer-offset-left">
+    <select id="per_page" data-limit class="showby">
+      <?php foreach ($per_page_items as $item): ?>
+        <option value="<?= $item ?>" <?= ($per_page == $item ? 'selected' : '') ?>><?= $item ?></option>
+      <?php endforeach; ?>
+    </select>
+  </div>
 <?php endif; ?>

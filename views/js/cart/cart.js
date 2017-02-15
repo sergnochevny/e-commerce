@@ -35,7 +35,7 @@
               $('#msg').dialog({
                 draggable: false,
                 dialogClass: 'msg',
-                title: 'Basket',
+                title: 'Cart',
                 modal: true,
                 zIndex: 10000,
                 autoOpen: true,

@@ -25,8 +25,8 @@
       <hr>
     </li>
     <li>
-      <a data-waitloader data-link title="View my Basket" href="<?= _A_::$app->router()->UrlTo('cart'); ?>">
-        View my Basket
+      <a data-waitloader data-link title="View my Cart" href="<?= _A_::$app->router()->UrlTo('cart'); ?>">
+        View my Cart
       </a>
       <hr>
     </li>

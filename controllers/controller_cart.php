@@ -1171,8 +1171,8 @@
           $this->template->vars('SUM', $cart_sum);
 
           ob_start();
-          $message = 'This Fabric has been added to your Basket.<br>Click the Basket to view your Order.';
-          $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+          $message = 'This Fabric has been added to your Cart.<br>Click the Cart to view your Order.';
+          $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
           $this->main->view_layout('msg_add');
           $msg = ob_get_contents();
@@ -1193,7 +1193,7 @@
 
           ob_start();
           $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
-          $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+          $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
           $this->main->view_layout('msg_add');
           $msg = ob_get_contents();
@@ -1243,8 +1243,8 @@
           $this->template->vars('SUM', $cart_sum);
 
           ob_start();
-          $message = 'This Samples has been added to your Basket.<br>Click the Basket to view your Order.';
-          $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+          $message = 'This Samples has been added to your Cart.<br>Click the Cart to view your Order.';
+          $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
           $this->main->view_layout('msg_add');
           $msg = ob_get_contents();
@@ -1267,7 +1267,7 @@
 
           ob_start();
           $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
-          $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+          $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
           $this->main->view_layout('msg_add');
           $msg = ob_get_contents();

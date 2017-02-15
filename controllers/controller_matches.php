@@ -148,7 +148,7 @@
                   $product['format_price'] = $format_price;
                   $product['format_sale_price'] = $format_sale_price;
                   $cart_items[$product[$this->id_field]] = $product;
-                  $message .= 'The product ' . $product['pname'] . ' have been added to your Basket.<br>';
+                  $message .= 'The product ' . $product['pname'] . ' have been added to your Cart.<br>';
                 } else {
                   $message .= 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
                 }
@@ -165,16 +165,16 @@
 
             $cart_sum = "$" . number_format($SUM, 2);
 
-            $message .= '<br>Click the Basket to view your Order.';
-            $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+            $message .= '<br>Click the Cart to view your Order.';
+            $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
             $added = 1;
           } else
-            $message = 'Empty Matches Area. Nothing added to the Basket.';
+            $message = 'Empty Matches Area. Nothing added to the Cart.';
         } catch(Exception $e) {
-          $message = 'Empty Matches Area. Nothing added to the Basket.';
+          $message = 'Empty Matches Area. Nothing added to the Cart.';
         }
       } else
-        $message = 'Empty Matches Area. Nothing added to the Basket.';
+        $message = 'Empty Matches Area. Nothing added to the Cart.';
 
       $this->template->vars('message', $message);
       $this->main->view_layout('msg_add');

@@ -7,7 +7,9 @@
     protected static function build_where(&$filter) {
       $result = "";
       if(isset($filter["a.aid"])) $result[] = "a.aid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['a.aid'])))."'";
-      if(isset($filter['username'])) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . implode('% %',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["username"])))))) . "%'";
+      if (!empty($filter['username']))
+        foreach (array_filter(explode(' ', $filter['username'])) as $item)
+          if (!empty($item)) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($item))) . "%'";
       if(isset($filter["a.status"])) $result[] = "a.status = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.status"])))."'";
       if(isset($filter["a.order_date"])) {
         $where = (!empty($filter["a.order_date"]['from']) ? "a.order_date >= '" . strtotime(mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.order_date"]["from"])))) . "'" : "") .

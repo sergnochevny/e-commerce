@@ -88,7 +88,7 @@
 //                          if($('span#cart_amount').length>0){
           $('#clear_matches').trigger('click');
           var buttons = {
-            "Basket": function () {
+            "Cart": function () {
               $(this).remove();
               $('#content').waitloader('show');
               window.location = base_url + 'cart';
@@ -97,7 +97,7 @@
           $('#msg').dialog({
             draggable: false,
             dialogClass: 'msg',
-            title: 'Add All to Basket',
+            title: 'Add All to Cart',
             modal: true,
             zIndex: 10000,
             autoOpen: true,

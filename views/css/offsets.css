@@ -30,3 +30,9 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+.outer-offset-left{
+    margin-left: 15px;
+}
+.outer-offset-right{
+    margin-right: 15px;
+}

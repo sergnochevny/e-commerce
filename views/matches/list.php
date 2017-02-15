@@ -15,7 +15,7 @@
         Experiment with possible combinations and have fun.
         <br/>
         If you want to purchase a fabric in matches area
-        press to &laquo;Add All to Basket&raquo;.
+        press to &laquo;Add All to Cart&raquo;.
         <br/>
         If you want to remove a fabric from
         your &laquo;Matches&raquo; drag it to the trash
@@ -42,7 +42,7 @@
     <?php if(isset($list)): ?>
       <a class="button" id="all_to_basket"
          href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
-        Add All to Basket
+        Add All to Cart
       </a>
       <a class="button" id="clear_matches"
          href="<?= _A_::$app->router()->UrlTo('matches/clear'); ?>">

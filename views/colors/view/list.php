@@ -7,6 +7,7 @@
 <div class="col-xs-12 search-result-header search-result-container text-right">
   <div class="row">
     <span class="search-result">Showing <?= $count_rows; ?> results</span>
+    <?= isset($show_by) ? $show_by : ''; ?>
   </div>
 </div>
 <div class="col-xs-12">

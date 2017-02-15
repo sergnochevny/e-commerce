@@ -75,7 +75,7 @@
               $('#content').waitloader('remove');
 
               var buttons = {
-                "Basket": function () {
+                "Cart": function () {
                   $(this).remove();
                   $('#content').waitloader('show');
                   window.location = base_url + 'cart';
@@ -85,7 +85,7 @@
               $('#modal').dialog({
                 draggable: false,
                 dialogClass: 'msg',
-                title: 'Add to Basket',
+                title: 'Add to Cart',
                 modal: true,
                 zIndex: 10000,
                 autoOpen: true,

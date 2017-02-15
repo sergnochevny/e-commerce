@@ -9,8 +9,9 @@
 <div class="row">
   <div class="col-xs-12 search-result-header">
     <div class="row">
-      <div class="col-sm-4 col-sm-offset-8 search-result-container text-right">
+      <div class="col-xs-12 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
+        <?= isset($show_by) ? $show_by : ''; ?>
       </div>
     </div>
   </div>

@@ -8,7 +8,9 @@
       if (isset($filter['hidden']['view']) && $filter['hidden']['view']){
         $result = "";
         if(Controller_Admin::is_logged()) {
-          if(isset($filter["a.pattern"])) $result[] = "a.pattern LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.pattern"]))) . "%'";
+          if (!empty($filter["a.pattern"]))
+            foreach (array_filter(explode(' ', $filter["a.pattern"])) as $item)
+              if (!empty($item)) $result[] = "a.pattern LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($item))) . "%'";
         } else {
           if(isset($filter["a.pattern"])) $result[] = Model_Synonyms::build_synonyms_like("a.pattern", $filter["a.pattern"]);
         }

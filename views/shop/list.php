@@ -1,6 +1,6 @@
-<?php if(isset($page_title)) : ?>
+<?php if (isset($page_title)) : ?>
   <div class="col-xs-12 text-center afterhead-row">
-    <?php if(!empty($user_name)) : ?>
+    <?php if (!empty($user_name)) : ?>
       <h3 class="welcome">
         <span class="welcome-message">Welcome back,</span>
         <span class="user_name"><?= $user_name; ?></span>
@@ -21,32 +21,32 @@
 <div class="row">
   <div class="col-xs-12 search-result-header">
     <div class="row">
-      <div class="col-sm-8">
-        <?php if(!empty(_A_::$app->get('cat')) || !empty(_A_::$app->get('mnf')) ||
+      <div class="col-sm-6">
+        <?php if (!empty(_A_::$app->get('cat')) || !empty(_A_::$app->get('mnf')) ||
           !empty(_A_::$app->get('ptrn')) || !empty(_A_::$app->get('clr')) || !is_null(_A_::$app->get('prc'))
         ) : ?>
           <p class="woocommerce-result-count">
             <?php
-              if(!empty(_A_::$app->get('cat'))) {
-                echo 'CATEGORY: ' . $category_name;
-              }
-              if(!empty(_A_::$app->get('mnf'))) {
-                echo 'MANUFACTURER: ' . $mnf_name;
-              }
-              if(!empty(_A_::$app->get('ptrn'))) {
-                echo 'PATTERN: ' . $ptrn_name;
-              }
-              if(!empty(_A_::$app->get('clr'))) {
-                echo 'COLOR: ' . $color_name;
-              }
-              if(!is_null(_A_::$app->get('prc'))) {
-                echo 'PRICE: ' . ((isset($prc_from) && !empty($prc_from)) ? ' $' . number_format($prc_from, 2) : ' $0.00') . ((isset($prc_to) && !empty($prc_to)) ? ' - $' . number_format($prc_to, 2) : ' and above');
-              }
+            if (!empty(_A_::$app->get('cat'))) {
+              echo 'CATEGORY: ' . $category_name;
+            }
+            if (!empty(_A_::$app->get('mnf'))) {
+              echo 'MANUFACTURER: ' . $mnf_name;
+            }
+            if (!empty(_A_::$app->get('ptrn'))) {
+              echo 'PATTERN: ' . $ptrn_name;
+            }
+            if (!empty(_A_::$app->get('clr'))) {
+              echo 'COLOR: ' . $color_name;
+            }
+            if (!is_null(_A_::$app->get('prc'))) {
+              echo 'PRICE: ' . ((isset($prc_from) && !empty($prc_from)) ? ' $' . number_format($prc_from, 2) : ' $0.00') . ((isset($prc_to) && !empty($prc_to)) ? ' - $' . number_format($prc_to, 2) : ' and above');
+            }
             ?>
           </p>
         <?php endif; ?>
       </div>
-      <div class="col-sm-4 search-result-container text-right">
+      <div class="col-sm-6 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
         <?= isset($show_by) ? $show_by : ''; ?>
       </div>

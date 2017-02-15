@@ -1291,6 +1291,7 @@ form[data-search] > .row > .panel > .panel-heading {
 }
 
 .search-result {
+    line-height: 4.5em;
     color: #666;
     padding-bottom: 1px;
     border-bottom: 1px solid #D0D0D0;
