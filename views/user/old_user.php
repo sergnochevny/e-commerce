@@ -43,23 +43,35 @@
             </form>
           </div>
         </div>
-        <div class="col-xs-12">
-          <div class="row inner-offset-vertical-top">
-            <a id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
-          </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="row">
+          <a id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
         </div>
       </div>
 
     </div>
 
-    <div class="col-xs-12 col-md-6 panel-default-vertical-sizing">
-      <div class="col-xs-12 panel panel-default">
-        <div class="row">
-          <div class="col-xs-12 text-center">
-            <h4>Register with iluvfabrix:</h4>
+    <div class="col-xs-12 col-sm-6">
+      <div class="col-xs-12 panel panel-default panel-default-vertical-sizing register-panel">
+        <div class="col-xs-12">
+          <div class="row">
+            <p>
+              Please click "Create Account" and become a registered customer to use the "Fabric Favorites",
+              "Recommendations" and "My Account" feature.
+            </p>
+            <p>
+              If you have not previously registered
+              with I luv fabrix, please click
+              CREATE ACCOUNT.
+              (Credit Card information NOT REQUIRED)
+            </p>
           </div>
-          <div class="col-xs-12" data-role="form_content"
-               data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+        </div>
+        <div class="col-xs-12 register-button">
+          <div class="row text-center">
+            <a id="register_user" class="btn button" href="<?= $registration_url ?>">Create Account</a>
           </div>
         </div>
       </div>
@@ -69,4 +81,3 @@
 </div>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
         type="text/javascript"></script>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
