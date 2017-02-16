@@ -702,6 +702,7 @@ a img.aligncenter {
 }
 
 #menu-button {
+    margin-right: 0;
     border: 0;
     background-color: transparent !important;
     position: absolute;
@@ -741,6 +742,7 @@ a img.aligncenter {
 
 .hamburger::before {
     top: -1px;
+    right: 0;
 }
 
 .hamburger .inner {
@@ -750,6 +752,7 @@ a img.aligncenter {
 
 .hamburger::after {
     top: 19px;
+    right: 0;
 }
 
 .menu-open .hamburger {

@@ -1,12 +1,10 @@
 <?php if(Controller_Admin::is_logged()): ?>
-  <div class="col-xs-8 col-xs-pull-8 navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
-       data-target=".site-navigation .navbar-collapse" id="menu-button">
-    <div class="row pull-right">
-      <div class="hamburger">
-        <div class="inner"></div>
-      </div>
+  <button type="button" class="navbar-toggle toggle-menu" data-toggle="collapse"
+          data-target=".site-navigation .navbar-collapse" id="menu-button">
+    <div class="hamburger">
+      <div class="inner"></div>
     </div>
-  </div>
+  </button>
   <div>
     <div class="col-xs-12 pull-right navbar-collapse collapse navbar-collapse-top admin-menubar">
       <ul id="menu-header-menu" class="site-menu nav navbar-nav navbar-right">

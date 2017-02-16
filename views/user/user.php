@@ -4,7 +4,7 @@
       <h2 class="page-title">Login</h2>
     </div>
 
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-md-6">
       <div class="col-xs-12 panel panel-default panel-default-vertical-sizing authorize-panel">
         <div class="col-xs-12">
           <div class="row">
@@ -49,9 +49,7 @@
           </div>
         </div>
       </div>
-
     </div>
-
     <div class="col-xs-12 col-md-6 panel-default-vertical-sizing">
       <div class="col-xs-12 panel panel-default">
         <div class="row">
@@ -64,7 +62,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
