@@ -107,7 +107,7 @@
     }
 
     public static function escape($str) {
-      return static::escape($str);
+      return mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $str);
     }
 
     public static function error() {
@@ -135,10 +135,10 @@
     }
 
     public static function affected_rows() {
-      return mysqli_affected_rows();
+      return mysqli_affected_rows(_A_::$app->getDBConnection('iluvfabrix'));
     }
 
     public static function free_result($result) {
-      return mysqli_free_result($result);
+      mysqli_free_result($result);
     }
   }
