@@ -11,8 +11,8 @@
       ];
       if(isset($id)) {
         $query = "SELECT * FROM blog_groups WHERE id = '$id'";
-        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-        if($result) $response = mysqli_fetch_assoc($result);
+        $result = static::query( $query);
+        if($result) $response = static::fetch_assoc($result);
       }
       return $response;
     }
@@ -22,8 +22,8 @@
       $query = "SELECT COUNT(DISTINCT a.id) FROM " . self::$table . " a";
       $query .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
       $query .= static::build_where($filter);
-      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-        $response = mysqli_fetch_row($result)[0];
+      if($result = static::query( $query)) {
+        $response = static::fetch_row($result)[0];
       }
       return $response;
     }
@@ -37,10 +37,10 @@
       $q .= " GROUP BY a.id, a.name";
       $q .= static::build_order($sort);
       if($limit != 0) $q .= " LIMIT $start, $limit";
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      $result = static::query( $q);
       if($result) {
-        $res_count_rows = mysqli_num_rows($result);
-        while($row = mysqli_fetch_array($result)) {
+        $res_count_rows = static::num_rows($result);
+        while($row = static::fetch_array($result)) {
           $res[] = $row;
         }
       }
@@ -50,31 +50,31 @@
     public static function delete($id) {
       if(isset($id)) {
         $query = "SELECT COUNT(*) FROM blog_group_posts WHERE id = $id";
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        $res = static::query( $query);
         if($res) {
-          $amount = mysqli_fetch_array($res)[0];
+          $amount = static::fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
         $query = "DELETE FROM blog_groups WHERE id = $id";
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+        $res = static::query( $query);
+        if(!$res) throw new Exception(static::error());
       }
     }
 
     public static function save(&$data) {
       extract($data);
-      $name = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $name);
+      $name = static::escape( $name);
       if(isset($id)) {
         $query = 'UPDATE blog_groups SET name = "' . $name . '" WHERE id = ' . $id;
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+        $res = static::query( $query);
+        if(!$res) throw new Exception(static::error());
       } else {
         $query = 'INSERT INTO blog_groups (name) VALUE ("' . $name . '")';
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-        $id = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix')) ;
+        $res = static::query( $query);
+        if(!$res) throw new Exception(static::error());
+        $id = static::last_id() ;
       }
       return $id;
     }

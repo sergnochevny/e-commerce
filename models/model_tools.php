@@ -43,8 +43,8 @@
             " WHERE b.post_status = 'publish'";
           break;
       }
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-      while($row = mysqli_fetch_assoc($result)) {
+      $result = static::query( $q);
+      while($row = static::fetch_assoc($result)) {
         $res[] = $row;
       }
       return $res;
@@ -60,8 +60,8 @@
         if(!empty(_A_::$app->router()->action) && (_A_::$app->router()->controller !== _A_::$app->router()->action))
           $q .= " AND action = '" . _A_::$app->router()->action . "'";
         else $q .= " AND action is null";
-        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-        $row = mysqli_fetch_array($result);
+        $result = static::query( $q);
+        $row = static::fetch_array($result);
         if(!empty($row['id'])) {
           $title = $row['title'];
           $description = $row['description'];

@@ -17,29 +17,29 @@
                 if(is_array($val[1])) {
                   foreach($val[1] as $like) {
                     if(strlen($where1) > 0) $where1 .= ' or ';
-                    $where1 .= $key . " " . $val[0] . " '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($like))) . "%'";
+                    $where1 .= $key . " " . $val[0] . " '%" . static::escape(static::strip_data(static::sanitize($like))) . "%'";
                   }
                 } else {
-                  $where1 .= $key . " " . $val[0] . " '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($val[1]))) . "%'";
+                  $where1 .= $key . " " . $val[0] . " '%" . static::escape(static::strip_data(static::sanitize($val[1]))) . "%'";
                 }
                 break;
               case '=':
                 if(is_array($val[1])) {
                   foreach($val[1] as $like) {
                     if(strlen($where1) > 0) $where1 .= ' or ';
-                    $where1 .= $key . " " . $val[0] . " '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($like))) . "'";
+                    $where1 .= $key . " " . $val[0] . " '" . static::escape(static::strip_data(static::sanitize($like))) . "'";
                   }
                 } else {
-                  $where1 .= $key . " " . $val[0] . " '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($val[1]))) . "'";
+                  $where1 .= $key . " " . $val[0] . " '" . static::escape(static::strip_data(static::sanitize($val[1]))) . "'";
                 }
                 break;
               case 'between':
                 if(!empty($val[1]['from'])) {
-                  $where1 = $key . " >= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($val[1]['from']))) . "'";
+                  $where1 = $key . " >= '" . static::escape(static::strip_data(static::sanitize($val[1]['from']))) . "'";
                 }
                 if(!empty($val[1]['to'])) {
                   if(strlen($where1) > 0) $where1 .= " and ";
-                  $where1 .= $key . " <= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($val[1]['to']))) . "'";
+                  $where1 .= $key . " <= '" . static::escape(static::strip_data(static::sanitize($val[1]['to']))) . "'";
                 }
                 break;
             }
@@ -70,9 +70,9 @@
     public static function get_fields() {
       $response = null;
       $query = "DESCRIBE " . static::$table;
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+      $result = static::query($query);
       if($result) {
-        while($row = mysqli_fetch_assoc($result)) {
+        while($row = static::fetch_assoc($result)) {
           $response[$row['Field']] = $row;
         }
       }
@@ -96,9 +96,49 @@
         if(function_exists('get_magic_quotes_gpc') == true && get_magic_quotes_gpc() == 1) {
           $data = stripslashes($data);
         }
-        $data = htmlspecialchars($data);
+        $data = nl2br(htmlspecialchars($data));
         $data = trim($data);
       }
       return $data;
+    }
+
+    public static function query($query) {
+      return mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+    }
+
+    public static function escape($str) {
+      return static::escape($str);
+    }
+
+    public static function error() {
+      return mysqli_error(_A_::$app->getDBConnection('iluvfabrix'));
+    }
+
+    public static function last_id() {
+      return mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix'));
+    }
+
+    public static function fetch_assoc($from) {
+      return mysqli_fetch_assoc($from);
+    }
+
+    public static function fetch_array($from, $resulttype = MYSQLI_BOTH) {
+      return mysqli_fetch_array($from, $resulttype);
+    }
+
+    public static function fetch_row($from) {
+      return mysqli_fetch_row($from);
+    }
+
+    public static function num_rows($from) {
+      return mysqli_num_rows($from);
+    }
+
+    public static function affected_rows() {
+      return mysqli_affected_rows();
+    }
+
+    public static function free_result($result) {
+      return mysqli_free_result($result);
     }
   }

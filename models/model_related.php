@@ -6,10 +6,10 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["b.pvisible"]))) . "'";
+      if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["b.pvisible"]))) . "'";
       if(isset($filter['hidden']["b.pnumber"])) $result[] = "b.pnumber is not null";
       if(isset($filter['hidden']["b.image1"])) $result[] = "b.image1 is not null";
-      if(isset($filter['hidden']["a.pid"])) $result[] = "a.pid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["a.pid"]))) . "'";
+      if(isset($filter['hidden']["a.pid"])) $result[] = "a.pid = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.pid"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
       }
@@ -25,8 +25,8 @@
       ];
       if(isset($id)) {
         $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
-        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-        if($result) $response = mysqli_fetch_assoc($result);
+        $result = static::query( $query);
+        if($result) $response = static::fetch_assoc($result);
       }
       return $response;
     }
@@ -37,8 +37,8 @@
       $query .= " LEFT JOIN fabrix_products b ON b.pid = a.r_pid";
       $query .= " LEFT JOIN fabrix_products c ON c.pid = a.pid";
       $query .= static::build_where($filter);
-      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-        $response = mysqli_fetch_row($result)[0];
+      if($result = static::query( $query)) {
+        $response = static::fetch_row($result)[0];
       }
       return $response;
     }
@@ -52,12 +52,12 @@
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
 
-      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-        $res_count_rows = mysqli_num_rows($result);
+      if($result = static::query( $query)) {
+        $res_count_rows = static::num_rows($result);
         $sys_hide_price = Model_Price::sysHideAllRegularPrices();
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
-        while($row = mysqli_fetch_array($result)) {
+        while($row = static::fetch_array($result)) {
           $response[] = Model_Shop::prepare_layout_product($row, $cart, $sys_hide_price);
         }
       }
@@ -67,17 +67,17 @@
     public static function save(&$data) {
       extract($data);
       $query = "REPLACE INTO " . static::$table . " (pid, r_pid) VALUE ('" . $pid . "', '" . $r_pid . "')";
-      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-      if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-      $id = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix')) ;
+      $res = static::query( $query);
+      if(!$res) throw new Exception(static::error());
+      $id = static::last_id() ;
       return $id;
     }
 
     public static function delete($id) {
       if(isset($id)) {
         $query = "DELETE FROM  " . static::$table . " WHERE id = $id";
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+        $res = static::query( $query);
+        if(!$res) throw new Exception(static::error());
       }
     }
 

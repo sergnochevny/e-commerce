@@ -6,26 +6,26 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["a.aid"])) $result[] = "a.aid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['a.aid'])))."'";
+      if(isset($filter["a.aid"])) $result[] = "a.aid = '" . static::escape( static::strip_data(static::sanitize($filter['a.aid'])))."'";
       if (!empty($filter['username']))
         foreach (array_filter(explode(' ', $filter['username'])) as $item)
-          if (!empty($item)) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($item))) . "%'";
-      if(isset($filter["a.status"])) $result[] = "a.status = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.status"])))."'";
+          if (!empty($item)) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . static::escape( static::strip_data(static::sanitize($item))) . "%'";
+      if(isset($filter["a.status"])) $result[] = "a.status = '" . static::escape( static::strip_data(static::sanitize($filter["a.status"])))."'";
       if(isset($filter["a.order_date"])) {
-        $where = (!empty($filter["a.order_date"]['from']) ? "a.order_date >= '" . strtotime(mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.order_date"]["from"])))) . "'" : "") .
-          (!empty($filter["a.order_date"]['to']) ? " AND a.order_date <= '" . strtotime(mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.order_date"]["to"])))) . "'" : "");
+        $where = (!empty($filter["a.order_date"]['from']) ? "a.order_date >= '" . strtotime(static::escape( static::strip_data(static::sanitize($filter["a.order_date"]["from"])))) . "'" : "") .
+          (!empty($filter["a.order_date"]['to']) ? " AND a.order_date <= '" . strtotime(static::escape( static::strip_data(static::sanitize($filter["a.order_date"]["to"])))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.trid"])) $result[] = "a.trid LIKE '%" . implode('%',array_filter(explode(' ',mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.trid"])))))) . "%'";
-      if(isset($filter["c.sid"])) $result[] = "c.sid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["c.sid"]))) . "'";
+      if(isset($filter["a.trid"])) $result[] = "a.trid LIKE '%" . implode('%',array_filter(explode(' ',static::escape( static::strip_data(static::sanitize($filter["a.trid"])))))) . "%'";
+      if(isset($filter["c.sid"])) $result[] = "c.sid = '" . static::escape( static::strip_data(static::sanitize($filter["c.sid"]))) . "'";
 
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']["a.aid"])) $result[] = "a.aid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']['a.aid'])))."'";
-      if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["c.sid"]))) . "'";
+      if(isset($filter['hidden']["a.aid"])) $result[] = "a.aid = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']['a.aid'])))."'";
+      if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["c.sid"]))) . "'";
 
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
@@ -55,9 +55,9 @@
                     fo.oid = ' . $arr['oid'] . '
             ';
 
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+        $res = static::query( $query);
         if($res) {
-          while($row = mysqli_fetch_assoc($res)) {
+          while($row = static::fetch_assoc($res)) {
             $result[] = $row;
           }
         }
@@ -74,8 +74,8 @@
           " track_code = '" . $track_code . "'," .
           " end_date = STR_TO_DATE('" . $end_date . "', '%m/%d/%Y')" .
           " WHERE oid = '" . $oid . "'";
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-        if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+        $res = static::query( $query);
+        if(!$res) throw new Exception(static::error());
       }
       return $oid;
     }
@@ -90,8 +90,8 @@
       ];
       if(isset($id)) {
         $query = "SELECT * FROM " . static::$table . " WHERE oid='$id'";
-        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-        if($result) $response = mysqli_fetch_assoc($result);
+        $result = static::query( $query);
+        if($result) $response = static::fetch_assoc($result);
       }
       return $response;
     }
@@ -102,9 +102,9 @@
         $query .= "LEFT JOIN fabrix_orders orders ON spec_usage.oid = orders.oid ";
         $query .= "LEFT JOIN fabrix_accounts users ON orders.aid = users.aid ";
         $query .= "WHERE spec_usage.sid = '$id'";
-        if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
+        if($result = static::query( $query)) {
           $rows = [];
-          while($row = mysqli_fetch_array($result)) {
+          while($row = static::fetch_array($result)) {
             $rows[] = $row;
           }
           return $rows;
@@ -120,8 +120,8 @@
       $query .= " left join fabrix_accounts b on a.aid = b.aid";
       $query .= " left join fabrix_specials_usage c on a.oid = c.oid";
       $query .= static::build_where($filter);
-      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-        $response = mysqli_fetch_row($result)[0];
+      if($result = static::query( $query)) {
+        $response = static::fetch_row($result)[0];
       }
       return $response;
     }
@@ -137,9 +137,9 @@
       $query .= static::build_order($sort);
       if ( $limit != 0 ) $query .= " LIMIT $start, $limit";
 
-      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-        $res_count_rows = mysqli_num_rows($result);
-        while($row = mysqli_fetch_array($result)) {
+      if($result = static::query( $query)) {
+        $res_count_rows = static::num_rows($result);
+        while($row = static::fetch_array($result)) {
           $response[] = $row;
         }
       }
@@ -178,8 +178,8 @@
         (!empty($data['shop_samples_qty_multiple_min']) ? $data['shop_samples_qty_multiple_min'] : SAMPLES_QTY_MULTIPLE_MIN),
         (!empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX));
 
-      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sSQL);
-      if($res) return mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix')) ;
+      $res = static::query( $sSQL);
+      if($res) return static::last_id() ;
       return null;
     }
 
@@ -190,7 +190,7 @@
         " VALUES (%u, %u,'%s', '%s', '%s','%s', '%s', '%s', %u);";
       $sql = sprintf($q, $order_id, $product_id, $product_number, $product_name,
                      $quantity, $price, $discount, $sale_price, $is_sample);
-      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sql);
+      $res = static::query( $sql);
       return $res;
     }
 
@@ -198,19 +198,19 @@
       if(isset($discountIds) && is_array($discountIds) && (count($discountIds) > 0)) {
         $discounts = array_unique($discountIds, SORT_NUMERIC);
         $delete = sprintf("DELETE from fabrix_specials_usage WHERE oid = %u", $oid);
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $delete);
+        $res = static::query( $delete);
         foreach($discounts as $sid) {
           $sSQL = sprintf("INSERT INTO fabrix_specials_usage (sid, oid) values (%u, %u)", $sid, $oid);
-          mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sSQL);
+          static::query( $sSQL);
         }
       }
     }
 
     public static function get_order_details($oid) {
-      $results = mysqli_query("select * from fabrix_order_details WHERE order_id='$oid'");
+      $results = static::query( "select * from fabrix_order_details WHERE order_id='$oid'");
       if($results) {
         $rows = [];
-        while($row = mysqli_fetch_array($results)) {
+        while($row = static::fetch_array($results)) {
           $rows[] = $row;
         }
         return $rows;

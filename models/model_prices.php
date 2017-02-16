@@ -26,8 +26,8 @@
     protected static function build_where(&$filter) {
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $result = "";
-        if(isset($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]))) . "'";
-        if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["a.pvisible"]))) . "'";
+        if(isset($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]))) . "'";
+        if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.pvisible"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');
@@ -68,8 +68,8 @@
 //
 //      $res_count_rows = PRICE_GROUPS_COUNT;
 //
-//      if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-//        $row = mysqli_fetch_array($result);
+//      if($result = static::query( $query)) {
+//        $row = static::fetch_array($result);
 //        $count = $row['count'];
 //        $step = ceil($count / $res_count_rows);
 //        $limit = $limit + $start;
@@ -88,8 +88,8 @@
 //            $query .= " LIMIT " . $from . "," . $step;
 //            $query .= ") s";
 //          }
-//          if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-//            while($row = mysqli_fetch_array($result)) {
+//          if($result = static::query( $query)) {
+//            while($row = static::fetch_array($result)) {
 //              $min_price = round($row['min_price']);
 //              $max_price = round($row['max_price']);
 //              $response[] = ['min_price' => $min_price, 'max_price' => $max_price];
@@ -105,8 +105,8 @@
 //            $query .= " ORDER BY a.priceyard";
 //            $query .= " LIMIT " . $from . "," . $step;
 //            $query .= ") s";
-//            if($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-//              $row = mysqli_fetch_array($result);
+//            if($result = static::query( $query)) {
+//              $row = static::fetch_array($result);
 //              $response[] = ['min_price' => $row['min_price'], 'max_price' => $row['max_price']];
 //            }
 //          }

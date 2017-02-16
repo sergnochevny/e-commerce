@@ -7,20 +7,20 @@
     protected static function build_where(&$filter) {
       $result = "";
       if(isset($filter["scenario"]) && ($filter["scenario"] == 'orders')){
-        if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["c.sid"]))) . "'";
+        if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["c.sid"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');
         }
       } else {
-        if(isset($filter["sid"])) $result[] = "sid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["sid"]))) . "'";
-        if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["promotion_type"]))) . "'";
-        if(isset($filter["user_type"])) $result[] = "user_type = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["user_type"]))) . "'";
-        if(isset($filter["discount_type"])) $result[] = "discount_type = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["discount_type"]))) . "'";
-        if(isset($filter["product_type"])) $result[] = "product_type = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["product_type"]))) . "'";
-        if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["coupon_code"])))))) . "%'";
-        if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['date_start'])))) . "'" : "");
-        if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['date_end'])))) . "'" : "");
+        if(isset($filter["sid"])) $result[] = "sid = '" . static::escape( static::strip_data(static::sanitize($filter["sid"]))) . "'";
+        if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . static::escape( static::strip_data(static::sanitize($filter["promotion_type"]))) . "'";
+        if(isset($filter["user_type"])) $result[] = "user_type = '" . static::escape( static::strip_data(static::sanitize($filter["user_type"]))) . "'";
+        if(isset($filter["discount_type"])) $result[] = "discount_type = '" . static::escape( static::strip_data(static::sanitize($filter["discount_type"]))) . "'";
+        if(isset($filter["product_type"])) $result[] = "product_type = '" . static::escape( static::strip_data(static::sanitize($filter["product_type"]))) . "'";
+        if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', static::escape( static::strip_data(static::sanitize($filter["coupon_code"])))))) . "%'";
+        if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(static::escape( static::strip_data(static::sanitize($filter['date_start'])))) . "'" : "");
+        if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(static::escape( static::strip_data(static::sanitize($filter['date_end'])))) . "'" : "");
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           if(strlen(trim($result)) > 0) {
@@ -49,15 +49,15 @@
       if(!isset($sid)) $sid = 0;
       $iCnt = 0;
       $sSQL = sprintf("SELECT sid FROM " . static::$table . " WHERE coupon_code='%s';", $cde);
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sSQL) or die(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-      $iCnt = mysqli_num_rows($result);
+      $result = static::query( $sSQL) or die(static::error());
+      $iCnt = static::num_rows($result);
       if($iCnt == 1) { #verify that it is not this record with the same coupon code
-        $rs = mysqli_fetch_row($result);
+        $rs = static::fetch_row($result);
         if($sid == $rs[0]) {
           $iCnt = 0;
         }
       }
-      mysqli_free_result($result);
+      static::free_result($result);
 
       if($iCnt > 0) return true;
       return false;
@@ -89,9 +89,9 @@
       ];
       if(isset($id)) {
         $q = "select * from " . static::$table . " where sid = '" . $id . "'";
-        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+        $result = static::query( $q);
         if($result) {
-          $data = mysqli_fetch_assoc($result);
+          $data = static::fetch_assoc($result);
         }
       }
       return $data;
@@ -106,9 +106,9 @@
         $q .= " left join fabrix_specials_usage c on a.oid = c.oid";
       } else $q = "SELECT COUNT(sid) FROM " . static::$table;
       $q .= self::build_where($filter);
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      $result = static::query( $q);
       if($result) {
-        $row = mysqli_fetch_array($result);
+        $row = static::fetch_array($result);
         $res = $row[0];
       }
       return $res;
@@ -126,10 +126,10 @@
       $q .= self::build_where($filter);
       $q .= static::build_order($sort);
       if($limit != 0) $q .= " LIMIT $start, $limit";
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      $result = static::query( $q);
       if($result) {
-        $res_count_rows = mysqli_num_rows($result);
-        while($row = mysqli_fetch_assoc($result)) {
+        $res_count_rows = static::num_rows($result);
+        while($row = static::fetch_assoc($result)) {
           $res[] = $row;
         }
       }
@@ -138,9 +138,9 @@
 
     public static function save(&$data) {
       extract($data);
-      $discount_comment1 = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $discount_comment1);
-      $discount_comment2 = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $discount_comment2);
-      $discount_comment3 = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $discount_comment3);
+      $discount_comment1 = static::escape( $discount_comment1);
+      $discount_comment2 = static::escape( $discount_comment2);
+      $discount_comment3 = static::escape( $discount_comment3);
       if(isset($sid)) {
         $q = "UPDATE " . static::$table .
           " SET" .
@@ -163,7 +163,7 @@
           " date_start='$date_start'," .
           " date_end='$date_end'" .
           " WHERE sid ='$sid'";
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+        $res = static::query( $q);
       } else {
         $q = "INSERT INTO " . static::$table .
           " SET" .
@@ -186,28 +186,28 @@
           " date_start='$date_start'," .
           " date_end='$date_end'";
 
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-        if($res) $sid = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix')) ;
+        $res = static::query( $q);
+        if($res) $sid = static::last_id() ;
       }
       if($res) {
-        $res = mysqli_query("DELETE FROM fabrix_specials_users WHERE sid ='$sid'");
+        $res = static::query("DELETE FROM fabrix_specials_users WHERE sid ='$sid'");
         if($res && ($user_type == 4)) {
           foreach($users as $aid) {
-            $res = mysqli_query("INSERT INTO  fabrix_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
+            $res = static::query("INSERT INTO  fabrix_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
             if(!$res) break;
           }
         }
       }
       if($res) {
-        $res = mysqli_query("DELETE FROM fabrix_specials_products WHERE sid='$sid'");
+        $res = static::query("DELETE FROM fabrix_specials_products WHERE sid='$sid'");
         if($res && isset($product_type) && ($product_type > 1)) {
           foreach($filter_products as $pid) {
-            $res = mysqli_query("INSERT INTO  fabrix_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
+            $res = static::query("INSERT INTO  fabrix_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
             if(!$res) break;
           }
         }
       }
-      if(!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+      if(!$res) throw new Exception(static::error());
       return $sid;
     }
 
@@ -225,12 +225,12 @@
         }
         if($user_type == '4') {
           if(strlen($select > 1)) {
-            $results = mysqli_query(
+            $results = static::query(
               "select * from fabrix_accounts" .
               " where aid in($select)" .
               " order by email, bill_firstname, bill_lastname"
             );
-            while($row = mysqli_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $users[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
             }
           }
@@ -251,12 +251,12 @@
               $select = implode(',', isset($data['prod_select']) ? array_keys($data['prod_select']) : []);
             }
             if(strlen($select) > 0) {
-              $results = mysqli_query(
+              $results = static::query(
                 "select * from fabrix_products" .
                 " where pid in ($select)" .
                 " order by pnumber, pname"
               );
-              while($row = mysqli_fetch_array($results)) {
+              while($row = static::fetch_array($results)) {
                 $filter_products[$row[0]] = $row[2] . '-' . $row[1];
               }
             }
@@ -271,12 +271,12 @@
               $select = implode(',', isset($data['mnf_select']) ? array_keys($data['mnf_select']) : []);
             }
             if(strlen($select) > 0) {
-              $results = mysqli_query(
+              $results = static::query(
                 "select * from fabrix_manufacturers" .
                 " where id in ($select)" .
                 " order by manufacturer"
               );
-              while($row = mysqli_fetch_array($results)) {
+              while($row = static::fetch_array($results)) {
                 $filter_products[$row[0]] = $row[1];
               }
             }
@@ -291,12 +291,12 @@
               $select = implode(',', isset($data['cat_select']) ? array_keys($data['cat_select']) : []);
             }
             if(strlen($select) > 0) {
-              $results = mysqli_query(
+              $results = static::query(
                 "select * from fabrix_categories " .
                 " where cid in ($select)" .
                 " order by cname"
               );
-              while($row = mysqli_fetch_array($results)) {
+              while($row = static::fetch_array($results)) {
                 $filter_products[$row[0]] = $row[1];
               }
             }
@@ -311,50 +311,50 @@
       $data = [];
       switch($type) {
         case 'users':
-          $results = mysqli_query(
+          $results = static::query(
             "select a.* from fabrix_specials_users b" .
             " inner join fabrix_accounts a on b.aid=a.aid " .
             " where sid='$id'" .
             " order by a.email, a.bill_firstname, a.bill_lastname"
           );
           if($results)
-            while($row = mysqli_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $data[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
             }
           break;
         case 'prod':
-          $results = mysqli_query(
+          $results = static::query(
             "select a.* from fabrix_specials_products b" .
             " inner join fabrix_products a on b.pid=a.pid " .
             " where b.sid='$id' and b.stype = 2" .
             " order by a.pnumber, a.pname"
           );
           if($results)
-            while($row = mysqli_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $data[$row[0]] = $row[2] . '-' . $row[1];
             }
           break;
         case 'mnf':
-          $results = mysqli_query(
+          $results = static::query(
             "select a.* from fabrix_specials_products b" .
             " inner join fabrix_manufacturers a on b.pid=a.id " .
             " where b.sid='$id' and b.stype = 4" .
             " order by a.manufacturer"
           );
           if($results)
-            while($row = mysqli_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $data[$row[0]] = $row[1];
             }
           break;
         case 'cat':
-          $results = mysqli_query(
+          $results = static::query(
             "select a.* from fabrix_specials_products b" .
             " inner join fabrix_categories a on b.pid=a.cid " .
             " where b.sid='$id' and b.stype = 3" .
             " order by a.cname"
           );
           if($results)
-            while($row = mysqli_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $data[$row[0]] = $row[1];
             }
           break;
@@ -366,7 +366,7 @@
       $filter = null;
       $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
       $start = isset($start) ? $start : 0;
-      $search = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), self::sanitize($search));
+      $search = static::escape( self::sanitize($search));
       switch($type) {
         case 'users':
           $q = "select count(aid) from fabrix_accounts";
@@ -375,8 +375,8 @@
             $q .= " or bill_lastname like '%$search%'";
             $q .= " or email like '%$search%'";
           }
-          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-          $row = mysqli_fetch_array($results);
+          $results = static::query( $q);
+          $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_accounts";
           if(isset($search) && (strlen($search) > 0)) {
@@ -386,8 +386,8 @@
           }
           $q .= " order by email, bill_firstname, bill_lastname";
           $q .= " limit $start, $filter_limit";
-          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-          while($row = mysqli_fetch_array($results)) {
+          $results = static::query( $q);
+          while($row = static::fetch_array($results)) {
             $filter[] = [$row[0], $row[1] . ' - ' . $row[3] . ' ' . $row[4]];
           }
           break;
@@ -397,8 +397,8 @@
             $q .= " where pnumber like '%$search%'";
             $q .= " or pname like '%$search%'";
           }
-          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-          $row = mysqli_fetch_array($results);
+          $results = static::query( $q);
+          $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_products";
           if(isset($search) && (strlen($search) > 0)) {
@@ -407,8 +407,8 @@
           }
           $q .= " order by pnumber, pname";
           $q .= " limit $start, $filter_limit";
-          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-          while($row = mysqli_fetch_array($results)) {
+          $results = static::query( $q);
+          while($row = static::fetch_array($results)) {
             $filter[] = [$row[0], $row[2] . ' - ' . $row[1]];
           }
           break;
@@ -417,8 +417,8 @@
           if(isset($search) && (strlen($search) > 0)) {
             $q .= " where manufacturer like '%$search%'";
           }
-          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-          $row = mysqli_fetch_array($results);
+          $results = static::query( $q);
+          $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_manufacturers";
           if(isset($search) && (strlen($search) > 0)) {
@@ -426,8 +426,8 @@
           }
           $q .= " order by manufacturer";
           $q .= " limit $start, $filter_limit";
-          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-          while($row = mysqli_fetch_array($results)) {
+          $results = static::query( $q);
+          while($row = static::fetch_array($results)) {
             $filter[] = [$row[0], $row[1]];
           }
           break;
@@ -436,8 +436,8 @@
           if(isset($search) && (strlen($search) > 0)) {
             $q .= " where cname like '%$search%'";
           }
-          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-          $row = mysqli_fetch_array($results);
+          $results = static::query( $q);
+          $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_categories";
           if(isset($search) && (strlen($search) > 0)) {
@@ -445,8 +445,8 @@
           }
           $q .= " order by cname";
           $q .= " limit $start, $filter_limit";
-          $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-          while($row = mysqli_fetch_array($results)) {
+          $results = static::query( $q);
+          while($row = static::fetch_array($results)) {
             $filter[] = [$row[0], $row[1]];
           }
       }
@@ -454,10 +454,10 @@
     }
 
     public static function delete($id) {
-      mysqli_query("DELETE FROM fabrix_specials_products WHERE sid='$id'");
-      mysqli_query("DELETE FROM fabrix_specials_users WHERE sid='$id'");
-      mysqli_query("DELETE FROM fabrix_specials_usage WHERE sid='$id'");
-      mysqli_query("DELETE FROM " . static::$table . " WHERE sid = '$id'");
+      static::query("DELETE FROM fabrix_specials_products WHERE sid='$id'");
+      static::query("DELETE FROM fabrix_specials_users WHERE sid='$id'");
+      static::query("DELETE FROM fabrix_specials_usage WHERE sid='$id'");
+      static::query("DELETE FROM " . static::$table . " WHERE sid = '$id'");
     }
 
   }

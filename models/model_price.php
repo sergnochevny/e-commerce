@@ -116,13 +116,13 @@
       $sSQL .= sprintf(" AND (s.enabled=1) AND (s.date_start<=%u) AND (s.date_end>=%u)", $iNow, $iNow);
       $sSQL .= " ORDER BY allow_multiple;";
 
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sSQL) or die(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-      if(mysqli_num_rows($result) > 0) {
+      $result = static::query( $sSQL) or die(static::error());
+      if(static::num_rows($result) > 0) {
         $shipFullSumDiscount1 = false;
         $shipFullSumDiscount2 = false;
         $shipFullSumDiscount3 = false;
         $isDiscountApplay = false;
-        while($rs = mysqli_fetch_assoc($result)) {
+        while($rs = static::fetch_assoc($result)) {
 
           $bDoDiscount = self::checkDiscountApplies($rs, $uid, $rPrice);
 
@@ -238,7 +238,7 @@
           }
         }
       }
-      mysqli_free_result($result);
+      static::free_result($result);
       #check if we need to return a string here
       if($bReturnString) {
         $sPriceDiscount = $sSingle;
@@ -330,11 +330,11 @@
     public static function isNextPurchase($id, $iStart) {
       $bNext = false;
       $sSQL = sprintf("SELECT oid FROM fabrix_orders WHERE aid=%u AND order_date > %u ORDER BY order_date DESC;", $id, $iStart);
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sSQL) or die(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-      if(mysqli_num_rows($result) == 0) {
+      $result = static::query( $sSQL) or die(static::error());
+      if(static::num_rows($result) == 0) {
         $bNext = true;
       }
-      mysqli_free_result($result);
+      static::free_result($result);
       return $bNext;
     }
 
@@ -379,11 +379,11 @@
         " (promotion_type=1)";
 
       $sql = sprintf($q, $id, $id, $id, $iNow, $iNow);
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sql) or die(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-      if(mysqli_num_rows($result) > 0) {
+      $result = static::query( $sql) or die(static::error());
+      if(static::num_rows($result) > 0) {
         $discount = '';
-//        if($rs = mysqli_fetch_assoc($result)) {
-        while($rs = mysqli_fetch_assoc($result)) {
+//        if($rs = static::fetch_assoc($result)) {
+        while($rs = static::fetch_assoc($result)) {
           $amt = $rs['discount_amount'];
           if($rs['discount_amount_type'] == 1) {
             $type = '$';
@@ -404,7 +404,7 @@
           }
         }
       }
-      mysqli_free_result($result);
+      static::free_result($result);
       return $bol;
     }
 
@@ -469,13 +469,13 @@
 
         $iNow = time();
         $sSQL .= sprintf("SELECT * FROM fabrix_specials WHERE enabled=1 AND date_start<=%u AND date_end>=%u AND coupon_code='%s';",$iNow,$iNow,ilter($bCodeValid));
-        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sSQL) or die(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-        if(mysqli_num_rows($result)>0){
+        $result = static::query( $sSQL) or die(static::error());
+        if(static::num_rows($result)>0){
             $bRet = true;
         } else {
             $bRet = false;
         }
-        mysqli_free_result($result);
+        static::free_result($result);
 
         return $bRet;
 
@@ -544,9 +544,9 @@
       #get the list of all the products that this special applies to, narrow down to only those that may be in the cart
       $sql = sprintf("SELECT sp.pid, p.priceyard FROM fabrix_specials_products sp INNER JOIN fabrix_products p ON sp.pid = p.pid WHERE sp.sid=%u AND sp.pid IN (%s);", $iSid, $sPds);
 
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sql) or die(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+      $result = static::query( $sql) or die(static::error());
 
-      while($rs = mysqli_fetch_row($result)) {
+      while($rs = static::fetch_row($result)) {
 
         $iPid = (int)$rs[0];
         $iPrice = (real)$rs[1];
@@ -565,7 +565,7 @@
         $rTtl += $iPrice * $qty;
       }
 
-      mysqli_free_result($result);
+      static::free_result($result);
 
       return $rTtl;
     }
@@ -603,12 +603,12 @@
         $sSQL .= sprintf(" AND order_date<=%u AND order_date>=%u;", $iEndMonth, $iBeginMonth);
       }
 
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sSQL) or die(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-      if(mysqli_num_rows($result)) {
-        $rs = mysqli_fetch_row($result);
+      $result = static::query( $sSQL) or die(static::error());
+      if(static::num_rows($result)) {
+        $rs = static::fetch_row($result);
         $rRet = (real)$rs[0];
       }
-      mysqli_free_result($result);
+      static::free_result($result);
 
       return $rRet;
     }
@@ -621,8 +621,8 @@
       }
 
       if(strlen($query) > 0) {
-        $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query) or die(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-        $rs = mysqli_fetch_assoc($result);
+        $result = static::query( $query) or die(static::error());
+        $rs = static::fetch_assoc($result);
         return $rs['next_date'];
       } else {
         return 0;
@@ -660,16 +660,16 @@
     public static function user_TaxRate($aid) {
 
       $sql = sprintf('SELECT bill_province FROM fabrix_accounts WHERE aid =' . $aid);
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sql);
+      $result = static::query( $sql);
 
       if($result) {
-        if($rs = mysqli_fetch_row($result)) {
+        if($rs = static::fetch_row($result)) {
           $userProvince = $rs[0];
           if(!(empty($userProvince))) {
             $sql = sprintf('SELECT tax_rate FROM fabrix_taxrates WHERE province_state_id = ' . $userProvince);
-            $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sql);
+            $result = static::query( $sql);
             if($result) {
-              if($rs = mysqli_fetch_row($result)) {
+              if($rs = static::fetch_row($result)) {
                 $tax = $rs[0];
                 if(!empty($tax)) return $tax;
               }

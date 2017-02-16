@@ -11,9 +11,9 @@
         } else {
           $q = "select value from key_storage";
           $q .= "  where `key` = '" . $key . "'";
-          $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+          $res = Model_Base::query($q);
           if($res) {
-            $row = mysqli_fetch_assoc($res);
+            $row = Model_Base::fetch_assoc($res);
             if($row){
               $this->storage[$key] = $row['value'];
               return $row['value'];
@@ -21,7 +21,7 @@
               return null;
             }
           } else {
-            throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix'), _A_::$app->getDBConnection('iluvfabrix')));
+            throw new Exception(Model_Base::error());
           }
         }
       }
@@ -31,11 +31,11 @@
     protected function set($key, $value) {
 
       if(isset($key) && isset($value)) {
-        $value = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), Model_Base::sanitize($value));
+        $value = Model_Base::escape(Model_Base::sanitize($value));
         $q = "replace into key_storage set `key` = '" . $key . "', `value` = '" . $value . "'";
-        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+        $res = Model_Base::query($q);
         if(!$res)
-          throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix'), _A_::$app->getDBConnection('iluvfabrix')));
+          throw new Exception(Model_Base::error());
 
         $this->storage[$key] = $value;
       }
@@ -43,13 +43,13 @@
 
     public function init() {
       $q = "select value from key_storage";
-      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+      $res = Model_Base::query( $q);
       if($res) {
-        while($row = mysqli_fetch_row($res)) {
+        while($row = Model_Base::fetch_row($res)) {
           $this->storage[$row['key']] = $row['value'];
         }
       } else {
-        throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix'), _A_::$app->getDBConnection('iluvfabrix')));
+        throw new Exception(Model_Base::error());
       }
     }
 

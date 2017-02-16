@@ -11,17 +11,17 @@ Class Model_Blog extends Model_Base
     if (Controller_Admin::is_logged()) {
       if (!empty($filter["a.post_title"]))
         foreach (array_filter(explode(' ', $filter["a.post_title"])) as $item)
-          if (!empty($item)) $result[] = "a.post_title LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($item))) . "%'";
+          if (!empty($item)) $result[] = "a.post_title LIKE '%" . static::escape( static::strip_data(static::sanitize($item))) . "%'";
     } else {
       if (isset($filter["a.post_title"])) $result[] = Model_Synonyms::build_synonyms_like("a.post_title", $filter["a.post_title"]);
     }
-    if (isset($filter["a.post_status"])) $result[] = "a.post_status = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.post_status"]))) . "'";
+    if (isset($filter["a.post_status"])) $result[] = "a.post_status = '" . static::escape( static::strip_data(static::sanitize($filter["a.post_status"]))) . "'";
     if (isset($filter["a.post_date"])) {
-      $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date >= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.post_date"]["from"]))) . "'" : "") .
-        (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.post_date"]["to"]))) . "'" : "");
+      $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date >= '" . static::escape( static::strip_data(static::sanitize($filter["a.post_date"]["from"]))) . "'" : "") .
+        (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . static::escape( static::strip_data(static::sanitize($filter["a.post_date"]["to"]))) . "'" : "");
       if (strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
     }
-    if (isset($filter["b.group_id"])) $result[] = "b.group_id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["b.group_id"]))) . "'";
+    if (isset($filter["b.group_id"])) $result[] = "b.group_id = '" . static::escape( static::strip_data(static::sanitize($filter["b.group_id"]))) . "'";
     if (!empty($result) && (count($result) > 0)) {
       $result = implode(" AND ", $result);
       if (strlen(trim($result)) > 0) {
@@ -49,14 +49,14 @@ Class Model_Blog extends Model_Base
       }
     }
     if (strlen($select) <= 0) $select = '1';
-    $results = mysqli_query(
+    $results = static::query(
       "select a.id, a.name, (max(b.order)+1) as pos from blog_groups a" .
       " left join blog_group_posts b on b.group_id = a.id" .
       " where a.id in ($select)" .
       " group by a.id, a.name" .
       " order by a.name"
     );
-    while ($row = mysqli_fetch_array($results)) {
+    while ($row = static::fetch_array($results)) {
       $filters[$row['id']] = [$row['name'], isset($categories[$row['id']]) ? $categories[$row['id']] : $row['pos']];
     }
     $data['categories'] = $filters;
@@ -65,14 +65,14 @@ Class Model_Blog extends Model_Base
   public static function get_filter_selected_data($id)
   {
     $data = [];
-    $results = mysqli_query(
+    $results = static::query(
       "select a.id, a.name, b.order from blog_group_posts b" .
       " inner join blog_groups a on b.group_id=a.id " .
       " where b.post_id='$id'" .
       " order by a.name"
     );
     if ($results)
-      while ($row = mysqli_fetch_array($results)) {
+      while ($row = static::fetch_array($results)) {
         $data[$row['id']] = [$row['name'], $row['order']];
       }
     return $data;
@@ -83,13 +83,13 @@ Class Model_Blog extends Model_Base
     $filter = null;
     $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
     $start = isset($start) ? $start : 0;
-    $search = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($search)));
+    $search = static::escape( static::strip_data(static::sanitize($search)));
     $q = "select count(id) from blog_groups";
     if (isset($search) && (strlen($search) > 0)) {
       $q .= " where name like '%$search%'";
     }
-    $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-    $row = mysqli_fetch_array($results);
+    $results = static::query( $q);
+    $row = static::fetch_array($results);
     $count = $row[0];
     $q = "select * from blog_groups";
     if (isset($search) && (strlen($search) > 0)) {
@@ -97,8 +97,8 @@ Class Model_Blog extends Model_Base
     }
     $q .= " order by name";
     $q .= " limit $start, $filter_limit";
-    $results = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-    while ($row = mysqli_fetch_array($results)) {
+    $results = static::query( $q);
+    while ($row = static::fetch_array($results)) {
       $filter[] = [$row['id'], $row['name']];
     }
     return $filter;
@@ -110,8 +110,8 @@ Class Model_Blog extends Model_Base
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
     $query .= static::build_where($filter);
-    if ($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-      $response = mysqli_fetch_row($result)[0];
+    if ($result = static::query( $query)) {
+      $response = static::fetch_row($result)[0];
     }
     return $response;
   }
@@ -126,9 +126,9 @@ Class Model_Blog extends Model_Base
     $query .= static::build_order($sort);
     if ($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if ($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-      $res_count_rows = mysqli_num_rows($result);
-      while ($row = mysqli_fetch_array($result)) {
+    if ($result = static::query( $query)) {
+      $res_count_rows = static::num_rows($result);
+      while ($row = static::fetch_array($result)) {
         $response[] = $row;
       }
     }
@@ -152,9 +152,9 @@ Class Model_Blog extends Model_Base
     ];
     if (isset($id)) {
       $strSQL = "select * from " . static::$table . " where id = '" . $id . "'";
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $strSQL);
+      $result = static::query( $strSQL);
       if ($result) {
-        $data = mysqli_fetch_assoc($result);
+        $data = static::fetch_assoc($result);
       }
     }
     return $data;
@@ -174,9 +174,9 @@ Class Model_Blog extends Model_Base
     $filename = null;
     if (isset($id)) {
       $strSQL = "select * from blog_post_img where post_id = '" . $id . "'";
-      $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $strSQL);
+      $result = static::query( $strSQL);
       if ($result) {
-        $data = mysqli_fetch_assoc($result);
+        $data = static::fetch_assoc($result);
         $filename = $data['img'];
       }
     }
@@ -195,8 +195,8 @@ Class Model_Blog extends Model_Base
           rename("img/blog/" . basename($data['img']), "img/blog/" . $filename);
         }
         $data['img'] = $filename;
-        $result = mysqli_query("DELETE FROM blog_post_img WHERE post_id = '$id'");
-        if ($result) $result = mysqli_query("INSERT INTO blog_post_img(post_id, img) values('$id', '$filename')");
+        $result = static::query("DELETE FROM blog_post_img WHERE post_id = '$id'");
+        if ($result) $result = static::query("INSERT INTO blog_post_img(post_id, img) values('$id', '$filename')");
         return $result;
       }
     }
@@ -206,12 +206,12 @@ Class Model_Blog extends Model_Base
   public static function delete($id)
   {
     if (isset($id)) {
-      $res = mysqli_query("DELETE FROM " . static::$table . " WHERE id = $id");
-      if ($res) $res = mysqli_query("delete from blog_group_posts where post_id = $id");
-      if ($res) $res = mysqli_query("delete from blog_post_keys_descriptions where post_id = $id");
+      $res = static::query("DELETE FROM " . static::$table . " WHERE id = $id");
+      if ($res) $res = static::query("delete from blog_group_posts where post_id = $id");
+      if ($res) $res = static::query("delete from blog_post_keys_descriptions where post_id = $id");
       if ($res) static::delete_img(static::get_img($id));
-      if ($res) $res = mysqli_query("delete from blog_post_img where post_id = $id");
-      if (!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+      if ($res) $res = static::query("delete from blog_post_img where post_id = $id");
+      if (!$res) throw new Exception(static::error());
     }
   }
 
@@ -219,10 +219,10 @@ Class Model_Blog extends Model_Base
   {
     extract($data);
 
-    $post_title = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $post_title);
-    $keywords = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $keywords);
-    $description = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $description);
-    $post_content = mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $post_content);
+    $post_title = static::escape( $post_title);
+    $keywords = static::escape( $keywords);
+    $description = static::escape( $description);
+    $post_content = static::escape( $post_content);
 
     if (!isset($id)) {
       $date['post_date'] = $post_date = date('Y-m-d H:i:s', time());
@@ -236,27 +236,27 @@ Class Model_Blog extends Model_Base
       $q .= "', post_status = '" . $post_status;
       $q .= "' WHERE id = $id;";
     }
-    $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-    if ($result && !isset($id)) $id = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix'));
-    if ($result) $result = mysqli_query("DELETE FROM blog_group_posts WHERE post_id = '$id'");
+    $result = static::query( $q);
+    if ($result && !isset($id)) $id = static::last_id();
+    if ($result) $result = static::query("DELETE FROM blog_group_posts WHERE post_id = '$id'");
     if ($result) {
       foreach ($categories as $group) {
-        if ($result) $result = mysqli_query("INSERT INTO blog_group_posts(post_id, group_id) values ('$id', '$group')");
+        if ($result) $result = static::query("INSERT INTO blog_group_posts(post_id, group_id) values ('$id', '$group')");
         if (!$result) break;
       }
     }
-    if ($result) $result = mysqli_query("DELETE FROM blog_post_keys_descriptions WHERE post_id = '$id'");
-    if ($result) $result = mysqli_query("INSERT INTO blog_post_keys_descriptions(post_id, keywords, description) values('$id', '$keywords', '$description')");
+    if ($result) $result = static::query("DELETE FROM blog_post_keys_descriptions WHERE post_id = '$id'");
+    if ($result) $result = static::query("INSERT INTO blog_post_keys_descriptions(post_id, keywords, description) values('$id', '$keywords', '$description')");
     if ($result) $result = static::update_image($id, $data);
-    if (!$result) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+    if (!$result) throw new Exception(static::error());
     return $id;
   }
 
   public static function get_desc_keys($id)
   {
     $data = null;
-    $res = mysqli_query("SELECT * FROM blog_post_keys_descriptions WHERE post_id='$id'");
-    if ($res && mysqli_num_rows($res) > 0) $data = mysqli_fetch_assoc($res);
+    $res = static::query("SELECT * FROM blog_post_keys_descriptions WHERE post_id='$id'");
+    if ($res && static::num_rows($res) > 0) $data = static::fetch_assoc($res);
     return $data;
   }
 

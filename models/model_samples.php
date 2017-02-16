@@ -57,8 +57,8 @@
     public static function allowedSamples($pid) {
 
       $sql = sprintf("SELECT piece FROM fabrix_products WHERE pid = %u ", $pid);
-      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sql);
-      $piece = mysqli_fetch_assoc($res);
+      $res = static::query( $sql);
+      $piece = static::fetch_assoc($res);
       $piece = $piece['piece'];
 
       if($piece == 1) return false;
@@ -67,11 +67,11 @@
       $sql = sprintf("SELECT pid FROM fabrix_product_categories WHERE pid = %u AND (cid = %u OR cid = %u OR cid = %u)", $pid, 14, 4, 26);
 
       #if the query fails, return false to disallow samples
-      if(($res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $sql)) === false) {
+      if(($res = static::query( $sql)) === false) {
         return false;
       }
 
-      if(mysqli_num_rows($res) > 0) {
+      if(static::num_rows($res) > 0) {
         return false;
       } else {
         return true;

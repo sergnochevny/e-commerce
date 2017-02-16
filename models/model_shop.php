@@ -11,43 +11,43 @@ Class Model_Shop extends Model_Base
     if (Controller_Admin::is_logged()) {
       if (!empty($filter["a.pname"]))
         foreach (array_filter(explode(' ', $filter["a.pname"])) as $item)
-          if (!empty($item)) $result[] = "a.pname LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($item))) . "%'";
+          if (!empty($item)) $result[] = "a.pname LIKE '%" . static::escape( static::strip_data(static::sanitize($item))) . "%'";
     } else {
       if (isset($filter["a.pname"])) $result[] = Model_Synonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
     }
-    if (isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.pvisible"]))) . "'";
-    if (isset($filter["a.piece"])) $result[] = "a.piece = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.piece"]))) . "'";
+    if (isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . static::escape( static::strip_data(static::sanitize($filter["a.pvisible"]))) . "'";
+    if (isset($filter["a.piece"])) $result[] = "a.piece = '" . static::escape( static::strip_data(static::sanitize($filter["a.piece"]))) . "'";
     if (isset($filter["a.dt"])) {
-      $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
-        (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
+      $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::escape( static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
+        (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::escape( static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
       if (strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
     }
-    if (isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
-    if (isset($filter["a.best"])) $result[] = "a.best = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.best"]))) . "'";
-    if (isset($filter["a.specials"])) $result[] = "a.specials = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
-    if (isset($filter["b.cid"])) $result[] = "b.cid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
-    if (isset($filter["c.id"])) $result[] = "c.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["c.id"]))) . "'";
-    if (isset($filter["d.id"])) $result[] = "d.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["d.id"]))) . "'";
-    if (isset($filter["e.id"])) $result[] = "e.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["e.id"]))) . "'";
-    if (isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.priceyard"]['from']))) . "'";
-    if (isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter["a.priceyard"]['to']))) . "'";
+    if (isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::escape( static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
+    if (isset($filter["a.best"])) $result[] = "a.best = '" . static::escape( static::strip_data(static::sanitize($filter["a.best"]))) . "'";
+    if (isset($filter["a.specials"])) $result[] = "a.specials = '" . static::escape( static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
+    if (isset($filter["b.cid"])) $result[] = "b.cid = '" . static::escape( static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
+    if (isset($filter["c.id"])) $result[] = "c.id = '" . static::escape( static::strip_data(static::sanitize($filter["c.id"]))) . "'";
+    if (isset($filter["d.id"])) $result[] = "d.id = '" . static::escape( static::strip_data(static::sanitize($filter["d.id"]))) . "'";
+    if (isset($filter["e.id"])) $result[] = "e.id = '" . static::escape( static::strip_data(static::sanitize($filter["e.id"]))) . "'";
+    if (isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::escape( static::strip_data(static::sanitize($filter["a.priceyard"]['from']))) . "'";
+    if (isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::escape( static::strip_data(static::sanitize($filter["a.priceyard"]['to']))) . "'";
     if (!empty($result) && (count($result) > 0)) {
       if (strlen(trim(implode(" AND ", $result))) > 0) {
         $filter['active'] = true;
       }
     }
-    if (isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]))) . "'";
-    if (isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["a.pvisible"]))) . "'";
+    if (isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]))) . "'";
+    if (isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.pvisible"]))) . "'";
     if (isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
     if (isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";
-    if (isset($filter['hidden']["b.cid"])) $result[] = "b.cid = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["b.cid"]))) . "'";
-    if (isset($filter['hidden']["c.id"])) $result[] = "c.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["c.id"]))) . "'";
-    if (isset($filter['hidden']["d.id"])) $result[] = "d.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["d.id"]))) . "'";
-    if (isset($filter['hidden']["e.id"])) $result[] = "e.id = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["e.id"]))) . "'";
-    if (isset($filter['hidden']["a.best"])) $result[] = "a.best = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["a.best"]))) . "'";
-    if (isset($filter['hidden']["a.specials"])) $result[] = "a.specials = '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["a.specials"]))) . "'";
-    if (isset($filter['hidden']["a.priceyard"]['from']) && !empty((float)$filter['hidden']["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['from']))) . "'";
-    if (isset($filter['hidden']["a.priceyard"]['to']) && !empty((float)$filter['hidden']["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['to']))) . "'";
+    if (isset($filter['hidden']["b.cid"])) $result[] = "b.cid = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["b.cid"]))) . "'";
+    if (isset($filter['hidden']["c.id"])) $result[] = "c.id = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["c.id"]))) . "'";
+    if (isset($filter['hidden']["d.id"])) $result[] = "d.id = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["d.id"]))) . "'";
+    if (isset($filter['hidden']["e.id"])) $result[] = "e.id = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["e.id"]))) . "'";
+    if (isset($filter['hidden']["a.best"])) $result[] = "a.best = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.best"]))) . "'";
+    if (isset($filter['hidden']["a.specials"])) $result[] = "a.specials = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.specials"]))) . "'";
+    if (isset($filter['hidden']["a.priceyard"]['from']) && !empty((float)$filter['hidden']["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['from']))) . "'";
+    if (isset($filter['hidden']["a.priceyard"]['to']) && !empty((float)$filter['hidden']["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['to']))) . "'";
     if (!empty($result) && (count($result) > 0)) {
       $result = implode(" AND ", $result);
       $result = (!empty($result) ? " WHERE " . $result : '');
@@ -209,7 +209,7 @@ Class Model_Shop extends Model_Base
     $q = "update fabrix_products set inventory=" . $inventory;
     $q .= ($inventory == 0) ? ", pvisible = 0" : "";
     $q .= " where pid=" . $pid;
-    $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+    $res = static::query( $q);
   }
 
   public static function get_product_params($pid)
@@ -247,7 +247,7 @@ Class Model_Shop extends Model_Base
 
   public static function inc_popular($pid)
   {
-    mysqli_query("update fabrix_products set popular = popular+1 WHERE pid='$pid'");
+    static::query( "update fabrix_products set popular = popular+1 WHERE pid='$pid'");
   }
 
   public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows)
@@ -281,12 +281,12 @@ Class Model_Shop extends Model_Base
         $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and image1 is not null ORDER BY popular DESC LIMIT " . $start . "," . $limit;
         break;
     }
-    if ($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q)) {
-      $res_count_rows = mysqli_num_rows($result);
+    if ($result = static::query( $q)) {
+      $res_count_rows = static::num_rows($result);
       $sys_hide_price = Model_Price::sysHideAllRegularPrices();
       $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
       $cart = array_keys($cart_items);
-      while ($row = mysqli_fetch_array($result)) {
+      while ($row = static::fetch_array($result)) {
         $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix);
       }
     }
@@ -335,8 +335,8 @@ Class Model_Shop extends Model_Base
           " WHERE b.post_status = 'publish'";
         break;
     }
-    $result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
-    while ($row = mysqli_fetch_assoc($result)) {
+    $result = static::query( $q);
+    while ($row = static::fetch_assoc($result)) {
       $res[] = $row;
     }
     return $res;
@@ -365,8 +365,8 @@ Class Model_Shop extends Model_Base
       $query .= " ORDER BY s DESC) m";
       $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
     }
-    if ($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-      $response = mysqli_fetch_row($result)[0];
+    if ($result = static::query( $query)) {
+      $response = static::fetch_row($result)[0];
     }
     return $response;
   }
@@ -398,12 +398,12 @@ Class Model_Shop extends Model_Base
       $query .= ") m";
       $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
     }
-    if ($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-      $res_count_rows = mysqli_num_rows($result);
+    if ($result = static::query( $query)) {
+      $res_count_rows = static::num_rows($result);
       $sys_hide_price = Model_Price::sysHideAllRegularPrices();
       $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
       $cart = array_keys($cart_items);
-      while ($row = mysqli_fetch_array($result)) {
+      while ($row = static::fetch_array($result)) {
         $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price);
       }
     }

@@ -30,13 +30,13 @@ Class Model_Synonyms extends Model_Base
     if (!empty($value))
       foreach (array_filter(explode(' ', $value)) as $item) {
         if (!empty($item)) {
-          $result .= (!empty($result) ? " AND " : "") . $field . " LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($item))) . "%'";
+          $result .= (!empty($result) ? " AND " : "") . $field . " LIKE '%" . static::escape( static::strip_data(static::sanitize($item))) . "%'";
         }
       }
 
     if (isset($synonyms)) {
       foreach ($synonyms as $synonym) {
-        $result = (!empty($result) ? " OR " : "") . $field . " LIKE '%" . mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), static::strip_data(static::sanitize($synonym))) . "%'";
+        $result = (!empty($result) ? " OR " : "") . $field . " LIKE '%" . static::escape( static::strip_data(static::sanitize($synonym))) . "%'";
       }
     }
     $result = "(" . $result . ")";
@@ -48,8 +48,8 @@ Class Model_Synonyms extends Model_Base
     $response = 0;
     $query = "SELECT COUNT(DISTINCT id) FROM " . self::$table;
     $query .= static::build_where($filter);
-    if ($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-      $response = mysqli_fetch_row($result)[0];
+    if ($result = static::query( $query)) {
+      $response = static::fetch_row($result)[0];
     }
     return $response;
   }
@@ -62,9 +62,9 @@ Class Model_Synonyms extends Model_Base
     $query .= static::build_order($sort);
     if ($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if ($result = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query)) {
-      $res_count_rows = mysqli_num_rows($result);
-      while ($row = mysqli_fetch_assoc($result)) {
+    if ($result = static::query( $query)) {
+      $res_count_rows = static::num_rows($result);
+      while ($row = static::fetch_assoc($result)) {
         $response[] = $row;
       }
     }
@@ -80,9 +80,9 @@ Class Model_Synonyms extends Model_Base
       'synonyms' => ''
     ];
     if (!empty($id)) {
-      $result = mysqli_query("select * from " . self::$table . " WHERE id='$id'");
+      $result = static::query("select * from " . self::$table . " WHERE id='$id'");
       if ($result) {
-        $data = mysqli_fetch_assoc($result);
+        $data = static::fetch_assoc($result);
       }
     }
     return $data;
@@ -98,13 +98,13 @@ Class Model_Synonyms extends Model_Base
      */
     if (isset($id)) {
       $query = "UPDATE " . static::$table . " SET keywords ='" . $keywords . "', synonyms ='" . $synonyms . "'  WHERE id = " . $id;
-      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-      if (!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+      $res = static::query( $query);
+      if (!$res) throw new Exception(static::error());
     } else {
       $query = "INSERT INTO " . static::$table . " (keywords, synonyms) VALUE ('" . $keywords . "','" . $synonyms . "')";
-      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-      if (!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
-      $id = mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix'));
+      $res = static::query( $query);
+      if (!$res) throw new Exception(static::error());
+      $id = static::last_id();
     }
     return $id;
   }
@@ -113,8 +113,8 @@ Class Model_Synonyms extends Model_Base
   {
     if (isset($id)) {
       $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-      $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
-      if (!$res) throw new Exception(mysqli_error(_A_::$app->getDBConnection('iluvfabrix')));
+      $res = static::query( $query);
+      if (!$res) throw new Exception(static::error());
     }
   }
 }
