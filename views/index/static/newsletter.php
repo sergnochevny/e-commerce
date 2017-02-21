@@ -13,7 +13,8 @@
       <div class="col-xs-12">
         <div class="row">
           <p class="h4">
-            <a href="<?= _A_::$app->UrlTo('shop') ?>">
+            <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
+              _A_::$app->UrlTo('shop') ?>">
               Designer upholstery / drapery fabrics with FREE SHIPPING.* Click to shop.
             </a>
           </p>
@@ -43,7 +44,8 @@
                 <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                   <div class="row">
                     <div class="col-xs-12" data-role="form_content"
-                         data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+                         data-load="<?= /** @noinspection PhpUndefinedMethodInspection */
+                           _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
                     </div>
                   </div>
                 </div>
@@ -58,6 +60,8 @@
 
 <?php include('views/index/block_footer.php'); ?>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
+<script type='text/javascript' src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
 

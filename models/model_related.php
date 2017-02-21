@@ -66,6 +66,10 @@
 
     public static function save(&$data) {
       extract($data);
+      /**
+       * @var integer $pid
+       * @var integer $r_pid
+       */
       $query = "REPLACE INTO " . static::$table . " (pid, r_pid) VALUE ('" . $pid . "', '" . $r_pid . "')";
       $res = static::query( $query);
       if(!$res) throw new Exception(static::error());

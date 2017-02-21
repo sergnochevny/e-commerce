@@ -41,7 +41,8 @@
               All Sales are Final
             </h3>
             <p>All special orders are final sale. No refunds. No cancellations. No returns.</p>
-            <p>Please <a href="<?= _A_::$app->router()->UrlTo('contact'); ?>">contact</a> us for information on fabric
+            <p>Please <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                _A_::$app->router()->UrlTo('contact'); ?>">contact</a> us for information on fabric
               sample purchases.</p>
             <p>We are confident you'll find our products to be of the highest quality. If however your are not
               completely satisfied with a product, please contact us by email or phone and we will endeavor to rectify
@@ -54,7 +55,9 @@
               Michelle’s Fabrics. Please examine your package immediately upon receipt so as to ensure the integrity
               of its contents. Please contact us by email at:
               <a
-                href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>
+                  href="mailto:<?= /** @noinspection PhpUndefinedMethodInspection */
+                    _A_::$app->keyStorage()->system_info_email; ?>"><?= /** @noinspection PhpUndefinedMethodInspection */
+                  _A_::$app->keyStorage()->system_info_email; ?></a>
               or phone at: <a href="tel:9155870200">(915) 587-0200</a></p>
           </div>
         </div>
@@ -68,7 +71,8 @@
                 <p class="service__cont-desc">
                   Your personal information is never under any circumstances shared with any other individuals or
                   organizations.
-                  <a href="<?= _A_::$app->router()->UrlTo('privacy'); ?>">privacy policy.</a>
+                  <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                    _A_::$app->router()->UrlTo('privacy'); ?>">privacy policy.</a>
                 </p>
               </div>
               <div class="col-sm-6">
@@ -98,7 +102,9 @@
                 </div>
                 <div class="col-sm-4">
                   <p>Email:<a
-                      href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>
+                        href="mailto:<?= /** @noinspection PhpUndefinedMethodInspection */
+                          _A_::$app->keyStorage()->system_info_email; ?>"><?= /** @noinspection PhpUndefinedMethodInspection */
+                        _A_::$app->keyStorage()->system_info_email; ?></a>
                   </p>
                   <p>Tel: <a href="tel:9155870200">(915) 587-0200</a></p>
                 </div>
@@ -109,5 +115,6 @@
       </div>
     </div>
   </div>
-  <script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
+  <script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+    _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
 <?php include('views/index/block_footer.php'); ?>

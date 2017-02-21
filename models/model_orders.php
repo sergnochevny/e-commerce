@@ -146,7 +146,7 @@
       return $response;
     }
 
-    public function register_order($aid, $trid, $shipping_type, $shipping_cost, $on_roll,
+    public static function register_order($aid, $trid, $shipping_type, $shipping_cost, $on_roll,
       $express_samples, $handling, $shipping_discount,
       $coupon_discount, $total_discount, $taxes, $total) {
 

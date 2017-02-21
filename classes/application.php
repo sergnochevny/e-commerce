@@ -6,7 +6,7 @@
 
     protected function init() {
       parent::init();
-      $this->SelectDB('iluvfabrix');
+      $this->SelectDB('default');
       $this->router = new Router($this);
       $this->keystorage = new KeyStorage();
       $this->registry()->set('router', $this->router);

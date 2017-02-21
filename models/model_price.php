@@ -524,7 +524,7 @@
           $iQty = 1;
         }
 
-        $rRet = self::doDiscount($rTtl, $rDis, $iDisAmntType, $iQty);
+        $rRet = self::doDiscount($rTtl, $rDis, $iDisAmntType);
         $rRet = $iQty * $rRet;
       }
 

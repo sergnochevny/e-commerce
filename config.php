@@ -86,7 +86,9 @@
           'user' => "root",
 //          'password' => "JzpEk0659o",
           'password' => "",
-          'db' => ['iluvfabrix']
+          'db' => [
+            'default' => 'fabrix'
+          ]
         ]
       ]
     ],

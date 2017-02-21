@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-sm-8">
             <div class="row">
-              <label">Coupon code:</label>
+              <label>Coupon code:</label>
               <input type="text"
                      placeholder="Coupon code"
                      value="<?= isset($coupon_code) ? $coupon_code : '' ?>"

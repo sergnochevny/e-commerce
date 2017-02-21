@@ -25,7 +25,10 @@
 
     <div class="row">
       <div class="col-sm-10 col-sm-offset-2 inner-offset-bottom">
-        &nbsp;<span color="#663300">$<?= number_format((!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), 2); ?> USD
+        &nbsp;<span color="#663300">$<?= /** @noinspection PhpUndefinedMethodInspection */
+            /** @noinspection PhpUndefinedMethodInspection */
+            number_format((!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), 2); ?>
+          USD
                     surcharge</span>
       </div>
     </div>

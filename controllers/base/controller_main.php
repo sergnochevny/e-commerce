@@ -102,6 +102,7 @@
         if(Controller_AdminBase::is_logged()) return 'admin';
         if(Controller_UserBase::is_logged()) return 'user';
       }
+      return null;
     }
 
     public function message() {
@@ -145,12 +146,12 @@
       $this->template->view($page);
     }
 
-    public function error404() {
+    public function error404($msg = null) {
       header("HTTP/1.0 404 Not Found");
       header("HTTP/1.1 404 Not Found");
       header("Status: 404 Not Found");
       $this->template->controller = 'main';
-
+      $this->template->vars('message', $msg);
       if(Controller_AdminBase::is_logged()) $this->view_admin('404/error');
       else $this->view('404/error');
     }

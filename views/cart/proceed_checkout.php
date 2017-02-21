@@ -113,10 +113,13 @@
     ) { ?>
 
       <a data-block="proceed_agreem_button" style="margin-top: 15px" class="checkout-button button alt wc-forward"
-         href="<?= _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
+         href="<?= /** @noinspection PhpUndefinedMethodInspection */
+           _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
         Proceed to Agreement</a>
     <?php } ?>
   </div>
 </div>
-<div data-load="<?= _A_::$app->router()->UrlTo('info/view',['method'=>'cart'])?>"></div>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/cart/checkout.min.js'); ?>'></script>
+<div data-load="<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>"></div>
+<script type='text/javascript' src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/cart/checkout.min.js'); ?>'></script>

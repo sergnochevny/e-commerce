@@ -159,7 +159,9 @@
     </div>
     <div class="col-xs-12 inner-offset-top wc-proceed-to-checkout">
       <div class="row text-center">
-        <a class="checkout-button button alt wc-forward cont-shop" href="<?= _A_::$app->router()->UrlTo('shop') ?>">
+        <a class="checkout-button button alt wc-forward cont-shop"
+           href="<?= /** @noinspection PhpUndefinedMethodInspection */
+             _A_::$app->router()->UrlTo('shop') ?>">
           <?php if((isset($cart_samples_items) && strlen($cart_samples_items) > 0) || (isset($cart_items) && strlen($cart_items) > 0)): ?>
             CONTINUE SHOPPING
           <?php else: ?>
@@ -168,7 +170,8 @@
         </a>
         <?php if((isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0)): ?>
           <a data-block="proceed_button" class="checkout-button button alt wc-forward"
-             href="<?= _A_::$app->router()->UrlTo('cart/proceed_checkout') ?>">Proceed to Checkout</a>
+             href="<?= /** @noinspection PhpUndefinedMethodInspection */
+               _A_::$app->router()->UrlTo('cart/proceed_checkout') ?>">Proceed to Checkout</a>
         <?php endif; ?>
       </div>
     </div>

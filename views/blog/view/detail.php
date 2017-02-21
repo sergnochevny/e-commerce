@@ -1,4 +1,5 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/blog.min.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/css/blog.min.css'); ?>">
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
@@ -22,7 +23,8 @@
             <div class="col-sm-2"></div>
 
           </div>
-          <?php if (isset($data['img']) && !$data['img'] == _A_::$app->router()->UrlTo('upload/upload/not_image.jpg')) { ?>
+          <?php /** @noinspection PhpUndefinedMethodInspection */
+            if(isset($data['img']) && !$data['img'] == _A_::$app->router()->UrlTo('upload/upload/not_image.jpg')) { ?>
             <div class="row">
               <div class="just-post-image" style="background-image: url('<?= $data['img']; ?>'); height: 220px"></div>
             </div>

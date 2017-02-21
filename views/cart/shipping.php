@@ -1,5 +1,9 @@
 <?php
+  /** @noinspection PhpUndefinedMethodInspection */
+  /** @noinspection PhpUndefinedMethodInspection */
   $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+  /** @noinspection PhpUndefinedMethodInspection */
+  /** @noinspection PhpUndefinedMethodInspection */
   $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
 ?>
 <div class="col-xs-12 table-list-row">

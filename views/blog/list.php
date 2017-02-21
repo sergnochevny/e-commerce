@@ -11,7 +11,8 @@
 
     <div class="row">
       <div class="col-xs-6 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('blog/add'); ?>" data-modify class="button">
+        <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
+          _A_::$app->router()->UrlTo('blog/add'); ?>" data-modify class="button">
           ADD NEW POST
         </a>
       </div>
@@ -43,4 +44,5 @@
 </div>
 
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

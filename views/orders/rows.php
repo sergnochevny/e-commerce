@@ -11,6 +11,7 @@
               $order['sort'] = 'trid';
               $order['order'] = 'desc';
             }
+            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -31,6 +32,7 @@
             $order['sort'] = 'username';
             $order['order'] = 'desc';
           }
+          /** @noinspection PhpUndefinedMethodInspection */
           $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
           <div class="col-sm-2 col">
@@ -53,6 +55,7 @@
               $order['sort'] = 'a.order_date';
               $order['order'] = 'desc';
             }
+            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -73,6 +76,7 @@
               $order['sort'] = 'a.status';
               $order['order'] = 'desc';
             }
+            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -93,6 +97,7 @@
               $order['sort'] = 'a.total';
               $order['order'] = 'desc';
             }
+            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('orders', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -114,7 +119,9 @@
     </div>
     <?php
       $edit = true;
+      /** @noinspection PhpUndefinedMethodInspection */
       if(!is_null(_A_::$app->get('aid'))) {
+        /** @noinspection PhpUndefinedMethodInspection */
         $prms['aid'] = _A_::$app->get('aid');
         $prms['user'] = 1;
         $edit = false;
@@ -123,7 +130,9 @@
     <?php foreach($rows as $row): ?>
       <?php
       $prms['oid'] = $row['oid'];
+      /** @noinspection PhpUndefinedMethodInspection */
       $edit_url = _A_::$app->router()->UrlTo('orders/edit', $prms);
+      /** @noinspection PhpUndefinedMethodInspection */
       $view_url = _A_::$app->router()->UrlTo('orders/view', $prms);
       ?>
       <div class="col-xs-12 table-list-row">

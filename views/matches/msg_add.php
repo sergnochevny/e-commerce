@@ -16,7 +16,8 @@
       </div>
       <div class="modal-footer">
         <button data-dismiss="modal" aria-hidden="true" title="Go to Shop Page" class="button pull-left">Continue Shopping</button>
-        <a class="button" href="<?= _A_::$app->router()->UrlTo('matches'); ?>">Matches</a>
+        <a class="button" href="<?= /** @noinspection PhpUndefinedMethodInspection */
+          _A_::$app->router()->UrlTo('matches'); ?>">Matches</a>
       </div>
     </div>
   </div>

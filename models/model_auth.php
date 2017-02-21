@@ -52,7 +52,6 @@
     }
 
     public static function is_user($mail) {
-      $res = false;
       $q = "select * from fabrix_accounts where email='" . static::escape( $mail) . "'";
       $res = static::query( $q);
       $res = $res && (static::num_rows($res) > 0);
@@ -104,7 +103,6 @@
     }
 
     public static function is_admin($login) {
-      $res = false;
       $q = "select * from fabrix_admins where login='" . static::escape( $login) . "'";
       $res = static::query( $q);
       $res = $res && (static::num_rows($res) > 0);

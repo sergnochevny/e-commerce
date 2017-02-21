@@ -32,6 +32,7 @@
           (($numberSamples - (!empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX)) *
             (!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL));
       }
+      return null;
     }
 
     public static function allowSamplesExpressShipping() {

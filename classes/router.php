@@ -61,7 +61,7 @@
           $sef_url = str_replace(trim($suff), '', $sef_url);
       }
       $sef_url = preg_replace('/-$/i', '', preg_replace('/^-/i', '', $sef_url));
-      $url = Model_Router::get_url($sef_url, $url);
+      $url = Model_Router::get_url($sef_url);
       return $url;
     }
 

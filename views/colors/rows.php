@@ -11,6 +11,7 @@
               $order['sort'] = 'a.color';
               $order['order'] = 'desc';
             }
+            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('colors', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -31,6 +32,7 @@
               $order['sort'] = 'amount';
               $order['order'] = 'desc';
             }
+            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('colors', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -69,10 +71,12 @@
             </div>
           </div>
           <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
-            <a data-modify href="<?= _A_::$app->router()->UrlTo('colors/edit', $prms) ?>">
+            <a data-modify href="<?= /** @noinspection PhpUndefinedMethodInspection */
+              _A_::$app->router()->UrlTo('colors/edit', $prms) ?>">
               <i class="fa fa-2x fa-pencil"></i>
             </a>
-            <a href="<?= _A_::$app->router()->UrlTo('colors/delete', $prms) ?>" data-delete rel="nofollow"
+            <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
+              _A_::$app->router()->UrlTo('colors/delete', $prms) ?>" data-delete rel="nofollow"
                class="text-danger <?= ($row[2] > 0) ? 'disabled' : '' ?>">
               <i class=" fa fa-2x fa-trash-o"></i>
             </a>

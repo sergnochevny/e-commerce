@@ -243,7 +243,7 @@
           ob_start();
           Model_Blog::get_filter_selected($data);
           $filters = array_keys($data['categories']);
-          $this->generate_filter($data, 'categories');
+          $this->generate_filter($data);
           $resporse[0] = ob_get_contents();
           ob_end_clean();
 

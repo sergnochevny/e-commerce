@@ -372,29 +372,6 @@
       $this->main->view('shop');
     }
 
-//    public function modify_products_images() {
-//      $c_image = new Controller_Image();
-//      $per_page = 12;
-//      $page = 1;
-//
-//      $total = Model_Shop::get_total_count();
-//      $count = 0;
-//      while($page <= ceil($total / $per_page)) {
-//        $start = (($page++ - 1) * $per_page);
-//        $rows = Model_Shop::get_list($start, $per_page);
-//        foreach($rows as $row) {
-//          for($i = 1; $i < 5; $i++) {
-//            $fimage = $row['image' . $i];
-//            if(isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
-//              $c_image->modify_products($fimage);
-//            }
-//          }
-//        }
-//        $count += count($rows);
-//        echo $count;
-//      }
-//    }
-
     /**
      * @export
      */
@@ -538,5 +515,92 @@
     public function view($partial = false, $required_access = false) { }
 
     public static function sitemap_order() { return 6; }
+
+//    /**
+//     * @export
+//     */
+//    public function update_related() {
+//      $per_page = 200;
+//      $page = 1;
+//      $total = Model_Product::get_total_count();
+//      $count = 0;
+//      $res_count_rows = 0;
+//      $filter = null;
+//      $sort = null;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Product::get_list($start, $per_page, $res_count_rows, $filter, $sort);
+//        foreach($rows as $row) {
+//          for($i = 1; $i < 6; $i++) {
+//            if(!empty(trim($row['rpnumber' . $i]))) {
+//              if(!empty($pid = Model_Product::get_id_by_condition(" LOWER(pnumber) = '" . strtolower($row['rpnumber' . $i]) . "'"))) {
+//                $data = ['pid' => $row['pid'], 'r_pid' => $pid];
+//                Model_Related::save($data);
+//              };
+//            }
+//          }
+//        }
+//        $count += count($rows);
+//        echo $count;
+//      }
+//    }
+
+//    /**
+//     * @export
+//     */
+//    public function update_products() {
+//      $per_page = 200;
+//      $page = 1;
+//      $total = Model_Product::get_total_count();
+//      $count = 0;
+//      $res_count_rows = 0;
+//      $filter = null;
+//      $sort = null;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Product::get_list($start, $per_page, $res_count_rows, $filter, $sort);
+//        foreach($rows as $data){
+//          if(empty($data['sdesc'])) $data['sdesc'] = trim($data['ldesc']);
+//          if(empty($data['metadescription'])) $data['metadescription'] = $data['sdesc'];
+//          if(empty($data['metatitle'])) $data['metatitle'] = $data['pname'];
+//          if(empty($data['metakeywords'])) {
+//            $data['metakeywords'] = preg_replace('/[^a-zA-Z0-9]+/i', ' ', $data['metadescription']);
+//            $data['metakeywords'] = trim(preg_replace('/\s{2,}/', ' ', $data['metakeywords']));
+//            $data['metakeywords'] = strtolower(implode(',', array_filter(array_map('trim', explode(' ', $data['metakeywords'])))));
+//          }
+//          try{
+//            Model_Product::save($data);
+//          } finally{
+//
+//          }
+//        }
+//
+//        $count += count($rows);
+//        echo $count;
+//      }
+//    }
+
+//    public function modify_products_images() {
+//      $c_image = new Controller_Image();
+//      $per_page = 12;
+//      $page = 1;
+//
+//      $total = Model_Shop::get_total_count();
+//      $count = 0;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Shop::get_list($start, $per_page);
+//        foreach($rows as $row) {
+//          for($i = 1; $i < 5; $i++) {
+//            $fimage = $row['image' . $i];
+//            if(isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
+//              $c_image->modify_products($fimage);
+//            }
+//          }
+//        }
+//        $count += count($rows);
+//        echo $count;
+//      }
+//    }
 
   }

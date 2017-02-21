@@ -44,11 +44,16 @@
 </div>
 
 <input type="hidden" id="hidden_bsells_products"
-       value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bestsellers']) ?>">
+       value="<?= /** @noinspection PhpUndefinedMethodInspection */
+         _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bestsellers']) ?>">
 <input type="hidden" id="hidden_popular_products"
-       value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'popular']) ?>">
+       value="<?= /** @noinspection PhpUndefinedMethodInspection */
+         _A_::$app->router()->UrlTo('shop/widget', ['type' => 'popular']) ?>">
 <input type="hidden" id="hidden_new_products"
-       value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'new']) ?>">
+       value="<?= /** @noinspection PhpUndefinedMethodInspection */
+         _A_::$app->router()->UrlTo('shop/widget', ['type' => 'new']) ?>">
 <input type="hidden" id="hidden_best_products"
-       value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'best']) ?>">
-<script src='<?= _A_::$app->router()->UrlTo('views/js/index/block_footer.min.js'); ?>' type="text/javascript"></script>
+       value="<?= /** @noinspection PhpUndefinedMethodInspection */
+         _A_::$app->router()->UrlTo('shop/widget', ['type' => 'best']) ?>">
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/index/block_footer.min.js'); ?>' type="text/javascript"></script>

@@ -1,4 +1,5 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('upload/styles.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('upload/styles.css'); ?>">
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
@@ -22,8 +23,12 @@
   <div data-role="form_content" class="row">
       <?= $form; ?>
   </div>
-  <input type="hidden" data-filemanager="<?= _A_::$app->router()->UrlTo('filemanager/') ?>">
+  <input type="hidden" data-filemanager="<?= /** @noinspection PhpUndefinedMethodInspection */
+    _A_::$app->router()->UrlTo('filemanager/') ?>">
 </div>
-<script src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/image.min.js'); ?>' type="text/javascript"></script>
+<script src="<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/blog/edit.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/blog/image.min.js'); ?>' type="text/javascript"></script>

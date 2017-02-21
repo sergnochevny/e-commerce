@@ -159,13 +159,13 @@
 //        set_time_limit(14400);
 //        $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
 //            " WHERE  a.pnumber is not null and a.pvisible = '1'";
-//        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q_total);
+//        $res = mysqli_query(_A_::$app->getDBConnection('default'), $q_total);
 //        $total = mysqli_fetch_row($res);
 //        $total = $total[0];
 //
 //        $q = "SELECT pid FROM fabrix_products a" .
 //            " WHERE  a.pnumber is not null and a.pvisible = '1'";
-//        $res = mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $q);
+//        $res = mysqli_query(_A_::$app->getDBConnection('default'), $q);
 //        $model = new Model_Users();
 //        $f = [1, 2, 3, 4, 5];
 //        $total_break = 0;

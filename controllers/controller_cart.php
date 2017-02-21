@@ -3,7 +3,6 @@
   class Controller_Cart extends Controller_Controller {
 
     private function products_in($template = 'product_in') {
-      $base_url = _A_::$app->router()->UrlTo('/');
       $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
       if(count($cart_items) > 0) {
         foreach($cart_items as $key => $item) {
@@ -17,8 +16,6 @@
     }
 
     private function product_in($pid, &$item, $template = 'product_in') {
-      $base_url = _A_::$app->router()->UrlTo('/');
-
       $product = Model_Product::get_by_id($pid);
       $filename = 'upload/upload/' . $item['image1'];
       if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
@@ -37,7 +34,6 @@
       $saleprice = $product['priceyard'];
       $sDiscount = 0;
       $saleprice = round(Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds), 2);
-      $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
 
       $cart['discountIds'] = $discountIds;
 
@@ -68,7 +64,6 @@
     }
 
     private function samples_in($template = 'sample_in') {
-      $base_url = _A_::$app->router()->UrlTo('/');
       $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
       if(count($cart_samples_items) > 0) {
         foreach($cart_samples_items as $key => $item) {
@@ -82,7 +77,6 @@
     }
 
     private function sample_in($pid, &$item, $template = 'sample_in') {
-      $base_url = _A_::$app->router()->UrlTo('/');
       $item = Model_Shop::get_product_params($pid);
       $filename = 'upload/upload/' . $item['image1'];
       if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
@@ -128,8 +122,6 @@
     }
 
     private function pay_ok() {
-      $base_url = _A_::$app->router()->UrlTo('/');
-
       $shipcost = 0;
       $rollcost = 0;
       $handlingcost = 0;
@@ -1108,7 +1100,6 @@
      * @export
      */
     function add() {
-      $base_url = _A_::$app->router()->UrlTo('/');
       if(!empty(_A_::$app->get('pid'))) {
         $pid = Model_Shop::sanitize(_A_::$app->get('pid'));
         $product = Model_Shop::get_product_params($pid);
@@ -1207,7 +1198,6 @@
      * @export
      */
     function add_samples() {
-      $base_url = _A_::$app->router()->UrlTo('/');
       if(!empty(_A_::$app->get('pid'))) {
         $pid = Model_Shop::sanitize(_A_::$app->get('pid'));
         $product = Model_Shop::get_product_params($pid);

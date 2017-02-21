@@ -18,6 +18,8 @@
     </div>
   </div>
 </div>
-<input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
-<script src='<?= _A_::$app->router()->UrlTo('views/js/cart/cart.min.js'); ?>' type="text/javascript"></script>
+<input type="hidden" id="base_url" value="<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('/'); ?>">
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/cart/cart.min.js'); ?>' type="text/javascript"></script>
 

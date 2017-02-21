@@ -1,6 +1,9 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('upload/styles.css'); ?>">
-<script src='<?= _A_::$app->router()->UrlTo('views/js/product/images.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/product/related.min.js'); ?>' type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('upload/styles.css'); ?>">
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/product/images.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/product/related.min.js'); ?>' type="text/javascript"></script>
 
 <div class="container">
   <div class="row">

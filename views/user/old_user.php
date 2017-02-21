@@ -8,10 +8,12 @@
       <div class="col-xs-12 panel panel-default panel-default-vertical-sizing authorize-panel">
         <div class="col-xs-12">
           <div class="row">
-            <form method="post" id="authorization" action="<?= _A_::$app->router()->UrlTo('user'); ?>"
+            <form method="post" id="authorization" action="<?= /** @noinspection PhpUndefinedMethodInspection */
+              _A_::$app->router()->UrlTo('user'); ?>"
                   class="login">
               <input type="hidden" name="redirect"
-                     value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
+                     value="<?= /** @noinspection PhpUndefinedMethodInspection */
+                       isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
 
               <div class="form-row">
                 <label for="username" class="required_field">Email Address/Username</label>
@@ -79,5 +81,6 @@
 
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
         type="text/javascript"></script>

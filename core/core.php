@@ -48,6 +48,7 @@ class Core
             call_user_func($key, $value);
           }
         } else {
+          /** @noinspection PhpUndefinedMethodInspection */
           $this->config($key, $value);
         }
       }
@@ -65,6 +66,7 @@ class Core
 
   private function initDBConnections()
   {
+    /** @noinspection PhpUndefinedMethodInspection */
     $DBS = $this->config('DBS');
     if (isset($DBS) && is_array($DBS)) {
       foreach ($DBS as $key => $val) {
@@ -80,7 +82,7 @@ class Core
             'connection' => $db_connection,
             'db' => $db
           ];
-          foreach ($db as $name_db) $this->db[$name_db] = $db_connection;
+          foreach($db as $key => $db_name) $this->db[$key] = [$db_name, $db_connection];
         }
       }
     } else {
@@ -106,7 +108,9 @@ class Core
 
   private function initSession()
   {
+    /** @noinspection PhpUndefinedMethodInspection */
     if (!is_null($this->get('pay_notify'))) {
+      /** @noinspection PhpUndefinedMethodInspection */
       $s_id = $this->get('pay_notify');
       session_id($s_id);
     }
@@ -137,6 +141,7 @@ class Core
         )
       );
     }
+    return null;
   }
 
   public function __call($name, $arguments)
@@ -226,19 +231,19 @@ class Core
 
   public function SelectDB($name)
   {
-    if (isset($this->db[$name])) {
-      if (!mysqli_select_db($this->db[$name], $name)) {
+    if(isset($this->db[$name]) && is_array($this->db[$name])) {
+      if(!mysqli_select_db($this->db[$name][1], $this->db[$name][0])) {
         throw new Exception(
           strtr('Data Base "{db}" do not select: {reason}',
             [
               "{db}" => $name,
-              '{reason}' => $this->db[$name]->error
+              '{reason}' => $this->db[$name][1]->error
             ]
           )
         );
       } else {
-        if ($this->db[$name]->errno > 0) {
-          throw new Exception($this->db[$name]->error);
+        if($this->db[$name][1]->errno > 0) {
+          throw new Exception($this->db[$name][1]->error);
         }
       }
     } else {
@@ -254,31 +259,36 @@ class Core
 
   public function getDBConnection($name)
   {
-    if (isset($this->db[$name])) {
-      return $this->db[$name];
+    if(isset($this->db[$name]) && is_array($this->db[$name])) {
+      return $this->db[$name][1];
     } else {
       new Exception(
-        strtr('Data Base "{db}" not present in Application',
-          [
+        strtr('Data Base configuration "{db}" not present in Application',
+              [
             "{db}" => $name
           ]
         )
       );
     }
+    return null;
   }
 
   public function request_is_ajax()
   {
+    /** @noinspection PhpUndefinedMethodInspection */
+    /** @noinspection PhpUndefinedMethodInspection */
     return !empty($this->server('HTTP_X_REQUESTED_WITH')) && strtolower($this->server('HTTP_X_REQUESTED_WITH')) == 'xmlhttprequest';
   }
 
   public function request_is_post()
   {
+    /** @noinspection PhpUndefinedMethodInspection */
     return $this->server('REQUEST_METHOD') == 'POST';
   }
 
   public function request_is_get()
   {
+    /** @noinspection PhpUndefinedMethodInspection */
     return $this->server('REQUEST_METHOD') == 'GET';
   }
 }

@@ -49,7 +49,7 @@
         ob_end_clean();
       }
       header('Content-Description: File Transfer');
-      $gz_use = (!is_null(_A_::$app->keyStorage()->system_csv_use_gz)?_A_::$app->keyStorage()->system_csv_use_gz:CSV_USE_GZ);
+      $gz_use = (!is_null(_A_::$app->keyStorage()->system_csv_use_gz) ? _A_::$app->keyStorage()->system_csv_use_gz : CSV_USE_GZ);
       if(function_exists('gzopen') && ($gz_use == '1')) {
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="users.csv.gz"');
@@ -319,7 +319,7 @@
     }
 
     protected function form_handling(&$data = null) {
-      if (_A_::$app->request_is_post() && (_A_::$app->post('method') == 'get_province_list')) exit($this->list_province(_A_::$app->post('country')));
+      if(_A_::$app->request_is_post() && (_A_::$app->post('method') == 'get_province_list')) exit($this->list_province(_A_::$app->post('country')));
       if(!empty($this->scenario())) {
         if($this->scenario() == 'csv') exit($this->get_csv());
       }
@@ -390,27 +390,62 @@
 
     public function index($required_access = true) { }
 
-//    public function modify_accounts_password()
-//    {
-//        $per_page = 200;
-//        $page = 1;
-//        $total = Model_User::get_total_count_users();
-//        $count = 0;
-//        while ($page <= ceil($total / $per_page)) {
-//            $start = (($page++ - 1) * $per_page);
-//            $rows = Model_Users::get_list($start, $per_page);
-//            foreach ($rows as $row) {
-//                $id = $row['aid'];
-//                $current_password = $row['password'];
-//                if (!strpos('$2a$12$', $current_password)) {
-//                    $salt = Model_Auth::generatestr();
-//                    $password = Model_Auth::hash_($current_password, $salt, 12);
-//                    $check = Model_Auth::check($current_password, $password);
-//                    if ($password == $check) Model_User::update_password($password, $id);
-//                }
-//            }
-//            $count += count($rows);
-//            echo $count;
+//    /**
+//     * @export
+//     */
+//    public function modify_accounts_password() {
+//      $per_page = 200;
+//      $page = 1;
+//      $total = Model_Users::get_total_count();
+//      $count = 0;
+//      $res_count_rows = 0;
+//      $filter = null;
+//      $sort = null;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Users::get_list($start, $per_page, $res_count_rows, $filter, $sort);
+//        foreach($rows as $row) {
+//          $id = $row['aid'];
+//          $current_password = $row['password'];
+//          if(!strpos('$2a$12$', $current_password)) {
+//            $salt = Model_Auth::generatestr();
+//            $password = Model_Auth::hash_($current_password, $salt, 12);
+//            $check = Model_Auth::check($current_password, $password);
+//            if($password == $check) Model_User::update_password($password, $id);
+//          }
 //        }
+//        $count += count($rows);
+//        echo $count;
+//      }
 //    }
+
+//    /**
+//     * @export
+//     */
+//    public function modify_admins_password() {
+//      $per_page = 200;
+//      $page = 1;
+//      $total = Model_Admin::get_total_count();
+//      $count = 0;
+//      $res_count_rows = 0;
+//      $filter = null;
+//      $sort = null;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Admin::get_list($start, $per_page, $res_count_rows, $filter, $sort);
+//        foreach($rows as $row) {
+//          $id = $row['id'];
+//          $current_password = $row['password'];
+//          if(!strpos('$2a$12$', $current_password)) {
+//            $salt = Model_Auth::generatestr();
+//            $password = Model_Auth::hash_($current_password, $salt, 12);
+//            $check = Model_Auth::check($current_password, $password);
+//            if($password == $check) Model_Admin::update_password($password, $id);
+//          }
+//        }
+//        $count += count($rows);
+//        echo $count;
+//      }
+//    }
+
   }

@@ -42,6 +42,8 @@
           </li>
         <?php endforeach; ?>
         <?php
+          /** @noinspection PhpUndefinedMethodInspection */
+          /** @noinspection PhpUndefinedMethodInspection */
           $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
           if(isset($filter_data_start) && isset($total) && !((ceil($filter_data_start / $filter_limit) + 1) >= ceil($total / $filter_limit))):?>
             <li class="select_item">
@@ -63,4 +65,5 @@
   <input type="hidden" name="filter_start_<?= $filter_type; ?>" value="<?= $filter_data_start; ?>">
 </div>
 <div class="clearfix"></div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/select.ui.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/select.ui.min.js'); ?>' type="text/javascript"></script>

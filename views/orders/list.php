@@ -1,4 +1,5 @@
 <?php
+  /** @noinspection PhpUndefinedMethodInspection */
   $user_id = _A_::$app->get('aid');
   $is_admin = Controller_Admin::is_logged();
   include_once 'views/messages/alert-boxes.php';
@@ -58,4 +59,5 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/simple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/simple/list.min.js'); ?>' type="text/javascript"></script>

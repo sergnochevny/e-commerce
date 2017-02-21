@@ -7,7 +7,7 @@ Class Model_Shop extends Model_Base
 
   protected static function build_where(&$filter)
   {
-    $result = "";
+    $result_where = "";
     if (Controller_Admin::is_logged()) {
       if (!empty($filter["a.pname"]))
         foreach (array_filter(explode(' ', $filter["a.pname"])) as $item)
@@ -49,10 +49,10 @@ Class Model_Shop extends Model_Base
     if (isset($filter['hidden']["a.priceyard"]['from']) && !empty((float)$filter['hidden']["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['from']))) . "'";
     if (isset($filter['hidden']["a.priceyard"]['to']) && !empty((float)$filter['hidden']["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['to']))) . "'";
     if (!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
-      $result = (!empty($result) ? " WHERE " . $result : '');
+      $result_where = implode(" AND ", $result);
+      $result_where = (!empty($result_where) ? " WHERE " . $result_where : '');
     }
-    return $result;
+    return $result_where;
   }
 
   public static function prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix = 'b_')

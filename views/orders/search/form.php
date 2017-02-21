@@ -96,4 +96,5 @@
     </div>
   </div>
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/search.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/search.min.js'); ?>' type="text/javascript"></script>

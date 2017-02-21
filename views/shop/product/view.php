@@ -1,7 +1,10 @@
 <?php
   $pid = $data['pid'];
+  /** @noinspection PhpUndefinedMethodInspection */
   $ahref = 'mailto:'._A_::$app->keyStorage()->system_info_email.'?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
+  /** @noinspection PhpUndefinedMethodInspection */
   $mhref = _A_::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
+  /** @noinspection PhpUndefinedMethodInspection */
   $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
 ?>
 
@@ -133,9 +136,11 @@
 
               <div class="col-xs-12">
                 <div class="row"
-                     data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'product']) ?>"></div>
+                     data-load="<?= /** @noinspection PhpUndefinedMethodInspection */
+                       _A_::$app->router()->UrlTo('info/view', ['method' => 'product']) ?>"></div>
                 <script type='text/javascript'
-                        src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+                        src='<?= /** @noinspection PhpUndefinedMethodInspection */
+                          _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
               </div>
 
               <div class="col-xs-12">
@@ -157,11 +162,13 @@
                       <?php if($data['inventory'] > 0) { ?>
                         <div class="button-small-width">
                           <a class="button col-xs-12" id="add_cart"
-                             href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
+                             href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                               _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
                             Add to Cart
                           </a>
                           <a class="button col-xs-12" id="view_cart"
-                             href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
+                             href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                               _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
                             Cart
                           </a>
                         </div>
@@ -169,7 +176,8 @@
                       <?php if($data['inventory'] > 0 && $allowed_samples) { ?>
                         <div class="button-small-width">
                           <a id="add_samples_cart" class="button col-xs-12"
-                             href="<?= _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
+                             href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                               _A_::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>" <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
                             Add Samples
                           </a>
                         </div>
@@ -179,7 +187,8 @@
                         <a class="button col-xs-12" id="view_favorites"
                            style="<?= (isset($in_favorites) && $in_favorites) ? '' : 'display:none'; ?>"
                            data-pid="<?= $data['pid'] ?>"
-                           href="<?= _A_::$app->router()->UrlTo('favorites'); ?>">
+                           href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                             _A_::$app->router()->UrlTo('favorites'); ?>">
 
                           My Favorites
                         </a>
@@ -187,7 +196,8 @@
                         <a class="button col-xs-12" id="add_favorites"
                            style="<?= (isset($in_favorites) && $in_favorites) ? 'display:none' : ''; ?>"
                            data-pid="<?= $data['pid'] ?>"
-                           href="<?= _A_::$app->router()->UrlTo('favorites/add'); ?>">
+                           href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                             _A_::$app->router()->UrlTo('favorites/add'); ?>">
 
                           Add to Favorites
                         </a>
@@ -202,7 +212,8 @@
                         </a>
 
                         <a class="button col-xs-12" id="view_matches"
-                           href="<?= _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
+                           href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                             _A_::$app->router()->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
 
                           Matches
                         </a>
@@ -267,5 +278,5 @@
 
   </div>
 </div>
-</div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/shop/product.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/shop/product.min.js'); ?>' type="text/javascript"></script>

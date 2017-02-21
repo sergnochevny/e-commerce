@@ -1,4 +1,5 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/blog.min.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/css/blog.min.css'); ?>">
 <?php include('views/index/main_gallery.php'); ?>
 <div class="container">
   <div id="blog" class="main-content-inner" role="main">
@@ -18,4 +19,5 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/view.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/blog/view.min.js'); ?>' type="text/javascript"></script>

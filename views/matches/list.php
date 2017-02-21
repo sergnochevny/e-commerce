@@ -41,15 +41,18 @@
   <div style="width: 100%" class="text-center inner-offset-vertical" id="b_in_product">
     <?php if(isset($list)): ?>
       <a class="button" id="all_to_basket"
-         href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
+         href="<?= /** @noinspection PhpUndefinedMethodInspection */
+           _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
         Add All to Cart
       </a>
       <a class="button" id="clear_matches"
-         href="<?= _A_::$app->router()->UrlTo('matches/clear'); ?>">
+         href="<?= /** @noinspection PhpUndefinedMethodInspection */
+           _A_::$app->router()->UrlTo('matches/clear'); ?>">
         Clear Matches
       </a>
     <?php else: ?>
-      <a class="button" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">
+      <a class="button" href="<?= /** @noinspection PhpUndefinedMethodInspection */
+        _A_::$app->router()->UrlTo('shop'); ?>">
         Go shopping
       </a>
     <?php endif; ?>

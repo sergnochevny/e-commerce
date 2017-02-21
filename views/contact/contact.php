@@ -13,7 +13,8 @@
           <div class="col-xs-12 col-sm-10 col-sm-offset-1  col-md-8 col-md-offset-2">
             <div class="row">
               <div class="col-xs-12">
-                <h4><p class="text-center">Leave us a message</p>
+                <h4 class="text-center">
+                  Leave us a message
                   <br>
                   <small style="text-shadow: none">
                     Please feel free to contact us with your questions
@@ -35,4 +36,5 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>

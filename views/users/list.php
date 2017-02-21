@@ -11,10 +11,13 @@
 
     <div class="row">
       <div class="col-xs-6 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('users/add'); ?>" data-modify class="button">
+        <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
+          _A_::$app->router()->UrlTo('users/add'); ?>" data-modify class="button">
           REGISTER NEW USER
         </a>
-        <a href="<?= _A_::$app->router()->UrlTo('users', ['method'=>'csv']); ?>" class="button icon" title="Expost users list in csv">
+        <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
+          _A_::$app->router()->UrlTo('users', ['method' => 'csv']); ?>" class="button icon"
+           title="Expost users list in csv">
           <i class="fa fa-2x fa-floppy-o" aria-hidden="true"></i>
         </a>
       </div>
@@ -46,5 +49,7 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/users/province.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/users/province.min.js'); ?>' type="text/javascript"></script>

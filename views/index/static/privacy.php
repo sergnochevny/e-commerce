@@ -58,7 +58,9 @@
             </ol>
             <p>For questions or comments regarding
               this policy please contact us by <a
-                href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>.
+                  href="mailto:<?= /** @noinspection PhpUndefinedMethodInspection */
+                    _A_::$app->keyStorage()->system_info_email; ?>"><?= /** @noinspection PhpUndefinedMethodInspection */
+                  _A_::$app->keyStorage()->system_info_email; ?></a>.
             </p>
 
             <p>Additional information about <a target="_blank" href="http://www.privcom.gc.ca">Canada's
@@ -78,5 +80,6 @@
       </div>
     </div>
   </div>
-  <script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
+  <script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+    _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
 <?php include('views/index/block_footer.php'); ?>

@@ -103,23 +103,28 @@
     }
 
     public static function query($query) {
-      return mysqli_query(_A_::$app->getDBConnection('iluvfabrix'), $query);
+      $res = mysqli_query(_A_::$app->getDBConnection('default'), $query);
+      if(!$res) {
+        throw new Exception(self::error());
+      }
+      return $res;
     }
 
     public static function escape($str) {
-      return mysqli_real_escape_string(_A_::$app->getDBConnection('iluvfabrix'), $str);
+      return mysqli_real_escape_string(_A_::$app->getDBConnection('default'), $str);
     }
 
     public static function error() {
-      return mysqli_error(_A_::$app->getDBConnection('iluvfabrix'));
+      return mysqli_error(_A_::$app->getDBConnection('default'));
     }
 
     public static function last_id() {
-      return mysqli_insert_id(_A_::$app->getDBConnection('iluvfabrix'));
+      return mysqli_insert_id(_A_::$app->getDBConnection('default'));
     }
 
     public static function fetch_assoc($from) {
-      return mysqli_fetch_assoc($from);
+      if($from) return mysqli_fetch_assoc($from);
+      return null;
     }
 
     public static function fetch_array($from, $resulttype = MYSQLI_BOTH) {
@@ -127,18 +132,20 @@
     }
 
     public static function fetch_row($from) {
-      return mysqli_fetch_row($from);
+      if($from) return mysqli_fetch_row($from);
+      return null;
     }
 
     public static function num_rows($from) {
-      return mysqli_num_rows($from);
+      if($from) return mysqli_num_rows($from);
+      return 0;
     }
 
     public static function affected_rows() {
-      return mysqli_affected_rows(_A_::$app->getDBConnection('iluvfabrix'));
+      return mysqli_affected_rows(_A_::$app->getDBConnection('default'));
     }
 
     public static function free_result($result) {
-      mysqli_free_result($result);
+      if($result) mysqli_free_result($result);
     }
   }

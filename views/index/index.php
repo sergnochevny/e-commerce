@@ -6,7 +6,8 @@
       <div class="col-xs-12<?= Controller_User::is_logged() ? '' : ' col-md-6' ?>">
         <div class="col-xs-12">
           <div class="row inner-offset-vertical"
-               data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'home']) ?>"></div>
+               data-load="<?= /** @noinspection PhpUndefinedMethodInspection */
+                 _A_::$app->router()->UrlTo('info/view', ['method' => 'home']) ?>"></div>
         </div>
       </div>
       <?php if(!Controller_User::is_logged()): ?>
@@ -16,7 +17,8 @@
               <h4>Register with iluvfabrix:</h4>
             </div>
             <div class="col-xs-12" data-role="form_content"
-                 data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+                 data-load="<?= /** @noinspection PhpUndefinedMethodInspection */
+                   _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
             </div>
           </div>
         </div>
@@ -43,7 +45,8 @@
         <div class="col-xs-12 background-textile">
           <div class="row textile-row">
             <div class="textile">
-              <a class="banner-action-link" href="<?= _A_::$app->router()->UrlTo('shop/last'); ?>">
+              <a class="banner-action-link" href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                _A_::$app->router()->UrlTo('shop/last'); ?>">
                 <div class="banner-detail">
                   <p>Brand new life, Brand new textile</p>
                   <h3 class="no-inner-offset-top">What's New</h3>
@@ -57,7 +60,8 @@
           <div class="col-sm-6">
             <div class="col-xs-12 background-textile">
               <div class="row best-textile">
-                <a class="banner-action-link" href="<?= _A_::$app->router()->UrlTo('shop/best'); ?>">
+                <a class="banner-action-link" href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                  _A_::$app->router()->UrlTo('shop/best'); ?>">
                   <div class="banner-detail">
                     <p>New Collection</p>
                     <h3 class="no-inner-offset-top">Best textile</h3>
@@ -70,7 +74,8 @@
           <div class="col-sm-6">
             <div class="col-xs-12 background-textile">
               <div class="row popular-textile">
-                <a class="banner-action-link" href="<?= _A_::$app->router()->UrlTo('shop/popular'); ?>">
+                <a class="banner-action-link" href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                  _A_::$app->router()->UrlTo('shop/popular'); ?>">
                   <div class="banner-detail">
                     <p>New collection</p>
                     <h3 class="no-inner-offset-top">Popular textile</h3>
@@ -95,7 +100,8 @@
           <div class="row products best-products"></div>
           <div class="row bestseller-action-row">
             <div class="col-xs-12 text-center">
-              <a href="<?= _A_::$app->router()->UrlTo('shop/bestsellers'); ?>" class="button button-2x">MORE</a>
+              <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
+                _A_::$app->router()->UrlTo('shop/bestsellers'); ?>" class="button button-2x">MORE</a>
             </div>
           </div>
         </div>
@@ -105,10 +111,14 @@
 
 </div>
 
-<input type="hidden" id="get_url" value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'carousel']); ?>">
+<input type="hidden" id="get_url" value="<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('shop/widget', ['type' => 'carousel']); ?>">
 <input type="hidden" id="slider_url"
-       value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bsells_horiz']); ?>">
+       value="<?= /** @noinspection PhpUndefinedMethodInspection */
+         _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bsells_horiz']); ?>">
 <?php include('views/index/block_footer.php'); ?>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/index/index.min.js'); ?>' type="text/javascript"></script>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/index/index.min.js'); ?>' type="text/javascript"></script>
+<script type='text/javascript' src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>

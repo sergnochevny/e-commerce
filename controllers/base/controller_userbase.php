@@ -21,7 +21,7 @@
       return false;
     }
 
-    public function authorize($email, $password) {
+    public static function authorize($email, $password) {
       $email = stripslashes(strip_tags(trim($email)));
       $password = stripslashes(strip_tags(trim($password)));
       $res = Model_Auth::user_authorize($email, $password);

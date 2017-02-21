@@ -292,9 +292,11 @@
 <div data-related_block class="col-xs-12" style="display: none;">
   <div class="col-xs-12 panel panel-default" style="padding-bottom: 30px">
     <input data-related_get_list type="hidden"
-           value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
+           value="<?= /** @noinspection PhpUndefinedMethodInspection */
+             _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
     <div id="content" data-edit_related class="row products"></div>
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/product/form.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
+  _A_::$app->router()->UrlTo('views/js/product/form.min.js'); ?>' type="text/javascript"></script>
