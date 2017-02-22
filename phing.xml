@@ -15,6 +15,8 @@
         <exclude name="owlcarousel*/"/>
         <exclude name="jquery*"/>
         <exclude name="bootstrap*"/>
+        <exclude name="tooltip*"/>
+        <exclude name="inputmask*/"/>
         <exclude name="modernizr*"/>
         <exclude name="owl*"/>
         <exclude name="char-counter*"/>
@@ -32,6 +34,7 @@
         <exclude name="jquery*/"/>
         <exclude name="jQuery*/"/>
         <exclude name="jqmobile*/"/>
+        <exclude name="inputmask*/"/>
         <exclude name="owlcarousel*/"/>
         <exclude name="jquery*"/>
         <exclude name="bootstrap*"/>
@@ -39,6 +42,8 @@
         <exclude name="owl*"/>
         <exclude name="char-counter*"/>
         <exclude name="select.ui*"/>
+        <exclude name="**/*.min.js"/>
+        <exclude name="*.min.js"/>
         <include name="**/*.js"/>
         <include name="hints.js"/>
         <include name="load.js"/>
@@ -66,6 +71,8 @@
         <exclude name="font-awesome*"/>
         <exclude name="owlcarousel*/"/>
         <exclude name="tooltipster*/"/>
+        <exclude name="*.min.css"/>
+        <exclude name="**/*.min.css"/>
         <include name="*.css"/>
         <include name="**/*.css"/>
     </fileset>
@@ -104,6 +111,8 @@
         <echo msg="Compressing JavaScript files..."/>
         <mygz>
             <fileset dir="${JS_DIR}/">
+                <exclude name="*.gz"/>
+                <exclude name="**/*.gz"/>
                 <include name="*.min.js"/>
                 <include name="**/*.min.js"/>
             </fileset>
@@ -114,6 +123,8 @@
         <echo msg="Compressing CSS files..."/>
         <mygz>
             <fileset dir="${CSS_DIR}/">
+                <exclude name="*.gz"/>
+                <exclude name="**/*.gz"/>
                 <include name="*.min.css"/>
                 <include name="**/*.min.css"/>
             </fileset>
