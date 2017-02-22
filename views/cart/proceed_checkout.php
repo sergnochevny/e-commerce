@@ -57,10 +57,10 @@
             </div>
             <div class="col-xs-12 col-sm-2 col-sm-offset-4 table-list-row-item">
               <div class="row">
-                <div class="col-xs-4 visible-xs">
+                <div class="col-xs-6 visible-xs">
                   <div class="row"><b>Total:</b></div>
                 </div>
-                <div class="col-xs-8 col-sm-12">
+                <div class="col-xs-6 col-sm-12">
                   <div class="row"><span class="amount"><?= isset($sum_samples) ? $sum_samples : ''; ?></span></div>
                 </div>
               </div>

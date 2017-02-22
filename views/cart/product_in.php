@@ -8,10 +8,10 @@
   </div>
   <div class="col-xs-12 col-sm-2 table-list-row-item">
     <div class="row">
-      <div class="col-xs-4 visible-xs">
+      <div class="col-xs-6 visible-xs">
         <div class="row"><b>Price:</b></div>
       </div>
-      <div class="col-xs-8 col-sm-12">
+      <div class="col-xs-6 col-sm-12">
         <div class="row">
           <span class="amount"><?= $item['format_price']; ?></span>
         </div>
@@ -20,20 +20,20 @@
   </div>
   <div class="col-xs-12 col-sm-2 table-list-row-item">
     <div class="row">
-      <div class="col-xs-4 visible-xs">
+      <div class="col-xs-6 visible-xs">
         <div class="row"><b>Discount:</b></div>
       </div>
-      <div class="col-xs-8 col-sm-12">
+      <div class="col-xs-6 col-sm-12">
         <div class="row"><?= $item['format_discount']; ?></div>
       </div>
     </div>
   </div>
   <div class="col-xs-12 col-sm-2 table-list-row-item">
     <div class="row">
-      <div class="col-xs-4 visible-xs">
+      <div class="col-xs-6 visible-xs">
         <div class="row"><b>Quantity:</b></div>
       </div>
-      <div class="col-xs-8 col-sm-12">
+      <div class="col-xs-6 col-sm-12">
         <div class="row">
           <div class="quantity">
             <?php if($item['piece'] == 0) { ?>
@@ -50,10 +50,10 @@
   </div>
   <div class="col-xs-12 col-sm-1 table-list-row-item">
     <div class="row">
-      <div class="col-xs-4 visible-xs">
+      <div class="col-xs-6 visible-xs">
         <div class="row"><b>Total:</b></div>
       </div>
-      <div class="col-xs-8 col-sm-12">
+      <div class="col-xs-6 col-sm-12">
         <div class="row"><span class="amount"><?= $t_pr; ?></span></div>
       </div>
     </div>

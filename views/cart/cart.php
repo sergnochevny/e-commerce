@@ -141,10 +141,8 @@
                   <b>Subtotal:</b>
                 </div>
               </div>
-              <div class="col-xs-2" data-block="subtotal_ship">
-                <div class="row">
-                  <b>$<?= number_format($subtotal_ship, 2); ?> USD</b>
-                </div>
+              <div class="col-xs-4" data-block="subtotal_ship">
+                <b>$<?= number_format($subtotal_ship, 2); ?> USD</b>
               </div>
             </div>
           </div>

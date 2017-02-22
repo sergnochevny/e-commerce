@@ -5,12 +5,18 @@
         <div class="row">
           <div class="col-xs-8">
             <div id="coupon_code_init" class="row">
-              <label for="coupon_code">Coupon code:</label>
-              <input id="coupon_code" type="text"
-                     placeholder="Coupon code"
-                     value="<?= isset($coupon_code) ? $coupon_code : '' ?>"
-                     data-block="coupon_code"
-                     class="input-text" name="coupon_code"/>
+              <div class="row">
+                <div class="col-xs-6">
+                  <label for="coupon_code">Coupon code:</label>
+                </div>
+                <div class="col-xs-6">
+                  <input id="coupon_code" type="text"
+                         placeholder="Coupon code"
+                         value="<?= isset($coupon_code) ? $coupon_code : '' ?>"
+                         data-block="coupon_code"
+                         class="input-text" name="coupon_code"/>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-xs-4">
