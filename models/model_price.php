@@ -191,7 +191,7 @@
               if($bReturnString) {
 
                 if($rs['discount_type'] == DISCOUNT_TYPE_SUBTOTAL) {
-                  if($isDiscountApplay) $temp = sprintf("reduced a further %s.", $tempAmtString);
+                  if($isDiscountApplay) $temp = sprintf("reduced further by %s.", $tempAmtString);
                   else $temp = sprintf("Reduced by %s.", $tempAmtString);
                   $isDiscountApplay = true;
                 } else if($rs['discount_type'] == DISCOUNT_TYPE_TOTAL) {

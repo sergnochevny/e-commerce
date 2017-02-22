@@ -470,7 +470,7 @@
           $field_name = "Sale price:";
         }
         if($data['bSystemDiscount']) {
-          $field_value = sprintf("Reduced a further %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
+          $field_value = sprintf("Reduced further by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
         } else {
           $field_value = sprintf("Reduced by %s.<br><strong>%s</strong>", $data['rDiscount'], $data['sDiscountPrice']);
         }

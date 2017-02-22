@@ -84,10 +84,11 @@
         'default' => [
           'connection' => "localhost",
           'user' => "root",
-//          'password' => "JzpEk0659o",
           'password' => "",
+//          'user' => "newiluvf",
+//          'password' => "dd94ZXG6",
           'db' => [
-            'default' => 'fabrix'
+            'default' => 'iluvfabrix'
           ]
         ]
       ]
