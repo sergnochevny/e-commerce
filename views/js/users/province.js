@@ -1,4 +1,5 @@
 'use strict';
+
 (function ($) {
 
   $("[data-change-province]").on('change',

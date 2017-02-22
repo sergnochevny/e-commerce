@@ -1,11 +1,10 @@
 'use strict';
+
 (function ($) {
 
   $("input").inputmask();
 
   $.danger_remove(8000);
-
-  setEvToFilter();
 
   function postdata(this_, url, data, context, callback) {
     $.postdata(this_, url, data,
@@ -32,7 +31,7 @@
         var data = new FormData(this);
         var url = $(this).attr('action');
         var container = $(this).parents('[data-role=form_content]');
-        if (container.length = 0) container = $(this).parent();
+        if (container.length == 0) container = $(this).parent();
         postdata(this, url, data, container, function (data) {
           $(document).trigger('tiny_init');
         });
@@ -82,43 +81,6 @@
     );
   }
 
-  function evFilterAdd(event) {
-    var data = new FormData($('form#edit_form')[0]);
-    var url = $('form#edit_form').attr('action');
-    data.append('method', $(this).attr('href'));
-    var destination = $(this).attr('data-destination');
-    var title = $(this).attr('data-title');
-    postdata(this, url, data, $('#modal_content'),
-      function () {
-        $('#modal_content').init_input();
-        $('#modal-title').html(title);
-        $('#modal-title').init_input();
-        $('#build_filter').attr('data-destination', destination);
-        $('[data-filter-search]').attr('data-destination', destination);
-        setEvToFilterSearch();
-        $('#modal').modal('show');
-      }
-    );
-  }
-
-  function setEvToFilterSearch() {
-
-    $('[data-filter-search]').on('click',
-      function (event) {
-        event.preventDefault();
-        evFilterSearch.call(this, event);
-      }
-    );
-
-    $('li.select_item input').on('change',
-      function (event) {
-        if (!this.checked) {
-          $('span[data-rem_row][data-index=' + $(this).val() + ']').trigger('click');
-        }
-      }
-    );
-  }
-
   function evFilterSearch() {
     var data_destination = $(this).attr('data-destination');
     var destination = $('[data-filter=' + data_destination + ']').parent('div');
@@ -144,10 +106,49 @@
     );
   }
 
+  function setEvToFilterSearch() {
+
+    $('[data-filter-search]').on('click',
+      function (event) {
+        event.preventDefault();
+        evFilterSearch.call(this, event);
+      }
+    );
+
+    $('li.select_item input').on('change',
+      function (event) {
+        if (!this.checked) {
+          $('span[data-rem_row][data-index=' + $(this).val() + ']').trigger('click');
+        }
+      }
+    );
+  }
+
+  function evFilterAdd(event) {
+    var data = new FormData($('form#edit_form')[0]);
+    var url = $('form#edit_form').attr('action');
+    data.append('method', $(this).attr('href'));
+    var destination = $(this).attr('data-destination');
+    var title = $(this).attr('data-title');
+    postdata(this, url, data, $('#modal_content'),
+      function () {
+        $('#modal_content').init_input();
+        $('#modal-title').html(title);
+        $('#modal-title').init_input();
+        $('#build_filter').attr('data-destination', destination);
+        $('[data-filter-search]').attr('data-destination', destination);
+        setEvToFilterSearch();
+        $('#modal').modal('show');
+      }
+    );
+  }
+
   $("#save").on('click', function (event) {
     event.preventDefault();
     $('#edit_form').trigger('submit', [true]);
   });
+
+  setEvToFilter();
 
   $('form#edit_form').init_input();
 

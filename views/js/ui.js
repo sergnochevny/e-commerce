@@ -1,4 +1,4 @@
-'use srict';
+'use strict';
 
 (function ($) {
   $('body').init_input();

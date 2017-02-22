@@ -4,8 +4,8 @@
     $.postdata(this_, url, data,
       function (data) {
         $.when($('[data-products_block]').html(data)).done(
-          function(){
-            if(callback) callback.call(this_);
+          function () {
+            if (callback) callback.call(this_);
           }
         );
       }

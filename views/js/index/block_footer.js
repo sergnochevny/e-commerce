@@ -1,4 +1,5 @@
 'use strict';
+
 (function ($) {
   $(document).ready(function (event) {
       $('#bsells_products').load($('#hidden_bsells_products').val());

@@ -1,3 +1,5 @@
+'use strict';
+
 (function ($) {
 
   $.each($('[data-load]'),

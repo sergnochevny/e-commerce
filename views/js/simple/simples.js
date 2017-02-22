@@ -1,4 +1,5 @@
 'use strict';
+
 (function ($) {
   $(document).on('click.confirm_action', ".popup a.close", function (event) {
     $("#confirm_action").off('click.confirm_action');
