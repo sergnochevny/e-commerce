@@ -995,9 +995,9 @@
      * @export
      */
     public function proceed_agreem() {
-      if(!empty(_A_::$app->keyStorage()->paypal_business) ||
-        !empty(_A_::$app->keyStorage()->paypal_url)
-      ) {
+      $paypal_business = _A_::$app->keyStorage()->paypal_business;
+      $paypal_url = _A_::$app->keyStorage()->paypal_url;
+      if(!empty($paypal_business) && !empty($paypal_url)) {
         $prms = null;
         $back_url = _A_::$app->router()->UrlTo('cart', ['proceed' => true]);
         $this->template->vars('back_url', $back_url);
@@ -1045,8 +1045,8 @@
 //          $paypal['business'] = "info@iluvfabrix.com";
 //          $paypal['url'] = "https://www.paypal.com/cgi-bin/webscr";
 //        }
-          $paypal['business'] = _A_::$app->keyStorage()->paypal_business;
-          $paypal['url'] = _A_::$app->keyStorage()->paypal_url;
+          $paypal['business'] = $paypal_business;
+          $paypal['url'] = $paypal_url;
 
           $paypal['cmd'] = "_xclick";
           $paypal['image_url'] = _A_::$app->router()->UrlTo('/');
