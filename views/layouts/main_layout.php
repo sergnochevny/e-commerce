@@ -100,9 +100,6 @@
     _A_::$app->router()->UrlTo('views/js/search/search.js'); ?>'></script>
   <script type='text/javascript' src='<?= /** @noinspection PhpUndefinedMethodInspection */
     _A_::$app->router()->UrlTo('views/js/script.min.js'); ?>'></script>
-  <input type="hidden" id="base_url" value="<?= /** @noinspection PhpUndefinedMethodInspection */
-    _A_::$app->router()->UrlTo('/'); ?>">
-
 </head>
 <body class="woocommerce woocommerce-page">
 <input type="hidden" id="base_url" value="<?= /** @noinspection PhpUndefinedMethodInspection */

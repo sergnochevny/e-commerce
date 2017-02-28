@@ -83,7 +83,10 @@
     }
 
     private function setBaseUrl() {
-      $this->base_url = strtolower(explode(DS, _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://" . _A_::$app->server('SERVER_NAME') . (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT'));
+      $scheme = strtolower(trim(_A_::$app->server('REQUEST_SCHEME')));
+      if(empty($scheme) && !empty(_A_::$app->server('HTTPS'))) $scheme = 'https';
+      if(empty($scheme)) $this->base_url = strtolower(explode(DS, _A_::$app->server('SERVER_PROTOCOL'))[0]) . "://" . _A_::$app->server('SERVER_NAME') . (_A_::$app->server('SERVER_PORT') == '80' ? '' : ':' . _A_::$app->server('SERVER_PORT'));
+      else $this->base_url = $scheme . "://" . _A_::$app->server('SERVER_NAME');
       $this->base_url = trim($this->base_url, '/\\');
       if(strlen(trim(dirname(_A_::$app->server('SCRIPT_NAME')), '/\\')))
         $this->base_url .= DS . trim(dirname(_A_::$app->server('SCRIPT_NAME')), '/\\');
@@ -260,7 +263,7 @@
         $sef_exclude_params = isset($sef_exclude_params) ? $sef_exclude_params : [];
         if(!$no_ctrl_ignore && is_callable(['Controller_' . ucfirst($this->controller), 'urlto_sef_ignore_prms']))
           $exclude_params = forward_static_call(['Controller_' . ucfirst($this->controller), 'urlto_sef_ignore_prms']);
-        if( !isset($exclude_params)) $exclude_params = [];
+        if(!isset($exclude_params)) $exclude_params = [];
         else $exclude_params = isset($exclude_params[$this->action]) ? $exclude_params[$this->action] : [];
         $sef_exclude_params = array_merge($this->exclude_params, $sef_exclude_params, $exclude_params);
         $path = rtrim(trim($path), DS);
