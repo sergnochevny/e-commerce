@@ -1825,6 +1825,10 @@ span.opa {
         margin-left: 15px;
     }
 
+}
+
+@media (max-width: 992px) {
+
     .product_view .product_details {
         padding-top: 15px;
     }
