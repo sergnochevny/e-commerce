@@ -6,7 +6,6 @@ body {
     transition: opacity 1.25s ease-in;
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
-
     background-image: url(../images/bg-body.jpg);
 }
 
