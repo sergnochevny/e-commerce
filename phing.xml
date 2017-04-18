@@ -1,12 +1,7 @@
 <project name="make_project" basedir="." default="build">
 
-    <taskdef name="myjsmin" classname="tasks.ext.my.MinJsTask"/>
-    <taskdef name="mycssmin" classname="tasks.ext.my.MinCssTask"/>
-    <taskdef name="mygz" classname="tasks.ext.my.GzTask"/>
-
     <property name="JS_DIR" value="views/js"/>
     <property name="CSS_DIR" value="views/css"/>
-    <property name="GLOBAL_LIB_DIR" value="../../js_libs"/>
 
     <fileset id="minjs" dir="${JS_DIR}/">
         <exclude name="jquery*/"/>
@@ -95,42 +90,18 @@
 
     <target name="minifyjs">
         <echo msg="Minifying JavaScript files..."/>
-        <myjsmin jsminpath="${GLOBAL_LIB_DIR}/jsmin.php">
+        <jsmin targetDir="${JS_DIR}" suffix=".min">
             <fileset refid="tominjs"/>
-        </myjsmin>
+        </jsmin>
     </target>
 
     <target name="minifycss">
         <echo msg="Minifying CSS files..."/>
-        <mycssmin cssminpath="${GLOBAL_LIB_DIR}/cssmin.php">
+        <jsmin targetDir="${CSS_DIR}" suffix=".min">
             <fileset refid="tomincss"/>
-        </mycssmin>
+        </jsmin>
     </target>
 
-    <target name="compressjs">
-        <echo msg="Compressing JavaScript files..."/>
-        <mygz>
-            <fileset dir="${JS_DIR}/">
-                <exclude name="*.gz"/>
-                <exclude name="**/*.gz"/>
-                <include name="*.min.js"/>
-                <include name="**/*.min.js"/>
-            </fileset>
-        </mygz>
-    </target>
-
-    <target name="compresscss">
-        <echo msg="Compressing CSS files..."/>
-        <mygz>
-            <fileset dir="${CSS_DIR}/">
-                <exclude name="*.gz"/>
-                <exclude name="**/*.gz"/>
-                <include name="*.min.css"/>
-                <include name="**/*.min.css"/>
-            </fileset>
-        </mygz>
-    </target>
-
-    <target name="build" depends="remove_old, minifyjs, minifycss, compresscss, compressjs">
+    <target name="build" depends="remove_old, minifyjs, minifycss">
     </target>
 </project>
