@@ -8,6 +8,7 @@
 	border-bottom: 4px solid transparent;
 	border-left: 4px dashed;
 }
+
 .navbar-nav:not(.sm-collapsible) ul a.has-submenu {
 	padding-right: 30px;
 }
