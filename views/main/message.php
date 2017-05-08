@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div id="content" class="main-content-inner" role="main">
     <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
       _A_::$app->router()->UrlTo('/'); ?>" class="back_button button">Back</a>

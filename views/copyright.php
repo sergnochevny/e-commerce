@@ -1,5 +1,5 @@
 <div class="footer-credit">
-  <div class="container">
+  <div class="container inner-offset-top half-outer-offset-bottom">
     <div class="copyright">
       <div class="row">
         <div class="footer-credit-left col-md-6 col-xs-12">

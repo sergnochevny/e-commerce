@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 col-md-2">
     <div class="row wo_search">
       <?= isset($shop_menu) ? $shop_menu : ''; ?>

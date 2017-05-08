@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="<?= /** @noinspection PhpUndefinedMethodInspection */
   _A_::$app->router()->UrlTo('views/css/blog.min.css'); ?>">
 <?php include('views/index/main_gallery.php'); ?>
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div id="blog" class="main-content-inner" role="main">
     <div class="row">
       <div class="col-xs-12">

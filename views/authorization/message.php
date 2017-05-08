@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div id="content" class="main-content-inner" role="main">
     <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
       <i class="fa fa-angle-left" aria-hidden="true"></i>

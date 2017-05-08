@@ -8,7 +8,7 @@
   $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
 ?>
 
-<div id="content" class="container product_view">
+<div id="content" class="container product_view inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12">
     <div class="row">
 

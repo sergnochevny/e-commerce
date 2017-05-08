@@ -7,10 +7,10 @@
           <div class="col-sm-6">
             <?php /** @noinspection PhpUndefinedMethodInspection */
               if(!empty(_A_::$app->get('cat'))): ?>
-              <p class="woocommerce-result-count">
-                CATEGORY: <?= $category_name ?> '<br/>
-              </p>
-            <?php endif; ?>
+                <p class="woocommerce-result-count">
+                  CATEGORY: <?= $category_name ?> '<br/>
+                </p>
+              <?php endif; ?>
           </div>
           <div class="col-sm-6 search-result-container text-right">
             <span class="search-result">Showing <?= $count_rows; ?> results</span>
@@ -33,16 +33,12 @@
 
 
 <div class="row">
-  <div class="col-xs-12">
-
-    <nav class="paging-navigation" role="navigation">
-      <h4 class="sr-only">Navigation</h4>
-      <ul class="pagination">
-        <?= isset($paginator) ? $paginator : ''; ?>
-      </ul>
-    </nav>
-
-  </div>
+  <nav class="paging-navigation" role="navigation">
+    <h4 class="sr-only">Navigation</h4>
+    <ul class="pagination">
+      <?= isset($paginator) ? $paginator : ''; ?>
+    </ul>
+  </nav>
 </div>
 
 <script src='<?= /** @noinspection PhpUndefinedMethodInspection */

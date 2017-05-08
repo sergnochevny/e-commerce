@@ -4,7 +4,7 @@
 <link rel='stylesheet' charset="UTF-8" href='<?php /** @noinspection PhpUndefinedMethodInspection */
   echo _A_::$app->router()->UrlTo('views/css/matches.min.css'); ?>'
       type='text/css' media='all'/>
-<div id="content" class="container">
+<div id="content" class="container inner-offset-top half-outer-offset-bottom">
   <div class="entry-content">
     <div class="row">
       <div class="col-xs-12">

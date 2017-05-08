@@ -21,17 +21,14 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-12">
-
-      <nav class="paging-navigation" role="navigation">
-        <h4 class="sr-only">Navigation</h4>
-        <ul class="pagination">
-          <?= isset($paginator) ? $paginator : ''; ?>
-        </ul>
-      </nav>
-
-    </div>
+    <nav class="paging-navigation" role="navigation">
+      <h4 class="sr-only">Navigation</h4>
+      <ul class="pagination">
+        <?= isset($paginator) ? $paginator : ''; ?>
+      </ul>
+    </nav>
   </div>
+
   <div class="row">
     <div class="col-xs-12">
       <div class="text-center">
@@ -40,5 +37,6 @@
     </div>
   </div>
 </div>
+
 <script src='<?= /** @noinspection PhpUndefinedMethodInspection */
   _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

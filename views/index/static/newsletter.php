@@ -1,5 +1,5 @@
 <?php include('views/index/main_gallery.php'); ?>
-<div id="content" class="container">
+<div id="content" class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12">
     <div class="row">
       <div class="col-xs-12 text-center afterhead-row">

@@ -42,3 +42,11 @@
 .outer-offset-right{
     margin-right: 15px;
 }
+
+.outer-offset-bottom {
+    margin-bottom: 20px;
+}
+
+.outer-offset-top {
+    margin-top: 20px;
+}

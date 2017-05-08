@@ -29,8 +29,8 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
+<div class="col-xs-12">
+  <div class="row">
     <nav class="paging-navigation" role="navigation">
       <h4 class="sr-only">Navigation</h4>
       <ul class="pagination">

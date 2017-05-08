@@ -231,16 +231,6 @@ span#b_in_product {
     margin-bottom: 30px;
 }
 
-.section-title:after {
-    content: '';
-    width: 30px;
-    height: 1px;
-    background: #000000;
-    display: block;
-    position: relative;
-    bottom: -10px;
-}
-
 /* woocommerce forms */
 
 .form-row label {
@@ -416,7 +406,7 @@ input[type='color']:focus {
 }
 
 .afterhead-row {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 /* @TODO */
@@ -2384,11 +2374,8 @@ div.box {
     border-radius: 4px;
     background: rgba(254, 254, 254, 0.5);
     box-shadow: 0 0 10px #999;
-    width: 100%;
     display: block;
     float: left;
-    padding-top: 15px;
-    padding-bottom: 15px;
 }
 
 div.tabs {

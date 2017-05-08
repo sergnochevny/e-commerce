@@ -11,48 +11,6 @@
     }
   );
 
-  // $(document).on('click', '[data-sb_prices]',
-  //   function (event) {
-  //     event.preventDefault();
-  //     var url = $(this).attr('href');
-  //     var data = new FormData();
-  //     $(this).addClass('active');
-  //     data.append('search[hidden][a.priceyard][from]', $(this).attr('data-prices_from'));
-  //     data.append('search[hidden][a.priceyard][to]', $(this).attr('data-prices_to'));
-  //     $.postdata(this, url, data,
-  //       function (data) {
-  //         $.when($('#content').html(data)).done(function () {
-  //           $('.wo_search').removeClass('wo_search').addClass('w_search');
-  //           if($('.welcome').length){
-  //             $('.w_search').removeClass('w_search').addClass('ww_search');
-  //             $('.wo_search').removeClass('wo_search').addClass('ww_search');
-  //           }
-  //         });
-  //       }
-  //     );
-  //   }
-  // );
-
-  // $(document).on('click', '[data-sb]',
-  //   function (event) {
-  //     event.preventDefault();
-  //     var url = $(this).attr('href');
-  //     var data = new FormData();
-  //     $(this).addClass('active');
-  //     $.postdata(this, url, data,
-  //       function (data) {
-  //         $.when($('#content').html(data)).done(function () {
-  //           $('.wo_search').removeClass('wo_search').addClass('w_search');
-  //           if($('.welcome').length){
-  //             $('.w_search').removeClass('w_search').addClass('ww_search');
-  //             $('.wo_search').removeClass('wo_search').addClass('ww_search');
-  //           }
-  //         });
-  //       }
-  //     );
-  //   }
-  // );
-
   $(document).on('click.basket', '#to_basket',
     function (event) {
       event.preventDefault();

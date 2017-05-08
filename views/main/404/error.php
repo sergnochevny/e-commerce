@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div id="content" class="main-content-inner" role="main">
     <div style="padding-top: 20px; margin: auto; width: 600px;">
       <div class="error404" id="message404">

@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?= /** @noinspection PhpUndefinedMethodInspection */
   _A_::$app->router()->UrlTo('upload/styles.css'); ?>">
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
     <div class="col-xs-12">
       <div class="row afterhead-row">

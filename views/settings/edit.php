@@ -1,5 +1,5 @@
 <script src='<?= _A_::$app->router()->UrlTo('views/js/settings/edit.min.js'); ?>' type="text/javascript"></script>
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
     <div class="col-xs-12">
       <div class="row afterhead-row">

@@ -455,6 +455,7 @@ p.discount {
 
 .site-container {
     overflow: hidden;
+    margin-bottom: 5px;
 }
 
 .title404 {
@@ -961,7 +962,7 @@ button[data-filter-search] {
 }
 
 .site-footer {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 input[type='text'],
@@ -1939,7 +1940,7 @@ span[role=combobox].ui-button:active .ui-icon {
     border-radius: 4px;
     box-shadow: 0 0 10px rgb(191, 191, 191);
     position: absolute;
-    top: 200px;
+    top: 30px;
 }
 
 .shop__sidebar .shop__sidebar-list {
@@ -1984,23 +1985,13 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 
 .w_search {
-    margin-top: -49px;
-    position: relative;
-}
-
-.wo_search {
-    margin-top: -26px;
-    position: relative;
-}
-
-.ww_search {
-    margin-top: 0;
     position: relative;
 }
 
 @media only screen and (min-width: 991px) {
-    .w_search, .ww_search, .wo_search {
+    .w_search {
         margin-right: 0;
+        margin-bottom: 20px;
     }
 }
 
@@ -2013,14 +2004,14 @@ span[role=combobox].ui-button:active .ui-icon {
 }
 
 @media only screen and (max-width: 991px) {
-    .w_search, .ww_search, .wo_search {
+    .w_search {
         margin-top: 0;
+        margin-bottom: 20px;
     }
 
     .shop__sidebar {
         height: auto;
         float: none;
-        margin-top: 30px;
         position: static;
     }
 
@@ -2728,12 +2719,7 @@ input:hover {
     box-shadow: 0 0 10px #666;
 }
 
-.w_search .title, .ww_search .title, .wo_search .title {
-    margin-top: 170px;
-}
-
-.w_search .title .row, .ww_search .title .row, .wo_search .title .row {
-    margin-right: -20px;
+.w_search .title .row {
     text-shadow: 2px 1px 0 #fff;
 }
 

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
     <div class="col-xs-12 col-sm-12">
 

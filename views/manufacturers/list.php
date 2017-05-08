@@ -1,4 +1,4 @@
-<?php  include_once 'views/messages/alert-boxes.php';?>
+<?php include_once 'views/messages/alert-boxes.php'; ?>
 <div class="col-xs-12 text-center afterhead-row">
   <h3 class="page-title">Manufacturers</h3>
 </div>
@@ -30,16 +30,12 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-12">
-
-    <nav class="paging-navigation" role="navigation">
-      <h4 class="sr-only">Navigation</h4>
-      <ul class="pagination">
-        <?= isset($paginator) ? $paginator : ''; ?>
-      </ul>
-    </nav>
-
-  </div>
+  <nav class="paging-navigation" role="navigation">
+    <h4 class="sr-only">Navigation</h4>
+    <ul class="pagination">
+      <?= isset($paginator) ? $paginator : ''; ?>
+    </ul>
+  </nav>
 </div>
 
 

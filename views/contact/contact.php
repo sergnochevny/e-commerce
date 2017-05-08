@@ -1,6 +1,6 @@
 <?php include('views/index/main_gallery.php'); ?>
 <div id="content">
-  <div class="container">
+  <div class="container inner-offset-top half-outer-offset-bottom">
     <div class="row">
       <div class="col-xs-12">
         <div class="row">

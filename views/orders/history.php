@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div id="content" class="main-content-inner" role="main">
 
     <div class="col-lg-12">
