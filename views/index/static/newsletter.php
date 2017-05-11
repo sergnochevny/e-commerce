@@ -1,67 +1,61 @@
 <?php include('views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
-  <div class="col-xs-12">
-    <div class="row">
-      <div class="col-xs-12 text-center afterhead-row">
-        <div class="row">
-          <h1 class="page-title">I Luv Fabrix Newsletter</h1>
-          <h2 class="page-title">
-            <small>DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</small>
-          </h2>
-        </div>
+  <div class="col-xs-12 box">
+    <div class="col-xs-12 text-center">
+      <div class="row">
+        <h1 class="page-title">I Luv Fabrix Newsletter</h1>
+        <h2 class="page-title">
+          <small>DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</small>
+        </h2>
       </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="row">
+        <p class="h4">
+          <a href="<?= _A_::$app->UrlTo('shop') ?>">
+            Designer upholstery / drapery fabrics with FREE SHIPPING.* Click to shop.
+          </a>
+        </p>
+        <p>
+          *(Free Ground Shipping in the Contiguous United States Only. Faster Shipping available at
+          moderate rates, Worldwide, if necessary)
+        </p>
+        <br/><br/>
+      </div>
+    </div>
+
+    <?php if(!Controller_User::is_logged()): ?>
       <div class="col-xs-12">
         <div class="row">
-          <p class="h4">
-            <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
-              _A_::$app->UrlTo('shop') ?>">
-              Designer upholstery / drapery fabrics with FREE SHIPPING.* Click to shop.
-            </a>
-          </p>
-          <p>
-            *(Free Ground Shipping in the Contiguous United States Only. Faster Shipping available at
-            moderate rates, Worldwide, if necessary)
-          </p>
-          <br/><br/>
-        </div>
-      </div>
-
-      <?php if(!Controller_User::is_logged()): ?>
-        <div class="col-xs-12">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="row">
-                <h4>Register for our newsletter to benefit from:</h4>
-                <ul>
-                  <li>exclusive offers only given to members</li>
-                  <li> first to know of any limited time fabric discounts</li>
-                  <li>new features & website tools</li>
-                </ul>
-              </div>
+          <div class="col-xs-12">
+            <div class="row">
+              <h4>Register for our newsletter to benefit from:</h4>
+              <ul>
+                <li>exclusive offers only given to members</li>
+                <li> first to know of any limited time fabric discounts</li>
+                <li>new features & website tools</li>
+              </ul>
             </div>
-            <div class="col-xs-12">
-              <div class="row afterhead-row">
-                <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
-                  <div class="row">
-                    <div class="col-xs-12" data-role="form_content"
-                         data-load="<?= /** @noinspection PhpUndefinedMethodInspection */
-                           _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
-                    </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+                <div class="row">
+                  <div class="col-xs-12" data-role="form_content"
+                       data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      <?php endif; ?>
-    </div>
+      </div>
+    <?php endif; ?>
   </div>
 </div>
 
 <?php include('views/index/block_footer.php'); ?>
 
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
-<script type='text/javascript' src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
 

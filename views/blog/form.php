@@ -89,5 +89,4 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </form>
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/blog/form.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/form.js'); ?>' type="text/javascript"></script>

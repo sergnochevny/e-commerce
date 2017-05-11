@@ -624,13 +624,16 @@ a img.aligncenter {
 
 /* main header */
 .site-navigation {
-    border-bottom: 1px solid #cacaca;
     /*background-color: #ddd;*/
     background-color: rgba(34, 34, 34, 0.1);
     width: 100%;
     z-index: 99;
     margin-bottom: 0px;
     border-radius: 0;
+}
+
+.site-header {
+    box-shadow: 0 1px 15px #999;
 }
 
 .site-navigation .navbar-header .navbar-icon {
@@ -2229,8 +2232,4 @@ sup {
     font-weight: normal !important;
     margin-top: 15px;
     text-align: center;
-}
-
-.note {
-    color: #666;
 }

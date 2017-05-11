@@ -1,5 +1,4 @@
-<?php /** @noinspection PhpUndefinedMethodInspection */
-  $href = _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart'], $item['pname']); ?>
+<?php $href = _A_::$app->router()->UrlTo('shop/product', ['pid' => $pid, 'back' => 'cart'], $item['pname']); ?>
 <div class="col-xs-12 table-list-row" data-block="cart_item" data-pid="<?= $pid; ?>" data-row="items">
   <div class="col-xs-12 col-sm-4 table-list-row-item">
     <div class="row">
@@ -59,8 +58,7 @@
     </div>
   </div>
   <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
-    <a data-block="del_product_cart" href="<?= /** @noinspection PhpUndefinedMethodInspection */
-      _A_::$app->router()->UrlTo('cart/del_product'); ?>">
+    <a data-block="del_product_cart" href="<?= _A_::$app->router()->UrlTo('cart/del_product'); ?>">
       <i class="fa fa-2x fa-trash-o"></i>
     </a>
   </div>

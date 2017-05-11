@@ -25,18 +25,18 @@
 
     <div class="row">
       <div class="col-sm-10 col-sm-offset-2 inner-offset-bottom">
-        &nbsp;<span color="#663300">$<?= /** @noinspection PhpUndefinedMethodInspection */
-            /** @noinspection PhpUndefinedMethodInspection */
-            number_format((!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), 2); ?>
-          USD
-                    surcharge</span>
+        &nbsp;
+        <span color="#663300">
+          $<?= number_format((!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), 2); ?>
+          USD surcharge
+        </span>
       </div>
     </div>
 
     <div class="row">
       <div class="col-sm-10 col-sm-offset-2 inner-offset-bottom">
         <?php if($bExpressSamples) { ?>
-          <small style="color:#999;">
+          <small class="note">
             <b>NOTE: </b>
             Only orders placed Monday through Thursday prior to 2:00 PM Eastern time will be processed
             for overnight delivery. Orders placed outside those hours will be processed the next open

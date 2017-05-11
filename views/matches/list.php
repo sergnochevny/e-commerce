@@ -1,6 +1,6 @@
 <section class="just-posts-grid">
   <h1 class="page-title" style="margin: 25px 0 35px !important; text-align: center;">Fabric Pattern Tool</h1>
-  <div class="note afterhead-row">
+  <div class="note_matches">
     <div class="matches-note text-bold">
       <small>
         NOTE:
@@ -28,11 +28,10 @@
         clear the area by clicking &laquo;Clear Matches&raquo;.
       </p>
     </div>
-    <hr>
   </div>
-  <div id="dragZone">
+  <div id="dragZone" class="dragZone">
     <div class="dragZoneTitle">Matches Area</div>
-    <div id="dragZoneArea">
+    <div id="dragZoneArea" class="dragZoneArea">
       <div class="deleteDragImg icon-delete"></div>
       <div class="detailsDragImg"></div>
       <?= isset($list) ? $list : '' ?>
@@ -41,18 +40,15 @@
   <div style="width: 100%" class="text-center inner-offset-vertical" id="b_in_product">
     <?php if(isset($list)): ?>
       <a class="button" id="all_to_basket"
-         href="<?= /** @noinspection PhpUndefinedMethodInspection */
-           _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
+         href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
         Add All to Cart
       </a>
       <a class="button" id="clear_matches"
-         href="<?= /** @noinspection PhpUndefinedMethodInspection */
-           _A_::$app->router()->UrlTo('matches/clear'); ?>">
+         href="<?= _A_::$app->router()->UrlTo('matches/clear'); ?>">
         Clear Matches
       </a>
     <?php else: ?>
-      <a class="button" href="<?= /** @noinspection PhpUndefinedMethodInspection */
-        _A_::$app->router()->UrlTo('shop'); ?>">
+      <a class="button" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">
         Go shopping
       </a>
     <?php endif; ?>

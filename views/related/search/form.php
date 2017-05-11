@@ -29,7 +29,7 @@
               <?php endif; ?>
               <?php if (isset($search['a.best'])): ?>
                 <div class="label label-search-info">Best
-                  textile: <?= isset($search['a.best']) && $search['a.best'] == 1 ? 'YES' : 'NO' ?></div>
+                  textiles: <?= isset($search['a.best']) && $search['a.best'] == 1 ? 'YES' : 'NO' ?></div>
               <?php endif; ?>
               <?php if (isset($search['a.specials'])): ?>
                 <div class="label label-search-info">
@@ -125,7 +125,7 @@
 
           <div class="col-sm-4">
             <div class="form-row">
-              <label>Best textile:</label>
+              <label>Best textiles:</label>
               <select name="search[a.best]">
                 <option value="" <?= isset($search['a.best']) ? '' : 'selected' ?>>Any</option>
                 <option value="1" <?= isset($search['a.best']) && $search['a.best'] == 1 ? 'selected' : '' ?>>Yes
@@ -230,5 +230,4 @@
     </div>
   </div>
 </form>
-<script src="<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/search.min.js'); ?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('views/js/search.min.js'); ?>"></script>

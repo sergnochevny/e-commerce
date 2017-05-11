@@ -38,7 +38,7 @@
     position: relative
 }
 
-#dragZoneArea > img {
+.dragZoneArea > img {
     cursor: move;
     z-index: 0;
     position: absolute;
@@ -46,17 +46,17 @@
     transition: opacity 1s;
 }
 
-#dragZoneArea {
-    background-color: rgb(245, 245, 245);
+.dragZoneArea {
+    background-color: #fff;
     height: 455px;
     margin: 45px 0 50px;
     position: relative;
     overflow: hidden;
 }
 
-#dragZone {
+.dragZone {
     background-color: #FFF;
-    box-shadow: 0 0 20px 0 #999;
+    box-shadow: 0 0 10px 0 #999;
     height: 500px;
     margin: 40px 0 50px;
     position: relative;

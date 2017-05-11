@@ -49,5 +49,4 @@
     endif;
   ?>
 </form>
-<script src="<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/search.min.js'); ?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('views/js/search.min.js'); ?>"></script>

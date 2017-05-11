@@ -1,4 +1,4 @@
-<div class="col-xs-12 panel panel-default" style="padding-bottom: 30px">
+<div class="col-xs-12" style="padding-bottom: 30px">
   <div class="row products">
 
     <div class="col-xs-12">

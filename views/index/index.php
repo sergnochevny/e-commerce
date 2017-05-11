@@ -4,8 +4,7 @@
   <div class="col-xs-12 box outer-offset-bottom half-inner-offset-vertical">
     <div class="col-xs-12">
       <div class="row"
-           data-load="<?= /** @noinspection PhpUndefinedMethodInspection */
-             _A_::$app->router()->UrlTo('info/view', ['method' => 'home']) ?>">
+           data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'home']) ?>">
       </div>
     </div>
   </div>
@@ -24,22 +23,17 @@
     <div class="row products best-products"></div>
     <div class="row bestseller-action-row">
       <div class="col-xs-12 text-center">
-        <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
-          _A_::$app->router()->UrlTo('shop/bestsellers'); ?>" class="button button-2x">MORE</a>
+        <a href="<?= _A_::$app->router()->UrlTo('shop/bestsellers'); ?>" class="button button-2x">MORE</a>
       </div>
     </div>
   </div>
 
 </div>
 
-<input type="hidden" id="get_url" value="<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('shop/widget', ['type' => 'carousel']); ?>">
+<input type="hidden" id="get_url" value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'carousel']); ?>">
 <input type="hidden" id="slider_url"
-       value="<?= /** @noinspection PhpUndefinedMethodInspection */
-         _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bsells_horiz']); ?>">
+       value="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bsells_horiz']); ?>">
 <?php include('views/index/block_footer.php'); ?>
 
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/index/index.min.js'); ?>' type="text/javascript"></script>
-<script type='text/javascript' src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/index/index.min.js'); ?>' type="text/javascript"></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>

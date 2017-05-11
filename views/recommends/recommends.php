@@ -4,8 +4,8 @@
       <?= isset($shop_menu) ? $shop_menu : ''; ?>
     </div>
   </div>
-  <div class="col-xs-12 col-md-10 main-content-inner" role="main">
-    <div id="content" class="content row">
+  <div class="col-xs-12 col-md-10 main-content-inner-side box" role="main">
+    <div id="content" class="content">
       <?=$list;?>
     </div>
   </div>

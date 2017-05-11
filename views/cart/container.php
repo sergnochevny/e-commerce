@@ -1,5 +1,5 @@
 <div class="container inner-offset-top half-outer-offset-bottom">
-  <div id="content" class="main-content-inner" role="main">
+  <div id="content" class="col-xs-12 main-content-inner box" role="main">
     <?= isset($content) ? $content : ''; ?>
   </div>
 </div>
@@ -18,7 +18,5 @@
     </div>
   </div>
 </div>
-<input type="hidden" id="base_url" value="<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('/'); ?>">
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/cart/cart.min.js'); ?>' type="text/javascript"></script>
+<input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
+<script src='<?= _A_::$app->router()->UrlTo('views/js/cart/cart.min.js'); ?>' type="text/javascript"></script>

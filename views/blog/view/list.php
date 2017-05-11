@@ -5,8 +5,7 @@
       <div class="col-xs-12 search-result-header">
         <div class="row">
           <div class="col-sm-6">
-            <?php /** @noinspection PhpUndefinedMethodInspection */
-              if(!empty(_A_::$app->get('cat'))): ?>
+            <?php if(!empty(_A_::$app->get('cat'))): ?>
                 <p class="woocommerce-result-count">
                   CATEGORY: <?= $category_name ?> '<br/>
                 </p>
@@ -41,5 +40,4 @@
   </nav>
 </div>
 
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

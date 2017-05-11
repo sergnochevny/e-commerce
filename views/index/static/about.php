@@ -1,12 +1,13 @@
 <?php include('views/index/main_gallery.php'); ?>
   <div id="content" class="container inner-offset-top half-outer-offset-bottom">
-    <div class="col-xs-12">
-      <div class="row">
+    <div class="box">
+      <div class="col-xs-12">
 
-        <div class="col-xs-12 text-center afterhead-row">
+        <div class="col-xs-12 text-center">
           <div class="row">
             <h1 class="page-title">About Us</h1>
-              <h2 class="page-title"><small>25 Years Selling Designer Fabrics</small>
+            <h2 class="page-title">
+              <small>25 Years Selling Designer Fabrics</small>
             </h2>
           </div>
         </div>
@@ -37,7 +38,6 @@
       </div>
     </div>
   </div>
-  <script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-    _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
+  <script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
 
 <?php include('views/index/block_footer.php'); ?>

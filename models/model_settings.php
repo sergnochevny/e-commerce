@@ -17,6 +17,9 @@
         'system_info_email' => (!is_null(_A_::$app->keyStorage()->system_info_email) ? _A_::$app->keyStorage()->system_info_email : ''),
         'system_csv_fields_dlm' => (!is_null(_A_::$app->keyStorage()->system_csv_fields_dlm) ? _A_::$app->keyStorage()->system_csv_fields_dlm : ','),
 
+        'shop_bsells_amount' => (!is_null(_A_::$app->keyStorage()->shop_bsells_amount) ? _A_::$app->keyStorage()->shop_bsells_amount : SHOP_BSELLS_AMOUNT),
+        'shop_specials_amount' => (!is_null(_A_::$app->keyStorage()->shop_specials_amount) ? _A_::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT),
+
         'shop_price_groups_count' => (!is_null(_A_::$app->keyStorage()->shop_price_groups_count) ? _A_::$app->keyStorage()->shop_price_groups_count : PRICE_GROUPS_COUNT),
         'shop_rate_handling' => (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING),
         'shop_rate_roll' => (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL),
@@ -60,6 +63,9 @@
       _A_::$app->keyStorage()->system_csv_fields = $system_csv_fields;
       _A_::$app->keyStorage()->system_info_email = $system_info_email;
       _A_::$app->keyStorage()->system_csv_fields_dlm = $system_csv_fields_dlm;
+
+      _A_::$app->keyStorage()->shop_bsells_amount = $shop_bsells_amount;
+      _A_::$app->keyStorage()->shop_specials_amount = $shop_specials_amount;
 
       _A_::$app->keyStorage()->shop_price_groups_count = $shop_price_groups_count;
       _A_::$app->keyStorage()->shop_rate_handling = $shop_rate_handling;

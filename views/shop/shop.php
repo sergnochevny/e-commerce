@@ -7,11 +7,10 @@
       </div>
     </div>
   <?php endif; ?>
-  <div class="col-xs-12 <?= $is_admin ? '' : 'col-md-10' ?> main-content-inner box" role="main">
+  <div class="col-xs-12 <?= $is_admin ? '' : 'col-md-10' ?> main-content-inner-side box" role="main">
     <div id="content" class="content row">
       <?= $list; ?>
     </div>
   </div>
 </div>
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/shop/shop.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/shop/shop.min.js'); ?>' type="text/javascript"></script>

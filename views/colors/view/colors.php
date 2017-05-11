@@ -4,11 +4,10 @@
       <?= isset($shop_menu) ? $shop_menu : ''; ?>
     </div>
   </div>
-  <div class="col-xs-12 col-md-10 pull-right main-content-inner" role="main">
-    <div id="content" class="content row">
+  <div class="col-xs-12 col-md-10 pull-right main-content-inner-side box" role="main">
+    <div id="content" class="content">
       <?= $list; ?>
     </div>
   </div>
 </div>
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/shop/shop.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/shop/shop.min.js'); ?>' type="text/javascript"></script>

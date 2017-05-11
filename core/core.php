@@ -48,7 +48,6 @@ class Core
             call_user_func($key, $value);
           }
         } else {
-          /** @noinspection PhpUndefinedMethodInspection */
           $this->config($key, $value);
         }
       }
@@ -66,7 +65,6 @@ class Core
 
   private function initDBConnections()
   {
-    /** @noinspection PhpUndefinedMethodInspection */
     $DBS = $this->config('DBS');
     if (isset($DBS) && is_array($DBS)) {
       foreach ($DBS as $key => $val) {
@@ -108,9 +106,7 @@ class Core
 
   private function initSession()
   {
-    /** @noinspection PhpUndefinedMethodInspection */
-    if (!is_null($this->get('pay_notify'))) {
-      /** @noinspection PhpUndefinedMethodInspection */
+    if(!is_null($this->get('pay_notify'))) {
       $s_id = $this->get('pay_notify');
       session_id($s_id);
     }
@@ -275,20 +271,16 @@ class Core
 
   public function request_is_ajax()
   {
-    /** @noinspection PhpUndefinedMethodInspection */
-    /** @noinspection PhpUndefinedMethodInspection */
     return !empty($this->server('HTTP_X_REQUESTED_WITH')) && strtolower($this->server('HTTP_X_REQUESTED_WITH')) == 'xmlhttprequest';
   }
 
   public function request_is_post()
   {
-    /** @noinspection PhpUndefinedMethodInspection */
     return $this->server('REQUEST_METHOD') == 'POST';
   }
 
   public function request_is_get()
   {
-    /** @noinspection PhpUndefinedMethodInspection */
     return $this->server('REQUEST_METHOD') == 'GET';
   }
 }

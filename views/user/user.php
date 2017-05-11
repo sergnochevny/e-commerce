@@ -1,6 +1,6 @@
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
-    <div class="col-xs-12 col-sm-12 text-center afterhead-row">
+    <div class="col-xs-12 col-sm-12 text-center">
       <h2 class="page-title">Login</h2>
     </div>
 
@@ -8,12 +8,10 @@
       <div class="col-xs-12 panel panel-default panel-default-vertical-sizing authorize-panel">
         <div class="col-xs-12">
           <div class="row">
-            <form method="post" id="authorization" action="<?= /** @noinspection PhpUndefinedMethodInspection */
-              _A_::$app->router()->UrlTo('user'); ?>"
+            <form method="post" id="authorization" action="<?= _A_::$app->router()->UrlTo('user'); ?>"
                   class="login">
               <input type="hidden" name="redirect"
-                     value="<?= /** @noinspection PhpUndefinedMethodInspection */
-                       isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
+                     value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
 
               <div class="form-row">
                 <label for="username" class="required_field">Email Address/Username</label>
@@ -59,16 +57,13 @@
             <h4>Register with iluvfabrix:</h4>
           </div>
           <div class="col-xs-12" data-role="form_content"
-               data-load="<?= /** @noinspection PhpUndefinedMethodInspection */
-                 _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+               data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
+<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
         type="text/javascript"></script>
-<script type='text/javascript' src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>

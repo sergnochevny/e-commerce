@@ -1,5 +1,5 @@
 <div class="container inner-offset-top half-outer-offset-bottom">
-  <div id="content" class="main-content-inner" role="main">
+  <div id="content" class="col-xs-12 main-content-inner box" role="main">
     <?= $list; ?>
   </div>
 </div>
@@ -23,5 +23,4 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/simple/simples.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/simple/simples.min.js'); ?>' type="text/javascript"></script>

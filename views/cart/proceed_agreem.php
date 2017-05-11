@@ -1,9 +1,9 @@
 <div class="container inner-offset-top half-outer-offset-bottom">
-  <div id="content" class="main-content-inner" role="main">
+  <div id="content" class="col-xs-12 main-content-inner box" role="main">
 
     <div class="row">
       <div class="col-xs-12">
-        <div class="row afterhead-row">
+        <div class="row">
           <div class="col-sm-2 back_button_container">
             <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
               <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -12,7 +12,7 @@
           </div>
           <div class="col-sm-8 text-center">
             <div class="row">
-              <h3 class="page-title">Agreement terms</h3>
+              <h1 class="page-title">Agreement terms</h1>
             </div>
           </div>
           <div class="col-sm-2"></div>
@@ -43,8 +43,7 @@
         </p>
         <p>
           Please
-          <a href="mailto:<?= /** @noinspection PhpUndefinedMethodInspection */
-            _A_::$app->keyStorage()->system_info_email; ?>?subject=Information%20on%20Fabric%20Samples"
+          <a href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>?subject=Information%20on%20Fabric%20Samples"
              class="copyProducts">
             contact us
           </a> for information on fabric sample purchases.
@@ -73,10 +72,8 @@
           All special orders are final sale. No refunds. No cancellations. No returns.
         </p>
         <p>
-          <a href="mailto:<?= /** @noinspection PhpUndefinedMethodInspection */
-            _A_::$app->keyStorage()->system_info_email; ?>"
-             class="copyProducts"><?= /** @noinspection PhpUndefinedMethodInspection */
-              _A_::$app->keyStorage()->system_info_email; ?></a><br>
+          <a href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"
+             class="copyProducts"><?= _A_::$app->keyStorage()->system_info_email; ?></a><br>
           or phone at: (915) 587-0200
         </p>
         <p>
@@ -90,10 +87,8 @@
           United States<br>
 
           <br>
-          Email: <a href="mailto:<?= /** @noinspection PhpUndefinedMethodInspection */
-            _A_::$app->keyStorage()->system_info_email; ?>"
-                    class="copyProducts"><?= /** @noinspection PhpUndefinedMethodInspection */
-              _A_::$app->keyStorage()->system_info_email; ?></a><br>
+          Email: <a href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"
+                    class="copyProducts"><?= _A_::$app->keyStorage()->system_info_email; ?></a><br>
           Tel: (915) 587-0200<br>
         </p>
         <p>Privacy Policy</p>
@@ -101,8 +96,7 @@
           Your personal information is never
           under any circumstances shared with any other individuals
           or organizations.<br>
-          <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
-            _A_::$app->router()->UrlTo('privacy'); ?>">privacy policy</a>.<br>
+          <a href="<?= _A_::$app->router()->UrlTo('privacy'); ?>">privacy policy</a>.<br>
         </p>
         <p>Security Information</p>
         <p>All purchase transactions made on
@@ -186,7 +180,5 @@
     </div>
   </div>
 </div>
-<div data-load="<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>"></div>
-<script type='text/javascript' src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/cart/checkout.min.js'); ?>'></script>
+<div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>"></div>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/cart/checkout.min.js'); ?>'></script>

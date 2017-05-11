@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12 text-center" style="margin-top: 30px">
-    <h4>ORDERS</h4>
+    <h3>ORDERS</h3>
   </div>
 </div>
 

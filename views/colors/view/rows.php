@@ -4,8 +4,7 @@
     <div class="col-xs-6 col-sm-3 list-item">
       <div class="list-inner">
         <a title="<?= $row['color'] ?>" data-sb data-waitloader
-           href="<?= /** @noinspection PhpUndefinedMethodInspection */
-             _A_::$app->router()->UrlTo('shop', $prms, $row['color']); ?>">
+           href="<?= _A_::$app->router()->UrlTo('shop', $prms, $row['color']); ?>">
           <div class="item-name"><?= $row['color']; ?></div>
         </a>
       </div>

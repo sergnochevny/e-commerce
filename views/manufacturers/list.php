@@ -1,6 +1,6 @@
 <?php include_once 'views/messages/alert-boxes.php'; ?>
-<div class="col-xs-12 text-center afterhead-row">
-  <h3 class="page-title">Manufacturers</h3>
+<div class="col-xs-12 text-center">
+  <h1 class="page-title">Manufacturers</h1>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>
@@ -9,12 +9,12 @@
   <div class="col-xs-12 search-result-header">
 
     <div class="row">
-      <div class="col-xs-6 action-button-add">
+      <div class="col-xs-5 action-button-add">
         <a href="<?= _A_::$app->router()->UrlTo('manufacturers/add'); ?>" data-modify class="button">
-          ADD NEW MANUFACTURER
+          ADD MANUFACTURER
         </a>
       </div>
-      <div class="col-xs-6 search-result-container text-right">
+      <div class="col-xs-7 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
         <?= isset($show_by) ? $show_by : ''; ?>
       </div>

@@ -1,5 +1,5 @@
 <div class="col-xs-12 pull-right">
-  <div class="row afterhead-row text-center">
+  <div class="row text-center">
     <h3 class="page-title sb">Color</h3>
   </div>
 </div>
@@ -27,5 +27,4 @@
   </nav>
 </div>
 
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

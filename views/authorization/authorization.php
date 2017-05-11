@@ -1,6 +1,6 @@
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
-    <div class="col-xs-12 col-sm-12 text-center afterhead-row">
+    <div class="col-xs-12 col-sm-12 text-center">
       <h2 class="page-title">Login</h2>
     </div>
 

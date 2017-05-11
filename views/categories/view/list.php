@@ -1,5 +1,5 @@
 <div class="col-xs-12 pull-right">
-  <div class="row afterhead-row text-center">
+  <div class="row text-center">
     <h3 class="page-title sb">Type</h3>
   </div>
 </div>

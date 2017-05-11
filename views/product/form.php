@@ -122,7 +122,7 @@
                     <input type="checkbox" name="best"
                            value="1" <?= (isset($data['best']) && ($data['best'] == "1")) ? 'checked' : '' ?>
                            class="input-checkbox">
-                    <b>Best Textile</b>
+                    <b>Best Textiles</b>
                   </label>
                 </div>
               </div>
@@ -239,7 +239,7 @@
             <option value="2" <?= ($data['weight_id'] == "2") ? 'selected' : ''; ?>>Medium</option>
             <option value="3" <?= ($data['weight_id'] == "3") ? 'selected' : ''; ?>>Heavy</option>
           </select>
-          <small style="color:#999;">
+          <small class="note">
             <b>NOTE:</b> choosing any of Light, Medium, Heavy overrides the default weight
             for the category.
           </small>
@@ -292,11 +292,9 @@
 <div data-related_block class="col-xs-12" style="display: none;">
   <div class="col-xs-12 panel panel-default" style="padding-bottom: 30px">
     <input data-related_get_list type="hidden"
-           value="<?= /** @noinspection PhpUndefinedMethodInspection */
-             _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
+           value="<?= _A_::$app->router()->UrlTo('related', ['pid' => $data['pid']]) ?>"/>
     <div id="content" data-edit_related class="row products"></div>
   </div>
 </div>
 
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/product/form.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/product/form.min.js'); ?>' type="text/javascript"></script>

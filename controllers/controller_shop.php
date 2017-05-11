@@ -364,7 +364,7 @@
       $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates.<br>All items available on a FIRST COME, FIRST SERVED basis only.';
       $this->main->template->vars('annotation', $annotation);
       ob_start();
-      $this->get_list_by_type('specials', 360);
+      $this->get_list_by_type('specials', (!is_null(_A_::$app->keyStorage()->shop_specials_amount) ? _A_::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
       $list = ob_get_contents();
       ob_end_clean();
       if(_A_::$app->request_is_ajax()) exit($list);
@@ -377,7 +377,7 @@
      */
     public function popular() {
       $this->template->vars('cart_enable', '_');
-      $this->page_title = 'Popular Textile';
+      $this->page_title = 'Popular Textiles';
       ob_start();
       $this->get_list_by_type('popular', 360);
       $list = ob_get_contents();
@@ -392,7 +392,7 @@
      */
     public function best() {
       $this->template->vars('cart_enable', '_');
-      $this->page_title = 'Best Textile';
+      $this->page_title = 'Best Textiles';
       ob_start();
       $this->get_list_by_type('best', 360);
       $list = ob_get_contents();
@@ -409,7 +409,7 @@
       $this->template->vars('cart_enable', '_');
       $this->page_title = 'Best Sellers';
       ob_start();
-      $this->get_list_by_type('bestsellers', 360);
+      $this->get_list_by_type('bestsellers', (!is_null(_A_::$app->keyStorage()->shop_bsells_amount) ? _A_::$app->keyStorage()->shop_bsells_amount : SHOP_BSELLS_AMOUNT));
       $list = ob_get_contents();
       ob_end_clean();
       if(_A_::$app->request_is_ajax()) exit($list);

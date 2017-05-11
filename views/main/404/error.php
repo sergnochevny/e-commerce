@@ -1,5 +1,5 @@
 <div class="container inner-offset-top half-outer-offset-bottom">
-  <div id="content" class="main-content-inner" role="main">
+  <div id="content" class="col-xs-12 main-content-inner box" role="main">
     <div style="padding-top: 20px; margin: auto; width: 600px;">
       <div class="error404" id="message404">
         <p class="title404">

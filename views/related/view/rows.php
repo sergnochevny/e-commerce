@@ -4,9 +4,7 @@
       <div class="product-inner">
         <?php
           $url_prms['pid'] = $row['pid'];
-          /** @noinspection PhpUndefinedMethodInspection */
           $url_prms['back'] = urlencode(base64_encode(_A_::$app->router()->UrlTo('shop/product', ['pid' => $row['cpid']], $row['cpname'], ['cat', 'mnf', 'ptrn', 'clr', 'prc'])));
-          /** @noinspection PhpUndefinedMethodInspection */
           $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr', 'prc']);
         ?>
         <div class="product-price-box clearfix">

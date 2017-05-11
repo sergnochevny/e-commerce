@@ -1,5 +1,5 @@
-<div class="col-xs-12 text-center afterhead-row">
-  <h3 class="page-title">Comments</h3>
+<div class="col-xs-12 text-center">
+  <h1 class="page-title">Comments</h1>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>

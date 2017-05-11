@@ -1,7 +1,7 @@
 <?php include_once 'views/messages/alert-boxes.php';?>
 
-<div class="col-xs-12 text-center afterhead-row">
-  <h3 class="page-title">Blog</h3>
+<div class="col-xs-12 text-center">
+  <h1 class="page-title">Blog</h1>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>
@@ -10,13 +10,12 @@
   <div class="col-xs-12 search-result-header">
 
     <div class="row">
-      <div class="col-xs-6 action-button-add">
-        <a href="<?= /** @noinspection PhpUndefinedMethodInspection */
-          _A_::$app->router()->UrlTo('blog/add'); ?>" data-modify class="button">
-          ADD NEW POST
+      <div class="col-xs-5 action-button-add">
+        <a href="<?= _A_::$app->router()->UrlTo('blog/add'); ?>" data-modify class="button">
+          ADD POST
         </a>
       </div>
-      <div class="col-xs-6 search-result-container text-right">
+      <div class="col-xs-7 search-result-container text-right">
         <span class="search-result">Showing <?= $count_rows; ?> results</span>
         <?= isset($show_by) ? $show_by : ''; ?>
       </div>
@@ -44,5 +43,4 @@
 </div>
 
 
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

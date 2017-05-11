@@ -1,8 +1,8 @@
 <div class="col-xs-12">
 
   <?php if(isset($page_title)) { ?>
-    <div class="col-xs-12 text-center afterhead-row">
-      <h3 class="page-title"><?= $page_title; ?></h3>
+    <div class="col-xs-12 text-center">
+      <h1 class="page-title"><?= $page_title; ?></h1>
     </div>
   <?php } ?>
 

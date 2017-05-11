@@ -5,7 +5,6 @@
         <span class="on-sale">Best!</span>
         <?php
           $url_prms['pid'] = $row['pid'];
-          /** @noinspection PhpUndefinedMethodInspection */
           $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr', 'prc']);
         ?>
         <div class="product-price-box clearfix">
@@ -56,6 +55,5 @@
   </div>
 <?php endif; ?>
 
-<script src='<?= /** @noinspection PhpUndefinedMethodInspection */
-  _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
 

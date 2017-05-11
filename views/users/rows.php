@@ -11,7 +11,6 @@
               $order['sort'] = 'aid';
               $order['order'] = 'desc';
             }
-            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('users', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -32,7 +31,6 @@
               $order['sort'] = 'email';
               $order['order'] = 'desc';
             }
-            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('users', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -53,7 +51,6 @@
               $order['sort'] = 'full_name';
               $order['order'] = 'desc';
             }
-            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('users', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -74,7 +71,6 @@
               $order['sort'] = 'date_registered';
               $order['order'] = 'desc';
             }
-            /** @noinspection PhpUndefinedMethodInspection */
             $sort_url = _A_::$app->router()->UrlTo('users', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -130,19 +126,16 @@
           </div>
 
           <div class="col-xs-12 col-sm-2 text-right action-buttons">
-            <a title="Edit" data-waitloader data-modify href="<?= /** @noinspection PhpUndefinedMethodInspection */
-              _A_::$app->router()->UrlTo('users/edit', $prms) ?>">
+            <a title="Edit" data-waitloader data-modify href="<?= _A_::$app->router()->UrlTo('users/edit', $prms) ?>">
               <i class="fa fa-2x fa-2x fa-pencil"></i>
             </a>
             <a title="Delete" data-delete class="text-danger"
-               href="<?= /** @noinspection PhpUndefinedMethodInspection */
-                 _A_::$app->router()->UrlTo('users/delete', $prms) ?>">
+               href="<?= _A_::$app->router()->UrlTo('users/delete', $prms) ?>">
               <i class=" fa fa-2x fa-2x fa-trash-o"></i>
             </a>
             <a data-waitloader class="text-success"
                title="Orders"
-               href="<?= /** @noinspection PhpUndefinedMethodInspection */
-                 _A_::$app->router()->UrlTo('orders', array_merge($prms, ['back' => 'users'])) ?>"><i
+               href="<?= _A_::$app->router()->UrlTo('orders', array_merge($prms, ['back' => 'users'])) ?>"><i
                   class="fa fa-2x fa-2x fa-file-text"></i></a>
           </div>
         </div>

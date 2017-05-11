@@ -63,6 +63,9 @@
       'CSV_FIELDS' => 'email,bill_firstname,bill_lastname',
       'CAPTCHA_RELEVANT' => 300,
 
+      'SHOP_SPECIALS_AMOUNT' => 30,
+      'SHOP_BSELLS_AMOUNT' => 60,
+
       'PRICE_GROUPS_COUNT' => 24,
 
       'LIGHT_FABRIC' => 1,
