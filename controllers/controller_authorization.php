@@ -105,13 +105,56 @@
         if(!is_null(_A_::$app->get('url'))) {
           $prms['url'] = _A_::$app->get('url');
         }
-        $registration_url = _A_::$app->router()->UrlTo('user/registration', $prms);
+        $registration_url = _A_::$app->router()->UrlTo('authorization/registration', $prms);
         $lostpassword_url = _A_::$app->router()->UrlTo('authorization/lost_password', $prms);
         $this->main->template->vars('registration_url', $registration_url);
         $this->main->template->vars('lostpassword_url', $lostpassword_url);
         $this->main->template->vars('redirect', $redirect);
         $this->main->view('authorization');
       }
+    }
+
+    /**
+     * @export
+     */
+    public function registration() {
+      $prms = null;
+
+      if($this->is_admin_logged()) {
+        $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : _A_::$app->router()->UrlTo('product');
+        $this->redirect($url);
+      }
+      if($this->is_user_logged()) {
+        $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : _A_::$app->router()->UrlTo('shop');
+        $this->redirect($url);
+      }
+      if($this->is_set_admin_remember()) {
+        $remember = _A_::$app->cookie('_ar');
+        if(Model_Auth::is_admin_remember($remember)) {
+          $admin = Model_Auth::get_admin_data();
+          _A_::$app->setSession('_a', $admin['id']);
+          $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : _A_::$app->router()->UrlTo('product');
+          $this->redirect($url);
+        }
+      }
+      if($this->is_set_user_remember()) {
+        $remember = _A_::$app->cookie('_r');
+        if(Model_Auth::is_user_remember($remember)) {
+          $user = Model_Auth::get_user_data();
+          _A_::$app->setSession('_', $user['aid']);
+          _A_::$app->setSession('user', $user);
+          $url = !is_null(_A_::$app->get('url')) ? base64_decode(urldecode(_A_::$app->get('url'))) : _A_::$app->router()->UrlTo('shop');
+          $this->redirect($url);
+        }
+      }
+
+      $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : '';
+      $prms = null;
+      if(!is_null(_A_::$app->get('url'))) {
+        $prms['url'] = _A_::$app->get('url');
+      }
+      $this->main->template->vars('redirect', $redirect);
+      $this->main->view('registration');
     }
 
     public function user_authorize($mail, $password) {

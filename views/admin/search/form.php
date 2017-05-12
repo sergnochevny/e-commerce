@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-xs-2">Search</div>
           <div class="col-xs-9 comment-text">
-            <?=isset($search['pname'])?'<span class="red">Patterns like </span><b>'.$search['pname'].'</b>':''?>
+            <?= isset($search['pname']) ? '<span class="red">Types like </span><b>' . $search['pname'] . '</b>' : '' ?>
           </div>
           <div class="col-xs-1">
             <b class="sr-ds">

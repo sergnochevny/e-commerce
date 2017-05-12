@@ -19,7 +19,7 @@
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Categories"
-                 href="<?= _A_::$app->router()->UrlTo('categories'); ?>">Categories</a>
+                 href="<?= _A_::$app->router()->UrlTo('categories'); ?>">Types</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Manufacturers"

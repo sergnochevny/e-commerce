@@ -78,7 +78,7 @@
         <div class="row" style="margin-bottom: 10px">
           <div class="col-xs-12">
             <div class="form-row">
-              <label><b>Categories:</b></label>
+              <label><b>Types:</b></label>
               <?= $data['categories']; ?>
             </div>
           </div>
@@ -94,7 +94,7 @@
         <div class="row" style="margin-bottom: 10px;">
           <div class="col-xs-12">
             <div class="form-row">
-              <label><b>Pattern Types:</b></label>
+              <label><b>Patterns:</b></label>
               <?= $data['patterns']; ?>
             </div>
           </div>

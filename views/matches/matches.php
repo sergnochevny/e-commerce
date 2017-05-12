@@ -11,5 +11,4 @@
     </div>
   </div>
 </div>
-<?php include('views/index/block_footer.php'); ?>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/matches/matches.min.js'); ?>' type="text/javascript"></script>

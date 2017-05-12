@@ -55,6 +55,8 @@
      * @export
      */
     public function matches() {
+      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
       parent::index(false);
     }
 

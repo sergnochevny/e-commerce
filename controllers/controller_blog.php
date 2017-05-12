@@ -269,7 +269,7 @@
       $this->template->vars('filters', $data['categories']);
       $this->template->vars('filter_type', 'categories');
       $this->template->vars('destination', 'categories');
-      $this->template->vars('title', 'Select Categories');
+      $this->template->vars('title', 'Select Types');
       $this->template->view_layout('filter/filter');
     }
 

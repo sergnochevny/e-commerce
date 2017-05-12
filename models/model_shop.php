@@ -207,7 +207,7 @@ Class Model_Shop extends Model_Base
   public static function set_inventory($pid, $inventory = 0)
   {
     $q = "update fabrix_products set inventory=" . $inventory;
-    $q .= ($inventory == 0) ? ", pvisible = 0" : "";
+    $q .= ($inventory <= 0) ? ", pvisible = 0" : "";
     $q .= " where pid=" . $pid;
     $res = static::query( $q);
   }

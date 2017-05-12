@@ -163,7 +163,7 @@
             $bExpressSamples = false;
           $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
           $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-          $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
+          $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : false;
           $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
           $samples_sum = _A_::$app->session('cart')['samples_sum'];
 
@@ -585,7 +585,7 @@
       $bAcceptExpress = !$systemAllowExpressSamples ? false : isset($cart['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
       $uid = (!is_null(_A_::$app->session('user'))) ? (int)_A_::$app->session('user')['aid'] : 0;
       $shipping = (isset($cart['ship']) && $cart['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-      $bShipRoll = (isset($cart['ship_roll'])) ? (boolean)$cart['ship_roll'] : flase;
+      $bShipRoll = (isset($cart['ship_roll'])) ? (boolean)$cart['ship_roll'] : false;
       $total_items = $this->calc_items_amount();
       $total += $total_items;
       $total_samples_items = $this->calc_samples_amount();

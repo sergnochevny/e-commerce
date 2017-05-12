@@ -4,7 +4,11 @@
       <h2 class="page-title">Login</h2>
     </div>
 
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12 col-sm-12 text-center">
+      <label>To enable all features of iluvfabrix.com please register or sign-in below</label>
+    </div>
+
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
       <div class="col-xs-12 panel panel-default panel-default-vertical-sizing authorize-panel">
         <div class="col-xs-12">
           <div class="row">
@@ -45,20 +49,16 @@
         </div>
         <div class="col-xs-12">
           <div class="row inner-offset-vertical-top">
-            <a id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xs-12 col-md-6 panel-default-vertical-sizing">
-      <div class="col-xs-12 panel panel-default">
-        <div class="row">
-          <div class="col-xs-12 text-center">
-            <h4>Register with iluvfabrix:</h4>
-          </div>
-          <div class="col-xs-12" data-role="form_content"
-               data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+            <div class="col-sm-6 col-xs-12">
+              <div class="row">
+                <a id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xs-12 text-right">
+              <div class="row">
+                <a href="<?= $registration_url ?>">Registration</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

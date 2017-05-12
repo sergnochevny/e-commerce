@@ -6,6 +6,7 @@
     private $path;
     private $exclude_params = ['page', 'back', 'idx'];
     public $base_url;
+    public $host;
     public $route;
     public $controller;
     public $action;
@@ -15,27 +16,47 @@
       if(isset($app)) $this->app = $app;
     }
 
-    private function parse_request_url() {
+    private function parse_url(&$request_uri, &$query_string, &$query) {
+      $exploded_url = parse_url($query_string);
+      if(!empty($exploded_url['query'])) {
+        parse_str($exploded_url['query'], $query);
+      } else {
+        $query = [];
+      }
+      if(!empty($exploded_url['path'])) {
+        parse_str($exploded_url['path'], $path);
+      } else {
+        $path = [];
+      }
+      $query = array_merge($query, $path);
       if($this->sef_enable()) {
-        $query_string = _A_::$app->server('QUERY_STRING');
-        $request_uri = _A_::$app->server('REQUEST_URI');
-        parse_str($query_string, $query);
         if(isset($query['route'])) {
           $query_sef_url = $query['route'];
           $query_path = str_replace('?', '&', $this->revert_sef_url($query_sef_url));
           $query_string = str_replace($query_sef_url, $query_path, $query_string);
           $request_uri = str_replace($query_sef_url, $query_path, $request_uri);
           parse_str($query_string, $query);
-          _A_::$app->server('QUERY_STRING', $query_string);
-          _A_::$app->server('REQUEST_URI', $request_uri);
-          _A_::$app->setGet($query);
         }
       }
+    }
+
+    private function parse_request_url() {
+      $query_string = _A_::$app->server('QUERY_STRING');
+      $request_uri = _A_::$app->server('REQUEST_URI');
+      $this->parse_url($request_uri, $query_string, $query);
+      _A_::$app->server('QUERY_STRING', $query_string);
+      _A_::$app->server('REQUEST_URI', $request_uri);
+      _A_::$app->setGet($query);
       if(isset($query['redirect'])) {
         $redirect_url = $query['redirect'];
         unset($query['redirect']);
         $this->redirect_301($this->UrlTo($redirect_url, $query));
       }
+      $this->route = $this->sanitize_url((empty(_A_::$app->get('route'))) ? '' : _A_::$app->get('route'));
+      $this->url_explode_parts($this->route, $controller, $action, $args);
+      $this->action = $action;
+      $this->controller = $controller;
+      $this->args = $args;
     }
 
     private function redirect_301($redirect_url) {
@@ -91,6 +112,9 @@
       if(strlen(trim(dirname(_A_::$app->server('SCRIPT_NAME')), '/\\')))
         $this->base_url .= DS . trim(dirname(_A_::$app->server('SCRIPT_NAME')), '/\\');
       define('BASE_URL', $this->base_url);
+
+      $parts = parse_url($this->base_url);
+      $this->host = $parts['host'];
     }
 
     private function http_build_url($url, $parts = [], $flags = null, &$new_url = false) {
@@ -163,6 +187,32 @@
       return $url;
     }
 
+    private function sanitize_url($route) {
+      if(empty($route)) $route = 'index';
+      return trim($route, '/\\');
+    }
+
+    private function url_explode_parts($route, &$controller, &$action, &$args) {
+      $parts = explode('/', $route);
+      $cmd_path = $this->path;
+      foreach($parts as $part) {
+        if(is_dir($cmd_path . $part)) {
+          $cmd_path .= $part . DS;
+          array_shift($parts);
+          continue;
+        }
+        if(is_file($cmd_path . 'controller_' . $part . '.php')) {
+          $controller = $part;
+          array_shift($parts);
+          break;
+        }
+      }
+      if(empty($controller)) $controller = 'index';
+      $action = array_shift($parts);
+      if(empty($action)) $action = $controller;
+      $args = $parts;
+    }
+
     protected function init() {
       if(!function_exists('http_build_url')) {
         define('HTTP_URL_REPLACE', 1);                // Replace every part of the first URL when there's one of the second URL
@@ -178,20 +228,37 @@
         define('HTTP_URL_STRIP_ALL', 1024);            // Strip anything but scheme and host
       }
 
+      $this->setPath(SITE_PATH . 'controllers' . DS);
+
       $this->setBaseUrl();
       $this->parse_request_url();
-      $this->route = (empty(_A_::$app->get('route'))) ? '' : _A_::$app->get('route');
-      if(empty($this->route))
-        $this->route = 'index';
-      $this->route = trim($this->route, '/\\');
-      $this->setPath(SITE_PATH . 'controllers' . DS);
+    }
+
+    public function parse_referrer_url(&$route, &$controller, &$action, &$args) {
+      $referrer_url = _A_::$app->server('HTTP_REFERER');
+      $referrer_uri = str_replace($this->base_url, '', $referrer_url);
+      $query_string = 'route=' . ltrim($referrer_uri, "\\/");
+      $exploded_url = parse_url($query_string);
+      if(!empty($exploded_url['query'])) {
+        parse_str($exploded_url['query'], $query);
+      } else {
+        $query = [];
+      }
+      if(!empty($exploded_url['path'])) {
+        parse_str($exploded_url['path'], $path);
+      } else {
+        $path = [];
+      }
+      $query = array_merge($query, $path);
+      $this->parse_url($referrer_uri, $query_string, $query);
+      $route = $this->sanitize_url((empty($query['route'])) ? '' : $query['route']);
+      $this->url_explode_parts($route, $controller, $action, $args);
     }
 
     public function start() {
       $this->init();
 
       $file = null;
-      $this->getController();
       try {
         $class = 'Controller_' . $this->controller;
         _A_::$app->registry()->set('controller', $this->controller);
@@ -218,29 +285,6 @@
       } catch(Exception $e) {
         (new Controller_Main())->error404($e->getMessage());
       }
-    }
-
-    function getController() {
-      $parts = explode('/', $this->route);
-      $cmd_path = $this->path;
-      foreach($parts as $part) {
-        if(is_dir($cmd_path . $part)) {
-          $cmd_path .= $part . DS;
-          array_shift($parts);
-          continue;
-        }
-        if(is_file($cmd_path . 'controller_' . $part . '.php')) {
-          $this->controller = $part;
-          array_shift($parts);
-          break;
-        }
-      }
-      if(empty($this->controller))
-        $this->controller = 'index';
-      $this->action = array_shift($parts);
-      if(empty($this->action))
-        $this->action = $this->controller;
-      $this->args = $parts;
     }
 
     public function redirect($url) {

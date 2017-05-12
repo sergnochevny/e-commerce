@@ -105,6 +105,8 @@
      * @export
      */
     public function service() {
+      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
       $this->main->view('static/service');
     }
 
@@ -112,6 +114,8 @@
      * @export
      */
     public function estimator() {
+      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
       $this->main->view('static/estimate');
     }
 
@@ -119,6 +123,8 @@
      * @export
      */
     public function newsletter() {
+      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
       $this->main->view('static/newsletter');
     }
 

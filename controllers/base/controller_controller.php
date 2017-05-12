@@ -65,11 +65,10 @@
     protected function build_back_url(&$back_url = null, &$prms = null) {
       $back_url = $this->controller;
       if($back_url == _A_::$app->router()->action) $back_url = null;
-      if(!is_null(_A_::$app->get('back'))) $back_url = _A_::$app->get('back');
+      if(!empty(_A_::$app->get('back'))) $back_url = _A_::$app->get('back');
     }
 
-    protected function set_back_url($back_url = null) {
-      $prms = null;
+    protected function set_back_url($back_url = null, $prms = null) {
       if(!isset($back_url)) $this->build_back_url($back_url, $prms);
       if(isset($back_url)) {
         $back_url = _A_::$app->router()->UrlTo($back_url, $prms, null, null, false, true);

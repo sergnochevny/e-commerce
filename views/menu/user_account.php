@@ -8,8 +8,8 @@
   </a>
   <ul class="dropdown-menu topnav-account-dropdown">
     <li>
-      <a data-waitloader data-link title="Favorite Fabrics" href="<?= _A_::$app->router()->UrlTo('favorites'); ?>">
-        Favorite Fabrics
+      <a data-waitloader data-link title="Fabric Favorites" href="<?= _A_::$app->router()->UrlTo('favorites'); ?>">
+        Fabric Favorites
       </a>
     </li>
     <li>

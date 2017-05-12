@@ -11,7 +11,7 @@
       $filter_products = $data['filter_products'];
       $product_type = $data['product_type'];
       $title = "Select Products";
-      if($product_type == 3) $title = "Select Categories";
+      if($product_type == 3) $title = "Select Types";
       if($product_type == 4) $title = "Select Manufacturers";
       $this->template->vars('filters', $filter_products);
       $this->template->vars('filter_type', $data['filter_type']);

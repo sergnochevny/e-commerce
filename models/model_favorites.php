@@ -4,19 +4,6 @@
 
     protected static $table = 'fabrix_product_favorites';
 
-    public static function get_by_id($pid, $aid) {
-      $data = null;
-      $q = "select * from " . self::$table;
-      $q .= " where pid = '$pid' and aid = '$aid'";
-      $res = static::query( $q);
-      if($res) {
-        $data = static::fetch_assoc($res);
-      } else {
-        throw new Exception(static::error());
-      }
-      return $data;
-    }
-
     protected static function build_where(&$filter) {
       $result = "";
       if(Controller_Admin::is_logged()) {
@@ -49,8 +36,21 @@
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
       }
-      $result = " WHERE a.pnumber is not null and a.pvisible = '1'" . (!empty($result) ? ' AND ' . $result : '');
+      $result = " WHERE a.pnumber is not null " . (!empty($result) ? ' AND ' . $result : '');
       return $result;
+    }
+
+    public static function get_by_id($pid, $aid) {
+      $data = null;
+      $q = "select * from " . self::$table;
+      $q .= " where pid = '$pid' and aid = '$aid'";
+      $res = static::query($q);
+      if($res) {
+        $data = static::fetch_assoc($res);
+      } else {
+        throw new Exception(static::error());
+      }
+      return $data;
     }
 
     public static function get_total_count($filter = null) {

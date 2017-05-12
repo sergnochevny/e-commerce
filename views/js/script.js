@@ -311,6 +311,24 @@ var change_text = false;
     }
   );
 
+  $(document).on('click', '[data-destroy]',
+    function (event) {
+      var container = $(this).data('destroy');
+      if (container) {
+        $('.' + container).remove();
+      }
+    }
+  );
+
+  $(document).on('click', '[data-redirect]',
+    function (event) {
+      var redirect = $(this).data('redirect');
+      if (redirect) {
+        window.location.href = redirect;
+      }
+    }
+  );
+
   $(document).ready(function () {
 
     var body = $('body');

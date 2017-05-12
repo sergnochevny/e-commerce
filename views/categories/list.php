@@ -1,7 +1,7 @@
 <?php include_once 'views/messages/alert-boxes.php'; ?>
 
 <div class="col-xs-12 text-center">
-  <h1 class="page-title">Categories</h1>
+  <h1 class="page-title">Types</h1>
 </div>
 
 <?= isset($search_form) ? $search_form : '' ?>

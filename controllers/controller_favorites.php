@@ -2,8 +2,8 @@
 
   class Controller_Favorites extends Controller_Simple {
 
-    protected $form_title_add = 'Add Favorite Fabrics';
-    protected $page_title = 'My Favorite Fabrics';
+    protected $form_title_add = 'Add Fabric Favorites';
+    protected $page_title = 'My Fabric Favorites';
 
     protected function search_fields($view = false) {
       return [
@@ -69,7 +69,7 @@
 
     protected function after_save($id, &$data) {
       $row = Model_Product::get_by_id($data['pid']);
-      $this->save_warning = $row['pname'] . " added to Favorite Fabrics!";
+      $this->save_warning = $row['pname'] . " added to Fabric Favorites!";
     }
 
     protected function edit_add_handling($url, $title) {

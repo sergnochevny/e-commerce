@@ -1028,6 +1028,31 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     color: #48520c;
 }
 
+.sold_out_1 hr, .sold_out_2 hr {
+    padding: 0;
+    margin: 0;
+    border: 3px solid rgba(255, 0, 0, 0.35);
+    position: absolute;
+    width: 70%;
+    top: 45%;
+    left: 15%
+}
+
+.sold_out_1 hr {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
+
+.sold_out_2 hr {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+}
+
+
 .product-price-box hr {
     -webkit-transform: rotate(20deg);
     -moz-transform: rotate(20deg);
@@ -1038,7 +1063,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     border: 2px solid rgba(255, 0, 0, 0.5);
     position: absolute;
     width: 70%;
-    top: 50px;
+    top: 35%;
     left: 15%
 }
 

@@ -1,5 +1,11 @@
 <?php
 
+  /**
+   * Class Application
+   * @property \Router router
+   * @property \KeyStorage keystorage
+   */
+
   class Application extends Core {
 
     protected $keystorage;
