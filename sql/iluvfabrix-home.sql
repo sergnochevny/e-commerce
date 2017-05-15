@@ -465,17 +465,7 @@ CREATE TABLE IF NOT EXISTS `fabrix_temp_product` (
 -- Дамп структуры для функция iluvfabrix.getTransactionDetailsCount
 DROP FUNCTION IF EXISTS `getTransactionDetailsCount`;
 DELIMITER //
-CREATE DEFINER=`root`@`%` FUNCTION `getTransactionDetailsCount`(
-	`aid` INT
-
-
-
-
-
-
-
-
-) RETURNS int(11)
+CREATE DEFINER=`root`@`%` FUNCTION `getTransactionDetailsCount`(`aid` INT) RETURNS INT(11)
 BEGIN
 	DECLARE ret INT DEFAULT 0;
 	DECLARE countRow INT DEFAULT 0;
@@ -497,11 +487,7 @@ DELIMITER ;
 -- Дамп структуры для функция iluvfabrix.getUserType
 DROP FUNCTION IF EXISTS `getUserType`;
 DELIMITER //
-CREATE DEFINER=`root`@`%` FUNCTION `getUserType`(
-	`aid` INT
-
-
-) RETURNS int(11)
+CREATE DEFINER=`root`@`%` FUNCTION `getUserType`(`aid` INT) RETURNS INT(11)
 BEGIN
 	DECLARE ret INT DEFAULT 0;
 	DECLARE iTtl INT DEFAULT 2;

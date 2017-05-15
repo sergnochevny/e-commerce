@@ -289,7 +289,7 @@
 
       $iNow = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
       $sSQL .= sprintf(" AND (s.enabled=1) AND (s.date_start<=%u) AND (s.date_end>=%u)", $iNow, $iNow);
-      $sSQL .= " ORDER BY allow_multiple;";
+      $sSQL .= " ORDER BY s.allow_multiple;";
 
       $result = static::query($sSQL) or die(static::error());
 
