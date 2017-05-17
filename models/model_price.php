@@ -109,7 +109,7 @@
           $sSQL .= ' AND (s.shipping_type = 3 OR s.shipping_type = 1 OR s.shipping_type = 0)';
         }
       } else {
-        $sSQL .= sprintf(" AND (s.coupon_code='')");
+        $sSQL .= sprintf(" AND ((s.coupon_code='') OR (s.coupon_code IS NULL))");
       }
 
       $iNow = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
@@ -260,63 +260,6 @@
       return $rDiscount;
     }
 
-    public static function _calculateDiscount($discount_category, $uid, $aPrdcts, $rPrice, $rShip) {
-
-      $uid = (int)$uid;
-
-      $rDiscount = 0;
-      $rMultDiscount = 0;
-      $sSQL = "SELECT DISTINCT s.sid, s.required_type, s.required_amount, s.date_start, s.promotion_type," .
-        " s.discount_type, s.shipping_type, s.discount_amount, s.discount_amount_type, s.product_type, " .
-        "s.allow_multiple, s.coupon_code " .
-        "FROM fabrix_specials s " .
-        "LEFT OUTER JOIN fabrix_specials_users su ON su.sid=s.sid " .
-        "LEFT OUTER JOIN fabrix_specials_products sp ON s.sid = sp.sid " .
-        "WHERE (s.user_type=1";
-
-      if($uid > 0) {
-        $sSQL .= sprintf(" OR (s.user_type=4 AND su.aid=%u)", $uid);
-        $sSQL .= sprintf(" OR (user_type=%u)", self::getUserType($uid));
-      }
-      $sSQL .= ")";
-
-      $sPds = '';
-      $sSQL .= " AND (s.product_type = 1)";
-
-      $sSQL .= " AND (s.discount_type != 2)";
-
-      $sSQL .= " AND (s.coupon_code='')";
-
-      $iNow = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
-      $sSQL .= sprintf(" AND (s.enabled=1) AND (s.date_start<=%u) AND (s.date_end>=%u)", $iNow, $iNow);
-      $sSQL .= " ORDER BY s.allow_multiple;";
-
-      $result = static::query($sSQL) or die(static::error());
-
-      if(static::num_rows($result) > 0) {
-        $isDiscountApplay = false;
-        while($rs = static::fetch_assoc($result)) {
-
-          $bDoDiscount = self::checkDiscountApplies($rs, $uid, $rPrice);
-
-          if($bDoDiscount) {
-
-            $tmpDiscount = self::discountIt($discount_category, $rPrice, $rShip, $rs['discount_amount'], $rs['discount_amount_type'], $rs['discount_type'], $rs['product_type'], $rs['sid'], $aPrdcts, $sPds);
-            $rPrice -= $tmpDiscount;
-            if((int)$rs['allow_multiple'] == 1) {
-              $rMultDiscount += $tmpDiscount;
-              $discountIds[] = $rs['sid'];
-              #check if we need to return a string here
-            } else if($tmpDiscount > $rDiscount) {
-
-              $rDiscount = $tmpDiscount;
-            }
-          }
-        }
-      }
-      return $rDiscount;
-    }
-
     public static function checkDiscountApplies($rs, $uid, $rPrice) {
       $bDoDiscount = false;
       $iType = (int)$rs['promotion_type'];
@@ -428,7 +371,7 @@
         " WHERE" .
         " (s.user_type=1) AND" .
         " (((s.product_type = 2) AND (sp.pid IN (%u))) OR ((s.product_type = 3) AND (cp.pid IN (%u))) OR ((s.product_type = 4) AND (mp.pid IN (%u)))) AND" .
-        " (s.coupon_code='') AND" .
+        " ((s.coupon_code='') OR (s.coupon_code IS NULL)) AND" .
         " (s.enabled=1) AND" .
         " (s.date_start<=%u) AND" .
         " (s.date_end>=%u) AND" .

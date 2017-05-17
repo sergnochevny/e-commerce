@@ -11,12 +11,12 @@
             " FROM fabrix_categories a" .
             " LEFT JOIN fabrix_product_categories c on a.cid = c.cid" .
             " LEFT JOIN fabrix_products b ON b.pid = c.pid" .
-            " WHERE b.pvisible = '1'" .
+            " WHERE b.priceyard > 0 and b.pvisible = '1'" .
             " ORDER BY a.displayorder";
           break;
         case 'new':
           $q = "SELECT distinct a.*" .
-            " FROM (SELECT pid FROM fabrix_products WHERE pvisible = '1' ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
+            " FROM (SELECT pid FROM fabrix_products WHERE priceyard > 0 and pvisible = '1' ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
             " LEFT JOIN fabrix_product_categories c ON b.pid = c.pid" .
             " LEFT JOIN fabrix_categories a on a.cid = c.cid" .
             " ORDER BY a.displayorder";
@@ -25,7 +25,7 @@
           $q = "SELECT distinct a.*" .
             " FROM fabrix_products b " .
             " INNER JOIN fabrix_manufacturers a ON b.manufacturerId = a.id" .
-            " WHERE b.pvisible = '1'" .
+            " WHERE b.priceyard > 0 and b.pvisible = '1'" .
             " ORDER BY b.dt DESC";
           break;
         case 'patterns':
@@ -33,7 +33,7 @@
             " FROM  fabrix_patterns a" .
             " LEFT JOIN fabrix_product_patterns c on a.id = c.patternId" .
             " LEFT JOIN fabrix_products b ON  b.pid = c.prodId" .
-            " WHERE b.pvisible = '1'";
+            " WHERE b.priceyard > 0 and b.pvisible = '1'";
           break;
         case 'blog_category':
           $q = "SELECT distinct a.*, c.group_id" .

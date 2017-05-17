@@ -25,7 +25,7 @@
             <div class="row">
               <?php
                 $url_prms['pid'] = $row['pid'];
-                $url_prms['back'] = '';
+                $url_prms['back'] = 'home';
                 $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr', 'prc']);
               ?>
               <a data-waitloader href="<?= $href; ?>" title="<?= $row['pname']; ?>">
@@ -52,6 +52,5 @@
   <?php endforeach; ?>
 <?php else: ?>
   <div class="col-xs-12 text-center inner-offset-vertical">
-    <span class="h3">No results found</span>
   </div>
 <?php endif; ?>

@@ -26,7 +26,7 @@
 
     protected function before_list_layout($view = false) { }
 
-    protected function build_order(&$sort, $view = false) {
+    protected function build_order(&$sort, $view = false, $filter = null) {
       $sort = _A_::$app->get('sort');
       if(isset($sort)) {
         $order = is_null(_A_::$app->get('order')) ? 'DESC' : _A_::$app->get('order');
@@ -46,13 +46,10 @@
       $this->before_search_form_layout($search_form, $view);
       $this->template->vars('search', $search_form);
       $search_form = null;
-      ob_start();
       try {
-        $this->main->view_layout($template);
-        $search_form = ob_get_contents();
+        $search_form = $this->main->view_layout_return($template);
       } catch(Exception $e) {
       }
-      ob_end_clean();
       $this->template->vars('search_form', $search_form);
     }
 
@@ -216,7 +213,7 @@
       $sort = null;
       if(is_null(_A_::$app->get('sort')) && is_null(_A_::$app->post('sort')))
         $sort = !empty($sorts[$this->controller][$idx]) ? $sorts[$this->controller][$idx] : null;
-      if(empty($sort)) $this->build_order($sort, $view);
+      if(empty($sort)) $this->build_order($sort, $view, $filter);
       if(!empty($sort)) {
         $sorts[$this->controller][$idx] = $sort;
         _A_::$app->setSession('sorts', $sorts);
@@ -224,7 +221,7 @@
       return $sort;
     }
 
-    protected function get_list($view = false) {
+    protected function get_list($view = false, $return = false) {
       $this->main->template->vars('page_title', $this->page_title);
       $search_form = $this->build_search_filter($filter, $view);
       $idx = $this->load_search_filter_get_idx($filter, $view);
@@ -246,22 +243,19 @@
       $this->search_form($search_form, $view);
       $this->template->vars('rows', $rows);
       $this->template->vars('sort', $sort);
-      ob_start();
-      $this->template->view_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows');
-      $rows = ob_get_contents();
-      ob_end_clean();
+      $this->template->vars('list', $this->template->view_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows'));
       $this->template->vars('count_rows', $res_count_rows);
-      $this->template->vars('list', $rows);
       $prms = !empty($this->scenario()) ? ['method' => $this->scenario()] : null;
       (new Controller_Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $prms, $per_page);
       $this->set_back_url();
       $this->before_list_layout($view);
+      if($return) return $this->main->view_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
       $this->main->view_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
     }
 
     protected function sitemap_get_list($page = 0, $view = false, $per_page = 1000) {
       $this->build_search_filter($filter, $view);
-      $this->build_order($sort, $view);
+      $this->build_order($sort, $view, $filter);
       $filter['scenario'] = $this->scenario();
       if($page <= 0) $page = 1;
       $start = (($page - 1) * $per_page);
@@ -298,10 +292,7 @@
      */
     public function index($required_access = true) {
       if($required_access) $this->main->is_admin_authorized();
-      ob_start();
-      $this->get_list();
-      $list = ob_get_contents();
-      ob_end_clean();
+      $list = $this->get_list(false, true);
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
       if(Controller_Admin::is_logged()) $this->main->view_admin($this->controller);
@@ -314,15 +305,12 @@
     public function view($partial = false, $required_access = false) {
       if($required_access) $this->main->is_admin_authorized();
       $this->template->vars('view_title', $this->view_title);
-      ob_start();
-      $this->get_list(true);
-      $list = ob_get_contents();
-      ob_end_clean();
+      $list = $this->get_list(true, true);
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('scenario', $this->scenario());
       $this->template->vars('list', $list);
       if($partial) $this->main->view_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
-      elseif ($required_access) $this->main->view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+      elseif($required_access) $this->main->view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
       else $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
     }
 

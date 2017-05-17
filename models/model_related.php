@@ -13,7 +13,7 @@
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
       }
-      $result = " WHERE b.pnumber is not null and b.pvisible = '1'  and b.image1 is not null" . (!empty($result) ? ' AND ' . $result : '');
+      $result = " WHERE b.priceyard > 0 and b.pnumber is not null and b.pvisible = '1'  and b.image1 is not null" . (!empty($result) ? ' AND ' . $result : '');
       return $result;
     }
 

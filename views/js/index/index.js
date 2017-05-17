@@ -3,8 +3,6 @@
 (function ($) {
   $(document).ready(function () {
 
-    $('.best-products').load($('#slider_url').val());
-
     $.get($('#get_url').val(), {}, function (data) {
       $('.special-products').html(data).owlCarousel({
         responsive: {

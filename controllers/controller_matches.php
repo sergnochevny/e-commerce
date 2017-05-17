@@ -23,11 +23,7 @@
     protected function before_form_layout(&$data = null) {
       $this->template->vars('message', $data['message']);
       $added = $data['res'];
-      ob_start();
-      $this->template->view_layout('msg_add');
-      $data = ob_get_contents();
-      ob_end_clean();
-      exit(json_encode(['data' => $data, 'added' => $added]));
+      exit(json_encode(['data' => $this->template->view_layout_return('msg_add'), 'added' => $added]));
     }
 
     public function view($partial = false, $required_access = false) { }

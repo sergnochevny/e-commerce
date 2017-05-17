@@ -28,12 +28,8 @@
 
     private function send_remind($email, $remind_url) {
       $subject = "ILuvFabrix. Change Password.";
-      ob_start();
       $this->template->vars('remind_url', $remind_url);
-      $this->template->view_layout('remind/message');
-      $message = ob_get_contents();
-      ob_end_clean();
-//        $message = htmlspecialchars(stripslashes(trim($message)));
+      $message = $this->template->view_layout_return('remind/message');
       $headers = "MIME-Version: 1.0' \r\n";
       $headers .= "Content-Type: text/html; charset=UTF-8 \r\n";
 

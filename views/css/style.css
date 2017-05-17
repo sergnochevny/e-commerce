@@ -1841,10 +1841,32 @@ span.opa {
     background: #FFF;
     margin-bottom: 15px;
     border-radius: 4px;
-    -webkit-border-adius: 4px;
+    -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     box-shadow: 0 0 7px #666;
 
+}
+
+.widget-info-container figure figcaption .extra_discount_small {
+    width: 100%;
+    position: absolute;
+    bottom: 25%;
+    left: 0;
+    right: 0;
+    text-transform: uppercase;
+    background: rgba(219, 68, 54, 0.4);
+    color: #ffffff;
+    font-size: 13px;
+    display: inline-block;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+    padding: 10px 15px;
+    font-weight: 400;
+    -webkit-transition: all .3s cubic-bezier(.2, 1, .25, 1);
+    -moz-transition: all .3s cubic-bezier(.2, 1, .25, 1);
+    -o-transition: all .3s cubic-bezier(.2, 1, .25, 1);
+    transition: all .3s cubic-bezier(.2, 1, .25, 1);
+    border: 2px solid #fc783b;
+    text-align: center;
 }
 
 .widget-info-container .product-image {

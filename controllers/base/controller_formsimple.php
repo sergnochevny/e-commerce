@@ -11,11 +11,7 @@
         exit($this->form($url, $data));
       }
       $this->set_back_url();
-      ob_start();
-      $this->form($url);
-      $form = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('form', $form);
+      $this->template->vars('form', $this->form($url, null, true));
       $this->main->view_admin('edit');
     }
 

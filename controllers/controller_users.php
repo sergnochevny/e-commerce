@@ -11,11 +11,7 @@
       $countries = Model_Address::get_countries_all();
       $this->template->vars('items', $countries);
       $this->template->vars('select', $select);
-      ob_start();
-      $this->template->view_layout('address/select_countries_options');
-      $list = ob_get_contents();
-      ob_end_clean();
-      return $list;
+      return $this->template->view_layout_return('address/select_countries_options');
     }
 
     private function list_province($country, $select = null) {
@@ -24,10 +20,7 @@
         $provincies = Model_Address::get_country_state($country);
         $this->template->vars('items', $provincies);
         $this->template->vars('select', $select);
-        ob_start();
-        $this->template->view_layout('address/select_countries_options');
-        $list = ob_get_contents();
-        ob_end_clean();
+        $list = $this->template->view_layout_return('address/select_countries_options');
       }
       return $list;
     }
@@ -124,8 +117,8 @@
       ];
     }
 
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
+    protected function build_order(&$sort, $view = false, $filter = null) {
+      parent::build_order($sort, $view, $filter);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['full_name' => 'ASC'];
       }
@@ -357,20 +350,14 @@
           if($this->scenario() !== 'short') return $result;
           else {
             Controller_User::sendWelcomeEmail($data['email']);
-            ob_start();
-            $this->template->view_layout('short/thanx');
-            $thanx = ob_get_contents();
-            ob_end_clean();
+            $thanx = $this->template->view_layout_return('short/thanx');
             $this->template->vars('warning', [$thanx]);
             exit($this->form($url, []));
           }
         }
         exit($this->form($url, $data));
       }
-      ob_start();
-      $this->form($url);
-      $form = ob_get_contents();
-      ob_end_clean();
+      $form = $this->form($url, null, true);
       if($this->scenario() == 'short') exit($form);
       $this->set_back_url($back_url);
       $this->template->vars('form', $form);

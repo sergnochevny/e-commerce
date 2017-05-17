@@ -40,7 +40,7 @@
             $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr', 'prc']);
             $del_href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr', 'prc']);
           ?>
-          <figcaption data-product>
+          <figcaption>
             <?php if($row['in_cart']) :
               include('views/cart/basket.php');
             else : ?>

@@ -695,32 +695,15 @@
       $this->main->is_user_authorized(true);
       if(!is_null(_A_::$app->get('proceed'))) {
         $this->proceed_checkout_prepare();
-        ob_start();
-        $this->main->view_layout('proceed_checkout');
-        $cart_content = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('content', $cart_content);
+        $this->main->template->vars('content', $this->template->view_layout_return('proceed_checkout'));
       } elseif(!is_null(_A_::$app->get('pay_ok'))) {
         $this->pay_ok();
-        ob_start();
-        $this->main->view_layout('pay_ok');
-        $cart_content = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('content', $cart_content);
+        $this->main->template->vars('content', $this->template->view_layout_return('pay_ok'));
       } elseif(!is_null(_A_::$app->get('pay_error'))) {
-
-        ob_start();
-        $this->main->view_layout('pay_error');
-        $cart_content = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('content', $cart_content);
+        $this->main->template->vars('content', $this->template->view_layout_return('pay_error'));
       } else {
         $this->prepare();
-        ob_start();
-        $this->main->view_layout('cart');
-        $cart_content = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('content', $cart_content);
+        $this->main->template->vars('content', $this->template->view_layout_return('cart'));
       }
       $this->main->view('container');
     }
@@ -1161,17 +1144,11 @@
           $cart_sum = "$" . number_format($SUM, 2);
           $this->template->vars('SUM', $cart_sum);
 
-          ob_start();
           $message = 'This Fabric has been added to your Cart.<br>Click the Cart to view your Order.';
           $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
-          $this->main->view_layout('msg_add');
-          $msg = ob_get_contents();
-          ob_end_clean();
-          ob_start();
-          $this->main->view_layout('basket');
-          $button = ob_get_contents();
-          ob_end_clean();
+          $msg = $this->template->view_layout_return('msg_add');
+          $button = $this->template->view_layout_return('basket');
           exit(json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]));
         } else {
 
@@ -1182,13 +1159,10 @@
           $cart_sum = "$" . number_format($SUM, 2);
           $this->template->vars('SUM', $cart_sum);
 
-          ob_start();
           $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
           $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
-          $this->main->view_layout('msg_add');
-          $msg = ob_get_contents();
-          ob_end_clean();
+          $msg = $this->template->view_layout_return('msg_add');
           exit(json_encode(['msg' => $msg, 'sum' => $cart_sum]));
         }
       }
@@ -1232,18 +1206,11 @@
           $cart_sum = "$" . number_format($SUM, 2);
           $this->template->vars('SUM', $cart_sum);
 
-          ob_start();
           $message = 'This Samples has been added to your Cart.<br>Click the Cart to view your Order.';
           $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
-          $this->main->view_layout('msg_add');
-          $msg = ob_get_contents();
-          ob_end_clean();
-          ob_start();
-          $this->main->view_layout('basket');
-          $button = ob_get_contents();
-          ob_end_clean();
-
+          $msg = $this->template->view_layout_return('msg_add');
+          $button = $this->template->view_layout_return('basket');
           $res = json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]);
           echo $res;
         } else {
@@ -1255,14 +1222,10 @@
           $cart_sum = "$" . number_format($SUM, 2);
           $this->template->vars('SUM', $cart_sum);
 
-          ob_start();
           $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
           $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
-          $this->main->view_layout('msg_add');
-          $msg = ob_get_contents();
-          ob_end_clean();
-
+          $msg = $this->template->view_layout_return('masg_add');
           $res = json_encode(['msg' => $msg, 'sum' => $cart_sum]);
           echo $res;
         }
@@ -1303,12 +1266,9 @@
             } else {
               $quantity = floor($quantity);
             }
-            ob_start();
             $message = 'The quantity for ' . $product['pname'] . ' must be a whole number. The order was adjusted.<br>';
             $this->template->vars('message', $message);
-            $this->main->view_layout('msg_add');
-            $response['msg'] = ob_get_contents();
-            ob_end_clean();
+            $response['msg'] = $this->template->view_layout_return('msg_add');
           }
 
           if($piece == 0) {
@@ -1316,22 +1276,16 @@
               $cart_items[$pid]['quantity'] = $quantity;
             } else {
               $cart_items[$pid]['quantity'] = $inventory;
-              ob_start();
               $message = 'The available inventory for ' . $cart_items[$pid]['pname'] . ' is ' . $inventory . '. The order was adjusted.<br>';
               $this->template->vars('message', $message);
-              $this->main->view_layout('msg_add');
-              $response['msg'] = ob_get_contents();
-              ob_end_clean();
+              $response['msg'] = $this->template->view_layout_return('msg_add');
             }
           }
         }
       } else {
-        ob_start();
         $message = 'The quantity must be a positive number. The order was adjusted.<br>';
         $this->template->vars('message', $message);
-        $this->main->view_layout('msg_add');
-        $response['msg'] = ob_get_contents();
-        ob_end_clean();
+        $response['msg'] = $this->template->view_layout_return('msg_add');
       }
 
       $item = $cart_items[$pid];

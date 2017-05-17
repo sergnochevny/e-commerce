@@ -35,8 +35,8 @@
       return true;
     }
 
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
+    protected function build_order(&$sort, $view = false, $filter = null) {
+      parent::build_order($sort, $view, $filter);
       if($view) {
         $sort['a.id'] = 'desc';
       }
@@ -80,7 +80,7 @@
       $this->template->vars('related_selected', $related_selected);
     }
 
-    protected function get_list($view = false) {
+    protected function get_list($view = false, $return = false) {
       $c_product = new Controller_Product($this->main);
       $c_product->scenario($this->scenario());
       $search_form = $this->build_search_filter($filter, $view);
@@ -102,14 +102,11 @@
       $this->search_form($search_form, $view);
       $this->template->vars('rows', $rows);
       $this->template->vars('sort', $sort);
-      ob_start();
-      $this->template->view_layout('rows');
-      $rows = ob_get_contents();
-      ob_end_clean();
+      $this->template->vars('list', $this->template->view_layout_return('rows'));
       $this->template->vars('count_rows', $res_count_rows);
-      $this->template->vars('list', $rows);
       (new Controller_Paginator($this->main))->paginator($total, $page, $this->controller, null, $per_page);
       $this->before_list_layout($view);
+      if($return) return $this->main->view_layout_return('list');
       $this->main->view_layout('list');
     }
 
@@ -126,10 +123,7 @@
      */
     public function index($required_access = true) {
       if($required_access) $this->main->is_admin_authorized();
-      ob_start();
-      $this->get_list();
-      $list = ob_get_contents();
-      ob_end_clean();
+      $list = $this->get_list(false, true);
       if(_A_::$app->request_is_ajax()) exit($list);
       else {
         throw new Exception('Error 404');

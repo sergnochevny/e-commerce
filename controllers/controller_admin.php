@@ -36,9 +36,9 @@
       return false;
     }
 
-    protected function form($url, $data = null) {
+    protected function form($url, $data = null, $return = false) {
       _A_::$app->get($this->id_field, self::get_from_session());
-      parent::form($url, $data);
+      parent::form($url, $data, $return);
     }
 
     protected function build_back_url(&$back_url = null, &$prms = null) {

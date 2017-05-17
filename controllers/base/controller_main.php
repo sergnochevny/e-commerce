@@ -27,18 +27,9 @@
         $this->template->vars('data', $data);
       }
 
-      ob_start();
-      $this->template->view_layout('admin', 'menu');
-      $menu = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('menu', $menu);
-
+      $this->template->vars('menu', $this->template->view_layout_return('admin', 'menu'));
       if(Controller_AdminBase::is_logged()) {
-        ob_start();
-        $this->template->view_layout('admin_account', 'menu');
-        $my_account_admin_menu = ob_get_contents();
-        ob_end_clean();
-        $this->template->vars('my_account_admin_menu', $my_account_admin_menu);
+        $this->template->vars('my_account_admin_menu', $this->template->view_layout_return('admin_account', 'menu'));
       }
 
       $this->meta_page();
@@ -56,6 +47,13 @@
         $this->template->vars('data', $data);
       }
       $this->template->view_layout($page);
+    }
+
+    public function view_layout_return($page, $data = null) {
+      if(isset($data)) {
+        $this->template->vars('data', $data);
+      }
+      return $this->template->view_layout_return($page);
     }
 
     public function is_user_authorized($redirect_to_url = false) {
@@ -132,13 +130,9 @@
       $cart = new Controller_Cart(isset($this->main) ? $this->main : $this);
       $cart->get();
 
-      ob_start();
       $user_logged = Controller_User::is_logged();
       $this->template->vars('user_logged', $user_logged);
-      $this->template->view_layout('user_account', 'menu');
-      $my_account_user_menu = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('my_account_user_menu', $my_account_user_menu);
+      $this->template->vars('my_account_user_menu', $this->template->view_layout_return('user_account', 'menu'));
 
       $menu = new Controller_Menu(isset($this->main) ? $this->main : $this);
       $menu->show_menu();

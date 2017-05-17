@@ -17,14 +17,14 @@
 
       $filter['hidden']["fabrix_orders.aid"] = Controller_User::get_from_session()['aid'];
       $filter['hidden']['a.pnumber'] = 'null';
-      if(!isset($filter['hidden']['a.priceyard']) && !isset($filter['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
+      if(!isset($filter['hidden']['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
       $filter['hidden']['a.pvisible'] = '1';
       $filter['hidden']['a.image1'] = 'null';
 
       return $res;
     }
 
-    protected function build_order(&$sort, $view = false) {
+    protected function build_order(&$sort, $view = false, $filter = null) {
       $sort['b.displayorder'] = 'asc';
       $sort['fabrix_product_categories.display_order'] = 'asc';
     }

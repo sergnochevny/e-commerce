@@ -35,19 +35,11 @@ class Controller_Paginator extends Controller_Controller
       $this->template->vars('prev_page', $prev_page);
       $this->template->vars('next_page', $next_page);
 
-      ob_start();
-      $this->template->view_layout('paginator');
-      $paginator = ob_get_contents();
-      ob_end_clean();
-      $this->main->template->vars('paginator', $paginator);
+      $this->main->template->vars('paginator', $this->template->view_layout_return('paginator'));
 
     }
 
-    ob_start();
-    $this->template->view_layout('show_by');
-    $show_by = ob_get_contents();
-    ob_end_clean();
-    $this->main->template->vars('show_by', $show_by);
+    $this->main->template->vars('show_by', $this->template->view_layout_return('show_by'));
   }
 
 }

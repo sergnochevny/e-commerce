@@ -6,8 +6,8 @@
     protected $form_title_add = 'NEW SYNONYMS';
     protected $form_title_edit = 'MODIFY SYNONYMS';
 
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
+    protected function build_order(&$sort, $view = false, $filter = null) {
+      parent::build_order($sort, $view, $filter);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['keywords' => 'asc'];
       }

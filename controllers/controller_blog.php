@@ -171,7 +171,7 @@
       return str_replace("\n", "<WPPreserveNewline />", $matches[0]);
     }
 
-    private function select_filter($filters, $start = null, $search = null) {
+    private function select_filter($filters, $start = null, $search = null, $return = false) {
       $selected = isset($filters) ? $filters : [];
       $filter = Model_Blog::get_filter_data($count, $start, $search);
       $this->template->vars('destination', 'categories');
@@ -182,10 +182,11 @@
       $this->template->vars('filter_data_start', isset($start) ? $start : 0);
       $this->template->vars('selected', $selected);
       $this->template->vars('filter', $filter);
+      if($return) return $this->template->view_layout_return('filter/select');
       $this->template->view_layout('filter/select');
     }
 
-    private function image($data) {
+    private function image($data, $return = false) {
       $file_img = trim(str_replace('{base_url}', '', $data['img']), '/\\');
       if(basename($file_img) == $file_img) {
         if(file_exists('img/blog/' . $file_img) && is_file('img/blog/' . $file_img) && is_readable('img/blog/' . $file_img)) {
@@ -205,6 +206,7 @@
         }
       }
       $this->template->vars('data', $data);
+      if($return) return $this->template->view_layout_return('image');
       $this->template->view_layout('image');
     }
 
@@ -240,23 +242,17 @@
       } else {
         if(!is_null(_A_::$app->post('filter-type')) && (_A_::$app->post('filter-type') == 'categories')) {
           $resporse = [];
-          ob_start();
           Model_Blog::get_filter_selected($data);
           $filters = array_keys($data['categories']);
-          $this->generate_filter($data);
-          $resporse[0] = ob_get_contents();
-          ob_end_clean();
+          $resporse[0] = $this->generate_filter($data, true);
 
-          ob_start();
           $search = _A_::$app->post('filter_select_search_categories');
           $start = _A_::$app->post('filter_start_categories');
           $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
           if(!is_null(_A_::$app->post('down'))) $start = $filter_limit + (isset($start) ? $start : 0);
           if(!is_null(_A_::$app->post('up'))) $start = (isset($start) ? $start : 0) - $filter_limit;
           if(($start < 0) || (is_null(_A_::$app->post('down')) && is_null(_A_::$app->post('up')))) $start = 0;
-          $this->select_filter($filters, $start, $search);
-          $resporse[1] = ob_get_contents();
-          ob_end_clean();
+          $resporse[1] = $this->select_filter($filters, $start, $search, true);
           exit(json_encode($resporse));
         } else {
           Model_Blog::get_filter_selected($data);
@@ -265,11 +261,12 @@
       }
     }
 
-    private function generate_filter($data) {
+    private function generate_filter($data, $return = false) {
       $this->template->vars('filters', $data['categories']);
       $this->template->vars('filter_type', 'categories');
       $this->template->vars('destination', 'categories');
       $this->template->vars('title', 'Select Types');
+      if($return) return $this->template->view_layout_return('filter/filter');
       $this->template->view_layout('filter/filter');
     }
 
@@ -287,8 +284,8 @@
       return $img;
     }
 
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
+    protected function build_order(&$sort, $view = false, $filter = null) {
+      parent::build_order($sort, $view, $filter);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['post_date' => 'desc'];
       }
@@ -334,17 +331,9 @@
       $data['post_content'] = preg_replace('#(style="[^>]*")#U', '', $data['post_content']);
       $data['post_title'] = stripslashes($data['post_title']);
       $data['post_date'] = date('F jS, Y', strtotime($data['post_date']));
-
-      ob_start();
       Model_Blog::get_filter_selected($data);
-      $this->generate_filter($data);
-      $data['categories'] = ob_get_contents();
-      ob_end_clean();
-      ob_start();
-      $this->image($data);
-      $image = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('image', $image);
+      $data['categories'] = $this->generate_filter($data, true);
+      $this->template->vars('image', $this->image($data, true));
     }
 
     protected function build_search_filter(&$filter, $view = false) {

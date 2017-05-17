@@ -7,7 +7,7 @@
     protected $form_title_edit = 'MODIFY DISCOUNT';
     protected $resolved_scenario = ['', 'orders'];
 
-    private function generate_prod_filter($data) {
+    private function generate_prod_filter($data, $return = false) {
       $filter_products = $data['filter_products'];
       $product_type = $data['product_type'];
       $title = "Select Products";
@@ -17,20 +17,22 @@
       $this->template->vars('filter_type', $data['filter_type']);
       $this->template->vars('destination', 'filter_products');
       $this->template->vars('title', $title);
+      if($return) return $this->template->view_layout_return('filter/filter');
       $this->template->view_layout('filter/filter');
     }
 
-    private function generate_users_filter($data) {
+    private function generate_users_filter($data, $return = true) {
       $users = $data['users'];
       $this->template->vars('filters', $users);
       $this->template->vars('filter_type', 'users');
       $this->template->vars('filter_data_start', 0);
       $this->template->vars('destination', 'users');
       $this->template->vars('title', 'Select Users');
+      if($return) return $this->template->view_layout_return('filter/filter');
       $this->template->view_layout('filter/filter');
     }
 
-    private function select_filter($method, $filters, $start = null, $search = null) {
+    private function select_filter($method, $filters, $start = null, $search = null, $return = false) {
       $selected = isset($filters) ? array_values($filters) : [];
       $filter = Model_Discount::get_filter_data($method, $count, $start, $search);
       $this->template->vars('destination', _A_::$app->post('type'));
@@ -41,6 +43,7 @@
       $this->template->vars('filter_data_start', isset($start) ? $start : 0);
       $this->template->vars('selected', $selected);
       $this->template->vars('filter', $filter);
+      if($return) return $this->template->view_layout_return('filter/select');
       $this->template->view_layout('filter/select');
     }
 
@@ -55,11 +58,13 @@
       return $data;
     }
 
-    private function selected_filter($data) {
+    private function selected_filter($data, $return = false) {
       if(_A_::$app->post('type') === 'users') {
-        $this->generate_users_filter($data);
+        if($return) return $this->generate_users_filter($data, $return);
+        $this->generate_users_filter($data, $return);
       } else {
-        $this->generate_prod_filter($data);
+        if($return) return $this->generate_users_filter($data, $return);
+        $this->generate_prod_filter($data, $return);
       }
     }
 
@@ -81,12 +86,12 @@
       return $res;
     }
 
-    protected function build_order(&$sort, $view = false) {
+    protected function build_order(&$sort, $view = false, $filter = null) {
       if($view && $this->scenario() == 'orders') {
-        parent::build_order($sort, $view);
+        parent::build_order($sort, $view, $filter);
         if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) $sort = ['a.order_date' => 'desc'];
       } else {
-        parent::build_order($sort, $view);
+        parent::build_order($sort, $view, $filter);
         if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
           $sort = ['date_start' => 'desc'];
         }
@@ -194,14 +199,8 @@
       if($data['user_type'] != 4) $data['users'] = null;
       $data['date_start'] = date("m/d/Y", $data['date_start']);
       $data['date_end'] = date("m/d/Y", $data['date_end']);
-      ob_start();
-      $this->generate_prod_filter($data);
-      $data['filter_products'] = ob_get_contents();
-      ob_end_clean();
-      ob_start();
-      $this->generate_users_filter($data);
-      $data['users'] = ob_get_contents();
-      ob_end_clean();
+      $data['filter_products'] = $this->generate_prod_filter($data, true);
+      $data['users'] = $this->generate_users_filter($data);
     }
 
     protected function form_handling(&$data = null) {
@@ -217,13 +216,11 @@
             $method = _A_::$app->post('filter-type');
             $resporse = [];
 
-            ob_start();
             $data = $this->selected_filter_data($data);
-            $this->selected_filter($data);
-            $resporse[0] = ob_get_contents();
-            ob_end_clean();
 
-            ob_start();
+            $resporse[0] = $this->selected_filter($data);
+
+            $resporse[1] = null;
             $search = _A_::$app->post('filter_select_search_' . $method);
             $start = _A_::$app->post('filter_start_' . $method);
             $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
@@ -232,10 +229,8 @@
             if(($start < 0) || (is_null(_A_::$app->post('down')) && is_null(_A_::$app->post('up')))) $start = 0;
             if(in_array($method, ['users', 'prod', 'cat', 'mnf', 'prc'])) {
               $filters = ($method == 'users') ? (isset($data['users']) ? array_keys($data['users']) : null) : (isset($data['filter_products']) ? array_keys($data['filter_products']) : null);
-              $this->select_filter($method, $filters, $start, $search);
+              $resporse[1] = $this->select_filter($method, $filters, $start, $search, true);
             }
-            $resporse[1] = ob_get_contents();
-            ob_end_clean();
             exit(json_encode($resporse));
           } else {
             $data = $this->selected_filter_data($data);
