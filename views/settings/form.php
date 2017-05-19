@@ -297,7 +297,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_handling" class="input-text"
-                        value="<?= number_format($data['shop_rate_handling'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_handling'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -310,7 +310,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_roll" class="input-text"
-                        value="<?= number_format($data['shop_rate_roll'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_roll'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -323,7 +323,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_express_light" class="input-text"
-                        value="<?= number_format($data['shop_rate_express_light'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_express_light'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -336,7 +336,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_express_medium" class="input-text"
-                        value="<?= number_format($data['shop_rate_express_medium'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_express_medium'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -349,7 +349,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_express_heavy" class="input-text"
-                        value="<?= number_format($data['shop_rate_express_heavy'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_express_heavy'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -362,7 +362,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_ground_light" class="input-text"
-                        value="<?= number_format($data['shop_rate_ground_light'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_ground_light'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -375,7 +375,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_ground_medium" class="input-text"
-                        value="<?= number_format($data['shop_rate_ground_medium'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_ground_medium'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -388,7 +388,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_ground_heavy" class="input-text"
-                        value="<?= number_format($data['shop_rate_ground_heavy'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_ground_heavy'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -401,7 +401,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_express_light_multiplier" class="input-text"
-                        value="<?= number_format($data['shop_rate_express_light_multiplier'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_express_light_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -414,7 +414,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_express_medium_multiplier" class="input-text"
-                        value="<?= number_format($data['shop_rate_express_medium_multiplier'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_express_medium_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -427,7 +427,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_express_heavy_multiplier" class="input-text"
-                        value="<?= number_format($data['shop_rate_express_heavy_multiplier'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_express_heavy_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -440,7 +440,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_ground_light_multiplier" class="input-text"
-                        value="<?= number_format($data['shop_rate_ground_light_multiplier'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_ground_light_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -453,7 +453,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_ground_medium_multiplier" class="input-text"
-                        value="<?= number_format($data['shop_rate_ground_medium_multiplier'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_ground_medium_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -466,7 +466,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_rate_ground_heavy_multiplier" class="input-text"
-                        value="<?= number_format($data['shop_rate_ground_heavy_multiplier'], 2); ?>"/>
+                        value="<?= number_format($data['shop_rate_ground_heavy_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -479,7 +479,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_samples_price_express_shipping" class="input-text"
-                        value="<?= number_format($data['shop_samples_price_express_shipping'], 2); ?>"/>
+                        value="<?= number_format($data['shop_samples_price_express_shipping'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -492,7 +492,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_samples_qty_multiple_min" class="input-text"
-                        value="<?= number_format($data['shop_samples_qty_multiple_min'], 2); ?>"/>
+                        value="<?= number_format($data['shop_samples_qty_multiple_min'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -505,7 +505,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_samples_qty_multiple_max" class="input-text"
-                        value="<?= number_format($data['shop_samples_qty_multiple_max'], 2); ?>"/>
+                        value="<?= number_format($data['shop_samples_qty_multiple_max'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -518,7 +518,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_samples_price_single" class="input-text"
-                        value="<?= number_format($data['shop_samples_price_single'], 2); ?>"/>
+                        value="<?= number_format($data['shop_samples_price_single'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -531,7 +531,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_samples_price_multiple" class="input-text"
-                        value="<?= number_format($data['shop_samples_price_multiple'], 2); ?>"/>
+                        value="<?= number_format($data['shop_samples_price_multiple'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -544,7 +544,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_samples_price_additional" class="input-text"
-                        value="<?= number_format($data['shop_samples_price_additional'], 2); ?>"/>
+                        value="<?= number_format($data['shop_samples_price_additional'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -557,7 +557,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_samples_price_with_products" class="input-text"
-                        value="<?= number_format($data['shop_samples_price_with_products'], 2); ?>"/>
+                        value="<?= number_format($data['shop_samples_price_with_products'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -570,7 +570,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_yrds_for_multiplier" class="input-text"
-                        value="<?= number_format($data['shop_yrds_for_multiplier'], 2); ?>"/>
+                        value="<?= number_format($data['shop_yrds_for_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
               </div>
@@ -596,7 +596,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_bestsellers_amount" class="input-text"
-                        value="<?= number_format($data['shop_bestsellers_amount'], 0); ?>"/>
+                        value="<?= number_format($data['shop_bestsellers_amount'], 0, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -609,7 +609,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_specials_amount" class="input-text"
-                        value="<?= number_format($data['shop_specials_amount'], 0); ?>"/>
+                        value="<?= number_format($data['shop_specials_amount'], 0, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -622,7 +622,7 @@
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
                         name="shop_under_amount" class="input-text"
-                        value="<?= number_format($data['shop_under_amount'], 0); ?>"/>
+                        value="<?= number_format($data['shop_under_amount'], 0, ".", ""); ?>"/>
                   </div>
                 </div>
               </div>

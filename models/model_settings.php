@@ -17,9 +17,9 @@
         'system_info_email' => (!is_null(_A_::$app->keyStorage()->system_info_email) ? _A_::$app->keyStorage()->system_info_email : ''),
         'system_csv_fields_dlm' => (!is_null(_A_::$app->keyStorage()->system_csv_fields_dlm) ? _A_::$app->keyStorage()->system_csv_fields_dlm : ','),
 
-        'shop_bestsellerss_amount' => (!is_null(_A_::$app->keyStorage()->shop_bestsellerss_amount) ? _A_::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT),
+        'shop_bestsellers_amount' => (!is_null(_A_::$app->keyStorage()->shop_bestsellers_amount) ? _A_::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT),
         'shop_specials_amount' => (!is_null(_A_::$app->keyStorage()->shop_specials_amount) ? _A_::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT),
-        'shop_under_amount' => (!is_null(_A_::$app->keyStorage()->shop_under_amount) ? _A_::$app->keyStorage()->shop_under_amount : SHOP_under_AMOUNT),
+        'shop_under_amount' => (!is_null(_A_::$app->keyStorage()->shop_under_amount) ? _A_::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT),
 
         'shop_price_groups_count' => (!is_null(_A_::$app->keyStorage()->shop_price_groups_count) ? _A_::$app->keyStorage()->shop_price_groups_count : PRICE_GROUPS_COUNT),
         'shop_rate_handling' => (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING),
