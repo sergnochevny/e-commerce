@@ -79,12 +79,157 @@
       return $rows;
     }
 
+    protected function collect_under() {
+      Model_Console::transaction();
+      try {
+        $limit = _A_::$app->keyStorage()->shop_under_limit;
+        $trigger = Model_Collection_Trigger::get_one(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 3]]]);
+        if(!empty($trigger) && ($trigger['trigger'] == 1)) {
+          Model_Collection_Trigger::save(['type' => 3, 'trigger' => 0]);
+          Model_Collection::delete(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 3]]]);
+          $start = 0;
+          $terminate = false;
+          do {
+            $rows = Model_Shop::get_widget_list_by_type('under', $start, $limit, $row_count);
+            if(!empty($rows) && (count($rows) > 0)) {
+              foreach($rows as $row) {
+                if($row['saleprice'] <= 100) {
+                  Model_Collection::save(['type' => 3, 'pid' => $row['pid'], 'price' => $row['saleprice']]);
+                }
+              }
+              $start += $limit;
+            } else $terminate = true;
+          } while(!$terminate);
+        }
+        Model_Console::commit();
+      } catch(Exception $e) {
+        Model_Console::rollback();
+        throw $e;
+      }
+    }
+
+    protected function collect_specials() {
+      Model_Console::transaction();
+      try {
+        $select_type = ['specials_1', 'specials_2'];
+        $specials = [];
+        $limit = (int)_A_::$app->keyStorage()->shop_specials_limit;
+        $terminate_limit = (int)_A_::$app->keyStorage()->shop_specials_amount;
+        $trigger = Model_Collection_Trigger::get_one(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 2]]]);
+        if(!empty($trigger) && ($trigger['trigger'] == 1)) {
+          Model_Collection_Trigger::save(['type' => 2, 'trigger' => 0]);
+          Model_Collection::delete(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 2]]]);
+          foreach($select_type as $type) {
+            $start = 0;
+            $tmp = [];
+            $terminate = false;
+            do {
+              $rows = Model_Shop::get_widget_list_by_type($type, $start, $limit, $row_count);
+              if(!empty($rows) && (count($rows) > 0)) {
+                foreach($rows as $row) {
+                  if($terminate) break;
+                  switch($type) {
+                    case 'specials_1':
+                      $tmp[] = $row;
+                      break;
+                    case 'specials_2':
+                      if($row['discount']) $tmp[] = $row;
+                      break;
+                  }
+                  if(count($tmp) >= $terminate_limit) $terminate = true;
+                }
+                $start += $limit;
+              } else $terminate = true;
+            } while(!$terminate);
+            $specials = array_merge($specials, $tmp);
+          }
+          if(!empty($specials) && (count($specials) > 0)) {
+            shuffle($specials);
+            foreach($specials as $row) {
+              Model_Collection::save(['type' => 2, 'pid' => $row['pid'], 'price' => $row['saleprice']]);
+              if($terminate_limit-- <= 0) break;
+            }
+          }
+        }
+        Model_Console::commit();
+      } catch(Exception $e) {
+        Model_Console::rollback();
+        throw $e;
+      }
+    }
+
+    protected function collect_bestsellers() {
+      Model_Console::transaction();
+      try {
+        $select_type = ['bestsellers_1', 'bestsellers_2'];
+        $specials = [];
+        $limit = (int)_A_::$app->keyStorage()->shop_bestsellers_limit;
+        $terminate_limit = (int)_A_::$app->keyStorage()->shop_bestsellers_amount;
+        $trigger = Model_Collection_Trigger::get_one(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 1]]]);
+        if(!empty($trigger) && ($trigger['trigger'] == 1)) {
+          Model_Collection_Trigger::save(['type' => 1, 'trigger' => 0]);
+          Model_Collection::delete(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 1]]]);
+          foreach($select_type as $type) {
+            $start = 0;
+            $tmp = [];
+            $terminate = false;
+            do {
+              $rows = Model_Shop::get_widget_list_by_type($type, $start, $limit, $row_count);
+              if(!empty($rows) && (count($rows) > 0)) {
+                foreach($rows as $row) {
+                  if($terminate) break;
+                  switch($type) {
+                    case 'bestsellers_1':
+                      $tmp[] = $row;
+                      break;
+                    case 'bestsellers_2':
+                      if($row['discount']) $tmp[] = $row;
+                      break;
+                  }
+                  if(count($tmp) >= $terminate_limit) $terminate = true;
+                }
+                $start += $limit;
+              } else $terminate = true;
+            } while(!$terminate);
+            $specials = array_merge($specials, $tmp);
+          }
+          if(!empty($specials) && (count($specials) > 0)) {
+            shuffle($specials);
+            foreach($specials as $row) {
+              Model_Collection::save(['type' => 1, 'pid' => $row['pid'], 'price' => $row['saleprice']]);
+              if($terminate_limit-- <= 0) break;
+            }
+          }
+        }
+        Model_Console::commit();
+      } catch(Exception $e) {
+        Model_Console::rollback();
+        throw $e;
+      }
+    }
+
     /**
      * @console
      */
     public function collect() {
-      $rows = $this->get_list_by_type('specials');
-      fwrite(STDOUT, print_r($rows, true));
+      try {
+        $this->collect_under();
+        fwrite(STDOUT, "'under' list was collected successfully\r\n");
+      } catch(Exception $e) {
+        fwrite(STDOUT, $e->getMessage());
+      }
+      try {
+        $this->collect_specials();
+        fwrite(STDOUT, "'specials' list was collected successfully\r\n");
+      } catch(Exception $e) {
+        fwrite(STDOUT, $e->getMessage());
+      }
+      try {
+        $this->collect_bestsellers();
+        fwrite(STDOUT, "'bestsellers' list was collected successfully\r\n");
+      } catch(Exception $e) {
+        fwrite(STDOUT, $e->getMessage());
+      }
     }
 
   }

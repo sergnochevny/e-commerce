@@ -127,7 +127,6 @@
       $handlingcost = 0;
       $express_samples_cost = 0;
       $total = 0;
-
       $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
       $samples_price_express_shipping = (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
       $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
@@ -182,46 +181,55 @@
             $handlingcost += $rate_handling;
             $handling = 1;
           }
-          $oid = Model_Orders::register_order($aid, $trid, $shipping, $shipcost, $on_roll, $express_samples, $handling, $shipDiscount, $couponDiscount, $discount, $taxes, $total);
-          if(isset($oid)) {
-            if(count($cart_items) > 0) {
-              foreach($cart_items as $pid => $item) {
-                $product = Model_Shop::get_product_params($pid);
-                $pnumber = $product['pnumber'];
-                $pname = $product['pname'];
-                $qty = $item['quantity'];
-                $price = $item['price'];
-                $discount = $item['discount'];
-                $sale_price = $item['saleprice'];
-                if(Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price)) {
+          Model_Orders::transaction();
+          try {
+            $oid = Model_Orders::register_order($aid, $trid, $shipping, $shipcost, $on_roll, $express_samples, $handling, $shipDiscount, $couponDiscount, $discount, $taxes, $total);
+            if(isset($oid)) {
+              if(count($cart_items) > 0) {
+                foreach($cart_items as $pid => $item) {
+                  $product = Model_Shop::get_product_params($pid);
+                  $pnumber = $product['pnumber'];
+                  $pname = $product['pname'];
                   $qty = $item['quantity'];
-                  $inventory = $product['inventory'];
-                  $remainder = $inventory - $qty;
-                  $remainder = ($remainder <= 0) ? 0 : $remainder;
+                  $price = $item['price'];
+                  $discount = $item['discount'];
+                  $sale_price = $item['saleprice'];
+                  if(Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price)) {
+                    $qty = $item['quantity'];
+                    $inventory = $product['inventory'];
+                    $remainder = $inventory - $qty;
+                    $remainder = ($remainder <= 0) ? 0 : $remainder;
 
-                  Model_Shop::set_inventory($pid, $remainder);
+                    Model_Shop::set_inventory($pid, $remainder);
+                  }
                 }
               }
-            }
-            if(count($cart_samples_items) > 0) {
-              foreach($cart_samples_items as $pid => $item) {
-                $product = Model_Shop::get_product_params($pid);
-                $pnumber = $product['pnumber'];
-                $pname = $product['pname'];
-                $qty = 1;
-                $price = $item['price'];
-                $discount = 0;
-                $sale_price = 0;
-                $is_sample = 1;
-                Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price, $is_sample);
+              if(count($cart_samples_items) > 0) {
+                foreach($cart_samples_items as $pid => $item) {
+                  $product = Model_Shop::get_product_params($pid);
+                  $pnumber = $product['pnumber'];
+                  $pname = $product['pname'];
+                  $qty = 1;
+                  $price = $item['price'];
+                  $discount = 0;
+                  $sale_price = 0;
+                  $is_sample = 1;
+                  Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price, $is_sample);
+                }
               }
-            }
 
-            $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
-            Model_Orders::save_discount_usage($discountIds, $oid);
-            $this->thanx_mail();
-            _A_::$app->setSession('cart', null);
-          } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
+              $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+              Model_Orders::save_discount_usage($discountIds, $oid);
+              $this->thanx_mail();
+              _A_::$app->setSession('cart', null);
+            } else {
+              Model_Orders::rollback();
+              $this->redirect(_A_::$app->router()->UrlTo('shop'));
+            }
+            Model_Orders::commit();
+          } catch(Exception $e) {
+            Model_Orders::rollback();
+          }
         } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
       } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
     }

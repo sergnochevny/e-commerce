@@ -591,12 +591,12 @@
                     <label class="required_field">
                       Best Sellers amount items
                     </label>
-                    <i class="fa fa-question-circle" data-promotion="" href="#shop_bsells_amount"></i>
+                    <i class="fa fa-question-circle" data-promotion="" href="#shop_bestsellers_amount"></i>
                     <input
                         data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                         type="text"
-                        name="shop_bsells_amount" class="input-text"
-                        value="<?= number_format($data['shop_bsells_amount'], 0); ?>"/>
+                        name="shop_bestsellers_amount" class="input-text"
+                        value="<?= number_format($data['shop_bestsellers_amount'], 0); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -610,6 +610,19 @@
                         type="text"
                         name="shop_specials_amount" class="input-text"
                         value="<?= number_format($data['shop_specials_amount'], 0); ?>"/>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6">
+                  <div class="form-row">
+                    <label class="required_field">
+                      "Under" amount items
+                    </label>
+                    <i class="fa fa-question-circle" data-promotion="" href="#shop_under_amount"></i>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_under_amount" class="input-text"
+                        value="<?= number_format($data['shop_under_amount'], 0); ?>"/>
                   </div>
                 </div>
               </div>

@@ -92,10 +92,6 @@
             $res['hidden']['a.best'] = '1';
             break;
           case 'specials':
-            unset($filter['a.specials']);
-            unset($res['a.specials']);
-            $filter['hidden']['a.specials'] = '1';
-            $res['hidden']['a.specials'] = '1';
             _A_::$app->setSession('sidebar_idx', 6);
             break;
         }
@@ -107,16 +103,9 @@
       $type = isset($filter['type']) ? $filter['type'] : null;
       if(isset($type)) {
         switch($type) {
-          case 'last':
-            $sort['a.dt'] = 'desc';
-            $sort['a.pid'] = 'desc';
-            break;
           case 'popular':
             $sort['a.popular'] = 'desc';
             $sort['a.pid'] = 'desc';
-            break;
-          case 'bestsellers':
-            $sort['s'] = 'desc';
             break;
           default:
             $sort['a.pid'] = 'desc';
@@ -255,33 +244,11 @@
     }
 
     protected function widget_products_under($limit, $layout = 'list_under') {
-      $rows_20 = [];
-      $rows_40 = [];
-      $rows_60 = [];
-      $start = 0;
-      do {
-        $terminate = false;
-        $rows = Model_Shop::get_widget_list_by_type('under', $start, 50, $row_count);
-        if(!empty($rows)) {
-          foreach($rows as $row) {
-            if(((count($rows_20) == $limit) && (count($rows_40) == $limit) && (count($rows_60) == $limit)) || $terminate) break;
-            if($row['saleprice'] <= 20) {
-              if(count($rows_20) < $limit) $rows_20[] = $row;
-            } elseif($row['saleprice'] <= 40) {
-              if(count($rows_40) < $limit) $rows_40[] = $row;
-            } elseif($row['saleprice'] <= 60) {
-              if(count($rows_60) < $limit) $rows_60[] = $row;
-            } else $terminate = true;
-          }
-          if(((count($rows_20) == $limit) && (count($rows_40) == $limit) && (count($rows_60) == $limit)) || $terminate) break;
-          $start += 50;
-        } else break;
-      } while(count($rows) > 0);
-      $this->template->vars('rows', $rows_20);
+      $this->template->vars('rows', Model_Shop::get_widget_list_by_type('under_20', 0, 5, $row_count));
       $this->template->vars('list_under_20', $this->template->view_layout_return('widget/list'));
-      $this->template->vars('rows', $rows_40);
+      $this->template->vars('rows', Model_Shop::get_widget_list_by_type('under_40', 0, 5, $row_count));
       $this->template->vars('list_under_40', $this->template->view_layout_return('widget/list'));
-      $this->template->vars('rows', $rows_60);
+      $this->template->vars('rows', Model_Shop::get_widget_list_by_type('under_60', 0, 5, $row_count));
       $this->template->vars('list_under_60', $this->template->view_layout_return('widget/list'));
       $this->template->view_layout('widget/' . $layout);
     }
@@ -297,7 +264,7 @@
         $back = _A_::$app->get('back');
         if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', 'home'])) {
           $back_url = ($back == 'home' ? '' : $back);
-        } elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials'])) {
+        } elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials', 'under'])) {
           $back_url = 'shop' . DS . $back;
         } else {
           $back_url = base64_decode(urldecode($back));
@@ -336,6 +303,7 @@
       return [
         'product' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
         'specials' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
+        'under' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
         'last' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
         'popular' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
         'best' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
@@ -423,7 +391,19 @@
     public function bestsellers() {
       $this->template->vars('cart_enable', '_');
       $this->page_title = 'Best Sellers';
-      $list = $this->get_list_by_type('bestsellers', (!is_null(_A_::$app->keyStorage()->shop_bsells_amount) ? _A_::$app->keyStorage()->shop_bsells_amount : SHOP_BSELLS_AMOUNT));
+      $list = $this->get_list_by_type('bestsellers', (!is_null(_A_::$app->keyStorage()->shop_bestsellers_amount) ? _A_::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT));
+      if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('list', $list);
+      $this->main->view('shop');
+    }
+
+    /**
+     * @export
+     */
+    public function under() {
+      $this->template->vars('cart_enable', '_');
+      $this->page_title = 'Under $100';
+      $list = $this->get_list_by_type('under', (!is_null(_A_::$app->keyStorage()->shop_under_amount) ? _A_::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT));
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
       $this->main->view('shop');

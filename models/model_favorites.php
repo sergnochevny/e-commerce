@@ -7,32 +7,32 @@
     protected static function build_where(&$filter) {
       $result = "";
       if(Controller_Admin::is_logged()) {
-        if (!empty($filter["a.pname"]))
-          foreach (array_filter(explode(' ', $filter["a.pname"])) as $item)
-            if (!empty($item)) $result[] = "a.pname LIKE '%" . static::escape( static::strip_data(static::sanitize($item))) . "%'";
+        if(!empty($filter["a.pname"]))
+          foreach(array_filter(explode(' ', $filter["a.pname"])) as $item)
+            if(!empty($item)) $result[] = "a.pname LIKE '%" . static::escape(static::strip_data(static::sanitize($item))) . "%'";
       } else {
         if(isset($filter["a.pname"])) $result[] = Model_Synonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
       }
-      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . static::escape( static::strip_data(static::sanitize($filter["a.pvisible"]))) . "'";
-      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::escape( static::strip_data(static::sanitize($filter["a.piece"]))) . "'";
+      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . static::escape(static::strip_data(static::sanitize($filter["a.pvisible"]))) . "'";
+      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::escape(static::strip_data(static::sanitize($filter["a.piece"]))) . "'";
       if(isset($filter["a.dt"])) {
-        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::escape( static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
-          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::escape( static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::escape(static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::escape(static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::escape( static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
-      if(isset($filter["a.best"])) $result[] = "a.best = '" . static::escape( static::strip_data(static::sanitize($filter["a.best"]))) . "'";
-      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::escape( static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
-      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::escape( static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
-      if(isset($filter["c.id"])) $result[] = "c.id = '" . static::escape( static::strip_data(static::sanitize($filter["c.id"]))) . "'";
-      if(isset($filter["d.id"])) $result[] = "d.id = '" . static::escape( static::strip_data(static::sanitize($filter["d.id"]))) . "'";
-      if(isset($filter["e.id"])) $result[] = "e.id = '" . static::escape( static::strip_data(static::sanitize($filter["e.id"]))) . "'";
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::escape(static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . static::escape(static::strip_data(static::sanitize($filter["a.best"]))) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::escape(static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::escape(static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . static::escape(static::strip_data(static::sanitize($filter["c.id"]))) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . static::escape(static::strip_data(static::sanitize($filter["d.id"]))) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . static::escape(static::strip_data(static::sanitize($filter["e.id"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']["z.aid"])) $result[] = "z.aid = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["z.aid"]))) . "'";
+      if(isset($filter['hidden']["z.aid"])) $result[] = "z.aid = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["z.aid"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
       }
@@ -65,7 +65,7 @@
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if($result = static::query( $query)) {
+      if($result = static::query($query)) {
         $response = static::fetch_row($result)[0];
       }
       return $response;
@@ -85,7 +85,7 @@
       $query .= static::build_where($filter);
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
-      if($result = static::query( $query)) {
+      if($result = static::query($query)) {
         $res_count_rows = static::num_rows($result);
         $sys_hide_price = Model_Price::sysHideAllRegularPrices();
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
@@ -98,19 +98,33 @@
     }
 
     public static function save(&$data) {
-      extract($data);
-      $query = "REPLACE INTO " . static::$table . " (aid, pid) VALUE ('" . $aid . "','" . $pid . "')";
-      $res = static::query( $query);
-      if(!$res) throw new Exception(static::error());
-      $id = static::last_id() ;
+      static::transaction();
+      try {
+        extract($data);
+        $query = "REPLACE INTO " . static::$table . " (aid, pid) VALUE ('" . $aid . "','" . $pid . "')";
+        $res = static::query($query);
+        if(!$res) throw new Exception(static::error());
+        $id = static::last_id();
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
+      }
       return $id;
     }
 
     public static function delete($id) {
-      if(isset($id)) {
-        $query = "DELETE FROM  " . static::$table . " WHERE id = $id";
-        $res = static::query( $query);
-        if(!$res) throw new Exception(static::error());
+      static::transaction();
+      try {
+        if(isset($id)) {
+          $query = "DELETE FROM  " . static::$table . " WHERE id = $id";
+          $res = static::query($query);
+          if(!$res) throw new Exception(static::error());
+        }
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
     }
 

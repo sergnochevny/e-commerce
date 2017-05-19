@@ -8,19 +8,19 @@
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $result = "";
         if(Controller_Admin::is_logged()) {
-          if (!empty($filter["a.color"]))
-            foreach (array_filter(explode(' ', $filter["a.color"])) as $item)
-              if (!empty($item)) $result[] = "a.color LIKE '%" . static::escape( static::strip_data(static::sanitize($item))) . "%'";
+          if(!empty($filter["a.color"]))
+            foreach(array_filter(explode(' ', $filter["a.color"])) as $item)
+              if(!empty($item)) $result[] = "a.color LIKE '%" . static::escape(static::strip_data(static::sanitize($item))) . "%'";
         } else {
           if(isset($filter["a.color"])) $result[] = Model_Synonyms::build_synonyms_like("a.color", $filter["a.color"]);
         }
-        if(isset($filter["a.id"])) $result[] = "a.id = '" . static::escape( static::strip_data(static::sanitize($filter["a.id"]))) . "'";
+        if(isset($filter["a.id"])) $result[] = "a.id = '" . static::escape(static::strip_data(static::sanitize($filter["a.id"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           if(strlen(trim(implode(" AND ", $result))) > 0) {
             $filter['active'] = true;
           }
         }
-        if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["c.pvisible"]))) . "'";
+        if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["c.pvisible"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');
@@ -38,7 +38,7 @@
       ];
       if(isset($id)) {
         $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
-        $result = static::query( $query);
+        $result = static::query($query);
         if($result) $response = static::fetch_assoc($result);
       }
       return $response;
@@ -51,7 +51,7 @@
       $query .= " JOIN fabrix_product_colors b ON b.colorId = a.id";
       $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.prodId" : '';
       $query .= static::build_where($filter);
-      if($result = static::query( $query)) {
+      if($result = static::query($query)) {
         $response = static::fetch_row($result)[0];
       }
       return $response;
@@ -69,7 +69,7 @@
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
 
-      if($result = static::query( $query)) {
+      if($result = static::query($query)) {
         $res_count_rows = static::num_rows($result);
         while($row = static::fetch_array($result)) {
           $response[] = $row;
@@ -80,33 +80,47 @@
     }
 
     public static function save(&$data) {
-      extract($data);
-      if(isset($id)) {
-        $query = 'UPDATE ' . static::$table . ' SET color ="' . $color . '" WHERE id =' . $id;
-        $res = static::query( $query);
-        if(!$res) throw new Exception(static::error());
-      } else {
-        $query = 'INSERT INTO ' . static::$table . '(color) VALUE ("' . $color . '")';
-        $res = static::query( $query);
-        if(!$res) throw new Exception(static::error());
-        $id = static::last_id() ;
+      static::transaction();
+      try {
+        extract($data);
+        if(isset($id)) {
+          $query = 'UPDATE ' . static::$table . ' SET color ="' . $color . '" WHERE id =' . $id;
+          $res = static::query($query);
+          if(!$res) throw new Exception(static::error());
+        } else {
+          $query = 'INSERT INTO ' . static::$table . '(color) VALUE ("' . $color . '")';
+          $res = static::query($query);
+          if(!$res) throw new Exception(static::error());
+          $id = static::last_id();
+        }
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
       return $id;
     }
 
     public static function delete($id) {
-      if(isset($id)) {
-        $query = "SELECT COUNT(*) FROM fabrix_product_colors WHERE colorId = $id";
-        $res = static::query( $query);
-        if($res) {
-          $amount = static::fetch_array($res)[0];
-          if(isset($amount) && ($amount > 0)) {
-            throw new Exception('Can not delete. There are dependent data.');
+      static::transaction();
+      try {
+        if(isset($id)) {
+          $query = "SELECT COUNT(*) FROM fabrix_product_colors WHERE colorId = $id";
+          $res = static::query($query);
+          if($res) {
+            $amount = static::fetch_array($res)[0];
+            if(isset($amount) && ($amount > 0)) {
+              throw new Exception('Can not delete. There are dependent data.');
+            }
           }
+          $query = "DELETE FROM " . static::$table . " WHERE id = $id";
+          $res = static::query($query);
+          if(!$res) throw new Exception(static::error());
         }
-        $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = static::query( $query);
-        if(!$res) throw new Exception(static::error());
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
     }
 

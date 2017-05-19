@@ -1,58 +1,23 @@
 <?php
 
-  Class Model_Shop extends Model_Base {
+  Class Model_Shop extends Model_Console {
 
     protected static $table = 'fabrix_products';
-
-    protected static function build_where(&$filter) {
-      $result_where = "";
-      $fields = !empty($filter['fields']) ? $filter['fields'] : [];
-      foreach($fields as $field => $condition) {
-        if(is_array($condition)) {
-          $clause = $field . " ";
-          $clause .= $condition['condition'] . " ";
-          if(is_null($condition["value"]) || (strtolower($condition["value"]) == 'null')) {
-            $clause .= ($condition['not'] ? "not " : "") . "null";
-            $condition['not'] = false;
-          } elseif($condition["condition"] == 'in') {
-            if(is_array($condition["value"])) {
-              $clause .= "(" . implode(', ', array_walk($condition["value"],
-                  function(&$value) { $value = "'" . static::escape(static::strip_data(static::sanitize($value))) . "'"; })) . ")";
-            } else {
-              $clause .= "(" . "'" . static::escape(static::strip_data(static::sanitize($condition["value"]))) . "'" . ")";
-            }
-          } else {
-            $clause .= "'" . static::escape(static::strip_data(static::sanitize($condition["value"]))) . "'";
-          }
-          $clause = ($condition['not'] ? "not (" . $clause . ")" : $clause);
-        } else {
-          $clause = $field . " ";
-          $clause .= (is_null($condition) ? "is" : "=") . " ";
-          $clause .= (is_null($condition) ? "null" : "'" . static::escape(static::strip_data(static::sanitize($condition["value"]))) . "'");
-        }
-        $result[] = $clause;
-      }
-      if(!empty($result) && (count($result) > 0)) {
-        $result_where = implode(" AND ", $result);
-        $result_where = (!empty($result_where) ? " WHERE " . $result_where : '');
-      }
-      return $result_where;
-    }
 
     public static function prepare_layout_product($row) {
       $pid = $row['pid'];
       $price = $row['priceyard'];
       $inventory = $row['inventory'];
       $piece = $row['piece'];
-      $price = Model_Price::getPrintPrice($price, $inventory, $piece);
+      $price = Model_Price::getPrice($price, $inventory, $piece);
 
       $discountIds = [];
       $saleprice = $row['priceyard'];
-      $saleprice = Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds);
+      $saleprice = Model_Price::calculateProductSalePrice($saleprice, $discountIds);
       $row['bProductDiscount'] = Model_Price::checkProductDiscount($pid, $saleprice, $discountIds);
-      $row['saleprice'] = Model_Price::getPrintPrice($saleprice, $inventory, $piece);
+      $row['saleprice'] = Model_Price::getPrice($saleprice, $inventory, $piece);
       $row['price'] = $price;
-      $row['Discount'] = (round(($price - $saleprice) * 100) != 0);
+      $row['discount'] = (round(($price - $saleprice) * 100) > 0);
       return $row;
     }
 
@@ -61,14 +26,16 @@
       $q = "";
       switch($type) {
         case 'new':
-          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY dt DESC, pid DESC LIMIT " . $start . "," . $limit;
-          break;
-        case 'carousel':
-          $image_suffix = 'b_';
-          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY dt DESC, pid DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products ";
+          $q .= "WHERE priceyard > 0 and pnumber is not null and ";
+          $q .= "pvisible = '1' and image1 is not null ";
+          $q .= "ORDER BY dt DESC, pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'best':
-          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and best = '1' and image1 is not null ORDER BY pid DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products ";
+          $q .= "WHERE priceyard > 0 and pnumber is not null and ";
+          $q .= "pvisible = '1' and best = '1' and image1 is not null ";
+          $q .= "ORDER BY pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'bestsellers':
           $q = "select n.pid, n.priceyard, n.inventory, n.piece" .
@@ -82,7 +49,44 @@
             " LEFT JOIN fabrix_products n ON m.pid = n.pid";
           break;
         case 'popular':
-          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY popular DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products ";
+          $q .= "WHERE priceyard > 0 and pnumber is not null and ";
+          $q .= "pvisible = '1' and image1 is not null ";
+          $q .= "ORDER BY popular DESC LIMIT " . $start . "," . $limit;
+          break;
+        case 'under':
+          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products ";
+          $q .= "WHERE priceyard > 0 and pnumber is not null and ";
+          $q .= "pvisible = '1' and image1 is not null ";
+          $q .= "ORDER BY priceyard ASC, pid DESC LIMIT " . $start . "," . $limit;
+          break;
+        case 'bestsellers_1':
+          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products ";
+          $q .= "WHERE priceyard > 0 and pnumber is not null and ";
+          $q .= "pvisible = '1' and specials != '1' and best = '1' and image1 is not null ";
+          $q .= "ORDER BY pid DESC LIMIT " . $start . "," . $limit;
+          break;
+        case 'bestsellers_2':
+          $q = "SELECT DISTINCT a.pid, a.priceyard, a.inventory, a.piece FROM fabrix_products a ";
+          $q .= "LEFT JOIN fabrix_product_categories pc on a.pid = pc.pid ";
+          $q .= "WHERE a.priceyard > 0 and a.pnumber is not null ";
+          $q .= "and a.pvisible = '1' and a.specials != '1' and best != '1' and a.image1 is not null ";
+          $q .= "and pc.cid != 13 ";
+          $q .= "ORDER BY a.pid DESC LIMIT " . $start . "," . $limit;
+          break;
+        case 'specials_1':
+          $q = "SELECT pid, priceyard, inventory, piece FROM fabrix_products ";
+          $q .= "WHERE priceyard > 0 and pnumber is not null and ";
+          $q .= "pvisible = '1' and specials = '1' and best != '1' and image1 is not null ";
+          $q .= "ORDER BY pid DESC LIMIT " . $start . "," . $limit;
+          break;
+        case 'specials_2':
+          $q = "SELECT DISTINCT a.pid, a.priceyard, a.inventory, a.piece FROM fabrix_products a ";
+          $q .= "LEFT JOIN fabrix_product_categories pc on a.pid = pc.pid ";
+          $q .= "WHERE a.priceyard > 0 and a.pnumber is not null ";
+          $q .= "and a.pvisible = '1' and a.specials != '1' and best != '1' and a.image1 is not null ";
+          $q .= "and pc.cid != 13 ";
+          $q .= "ORDER BY a.pid DESC LIMIT " . $start . "," . $limit;
           break;
       }
       if($result = static::query($q)) {
@@ -90,6 +94,8 @@
         while($row = static::fetch_assoc($result)) {
           $response[] = self::prepare_layout_product($row);
         }
+      } else {
+        throw new Exception(static::error());
       }
       return $response;
     }
@@ -118,6 +124,8 @@
       }
       if($result = static::query($query)) {
         $response = static::fetch_row($result)[0];
+      } else {
+        throw new Exception(static::error());
       }
       return $response;
     }
@@ -157,6 +165,8 @@
             $response[$row['pid']] = $row['pid'];
           }
         }
+      } else {
+        throw new Exception(static::error());
       }
       return $response;
     }

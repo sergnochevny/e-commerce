@@ -1,6 +1,8 @@
 <?php
 
-  abstract class Model_Base {
+  class Model_Base {
+
+    protected static $intransaction = false;
 
     protected static $table;
     public static $filter_exclude_keys = ['scenario', 'reset'];
@@ -100,6 +102,40 @@
         $data = trim($data);
       }
       return $data;
+    }
+
+    public static function transaction() {
+      if(!static::$intransaction) {
+        static::$intransaction = mysqli_begin_transaction(_A_::$app->getDBConnection('default'));
+        if(!static::$intransaction) {
+          throw new Exception(self::error());
+        }
+      }
+      return static::$intransaction;
+    }
+
+    public static function commit() {
+      $res = !static::$intransaction;
+      if(static::$intransaction) {
+        $res = mysqli_commit(_A_::$app->getDBConnection('default'));
+        if(!$res) {
+          throw new Exception(self::error());
+        }
+        static::$intransaction = false;
+      }
+      return $res;
+    }
+
+    public static function rollback() {
+      $res = !static::$intransaction;
+      if(static::$intransaction) {
+        $res = mysqli_rollback(_A_::$app->getDBConnection('default'));
+        if(!$res) {
+          throw new Exception(self::error());
+        }
+        static::$intransaction = false;
+      }
+      return $res;
     }
 
     public static function query($query) {

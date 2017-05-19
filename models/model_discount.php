@@ -6,21 +6,21 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["scenario"]) && ($filter["scenario"] == 'orders')){
-        if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::escape( static::strip_data(static::sanitize($filter['hidden']["c.sid"]))) . "'";
+      if(isset($filter["scenario"]) && ($filter["scenario"] == 'orders')) {
+        if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["c.sid"]))) . "'";
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           $result = (!empty($result) ? " WHERE " . $result : '');
         }
       } else {
-        if(isset($filter["sid"])) $result[] = "sid = '" . static::escape( static::strip_data(static::sanitize($filter["sid"]))) . "'";
-        if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . static::escape( static::strip_data(static::sanitize($filter["promotion_type"]))) . "'";
-        if(isset($filter["user_type"])) $result[] = "user_type = '" . static::escape( static::strip_data(static::sanitize($filter["user_type"]))) . "'";
-        if(isset($filter["discount_type"])) $result[] = "discount_type = '" . static::escape( static::strip_data(static::sanitize($filter["discount_type"]))) . "'";
-        if(isset($filter["product_type"])) $result[] = "product_type = '" . static::escape( static::strip_data(static::sanitize($filter["product_type"]))) . "'";
-        if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', static::escape( static::strip_data(static::sanitize($filter["coupon_code"])))))) . "%'";
-        if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(static::escape( static::strip_data(static::sanitize($filter['date_start'])))) . "'" : "");
-        if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(static::escape( static::strip_data(static::sanitize($filter['date_end'])))) . "'" : "");
+        if(isset($filter["sid"])) $result[] = "sid = '" . static::escape(static::strip_data(static::sanitize($filter["sid"]))) . "'";
+        if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . static::escape(static::strip_data(static::sanitize($filter["promotion_type"]))) . "'";
+        if(isset($filter["user_type"])) $result[] = "user_type = '" . static::escape(static::strip_data(static::sanitize($filter["user_type"]))) . "'";
+        if(isset($filter["discount_type"])) $result[] = "discount_type = '" . static::escape(static::strip_data(static::sanitize($filter["discount_type"]))) . "'";
+        if(isset($filter["product_type"])) $result[] = "product_type = '" . static::escape(static::strip_data(static::sanitize($filter["product_type"]))) . "'";
+        if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', static::escape(static::strip_data(static::sanitize($filter["coupon_code"])))))) . "%'";
+        if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(static::escape(static::strip_data(static::sanitize($filter['date_start'])))) . "'" : "");
+        if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(static::escape(static::strip_data(static::sanitize($filter['date_end'])))) . "'" : "");
         if(!empty($result) && (count($result) > 0)) {
           $result = implode(" AND ", $result);
           if(strlen(trim($result)) > 0) {
@@ -49,7 +49,7 @@
       if(!isset($sid)) $sid = 0;
       $iCnt = 0;
       $sSQL = sprintf("SELECT sid FROM " . static::$table . " WHERE coupon_code='%s';", $cde);
-      $result = static::query( $sSQL) or die(static::error());
+      $result = static::query($sSQL) or die(static::error());
       $iCnt = static::num_rows($result);
       if($iCnt == 1) { #verify that it is not this record with the same coupon code
         $rs = static::fetch_row($result);
@@ -89,7 +89,7 @@
       ];
       if(isset($id)) {
         $q = "select * from " . static::$table . " where sid = '" . $id . "'";
-        $result = static::query( $q);
+        $result = static::query($q);
         if($result) {
           $data = static::fetch_assoc($result);
         }
@@ -99,14 +99,14 @@
 
     public static function get_total_count($filter = null) {
       $res = 0;
-      if(isset($filter['scenario']) &&($filter['scenario'] == 'orders')){
+      if(isset($filter['scenario']) && ($filter['scenario'] == 'orders')) {
         $q = "SELECT COUNT(DISTINCT a.oid)";
         $q .= " from fabrix_orders a";
         $q .= " left join fabrix_accounts b on a.aid = b.aid";
         $q .= " left join fabrix_specials_usage c on a.oid = c.oid";
       } else $q = "SELECT COUNT(sid) FROM " . static::$table;
       $q .= self::build_where($filter);
-      $result = static::query( $q);
+      $result = static::query($q);
       if($result) {
         $row = static::fetch_array($result);
         $res = $row[0];
@@ -116,7 +116,7 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $res = null;
-      if(isset($filter['scenario']) &&($filter['scenario'] == 'orders')){
+      if(isset($filter['scenario']) && ($filter['scenario'] == 'orders')) {
         $q = "select";
         $q .= " DISTINCT a.*, CONCAT(b.bill_firstname,' ',b.bill_lastname) as username";
         $q .= " from fabrix_orders a";
@@ -126,7 +126,7 @@
       $q .= self::build_where($filter);
       $q .= static::build_order($sort);
       if($limit != 0) $q .= " LIMIT $start, $limit";
-      $result = static::query( $q);
+      $result = static::query($q);
       if($result) {
         $res_count_rows = static::num_rows($result);
         while($row = static::fetch_assoc($result)) {
@@ -137,77 +137,85 @@
     }
 
     public static function save(&$data) {
-      extract($data);
-      $discount_comment1 = static::escape( $discount_comment1);
-      $discount_comment2 = static::escape( $discount_comment2);
-      $discount_comment3 = static::escape( $discount_comment3);
-      if(isset($sid)) {
-        $q = "UPDATE " . static::$table .
-          " SET" .
-          " coupon_code='$coupon_code'," .
-          " discount_amount='$discount_amount'," .
-          " discount_amount_type='$discount_amount_type'," .
-          " discount_type='$discount_type'," .
-          " user_type='$user_type'," .
-          " shipping_type='$shipping_type'," .
-          " product_type='$product_type'," .
-          " promotion_type='$promotion_type'," .
-          " required_amount='$required_amount'," .
-          " required_type='$required_type'," .
-          " allow_multiple='$allow_multiple'," .
-          " enabled='$enabled'," .
-          " countdown='$countdown'," .
-          " discount_comment1='$discount_comment1'," .
-          " discount_comment2='$discount_comment2'," .
-          " discount_comment3='$discount_comment3'," .
-          " date_start='$date_start'," .
-          " date_end='$date_end'" .
-          " WHERE sid ='$sid'";
-        $res = static::query( $q);
-      } else {
-        $q = "INSERT INTO " . static::$table .
-          " SET" .
-          " coupon_code='$coupon_code'," .
-          " discount_amount='$discount_amount'," .
-          " discount_amount_type='$discount_amount_type'," .
-          " discount_type='$discount_type'," .
-          " user_type='$user_type'," .
-          " shipping_type='$shipping_type'," .
-          " product_type='$product_type'," .
-          " promotion_type='$promotion_type'," .
-          " required_amount='$required_amount'," .
-          " required_type='$required_type'," .
-          " allow_multiple='$allow_multiple'," .
-          " enabled='$enabled'," .
-          " countdown='$countdown'," .
-          " discount_comment1='$discount_comment1'," .
-          " discount_comment2='$discount_comment2'," .
-          " discount_comment3='$discount_comment3'," .
-          " date_start='$date_start'," .
-          " date_end='$date_end'";
+      static::transaction();
+      try {
+        extract($data);
+        $discount_comment1 = static::escape($discount_comment1);
+        $discount_comment2 = static::escape($discount_comment2);
+        $discount_comment3 = static::escape($discount_comment3);
+        if(isset($sid)) {
+          $q = "UPDATE " . static::$table .
+            " SET" .
+            " coupon_code='$coupon_code'," .
+            " discount_amount='$discount_amount'," .
+            " discount_amount_type='$discount_amount_type'," .
+            " discount_type='$discount_type'," .
+            " user_type='$user_type'," .
+            " shipping_type='$shipping_type'," .
+            " product_type='$product_type'," .
+            " promotion_type='$promotion_type'," .
+            " required_amount='$required_amount'," .
+            " required_type='$required_type'," .
+            " allow_multiple='$allow_multiple'," .
+            " enabled='$enabled'," .
+            " countdown='$countdown'," .
+            " discount_comment1='$discount_comment1'," .
+            " discount_comment2='$discount_comment2'," .
+            " discount_comment3='$discount_comment3'," .
+            " date_start='$date_start'," .
+            " date_end='$date_end'" .
+            " WHERE sid ='$sid'";
+          $res = static::query($q);
+        } else {
+          $q = "INSERT INTO " . static::$table .
+            " SET" .
+            " coupon_code='$coupon_code'," .
+            " discount_amount='$discount_amount'," .
+            " discount_amount_type='$discount_amount_type'," .
+            " discount_type='$discount_type'," .
+            " user_type='$user_type'," .
+            " shipping_type='$shipping_type'," .
+            " product_type='$product_type'," .
+            " promotion_type='$promotion_type'," .
+            " required_amount='$required_amount'," .
+            " required_type='$required_type'," .
+            " allow_multiple='$allow_multiple'," .
+            " enabled='$enabled'," .
+            " countdown='$countdown'," .
+            " discount_comment1='$discount_comment1'," .
+            " discount_comment2='$discount_comment2'," .
+            " discount_comment3='$discount_comment3'," .
+            " date_start='$date_start'," .
+            " date_end='$date_end'";
 
-        $res = static::query( $q);
-        if($res) $sid = static::last_id() ;
-      }
-      if($res) {
-        $res = static::query("DELETE FROM fabrix_specials_users WHERE sid ='$sid'");
-        if($res && ($user_type == 4)) {
-          foreach($users as $aid) {
-            $res = static::query("INSERT INTO  fabrix_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
-            if(!$res) break;
+          $res = static::query($q);
+          if($res) $sid = static::last_id();
+        }
+        if($res) {
+          $res = static::query("DELETE FROM fabrix_specials_users WHERE sid ='$sid'");
+          if($res && ($user_type == 4)) {
+            foreach($users as $aid) {
+              $res = static::query("INSERT INTO  fabrix_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
+              if(!$res) break;
+            }
           }
         }
-      }
-      if($res) {
-        $res = static::query("DELETE FROM fabrix_specials_products WHERE sid='$sid'");
-        if($res && isset($product_type) && ($product_type > 1)) {
-          foreach($filter_products as $pid) {
-            $res = static::query("INSERT INTO  fabrix_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
-            if(!$res) break;
+        if($res) {
+          $res = static::query("DELETE FROM fabrix_specials_products WHERE sid='$sid'");
+          if($res && isset($product_type) && ($product_type > 1)) {
+            foreach($filter_products as $pid) {
+              $res = static::query("INSERT INTO  fabrix_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
+              if(!$res) break;
+            }
           }
         }
+        if(!$res) throw new Exception(static::error());
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
-      if(!$res) throw new Exception(static::error());
+
       return $sid;
     }
 
@@ -366,7 +374,7 @@
       $filter = null;
       $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
       $start = isset($start) ? $start : 0;
-      $search = static::escape( self::sanitize($search));
+      $search = static::escape(self::sanitize($search));
       switch($type) {
         case 'users':
           $q = "select count(aid) from fabrix_accounts";
@@ -375,7 +383,7 @@
             $q .= " or bill_lastname like '%$search%'";
             $q .= " or email like '%$search%'";
           }
-          $results = static::query( $q);
+          $results = static::query($q);
           $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_accounts";
@@ -386,7 +394,7 @@
           }
           $q .= " order by email, bill_firstname, bill_lastname";
           $q .= " limit $start, $filter_limit";
-          $results = static::query( $q);
+          $results = static::query($q);
           while($row = static::fetch_array($results)) {
             $filter[] = [$row[0], $row[1] . ' - ' . $row[3] . ' ' . $row[4]];
           }
@@ -397,7 +405,7 @@
             $q .= " where pnumber like '%$search%'";
             $q .= " or pname like '%$search%'";
           }
-          $results = static::query( $q);
+          $results = static::query($q);
           $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_products";
@@ -407,7 +415,7 @@
           }
           $q .= " order by pnumber, pname";
           $q .= " limit $start, $filter_limit";
-          $results = static::query( $q);
+          $results = static::query($q);
           while($row = static::fetch_array($results)) {
             $filter[] = [$row[0], $row[2] . ' - ' . $row[1]];
           }
@@ -417,7 +425,7 @@
           if(isset($search) && (strlen($search) > 0)) {
             $q .= " where manufacturer like '%$search%'";
           }
-          $results = static::query( $q);
+          $results = static::query($q);
           $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_manufacturers";
@@ -426,7 +434,7 @@
           }
           $q .= " order by manufacturer";
           $q .= " limit $start, $filter_limit";
-          $results = static::query( $q);
+          $results = static::query($q);
           while($row = static::fetch_array($results)) {
             $filter[] = [$row[0], $row[1]];
           }
@@ -436,7 +444,7 @@
           if(isset($search) && (strlen($search) > 0)) {
             $q .= " where cname like '%$search%'";
           }
-          $results = static::query( $q);
+          $results = static::query($q);
           $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_categories";
@@ -445,7 +453,7 @@
           }
           $q .= " order by cname";
           $q .= " limit $start, $filter_limit";
-          $results = static::query( $q);
+          $results = static::query($q);
           while($row = static::fetch_array($results)) {
             $filter[] = [$row[0], $row[1]];
           }
@@ -454,10 +462,16 @@
     }
 
     public static function delete($id) {
-      static::query("DELETE FROM fabrix_specials_products WHERE sid='$id'");
-      static::query("DELETE FROM fabrix_specials_users WHERE sid='$id'");
-      static::query("DELETE FROM fabrix_specials_usage WHERE sid='$id'");
-      static::query("DELETE FROM " . static::$table . " WHERE sid = '$id'");
+      static::transaction();
+      try {
+        static::query("DELETE FROM fabrix_specials_products WHERE sid='$id'");
+        static::query("DELETE FROM fabrix_specials_users WHERE sid='$id'");
+        static::query("DELETE FROM fabrix_specials_usage WHERE sid='$id'");
+        static::query("DELETE FROM " . static::$table . " WHERE sid = '$id'");
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
+      }
     }
-
   }

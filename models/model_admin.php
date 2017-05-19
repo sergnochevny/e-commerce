@@ -33,8 +33,15 @@
     }
 
     public static function delete($id) {
-      $strSQL = "DELETE FROM " . static::$table . " WHERE id = $id";
-      static::query( $strSQL);
+      static::transaction();
+      try {
+        $strSQL = "DELETE FROM " . static::$table . " WHERE id = $id";
+        static::query($strSQL);
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
+      }
     }
 
     public static function exist($login = null, $id = null) {
@@ -68,32 +75,46 @@
     }
 
     public static function update_password($password, $id) {
-      $result = static::query( "UPDATE " . static::$table . " SET password =  '$password' WHERE  id =$id;");
-      if(!$result) throw new Exception(static::error());
+      static::transaction();
+      try {
+        $result = static::query("UPDATE " . static::$table . " SET password =  '$password' WHERE  id =$id;");
+        if(!$result) throw new Exception(static::error());
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
+      }
     }
 
     public static function save(&$data) {
-      extract($data);
       /**
        * @var string $login
        * @var string $password
        */
-      if(!isset($id)) {
-        $q = "INSERT INTO  " . static::$table .
-          "(id ,login ,password)" .
-          "VALUES (NULL , '$login', '$password');";
-      } else {
-        $q = "UPDATE " . static::$table . " SET" .
-          " login = '" . $login;
-        if(isset($password) && (strlen($password) > 0)) {
-          $q .= "',password = '" . $password;
+      static::transaction();
+      try {
+        extract($data);
+        if(!isset($id)) {
+          $q = "INSERT INTO  " . static::$table .
+            "(id ,login ,password)" .
+            "VALUES (NULL , '$login', '$password');";
+        } else {
+          $q = "UPDATE " . static::$table . " SET" .
+            " login = '" . $login;
+          if(isset($password) && (strlen($password) > 0)) {
+            $q .= "',password = '" . $password;
+          }
+          $q .= "' WHERE  id = $id";
         }
-        $q .= "' WHERE  id = $id";
-      }
-      $result = static::query( $q);
-      if(!$result) throw new Exception(static::error());
-      if(!isset($admin_id)) {
-        $id = static::last_id() ;
+        $result = static::query($q);
+        if(!$result) throw new Exception(static::error());
+        if(!isset($admin_id)) {
+          $id = static::last_id();
+        }
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
       return $id;
     }

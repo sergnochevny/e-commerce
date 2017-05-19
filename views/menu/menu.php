@@ -37,9 +37,11 @@
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="Matches" href="<?= _A_::$app->router()->UrlTo('matches') ?>">Matches</a>
         </li>
-        <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Newsletter" href="<?= _A_::$app->router()->UrlTo('newsletter') ?>">Newsletter</a>
-        </li>
+        <?php if(!Controller_User::is_logged()) : ?>
+          <li class="menu-item menu-item-type-post_type menu-item-object-page">
+            <a data-waitloader data-link title="Newsletter" href="<?= _A_::$app->router()->UrlTo('newsletter') ?>">Newsletter</a>
+          </li>
+        <?php endif; ?>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="Service" href="<?= _A_::$app->router()->UrlTo('service') ?>">Service</a>
         </li>

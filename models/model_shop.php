@@ -2,6 +2,8 @@
 
   Class Model_Shop extends Model_Base {
 
+    protected static $list_conditions = ['bestsellers' => 1, 'specials' => 2, 'under' => 3];
+
     protected static $table = 'fabrix_products';
 
     protected static function build_where(&$filter) {
@@ -48,6 +50,10 @@
       if(isset($filter['hidden']["a.priceyard"]['to']) && !empty((float)$filter['hidden']["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['to']))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result_where = implode(" AND ", $result);
+        if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
+          $type = static::$list_conditions[$filter['type']];
+          $result_where = (!empty($result_where) ? "cc.type = " . $type . ' AND ' . $result_where : "cc.type = " . $type);
+        }
         $result_where = (!empty($result_where) ? " WHERE " . $result_where : '');
       }
       return $result_where;
@@ -254,27 +260,38 @@
           break;
         case 'carousel':
           $image_suffix = 'b_';
-          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY dt DESC, pid DESC LIMIT " . $start . "," . $limit;
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 2";
+          $q .= " where c.type = 2 order by a.pid desc limit " . $start . "," . $limit;
           break;
         case 'best':
+          $image_suffix = 'b_';
           $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and best = '1' and image1 is not null ORDER BY pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'bestsellers':
-          $q = "select n.*" .
-            " from (SELECT a.pid, SUM(b.quantity) as s" .
-            " FROM fabrix_products a" .
-            " LEFT JOIN fabrix_order_details b ON a . pid = b . product_id" .
-            " WHERE a.priceyard > 0 and a.pnumber is not null and a.pvisible = '1' and a.image1 is not null" .
-            " GROUP BY a . pid" .
-            " ORDER BY s DESC" .
-            " LIMIT " . $start . "," . $limit . ") m" .
-            " LEFT JOIN fabrix_products n ON m.pid = n.pid";
+          $image_suffix = 'b_';
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 1";
+          $q .= " where c.type = 1 order by a.pid desc limit " . $start . "," . $limit;
           break;
         case 'popular':
+          $image_suffix = 'b_';
           $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY popular DESC LIMIT " . $start . "," . $limit;
           break;
-        case 'under':
-          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and priceyard < 200 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY priceyard ASC, pid DESC LIMIT " . $start . "," . $limit;
+        case 'under_20':
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+          $q .= " where c.type = 3 and c.price <= 20 order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
+          break;
+        case 'under_40':
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+          $q .= " where c.type = 3 and c.price <= 40 order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
+        case 'under_60':
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+          $q .= " where c.type = 3 and c.price <= 40 order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
+          break;
       }
       if($result = static::query($q)) {
         $res_count_rows = static::num_rows($result);
@@ -338,26 +355,28 @@
 
     public static function get_total_count($filter = null) {
       $response = 0;
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query = "select COUNT(n.pid) from (";
-        $query .= "SELECT a.pid, SUM(k.quantity) as s FROM " . static::$table . " a";
-        $query .= " LEFT JOIN fabrix_order_details k ON a.pid = k.product_id";
+      if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
+        $type = static::$list_conditions[$filter['type']];
+        $query = "select COUNT(a.pid) from collection cc";
+        $query .= " left join fabrix_products a on cc.pid = a.pid and cc.type = " . $type;
+        $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+        $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+        $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+        $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
+        $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+        $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+        $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       } else {
         $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
+        $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+        $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+        $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+        $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
+        $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+        $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+        $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       }
-      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query .= " GROUP BY a.pid";
-        $query .= " ORDER BY s DESC) m";
-        $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
-      }
       if($result = static::query($query)) {
         $response = static::fetch_row($result)[0];
       }
@@ -366,30 +385,30 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query = "select n.* from (";
-        $query .= "SELECT a.pid, SUM(k.quantity) as s FROM " . static::$table . " a";
-        $query .= " LEFT JOIN fabrix_order_details k ON a.pid = k.product_id";
+      if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
+        $type = static::$list_conditions[$filter['type']];
+        $query = "select DISTINCT a.* from collection cc";
+        $query .= " left join fabrix_products a on cc.pid = a.pid and cc.type = " . $type;
+        $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+        $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+        $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+        $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
+        $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+        $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+        $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       } else {
         $query = "SELECT DISTINCT a.* FROM " . static::$table . " a";
+        $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+        $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+        $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+        $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
+        $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+        $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+        $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       }
-      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query .= " GROUP BY a.pid";
-      }
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query .= ") m";
-        $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
-      }
       if($result = static::query($query)) {
         $res_count_rows = static::num_rows($result);
         $sys_hide_price = Model_Price::sysHideAllRegularPrices();

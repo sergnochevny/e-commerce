@@ -2,25 +2,17 @@
 
   Class Model_Price extends Model_Base {
 
-    public static function getPrintPrice($price, $inventory = 0, $piece = 0) {
+    public static function getPrice($price, $inventory = 0, $piece = 0) {
       if($piece == 1 && $inventory > 0) {
         $price = $price * $inventory;
       }
-      return number_format($price, 2);
+      return round($price, 2);
     }
 
-    public static function calculateDiscount($discount_category, $aPrdcts, $rPrice, $rShip, $sCoupon, &$bCodeValid, $bReturnString, &$sPriceDiscount, &$sShippingDiscount, $shipType, &$discountIds) {
-
-      #strings for the single and multiple discounts
-      $sSingle = '';
-      $sMultiple = '';
-
-      $sShippingDiscount1 = '';
-      $sShippingDiscount2 = '';
-      $sShippingDiscount3 = '';
+    public static function calculateDiscount($discount_category, $rPrice, $rShip, $shipType, &$discountIds) {
 
       #make sure that the user is entering a coupon code when we are checking for a coupon
-      if(($discount_category == DISCOUNT_CATEGORY_COUPON) && strlen($sCoupon) == 0) {
+      if(($discount_category == DISCOUNT_CATEGORY_COUPON)) {
         return 0;
       }
 
@@ -74,19 +66,7 @@
         $sSQL .= sprintf(" AND (s.discount_type != %u)", DISCOUNT_TYPE_SHIPPING);
       }
 
-      #check the coupon code if the discount category is for coupon code
-      if($discount_category == DISCOUNT_CATEGORY_COUPON) {
-        $sSQL .= sprintf(" AND (s.coupon_code='%s')", $sCoupon);
-
-        #add the shipping type restriction
-        if($shipType == 3) {            #ground shipping
-          $sSQL .= ' AND (s.shipping_type = 2 OR s.shipping_type = 1 OR s.shipping_type = 0)';
-        } else if($shipType == 1) {    #express shipping
-          $sSQL .= ' AND (s.shipping_type = 3 OR s.shipping_type = 1 OR s.shipping_type = 0)';
-        }
-      } else {
-        $sSQL .= sprintf(" AND ((s.coupon_code='') OR (s.coupon_code IS NULL))");
-      }
+      $sSQL .= sprintf(" AND ((s.coupon_code='') OR (s.coupon_code IS NULL))");
 
       $iNow = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
       $sSQL .= sprintf(" AND (s.enabled=1) AND (s.date_start<=%u) AND (s.date_end>=%u)", $iNow, $iNow);
@@ -94,145 +74,34 @@
 
       $result = static::query($sSQL) or die(static::error());
       if(static::num_rows($result) > 0) {
-        $shipFullSumDiscount1 = false;
-        $shipFullSumDiscount2 = false;
-        $shipFullSumDiscount3 = false;
-        $isDiscountApplay = false;
         while($rs = static::fetch_assoc($result)) {
-
           $bDoDiscount = self::checkDiscountApplies($rs, $rPrice);
-
           if($bDoDiscount) {
-
-            if($bReturnString) {
-
-              #get the string for the discount amount
-              $tempAmt = number_format($rs['discount_amount'], 2, '.', '');
-              $tempAmtString = '';
-              $temp = '';
-              if($rs['discount_amount_type'] == 1) {        #$
-                $tempAmtString = sprintf("$%s", $tempAmt);
-              } else if($rs['discount_amount_type'] == 2) {    #%
-                $tempAmtString = sprintf("%s%%", $tempAmt);
-              }
-            }
-
-            #check if we are returning a string or the new price
-            if($bReturnString && $rs['discount_type'] == DISCOUNT_TYPE_SHIPPING) {
-
-              $strShp = '';
-              if($rs['shipping_type'] == 1) {
-                $strShp = 'Shipping';
-                if(!$shipFullSumDiscount1) {
-                  if(strlen($sShippingDiscount1) > 0) {
-                    $sShippingDiscount1 .= DISCOUNT_STRING_JOINER;
-                  }
-                  if($tempAmtString == "100.00%") {
-                    $sShippingDiscount1 = sprintf("%s FREE.", $strShp);
-                    $shipFullSumDiscount1 = true;
-                  } else {
-                    $sShippingDiscount1 .= sprintf("%s will be reduced by %s.", $strShp, $tempAmtString);
-                  }
-                }
-              } else if($rs['shipping_type'] == 2) {
-                $strShp = 'Ground shipping';
-                if(!$shipFullSumDiscount2) {
-                  if(strlen($sShippingDiscount2) > 0) {
-                    $sShippingDiscount2 .= DISCOUNT_STRING_JOINER;
-                  }
-                  if($tempAmtString == "100.00%") {
-                    $sShippingDiscount2 = sprintf("%s FREE.", $strShp);
-                    $shipFullSumDiscount2 = true;
-                  } else {
-                    $sShippingDiscount2 .= sprintf("%s will be reduced by %s.", $strShp, $tempAmtString);
-                  }
-                }
-              } else if($rs['shipping_type'] == 3) {
-                $strShp = 'Express shipping';
-                if(!$shipFullSumDiscount3) {
-                  if(strlen($sShippingDiscount3) > 0) {
-                    $sShippingDiscount3 .= DISCOUNT_STRING_JOINER;
-                  }
-                  if($tempAmtString == "100.00%") {
-                    $sShippingDiscount3 = sprintf("%s FREE.", $strShp);
-                    $shipFullSumDiscount3 = true;
-                  } else {
-                    $sShippingDiscount3 .= sprintf("%s will be reduced by %s.", $strShp, $tempAmtString);
-                  }
-                }
-              }
-            } else {
-
+            $tmpDiscount = self::discountIt($rPrice, $rShip, $rs['discount_amount'], $rs['discount_amount_type'], $rs['discount_type']);
+            if($discount_category == DISCOUNT_CATEGORY_SHIPPING) {
+              $rShip -= $tmpDiscount;
+            } else $rPrice -= $tmpDiscount;
+            #determine whether we are using a multiple or single discount
+            #the system will take the highest not multiple discount and add it to the sum of all the multiple discounts
+            if((int)$rs['allow_multiple'] == 1) {
+              $rMultDiscount += $tmpDiscount;
+              $discountIds[] = $rs['sid'];
               #check if we need to return a string here
-              if($bReturnString) {
-
-                if($rs['discount_type'] == DISCOUNT_TYPE_SUBTOTAL) {
-                  if($isDiscountApplay) $temp = sprintf("reduced further by %s.", $tempAmtString);
-                  else $temp = sprintf("Reduced by %s.", $tempAmtString);
-                  $isDiscountApplay = true;
-                } else if($rs['discount_type'] == DISCOUNT_TYPE_TOTAL) {
-                  $temp = sprintf("Your total order is reduced by %s.", $tempAmtString);
-                }
-              }
-
-              $tmpDiscount = self::discountIt($discount_category, $rPrice, $rShip, $rs['discount_amount'], $rs['discount_amount_type'], $rs['discount_type'], $rs['product_type'], $rs['sid'], $aPrdcts, $sPds);
-              if($discount_category == DISCOUNT_CATEGORY_SHIPPING) {
-                $rShip -= $tmpDiscount;
-              } else $rPrice -= $tmpDiscount;
-              #determine whether we are using a multiple or single discount
-              #the system will take the highest not multiple discount and add it to the sum of all the multiple discounts
-              if((int)$rs['allow_multiple'] == 1) {
-                $rMultDiscount += $tmpDiscount;
+            } else if($tmpDiscount > $rDiscount) {
+              if($rDiscount == 0) {
                 $discountIds[] = $rs['sid'];
-                #check if we need to return a string here
-                if($bReturnString) {
-                  if(strlen($sMultiple) > 0) {
-                    $sMultiple .= DISCOUNT_STRING_JOINER;
-                  }
-                  $sMultiple .= $temp;
-                }
-              } else if($tmpDiscount > $rDiscount) {
-
-                if($rDiscount == 0) {
-                  $discountIds[] = $rs['sid'];
-                } else {
-                  $discountIds[count($discountIds) - 1] = $rs['sid'];
-                }
-
-                $rDiscount = $tmpDiscount;
-
-                #check if we need to return a string here
-                if($bReturnString) {
-                  $sSingle = $temp;
-                }
+              } else {
+                $discountIds[count($discountIds) - 1] = $rs['sid'];
               }
-
-              if((strlen($sCoupon)) && ($rs['coupon_code'] == $sCoupon)) {
-                $bCodeValid = true;
-              }
+              $rDiscount = $tmpDiscount;
             }
           }
         }
       }
       static::free_result($result);
       #check if we need to return a string here
-      if($bReturnString) {
-        $sPriceDiscount = $sSingle;
-        if((strlen($sSingle) > 0) && (strlen($sMultiple) > 0)) {
-          $sPriceDiscount .= DISCOUNT_STRING_JOINER;
-        }
-        $sPriceDiscount .= $sMultiple;
-      }
       $rDiscount = $rDiscount + $rMultDiscount;
-      $sShippingDiscount .= $sShippingDiscount1;
-      if(strlen($sShippingDiscount) > 0 && strlen($sShippingDiscount2) > 0) {
-        $sShippingDiscount .= DISCOUNT_STRING_JOINER;
-      }
-      $sShippingDiscount .= $sShippingDiscount2;
-      if(strlen($sShippingDiscount) > 0 && strlen($sShippingDiscount3) > 0) {
-        $sShippingDiscount .= DISCOUNT_STRING_JOINER;
-      }
-      $sShippingDiscount .= $sShippingDiscount3;
+
       return $rDiscount;
     }
 
@@ -309,25 +178,16 @@
       return $bol;
     }
 
-    public static function calculateProductSalePrice($pid, $price, &$discountIds) {
-
-      #do the check to see if there is a system wide discount
-      $aPrds = [];
-      $aPrds[] = $pid;    #add product id
-      $aPrds[] = 1;        #add qty
+    public static function calculateProductSalePrice($price, &$discountIds) {
 
       #set the return price to the current price, the return price will be changed if needed
       $ret = $price;
 
       #get the shipping
       $shipping = DEFAULT_SHIPPING;
-
-      #create the fake variables as they will not be needed
-      $bTemp = false;        #passed in by reference, not needed anywhere
-      $NOT_USED = '';
       $shipcost = 0;
 
-      $rSystemDiscount = self::calculateDiscount(DISCOUNT_CATEGORY_PRODUCT, $aPrds, $price, $shipcost, '', $bTemp, false, $NOT_USED, $NOT_USED, $shipping, $discountIds);
+      $rSystemDiscount = self::calculateDiscount(DISCOUNT_CATEGORY_PRODUCT, $price, $shipcost, $shipping, $discountIds);
       if($rSystemDiscount > 0) $ret = $price - $rSystemDiscount;
 
       return $ret;
@@ -348,9 +208,7 @@
       return $rRet;
     }
 
-    public static function discountIt($discount_category, $rTtl, $rShip, $rDis, $iDisAmntType, $iDisType, $iPrdType, $iSid, $aPrd, $sPds) {
-
-      $rRet = 0;
+    public static function discountIt($rTtl, $rShip, $rDis, $iDisAmntType, $iDisType) {
 
       $rDis = preg_replace('/[^\.|\d]/', '', $rDis);
 
@@ -365,22 +223,7 @@
       } else if($iDisType == 3) {
         $rRet = self::doDiscount(($rTtl + $rShip + $rate_handling), $rDis, $iDisAmntType);
       } else {
-
-        if(($discount_category != DISCOUNT_CATEGORY_COUPON) && ($iDisAmntType == 1)) {    #$ amount
-          $iQty = 0;
-          for($i = 1; $i < count($aPrd); $i++) {
-
-            $iQty += (int)$aPrd[$i];
-
-            #skip one as qty is every other
-            $i++;
-          }
-        } else {
-          $iQty = 1;
-        }
-
         $rRet = self::doDiscount($rTtl, $rDis, $iDisAmntType);
-        $rRet = $iQty * $rRet;
       }
 
       return $rRet;

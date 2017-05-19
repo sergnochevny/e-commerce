@@ -426,126 +426,140 @@
     }
 
     public static function save(&$data) {
-      extract($data);
+      static::transaction();
+      try {
+        extract($data);
 
-      $metatitle = static::escape($metatitle);
-      $metadescription = static::escape($metadescription);
-      $metakeywords = static::escape($metakeywords);
-      $pname = static::escape($pname);
-      $sdesc = static::escape($sdesc);
-      $ldesc = static::escape($ldesc);;
-      $stock_number = static::escape($stock_number);
-      $dimensions = static::escape($dimensions);
+        $metatitle = static::escape($metatitle);
+        $metadescription = static::escape($metadescription);
+        $metakeywords = static::escape($metakeywords);
+        $pname = static::escape($pname);
+        $sdesc = static::escape($sdesc);
+        $ldesc = static::escape($ldesc);;
+        $stock_number = static::escape($stock_number);
+        $dimensions = static::escape($dimensions);
 
-      if(isset($pid)) {
-        $sql = "update " . static::$table . " set";
-        if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
-        $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
-        $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
-        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
-        $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
-        $sql .= " piece='$piece', whole = '$whole'  WHERE pid ='$pid'";
-        $result = static::query($sql);
-      } else {
-        $sql = "insert into " . static::$table . " set";
-        if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
-        $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
-        $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
-        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
-        $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
-        $sql .= " piece='$piece', whole = '$whole'";
-        $result = static::query($sql);
-        if($result) {
-          $pid = static::last_id();
-          $data['pid'] = $pid;
+        if(isset($pid)) {
+          $sql = "update " . static::$table . " set";
+          if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
+          $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
+          $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
+          $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
+          $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
+          $sql .= " piece='$piece', whole = '$whole'  WHERE pid ='$pid'";
+          $result = static::query($sql);
+        } else {
+          $sql = "insert into " . static::$table . " set";
+          if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
+          $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
+          $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
+          $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
+          $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
+          $sql .= " piece='$piece', whole = '$whole'";
+          $result = static::query($sql);
+          if($result) {
+            $pid = static::last_id();
+            $data['pid'] = $pid;
+          }
         }
-      }
-      if($result) $result = static::update_images($pid, $data);
-      if($result) {
-        $res = true;
-        if($res && (count($categories) > 0)) {
-          $res = static::query("select * from fabrix_product_categories  where pid='$pid'");
-          if($res) {
-            $result = $res;
-            while($category = static::fetch_assoc($res)) {
-              $result = $result && static::query("DELETE FROM fabrix_product_categories WHERE pid = " . $category['pid'] . " and cid = " . $category['cid']);
-              $result = $result && static::query("update fabrix_product_categories SET display_order=display_order-1 where display_order > " . $category['display_order'] . " and cid=" . $category['cid']);
-              if(!$result) {
-                $res = $result;
-                break;
+        if($result) $result = static::update_images($pid, $data);
+        if($result) {
+          $res = true;
+          if($res && (count($categories) > 0)) {
+            $res = static::query("select * from fabrix_product_categories  where pid='$pid'");
+            if($res) {
+              $result = $res;
+              while($category = static::fetch_assoc($res)) {
+                $result = $result && static::query("DELETE FROM fabrix_product_categories WHERE pid = " . $category['pid'] . " and cid = " . $category['cid']);
+                $result = $result && static::query("update fabrix_product_categories SET display_order=display_order-1 where display_order > " . $category['display_order'] . " and cid=" . $category['cid']);
+                if(!$result) {
+                  $res = $result;
+                  break;
+                }
+              }
+            }
+          } elseif($res) {
+            if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
+              static::query("DELETE FROM fabrix_product_categories WHERE pid = $pid");
+              $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" .
+                " from fabrix_categories a" .
+                " left join fabrix_product_categories b on a.cid = b.cid" .
+                " where a.cid = 1";
+              $res = static::query($q);
+              if($res) {
+                $row = static::fetch_array($res, MYSQLI_NUM);
+                $categories = [$row['cid'] => $row['pos']];
+                $data['categories'] = $categories;
               }
             }
           }
-        } elseif($res) {
-          if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
-            static::query("DELETE FROM fabrix_product_categories WHERE pid = $pid");
-            $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" .
-              " from fabrix_categories a" .
-              " left join fabrix_product_categories b on a.cid = b.cid" .
-              " where a.cid = 1";
-            $res = static::query($q);
-            if($res) {
-              $row = static::fetch_array($res, MYSQLI_NUM);
-              $categories = [$row['cid'] => $row['pos']];
-              $data['categories'] = $categories;
+          if($res) {
+            foreach($categories as $cid => $category) {
+              $res = $res && static::query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
+              $res = $res && static::query("REPLACE INTO fabrix_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
+              if(!$res) break;
             }
           }
-        }
-        if($res) {
-          foreach($categories as $cid => $category) {
-            $res = $res && static::query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
-            $res = $res && static::query("REPLACE INTO fabrix_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
-            if(!$res) break;
+          if($res) $res = $res && static::query("DELETE FROM fabrix_product_colors WHERE prodID='$pid'");
+          if($res && (count($colors) > 0)) {
+            foreach($colors as $colorId) {
+              $res = $res && static::query("REPLACE INTO fabrix_product_colors SET prodID='$pid', colorId='$colorId'");
+              if(!$res) break;
+            }
           }
-        }
-        if($res) $res = $res && static::query("DELETE FROM fabrix_product_colors WHERE prodID='$pid'");
-        if($res && (count($colors) > 0)) {
-          foreach($colors as $colorId) {
-            $res = $res && static::query("REPLACE INTO fabrix_product_colors SET prodID='$pid', colorId='$colorId'");
-            if(!$res) break;
+          if($res) $res = $res && static::query("DELETE FROM fabrix_product_patterns WHERE prodID='$pid'");
+          if($res && (count($patterns) > 0)) {
+            foreach($patterns as $patternId) {
+              $res = $res && static::query("REPLACE INTO fabrix_product_patterns SET prodID='$pid', patternId='$patternId'");
+              if(!$res) break;
+            }
           }
-        }
-        if($res) $res = $res && static::query("DELETE FROM fabrix_product_patterns WHERE prodID='$pid'");
-        if($res && (count($patterns) > 0)) {
-          foreach($patterns as $patternId) {
-            $res = $res && static::query("REPLACE INTO fabrix_product_patterns SET prodID='$pid', patternId='$patternId'");
-            if(!$res) break;
+          if($res) $res = $res && static::query("DELETE FROM fabrix_product_related WHERE pid='$pid'");
+          if($res && (count($related) > 0)) {
+            foreach($related as $r_pid) {
+              $res = $res && static::query("REPLACE INTO fabrix_product_related SET pid='$pid', r_pid='$r_pid'");
+              if(!$res) break;
+            }
           }
+          $result = $result && $res;
         }
-        if($res) $res = $res && static::query("DELETE FROM fabrix_product_related WHERE pid='$pid'");
-        if($res && (count($related) > 0)) {
-          foreach($related as $r_pid) {
-            $res = $res && static::query("REPLACE INTO fabrix_product_related SET pid='$pid', r_pid='$r_pid'");
-            if(!$res) break;
-          }
-        }
-        $result = $result && $res;
+        if(!$result) throw new Exception(static::error());
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
-      if(!$result) throw new Exception(static::error());
       return $pid;
     }
 
     public static function delete($id) {
-      if(isset($id)) {
-        $data = static::get_by_id($id);
-        $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
-        $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_related WHERE pid = $id or r_pid = $id";
-        if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_clearance WHERE pid = $id";
-        if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_favorites WHERE pid = $id";
-        if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
-        if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_colors WHERE prodId = $id";
-        if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_patterns WHERE prodId = $id";
-        if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_specials_products WHERE pid = $id";
-        if($res) $res = static::query($query);
-        if(!$res) throw new Exception(static::error());
-        static::delete_images($data);
+      static::transaction();
+      try {
+        if(isset($id)) {
+          $data = static::get_by_id($id);
+          $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
+          $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_related WHERE pid = $id or r_pid = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_clearance WHERE pid = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_favorites WHERE pid = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_colors WHERE prodId = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_patterns WHERE prodId = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_specials_products WHERE pid = $id";
+          if($res) $res = static::query($query);
+          if(!$res) throw new Exception(static::error());
+          static::delete_images($data);
+        }
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
     }
 
