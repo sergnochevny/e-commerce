@@ -30,8 +30,7 @@
   </div>
 
   <div class="col-xs-12 box inner-offset-top half-outer-offset-bottom">
-    <div class="row"
-         data-load="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'under']) ?>"></div>
+    <div data-load="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'under']) ?>"></div>
     <div class="row bestseller-action-row">
       <div class="col-xs-12 text-center">
         <a href="<?= _A_::$app->router()->UrlTo('shop/under'); ?>" class="button button-2x">MORE</a>

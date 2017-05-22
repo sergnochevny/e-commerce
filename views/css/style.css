@@ -1957,6 +1957,13 @@ span[role=combobox].ui-button:active .ui-icon {
     }
 }
 
+@media (min-width: 990px) {
+    .footer-widget-row-lg {
+        margin-left: 0;
+    }
+
+}
+
 /*Shop Sidebar*/
 
 .shop__sidebar {
@@ -2493,9 +2500,6 @@ span[role=combobox].ui-button:active .ui-icon {
         width: 50%;
     }
 
-    .footer-widget-row {
-        margin-left: 0;
-    }
 }
 
 @media only screen and (min-width: 1200px) {
