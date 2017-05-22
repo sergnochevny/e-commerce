@@ -78,7 +78,7 @@
 
       $data['shop_bestsellers_amount'] = !empty($data['shop_bestsellers_amount']) ? $data['shop_bestsellers_amount'] : SHOP_BSELLS_AMOUNT;
       $data['shop_specials_amount'] = !empty($data['shop_specials_amount']) ? $data['shop_specials_amount'] : SHOP_SPECIALS_AMOUNT;
-      $data['shop_under_amount'] = !empty($data['shop_specials_amount']) ? $data['shop_specials_amount'] : SHOP_UNDER_AMOUNT;
+      $data['shop_under_amount'] = !empty($data['shop_under_amount']) ? $data['shop_under_amount'] : SHOP_UNDER_AMOUNT;
 
       $data['shop_price_groups_count'] = !empty((int)$data['shop_price_groups_count']) ? $data['shop_price_groups_count'] : PRICE_GROUPS_COUNT;
       $data['shop_rate_handling'] = !empty((float)$data['shop_rate_handling']) ? $data['shop_rate_handling'] : RATE_HANDLING;

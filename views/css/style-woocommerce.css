@@ -589,7 +589,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     position: relative;
     background-color: #fff;
     border-radius: 4px;
-    box-shadow: 0 0 10px rgb(191, 191, 191);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .owl-prev, .owl-next {

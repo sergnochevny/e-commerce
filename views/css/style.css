@@ -470,6 +470,10 @@ p.discount {
     float: right;
 }
 
+.topnav-label {
+    text-transform: uppercase;
+}
+
 .header-topnav .navbar-nav .dropdown .topnav-label {
     padding-left: 10px;
     font-size: 16px;
@@ -2062,7 +2066,7 @@ span[role=combobox].ui-button:active .ui-icon {
     }
 }
 
-@media only screen and (max-width: 510px) {
+@media only screen and (max-width: 768px) {
     .shop__sidebar .shop__sidebar-list {
         flex-flow: column nowrap;
         justify-content: center;
@@ -2379,6 +2383,15 @@ span[role=combobox].ui-button:active .ui-icon {
     position: relative;
 }
 
+.col-logo {
+    float: left;
+    width: 100px;
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .navbar-nav {
     margin: 25px 15px 0;
 }
@@ -2411,11 +2424,6 @@ span[role=combobox].ui-button:active .ui-icon {
         padding: 5px 10px;
     }
 
-    #menu-button {
-        top: 20px;
-        right: 0;
-    }
-
     .navbar-nav {
         margin: 15px 15px 0;
     }
@@ -2427,7 +2435,7 @@ span[role=combobox].ui-button:active .ui-icon {
     }
 
     .navbar-nav {
-        margin: 0 15px 0;
+        margin: 0 15px 0 0;
     }
 
     .button-ask {
@@ -2439,28 +2447,11 @@ span[role=combobox].ui-button:active .ui-icon {
     .button-ask {
         margin: 22px 60px 0 0;
     }
-}
 
-@media only screen and (max-width: 767px) {
-    .button-ask {
-        margin: 22px 60px 0 0;
-    }
-}
-
-@media only screen and (max-width: 991px) {
     .button-ask.login {
         margin: 22px 0 0 0;
         position: absolute;
         right: 45px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .button-ask.login {
-        margin: 22px 0 0 0;
-        position: absolute;
-        right: 45px;
-        /*margin: 22px -30px 0 0;*/
     }
 }
 
@@ -2468,6 +2459,23 @@ span[role=combobox].ui-button:active .ui-icon {
     .top-menu {
         display: inline-block !important;
     }
+}
+
+@media only screen and (max-width: 768px) {
+    .button-ask i {
+        font-size: 30px;
+    }
+
+    .button-ask a {
+        padding: 8px 15px;
+    }
+
+    .button-ask.login {
+        margin: 12px 15px 0 0;
+        position: relative;
+        right: 70px;
+    }
+
 }
 
 /*products item*/

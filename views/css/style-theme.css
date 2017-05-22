@@ -482,10 +482,11 @@ a img.aligncenter {
     z-index: 999;
 }
 
-.header-topnav .header-search{
+.header-topnav .header-search {
     font-size: 14px;
 }
-.header-topnav .welcome-message{
+
+.header-topnav .welcome-message {
     font-size: 16px;
 }
 
@@ -555,6 +556,10 @@ a img.aligncenter {
     width: 260px !important;
 }
 
+.header-topnav .navbar-nav .dropdown-menu.topnav-about-dropdown {
+    width: 260px !important;
+}
+
 .header-topnav .navbar-nav .dropdown-menu,
 .header-topnav .navbar-nav .open .dropdown-menu {
     position: absolute;
@@ -580,6 +585,20 @@ a img.aligncenter {
     text-transform: uppercase;
     font-size: 14px;
     text-shadow: 1px 1px 0 #DDD;
+}
+
+@media (max-width: 768px) {
+    .shop__sidebar .shop__sidebar-list .shop__sidebar-item .shop__sidebar-link,
+    .navbar-nav > li > a {
+        text-transform: uppercase;
+        font-size: 18px;
+    }
+
+    .header-topnav .navbar-nav .dropdown-menu > li > a,
+    .header-topnav .navbar-nav .open .dropdown-menu > li > a {
+        font-size: 20px;
+        line-height: 40px;
+    }
 }
 
 .header-topnav .navbar-nav .dropdown-menu > li > a i {
@@ -709,7 +728,7 @@ a img.aligncenter {
     background-color: transparent !important;
     position: absolute;
     top: 25px;
-    right: 15px;
+    right: 0;
     transition: background 750ms ease-in-out;
     user-select: none;
     padding: 0;
@@ -858,23 +877,23 @@ a img.aligncenter {
 }
 
 .alert-danger {
-    background-color: rgba(252,77,60,0.85);
+    background-color: rgba(252, 77, 60, 0.85);
     border: 0;
     border-top: 2px solid #db4436;
     color: #FFF;
 }
 
-.alert-danger pre{
+.alert-danger pre {
     color: red;
-    background-color: rgba(252,252,252,0.85);
-    font-size: 1em;
-}
-.alert-success pre{
-    color: green;
-    background-color: rgba(252,252,252,0.85);
+    background-color: rgba(252, 252, 252, 0.85);
     font-size: 1em;
 }
 
+.alert-success pre {
+    color: green;
+    background-color: rgba(252, 252, 252, 0.85);
+    font-size: 1em;
+}
 
 .entry .entry-header {
     margin-bottom: 50px;
@@ -1790,7 +1809,7 @@ table.table-bordered center a {
     margin-bottom: 5px;
 }
 
-.sale-price:after{
+.sale-price:after {
     content: "sale";
     color: rgba(255, 0, 0, 0.49);
 }
@@ -1798,6 +1817,7 @@ table.table-bordered center a {
 .sale-price sup {
     color: #666 !important;
 }
+
 @media (max-width: 767px) {
     .product-image {
         height: 170px;
@@ -2072,7 +2092,7 @@ table.table-bordered center a {
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 15px;
-    background: rgba(251,251,251,0.5);
+    background: rgba(251, 251, 251, 0.5);
     box-shadow: 0 0 10px #999;
     border-top: 1px solid #dedede;
     border-radius: 4px;
@@ -2221,7 +2241,7 @@ sup {
     text-align: center;
 }
 
-.wpb_row{
+.wpb_row {
     margin-top: 30px;
 }
 
@@ -2232,3 +2252,71 @@ sup {
     margin-top: 15px;
     text-align: center;
 }
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    #menu-button {
+        top: 20px;
+        right: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    body {
+        font-size: 200%;
+    }
+
+    .hamburger::before {
+        top: -12px;
+        right: 0;
+    }
+
+    .hamburger::after {
+        top: 28px;
+        right: 0;
+    }
+
+    .hamburger .inner {
+        top: 8px;
+    }
+
+    .hamburger {
+        width: 58px;
+        right: 0;
+    }
+
+    .menu-open .hamburger,
+    .menu-open .hamburger::before,
+    .menu-open .hamburger::after,
+    .menu-open .hamburger .inner {
+        width: 60px;
+    }
+
+    .menu-open .hamburger::after {
+        right: 10px;
+    }
+
+    .menu-open .hamburger::before {
+        right: 10px;
+    }
+
+    .hamburger::before, .hamburger::after, .hamburger .inner {
+        width: 58px;
+        height: 8px;
+    }
+
+    .navbar-toggle {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .paging-navigation ul.pagination li .page-numbers {
+        font-size: 20px;
+        padding: 10px 15px;
+        font-weight: 800;
+        border: 3px solid rgba(69, 86, 0, 0.8);
+        text-transform: uppercase;
+        border-radius: 4px;
+    }
+}
+

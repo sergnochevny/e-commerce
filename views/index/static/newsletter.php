@@ -9,33 +9,17 @@
         </h2>
       </div>
     </div>
-    <div class="col-xs-12">
-      <div class="row">
-        <p class="h4">
-          <a href="<?= _A_::$app->UrlTo('shop') ?>">
-            Designer upholstery / drapery fabrics with FREE SHIPPING.* Click to shop.
-          </a>
-        </p>
-        <p>
-          *(Free Ground Shipping in the Contiguous United States Only. Faster Shipping available at
-          moderate rates, Worldwide, if necessary)
-        </p>
-        <br/><br/>
-      </div>
-    </div>
 
     <?php if(!Controller_User::is_logged()): ?>
       <div class="col-xs-12">
         <div class="row">
-          <div class="col-xs-12">
-            <div class="row">
+          <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
               <h4>Register for our newsletter to benefit from:</h4>
               <ul>
                 <li>exclusive offers only given to members</li>
                 <li> first to know of any limited time fabric discounts</li>
                 <li>new features & website tools</li>
               </ul>
-            </div>
           </div>
           <div class="col-xs-12">
             <div class="row">
