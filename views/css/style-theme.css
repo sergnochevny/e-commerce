@@ -2255,6 +2255,10 @@ sup {
     text-align: center;
 }
 
+.note {
+    color: #666;
+}
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     #menu-button {
         top: 20px;
