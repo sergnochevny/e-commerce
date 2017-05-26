@@ -25,8 +25,9 @@
             <span class="extra_discount">Extra Discount!</span>
           <?php }
             $url_prms['pid'] = $row[0];
-            $url_prms['back'] = 'shop';
-            $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr','prc']);
+            $url_prms['back'] = 'recommends';
+            if(!empty($scenario)) $url_prms['method'] = $scenario;
+            $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['method', 'cat', 'mnf', 'ptrn', 'clr', 'prc']);
           ?>
 
           <figcaption data-product>

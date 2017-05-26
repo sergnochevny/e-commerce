@@ -13,7 +13,7 @@
         </div>
       <?php endif; ?>
       <div class="<?= empty($back_url) ? 'col-xs-12' : 'col-sm-8' ?> text-center">
-        <h1 class="page-title" style="margin: 25px 0 35px !important; text-align: center;">Fabric Pattern Tool</h1>
+        <h1 class="page-title">Fabric Pattern Tool</h1>
       </div>
       <?php if(!empty($back_url)): ?>
         <div class="col-sm-2"></div>

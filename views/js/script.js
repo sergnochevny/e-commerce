@@ -194,7 +194,16 @@ var change_text = false;
               }
             }
           );
-          $(this).selectmenu(options);
+          if (!$(this).is('[multiple]')) {
+            $(this).selectmenu(options);
+          } else {
+            if ($(this).is('[data-placeholder]')) {
+              options = $.extend(options, {
+                placeholder: $(this).data('placeholder')
+              });
+            }
+            $(this).multiselect(options);
+          }
         }
       );
     },

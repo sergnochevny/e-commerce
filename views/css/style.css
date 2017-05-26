@@ -999,6 +999,27 @@ select {
     border-bottom: 2px solid #ddd;
 }
 
+.recommends_filter .annotation {
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.recommends_filter .annotation p {
+    text-align: justify;
+}
+
+.recommends_filter .filter_select_panel {
+    background-color: #fff;
+    border: 1px solid #b0b0b0;
+    border-radius: 2px;
+    box-shadow: 0 0 3px 1px #dbdbdb inset;
+    margin-bottom: 20px;
+}
+
+.recommends_filter .filter_select_panel .select_panel {
+    height: 200px;
+}
+
 .search_panel input {
     margin-bottom: 0;
 }
@@ -1896,10 +1917,10 @@ span[role=combobox] {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     font-size: 12px;
-    height: 42px;
+    /*height: 42px;*/
     padding: 12px 10px;
     width: 100% !important;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 span[role=combobox].ui-button:focus, span[role=combobox].ui-button:active {
@@ -2450,9 +2471,21 @@ span[role=combobox].ui-button:active .ui-icon {
     }
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (min-width: 768px) and (max-width: 991px) {
     .button-ask {
         margin: 22px 60px 0 0;
+    }
+
+    .button-ask.login {
+        margin: 22px 0 0 0;
+        position: absolute;
+        right: 45px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .button-ask {
+        margin: 12px 90px 0 0;
     }
 
     .button-ask.login {

@@ -255,6 +255,7 @@
 
     protected function build_back_url(&$back_url = null, &$prms = null) {
       $prms = null;
+      if((!empty(_A_::$app->get('method')))) $prms['method'] = _A_::$app->get('method');
       if((!empty(_A_::$app->get('cat')))) $prms['cat'] = _A_::$app->get('cat');
       if((!empty(_A_::$app->get('mnf')))) $prms['mnf'] = _A_::$app->get('mnf');
       if((!empty(_A_::$app->get('ptrn')))) $prms['ptrn'] = _A_::$app->get('ptrn');
@@ -262,7 +263,7 @@
       if((!empty(_A_::$app->get('prc')))) $prms['prc'] = _A_::$app->get('prc');
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');
-        if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', 'home'])) {
+        if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', 'home', 'recommends'])) {
           $back_url = ($back == 'home' ? '' : $back);
         } elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials', 'under'])) {
           $back_url = 'shop' . DS . $back;

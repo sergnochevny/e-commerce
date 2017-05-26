@@ -15,11 +15,35 @@
               <?php if(isset($search['b.cid'])): ?>
                 <div class="label label-search-info">Category: <?= $search['categories'][$search['b.cid']] ?></div>
               <?php endif; ?>
-              <?php if(isset($search['c.id'])): ?>
-                <div class="label label-search-info">Color: <?= $search['colors'][$search['c.id']] ?></div>
+              <?php if(!empty($search['c.id'])): ?>
+                <div class="label label-search-info">Color:
+                  <?php if(is_array($search['c.id'])): ?>
+                    <?php
+                    $colors = [];
+                    foreach($search['c.id'] as $idx) {
+                      $colors[] = $search['colors'][$idx];
+                    }
+                    ?>
+                    <?= implode(', ', $colors); ?>
+                  <?php else: ?>
+                    <?= $search['colors'][$search['c.id']] ?>
+                  <?php endif; ?>
+                </div>
               <?php endif; ?>
-              <?php if(isset($search['d.id'])): ?>
-                <div class="label label-search-info">Pattern: <?= $search['patterns'][$search['d.id']] ?></div>
+              <?php if(!empty($search['d.id'])): ?>
+                <div class="label label-search-info">Pattern:
+                  <?php if(is_array($search['d.id'])): ?>
+                    <?php
+                    $patterns = [];
+                    foreach($search['d.id'] as $idx) {
+                      $patterns[] = $search['patterns'][$idx];
+                    }
+                    ?>
+                    <?= implode(', ', $patterns); ?>
+                  <?php else: ?>
+                    <?= $search['patterns'][$search['d.id']] ?>
+                  <?php endif; ?>
+                </div>
               <?php endif; ?>
               <?php if(isset($search['e.id'])): ?>
                 <div class="label label-search-info">Manufacturer: <?= $search['manufacturers'][$search['e.id']] ?>
@@ -68,7 +92,7 @@
                 <?php if(isset($search['categories'])):
                   foreach($search['categories'] as $key => $val): ?>
                     <option
-                      value="<?= $key ?>" <?= (isset($search['b.cid']) && ($key == $search['b.cid'])) ? 'selected' : '' ?>>
+                        value="<?= $key ?>" <?= (isset($search['b.cid']) && ($key == $search['b.cid'])) ? 'selected' : '' ?>>
                       <?= $val ?>
                     </option>
                   <?php endforeach; ?>
@@ -84,7 +108,7 @@
                 <?php if(isset($search['manufacturers'])):
                   foreach($search['manufacturers'] as $key => $val):?>
                     <option
-                      value="<?= $key ?>" <?= (isset($search['e.id']) && ($key == $search['e.id'])) ? 'selected' : '' ?>>
+                        value="<?= $key ?>" <?= (isset($search['e.id']) && ($key == $search['e.id'])) ? 'selected' : '' ?>>
                       <?= $val ?>
                     </option>
                   <?php endforeach; ?>
@@ -94,15 +118,16 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             <div class="form-row">
               <label <?= isset($search['hidden']['c.id']) ? 'disabled' : '' ?>>In specific color</label>
-              <select name="search[c.id]" <?= isset($search['hidden']['c.id']) ? 'disabled' : '' ?>>
-                <option value="" <?= isset($search['c.id']) ? '' : 'selected' ?>>Any</option>
+              <select id="colors" multiple="multiple" style="width: 100%"
+                      data-placeholder="Select Colors"
+                      name="search[c.id][]" <?= isset($search['hidden']['c.id']) ? 'disabled' : '' ?>>
                 <?php if(isset($search['colors'])):
                   foreach($search['colors'] as $key => $val):?>
                     <option
-                      value="<?= $key ?>" <?= (isset($search['c.id']) && ($key == $search['c.id'])) ? 'selected' : '' ?>>
+                        value="<?= $key ?>" <?= (!empty($search['c.id']) && in_array($key, $search['c.id'])) ? 'selected' : '' ?>>
                       <?= $val ?>
                     </option>
                   <?php endforeach; ?>
@@ -110,15 +135,16 @@
               </select>
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             <div class="form-row">
               <label <?= isset($search['hidden']['d.id']) ? 'disabled' : '' ?>>With specific pattern</label>
-              <select name="search[d.id]" <?= isset($search['hidden']['d.id']) ? 'disabled' : '' ?>>
-                <option value="" <?= isset($search['d.id']) ? '' : 'selected' ?>>Any</option>
+              <select id="patterns" multiple="multiple" style="width: 100%"
+                      data-placeholder="Select Patterns"
+                      name="search[d.id][]" <?= isset($search['hidden']['d.id']) ? 'disabled' : '' ?>>
                 <?php if(isset($search['patterns'])):
                   foreach($search['patterns'] as $key => $val):?>
                     <option
-                      value="<?= $key ?>" <?= (isset($search['d.id']) && ($key == $search['d.id'])) ? 'selected' : '' ?>>
+                        value="<?= $key ?>" <?= (!empty($search['d.id']) && in_array($key, $search['d.id'])) ? 'selected' : '' ?>>
                       <?= $val ?>
                     </option>
                   <?php endforeach; ?>
@@ -126,6 +152,8 @@
               </select>
             </div>
           </div>
+        </div>
+        <div class="row">
           <div class="col-sm-4">
             <div class="form-row">
               <label>Piece</label>
@@ -138,35 +166,35 @@
               </select>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-              <label>Price ranges from <?= isset($search['hidden']['a.priceyard']['from']) ? 'min = ' . number_format($search['hidden']['a.priceyard']['from'],2) : ''; ?> <?= isset($search['hidden']['a.priceyard']['to']) ? 'max = ' . number_format($search['hidden']['a.priceyard']['to'],2) : ''; ?></label>
+              <label>Price ranges
+                from <?= isset($search['hidden']['a.priceyard']['from']) ? 'min = ' . number_format($search['hidden']['a.priceyard']['from'], 2) : ''; ?> <?= isset($search['hidden']['a.priceyard']['to']) ? 'max = ' . number_format($search['hidden']['a.priceyard']['to'], 2) : ''; ?></label>
               <input
-                data-restrict
-                relation-max="#price-to"
-                min="<?= isset($search['hidden']['a.priceyard']['from']) ? $search['hidden']['a.priceyard']['from'] : 0; ?>"
-                max="<?= isset($search['hidden']['a.priceyard']['to']) ? $search['hidden']['a.priceyard']['to'] : 9999999; ?>"
-                data-inputmask="'alias': 'currency', 'prefix': '', 'rightAlign': 'false'"
-                type="text" class="input-text" id="price-from"
-                placeholder="Price ranges from"
-                name="search[a.priceyard][from]"
-                value="<?= isset($search['a.priceyard']['from']) ? $search['a.priceyard']['from'] : '' ?>">
+                  data-restrict
+                  relation-max="#price-to"
+                  min="<?= isset($search['hidden']['a.priceyard']['from']) ? $search['hidden']['a.priceyard']['from'] : 0; ?>"
+                  max="<?= isset($search['hidden']['a.priceyard']['to']) ? $search['hidden']['a.priceyard']['to'] : 9999999; ?>"
+                  data-inputmask="'alias': 'currency', 'prefix': '', 'rightAlign': 'false'"
+                  type="text" class="input-text" id="price-from"
+                  placeholder="Price ranges from"
+                  name="search[a.priceyard][from]"
+                  value="<?= !empty($search['a.priceyard']['from']) ? $search['a.priceyard']['from'] : '' ?>">
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-6 col-sm-4">
             <div class="form-row">
-              <label>Price ranges to <?= isset($search['hidden']['a.priceyard']['from']) ? 'min = ' . number_format($search['hidden']['a.priceyard']['from'],2) : ''; ?> <?= isset($search['hidden']['a.priceyard']['to']) ? 'max = ' . number_format($search['hidden']['a.priceyard']['to'],2) : ''; ?></label>
+              <label>Price ranges
+                to <?= isset($search['hidden']['a.priceyard']['from']) ? 'min = ' . number_format($search['hidden']['a.priceyard']['from'], 2) : ''; ?> <?= isset($search['hidden']['a.priceyard']['to']) ? 'max = ' . number_format($search['hidden']['a.priceyard']['to'], 2) : ''; ?></label>
               <input
-                data-restrict
-                relation-min="#price-from"
-                min="<?= isset($search['hidden']['a.priceyard']['from']) ? $search['hidden']['a.priceyard']['from'] : 0; ?>"
-                max="<?= isset($search['hidden']['a.priceyard']['to']) ? $search['hidden']['a.priceyard']['to'] : 9999999; ?>"
-                data-inputmask="'alias': 'currency', 'prefix': '', 'rightAlign': 'false'"
-                type="text" class="input-text" id="price-to" placeholder="Price ranges to"
-                name="search[a.priceyard][to]"
-                value="<?= isset($search['a.priceyard']['to']) ? $search['a.priceyard']['to'] : '' ?>">
+                  data-restrict
+                  relation-min="#price-from"
+                  min="<?= isset($search['hidden']['a.priceyard']['from']) ? $search['hidden']['a.priceyard']['from'] : 0; ?>"
+                  max="<?= isset($search['hidden']['a.priceyard']['to']) ? $search['hidden']['a.priceyard']['to'] : 9999999; ?>"
+                  data-inputmask="'alias': 'currency', 'prefix': '', 'rightAlign': 'false'"
+                  type="text" class="input-text" id="price-to" placeholder="Price ranges to"
+                  name="search[a.priceyard][to]"
+                  value="<?= !empty($search['a.priceyard']['to']) ? $search['a.priceyard']['to'] : '' ?>">
             </div>
           </div>
         </div>

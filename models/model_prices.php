@@ -4,7 +4,7 @@
 
     protected static $table = 'fabrix_products';
 
-    protected static $price_parceling =
+    public static $price_parceling =
       [
         1 => ['max_price' => 15, 'title' => '$15.00 and under'],
         2 => ['min_price' => 15, 'max_price' => 30, 'title' => '$15.01 to $30.00'],
@@ -54,6 +54,10 @@
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $res_count_rows = count(static::$price_parceling);
+      if(empty($start) && empty($limit)) {
+        $start = 0;
+        $limit = count(static::$price_parceling);
+      }
       $response = array_slice(static::$price_parceling, $start, $limit, true);
       foreach($response as $key => $row) $response[$key]['id'] = $key;
       return $response;

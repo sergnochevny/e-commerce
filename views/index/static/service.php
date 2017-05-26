@@ -3,7 +3,7 @@
     <div class="col-xs-12 box">
       <div class="col-xs-12 text-center">
         <div class="row">
-          <h1 class="page-title" style="margin-bottom: 35px!important;">Customer service</h1>
+          <h1 class="page-title">Customer Service</h1>
         </div>
       </div>
 

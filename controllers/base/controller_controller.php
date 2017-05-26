@@ -51,6 +51,7 @@
       } catch(Exception $e) {
       }
       $this->template->vars('search_form', $search_form);
+      return $search_form;
     }
 
     protected function after_get_list(&$rows, $view = false) { }
@@ -91,8 +92,14 @@
           $per_pages[$this->controller][$idx] = $per_page;
           _A_::$app->setSession('per_pages', $per_pages);
         }
-
-        $search = _A_::$app->post('search');
+        //
+        $search = array_filter(_A_::$app->post('search'),
+          function($val) {
+            if(is_array($val)) return !empty(array_filter($val));
+            return !empty($val);
+          }
+        );
+        //_A_::$app->post('search');
         if(isset($search)) {
           if(isset($search['hidden'])) unset($search['hidden']);
           if((is_array($search) && !count($search)) || !is_array($search)) $search = null;
@@ -109,7 +116,14 @@
               _A_::$app->setSession('pages', $pages);
             }
           }
-          $search = _A_::$app->post('search');
+          //
+          $search = array_filter(_A_::$app->post('search'),
+            function($val) {
+              if(is_array($val)) return !empty(array_filter($val));
+              return !empty($val);
+            }
+          );
+          //_A_::$app->post('search');
           $filters = _A_::$app->session('filters');
           if(!isset($search['reset'])) {
             $filters[$this->controller][$idx] = $search;
