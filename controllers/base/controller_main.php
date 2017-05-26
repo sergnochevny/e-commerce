@@ -18,7 +18,7 @@
     protected function build_canonical_url() {
       $prms = _A_::$app->get();
       $url = array_shift($prms);
-      $url = _A_::$app->router()->UrlTo($url, $prms, null, null, true);
+      $url = _A_::$app->router()->UrlTo($url, $prms, null, ['url'], true);
       $this->template->vars('canonical_url', $url);
     }
 

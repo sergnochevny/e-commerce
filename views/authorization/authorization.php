@@ -49,14 +49,14 @@
         </div>
         <div class="col-xs-12">
           <div class="row inner-offset-vertical-top">
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-xs-6">
               <div class="row">
-                <a id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
+                <a data-waitloader id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
               </div>
             </div>
-            <div class="col-sm-6 col-xs-12 text-right">
+            <div class="col-xs-6 text-right">
               <div class="row">
-                <a href="<?= $registration_url ?>">Registration</a>
+                <a data-waitloader href="<?= $registration_url ?>">Registration</a>
               </div>
             </div>
           </div>
@@ -68,4 +68,3 @@
 </div>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
         type="text/javascript"></script>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>

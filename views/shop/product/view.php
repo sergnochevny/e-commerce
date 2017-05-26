@@ -256,10 +256,11 @@
     </div>
 
     <div class="col-xs-12">
-      <div class="row"
-           data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'product']) ?>"></div>
-      <script type='text/javascript'
-              src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+      <div class="row">
+        <div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'product']) ?>">
+          <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+        </div>
+      </div>
     </div>
 
   </div>

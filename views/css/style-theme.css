@@ -562,6 +562,10 @@ a img.aligncenter {
     width: 260px !important;
 }
 
+.header-topnav .navbar-nav .dropdown-menu.topnav-login-dropdown {
+    width: 360px !important;
+}
+
 .header-topnav .navbar-nav .dropdown-menu,
 .header-topnav .navbar-nav .open .dropdown-menu {
     position: absolute;

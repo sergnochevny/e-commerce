@@ -7,7 +7,7 @@ var currentScript = document.currentScript || (function () {
 
   $.each($(me).closest('div:not([data-load])').find('[data-load]'),
     function () {
-      $(this).parent().load($(this).attr('data-load'));
+      $(this).parent().load($(this).attr('data-load') + '&url=' + encodeURI(btoa(window.location.pathname)));
     }
   );
 

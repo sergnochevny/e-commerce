@@ -2,6 +2,7 @@
 
   Class Controller_User Extends Controller_UserBase {
 
+
     public static function sendWelcomeEmail($email) {
       $headers = "From: \"I Luv Fabrix\"<" . _A_::$app->keyStorage()->system_info_email . ">\n";
       $subject = "Thank you for registering with iluvfabrix.com";
@@ -36,7 +37,7 @@
           $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : urlencode(base64_encode(_A_::$app->router()->UrlTo('shop')));
           $prms = null;
           if(!is_null(_A_::$app->get('url'))) $prms['url'] = _A_::$app->get('url');
-          $registration_url = _A_::$app->router()->UrlTo('user/registration', $prms);
+          $registration_url = _A_::$app->router()->UrlTo('authorization/registration', $prms);
           $lostpassword_url = _A_::$app->router()->UrlTo('authorization/lost_password', $prms);
           $this->main->template->vars('registration_url', $registration_url);
           $this->main->template->vars('lostpassword_url', $lostpassword_url);

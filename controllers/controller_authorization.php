@@ -2,6 +2,8 @@
 
   class Controller_Authorization extends Controller_Controller {
 
+    protected $resolved_scenario = ['', 'short'];
+
     private function is_admin_logged() {
       return Controller_Admin::is_logged();
     }
@@ -95,7 +97,6 @@
         }
         exit('Wrong Email/Username or Password');
       } else {
-
         $redirect = !is_null(_A_::$app->get('url')) ? _A_::$app->get('url') : '';
         $prms = null;
         if(!is_null(_A_::$app->get('url'))) {
@@ -106,7 +107,11 @@
         $this->main->template->vars('registration_url', $registration_url);
         $this->main->template->vars('lostpassword_url', $lostpassword_url);
         $this->main->template->vars('redirect', $redirect);
-        $this->main->view('authorization');
+        if($this->scenario() != 'short') {
+          $this->main->view('authorization');
+        } else {
+          $this->main->view_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'authorization');
+        }
       }
     }
 

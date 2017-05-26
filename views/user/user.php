@@ -4,6 +4,10 @@
       <h2 class="page-title">Login</h2>
     </div>
 
+    <div class="col-xs-12 col-sm-12 text-center">
+      <label>To enable all features of iluvfabrix.com please register or sign-in below</label>
+    </div>
+
     <div class="col-xs-12 col-md-8 col-md-offset-2">
       <div class="col-xs-12 panel panel-default panel-default-vertical-sizing authorize-panel">
         <div class="col-xs-12">
@@ -43,11 +47,22 @@
             </form>
           </div>
         </div>
+
         <div class="col-xs-12">
           <div class="row inner-offset-vertical-top">
-            <a id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
+            <div class="col-xs-6">
+              <div class="row">
+                <a data-waitloader id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
+              </div>
+            </div>
+            <div class="col-xs-6 text-right">
+              <div class="row">
+                <a data-waitloader href="<?= $registration_url ?>">Registration</a>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
