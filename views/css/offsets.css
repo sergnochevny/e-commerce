@@ -10,6 +10,12 @@
 
     padding-bottom: 20px;
 }
+.inner-offset-vertical-top{
+    padding-top: 20px;
+}
+.inner-offset-vertical-bottom{
+    padding-bottom: 20px;
+}
 
 .half-inner-offset-top{
     padding-top: 10px;
@@ -31,4 +37,18 @@
 .half-outer-offset-vertical{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.outer-offset-left{
+    margin-left: 15px;
+}
+.outer-offset-right{
+    margin-right: 15px;
+}
+
+.outer-offset-bottom {
+    margin-bottom: 20px;
+}
+
+.outer-offset-top {
+    margin-top: 20px;
 }

@@ -35,6 +35,7 @@
       </div>
     </div>
   </div>
+
   <?php
     if(isset($search['hidden'])):
       foreach($search['hidden'] as $field_name => $field_value):?>

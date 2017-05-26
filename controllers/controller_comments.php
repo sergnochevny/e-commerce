@@ -5,8 +5,8 @@
     protected $form_title_edit = 'MODIFY COMMENT';
     protected $view_title = 'COMMENT VIEW';
 
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
+    protected function build_order(&$sort, $view = false, $filter = null) {
+      parent::build_order($sort, $view, $filter);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['a.dt' => 'desc'];
       }

@@ -1,5 +1,5 @@
-<div class="container">
-  <div id="content" class="main-content-inner" role="main">
+<div class="container inner-offset-top half-outer-offset-bottom">
+  <div id="content" class="col-xs-12 main-content-inner box" role="main">
     <?= $list ?>
   </div>
 </div>
@@ -9,7 +9,6 @@
 <div class="popup">
   <div class="fcheck"></div>
   <a class="close" href="javascript:void(0)" title="close"><i class="fa fa-times" aria-hidden="true"></i></a>
-
   <div class="b_cap_cod_main">
     <p style="color: black;" class="text-center"><b>You confirm the removal?</b></p>
     <br/>
@@ -23,7 +22,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"
+                                                                                       aria-hidden="true"></i></button>
         <h4 id="modal-title" class="modal-title text-center"></h4>
       </div>
       <div class="modal-body clearfix">

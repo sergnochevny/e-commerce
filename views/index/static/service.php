@@ -1,113 +1,121 @@
 <?php include('views/index/main_gallery.php'); ?>
-  <div id="content" class="container">
-    <div class="col-xs-12">
-      <div class="row">
-        <div class="col-xs-12 text-center afterhead-row">
-          <div class="row">
-            <h1 class="page-title" style="margin-bottom: 35px!important;">Customer service</h1>
-          </div>
+  <div id="content" class="container inner-offset-top half-outer-offset-bottom">
+    <div class="col-xs-12 box">
+      <div class="col-xs-12 text-center">
+        <div class="row">
+          <h1 class="page-title">Customer Service</h1>
         </div>
+      </div>
 
-        <div class="col-xs-12">
+      <div class="col-xs-12">
+        <div class="row">
           <div class="row">
-            <div class="row">
-              <div class="col-xs-12 col-sm-6">
-                <h3 class="service__cont-title">
-                  Shipping
-                </h3>
-                <p>We ship Worldwide.</p>
-                <p>
-                  Products are generally shipped within 24 to 72 hours from the time of approved payment received.
-                </p>
-              </div>
-              <div class="col-xs-12 col-sm-6">
-                <h3 class="service__cont-title">
-                  Sales Terms
-                </h3>
-                <p>Please purchase a sample (we offer samples at very reasonable prices) if you are not entirely
-                  confident in your fabric purchase, as there are no returns or refunds.</p>
-                <p>We cannot guarantee dye lot if a sample is purchased more than 2 weeks prior to the purchase of your
-                  order. Dye lots are normally close but each dye lot is different.
-                </p>
-              </div>
+            <div class="col-xs-12">
+              <h3 class="service__cont-title">
+                Shipping
+              </h3>
+              <p>We ship Worldwide.</p>
+              <p>
+                Products are generally shipped within 24 to 72 hours of receipt of the full payment. Some fabrics take
+                longer to ship. This is clearly mentioned in the fabric description should this be the case.
+              </p>
+              <p>
+                Please always examine your package immediately upon receipt so as to ensure the integrity of the
+                packaging and its contents. Our contact information appears just below. Many times when we package
+                fabrics we put layers of tissue paper around the fabric before the plastic sleeve, which is sometimes
+                mistaken for the fabric that was ordered. Please OPEN your package to see your fabric to verify its
+                contents and integrity.
+              </p>
+              <p>
+                Phone at: <a href="tel:9155870200">(915) 587-0200</a><br>
+                Email: <a
+                    href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a><br>
+                Address: <a href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router->host; ?></a> (Division
+                of Fabric Love LLC)<br>
+                211 Teramar Way<br>
+                El Paso, Texas, 79922<br>
+                United States<br>
+              </p>
             </div>
-          </div>
-        </div>
-
-
-        <div class="col-xs-12">
-          <div class="row">
-            <h3 class="service__cont-title">
-              All Sales are Final
-            </h3>
-            <p>All special orders are final sale. No refunds. No cancellations. No returns.</p>
-            <p>Please <a href="<?= _A_::$app->router()->UrlTo('contact'); ?>">contact</a> us for information on fabric
-              sample purchases.</p>
-            <p>We are confident you'll find our products to be of the highest quality. If however your are not
-              completely satisfied with a product, please contact us by email or phone and we will endeavor to rectify
-              the problem.</p>
-            <p>Should ILuvFabrix.com accept a return (at ILuvFabrix's sole discretion), it must be accompanied by a
-              return authorization number. No fabric is to be returned without a Return Authorization Number. Any
-              fabric returned without such a number will not be accepted. If a return is authorized by iluvfabrix or
-              Michelle’s Fabrics, all return shipping costs and any customs duties or taxes are to be paid in their
-              entirety by the purchaser, unless otherwise agreed to in advance of the return by iluvfabrix or
-              Michelle’s Fabrics. Please examine your package immediately upon receipt so as to ensure the integrity
-              of its contents. Please contact us by email at:
-              <a
-                href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>
-              or phone at: <a href="tel:9155870200">(915) 587-0200</a></p>
-          </div>
-        </div>
-        <div class="col-xs-12">
-          <div class="row">
-            <div class="row">
-              <div class="col-sm-6">
-                <h3 class="service__cont-title">
-                  Privacy Policy
-                </h3>
-                <p class="service__cont-desc">
-                  Your personal information is never under any circumstances shared with any other individuals or
-                  organizations.
-                  <a href="<?= _A_::$app->router()->UrlTo('privacy'); ?>">privacy policy.</a>
-                </p>
-              </div>
-              <div class="col-sm-6">
-                <h3 class="service__cont-title">
-                  Security Information
-                </h3>
-                <p class="service__cont-desc">
-                  All purchase transactions made on our site are fully and completely secured.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-12">
-          <div class="row">
-            <h3 class="service__cont-title">
-              Contact Information
-            </h3>
-            <div class="service__cont-desc">
-              <div class="row">
-                <div class="col-sm-4">
-                  <p>iluvfabrix (Division of Fabric Love LLC)</p>
-                  <p>211 Teramar Way</p>
-                  <p>El Paso, Texas, 79922</p>
-                  <p>United States</p>
-                </div>
-                <div class="col-sm-4">
-                  <p>Email:<a
-                      href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>
-                  </p>
-                  <p>Tel: <a href="tel:9155870200">(915) 587-0200</a></p>
-                </div>
-              </div>
+            <div class="col-xs-12">
+              <h3 class="service__cont-title">
+                Sales Terms
+              </h3>
+              <p>
+                All Sales are final. Please purchase a sample (we offer samples at very reasonable prices) if you are
+                not entirely confident in your fabric purchase, as there are no returns or refunds. You can purchase a
+                Sample of most of our products. It is initiated from the Fabric Details page. </p>
+              <p>
+                Also, we cannot guarantee your fabric when purchased will be from the same dye lot as your sample, if
+                your fabric purchase is initiated more than 2 weeks beyond the purchase of your sample. Dye lots are
+                normally close but each dye lot is different. Please check with us if you are not sure of your dates
+                before you make your fabric purchase.
+              </p>
+              <p>
+                We are confident you'll find our products to be of the highest quality. If however your are not
+                completely satisfied with a product, please contact us by phone and email. The email must clearly
+                delineate the issue and be accompanied by pictures. We will endeavor to rectify the problem if both
+                possible, and deemed appropriate.
+              </p>
+              <p>
+                It is up to the sole discretion of <a
+                    href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?></a> / Fabric Love
+                LLC. to decide whether your purchase
+                qualifies for any sort of remedy. Should <a
+                    href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?></a> / Fabric Love
+                LLC. accept a return (at
+                <a href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?>’s</a> sole
+                discretion), we will generate and provide you with a Return Authorization
+                Number. No fabric return will be accepted by our warehouse without a Return Authorization Number marked
+                and clearly visible on the outside of the return package. Any fabric returned without such a number will
+                not be accepted and will be returned to the sender at the sender’s expense.
+              </p>
+              <p>
+                If a return is authorized by <a
+                    href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?></a> / Fabric Love
+                LLC., all return shipping costs and
+                customs duties or taxes, if any, are to be paid in their entirety by the purchaser, unless otherwise
+                agreed to in advance of the return by <a
+                    href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?></a> / Fabric Love
+                LLC. Depending on the nature of
+                the issue, <a href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router->host; ?></a> / Fabric
+                Love LLC. may be unable to provide any sort of rectification.
+                However, as we do want to keep our customers happy, we always endeavor to find a mutually agreeable
+                solution to the problem which may, in certain cases, allow for the return of a fabric, usually
+                accompanied by a modest restocking fee. In these cases we generally provide the customer with a website
+                credit for the purchase of another fabric of their choice. Our website credits are usable for one year
+                from the date of your original fabric purchase.
+              </p>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="row">
+            <div class="col-sm-6">
+              <h3 class="service__cont-title">
+                Privacy Policy
+              </h3>
+              <p class="service__cont-desc">
+                Your personal information is never under any circumstances shared with any other individuals or
+                organizations. For a complete understanding of our Privacy Policy, please click the following link:
+                <a href="<?= _A_::$app->router()->UrlTo('privacy'); ?>">privacy policy.</a>
+              </p>
+            </div>
+            <div class="col-sm-6">
+              <h3 class="service__cont-title">
+                Security Information
+              </h3>
+              <p class="service__cont-desc">
+                All purchase transactions made on our site are fully and completely secure.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   <script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
-<?php include('views/index/block_footer.php'); ?>

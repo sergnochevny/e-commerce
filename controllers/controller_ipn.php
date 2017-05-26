@@ -10,6 +10,8 @@
     public function index($required_access = true) {
       if(!is_null(_A_::$app->get('pay_notify'))) {
 
+        $demo = (!is_null(_A_::$app->keyStorage()->system_demo) ? _A_::$app->keyStorage()->system_demo : DEMO);
+
         header('HTTP/1.1 200 OK');
         $req = 'cmd=_notify-validate';
         foreach($_POST as $key => $value) {
@@ -35,8 +37,7 @@
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Connection: Close']);
         $res = curl_exec($ch);
-        if(curl_errno($ch) != 0) // cURL error
-        {
+        if(curl_errno($ch) != 0) { // cURL error
           curl_close($ch);
           file_put_contents('notify.log', 'error');
           exit;
@@ -46,17 +47,21 @@
         $tokens = explode("\r\n\r\n", trim($res));
         $res = trim(end($tokens));
         if(strcmp($res, "VERIFIED") == 0) {
-          ob_start();
-          print_r($_SESSION);
-          print_r($_COOKIE);
-          print_r($_GET);
-          print_r($_POST);
-          print_r($_SERVER);
 
-          $body = ob_get_clean();
-          ob_end_clean();
-          file_put_contents('notify.log', $body, FILE_APPEND);
-          mail('sergnochevny@studionovi.co', 'PayPall Payment', $body);
+          if($demo) {
+            ob_start();
+            print_r($_SESSION);
+            print_r($_COOKIE);
+            print_r($_GET);
+            print_r($_POST);
+            print_r($_SERVER);
+
+            $body = ob_get_clean();
+            ob_end_clean();
+            file_put_contents('notify.log', $body, FILE_APPEND);
+            mail('sergnochevny@studionovi.co', 'PayPall Payment', $body);
+          }
+
           $cart = _A_::$app->session('cart');
           $cart['payment'] = 1;
           _A_::$app->setSession('cart', $cart);

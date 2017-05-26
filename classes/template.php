@@ -46,6 +46,14 @@
       include($contentPage);
     }
 
+    public function view_layout_return($name, $controller = null) {
+      ob_start();
+      $this->view_layout($name, $controller);
+      $content = ob_get_contents();
+      ob_end_clean();
+      return $content;
+    }
+
     public function setMeta($key, $value) {
       $this->meta[$key] = $value;
     }

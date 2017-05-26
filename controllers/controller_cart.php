@@ -3,7 +3,6 @@
   class Controller_Cart extends Controller_Controller {
 
     private function products_in($template = 'product_in') {
-      $base_url = _A_::$app->router()->UrlTo('/');
       $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
       if(count($cart_items) > 0) {
         foreach($cart_items as $key => $item) {
@@ -17,8 +16,6 @@
     }
 
     private function product_in($pid, &$item, $template = 'product_in') {
-      $base_url = _A_::$app->router()->UrlTo('/');
-
       $product = Model_Product::get_by_id($pid);
       $filename = 'upload/upload/' . $item['image1'];
       if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
@@ -37,7 +34,6 @@
       $saleprice = $product['priceyard'];
       $sDiscount = 0;
       $saleprice = round(Model_Price::calculateProductSalePrice($pid, $saleprice, $discountIds), 2);
-      $bProductDiscount = Model_Price::checkProductDiscount($pid, $sDiscount, $saleprice, $discountIds);
 
       $cart['discountIds'] = $discountIds;
 
@@ -68,7 +64,6 @@
     }
 
     private function samples_in($template = 'sample_in') {
-      $base_url = _A_::$app->router()->UrlTo('/');
       $cart_samples_items = isset(_A_::$app->session('cart')['samples_items']) ? _A_::$app->session('cart')['samples_items'] : [];
       if(count($cart_samples_items) > 0) {
         foreach($cart_samples_items as $key => $item) {
@@ -82,7 +77,6 @@
     }
 
     private function sample_in($pid, &$item, $template = 'sample_in') {
-      $base_url = _A_::$app->router()->UrlTo('/');
       $item = Model_Shop::get_product_params($pid);
       $filename = 'upload/upload/' . $item['image1'];
       if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
@@ -128,14 +122,11 @@
     }
 
     private function pay_ok() {
-      $base_url = _A_::$app->router()->UrlTo('/');
-
       $shipcost = 0;
       $rollcost = 0;
       $handlingcost = 0;
       $express_samples_cost = 0;
       $total = 0;
-
       $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
       $samples_price_express_shipping = (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
       $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
@@ -171,7 +162,7 @@
             $bExpressSamples = false;
           $bAcceptExpress = !$systemAllowExpressSamples ? false : isset(_A_::$app->session('cart')['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
           $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-          $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : flase;
+          $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : false;
           $coupon_code = isset(_A_::$app->session('cart')['coupon']) ? _A_::$app->session('cart')['coupon'] : '';
           $samples_sum = _A_::$app->session('cart')['samples_sum'];
 
@@ -190,46 +181,55 @@
             $handlingcost += $rate_handling;
             $handling = 1;
           }
-          $oid = Model_Orders::register_order($aid, $trid, $shipping, $shipcost, $on_roll, $express_samples, $handling, $shipDiscount, $couponDiscount, $discount, $taxes, $total);
-          if(isset($oid)) {
-            if(count($cart_items) > 0) {
-              foreach($cart_items as $pid => $item) {
-                $product = Model_Shop::get_product_params($pid);
-                $pnumber = $product['pnumber'];
-                $pname = $product['pname'];
-                $qty = $item['quantity'];
-                $price = $item['price'];
-                $discount = $item['discount'];
-                $sale_price = $item['saleprice'];
-                if(Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price)) {
+          Model_Orders::transaction();
+          try {
+            $oid = Model_Orders::register_order($aid, $trid, $shipping, $shipcost, $on_roll, $express_samples, $handling, $shipDiscount, $couponDiscount, $discount, $taxes, $total);
+            if(isset($oid)) {
+              if(count($cart_items) > 0) {
+                foreach($cart_items as $pid => $item) {
+                  $product = Model_Shop::get_product_params($pid);
+                  $pnumber = $product['pnumber'];
+                  $pname = $product['pname'];
                   $qty = $item['quantity'];
-                  $inventory = $product['inventory'];
-                  $remainder = $inventory - $qty;
-                  $remainder = ($remainder <= 0) ? 0 : $remainder;
+                  $price = $item['price'];
+                  $discount = $item['discount'];
+                  $sale_price = $item['saleprice'];
+                  if(Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price)) {
+                    $qty = $item['quantity'];
+                    $inventory = $product['inventory'];
+                    $remainder = $inventory - $qty;
+                    $remainder = ($remainder <= 0) ? 0 : $remainder;
 
-                  Model_Shop::set_inventory($pid, $remainder);
+                    Model_Shop::set_inventory($pid, $remainder);
+                  }
                 }
               }
-            }
-            if(count($cart_samples_items) > 0) {
-              foreach($cart_samples_items as $pid => $item) {
-                $product = Model_Shop::get_product_params($pid);
-                $pnumber = $product['pnumber'];
-                $pname = $product['pname'];
-                $qty = 1;
-                $price = $item['price'];
-                $discount = 0;
-                $sale_price = 0;
-                $is_sample = 1;
-                Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price, $is_sample);
+              if(count($cart_samples_items) > 0) {
+                foreach($cart_samples_items as $pid => $item) {
+                  $product = Model_Shop::get_product_params($pid);
+                  $pnumber = $product['pnumber'];
+                  $pname = $product['pname'];
+                  $qty = 1;
+                  $price = $item['price'];
+                  $discount = 0;
+                  $sale_price = 0;
+                  $is_sample = 1;
+                  Model_Orders::insert_order_detail($oid, $pid, $pnumber, $pname, $qty, $price, $discount, $sale_price, $is_sample);
+                }
               }
-            }
 
-            $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
-            Model_Orders::save_discount_usage($discountIds, $oid);
-            $this->thanx_mail();
-            _A_::$app->setSession('cart', null);
-          } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
+              $discountIds = isset(_A_::$app->session('cart')['discountIds']) ? _A_::$app->session('cart')['discountIds'] : [];
+              Model_Orders::save_discount_usage($discountIds, $oid);
+              $this->thanx_mail();
+              _A_::$app->setSession('cart', null);
+            } else {
+              Model_Orders::rollback();
+              $this->redirect(_A_::$app->router()->UrlTo('shop'));
+            }
+            Model_Orders::commit();
+          } catch(Exception $e) {
+            Model_Orders::rollback();
+          }
         } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
       } else $this->redirect(_A_::$app->router()->UrlTo('shop'));
     }
@@ -593,7 +593,7 @@
       $bAcceptExpress = !$systemAllowExpressSamples ? false : isset($cart['accept_express']) ? _A_::$app->session('cart')['accept_express'] : false;
       $uid = (!is_null(_A_::$app->session('user'))) ? (int)_A_::$app->session('user')['aid'] : 0;
       $shipping = (isset($cart['ship']) && $cart['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
-      $bShipRoll = (isset($cart['ship_roll'])) ? (boolean)$cart['ship_roll'] : flase;
+      $bShipRoll = (isset($cart['ship_roll'])) ? (boolean)$cart['ship_roll'] : false;
       $total_items = $this->calc_items_amount();
       $total += $total_items;
       $total_samples_items = $this->calc_samples_amount();
@@ -703,32 +703,15 @@
       $this->main->is_user_authorized(true);
       if(!is_null(_A_::$app->get('proceed'))) {
         $this->proceed_checkout_prepare();
-        ob_start();
-        $this->main->view_layout('proceed_checkout');
-        $cart_content = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('content', $cart_content);
+        $this->main->template->vars('content', $this->template->view_layout_return('proceed_checkout'));
       } elseif(!is_null(_A_::$app->get('pay_ok'))) {
         $this->pay_ok();
-        ob_start();
-        $this->main->view_layout('pay_ok');
-        $cart_content = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('content', $cart_content);
+        $this->main->template->vars('content', $this->template->view_layout_return('pay_ok'));
       } elseif(!is_null(_A_::$app->get('pay_error'))) {
-
-        ob_start();
-        $this->main->view_layout('pay_error');
-        $cart_content = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('content', $cart_content);
+        $this->main->template->vars('content', $this->template->view_layout_return('pay_error'));
       } else {
         $this->prepare();
-        ob_start();
-        $this->main->view_layout('cart');
-        $cart_content = ob_get_contents();
-        ob_end_clean();
-        $this->main->template->vars('content', $cart_content);
+        $this->main->template->vars('content', $this->template->view_layout_return('cart'));
       }
       $this->main->view('container');
     }
@@ -1003,9 +986,9 @@
      * @export
      */
     public function proceed_agreem() {
-      if(!empty(_A_::$app->keyStorage()->paypal_business) ||
-        !empty(_A_::$app->keyStorage()->paypal_url)
-      ) {
+      $paypal_business = _A_::$app->keyStorage()->paypal_business;
+      $paypal_url = _A_::$app->keyStorage()->paypal_url;
+      if(!empty($paypal_business) && !empty($paypal_url)) {
         $prms = null;
         $back_url = _A_::$app->router()->UrlTo('cart', ['proceed' => true]);
         $this->template->vars('back_url', $back_url);
@@ -1053,8 +1036,8 @@
 //          $paypal['business'] = "info@iluvfabrix.com";
 //          $paypal['url'] = "https://www.paypal.com/cgi-bin/webscr";
 //        }
-          $paypal['business'] = _A_::$app->keyStorage()->paypal_business;
-          $paypal['url'] = _A_::$app->keyStorage()->paypal_url;
+          $paypal['business'] = $paypal_business;
+          $paypal['url'] = $paypal_url;
 
           $paypal['cmd'] = "_xclick";
           $paypal['image_url'] = _A_::$app->router()->UrlTo('/');
@@ -1108,7 +1091,6 @@
      * @export
      */
     function add() {
-      $base_url = _A_::$app->router()->UrlTo('/');
       if(!empty(_A_::$app->get('pid'))) {
         $pid = Model_Shop::sanitize(_A_::$app->get('pid'));
         $product = Model_Shop::get_product_params($pid);
@@ -1170,17 +1152,11 @@
           $cart_sum = "$" . number_format($SUM, 2);
           $this->template->vars('SUM', $cart_sum);
 
-          ob_start();
-          $message = 'This Fabric has been added to your Basket.<br>Click the Basket to view your Order.';
-          $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+          $message = 'This Fabric has been added to your Cart.<br>Click the Cart to view your Order.';
+          $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
-          $this->main->view_layout('msg_add');
-          $msg = ob_get_contents();
-          ob_end_clean();
-          ob_start();
-          $this->main->view_layout('basket');
-          $button = ob_get_contents();
-          ob_end_clean();
+          $msg = $this->template->view_layout_return('msg_add');
+          $button = $this->template->view_layout_return('basket');
           exit(json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]));
         } else {
 
@@ -1191,13 +1167,10 @@
           $cart_sum = "$" . number_format($SUM, 2);
           $this->template->vars('SUM', $cart_sum);
 
-          ob_start();
           $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
-          $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+          $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
-          $this->main->view_layout('msg_add');
-          $msg = ob_get_contents();
-          ob_end_clean();
+          $msg = $this->template->view_layout_return('msg_add');
           exit(json_encode(['msg' => $msg, 'sum' => $cart_sum]));
         }
       }
@@ -1207,7 +1180,6 @@
      * @export
      */
     function add_samples() {
-      $base_url = _A_::$app->router()->UrlTo('/');
       if(!empty(_A_::$app->get('pid'))) {
         $pid = Model_Shop::sanitize(_A_::$app->get('pid'));
         $product = Model_Shop::get_product_params($pid);
@@ -1242,18 +1214,11 @@
           $cart_sum = "$" . number_format($SUM, 2);
           $this->template->vars('SUM', $cart_sum);
 
-          ob_start();
-          $message = 'This Samples has been added to your Basket.<br>Click the Basket to view your Order.';
-          $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+          $message = 'This Samples has been added to your Cart.<br>Click the Cart to view your Order.';
+          $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
-          $this->main->view_layout('msg_add');
-          $msg = ob_get_contents();
-          ob_end_clean();
-          ob_start();
-          $this->main->view_layout('basket');
-          $button = ob_get_contents();
-          ob_end_clean();
-
+          $msg = $this->template->view_layout_return('msg_add');
+          $button = $this->template->view_layout_return('basket');
           $res = json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]);
           echo $res;
         } else {
@@ -1265,14 +1230,10 @@
           $cart_sum = "$" . number_format($SUM, 2);
           $this->template->vars('SUM', $cart_sum);
 
-          ob_start();
           $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
-          $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+          $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
           $this->template->vars('message', $message);
-          $this->main->view_layout('msg_add');
-          $msg = ob_get_contents();
-          ob_end_clean();
-
+          $msg = $this->template->view_layout_return('masg_add');
           $res = json_encode(['msg' => $msg, 'sum' => $cart_sum]);
           echo $res;
         }
@@ -1313,12 +1274,9 @@
             } else {
               $quantity = floor($quantity);
             }
-            ob_start();
             $message = 'The quantity for ' . $product['pname'] . ' must be a whole number. The order was adjusted.<br>';
             $this->template->vars('message', $message);
-            $this->main->view_layout('msg_add');
-            $response['msg'] = ob_get_contents();
-            ob_end_clean();
+            $response['msg'] = $this->template->view_layout_return('msg_add');
           }
 
           if($piece == 0) {
@@ -1326,22 +1284,16 @@
               $cart_items[$pid]['quantity'] = $quantity;
             } else {
               $cart_items[$pid]['quantity'] = $inventory;
-              ob_start();
               $message = 'The available inventory for ' . $cart_items[$pid]['pname'] . ' is ' . $inventory . '. The order was adjusted.<br>';
               $this->template->vars('message', $message);
-              $this->main->view_layout('msg_add');
-              $response['msg'] = ob_get_contents();
-              ob_end_clean();
+              $response['msg'] = $this->template->view_layout_return('msg_add');
             }
           }
         }
       } else {
-        ob_start();
         $message = 'The quantity must be a positive number. The order was adjusted.<br>';
         $this->template->vars('message', $message);
-        $this->main->view_layout('msg_add');
-        $response['msg'] = ob_get_contents();
-        ob_end_clean();
+        $response['msg'] = $this->template->view_layout_return('msg_add');
       }
 
       $item = $cart_items[$pid];

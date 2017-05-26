@@ -1,4 +1,5 @@
 'use strict';
+
 (function ($) {
 
   var status = $('#status');
@@ -8,11 +9,11 @@
   }
 
   function getExt(file) {
-    return (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';
+    return (/[.]/.exec(file)) ? (/[^.]+$/).exec(file.toLowerCase()) : '';
   }
 
   function postdata(this_, url, data, context, callback) {
-    $.postdata(this_, url,data,
+    $.postdata(this_, url, data,
       function (data) {
         if (context !== undefined && context !== null) {
           $.when($(context[0]).html(data)).done(
@@ -41,7 +42,7 @@
       var file = fileFromPath(this.value);
       var ext = getExt(file);
 
-      if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
+      if (!(ext && (/^(jpg|png|jpeg|gif)$/).test(ext))) {
         status.text('Error format');
       } else {
         var data = new FormData($('form#edit_form')[0]);

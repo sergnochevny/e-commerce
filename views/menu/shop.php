@@ -1,6 +1,6 @@
 <div class="col-xs-12 title hidden-sm hidden-xs">
-  <div class="row">
-    <b>Organize Fabrics by:</b>
+  <div class="row no-offset-right outer-offset-bottom">
+    <b>Organize Fabrics by</b>
   </div>
 </div>
 <div class="shop__sidebar">

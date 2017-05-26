@@ -33,7 +33,7 @@
 
     protected function after_get_data_item_view(&$data) { }
 
-    protected function form($url, $data = null) {
+    protected function form($url, $data = null, $return = false) {
       $id = _A_::$app->get($this->id_field);
       if(!isset($data)) {
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_id'], $id);
@@ -48,6 +48,7 @@
       $this->template->vars('data', $data);
       $this->template->vars('scenario', $this->scenario());
       $this->template->vars('action', $action);
+      if($return) return $this->main->view_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
       $this->main->view_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
     }
 

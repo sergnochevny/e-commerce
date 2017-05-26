@@ -1,16 +1,16 @@
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
     <div class="col-xs-12 col-sm-12">
 
-      <div class="col-xs-12 text-center afterhead-row">
+      <div class="col-xs-12 text-center">
         <h2 class="page-title">Login</h2>
       </div>
       
       <div class="col-xs-12 col-sm-8 col-sm-push-2 panel panel-default panel-default-vertical-sizing">
         <div class="col-xs-12">
-          
-            <form method="POST" id="authorization" action="<?= _A_::$app->router()->UrlTo('admin'); ?>"
-                  class="login">
+
+          <form method="POST" id="authorization" action="<?= _A_::$app->router()->UrlTo('admin'); ?>"
+                class="login">
               <input type="hidden" name="redirect"
                      value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
               <div class="form-row">
@@ -50,4 +50,5 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
+        type="text/javascript"></script>

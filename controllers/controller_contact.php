@@ -70,11 +70,7 @@
       if(_A_::$app->request_is_post() && $this->form_handling($data)) {
         exit($this->form($url, $data));
       }
-      ob_start();
-      $this->form($url, []);
-      $form = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('form', $form);
+      $this->template->vars('form', $this->form($url, [], true));
       $this->main->view($this->controller);
     }
 

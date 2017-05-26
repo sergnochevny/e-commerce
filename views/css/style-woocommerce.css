@@ -11,8 +11,7 @@
 --------------------------------------------------------------------*/
 /* 1.0 GLOBAL STYLE
 -------------------------------------------------------------- */
-
-.h1, .h2, .h3, .h4{
+.h1, .h2, .h3, .h4 {
     color: #670;
     text-transform: capitalize;
     text-shadow: 1px 1px 1px #000;
@@ -180,6 +179,27 @@ span#b_in_product {
     padding-left: 25px;
 }
 
+@media screen and (max-width: 768px) {
+    h1.page-title {
+        margin-top: 0;
+    }
+
+    .back_button {
+        font-size: 18px;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    h1.page-title {
+        margin-top: 0;
+    }
+
+    .back_button {
+        margin-top: 0;
+    }
+}
+
 .back_button .fa {
     font-size: 1.4em;
     font-weight: bold;
@@ -230,16 +250,6 @@ span#b_in_product {
 
 .section-title {
     margin-bottom: 30px;
-}
-
-.section-title:after {
-    content: '';
-    width: 30px;
-    height: 1px;
-    background: #000000;
-    display: block;
-    position: relative;
-    bottom: -10px;
 }
 
 /* woocommerce forms */
@@ -352,7 +362,7 @@ select:focus {
     resize: none;
     min-height: 100px;
     padding: 10px;
-    font-size: 12px;
+    font-size: 14px;
     width: 100%;
     margin: 0;
 }
@@ -417,7 +427,7 @@ input[type='color']:focus {
 }
 
 .afterhead-row {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 /* @TODO */
@@ -503,12 +513,13 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     position: relative;
 }
 
+.main-content-shop .main-content-inner-side {
+    position: relative;
+}
+
 .main-content-shop .page-title {
-    min-height: 76px;
-    margin: 0 0 35px;
-    line-height: normal;
     text-transform: uppercase;
-    font-size: 2.195em;
+    margin-bottom: 30px;
 }
 
 .main-content-shop .page-title.sb {
@@ -599,7 +610,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     position: relative;
     background-color: #fff;
     border-radius: 4px;
-    box-shadow: 0 0 10px rgb(191, 191, 191);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .owl-prev, .owl-next {
@@ -838,15 +849,15 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     content: "\e04f";
     font-family: 'Simple-Line-Icons';
 }
+
 .products .owl-item .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before,
 .products .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before,
 .just-post-image-admin a.button.add_to_cart_button:hover:before,
 .products .owl-item .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before,
-.products .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before{
+.products .product-item .product-image-box figcaption a.button.add_to_cart_button:hover:before {
     color: #667700;
     text-shadow: 1px 1px 0 #fff;
 }
-
 
 .just-post-image img {
     border-radius: 2px;
@@ -1038,6 +1049,30 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     color: #48520c;
 }
 
+.sold_out_1 hr, .sold_out_2 hr {
+    padding: 0;
+    margin: 0;
+    border: 3px solid rgba(255, 0, 0, 0.35);
+    position: absolute;
+    width: 70%;
+    top: 45%;
+    left: 15%
+}
+
+.sold_out_1 hr {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
+
+.sold_out_2 hr {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+}
+
 .product-price-box hr {
     -webkit-transform: rotate(20deg);
     -moz-transform: rotate(20deg);
@@ -1048,7 +1083,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     border: 2px solid rgba(255, 0, 0, 0.5);
     position: absolute;
     width: 70%;
-    top: 50px;
+    top: 35%;
     left: 15%
 }
 
@@ -1998,8 +2033,8 @@ ul.product_list_widget li dl dd p {
 .clearance_products .product-item label,
 .related_products .product-item label {
     padding: 15px;
-    border: 2px solid #EEE;
-    color: #999;
+    border: 2px solid #ddd;
+    color: #666;
     margin: 0;
     width: 100%;
     border-radius: 2px;
@@ -2197,7 +2232,12 @@ ul.product_list_widget li dl dd p {
 }
 
 .search-result-container {
-    margin-top: 20px;
+    /*margin-top: 15px;*/
+    margin-bottom: -15px;
+}
+
+.page-limit-selector {
+    width: 60px;
 }
 
 @media (max-width: 768px) {
@@ -2384,25 +2424,31 @@ div.box {
     border-radius: 4px;
     background: rgba(254, 254, 254, 0.5);
     box-shadow: 0 0 10px #999;
-    width: 100%;
     display: block;
     float: left;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding: 15px;
+}
+
+.export-fields .box {
+    border-radius: 4px;
+    border: 1px solid #999;
+    display: block;
+    box-shadow: none;
+    float: left;
 }
 
 div.tabs {
     border-radius: 4px;
-    background: rgba(254, 254, 254, 0.5);
-    box-shadow: 0 0 10px #999;
+    /*background: rgba(254, 254, 254, 0.5);*/
+    /*box-shadow: 0 0 10px #999;*/
     padding: 25px 0 0 0;
 }
 
 div.tabs_content {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
-    border-top: 2px solid #ddd;
-    background: rgba(254, 254, 254, 0.7);
+    border: 2px solid #ddd;
+    background: rgba(255, 255, 255, 0.9);
     padding: 15px;
     margin-top: 5px;
 }
@@ -2434,14 +2480,15 @@ ul.tabNavigation li {
     border-top: 2px solid #ddd;
     border-left: 2px solid #ddd;
     border-right: 2px solid #ddd;
-}
-ul.tabNavigation li.selected {
-    border-bottom: 2px solid rgba(254,254,254,0.95);
-    z-index: 10;
-    position: relative;
-    background: rgba(254, 254,254, 0.7);
+    background: rgba(238, 238, 238, 0.5);
 }
 
+ul.tabNavigation li.selected {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.95);
+    z-index: 10;
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+}
 
 ul.tabNavigation li.selected a,
 ul.tabNavigation li.selected a:hover {
@@ -2530,7 +2577,7 @@ ul.sortable li.ui-selected label {
 }
 
 .sortable_item label {
-    width: 78%;
+    width: 77%;
     font-weight: bold;
 }
 
@@ -2565,19 +2612,22 @@ ul.sortable li.ui-selected label {
         padding-left: 7px;
     }
 }
+
 @media (min-width: 991px) {
-    .content{
+    .content {
         min-height: 450px;
     }
 }
 
-small.hint{
+small.hint {
     color: #999;
     font-weight: normal;
 }
-i[data-promotion]{
+
+i[data-promotion] {
     cursor: pointer;
 }
-.hint{
+
+.hint {
     z-index: 99999999;
 }

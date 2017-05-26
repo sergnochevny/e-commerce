@@ -2,6 +2,10 @@
 
   Class Model_Matches extends Model_Base {
 
+    public static function get_fields() {
+      return null;
+    }
+
     public static function get_total_count($filter = null) {
       $response = 0;
       if(isset(_A_::$app->session('matches')['items'])) {

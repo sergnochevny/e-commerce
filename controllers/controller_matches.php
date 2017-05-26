@@ -23,11 +23,7 @@
     protected function before_form_layout(&$data = null) {
       $this->template->vars('message', $data['message']);
       $added = $data['res'];
-      ob_start();
-      $this->template->view_layout('msg_add');
-      $data = ob_get_contents();
-      ob_end_clean();
-      exit(json_encode(['data' => $data, 'added' => $added]));
+      exit(json_encode(['data' => $this->template->view_layout_return('msg_add'), 'added' => $added]));
     }
 
     public function view($partial = false, $required_access = false) { }
@@ -55,6 +51,8 @@
      * @export
      */
     public function matches() {
+      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
       parent::index(false);
     }
 
@@ -148,7 +146,7 @@
                   $product['format_price'] = $format_price;
                   $product['format_sale_price'] = $format_sale_price;
                   $cart_items[$product[$this->id_field]] = $product;
-                  $message .= 'The product ' . $product['pname'] . ' have been added to your Basket.<br>';
+                  $message .= 'The product ' . $product['pname'] . ' have been added to your Cart.<br>';
                 } else {
                   $message .= 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
                 }
@@ -165,16 +163,16 @@
 
             $cart_sum = "$" . number_format($SUM, 2);
 
-            $message .= '<br>Click the Basket to view your Order.';
-            $message .= '<br>Subtotal sum of basket is ' . $cart_sum;
+            $message .= '<br>Click the Cart to view your Order.';
+            $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
             $added = 1;
           } else
-            $message = 'Empty Matches Area. Nothing added to the Basket.';
+            $message = 'Empty Matches Area. Nothing added to the Cart.';
         } catch(Exception $e) {
-          $message = 'Empty Matches Area. Nothing added to the Basket.';
+          $message = 'Empty Matches Area. Nothing added to the Cart.';
         }
       } else
-        $message = 'Empty Matches Area. Nothing added to the Basket.';
+        $message = 'Empty Matches Area. Nothing added to the Cart.';
 
       $this->template->vars('message', $message);
       $this->main->view_layout('msg_add');

@@ -6,7 +6,7 @@
     protected $form_title_add = 'NEW PRODUCT';
     protected $form_title_edit = 'MODIFY PRODUCT';
 
-    private function select_filter($method, $filters, $start = null, $search = null) {
+    private function select_filter($method, $filters, $start = null, $search = null, $return = false) {
       $selected = isset($filters) ? $filters : [];
       $filter = Model_Product::get_filter_data($method, $count, $start, $search);
       $this->template->vars('destination', $method);
@@ -17,10 +17,11 @@
       $this->template->vars('filter_data_start', isset($start) ? $start : 0);
       $this->template->vars('selected', $selected);
       $this->template->vars('filter', $filter);
+      if($return) return $this->template->view_layout_return('filter/select');
       $this->template->view_layout('filter/select');
     }
 
-    private function images($data) {
+    private function images($data, $return = false) {
       $not_image = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
       $data['u_image1'] = empty($data['image1']) || !is_file('upload/upload/' . $data['image1']) ? '' : _A_::$app->router()->UrlTo('upload/upload/v_' . $data['image1']);
       $data['u_image2'] = empty($data['image2']) || !is_file('upload/upload/' . $data['image2']) ? '' : _A_::$app->router()->UrlTo('upload/upload/b_' . $data['image2']);
@@ -29,6 +30,7 @@
       $data['u_image5'] = empty($data['image5']) || !is_file('upload/upload/' . $data['image5']) ? '' : _A_::$app->router()->UrlTo('upload/upload/b_' . $data['image5']);
       $this->template->vars('not_image', $not_image);
       $this->template->vars('data', $data);
+      if($return) return $this->template->view_layout_return('images');
       $this->template->view_layout('images');
     }
 
@@ -77,14 +79,11 @@
           $method = _A_::$app->post('filter-type');
           $resporse = [];
 
-          ob_start();
           Model_Product::get_filter_selected($method, $data);
           $filters = array_keys($data[$method]);
-          $this->generate_filter($data, $method);
-          $resporse[0] = ob_get_contents();
-          ob_end_clean();
+          $resporse[0] = $this->generate_filter($data, $method, true);
 
-          ob_start();
+          $resporse[1] = null;
           $search = _A_::$app->post('filter_select_search_' . $method);
           $start = _A_::$app->post('filter_start_' . $method);
           $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
@@ -92,10 +91,8 @@
           if(!is_null(_A_::$app->post('up'))) $start = (isset($start) ? $start : 0) - $filter_limit;
           if(($start < 0) || (is_null(_A_::$app->post('down')) && is_null(_A_::$app->post('up')))) $start = 0;
           if(in_array($method, ['colors', 'patterns', 'categories'])) {
-            $this->select_filter($method, $filters, $start, $search);
+            $resporse[1] = $this->select_filter($method, $filters, $start, $search, true);
           }
-          $resporse[1] = ob_get_contents();
-          ob_end_clean();
           exit(json_encode($resporse));
         } else {
           $method = _A_::$app->post('type');
@@ -105,22 +102,24 @@
       }
     }
 
-    private function generate_filter($data, $type) {
+    private function generate_filter($data, $type, $return = false) {
       $filters = $data[$type];
       $this->template->vars('filters', $filters);
       $this->template->vars('filter_type', $type);
       $this->template->vars('destination', $type);
       $this->template->vars('title', 'Select ' . ucfirst($type));
+      if($return) return $this->template->view_layout_return('filter/filter');
       $this->template->view_layout('filter/filter');
     }
 
-    private function generate_select($data, $selected) {
+    private function generate_select($data, $selected, $return = false) {
       $this->template->vars('selected', is_array($selected) ? $selected : [$selected]);
       $this->template->vars('data', is_array($data) ? $data : [$data]);
+      if($return) return $this->template->view_layout_return('select');
       $this->template->view_layout('select');
     }
 
-    private function generate_related($data) {
+    private function generate_related($data, $return = false) {
       $pid = $data['pid'];
       $rows = null;
       if(isset($pid)) {
@@ -131,11 +130,8 @@
         $rows = Model_Related::get_list(0, 0, $res_count_rows, $filter);
       }
       $this->template->vars('rows', $rows);
-      ob_start();
-      $this->template->view_layout('related/rows');
-      $rows = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('list', $rows);
+      $this->template->vars('list', $this->template->view_layout_return('related/rows'));
+      if($return) return $this->main->view_layout_return('related/list');
       $this->main->view_layout('related/list');
     }
 
@@ -147,8 +143,8 @@
       ];
     }
 
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
+    protected function build_order(&$sort, $view = false, $filter = null) {
+      parent::build_order($sort, $view, $filter);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['a.pid' => 'desc'];
       }
@@ -209,7 +205,8 @@
         if(empty($data['priceyard'])) $error[] = 'Identify Price field !';
         if(empty($data['image1'])) $error[] = 'Identify Main Image!';
         if((!empty($data['priceyard']) && empty((float)$data['priceyard'])) ||
-        (!empty($data['priceyard']) && ((float)$data['priceyard'] < 0))) $error[] = "The field 'Price' value must be greater than zero!";
+          (!empty($data['priceyard']) && ((float)$data['priceyard'] < 0))
+        ) $error[] = "The field 'Price' value must be greater than zero!";
         $this->template->vars('error', $error);
         return false;
       }
@@ -237,31 +234,12 @@
 
       $data['manufacturers'] = Model_Product::get_manufacturers();
       foreach(['categories', 'colors', 'patterns'] as $type) {
-        ob_start();
         Model_Product::get_filter_selected($type, $data);
-        $this->generate_filter($data, $type);
-        $filter = ob_get_contents();
-        ob_end_clean();
-        $data[$type] = $filter;
+        $data[$type] = $this->generate_filter($data, $type, true);
       }
-
-      ob_start();
-      $this->generate_select($data['manufacturers'], $data['manufacturerId']);
-      $select = ob_get_contents();
-      ob_end_clean();
-      $data['manufacturers'] = $select;
-
-      ob_start();
-      $this->generate_related($data);
-      $related = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('related', $related);
-
-      ob_start();
-      $this->images($data);
-      $images = ob_get_contents();
-      ob_end_clean();
-      $this->template->vars('images', $images);
+      $data['manufacturers'] = $this->generate_select($data['manufacturers'], $data['manufacturerId'], true);
+      $this->template->vars('related', $this->generate_related($data, true));
+      $this->template->vars('images', $this->images($data, true));
     }
 
     protected function before_search_form_layout(&$search_data, $view = false) {

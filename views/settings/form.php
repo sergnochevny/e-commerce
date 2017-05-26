@@ -8,6 +8,7 @@
         <ul class="tabNavigation">
           <li><a class="" data-tab_index="1" href="#first">System</a></li>
           <li><a class="" data-tab_index="2" href="#second">Shop</a></li>
+          <li><a class="" data-tab_index="3" href="#third">Shop Widgets</a></li>
         </ul>
       </div>
     </div>
@@ -104,7 +105,7 @@
                 </div>
                 <div class="col-xs-6">
                   <label class="required_field">
-                      Export Users CSV, fields delimiter
+                    Export Users CSV, fields delimiter
                   </label>
                   <i class="fa fa-question-circle" data-promotion="" href="#system_csv_fields_dlm"></i>
                   <div class="form-row">
@@ -124,111 +125,108 @@
 
                 <div class="col-xs-12">
                   <label class="required_field">
-                      Export Users CSV fields
+                    Export Users CSV fields
                   </label>
                   <i class="fa fa-question-circle" data-promotion="" href="#system_csv_fields"></i>
                   <small class="hint">(drag the field box and place it in
-                    desired place or use the action spots)</small>
+                    desired place or use the action spots)
+                  </small>
                 </div>
                 <div data-csv_export_fields class="export-fields col-xs-12">
                   <div class="box">
                     <div class="col-xs-12 col-sm-6 col-sm-halfoffset-right">
-                      <div class="form-row">
-                        <div class="col-xs-12">
-                          <div class="row">
-                            <label>Selected Fields</label>
-                            <small class="hint">(that will be exported)</small>
-                          </div>
+                      <div class="col-xs-12">
+                        <div class="row">
+                          <label>Selected Fields</label>
+                          <small class="hint">(that will be exported)</small>
                         </div>
-                        <div class="col-xs-12">
-                          <div class="row">
-                            <ul data-sortable class="sortable selected_fields">
-                              <?php if(isset($data['system_csv_fields']) && is_array($data['system_csv_fields'])): ?>
-                                <?php foreach($data['system_csv_fields'] as $field): ?>
-                                  <li class="sortable_item">
-                                    <div class="col-xs-1 dd-action text-center">
+                      </div>
+                      <div class="col-xs-12">
+                        <div class="row">
+                          <ul data-sortable class="sortable selected_fields">
+                            <?php if(isset($data['system_csv_fields']) && is_array($data['system_csv_fields'])): ?>
+                              <?php foreach($data['system_csv_fields'] as $field): ?>
+                                <li class="sortable_item">
+                                  <div class="col-xs-1 dd-action text-center">
+                                    <div class="row">
+                                      <i class="fa fa-2x fa-plus" data-append aria-hidden="true"></i>
+                                      <i class="fa fa-2x fa-minus" data-remove aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                  <label class="dd-sortable">
+                                    <div class="col-xs-1 text-center">
                                       <div class="row">
-                                        <i class="fa fa-2x fa-plus" data-append aria-hidden="true"></i>
-                                        <i class="fa fa-2x fa-minus" data-remove aria-hidden="true"></i>
+                                        <i class="fa fa-2x fa-arrows-v" aria-hidden="true"></i>
+                                        <i class="fa fa-2x fa-long-arrow-left" aria-hidden="true"></i>
                                       </div>
                                     </div>
-                                    <label class="dd-sortable">
-                                      <div class="col-xs-1 text-center">
-                                        <div class="row">
-                                          <i class="fa fa-2x fa-arrows-v" aria-hidden="true"></i>
-                                          <i class="fa fa-2x fa-long-arrow-left" aria-hidden="true"></i>
-                                        </div>
-                                      </div>
-                                      <div class="col-xs-9">
-                                        <div class="row field_name">
-                                          <?= $field; ?>
-                                        </div>
-                                      </div>
-                                    </label>
-                                    <div class="col-xs-1 move-arrows pull-right text-right">
-                                      <div class="row">
-                                        <i data-move_up class="fa fa-arrow-up" aria-hidden="true"></i>
-                                        <i data-move_down class="fa fa-arrow-down" aria-hidden="true"></i>
+                                    <div class="col-xs-9">
+                                      <div class="row field_name">
+                                        <?= $field; ?>
                                       </div>
                                     </div>
-                                    <input type="checkbox" name="system_csv_fields[]"
-                                           value="<?= $field; ?>" checked
-                                           class="hidden csv_field input-checkbox">
-                                    </input>
-                                  </li>
-                                <?php endforeach; ?>
-                              <?php endif; ?>
-                            </ul>
-                          </div>
+                                  </label>
+                                  <div class="col-xs-1 move-arrows pull-right text-right">
+                                    <div class="row">
+                                      <i data-move_up class="fa fa-arrow-up" aria-hidden="true"></i>
+                                      <i data-move_down class="fa fa-arrow-down" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                  <input type="checkbox" name="system_csv_fields[]"
+                                         value="<?= $field; ?>" checked
+                                         class="hidden csv_field input-checkbox">
+                                  </input>
+                                </li>
+                              <?php endforeach; ?>
+                            <?php endif; ?>
+                          </ul>
                         </div>
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-sm-halfoffset-left">
-                      <div class="form-row">
-                        <div class="col-xs-12">
-                          <div class="row">
-                            <label for="">Available Fields</label>
-                          </div>
+                      <div class="col-xs-12">
+                        <div class="row">
+                          <label for="">Available Fields</label>
                         </div>
-                        <div class="col-xs-12">
-                          <div class="row">
-                            <ul data-sortable class="sortable available_fields">
-                              <?php if(isset($data['system_csv_fields_avail']) && is_array($data['system_csv_fields_avail'])): ?>
-                                <?php foreach($data['system_csv_fields_avail'] as $field): ?>
-                                  <li class="sortable_item">
-                                    <div class="col-xs-1 dd-action text-center">
+                      </div>
+                      <div class="col-xs-12">
+                        <div class="row">
+                          <ul data-sortable class="sortable available_fields">
+                            <?php if(isset($data['system_csv_fields_avail']) && is_array($data['system_csv_fields_avail'])): ?>
+                              <?php foreach($data['system_csv_fields_avail'] as $field): ?>
+                                <li class="sortable_item">
+                                  <div class="col-xs-1 dd-action text-center">
+                                    <div class="row">
+                                      <i class="fa fa-2x fa-plus" data-append aria-hidden="true"></i>
+                                      <i class="fa fa-2x fa-minus" data-remove aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                  <label class="dd-sortable">
+                                    <div class="col-xs-1 text-center">
                                       <div class="row">
-                                        <i class="fa fa-2x fa-plus" data-append aria-hidden="true"></i>
-                                        <i class="fa fa-2x fa-minus" data-remove aria-hidden="true"></i>
+                                        <i class="fa fa-2x fa-arrows-v" aria-hidden="true"></i>
+                                        <i class="fa fa-2x fa-long-arrow-left hidden-xs" aria-hidden="true"></i>
                                       </div>
                                     </div>
-                                    <label class="dd-sortable">
-                                      <div class="col-xs-1 text-center">
-                                        <div class="row">
-                                          <i class="fa fa-2x fa-arrows-v" aria-hidden="true"></i>
-                                          <i class="fa fa-2x fa-long-arrow-left hidden-xs" aria-hidden="true"></i>
-                                        </div>
-                                      </div>
-                                      <div class="col-xs-9">
-                                        <div class="row field_name">
-                                          <?= $field; ?>
-                                        </div>
-                                      </div>
-                                    </label>
-                                    <div class="col-xs-1 move-arrows pull-right text-right hidden">
-                                      <div class="row">
-                                        <i data-move_up class="fa fa-arrow-up" aria-hidden="true"></i>
-                                        <i data-move_down class="fa fa-arrow-down" aria-hidden="true"></i>
+                                    <div class="col-xs-9">
+                                      <div class="row field_name">
+                                        <?= $field; ?>
                                       </div>
                                     </div>
-                                    <input type="checkbox" name="system_csv_fields[]"
-                                           value="<?= $field; ?>" class="hidden csv_field input-checkbox">
-                                    </input>
-                                  </li>
-                                <?php endforeach; ?>
-                              <?php endif; ?>
-                            </ul>
-                          </div>
+                                  </label>
+                                  <div class="col-xs-1 move-arrows pull-right text-right hidden">
+                                    <div class="row">
+                                      <i data-move_up class="fa fa-arrow-up" aria-hidden="true"></i>
+                                      <i data-move_down class="fa fa-arrow-down" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                  <input type="checkbox" name="system_csv_fields[]"
+                                         value="<?= $field; ?>" class="hidden csv_field input-checkbox">
+                                  </input>
+                                </li>
+                              <?php endforeach; ?>
+                            <?php endif; ?>
+                          </ul>
                         </div>
                       </div>
                     </div>
@@ -252,7 +250,7 @@
                       <input type="checkbox" name="system_allow_sample_express_shipping" value="1"
                         <?= (isset($data['system_allow_sample_express_shipping']) && $data['system_allow_sample_express_shipping'] == '1') ? 'checked' : '' ?>
                              class="input-checkbox">
-                        Allow Sample EXPRESS SHIPPING
+                      Allow Sample EXPRESS SHIPPING
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#system_allow_sample_express_shipping"></i>
                   </div>
@@ -295,9 +293,11 @@
                       Rate Handling
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_handling"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_handling" class="input-text"
-                           value="<?= number_format($data['shop_rate_handling'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_handling" class="input-text"
+                        value="<?= number_format($data['shop_rate_handling'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -306,9 +306,11 @@
                       Rate Roll
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_roll"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_roll" class="input-text"
-                           value="<?= number_format($data['shop_rate_roll'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_roll" class="input-text"
+                        value="<?= number_format($data['shop_rate_roll'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -317,9 +319,11 @@
                       Rate Express Light
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_light"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_express_light" class="input-text"
-                           value="<?= number_format($data['shop_rate_express_light'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_express_light" class="input-text"
+                        value="<?= number_format($data['shop_rate_express_light'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -328,9 +332,11 @@
                       Rate Express Medium
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_medium"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_express_medium" class="input-text"
-                           value="<?= number_format($data['shop_rate_express_medium'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_express_medium" class="input-text"
+                        value="<?= number_format($data['shop_rate_express_medium'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -339,9 +345,11 @@
                       Rate Express Heavy
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_heavy"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_express_heavy" class="input-text"
-                           value="<?= number_format($data['shop_rate_express_heavy'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_express_heavy" class="input-text"
+                        value="<?= number_format($data['shop_rate_express_heavy'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -350,9 +358,11 @@
                       Rate Ground Light
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_light"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_ground_light" class="input-text"
-                           value="<?= number_format($data['shop_rate_ground_light'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_ground_light" class="input-text"
+                        value="<?= number_format($data['shop_rate_ground_light'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -361,9 +371,11 @@
                       Rate Ground Medium
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_medium"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_ground_medium" class="input-text"
-                           value="<?= number_format($data['shop_rate_ground_medium'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_ground_medium" class="input-text"
+                        value="<?= number_format($data['shop_rate_ground_medium'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -372,86 +384,102 @@
                       Rate Ground Heavy
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_heavy"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_ground_heavy" class="input-text"
-                           value="<?= number_format($data['shop_rate_ground_heavy'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_ground_heavy" class="input-text"
+                        value="<?= number_format($data['shop_rate_ground_heavy'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                        Light Express Rate Multiplier
+                      Light Express Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_light_multiplier"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_express_light_multiplier" class="input-text"
-                           value="<?= number_format($data['shop_rate_express_light_multiplier'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_express_light_multiplier" class="input-text"
+                        value="<?= number_format($data['shop_rate_express_light_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                        Medium Express Rate Multiplier
+                      Medium Express Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_medium_multiplier"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_express_medium_multiplier" class="input-text"
-                           value="<?= number_format($data['shop_rate_express_medium_multiplier'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_express_medium_multiplier" class="input-text"
+                        value="<?= number_format($data['shop_rate_express_medium_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                        Heavy Express Rate Multiplier
+                      Heavy Express Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_express_heavy_multiplier"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_express_heavy_multiplier" class="input-text"
-                           value="<?= number_format($data['shop_rate_express_heavy_multiplier'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_express_heavy_multiplier" class="input-text"
+                        value="<?= number_format($data['shop_rate_express_heavy_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                        Light Ground Rate Multiplier
+                      Light Ground Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_light_multiplier"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_ground_light_multiplier" class="input-text"
-                           value="<?= number_format($data['shop_rate_ground_light_multiplier'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_ground_light_multiplier" class="input-text"
+                        value="<?= number_format($data['shop_rate_ground_light_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                        Medium Ground Rate Multiplier
+                      Medium Ground Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_medium_multiplier"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_ground_medium_multiplier" class="input-text"
-                           value="<?= number_format($data['shop_rate_ground_medium_multiplier'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_ground_medium_multiplier" class="input-text"
+                        value="<?= number_format($data['shop_rate_ground_medium_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                        Heavy Ground Rate Multiplier
+                      Heavy Ground Rate Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_rate_ground_heavy_multiplier"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_rate_ground_heavy_multiplier" class="input-text"
-                           value="<?= number_format($data['shop_rate_ground_heavy_multiplier'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_rate_ground_heavy_multiplier" class="input-text"
+                        value="<?= number_format($data['shop_rate_ground_heavy_multiplier'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
                   <div class="form-row">
                     <label class="required_field">
-                        Samples Express Shipping Price
+                      Samples Express Shipping Price
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_express_shipping"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_samples_price_express_shipping" class="input-text"
-                           value="<?= number_format($data['shop_samples_price_express_shipping'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_samples_price_express_shipping" class="input-text"
+                        value="<?= number_format($data['shop_samples_price_express_shipping'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -460,9 +488,11 @@
                       Samples Qty Multiple Min
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_qty_multiple_min"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_samples_qty_multiple_min" class="input-text"
-                           value="<?= number_format($data['shop_samples_qty_multiple_min'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_samples_qty_multiple_min" class="input-text"
+                        value="<?= number_format($data['shop_samples_qty_multiple_min'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -471,9 +501,11 @@
                       Samples Qty Multiple Max
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_qty_multiple_max"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_samples_qty_multiple_max" class="input-text"
-                           value="<?= number_format($data['shop_samples_qty_multiple_max'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_samples_qty_multiple_max" class="input-text"
+                        value="<?= number_format($data['shop_samples_qty_multiple_max'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -482,9 +514,11 @@
                       Samples Price Single
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_single"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_samples_price_single" class="input-text"
-                           value="<?= number_format($data['shop_samples_price_single'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_samples_price_single" class="input-text"
+                        value="<?= number_format($data['shop_samples_price_single'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -493,9 +527,11 @@
                       Samples Price Multiple
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_multiple"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_samples_price_multiple" class="input-text"
-                           value="<?= number_format($data['shop_samples_price_multiple'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_samples_price_multiple" class="input-text"
+                        value="<?= number_format($data['shop_samples_price_multiple'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -504,9 +540,11 @@
                       Samples Price Additional
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_additional"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_samples_price_additional" class="input-text"
-                           value="<?= number_format($data['shop_samples_price_additional'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_samples_price_additional" class="input-text"
+                        value="<?= number_format($data['shop_samples_price_additional'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -515,9 +553,11 @@
                       Samples Price With Products
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_samples_price_with_products"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_samples_price_with_products" class="input-text"
-                           value="<?= number_format($data['shop_samples_price_with_products'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_samples_price_with_products" class="input-text"
+                        value="<?= number_format($data['shop_samples_price_with_products'], 2, ".", ""); ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6">
@@ -526,9 +566,63 @@
                       Yrds for Multiplier
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#shop_yrds_for_multiplier"></i>
-                    <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text"
-                           name="shop_yrds_for_multiplier" class="input-text"
-                           value="<?= number_format($data['shop_yrds_for_multiplier'], 2); ?>"/>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_yrds_for_multiplier" class="input-text"
+                        value="<?= number_format($data['shop_yrds_for_multiplier'], 2, ".", ""); ?>"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-role="tab" class="row" id="third" style="display: none;">
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              <h3>Shop Wigets</h3>
+            </div>
+            <div class="col-xs-12">
+              <div class="row">
+
+                <div class="col-xs-6 col-sm-6">
+                  <div class="form-row">
+                    <label class="required_field">
+                      Best Sellers amount items
+                    </label>
+                    <i class="fa fa-question-circle" data-promotion="" href="#shop_bestsellers_amount"></i>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_bestsellers_amount" class="input-text"
+                        value="<?= number_format($data['shop_bestsellers_amount'], 0, ".", ""); ?>"/>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6">
+                  <div class="form-row">
+                    <label class="required_field">
+                      Specials amount items
+                    </label>
+                    <i class="fa fa-question-circle" data-promotion="" href="#shop_specials_amount"></i>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_specials_amount" class="input-text"
+                        value="<?= number_format($data['shop_specials_amount'], 0, ".", ""); ?>"/>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6">
+                  <div class="form-row">
+                    <label class="required_field">
+                      "Under" amount items
+                    </label>
+                    <i class="fa fa-question-circle" data-promotion="" href="#shop_under_amount"></i>
+                    <input
+                        data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                        type="text"
+                        name="shop_under_amount" class="input-text"
+                        value="<?= number_format($data['shop_under_amount'], 0, ".", ""); ?>"/>
                   </div>
                 </div>
               </div>
@@ -536,6 +630,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 

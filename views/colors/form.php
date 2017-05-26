@@ -1,4 +1,4 @@
-<form id="edit_form" action="<?= $action ?>" method="post"  data-title="<?=$form_title?>">
+<form id="edit_form" action="<?= $action ?>" method="post" data-title="<?= $form_title ?>">
   <div class="row">
     <div class="col-xs-12">
       <div class="form-row">

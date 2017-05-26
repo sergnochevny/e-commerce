@@ -178,7 +178,8 @@
             <?php if(Controller_Admin::is_logged() && $edit): ?>
               <a title="Edit Order Parameters" class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-2x fa-pencil"></i></a>
             <?php endif; ?>
-            <a class="<?= (Controller_Admin::is_logged() && $edit)?'no-float':''; ?>" data-waitloader title="View Order Details" href="<?= $view_url ?>"><i class="fa fa-2x fa-file-text"></i></a>
+            <a class="<?= (!(Controller_Admin::is_logged() && $edit)) ? 'no-float' : ''; ?>" data-waitloader
+               title="View Order Details" href="<?= $view_url ?>"><i class="fa fa-2x fa-file-text"></i></a>
           </div>
         </div>
       </div>

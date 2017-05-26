@@ -12,14 +12,16 @@
     $('body').waitloader('show');
 
     $.get(url,
-      {pid: pid, qnt: v},
+      {
+        pid: pid,
+        qnt: v
+      },
       function (answer) {
         var data = JSON.parse(answer);
         if (data.product) {
           $(document).trigger('destroy_spinner');
 
-          $.when($(parent).replaceWith(data.product))
-            .done(function () {
+          $.when($(parent).replaceWith(data.product)).done(function () {
               $(document).trigger('init_spinner');
               $('body').waitloader('remove');
               $('[data-block=subtotal_items]').load(base_url + 'cart/items_amount');
@@ -35,7 +37,7 @@
               $('#msg').dialog({
                 draggable: false,
                 dialogClass: 'msg',
-                title: 'Basket',
+                title: 'Cart',
                 modal: true,
                 zIndex: 10000,
                 autoOpen: true,
@@ -212,8 +214,8 @@
         var roll = 0;
         if ($('[data-block=roll]').length > 0) roll = $('[data-block=roll]')[0].checked ? 1 : 0;
         data.append('ship', ship);
-        data.append('roll',roll);
-        data.append('coupon',coupon);
+        data.append('roll', roll);
+        data.append('coupon', coupon);
       }
 
       if ($('[data-block=express_samples]').length > 0) {
@@ -232,7 +234,7 @@
   $(document).on('calc_total', function () {
     var url = base_url + 'cart/coupon_total_calc';
     var data = new FormData();
-    data.append('emty',true);
+    data.append('emty', true);
     $.postdata(this, url, data, function (data) {
       $('[data-block=coupon_total]').html(data);
     });
@@ -254,8 +256,7 @@
     event.preventDefault();
     var url = $(this).attr('href');
     $.get(url, {}, function (data) {
-      $.when($('#content').html(data))
-        .done(function () {
+      $.when($('#content').html(data)).done(function () {
           $('html, body').stop().animate({scrollTop: 0}, 1000);
         });
     });
@@ -265,8 +266,7 @@
     event.preventDefault();
     var url = $(this).attr('href');
     $.get(url, {}, function (data) {
-      $.when($('#content').html(data))
-        .done(function () {
+      $.when($('#content').html(data)).done(function () {
           $('html, body').stop().animate({scrollTop: 0}, 1000);
         });
     });

@@ -1,14 +1,14 @@
 <div class="col-xs-12">
   <div class="row">
-    <div class="col-xs-12 text-center afterhead-row">
+    <div class="col-xs-12 text-center">
       <div class="row">
-        <h3 class="page-title">
+        <h1 class="page-title">
           <?php if((isset($cart_samples_items) && strlen($cart_samples_items) > 0) || (isset($cart_items) && strlen($cart_items) > 0)): ?>
             Cart
           <?php else: ?>
             Your cart is empty, yet...
           <?php endif; ?>
-        </h3>
+        </h1>
       </div>
     </div>
 
@@ -141,10 +141,8 @@
                   <b>Subtotal:</b>
                 </div>
               </div>
-              <div class="col-xs-2" data-block="subtotal_ship">
-                <div class="row">
-                  <b>$<?= number_format($subtotal_ship, 2); ?> USD</b>
-                </div>
+              <div class="col-xs-4" data-block="subtotal_ship">
+                <b>$<?= number_format($subtotal_ship, 2); ?> USD</b>
               </div>
             </div>
           </div>
@@ -159,7 +157,8 @@
     </div>
     <div class="col-xs-12 inner-offset-top wc-proceed-to-checkout">
       <div class="row text-center">
-        <a class="checkout-button button alt wc-forward cont-shop" href="<?= _A_::$app->router()->UrlTo('shop') ?>">
+        <a class="checkout-button button alt wc-forward cont-shop"
+           href="<?= _A_::$app->router()->UrlTo('shop') ?>">
           <?php if((isset($cart_samples_items) && strlen($cart_samples_items) > 0) || (isset($cart_items) && strlen($cart_items) > 0)): ?>
             CONTINUE SHOPPING
           <?php else: ?>

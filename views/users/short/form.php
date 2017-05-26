@@ -1,5 +1,7 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include_once 'views/messages/thanx-boxes-registration.php'; ?>
 <form id="edit_form" action="<?= $action ?>" method="post" class="index__form-wrap">
+  <input type="hidden" name="redirect"
+         value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
   <div class="form-row">
     <div class="col-xs-12">
       <div class="row">
@@ -48,4 +50,5 @@
   </div>
 </form>
 <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/captcha/captcha.min.js'); ?>'></script>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.min.js'); ?>'></script>
+<script type='text/javascript'
+        src='<?= _A_::$app->router()->UrlTo('views/js/authorization/registration/form.min.js'); ?>'></script>

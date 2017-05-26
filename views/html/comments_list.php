@@ -27,9 +27,9 @@
         </div>
         <div class="col-xs-12 col-sm-2 text-right action-buttons">
             <a <?= $row['moderated'] == '0' ? "class=\"text-danger public_comment\"" : "class=\"text-success public_comment\"" ?>
-              href="<?= _A_::$app->router()->UrlTo('comments/public', $opt) ?>"
-              title="<?= $row['moderated'] == '1' ? 'Hide comment' : 'Show comment' ?>"
-              data-value="<?= $row['moderated'] ?>">
+                href="<?= _A_::$app->router()->UrlTo('comments/public', $opt) ?>"
+                title="<?= $row['moderated'] == '1' ? 'Hide comment' : 'Show comment' ?>"
+                data-value="<?= $row['moderated'] ?>">
                 <i class="fa <?= $row['moderated'] == '0' ? 'fa-minus-square-o' : 'fa-eye-slash'; ?>"></i>
             </a>
             <a data-edit class="edit-comment"

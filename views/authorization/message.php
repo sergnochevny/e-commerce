@@ -1,5 +1,5 @@
-<div class="container">
-  <div id="content" class="main-content-inner" role="main">
+<div class="container inner-offset-top half-outer-offset-bottom">
+  <div id="content" class="col-xs-12 main-content-inner box" role="main">
     <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
       <i class="fa fa-angle-left" aria-hidden="true"></i>
       Back

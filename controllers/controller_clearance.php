@@ -37,7 +37,7 @@
       $res = parent::build_search_filter($filter, $view);
       if($view) {
         $filter['hidden']['a.pnumber'] = 'null';
-        if(!isset($filter['hidden']['a.priceyard']) && !isset($filter['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
+        if(!isset($filter['hidden']['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
         $filter['hidden']['a.pvisible'] = '1';
         $filter['hidden']['a.image1'] = 'null';
         $filter['hidden']['view'] = true;
@@ -45,7 +45,7 @@
       return $res;
     }
 
-    protected function build_order(&$sort, $view = false) {
+    protected function build_order(&$sort, $view = false, $filter = null) {
       if($view) {
         $sort['b.displayorder'] = 'asc';
         $sort['fabrix_product_categories.display_order'] = 'asc';

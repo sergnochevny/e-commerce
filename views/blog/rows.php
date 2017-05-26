@@ -20,7 +20,7 @@
           </div>
           <div class="just-post-detail">
             <h3 class="post-title"><a
-                href="<?= _A_::$app->router()->UrlTo('blog/edit', $prms); ?>"><?= isset($row['post_title']) ? $row['post_title'] : ''; ?></a>
+                  href="<?= _A_::$app->router()->UrlTo('blog/edit', $prms); ?>"><?= isset($row['post_title']) ? $row['post_title'] : ''; ?></a>
             </h3>
 
             <div class="just-divider text-center line-yes icon-hide">

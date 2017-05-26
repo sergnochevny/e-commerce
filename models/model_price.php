@@ -109,20 +109,20 @@
           $sSQL .= ' AND (s.shipping_type = 3 OR s.shipping_type = 1 OR s.shipping_type = 0)';
         }
       } else {
-        $sSQL .= sprintf(" AND (s.coupon_code='')");
+        $sSQL .= sprintf(" AND ((s.coupon_code='') OR (s.coupon_code IS NULL))");
       }
 
       $iNow = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
       $sSQL .= sprintf(" AND (s.enabled=1) AND (s.date_start<=%u) AND (s.date_end>=%u)", $iNow, $iNow);
       $sSQL .= " ORDER BY allow_multiple;";
 
-      $result = mysql_query($sSQL) or die(mysql_error());
-      if(mysql_num_rows($result) > 0) {
+      $result = static::query( $sSQL) or die(static::error());
+      if(static::num_rows($result) > 0) {
         $shipFullSumDiscount1 = false;
         $shipFullSumDiscount2 = false;
         $shipFullSumDiscount3 = false;
         $isDiscountApplay = false;
-        while($rs = mysql_fetch_assoc($result)) {
+        while($rs = static::fetch_assoc($result)) {
 
           $bDoDiscount = self::checkDiscountApplies($rs, $uid, $rPrice);
 
@@ -191,7 +191,7 @@
               if($bReturnString) {
 
                 if($rs['discount_type'] == DISCOUNT_TYPE_SUBTOTAL) {
-                  if($isDiscountApplay) $temp = sprintf("reduced a further %s.", $tempAmtString);
+                  if($isDiscountApplay) $temp = sprintf("reduced further by %s.", $tempAmtString);
                   else $temp = sprintf("Reduced by %s.", $tempAmtString);
                   $isDiscountApplay = true;
                 } else if($rs['discount_type'] == DISCOUNT_TYPE_TOTAL) {
@@ -238,7 +238,7 @@
           }
         }
       }
-      mysql_free_result($result);
+      static::free_result($result);
       #check if we need to return a string here
       if($bReturnString) {
         $sPriceDiscount = $sSingle;
@@ -330,11 +330,11 @@
     public static function isNextPurchase($id, $iStart) {
       $bNext = false;
       $sSQL = sprintf("SELECT oid FROM fabrix_orders WHERE aid=%u AND order_date > %u ORDER BY order_date DESC;", $id, $iStart);
-      $result = mysql_query($sSQL) or die(mysql_error());
-      if(mysql_num_rows($result) == 0) {
+      $result = static::query( $sSQL) or die(static::error());
+      if(static::num_rows($result) == 0) {
         $bNext = true;
       }
-      mysql_free_result($result);
+      static::free_result($result);
       return $bNext;
     }
 
@@ -371,7 +371,7 @@
         " WHERE" .
         " (s.user_type=1) AND" .
         " (((s.product_type = 2) AND (sp.pid IN (%u))) OR ((s.product_type = 3) AND (cp.pid IN (%u))) OR ((s.product_type = 4) AND (mp.pid IN (%u)))) AND" .
-        " (s.coupon_code='') AND" .
+        " ((s.coupon_code='') OR (s.coupon_code IS NULL)) AND" .
         " (s.enabled=1) AND" .
         " (s.date_start<=%u) AND" .
         " (s.date_end>=%u) AND" .
@@ -379,11 +379,11 @@
         " (promotion_type=1)";
 
       $sql = sprintf($q, $id, $id, $id, $iNow, $iNow);
-      $result = mysql_query($sql) or die(mysql_error());
-      if(mysql_num_rows($result) > 0) {
+      $result = static::query( $sql) or die(static::error());
+      if(static::num_rows($result) > 0) {
         $discount = '';
-//        if($rs = mysql_fetch_assoc($result)) {
-        while($rs = mysql_fetch_assoc($result)) {
+//        if($rs = static::fetch_assoc($result)) {
+        while($rs = static::fetch_assoc($result)) {
           $amt = $rs['discount_amount'];
           if($rs['discount_amount_type'] == 1) {
             $type = '$';
@@ -404,7 +404,7 @@
           }
         }
       }
-      mysql_free_result($result);
+      static::free_result($result);
       return $bol;
     }
 
@@ -419,23 +419,11 @@
       $ret = $price;
 
       #get the shipping
-      if(!is_null(_A_::$app->cookie('cship')) && ((int)_A_::$app->cookie('cship') > 0)) {
-        $shipping = (int)_A_::$app->cookie('cship');
-      } else {
-        $shipping = DEFAULT_SHIPPING;
-      }
-      if(!is_null(_A_::$app->cookie('cshproll')) && ((int)!is_null(_A_::$app->cookie('cshproll') > 0))) {
-        $bShipRoll = true;
-      } else {
-        $bShipRoll = false;
-      }
+      $shipping = (isset(_A_::$app->session('cart')['ship']) && _A_::$app->session('cart')['ship'] > 0) ? (int)_A_::$app->session('cart')['ship'] : DEFAULT_SHIPPING;
+      $bShipRoll = (isset(_A_::$app->session('cart')['ship_roll'])) ? (boolean)_A_::$app->session('cart')['ship_roll'] : false;
 
       #grab the user id
-      if(isset(_A_::$app->session('user')['aid'])) {
-        $uid = (int)_A_::$app->session('user')['aid'];
-      } else {
-        $uid = 0;
-      }
+      $uid = (isset(_A_::$app->session('user')['aid'])) ? (int)_A_::$app->session('user')['aid'] : 0;
 
       #create the fake variables as they will not be needed
       $bTemp = false;        #passed in by reference, not needed anywhere
@@ -443,9 +431,7 @@
       $shipcost = 0;
 
       $rSystemDiscount = self::calculateDiscount(DISCOUNT_CATEGORY_PRODUCT, $uid, $aPrds, $price, $shipcost, '', $bTemp, false, $NOT_USED, $NOT_USED, $shipping, $discountIds);
-      if($rSystemDiscount > 0) {
-        $ret = $price - $rSystemDiscount;
-      }
+      if($rSystemDiscount > 0) $ret = $price - $rSystemDiscount;
 
       return $ret;
     }
@@ -469,13 +455,13 @@
 
         $iNow = time();
         $sSQL .= sprintf("SELECT * FROM fabrix_specials WHERE enabled=1 AND date_start<=%u AND date_end>=%u AND coupon_code='%s';",$iNow,$iNow,ilter($bCodeValid));
-        $result = mysql_query($sSQL) or die(mysql_error());
-        if(mysql_num_rows($result)>0){
+        $result = static::query( $sSQL) or die(static::error());
+        if(static::num_rows($result)>0){
             $bRet = true;
         } else {
             $bRet = false;
         }
-        mysql_free_result($result);
+        static::free_result($result);
 
         return $bRet;
 
@@ -524,7 +510,7 @@
           $iQty = 1;
         }
 
-        $rRet = self::doDiscount($rTtl, $rDis, $iDisAmntType, $iQty);
+        $rRet = self::doDiscount($rTtl, $rDis, $iDisAmntType);
         $rRet = $iQty * $rRet;
       }
 
@@ -544,9 +530,9 @@
       #get the list of all the products that this special applies to, narrow down to only those that may be in the cart
       $sql = sprintf("SELECT sp.pid, p.priceyard FROM fabrix_specials_products sp INNER JOIN fabrix_products p ON sp.pid = p.pid WHERE sp.sid=%u AND sp.pid IN (%s);", $iSid, $sPds);
 
-      $result = mysql_query($sql) or die(mysql_error());
+      $result = static::query( $sql) or die(static::error());
 
-      while($rs = mysql_fetch_row($result)) {
+      while($rs = static::fetch_row($result)) {
 
         $iPid = (int)$rs[0];
         $iPrice = (real)$rs[1];
@@ -565,7 +551,7 @@
         $rTtl += $iPrice * $qty;
       }
 
-      mysql_free_result($result);
+      static::free_result($result);
 
       return $rTtl;
     }
@@ -603,12 +589,12 @@
         $sSQL .= sprintf(" AND order_date<=%u AND order_date>=%u;", $iEndMonth, $iBeginMonth);
       }
 
-      $result = mysql_query($sSQL) or die(mysql_error());
-      if(mysql_num_rows($result)) {
-        $rs = mysql_fetch_row($result);
+      $result = static::query( $sSQL) or die(static::error());
+      if(static::num_rows($result)) {
+        $rs = static::fetch_row($result);
         $rRet = (real)$rs[0];
       }
-      mysql_free_result($result);
+      static::free_result($result);
 
       return $rRet;
     }
@@ -621,8 +607,8 @@
       }
 
       if(strlen($query) > 0) {
-        $result = mysql_query($query) or die(mysql_error());
-        $rs = mysql_fetch_assoc($result);
+        $result = static::query( $query) or die(static::error());
+        $rs = static::fetch_assoc($result);
         return $rs['next_date'];
       } else {
         return 0;
@@ -660,16 +646,16 @@
     public static function user_TaxRate($aid) {
 
       $sql = sprintf('SELECT bill_province FROM fabrix_accounts WHERE aid =' . $aid);
-      $result = mysql_query($sql);
+      $result = static::query( $sql);
 
       if($result) {
-        if($rs = mysql_fetch_row($result)) {
+        if($rs = static::fetch_row($result)) {
           $userProvince = $rs[0];
           if(!(empty($userProvince))) {
             $sql = sprintf('SELECT tax_rate FROM fabrix_taxrates WHERE province_state_id = ' . $userProvince);
-            $result = mysql_query($sql);
+            $result = static::query( $sql);
             if($result) {
-              if($rs = mysql_fetch_row($result)) {
+              if($rs = static::fetch_row($result)) {
                 $tax = $rs[0];
                 if(!empty($tax)) return $tax;
               }

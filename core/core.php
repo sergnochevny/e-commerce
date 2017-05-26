@@ -70,12 +70,12 @@
              * @var $password
              * @var $db
              */
-            $db_connection = mysql_connect($connection, $user, $password);
+            $db_connection = mysqli_connect($connection, $user, $password);
             $this->{$key}[$con] = [
               'connection' => $db_connection,
               'db' => $db
             ];
-            foreach($db as $name_db) $this->db[$name_db] = $db_connection;
+            foreach($db as $key => $db_name) $this->db[$key] = [$db_name, $db_connection];
           }
         }
       } else {
@@ -127,6 +127,7 @@
           )
         );
       }
+      return null;
     }
 
     public function __call($name, $arguments) {
@@ -208,10 +209,23 @@
     }
 
     public function SelectDB($name) {
-      if(isset($this->db[$name])) {
-        mysql_select_db($name);
+      if(isset($this->db[$name]) && is_array($this->db[$name])) {
+        if(!mysqli_select_db($this->db[$name][1], $this->db[$name][0])) {
+          throw new Exception(
+            strtr('Data Base "{db}" do not select: {reason}',
+                  [
+                    "{db}" => $name,
+                    '{reason}' => $this->db[$name][1]->error
+                  ]
+            )
+          );
+        } else {
+          if($this->db[$name][1]->errno > 0) {
+            throw new Exception($this->db[$name][1]->error);
+          }
+        }
       } else {
-        new Exception(
+        throw new Exception(
           strtr('Data Base "{db}" not present in Application',
                 [
                   "{db}" => $name
@@ -219,6 +233,21 @@
           )
         );
       }
+    }
+
+    public function getDBConnection($name) {
+      if(isset($this->db[$name]) && is_array($this->db[$name])) {
+        return $this->db[$name][1];
+      } else {
+        new Exception(
+          strtr('Data Base configuration "{db}" not present in Application',
+                [
+                  "{db}" => $name
+                ]
+          )
+        );
+      }
+      return null;
     }
 
     public function request_is_ajax() {

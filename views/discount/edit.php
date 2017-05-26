@@ -1,20 +1,18 @@
-<div class="container">
-  <div class="col-xs-12">
+<div class="container inner-offset-top half-outer-offset-bottom">
+  <div class="box col-xs-12">
 
     <div class="row">
       <div class="col-xs-12">
-        <div class="row afterhead-row">
+        <div class="row">
           <div class="col-sm-2 back_button_container">
-            <div class="row">
-              <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>
-                Back
-              </a>
-            </div>
+            <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+              <i class="fa fa-angle-left" aria-hidden="true"></i>
+              Back
+            </a>
           </div>
           <div class="col-sm-8 text-center">
             <div class="row">
-              <h3 class="page-title"><?= $form_title ?></h3>
+              <h1 class="page-title"><?= $form_title ?></h1>
             </div>
           </div>
           <div class="col-sm-2"></div>
@@ -36,10 +34,10 @@
         </small>
       </div>
     </div>
-  </div>
 
-  <div data-role="form_content" class="row">
-    <?= $form; ?>
+    <div data-role="form_content" class="row">
+      <?= $form; ?>
+    </div>
   </div>
 
 </div>
@@ -67,8 +65,10 @@
     Adding a coupon code requies that the customer enters in the coupon code to get the discount. If no coupon code
     exists then the customer will receive the discount if they qualify. The user must still meet the requirements even
     if a coupon code is entered. Clicking 'Generate Coupon Code for me' will generate a 10 digit unique code.
-    <br/><b>NOTE: </b> All coupon code discounts must be multiple discounts.
-    <br/><b>NOTE: </b> coupon code discounts must apply to all products.
+    <br/>
+    <small class="note"><b>NOTE: </b> All coupon code discounts must be multiple discounts.</small>
+    <br/>
+    <small class="note"><b>NOTE: </b> coupon code discounts must apply to all products.</small>
   </p>
 </div>
 <div id="discount_details" class="overlay"></div>
@@ -77,7 +77,8 @@
   <p>
     Allows the admin to set the percentage or total dollars off as the discount - when percentage is chosen then the
     percentage can be taken off either of the sub total (price of all products * quantities), the shipping.
-    <br/><b>NOTE: </b> All shipping discounts must be multiple discounts.
+    <br/>
+    <small class="note"><b>NOTE: </b> All shipping discounts must be multiple discounts.</small>
   </p>
 </div>
 <div id="required_amount" class="overlay"></div>
@@ -105,10 +106,15 @@
   <p>
     <b>All selected fabrics</b><br/>
     Allows the admin to select one or more fabrics from the list of all fabrics.
-    <br/><b>NOTE:</b> this option will only apply to the subtotal of the selected product regardless of the discount
-    details selection.
-    <br/><b>NOTE:</b> the list contains all products, not just those that are visible.
-    <br/><b>NOTE:</b> coupon code discounts must apply to all products.
+    <br/>
+    <small class="note"><b>NOTE:</b> this option will only apply to the subtotal of the selected product regardless of
+      the discount
+      details selection.
+    </small>
+    <br/>
+    <small class="note"><b>NOTE:</b> the list contains all products, not just those that are visible.</small>
+    <br/>
+    <small class="note"><b>NOTE:</b> coupon code discounts must apply to all products.</small>
   </p>
 </div>
 <div id="allow_multiple" class="overlay"></div>
@@ -117,8 +123,10 @@
   <p>
     Checking this allows this discount to be used in conjunction with another discount. The sum of all applicable
     discounts will be added to the total amount of discount given by all applicable non-multiple discounts.
-    <br/><b>NOTE:</b> All shipping discounts must be multiple discounts.
-    <br/><b>NOTE:</b> All discounts involving a coupon code are multiple discounts.
+    <br/>
+    <small class="note"><b>NOTE:</b> All shipping discounts must be multiple discounts.</small>
+    <br/>
+    <small class="note"><b>NOTE:</b> All discounts involving a coupon code are multiple discounts.</small>
   </p>
 </div>
 <div id="date_start" class="overlay"></div>

@@ -6,8 +6,8 @@
     protected $form_title_add = 'NEW SYNONYMS';
     protected $form_title_edit = 'MODIFY SYNONYMS';
 
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
+    protected function build_order(&$sort, $view = false, $filter = null) {
+      parent::build_order($sort, $view, $filter);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['keywords' => 'asc'];
       }
@@ -28,8 +28,8 @@
       $data['synonyms'] = preg_replace("/\r/i", ",", $data['synonyms']);
       $data['keywords'] = preg_replace("/\n/i", ",", $data['keywords']);
       $data['synonyms'] = preg_replace("/\n/i", ",", $data['synonyms']);
-      $data['keywords'] = mysql_real_escape_string(implode(',', array_filter(array_map('trim', explode(',', $data['keywords'])))));
-      $data['synonyms'] = mysql_real_escape_string(implode(',', array_filter(array_map('trim', explode(',', $data['synonyms'])))));
+      $data['keywords'] = Model_Base::escape(implode(',', array_filter(array_map('trim', explode(',', $data['keywords'])))));
+      $data['synonyms'] = Model_Base::escape(implode(',', array_filter(array_map('trim', explode(',', $data['synonyms'])))));
     }
 
     protected function validate(&$data, &$error) {

@@ -2,53 +2,61 @@
 
   Class Model_Shop extends Model_Base {
 
+    protected static $list_conditions = ['bestsellers' => 1, 'specials' => 2, 'under' => 3];
+
     protected static $table = 'fabrix_products';
 
     protected static function build_where(&$filter) {
-      $result = "";
+      $result_where = "";
       if(Controller_Admin::is_logged()) {
-        if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pname"]))) . "%'";
+        if(!empty($filter["a.pname"]))
+          foreach(array_filter(explode(' ', $filter["a.pname"])) as $item)
+            if(!empty($item)) $result[] = "a.pname LIKE '%" . static::escape(static::strip_data(static::sanitize($item))) . "%'";
       } else {
         if(isset($filter["a.pname"])) $result[] = Model_Synonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
       }
-      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pvisible"]))) . "'";
-      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.piece"]))) . "'";
+      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . static::escape(static::strip_data(static::sanitize($filter["a.pvisible"]))) . "'";
+      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::escape(static::strip_data(static::sanitize($filter["a.piece"]))) . "'";
       if(isset($filter["a.dt"])) {
-        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
-          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::escape(static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::escape(static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
-      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.best"]))) . "'";
-      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
-      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
-      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["c.id"]))) . "'";
-      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["d.id"]))) . "'";
-      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["e.id"]))) . "'";
-      if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.priceyard"]['from']))) . "'";
-      if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.priceyard"]['to']))) . "'";
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::escape(static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . static::escape(static::strip_data(static::sanitize($filter["a.best"]))) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::escape(static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::escape(static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . static::escape(static::strip_data(static::sanitize($filter["c.id"]))) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . static::escape(static::strip_data(static::sanitize($filter["d.id"]))) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . static::escape(static::strip_data(static::sanitize($filter["e.id"]))) . "'";
+      if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::escape(static::strip_data(static::sanitize($filter["a.priceyard"]['from']))) . "'";
+      if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::escape(static::strip_data(static::sanitize($filter["a.priceyard"]['to']))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]))) . "'";
-      if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.pvisible"]))) . "'";
+      if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]))) . "'";
+      if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["a.pvisible"]))) . "'";
       if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
       if(isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";
-      if(isset($filter['hidden']["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["b.cid"]))) . "'";
-      if(isset($filter['hidden']["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["c.id"]))) . "'";
-      if(isset($filter['hidden']["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["d.id"]))) . "'";
-      if(isset($filter['hidden']["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["e.id"]))) . "'";
-      if(isset($filter['hidden']["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.best"]))) . "'";
-      if(isset($filter['hidden']["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.specials"]))) . "'";
-      if(isset($filter['hidden']["a.priceyard"]['from']) && !empty((float)$filter['hidden']["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['from']))) . "'";
-      if(isset($filter['hidden']["a.priceyard"]['to']) && !empty((float)$filter['hidden']["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['to']))) . "'";
+      if(isset($filter['hidden']["b.cid"])) $result[] = "b.cid = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["b.cid"]))) . "'";
+      if(isset($filter['hidden']["c.id"])) $result[] = "c.id = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["c.id"]))) . "'";
+      if(isset($filter['hidden']["d.id"])) $result[] = "d.id = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["d.id"]))) . "'";
+      if(isset($filter['hidden']["e.id"])) $result[] = "e.id = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["e.id"]))) . "'";
+      if(isset($filter['hidden']["a.best"])) $result[] = "a.best = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["a.best"]))) . "'";
+      if(isset($filter['hidden']["a.specials"])) $result[] = "a.specials = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["a.specials"]))) . "'";
+      if(isset($filter['hidden']["a.priceyard"]['from']) && !empty((float)$filter['hidden']["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['from']))) . "'";
+      if(isset($filter['hidden']["a.priceyard"]['to']) && !empty((float)$filter['hidden']["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]['to']))) . "'";
       if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        $result = (!empty($result) ? " WHERE " . $result : '');
+        $result_where = implode(" AND ", $result);
+        if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
+          $type = static::$list_conditions[$filter['type']];
+          $result_where = (!empty($result_where) ? "cc.type = " . $type . ' AND ' . $result_where : "cc.type = " . $type);
+        }
+        $result_where = (!empty($result_where) ? " WHERE " . $result_where : '');
       }
-      return $result;
+      return $result_where;
     }
 
     public static function prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix = 'b_') {
@@ -80,6 +88,8 @@
       $row['in_cart'] = in_array($row['pid'], $cart);
       $row['sys_hide_price'] = $sys_hide_price;
       $row['price'] = $price;
+      $row['Discount'] = (round(($price - $saleprice) * 100) != 0);
+
       return $row;
     }
 
@@ -200,9 +210,9 @@
 
     public static function set_inventory($pid, $inventory = 0) {
       $q = "update fabrix_products set inventory=" . $inventory;
-      $q .= ($inventory == 0) ? ", pvisible = 0" : "";
+      $q .= ($inventory <= 0) ? ", pvisible = 0" : "";
       $q .= " where pid=" . $pid;
-      $res = mysql_query($q);
+      $res = static::query($q);
     }
 
     public static function get_product_params($pid) {
@@ -237,7 +247,7 @@
     }
 
     public static function inc_popular($pid) {
-      mysql_query("update fabrix_products set popular = popular+1 WHERE pid='$pid'");
+      static::query("update fabrix_products set popular = popular+1 WHERE pid='$pid'");
     }
 
     public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows) {
@@ -246,36 +256,49 @@
       $image_suffix = '';
       switch($type) {
         case 'new':
-          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and image1 is not null ORDER BY  dt DESC, pid DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY dt DESC, pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'carousel':
           $image_suffix = 'b_';
-          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and image1 is not null ORDER BY  dt DESC, pid DESC LIMIT " . $start . "," . $limit;
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 2";
+          $q .= " where c.type = 2 order by a.pid desc limit " . $start . "," . $limit;
           break;
         case 'best':
-          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and best = '1' and image1 is not null ORDER BY pid DESC LIMIT " . $start . "," . $limit;
+          $image_suffix = 'b_';
+          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and best = '1' and image1 is not null ORDER BY pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'bestsellers':
-          $q = "select n.*" .
-            " from (SELECT a.pid, SUM(b.quantity) as s" .
-            " FROM fabrix_products a" .
-            " LEFT JOIN fabrix_order_details b ON a . pid = b . product_id" .
-            " WHERE a . pnumber is not null and a . pvisible = '1' and a.image1 is not null" .
-            " GROUP BY a . pid" .
-            " ORDER BY s DESC" .
-            " LIMIT " . $start . "," . $limit . ") m" .
-            " LEFT JOIN fabrix_products n ON m.pid = n.pid";
+          $image_suffix = 'b_';
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 1";
+          $q .= " where c.type = 1 order by a.pid desc limit " . $start . "," . $limit;
           break;
         case 'popular':
-          $q = "SELECT * FROM fabrix_products WHERE  pnumber is not null and pvisible = '1' and image1 is not null ORDER BY popular DESC LIMIT " . $start . "," . $limit;
+          $image_suffix = 'b_';
+          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY popular DESC LIMIT " . $start . "," . $limit;
+          break;
+        case 'under_20':
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+          $q .= " where c.type = 3 and c.price <= 20 order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
+          break;
+        case 'under_40':
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+          $q .= " where c.type = 3 and c.price <= 40 order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
+        case 'under_60':
+          $q = "select a.* from collection c";
+          $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+          $q .= " where c.type = 3 and c.price <= 40 order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
           break;
       }
-      if($result = mysql_query($q)) {
-        $res_count_rows = mysql_num_rows($result);
+      if($result = static::query($q)) {
+        $res_count_rows = static::num_rows($result);
         $sys_hide_price = Model_Price::sysHideAllRegularPrices();
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
-        while($row = mysql_fetch_array($result)) {
+        while($row = static::fetch_array($result)) {
           $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix);
         }
       }
@@ -291,12 +314,12 @@
             " FROM fabrix_categories a" .
             " LEFT JOIN fabrix_product_categories c on a.cid = c.cid" .
             " LEFT JOIN fabrix_products b ON b.pid = c.pid" .
-            " WHERE b.pvisible = '1' and b.image1 is not null" .
+            " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null" .
             " ORDER BY a.displayorder, c.displayorder";
           break;
         case 'new':
           $q = "SELECT distinct a.*" .
-            " FROM (SELECT pid FROM fabrix_products WHERE pvisible = '1' and image1 is not null ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
+            " FROM (SELECT pid FROM fabrix_products WHERE priceyard > 0 and pvisible = '1' and image1 is not null ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
             " LEFT JOIN fabrix_product_categories c ON b.pid = c.pid" .
             " LEFT JOIN fabrix_categories a on a.cid = c.cid" .
             " ORDER BY a.displayorder, c.displayorder";
@@ -305,7 +328,7 @@
           $q = "SELECT distinct a.*" .
             " FROM fabrix_products b " .
             " INNER JOIN fabrix_manufacturers a ON b.manufacturerId = a.id" .
-            " WHERE b.pvisible = '1' and b.image1 is not null" .
+            " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null" .
             " ORDER BY b.dt DESC";
           break;
         case 'patterns':
@@ -313,7 +336,7 @@
             " FROM  fabrix_patterns a" .
             " LEFT JOIN fabrix_product_patterns c on a.id = c.patternId" .
             " LEFT JOIN fabrix_products b ON  b.pid = c.prodId" .
-            " WHERE b.pvisible = '1' and b.image1 is not null";
+            " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null";
           break;
         case 'blog_category':
           $q = "SELECT distinct a.*" .
@@ -323,8 +346,8 @@
             " WHERE b.post_status = 'publish'";
           break;
       }
-      $result = mysql_query($q);
-      while($row = mysql_fetch_assoc($result)) {
+      $result = static::query($q);
+      while($row = static::fetch_assoc($result)) {
         $res[] = $row;
       }
       return $res;
@@ -332,64 +355,66 @@
 
     public static function get_total_count($filter = null) {
       $response = 0;
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query = "select COUNT(n.pid) from (";
-        $query .= "SELECT a.pid, SUM(k.quantity) as s FROM " . static::$table . " a";
-        $query .= " LEFT JOIN fabrix_order_details k ON a.pid = k.product_id";
+      if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
+        $type = static::$list_conditions[$filter['type']];
+        $query = "select COUNT(a.pid) from collection cc";
+        $query .= " left join fabrix_products a on cc.pid = a.pid and cc.type = " . $type;
+        $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+        $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+        $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+        $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
+        $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+        $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+        $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       } else {
         $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
+        $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+        $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+        $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+        $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
+        $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+        $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+        $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       }
-      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query .= " GROUP BY a.pid";
-        $query .= " ORDER BY s DESC) m";
-        $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
-      }
-      if($result = mysql_query($query)) {
-        $response = mysql_fetch_row($result)[0];
+      if($result = static::query($query)) {
+        $response = static::fetch_row($result)[0];
       }
       return $response;
     }
 
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query = "select n.* from (";
-        $query .= "SELECT a.pid, SUM(k.quantity) as s FROM " . static::$table . " a";
-        $query .= " LEFT JOIN fabrix_order_details k ON a.pid = k.product_id";
+      if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
+        $type = static::$list_conditions[$filter['type']];
+        $query = "select DISTINCT a.* from collection cc";
+        $query .= " left join fabrix_products a on cc.pid = a.pid and cc.type = " . $type;
+        $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+        $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+        $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+        $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
+        $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+        $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+        $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       } else {
         $query = "SELECT DISTINCT a.* FROM " . static::$table . " a";
+        $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
+        $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
+        $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
+        $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
+        $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
+        $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
+        $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       }
-      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query .= " GROUP BY a.pid";
-      }
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
-      if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-        $query .= ") m";
-        $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
-      }
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
+      if($result = static::query($query)) {
+        $res_count_rows = static::num_rows($result);
         $sys_hide_price = Model_Price::sysHideAllRegularPrices();
         $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
-        while($row = mysql_fetch_array($result)) {
+        while($row = static::fetch_array($result)) {
           $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price);
         }
       }

@@ -78,7 +78,7 @@
         <div class="row" style="margin-bottom: 10px">
           <div class="col-xs-12">
             <div class="form-row">
-              <label><b>Categories:</b></label>
+              <label><b>Types:</b></label>
               <?= $data['categories']; ?>
             </div>
           </div>
@@ -94,7 +94,7 @@
         <div class="row" style="margin-bottom: 10px;">
           <div class="col-xs-12">
             <div class="form-row">
-              <label><b>Pattern Types:</b></label>
+              <label><b>Patterns:</b></label>
               <?= $data['patterns']; ?>
             </div>
           </div>
@@ -122,7 +122,7 @@
                     <input type="checkbox" name="best"
                            value="1" <?= (isset($data['best']) && ($data['best'] == "1")) ? 'checked' : '' ?>
                            class="input-checkbox">
-                    <b>Best Textile</b>
+                    <b>Best Textiles</b>
                   </label>
                 </div>
               </div>
@@ -239,7 +239,7 @@
             <option value="2" <?= ($data['weight_id'] == "2") ? 'selected' : ''; ?>>Medium</option>
             <option value="3" <?= ($data['weight_id'] == "3") ? 'selected' : ''; ?>>Heavy</option>
           </select>
-          <small style="color:#999;">
+          <small class="note">
             <b>NOTE:</b> choosing any of Light, Medium, Heavy overrides the default weight
             for the category.
           </small>

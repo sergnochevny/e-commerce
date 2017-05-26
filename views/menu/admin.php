@@ -1,12 +1,10 @@
 <?php if(Controller_Admin::is_logged()): ?>
-  <div class="col-xs-8 col-xs-pull-8 navbar-toggle navbar-icon toggle-menu" data-toggle="collapse"
-       data-target=".site-navigation .navbar-collapse" id="menu-button">
-    <div class="row pull-right">
-      <div class="hamburger">
-        <div class="inner"></div>
-      </div>
+  <button type="button" class="navbar-toggle toggle-menu" data-toggle="collapse"
+          data-target=".site-navigation .navbar-collapse" id="menu-button">
+    <div class="hamburger">
+      <div class="inner"></div>
     </div>
-  </div>
+  </button>
   <div>
     <div class="col-xs-12 pull-right navbar-collapse collapse navbar-collapse-top admin-menubar">
       <ul id="menu-header-menu" class="site-menu nav navbar-nav navbar-right">
@@ -20,7 +18,8 @@
                  href="<?= _A_::$app->router()->UrlTo('product'); ?>">Overview</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
-              <a data-waitloader data-link title="Categories" href="<?= _A_::$app->router()->UrlTo('categories'); ?>">Categories</a>
+              <a data-waitloader data-link title="Categories"
+                 href="<?= _A_::$app->router()->UrlTo('categories'); ?>">Types</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Manufacturers"
@@ -64,7 +63,8 @@
           </ul>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Discounts" href="<?= _A_::$app->router()->UrlTo('discount'); ?>">Discounts</a>
+          <a data-waitloader data-link title="Discounts"
+             href="<?= _A_::$app->router()->UrlTo('discount'); ?>">Discounts</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="Users" href="<?= _A_::$app->router()->UrlTo('users'); ?>">Users</a>
@@ -74,7 +74,8 @@
           <ul role="group" class="dropdown-menu" aria-hidden="true" aria-expanded="false"
               style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
-              <a data-waitloader data-link title="Blog Overview" href="<?= _A_::$app->router()->UrlTo('blog'); ?>">Overview</a>
+              <a data-waitloader data-link title="Blog Overview"
+                 href="<?= _A_::$app->router()->UrlTo('blog'); ?>">Overview</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Blog Categories"
@@ -86,7 +87,8 @@
           <a data-waitloader data-link title="All Orders" href="<?= _A_::$app->router()->UrlTo('orders'); ?>">Orders</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="System Settings" href="<?= _A_::$app->router()->UrlTo('settings/edit'); ?>">Settings</a>
+          <a data-waitloader data-link title="System Settings"
+             href="<?= _A_::$app->router()->UrlTo('settings/edit'); ?>">Settings</a>
         </li>
       </ul>
     </div>

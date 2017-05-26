@@ -29,12 +29,13 @@
           <div class="col-xs-6 col-sm-6">
             <div class="row form-row">
               <label for="roll" class="inline">
-                <input data-block="roll" type="checkbox" id="roll" name="roll" value="1" <?= $bShipRoll ? 'checked' : ''; ?>>
+                <input data-block="roll" type="checkbox" id="roll" name="roll"
+                       value="1" <?= $bShipRoll ? 'checked' : ''; ?>>
                 Ship my fabric on a roll.
               </label>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6">
+          <div class="col-xs-6 col-sm-6 note">
             <b>NOTE: </b> This cost $<?= number_format($rate_roll, 2); ?> USD
           </div>
         </div>
@@ -72,7 +73,7 @@
     </div>
 
     <div class="col-xs-12 col-sm-8 col-sm-offset-4 inner-offset-top">
-      <small style="color: #999">NOTE:
+      <small class="note">NOTE:
         <?php
           if($shipping == 1) {
             echo "Delivery can be generally expected within 5 days from the shipping date of the order (orders usually ship within 48 hours of payment).  Please note that this is an approximation as it relies on the mail, a service over which we have no control.";

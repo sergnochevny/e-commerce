@@ -13,8 +13,8 @@
       ];
     }
 
-    protected function build_order(&$sort, $view = false) {
-      parent::build_order($sort, $view);
+    protected function build_order(&$sort, $view = false, $filter = null) {
+      parent::build_order($sort, $view, $filter);
       if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
         $sort = ['a.order_date' => 'desc'];
       }
@@ -67,7 +67,6 @@
       if(!is_null(_A_::$app->get('user_id'))) $prms['user_id'] = _A_::$app->get('user_id');
 //      if(!is_null(_A_::$app->get('oid'))) $prms['d_id'] = _A_::$app->get('d_id');
 
-      $back_url = '';
       if(!is_null(_A_::$app->get('discount'))) {
         $prms['sid'] = _A_::$app->get('sid');
         $back_url = _A_::$app->router()->UrlTo('discount/view', $prms);

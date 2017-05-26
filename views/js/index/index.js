@@ -1,12 +1,15 @@
 'use strict';
+
 (function ($) {
   $(document).ready(function () {
 
-    $('.best-products').load($('#slider_url').val());
-
     $.get($('#get_url').val(), {}, function (data) {
       $('.special-products').html(data).owlCarousel({
-        responsive: {0: {items: 1}, 461: {items: 2}, 992: {items: 3}},
+        responsive: {
+          0: {items: 1},
+          461: {items: 2},
+          992: {items: 3}
+        },
         margin: 15,
         nav: true,
         navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
@@ -19,15 +22,19 @@
   });
 
   $(document).on('click', '[data-product]',
-    function(event){
+    function (event) {
       event.preventDefault();
-      if($(this).find(' > a').length){
+      if ($(this).find(' > a').length) {
         $('body').waitloader('show');
         location.href = $(this).find(' > a').attr('href');
       }
     }
   );
 
-  $(document).on('click', '[data-product] > a', function(event){event.stopPropagation();});
+  $(document).on('click', '[data-product] > a',
+    function (event) {
+      event.stopPropagation();
+    }
+  );
 
 })(jQuery);

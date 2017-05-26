@@ -1,4 +1,5 @@
 'use strict';
+
 (function ($) {
 
   $.danger_remove(8000);

@@ -1,6 +1,8 @@
 <?php
 
-  abstract class Model_Base {
+  class Model_Base {
+
+    protected static $intransaction = false;
 
     protected static $table;
     public static $filter_exclude_keys = ['scenario', 'reset'];
@@ -17,29 +19,29 @@
                 if(is_array($val[1])) {
                   foreach($val[1] as $like) {
                     if(strlen($where1) > 0) $where1 .= ' or ';
-                    $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::strip_data(static::sanitize($like))) . "%'";
+                    $where1 .= $key . " " . $val[0] . " '%" . static::escape(static::strip_data(static::sanitize($like))) . "%'";
                   }
                 } else {
-                  $where1 .= $key . " " . $val[0] . " '%" . mysql_real_escape_string(static::strip_data(static::sanitize($val[1]))) . "%'";
+                  $where1 .= $key . " " . $val[0] . " '%" . static::escape(static::strip_data(static::sanitize($val[1]))) . "%'";
                 }
                 break;
               case '=':
                 if(is_array($val[1])) {
                   foreach($val[1] as $like) {
                     if(strlen($where1) > 0) $where1 .= ' or ';
-                    $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::strip_data(static::sanitize($like))) . "'";
+                    $where1 .= $key . " " . $val[0] . " '" . static::escape(static::strip_data(static::sanitize($like))) . "'";
                   }
                 } else {
-                  $where1 .= $key . " " . $val[0] . " '" . mysql_real_escape_string(static::strip_data(static::sanitize($val[1]))) . "'";
+                  $where1 .= $key . " " . $val[0] . " '" . static::escape(static::strip_data(static::sanitize($val[1]))) . "'";
                 }
                 break;
               case 'between':
                 if(!empty($val[1]['from'])) {
-                  $where1 = $key . " >= '" . mysql_real_escape_string(static::strip_data(static::sanitize($val[1]['from']))) . "'";
+                  $where1 = $key . " >= '" . static::escape(static::strip_data(static::sanitize($val[1]['from']))) . "'";
                 }
                 if(!empty($val[1]['to'])) {
                   if(strlen($where1) > 0) $where1 .= " and ";
-                  $where1 .= $key . " <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($val[1]['to']))) . "'";
+                  $where1 .= $key . " <= '" . static::escape(static::strip_data(static::sanitize($val[1]['to']))) . "'";
                 }
                 break;
             }
@@ -70,9 +72,9 @@
     public static function get_fields() {
       $response = null;
       $query = "DESCRIBE " . static::$table;
-      $result = mysql_query($query);
+      $result = static::query($query);
       if($result) {
-        while($row = mysql_fetch_assoc($result)) {
+        while($row = static::fetch_assoc($result)) {
           $response[$row['Field']] = $row;
         }
       }
@@ -86,7 +88,7 @@
       $text = trim(strip_tags($text));
       $text = str_replace($quotes, '', $text);
       $text = str_replace($goodquotes, $repquotes, $text);
-      $text = ereg_replace(" +", " ", $text);
+      $text = preg_replace("/ +/i", " ", $text);
 
       return $text;
     }
@@ -96,9 +98,90 @@
         if(function_exists('get_magic_quotes_gpc') == true && get_magic_quotes_gpc() == 1) {
           $data = stripslashes($data);
         }
-        $data = htmlspecialchars($data);
+        $data = nl2br(htmlspecialchars($data));
         $data = trim($data);
       }
       return $data;
+    }
+
+    public static function transaction() {
+      if(!static::$intransaction) {
+        static::$intransaction = mysqli_begin_transaction(_A_::$app->getDBConnection('default'));
+        if(!static::$intransaction) {
+          throw new Exception(self::error());
+        }
+      }
+      return static::$intransaction;
+    }
+
+    public static function commit() {
+      $res = !static::$intransaction;
+      if(static::$intransaction) {
+        $res = mysqli_commit(_A_::$app->getDBConnection('default'));
+        if(!$res) {
+          throw new Exception(self::error());
+        }
+        static::$intransaction = false;
+      }
+      return $res;
+    }
+
+    public static function rollback() {
+      $res = !static::$intransaction;
+      if(static::$intransaction) {
+        $res = mysqli_rollback(_A_::$app->getDBConnection('default'));
+        if(!$res) {
+          throw new Exception(self::error());
+        }
+        static::$intransaction = false;
+      }
+      return $res;
+    }
+
+    public static function query($query) {
+      $res = mysqli_query(_A_::$app->getDBConnection('default'), $query);
+      if(!$res) {
+        throw new Exception(self::error());
+      }
+      return $res;
+    }
+
+    public static function escape($str) {
+      return mysqli_real_escape_string(_A_::$app->getDBConnection('default'), $str);
+    }
+
+    public static function error() {
+      return mysqli_error(_A_::$app->getDBConnection('default'));
+    }
+
+    public static function last_id() {
+      return mysqli_insert_id(_A_::$app->getDBConnection('default'));
+    }
+
+    public static function fetch_assoc($from) {
+      if($from) return mysqli_fetch_assoc($from);
+      return null;
+    }
+
+    public static function fetch_array($from, $resulttype = MYSQLI_BOTH) {
+      return mysqli_fetch_array($from, $resulttype);
+    }
+
+    public static function fetch_row($from) {
+      if($from) return mysqli_fetch_row($from);
+      return null;
+    }
+
+    public static function num_rows($from) {
+      if($from) return mysqli_num_rows($from);
+      return 0;
+    }
+
+    public static function affected_rows() {
+      return mysqli_affected_rows(_A_::$app->getDBConnection('default'));
+    }
+
+    public static function free_result($result) {
+      if($result) mysqli_free_result($result);
     }
   }

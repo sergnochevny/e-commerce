@@ -84,7 +84,7 @@ form .form-row select {
 form .form-row textarea {
     border: 2px solid #222222;
     border-radius: 0;
-    font-size: 12px;
+    font-size: 14px;
     min-height: 100px;
     padding: 10px;
 }
@@ -130,10 +130,6 @@ form .form-row .inline input {
 }
 
 .main-content-shop .page-title {
-    color: #222222;
-    font-size: 31px;
-    line-height: 40px;
-    margin: 0 0 50px;
     text-align: center;
     text-transform: uppercase;
 }

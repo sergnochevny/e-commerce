@@ -22,8 +22,10 @@
           <div class="row">Details</div>
         </div>
         <div class="col-xs-8 col-sm-12">
-          <div class="row cut-text-in-one-line"><?= $data['discount_amount']; ?>%
-            off </b><?= $data['discount_comment1']; ?></div>
+          <div class="row cut-text-in-one-line">
+            <?= $data['discount_amount']; ?>% off
+            </br><?= $data['discount_comment1']; ?>
+          </div>
         </div>
       </div>
       <div class="col-xs-12 col-sm-2 table-list-row-item">
@@ -31,7 +33,7 @@
           <div class="row">On</div>
         </div>
         <div class="col-xs-8 col-sm-12">
-          <div class="row"><?= $data['enabled'];?></div>
+          <div class="row"><?= $data['enabled']; ?></div>
         </div>
       </div>
       <div class="col-xs-12 col-sm-2 table-list-row-item">

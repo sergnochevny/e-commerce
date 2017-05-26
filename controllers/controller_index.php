@@ -105,6 +105,8 @@
      * @export
      */
     public function service() {
+      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
       $this->main->view('static/service');
     }
 
@@ -112,6 +114,8 @@
      * @export
      */
     public function estimator() {
+      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
       $this->main->view('static/estimate');
     }
 
@@ -119,6 +123,8 @@
      * @export
      */
     public function newsletter() {
+      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
       $this->main->view('static/newsletter');
     }
 
@@ -158,20 +164,20 @@
 //    {
 //        set_time_limit(14400);
 //        $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
-//            " WHERE  a.pnumber is not null and a.pvisible = '1'";
-//        $res = mysql_query($q_total);
-//        $total = mysql_fetch_row($res);
+//            " WHERE a.priceyard > 0 and a.pnumber is not null and a.pvisible = '1'";
+//        $res = mysqli_query(_A_::$app->getDBConnection('default'), $q_total);
+//        $total = mysqli_fetch_row($res);
 //        $total = $total[0];
 //
 //        $q = "SELECT pid FROM fabrix_products a" .
-//            " WHERE  a.pnumber is not null and a.pvisible = '1'";
-//        $res = mysql_query($q);
+//            " WHERE a.priceyard > 0 and a.pnumber is not null and a.pvisible = '1'";
+//        $res = mysqli_query(_A_::$app->getDBConnection('default'), $q);
 //        $model = new Model_Users();
 //        $f = [1, 2, 3, 4, 5];
 //        $total_break = 0;
 //        $total_break_p = 0;
 //        $total_break_v = 0;
-//        while ($row = mysql_fetch_assoc($res)) {
+//        while ($row = mysqli_fetch_assoc($res)) {
 //            $pid = $row['pid'];
 //            $images = $model->getImage($pid);
 //            foreach ($f as $idx) {

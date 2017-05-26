@@ -32,7 +32,7 @@
               <?php endif; ?>
               <?php if (isset($search['a.best'])): ?>
                 <div class="label label-search-info">Best
-                  textile: <?= isset($search['a.best']) && $search['a.best'] == 1 ? 'YES' : 'NO' ?></div>
+                  textiles: <?= isset($search['a.best']) && $search['a.best'] == 1 ? 'YES' : 'NO' ?></div>
               <?php endif; ?>
               <?php if (isset($search['a.specials'])): ?>
                 <div class="label label-search-info">

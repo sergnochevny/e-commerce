@@ -1,0 +1,107 @@
+<project name="make_project" basedir="." default="build">
+
+    <property name="JS_DIR" value="views/js"/>
+    <property name="CSS_DIR" value="views/css"/>
+
+    <fileset id="minjs" dir="${JS_DIR}/">
+        <exclude name="jquery*/"/>
+        <exclude name="jQuery*/"/>
+        <exclude name="jqmobile*/"/>
+        <exclude name="owlcarousel*/"/>
+        <exclude name="jquery*"/>
+        <exclude name="bootstrap*"/>
+        <exclude name="tooltip*"/>
+        <exclude name="inputmask*/"/>
+        <exclude name="modernizr*"/>
+        <exclude name="owl*"/>
+        <exclude name="char-counter*"/>
+        <exclude name="select.ui*"/>
+        <include name="**/*.min.js"/>
+        <include name="hints.min.js"/>
+        <include name="load.min.js"/>
+        <include name="paginator.min.js"/>
+        <include name="srcipt.min.js"/>
+        <include name="search.min.js"/>
+        <include name="ui.min.js"/>
+    </fileset>
+
+    <fileset id="tominjs" dir="${JS_DIR}/">
+        <exclude name="jquery*/"/>
+        <exclude name="jQuery*/"/>
+        <exclude name="jqmobile*/"/>
+        <exclude name="inputmask*/"/>
+        <exclude name="owlcarousel*/"/>
+        <exclude name="jquery*"/>
+        <exclude name="bootstrap*"/>
+        <exclude name="modernizr*"/>
+        <exclude name="owl*"/>
+        <exclude name="char-counter*"/>
+        <exclude name="select.ui*"/>
+        <exclude name="**/*.min.js"/>
+        <exclude name="*.min.js"/>
+        <include name="**/*.js"/>
+        <include name="hints.js"/>
+        <include name="load.js"/>
+        <include name="paginator.js"/>
+        <include name="srcipt.js"/>
+        <include name="search.js"/>
+        <include name="ui.js"/>
+    </fileset>
+
+    <fileset id="mincss" dir="${CSS_DIR}/">
+        <exclude name="jqmobile*/"/>
+        <exclude name="jquery*"/>
+        <exclude name="bootstrap*"/>
+        <exclude name="font-awesome*"/>
+        <exclude name="owlcarousel*/"/>
+        <exclude name="tooltipster*/"/>
+        <include name="*.min.css"/>
+        <include name="**/*.min.css"/>
+    </fileset>
+
+    <fileset id="tomincss" dir="${CSS_DIR}/">
+        <exclude name="jqmobile*/"/>
+        <exclude name="jquery*"/>
+        <exclude name="bootstrap*"/>
+        <exclude name="font-awesome*"/>
+        <exclude name="owlcarousel*/"/>
+        <exclude name="tooltipster*/"/>
+        <exclude name="*.min.css"/>
+        <exclude name="**/*.min.css"/>
+        <include name="*.css"/>
+        <include name="**/*.css"/>
+    </fileset>
+
+    <target name="remove_old">
+        <echo msg="Removing old min, gz files..."/>
+        <delete>
+            <fileset refid="minjs"/>
+            <fileset refid="mincss"/>
+            <fileset dir="${CSS_DIR}/">
+                <include name="*.gz"/>
+                <include name="**/*.gz"/>
+            </fileset>
+            <fileset dir="${JS_DIR}/">
+                <include name="*.gz"/>
+                <include name="**/*.gz"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="minifyjs">
+        <echo msg="Minifying JavaScript files..."/>
+        <jsmin targetDir="${JS_DIR}" suffix=".min">
+            <fileset refid="tominjs"/>
+        </jsmin>
+    </target>
+
+    <target name="minifycss">
+        <echo msg="Minifying CSS files..."/>
+        <jsmin targetDir="${CSS_DIR}" suffix=".min">
+            <fileset refid="tomincss"/>
+        </jsmin>
+    </target>
+
+    <target name="build" depends="remove_old, minifyjs, minifycss">
+    </target>
+</project>

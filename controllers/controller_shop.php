@@ -21,7 +21,7 @@
       $res = parent::build_search_filter($filter, $view);
       _A_::$app->setSession('sidebar_idx', 0);
       $filter['hidden']['a.pnumber'] = 'null';
-      if(!isset($filter['hidden']['a.priceyard']) && !isset($filter['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
+      if(!isset($filter['hidden']['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
       $filter['hidden']['a.pvisible'] = '1';
       $filter['hidden']['a.image1'] = 'null';
 
@@ -92,10 +92,6 @@
             $res['hidden']['a.best'] = '1';
             break;
           case 'specials':
-            unset($filter['a.specials']);
-            unset($res['a.specials']);
-            $filter['hidden']['a.specials'] = '1';
-            $res['hidden']['a.specials'] = '1';
             _A_::$app->setSession('sidebar_idx', 6);
             break;
         }
@@ -103,20 +99,13 @@
       return $res;
     }
 
-    protected function build_order(&$sort, $view = false) {
-      $type = isset($sort['type']) ? $sort['type'] : null;
-      unset($sort['type']);
+    protected function build_order(&$sort, $view = false, $filter = null) {
+      $type = isset($filter['type']) ? $filter['type'] : null;
       if(isset($type)) {
         switch($type) {
-          case 'last':
-            $sort['a.dt'] = 'desc';
-            $sort['a.pid'] = 'desc';
-            break;
           case 'popular':
             $sort['a.popular'] = 'desc';
-            break;
-          case 'bestsellers':
-            $sort['s'] = 'desc';
+            $sort['a.pid'] = 'desc';
             break;
           default:
             $sort['a.pid'] = 'desc';
@@ -221,13 +210,13 @@
     protected function get_list_by_type($type = 'last', $max_count_items = 50) {
       $this->template->vars('page_title', $this->page_title);
       $filter['type'] = $type;
-      $sort['type'] = $type;
       $search_form = $this->build_search_filter($filter);
       $idx = $this->load_search_filter_get_idx($filter);
       $pages = _A_::$app->session('pages');
+      $per_pages = _A_::$app->session('per_pages');
       $sort = $this->load_sort($filter);
       $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
-      $per_page = $this->per_page;
+      $per_page = !empty($per_pages[$this->controller][$idx]) ? $per_pages[$this->controller][$idx] : $this->per_page;
       $total = Model_Shop::get_total_count($filter);
       if(($total > $max_count_items) && ($max_count_items > 0)) $total = $max_count_items;
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
@@ -241,15 +230,11 @@
       $this->search_form($search_form);
       $this->template->vars('rows', $rows);
       $this->template->vars('sort', $sort);
-      ob_start();
-      $this->template->view_layout($type);
-      $rows = ob_get_contents();
-      ob_end_clean();
+      $this->template->vars('list', $this->template->view_layout_return($type));
       $this->template->vars('count_rows', $res_count_rows);
-      $this->template->vars('list', $rows);
       (new Controller_Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, null, $per_page);
       $this->before_list_layout();
-      $this->main->view_layout('list');
+      return $this->main->view_layout_return('list');
     }
 
     protected function widget_products($type, $start, $limit, $layout = 'list') {
@@ -258,8 +243,19 @@
       $this->template->view_layout('widget/' . $layout);
     }
 
+    protected function widget_products_under($limit, $layout = 'list_under') {
+      $this->template->vars('rows', Model_Shop::get_widget_list_by_type('under_20', 0, 5, $row_count));
+      $this->template->vars('list_under_20', $this->template->view_layout_return('widget/list'));
+      $this->template->vars('rows', Model_Shop::get_widget_list_by_type('under_40', 0, 5, $row_count));
+      $this->template->vars('list_under_40', $this->template->view_layout_return('widget/list'));
+      $this->template->vars('rows', Model_Shop::get_widget_list_by_type('under_60', 0, 5, $row_count));
+      $this->template->vars('list_under_60', $this->template->view_layout_return('widget/list'));
+      $this->template->view_layout('widget/' . $layout);
+    }
+
     protected function build_back_url(&$back_url = null, &$prms = null) {
       $prms = null;
+      if((!empty(_A_::$app->get('method')))) $prms['method'] = _A_::$app->get('method');
       if((!empty(_A_::$app->get('cat')))) $prms['cat'] = _A_::$app->get('cat');
       if((!empty(_A_::$app->get('mnf')))) $prms['mnf'] = _A_::$app->get('mnf');
       if((!empty(_A_::$app->get('ptrn')))) $prms['ptrn'] = _A_::$app->get('ptrn');
@@ -267,9 +263,9 @@
       if((!empty(_A_::$app->get('prc')))) $prms['prc'] = _A_::$app->get('prc');
       if(!is_null(_A_::$app->get('back'))) {
         $back = _A_::$app->get('back');
-        if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', '']))
-          $back_url = $back;
-        elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials'])) {
+        if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', 'home', 'recommends'])) {
+          $back_url = ($back == 'home' ? '' : $back);
+        } elseif(in_array($back, ['bestsellers', 'last', 'popular', 'specials', 'under'])) {
           $back_url = 'shop' . DS . $back;
         } else {
           $back_url = base64_decode(urldecode($back));
@@ -308,6 +304,7 @@
       return [
         'product' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
         'specials' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
+        'under' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
         'last' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
         'popular' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
         'best' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
@@ -345,10 +342,7 @@
     public function last() {
       $this->template->vars('cart_enable', '_');
       $this->page_title = "What's New";
-      ob_start();
-      $this->get_list_by_type('last', 50);
-      $list = ob_get_contents();
-      ob_end_clean();
+      $list = $this->get_list_by_type('last', 50);
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
       $this->main->view('shop');
@@ -362,48 +356,19 @@
       $this->page_title = "Discount Decorator and Designer Fabrics";
       $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates.<br>All items available on a FIRST COME, FIRST SERVED basis only.';
       $this->main->template->vars('annotation', $annotation);
-      ob_start();
-      $this->get_list_by_type('specials', 360);
-      $list = ob_get_contents();
-      ob_end_clean();
+      $list = $this->get_list_by_type('specials', (!is_null(_A_::$app->keyStorage()->shop_specials_amount) ? _A_::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
       $this->main->view('shop');
     }
-
-//    public function modify_products_images() {
-//      $c_image = new Controller_Image();
-//      $per_page = 12;
-//      $page = 1;
-//
-//      $total = Model_Shop::get_total_count();
-//      $count = 0;
-//      while($page <= ceil($total / $per_page)) {
-//        $start = (($page++ - 1) * $per_page);
-//        $rows = Model_Shop::get_list($start, $per_page);
-//        foreach($rows as $row) {
-//          for($i = 1; $i < 5; $i++) {
-//            $fimage = $row['image' . $i];
-//            if(isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
-//              $c_image->modify_products($fimage);
-//            }
-//          }
-//        }
-//        $count += count($rows);
-//        echo $count;
-//      }
-//    }
 
     /**
      * @export
      */
     public function popular() {
       $this->template->vars('cart_enable', '_');
-      $this->page_title = 'Popular Textile';
-      ob_start();
-      $this->get_list_by_type('popular', 360);
-      $list = ob_get_contents();
-      ob_end_clean();
+      $this->page_title = 'Popular Textiles';
+      $list = $this->get_list_by_type('popular', 360);
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
       $this->main->view('shop');
@@ -414,11 +379,8 @@
      */
     public function best() {
       $this->template->vars('cart_enable', '_');
-      $this->page_title = 'Best Textile';
-      ob_start();
-      $this->get_list_by_type('best', 360);
-      $list = ob_get_contents();
-      ob_end_clean();
+      $this->page_title = 'Best Textiles';
+      $list = $this->get_list_by_type('best', 360);
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
       $this->main->view('shop');
@@ -430,10 +392,19 @@
     public function bestsellers() {
       $this->template->vars('cart_enable', '_');
       $this->page_title = 'Best Sellers';
-      ob_start();
-      $this->get_list_by_type('bestsellers', 360);
-      $list = ob_get_contents();
-      ob_end_clean();
+      $list = $this->get_list_by_type('bestsellers', (!is_null(_A_::$app->keyStorage()->shop_bestsellers_amount) ? _A_::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT));
+      if(_A_::$app->request_is_ajax()) exit($list);
+      $this->template->vars('list', $list);
+      $this->main->view('shop');
+    }
+
+    /**
+     * @export
+     */
+    public function under() {
+      $this->template->vars('cart_enable', '_');
+      $this->page_title = 'Under $100';
+      $list = $this->get_list_by_type('under', (!is_null(_A_::$app->keyStorage()->shop_under_amount) ? _A_::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT));
       if(_A_::$app->request_is_ajax()) exit($list);
       $this->template->vars('list', $list);
       $this->main->view('shop');
@@ -461,6 +432,10 @@
           break;
         case 'bsells_horiz':
           $this->widget_products('bestsellers', 0, 6, 'widget_bsells_products_horiz');
+          break;
+        case 'under':
+          $this->widget_products_under(5, 'list_under');
+          break;
       }
     }
 
@@ -492,9 +467,9 @@
           $field_name = "Sale price:";
         }
         if($data['bSystemDiscount']) {
-          $field_value = sprintf("Reduced a further %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
+          $field_value = sprintf("Reduced further by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
         } else {
-          $field_value = sprintf("Reduced by %s.<br><strong>%s</strong>", $data['rDiscount'], $data['sDiscountPrice']);
+          $field_value = sprintf("Reduced by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
         }
         $this->template->vars('field_name', $field_name);
         $this->template->vars('field_value', $field_value);
@@ -537,5 +512,92 @@
     public function view($partial = false, $required_access = false) { }
 
     public static function sitemap_order() { return 6; }
+
+//    /**
+//     * @export
+//     */
+//    public function update_related() {
+//      $per_page = 200;
+//      $page = 1;
+//      $total = Model_Product::get_total_count();
+//      $count = 0;
+//      $res_count_rows = 0;
+//      $filter = null;
+//      $sort = null;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Product::get_list($start, $per_page, $res_count_rows, $filter, $sort);
+//        foreach($rows as $row) {
+//          for($i = 1; $i < 6; $i++) {
+//            if(!empty(trim($row['rpnumber' . $i]))) {
+//              if(!empty($pid = Model_Product::get_id_by_condition(" LOWER(pnumber) = '" . strtolower($row['rpnumber' . $i]) . "'"))) {
+//                $data = ['pid' => $row['pid'], 'r_pid' => $pid];
+//                Model_Related::save($data);
+//              };
+//            }
+//          }
+//        }
+//        $count += count($rows);
+//        echo $count;
+//      }
+//    }
+
+//    /**
+//     * @export
+//     */
+//    public function update_products() {
+//      $per_page = 200;
+//      $page = 1;
+//      $total = Model_Product::get_total_count();
+//      $count = 0;
+//      $res_count_rows = 0;
+//      $filter = null;
+//      $sort = null;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Product::get_list($start, $per_page, $res_count_rows, $filter, $sort);
+//        foreach($rows as $data){
+//          if(empty($data['sdesc'])) $data['sdesc'] = trim($data['ldesc']);
+//          if(empty($data['metadescription'])) $data['metadescription'] = $data['sdesc'];
+//          if(empty($data['metatitle'])) $data['metatitle'] = $data['pname'];
+//          if(empty($data['metakeywords'])) {
+//            $data['metakeywords'] = preg_replace('/[^a-zA-Z0-9]+/i', ' ', $data['metadescription']);
+//            $data['metakeywords'] = trim(preg_replace('/\s{2,}/', ' ', $data['metakeywords']));
+//            $data['metakeywords'] = strtolower(implode(',', array_filter(array_map('trim', explode(' ', $data['metakeywords'])))));
+//          }
+//          try{
+//            Model_Product::save($data);
+//          } finally{
+//
+//          }
+//        }
+//
+//        $count += count($rows);
+//        echo $count;
+//      }
+//    }
+
+//    public function modify_products_images() {
+//      $c_image = new Controller_Image();
+//      $per_page = 12;
+//      $page = 1;
+//
+//      $total = Model_Shop::get_total_count();
+//      $count = 0;
+//      while($page <= ceil($total / $per_page)) {
+//        $start = (($page++ - 1) * $per_page);
+//        $rows = Model_Shop::get_list($start, $per_page);
+//        foreach($rows as $row) {
+//          for($i = 1; $i < 5; $i++) {
+//            $fimage = $row['image' . $i];
+//            if(isset($fimage) && is_string($fimage) && strlen($fimage) > 0) {
+//              $c_image->modify_products($fimage);
+//            }
+//          }
+//        }
+//        $count += count($rows);
+//        echo $count;
+//      }
+//    }
 
   }

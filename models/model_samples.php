@@ -32,6 +32,7 @@
           (($numberSamples - (!empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX)) *
             (!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL));
       }
+      return null;
     }
 
     public static function allowSamplesExpressShipping() {
@@ -57,8 +58,8 @@
     public static function allowedSamples($pid) {
 
       $sql = sprintf("SELECT piece FROM fabrix_products WHERE pid = %u ", $pid);
-      $res = mysql_query($sql);
-      $piece = mysql_fetch_assoc($res);
+      $res = static::query( $sql);
+      $piece = static::fetch_assoc($res);
       $piece = $piece['piece'];
 
       if($piece == 1) return false;
@@ -67,11 +68,11 @@
       $sql = sprintf("SELECT pid FROM fabrix_product_categories WHERE pid = %u AND (cid = %u OR cid = %u OR cid = %u)", $pid, 14, 4, 26);
 
       #if the query fails, return false to disallow samples
-      if(($res = mysql_query($sql)) === false) {
+      if(($res = static::query( $sql)) === false) {
         return false;
       }
 
-      if(mysql_num_rows($res) > 0) {
+      if(static::num_rows($res) > 0) {
         return false;
       } else {
         return true;

@@ -32,11 +32,11 @@
     }
 
     public static function is_user_remember($remember) {
-      $q = "select * from fabrix_accounts where remember='" . mysql_real_escape_string($remember) . "'";
-      $res = mysql_query($q);
+      $q = "select * from fabrix_accounts where remember='" . static::escape( $remember) . "'";
+      $res = static::query( $q);
       if($res) {
-        self::$user = mysql_fetch_assoc($res);
-        if(mysql_num_rows($res) > 0) {
+        self::$user = static::fetch_assoc($res);
+        if(static::num_rows($res) > 0) {
           $mail = self::$user['email'];
           $hash = self::$user['password'];
           $hash = md5($mail) . $hash;
@@ -52,29 +52,28 @@
     }
 
     public static function is_user($mail) {
-      $res = false;
-      $q = "select * from fabrix_accounts where email='" . mysql_real_escape_string($mail) . "'";
-      $res = mysql_query($q);
-      $res = $res && (mysql_num_rows($res) > 0);
+      $q = "select * from fabrix_accounts where email='" . static::escape( $mail) . "'";
+      $res = static::query( $q);
+      $res = $res && (static::num_rows($res) > 0);
       return $res;
     }
 
     public static function user_authorize($mail, $password) {
-      $mail = mysql_real_escape_string($mail);
-      $password = mysql_real_escape_string($password);
+      $mail = static::escape( $mail);
+      $password = static::escape( $password);
       $q = "select * from fabrix_accounts where email='$mail'";
-      $res = mysql_query($q);
+      $res = static::query( $q);
       if($res) {
-        if(mysql_num_rows($res) > 0) {
-          self::$user = mysql_fetch_assoc($res);
+        if(static::num_rows($res) > 0) {
+          self::$user = static::fetch_assoc($res);
           $hash = self::$user['password'];
           if($hash == self::check($password, $hash)) {
             if(!is_null(_A_::$app->post('rememberme')) && _A_::$app->post('rememberme') == 1) {
               $hash = md5($mail) . $hash;
               $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
               $hash = self::hash_($hash, $salt, self::$cost);
-              $q = "update fabrix_accounts set remember = '" . mysql_real_escape_string($hash) . "' where aid = " . self::$user['aid'];
-              if(mysql_query($q)) setcookie('_r', $hash, time() + 60 * 60 * 24 * 30);
+              $q = "update fabrix_accounts set remember = '" . static::escape( $hash) . "' where aid = " . self::$user['aid'];
+              if(static::query( $q)) setcookie('_r', $hash, time() + 60 * 60 * 24 * 30);
             }
             return true;
           }
@@ -84,11 +83,11 @@
     }
 
     public static function is_admin_remember($remember) {
-      $q = "select * from fabrix_admins where rememberme ='" . mysql_real_escape_string($remember) . "'";
-      $res = mysql_query($q);
+      $q = "select * from fabrix_admins where rememberme ='" . static::escape( $remember) . "'";
+      $res = static::query( $q);
       if($res) {
-        self::$admin = mysql_fetch_assoc($res);
-        if(mysql_num_rows($res) > 0) {
+        self::$admin = static::fetch_assoc($res);
+        if(static::num_rows($res) > 0) {
           $login = self::$admin['login'];
           $hash = self::$admin['password'];
           $hash = md5($login) . $hash;
@@ -104,29 +103,28 @@
     }
 
     public static function is_admin($login) {
-      $res = false;
-      $q = "select * from fabrix_admins where login='" . mysql_real_escape_string($login) . "'";
-      $res = mysql_query($q);
-      $res = $res && (mysql_num_rows($res) > 0);
+      $q = "select * from fabrix_admins where login='" . static::escape( $login) . "'";
+      $res = static::query( $q);
+      $res = $res && (static::num_rows($res) > 0);
       return $res;
     }
 
     public static function admin_authorize($login, $password) {
-      $login = mysql_real_escape_string($login);
-      $password = mysql_real_escape_string($password);
+      $login = static::escape( $login);
+      $password = static::escape( $password);
       $q = "select * from fabrix_admins where login='$login'";
-      $res = mysql_query($q);
+      $res = static::query( $q);
       if($res) {
-        self::$admin = mysql_fetch_assoc($res);
-        if(mysql_num_rows($res) > 0) {
+        self::$admin = static::fetch_assoc($res);
+        if(static::num_rows($res) > 0) {
           $hash = self::$admin['password'];
           if($hash == self::check($password, $hash)) {
             if(!is_null(_A_::$app->post('rememberme')) && _A_::$app->post('rememberme') == 1) {
               $hash = md5($login) . $hash;
               $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
               $hash = self::hash_($hash, $salt, self::$cost);
-              $q = "update fabrix_admins set rememberme = '" . mysql_real_escape_string($hash) . "' where id = " . self::$admin['id'];
-              if(mysql_query($q)) setcookie('_ar', $hash, time() + 60 * 60 * 24 * 30);
+              $q = "update fabrix_admins set rememberme = '" . static::escape( $hash) . "' where id = " . self::$admin['id'];
+              if(static::query( $q)) setcookie('_ar', $hash, time() + 60 * 60 * 24 * 30);
             }
             return true;
           }

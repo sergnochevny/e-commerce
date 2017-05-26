@@ -6,24 +6,34 @@
 
     protected static function build_where(&$filter) {
       $result = "";
-      if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pname"]))) . "%'";
-      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pvisible"])))."'";
-      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.piece"])))."'";
+      if(!empty($filter["a.pname"])) {
+        foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) {
+          if(!empty($item)) $result[] = "a.pname LIKE '%" . static::escape(static::strip_data(static::sanitize($item))) . "%'";
+        }
+      }
+      if(isset($filter["a.pvisible"])) {
+        $result[] = "a.pvisible = '" .
+          static::escape(static::strip_data(static::sanitize($filter["a.pvisible"]))) . "'";
+      }
+      if(isset($filter["a.piece"])) {
+        $result[] = "a.piece = '" .
+          static::escape(static::strip_data(static::sanitize($filter["a.piece"]))) . "'";
+      }
       if(isset($filter["a.dt"])) {
-        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
-          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::escape(static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::escape(static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
-      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.best"]))) . "'";
-      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
-      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
-      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["c.id"]))) . "'";
-      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["d.id"]))) . "'";
-      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["e.id"]))) . "'";
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::escape(static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . static::escape(static::strip_data(static::sanitize($filter["a.best"]))) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::escape(static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::escape(static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . static::escape(static::strip_data(static::sanitize($filter["c.id"]))) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . static::escape(static::strip_data(static::sanitize($filter["d.id"]))) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . static::escape(static::strip_data(static::sanitize($filter["e.id"]))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
-        if(strlen(trim($result)) > 0){
+        if(strlen(trim($result)) > 0) {
           $result = " WHERE " . $result;
           $filter['active'] = true;
         }
@@ -58,12 +68,12 @@
             $select = implode(',', isset($data['colors']) ? array_keys($data['colors']) : []);
           }
           if(strlen($select) > 0) {
-            $results = mysql_query(
+            $results = static::query(
               "select * from fabrix_color" .
               " where id in ($select)" .
               " order by color"
             );
-            while($row = mysql_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $filters[$row['id']] = $row['color'];
             }
           }
@@ -77,12 +87,12 @@
             $select = implode(',', isset($data['patterns']) ? array_keys($data['patterns']) : []);
           }
           if(strlen($select) > 0) {
-            $results = mysql_query(
+            $results = static::query(
               "select * from fabrix_patterns" .
               " where id in ($select)" .
               " order by pattern"
             );
-            while($row = mysql_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $filters[$row['id']] = $row['pattern'];
             }
           }
@@ -101,14 +111,14 @@
             }
           }
           if(strlen($select) <= 0) $select = '1';
-          $results = mysql_query(
+          $results = static::query(
             "select a.cid, a.cname, (max(b.display_order)+1) as pos from fabrix_categories a" .
             " left join fabrix_product_categories b on b.cid = a.cid" .
             " where a.cid in ($select)" .
             " group by a.cid, a.cname" .
             " order by a.cname"
           );
-          while($row = mysql_fetch_array($results)) {
+          while($row = static::fetch_array($results)) {
             $filters[$row['cid']] = [$row['cname'], isset($categories[$row['cid']]) ? $categories[$row['cid']] : $row['pos']];
           }
           break;
@@ -120,49 +130,49 @@
       $data = [];
       switch($type) {
         case 'patterns':
-          $results = mysql_query(
+          $results = static::query(
             "select a.* from fabrix_product_patterns b" .
             " inner join fabrix_patterns a on b.patternId=a.id " .
             " where b.prodId='$id'" .
             " order by a.pattern"
           );
           if($results)
-            while($row = mysql_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $data[$row['id']] = $row['pattern'];
             }
           break;
         case 'colors':
-          $results = mysql_query(
+          $results = static::query(
             "select a.* from fabrix_product_colors b" .
             " inner join fabrix_color a on b.colorId=a.id " .
             " where b.prodId='$id'" .
             " order by a.color"
           );
           if($results)
-            while($row = mysql_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $data[$row['id']] = $row['color'];
             }
           break;
         case 'categories':
-          $results = mysql_query(
+          $results = static::query(
             "select a.cid, a.cname, b.display_order from fabrix_product_categories b" .
             " inner join fabrix_categories a on b.cid=a.cid " .
             " where b.pid='$id'" .
             " order by a.cname"
           );
           if($results)
-            while($row = mysql_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $data[$row['cid']] = [$row['cname'], $row['display_order']];
             }
           break;
         case 'manufacturers':
-          $results = mysql_query(
+          $results = static::query(
             "select a.cid, a.manufacturer" .
             " from fabrix_manufacturers a" .
             " order by a.manufacturer"
           );
           if($results)
-            while($row = mysql_fetch_array($results)) {
+            while($row = static::fetch_array($results)) {
               $data[$row['id']] = $row['manufacturer'];
             }
           break;
@@ -171,11 +181,11 @@
     }
 
     public static function get_filter_data($type, &$count, $start = 0, $search = null) {
-      $search = mysql_real_escape_string($search);
+      $search = static::escape($search);
       $filter = null;
       $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
       $start = isset($start) ? $start : 0;
-      $search = mysql_escape_string(static::sanitize($search));
+      $search = static::escape(static::sanitize($search));
       switch($type) {
         case 'colors':
           $q = "select count(id) from fabrix_color";
@@ -183,8 +193,8 @@
             $q .= " where color like '%$search%'";
             $q .= " or color like '%$search%'";
           }
-          $results = mysql_query($q);
-          $row = mysql_fetch_array($results);
+          $results = static::query($q);
+          $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_color";
           if(isset($search) && (strlen($search) > 0)) {
@@ -193,8 +203,8 @@
           }
           $q .= " order by color";
           $q .= " limit $start, $filter_limit";
-          $results = mysql_query($q);
-          while($row = mysql_fetch_array($results)) {
+          $results = static::query($q);
+          while($row = static::fetch_array($results)) {
             $filter[] = [$row['id'], $row['color']];
           }
           break;
@@ -203,8 +213,8 @@
           if(isset($search) && (strlen($search) > 0)) {
             $q .= " where pattern like '%$search%'";
           }
-          $results = mysql_query($q);
-          $row = mysql_fetch_array($results);
+          $results = static::query($q);
+          $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_patterns";
           if(isset($search) && (strlen($search) > 0)) {
@@ -212,8 +222,8 @@
           }
           $q .= " order by pattern";
           $q .= " limit $start, $filter_limit";
-          $results = mysql_query($q);
-          while($row = mysql_fetch_array($results)) {
+          $results = static::query($q);
+          while($row = static::fetch_array($results)) {
             $filter[] = [$row['id'], $row['pattern']];
           }
           break;
@@ -222,8 +232,8 @@
           if(isset($search) && (strlen($search) > 0)) {
             $q .= " where cname like '%$search%'";
           }
-          $results = mysql_query($q);
-          $row = mysql_fetch_array($results);
+          $results = static::query($q);
+          $row = static::fetch_array($results);
           $count = $row[0];
           $q = "select * from fabrix_categories";
           if(isset($search) && (strlen($search) > 0)) {
@@ -231,8 +241,8 @@
           }
           $q .= " order by cname";
           $q .= " limit $start, $filter_limit";
-          $results = mysql_query($q);
-          while($row = mysql_fetch_array($results)) {
+          $results = static::query($q);
+          while($row = static::fetch_array($results)) {
             $filter[] = [$row['cid'], $row['cname']];
           }
       }
@@ -261,8 +271,8 @@
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if($result = mysql_query($query)) {
-        $response = mysql_fetch_row($result)[0];
+      if($result = static::query($query)) {
+        $response = static::fetch_row($result)[0];
       }
       return $response;
     }
@@ -282,9 +292,9 @@
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
 
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
-        while($row = mysql_fetch_array($result)) {
+      if($result = static::query($query)) {
+        $res_count_rows = static::num_rows($result);
+        while($row = static::fetch_array($result)) {
           $filename = 'upload/upload/b_' . $row['image1'];
           if(!(file_exists($filename) && is_file($filename))) {
             $filename = 'upload/upload/not_image.jpg';
@@ -340,9 +350,9 @@
       ];
       if(isset($id)) {
         $q = "select * from " . static::$table . " where pid = '" . $id . "'";
-        $result = mysql_query($q);
+        $result = static::query($q);
         if($result) {
-          $data = mysql_fetch_assoc($result);
+          $data = static::fetch_assoc($result);
         }
       }
       return $data;
@@ -395,10 +405,17 @@
         }
       }
       extract($data);
+      /**
+       * @var string $image1
+       * @var string $image2
+       * @var string $image3
+       * @var string $image4
+       * @var string $image5
+       */
       $q = "update " . static::$table . " set" .
         " image1='$image1', image2='$image2', image3='$image3'," .
         " image4='$image4', image5='$image5' where pid = '$pid'";
-      return mysql_query($q);
+      return static::query($q);
     }
 
     public static function delete_images(&$data) {
@@ -409,126 +426,152 @@
     }
 
     public static function save(&$data) {
-      extract($data);
+      static::transaction();
+      try {
+        extract($data);
 
-      $metatitle = mysql_real_escape_string($metatitle);
-      $metadescription = mysql_real_escape_string($metadescription);
-      $metakeywords = mysql_real_escape_string($metakeywords);
-      $pname = mysql_real_escape_string($pname);
-      $sdesc = mysql_real_escape_string($sdesc);
-      $ldesc = mysql_real_escape_string($ldesc);;
-      $stock_number = mysql_real_escape_string($stock_number);
+        $metatitle = static::escape($metatitle);
+        $metadescription = static::escape($metadescription);
+        $metakeywords = static::escape($metakeywords);
+        $pname = static::escape($pname);
+        $sdesc = static::escape($sdesc);
+        $ldesc = static::escape($ldesc);;
+        $stock_number = static::escape($stock_number);
+        $dimensions = static::escape($dimensions);
 
-      if(isset($pid)) {
-        $sql = "update " . static::$table . " set";
-        if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
-        $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
-        $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
-        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
-        $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
-        $sql .= " piece='$piece', whole = '$whole'  WHERE pid ='$pid'";
-        $result = mysql_query($sql);
-      } else {
-        $sql = "insert into " . static::$table . " set";
-        if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
-        $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
-        $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
-        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
-        $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
-        $sql .= " piece='$piece', whole = '$whole'";
-        $result = mysql_query($sql);
-        if($result) {
-          $pid = mysql_insert_id();
-          $data['pid'] = $pid;
+        if(isset($pid)) {
+          $sql = "update " . static::$table . " set";
+          if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
+          $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
+          $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
+          $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
+          $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
+          $sql .= " piece='$piece', whole = '$whole'  WHERE pid ='$pid'";
+          $result = static::query($sql);
+        } else {
+          $sql = "insert into " . static::$table . " set";
+          if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
+          $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
+          $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
+          $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
+          $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
+          $sql .= " piece='$piece', whole = '$whole'";
+          $result = static::query($sql);
+          if($result) {
+            $pid = static::last_id();
+            $data['pid'] = $pid;
+          }
         }
-      }
-      if($result) $result = static::update_images($pid, $data);
-      if($result) {
-        $res = true;
-        if($res && (count($categories) > 0)) {
-          $res = mysql_query("select * from fabrix_product_categories  where pid='$pid'");
-          if($res) {
-            $result = $res;
-            while($category = mysql_fetch_assoc($res)) {
-              $result = $result && mysql_query("DELETE FROM fabrix_product_categories WHERE pid = " . $category['pid'] . " and cid = " . $category['cid']);
-              $result = $result && mysql_query("update fabrix_product_categories SET display_order=display_order-1 where display_order > " . $category['display_order'] . " and cid=" . $category['cid']);
-              if(!$result) {
-                $res = $result;
-                break;
+        if($result) $result = static::update_images($pid, $data);
+        if($result) {
+          $res = true;
+          if($res && (count($categories) > 0)) {
+            $res = static::query("select * from fabrix_product_categories  where pid='$pid'");
+            if($res) {
+              $result = $res;
+              while($category = static::fetch_assoc($res)) {
+                $result = $result && static::query("DELETE FROM fabrix_product_categories WHERE pid = " . $category['pid'] . " and cid = " . $category['cid']);
+                $result = $result && static::query("update fabrix_product_categories SET display_order=display_order-1 where display_order > " . $category['display_order'] . " and cid=" . $category['cid']);
+                if(!$result) {
+                  $res = $result;
+                  break;
+                }
+              }
+            }
+          } elseif($res) {
+            if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
+              static::query("DELETE FROM fabrix_product_categories WHERE pid = $pid");
+              $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" .
+                " from fabrix_categories a" .
+                " left join fabrix_product_categories b on a.cid = b.cid" .
+                " where a.cid = 1";
+              $res = static::query($q);
+              if($res) {
+                $row = static::fetch_array($res, MYSQLI_NUM);
+                $categories = [$row['cid'] => $row['pos']];
+                $data['categories'] = $categories;
               }
             }
           }
-        } elseif($res) {
-          if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
-            mysql_query("DELETE FROM fabrix_product_categories WHERE pid = $pid");
-            $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" .
-              " from fabrix_categories a" .
-              " left join fabrix_product_categories b on a.cid = b.cid" .
-              " where a.cid = 1";
-            $res = mysql_query($q);
-            if($res) {
-              $row = mysql_fetch_array($res, MYSQL_NUM);
-              $categories = [$row['cid'] => $row['pos']];
-              $data['categories'] = $categories;
+          if($res) {
+            foreach($categories as $cid => $category) {
+              $res = $res && static::query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
+              $res = $res && static::query("REPLACE INTO fabrix_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
+              if(!$res) break;
             }
           }
-        }
-        if($res) {
-          foreach($categories as $cid => $category) {
-            $res = $res && mysql_query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
-            $res = $res && mysql_query("REPLACE INTO fabrix_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
-            if(!$res) break;
+          if($res) $res = $res && static::query("DELETE FROM fabrix_product_colors WHERE prodID='$pid'");
+          if($res && (count($colors) > 0)) {
+            foreach($colors as $colorId) {
+              $res = $res && static::query("REPLACE INTO fabrix_product_colors SET prodID='$pid', colorId='$colorId'");
+              if(!$res) break;
+            }
           }
-        }
-        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_colors WHERE prodID='$pid'");
-        if($res && (count($colors) > 0)) {
-          foreach($colors as $colorId) {
-            $res = $res && mysql_query("REPLACE INTO fabrix_product_colors SET prodID='$pid', colorId='$colorId'");
-            if(!$res) break;
+          if($res) $res = $res && static::query("DELETE FROM fabrix_product_patterns WHERE prodID='$pid'");
+          if($res && (count($patterns) > 0)) {
+            foreach($patterns as $patternId) {
+              $res = $res && static::query("REPLACE INTO fabrix_product_patterns SET prodID='$pid', patternId='$patternId'");
+              if(!$res) break;
+            }
           }
-        }
-        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_patterns WHERE prodID='$pid'");
-        if($res && (count($patterns) > 0)) {
-          foreach($patterns as $patternId) {
-            $res = $res && mysql_query("REPLACE INTO fabrix_product_patterns SET prodID='$pid', patternId='$patternId'");
-            if(!$res) break;
+          if($res) $res = $res && static::query("DELETE FROM fabrix_product_related WHERE pid='$pid'");
+          if($res && (count($related) > 0)) {
+            foreach($related as $r_pid) {
+              $res = $res && static::query("REPLACE INTO fabrix_product_related SET pid='$pid', r_pid='$r_pid'");
+              if(!$res) break;
+            }
           }
+          $result = $result && $res;
         }
-        if($res) $res = $res && mysql_query("DELETE FROM fabrix_product_related WHERE pid='$pid'");
-        if($res && (count($related) > 0)) {
-          foreach($related as $r_pid) {
-            $res = $res && mysql_query("REPLACE INTO fabrix_product_related SET pid='$pid', r_pid='$r_pid'");
-            if(!$res) break;
-          }
-        }
-        $result = $result && $res;
+        if(!$result) throw new Exception(static::error());
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
-      if(!$result) throw new Exception(mysql_error());
       return $pid;
     }
 
     public static function delete($id) {
-      if(isset($id)) {
-        $data = static::get_by_id($id);
-        $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
-        $res = mysql_query($query);
-        $query = "DELETE FROM fabrix_product_related WHERE pid = $id or r_pid = $id";
-        if($res) $res = mysql_query($query);
-        $query = "DELETE FROM fabrix_clearance WHERE pid = $id";
-        if($res) $res = mysql_query($query);
-        $query = "DELETE FROM fabrix_product_favorites WHERE pid = $id";
-        if($res) $res = mysql_query($query);
-        $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
-        if($res) $res = mysql_query($query);
-        $query = "DELETE FROM fabrix_product_colors WHERE prodId = $id";
-        if($res) $res = mysql_query($query);
-        $query = "DELETE FROM fabrix_product_patterns WHERE prodId = $id";
-        if($res) $res = mysql_query($query);
-        $query = "DELETE FROM fabrix_specials_products WHERE pid = $id";
-        if($res) $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
-        static::delete_images($data);
+      static::transaction();
+      try {
+        if(isset($id)) {
+          $data = static::get_by_id($id);
+          $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
+          $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_related WHERE pid = $id or r_pid = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_clearance WHERE pid = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_favorites WHERE pid = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_colors WHERE prodId = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_product_patterns WHERE prodId = $id";
+          if($res) $res = static::query($query);
+          $query = "DELETE FROM fabrix_specials_products WHERE pid = $id";
+          if($res) $res = static::query($query);
+          if(!$res) throw new Exception(static::error());
+          static::delete_images($data);
+        }
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
     }
+
+//    public static function get_id_by_condition($condition) {
+//      $res = null;
+//      if(!empty(trim($condition))) {
+//        $query = "select * from " . static::$table . " WHERE " . $condition;
+//        $query .= " LIMIT 0, 1";
+//        $results = static::query($query);
+//        if ($results && !empty($row = static::fetch_assoc($results)))  $res = $row['pid'];
+//      }
+//      return $res;
+//    }
 
   }

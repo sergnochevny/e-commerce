@@ -13,7 +13,7 @@
                 <div class="label label-search-info">Product number Like: <?= $search['a.pnumber'] ?></div>
               <?php endif; ?>
               <?php if(isset($search['b.cid'])): ?>
-                <div class="label label-search-info">Category: <?= $search['categories'][$search['b.cid']] ?></div>
+                <div class="label label-search-info">Type: <?= $search['categories'][$search['b.cid']] ?></div>
               <?php endif; ?>
               <?php if(isset($search['c.id'])): ?>
                 <div class="label label-search-info">Color: <?= $search['colors'][$search['c.id']] ?></div>

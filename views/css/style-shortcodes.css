@@ -383,6 +383,7 @@
 -------------------------------------------------------------- */
 .just-slider-wrap {
   background: #222222;
+    box-shadow: 0 1px 15px #999;
 }
 .just-slider-wrap .just-slides .just-slide {
   text-align: center;

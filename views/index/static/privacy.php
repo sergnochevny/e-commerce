@@ -1,9 +1,9 @@
 <?php include('views/index/main_gallery.php'); ?>
 
-  <div id="content" class="container">
+  <div id="content" class="container inner-offset-top half-outer-offset-bottom">
     <div class="col-xs-12">
       <div class="row">
-        <div class="col-xs-12 text-center afterhead-row">
+        <div class="col-xs-12 text-center">
           <div class="row">
             <h2 class="page-title">Privacy Policy</h2>
           </div>
@@ -58,7 +58,7 @@
             </ol>
             <p>For questions or comments regarding
               this policy please contact us by <a
-                href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>.
+                  href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>.
             </p>
 
             <p>Additional information about <a target="_blank" href="http://www.privcom.gc.ca">Canada's
@@ -79,4 +79,3 @@
     </div>
   </div>
   <script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
-<?php include('views/index/block_footer.php'); ?>

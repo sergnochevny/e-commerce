@@ -1,3 +1,5 @@
+'use strict';
+
 (function ($) {
 
   $('#date-from').datepicker({

@@ -28,6 +28,10 @@
           'system_info_email' => Model_Settings::sanitize(_A_::$app->post('system_info_email')),
           'system_csv_fields_dlm' => Model_Settings::sanitize(_A_::$app->post('system_csv_fields_dlm')),
 
+          'shop_bestsellers_amount' => Model_Settings::sanitize(_A_::$app->post('shop_bestsellers_amount')),
+          'shop_specials_amount' => Model_Settings::sanitize(_A_::$app->post('shop_specials_amount')),
+          'shop_under_amount' => Model_Settings::sanitize(_A_::$app->post('shop_under_amount')),
+
           'shop_price_groups_count' => Model_Settings::sanitize(_A_::$app->post('shop_price_groups_count')),
           'shop_rate_handling' => Model_Settings::sanitize(_A_::$app->post('shop_rate_handling')),
           'shop_rate_roll' => Model_Settings::sanitize(_A_::$app->post('shop_rate_roll')),
@@ -71,6 +75,10 @@
 
       $data['system_csv_fields'] = !empty($data['system_csv_fields']) ? $data['system_csv_fields'] : CSV_FIELDS;
       $data['system_csv_fields_dlm'] = !empty($data['system_csv_fields_dlm']) ? $data['system_csv_fields_dlm'] : ',';
+
+      $data['shop_bestsellers_amount'] = !empty($data['shop_bestsellers_amount']) ? $data['shop_bestsellers_amount'] : SHOP_BSELLS_AMOUNT;
+      $data['shop_specials_amount'] = !empty($data['shop_specials_amount']) ? $data['shop_specials_amount'] : SHOP_SPECIALS_AMOUNT;
+      $data['shop_under_amount'] = !empty($data['shop_under_amount']) ? $data['shop_under_amount'] : SHOP_UNDER_AMOUNT;
 
       $data['shop_price_groups_count'] = !empty((int)$data['shop_price_groups_count']) ? $data['shop_price_groups_count'] : PRICE_GROUPS_COUNT;
       $data['shop_rate_handling'] = !empty((float)$data['shop_rate_handling']) ? $data['shop_rate_handling'] : RATE_HANDLING;

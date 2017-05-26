@@ -53,7 +53,7 @@
       }
     }
 
-    protected function form($url, $data = null) {
+    protected function form($url, $data = null, $return = false) {
       if(!isset($data)) {
         $filter = ['hidden' => ['f1' => $this->resolved_scenario[$this->scenario()]]];
         $data = forward_static_call(['Model_' . ucfirst($this->controller), 'get_by_f1'], $filter);
@@ -66,6 +66,7 @@
       $this->template->vars('scenario', $this->scenario());
       $this->template->vars('data', $data);
       $this->template->vars('action', $action);
+      if($return) return $this->main->view_layout_return('form');
       $this->main->view_layout('form');
     }
 

@@ -143,8 +143,9 @@
               <div class="row">Details</div>
             </div>
             <div class="col-xs-8 col-sm-12">
-              <div class="row cut-text-in-one-line"><?= $row['discount_amount']; ?>%
-                off </b><?= $row['discount_comment1']; ?></div>
+              <div class="row cut-text-in-one-line">
+                <?= $row['discount_amount']; ?>% off <br>
+                <?= $row['discount_comment1']; ?></div>
             </div>
           </div>
           <div class="col-xs-12 col-sm-1 table-list-row-item">

@@ -7,33 +7,35 @@
     protected static function build_where(&$filter) {
       $result = "";
       if(Controller_Admin::is_logged()) {
-        if(isset($filter["a.pname"])) $result[] = "a.pname LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pname"]))) . "%'";
+        if(!empty($filter["a.pname"]))
+          foreach(array_filter(explode(' ', $filter["a.pname"])) as $item)
+            if(!empty($item)) $result[] = "a.pname LIKE '%" . static::escape(static::strip_data(static::sanitize($item))) . "%'";
       } else {
         if(isset($filter["a.pname"])) $result[] = Model_Synonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
       }
-      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pvisible"]))) . "'";
-      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.piece"]))) . "'";
+      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . static::escape(static::strip_data(static::sanitize($filter["a.pvisible"]))) . "'";
+      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::escape(static::strip_data(static::sanitize($filter["a.piece"]))) . "'";
       if(isset($filter["a.dt"])) {
-        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
-          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::escape(static::strip_data(static::sanitize($filter["a.dt"]["from"]))) . "'" : "") .
+          (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::escape(static::strip_data(static::sanitize($filter["a.dt"]["to"]))) . "'" : "");
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
-      if(isset($filter["a.best"])) $result[] = "a.best = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.best"]))) . "'";
-      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
-      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
-      if(isset($filter["c.id"])) $result[] = "c.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["c.id"]))) . "'";
-      if(isset($filter["d.id"])) $result[] = "d.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["d.id"]))) . "'";
-      if(isset($filter["e.id"])) $result[] = "e.id = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["e.id"]))) . "'";
-      if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.priceyard"]['from']))) . "'";
-      if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter["a.priceyard"]['to']))) . "'";
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::escape(static::strip_data(static::sanitize($filter["a.pnumber"]))) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . static::escape(static::strip_data(static::sanitize($filter["a.best"]))) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::escape(static::strip_data(static::sanitize($filter["a.specials"]))) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::escape(static::strip_data(static::sanitize($filter["b.cid"]))) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . static::escape(static::strip_data(static::sanitize($filter["c.id"]))) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . static::escape(static::strip_data(static::sanitize($filter["d.id"]))) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . static::escape(static::strip_data(static::sanitize($filter["e.id"]))) . "'";
+      if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::escape(static::strip_data(static::sanitize($filter["a.priceyard"]['from']))) . "'";
+      if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::escape(static::strip_data(static::sanitize($filter["a.priceyard"]['to']))) . "'";
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]))) . "'";
-      if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . mysql_real_escape_string(static::strip_data(static::sanitize($filter['hidden']["a.pvisible"]))) . "'";
+      if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["a.priceyard"]))) . "'";
+      if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . static::escape(static::strip_data(static::sanitize($filter['hidden']["a.pvisible"]))) . "'";
       if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
       if(isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";
       if(!empty($result) && (count($result) > 0)) {
@@ -46,9 +48,9 @@
     public static function get_total_count($filter = null) {
       $response = 0;
       $query = "SELECT COUNT(DISTINCT a.pid) ";
-      if(isset($filter['scenario']) && ($filter['scenario'] == 'add')){
+      if(isset($filter['scenario']) && ($filter['scenario'] == 'add')) {
         $query .= " FROM fabrix_products a";
-        $query .= " LEFT JOIN " . static::$table .  " z ON a.pid = z.pid";
+        $query .= " LEFT JOIN " . static::$table . " z ON a.pid = z.pid";
       } else {
         $query .= " FROM " . static::$table . " z";
         $query .= " LEFT JOIN fabrix_products a ON a.pid = z.pid";
@@ -61,8 +63,8 @@
       $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
       $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
       $query .= static::build_where($filter);
-      if($result = mysql_query($query)) {
-        $response = mysql_fetch_row($result)[0];
+      if($result = static::query($query)) {
+        $response = static::fetch_row($result)[0];
       }
       return $response;
     }
@@ -70,9 +72,9 @@
     public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
       $response = null;
       $query = "SELECT DISTINCT z.id, a.* ";
-      if(isset($filter['scenario']) && ($filter['scenario'] == 'add')){
+      if(isset($filter['scenario']) && ($filter['scenario'] == 'add')) {
         $query .= " FROM fabrix_products a";
-        $query .= " LEFT JOIN " . static::$table .  " z ON a.pid = z.pid";
+        $query .= " LEFT JOIN " . static::$table . " z ON a.pid = z.pid";
       } else {
         $query .= " FROM " . static::$table . " z";
         $query .= " LEFT JOIN fabrix_products a ON a.pid = z.pid";
@@ -88,18 +90,18 @@
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
 
-      if($result = mysql_query($query)) {
-        $res_count_rows = mysql_num_rows($result);
+      if($result = static::query($query)) {
+        $res_count_rows = static::num_rows($result);
 
         if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
           $sys_hide_price = Model_Price::sysHideAllRegularPrices();
           $cart_items = isset(_A_::$app->session('cart')['items']) ? _A_::$app->session('cart')['items'] : [];
           $cart = array_keys($cart_items);
-          while($row = mysql_fetch_array($result)) {
+          while($row = static::fetch_array($result)) {
             $response[] = Model_Shop::prepare_layout_product($row, $cart, $sys_hide_price);
           }
         } else {
-          while($row = mysql_fetch_array($result)) {
+          while($row = static::fetch_array($result)) {
             $filename = 'upload/upload/b_' . $row['image1'];
             if(!(file_exists($filename) && is_file($filename))) {
               $filename = 'upload/upload/not_image.jpg';
@@ -160,36 +162,50 @@
         $q = "select z.id, a.* from " . static::$table . " z";
         $q .= " left join fabrix_products a on z.pid = a.pid";
         $q .= " where z.id = '" . $id . "'";
-        $result = mysql_query($q);
+        $result = static::query($q);
         if($result) {
-          $data = mysql_fetch_assoc($result);
+          $data = static::fetch_assoc($result);
         }
       }
       return $data;
     }
 
     public static function save(&$data) {
-      extract($data);
-      if(isset($pid) & isset($id)) {
-        $sql = "update " . static::$table . " set";
-        $sql .= " pid='$pid'";
-        $sql .= " where id ='$id'";
-        $result = mysql_query($sql);
-      } else {
-        $sql = "insert into " . static::$table . " set";
-        $sql .= " pid='$pid'";
-        $result = mysql_query($sql);
-        if($result) $id = mysql_insert_id();
+      static::transaction();
+      try {
+        extract($data);
+        if(isset($pid) & isset($id)) {
+          $sql = "update " . static::$table . " set";
+          $sql .= " pid='$pid'";
+          $sql .= " where id ='$id'";
+          $result = static::query($sql);
+        } else {
+          $sql = "insert into " . static::$table . " set";
+          $sql .= " pid='$pid'";
+          $result = static::query($sql);
+          if($result) $id = static::last_id();
+        }
+        if(!$result) throw new Exception(static::error());
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
-      if(!$result) throw new Exception(mysql_error());
       return $id;
     }
 
     public static function delete($id) {
-      if(isset($id)) {
-        $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = mysql_query($query);
-        if(!$res) throw new Exception(mysql_error());
+      static::transaction();
+      try {
+        if(isset($id)) {
+          $query = "DELETE FROM " . static::$table . " WHERE id = $id";
+          $res = static::query($query);
+          if(!$res) throw new Exception(static::error());
+        }
+        static::commit();
+      } catch(Exception $e) {
+        static::rollback();
+        throw $e;
       }
     }
 

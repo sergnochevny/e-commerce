@@ -4,7 +4,7 @@
         <div class="form-row">
           <label class="required_field"><strong>Category:</strong></label>
           <input type="text" name="cname" value="<?= $data['cname'] ?>" class="input-text ">
-          <small style="color: #999">NOTE: the title cannot be more than 28 characters.</small>
+          <small class="note"><b>NOTE:</b> the title cannot be more than 28 characters.</small>
         </div>
       </div>
       <div class="col-md-4 col-xs-12">

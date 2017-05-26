@@ -194,7 +194,16 @@ var change_text = false;
               }
             }
           );
-          $(this).selectmenu(options);
+          if (!$(this).is('[multiple]')) {
+            $(this).selectmenu(options);
+          } else {
+            if ($(this).is('[data-placeholder]')) {
+              options = $.extend(options, {
+                placeholder: $(this).data('placeholder')
+              });
+            }
+            $(this).multiselect(options);
+          }
         }
       );
     },
@@ -308,6 +317,24 @@ var change_text = false;
   $(document).on('focusout', 'textarea.focus',
     function (event) {
       $(this).removeClass('focus')
+    }
+  );
+
+  $(document).on('click', '[data-destroy]',
+    function (event) {
+      var container = $(this).data('destroy');
+      if (container) {
+        $('.' + container).remove();
+      }
+    }
+  );
+
+  $(document).on('click', '[data-redirect]',
+    function (event) {
+      var redirect = $(this).data('redirect');
+      if (redirect) {
+        window.location.href = redirect;
+      }
     }
   );
 

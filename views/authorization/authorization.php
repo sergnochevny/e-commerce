@@ -1,10 +1,14 @@
-<div class="container">
+<div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
-    <div class="col-xs-12 col-sm-12 text-center afterhead-row">
+    <div class="col-xs-12 col-sm-12 text-center">
       <h2 class="page-title">Login</h2>
     </div>
 
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-sm-12 text-center">
+      <label>To enable all features of iluvfabrix.com please register or sign-in below</label>
+    </div>
+
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
       <div class="col-xs-12 panel panel-default panel-default-vertical-sizing authorize-panel">
         <div class="col-xs-12">
           <div class="row">
@@ -43,35 +47,18 @@
             </form>
           </div>
         </div>
-      </div>
-
-      <div class="col-xs-12">
-        <div class="row">
-          <a id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-6">
-      <div class="col-xs-12 panel panel-default panel-default-vertical-sizing register-panel">
         <div class="col-xs-12">
-          <div class="row">
-            <p>
-              Please click "Create Account" and become a registered customer to use the "Fabric Favorites",
-              "Recommendations" and "My Account" feature.
-            </p>
-            <p>
-              If you have not previously registered
-              with I luv fabrix, please click
-              CREATE ACCOUNT.
-              (Credit Card information NOT REQUIRED)
-            </p>
-          </div>
-        </div>
-        <div class="col-xs-12 register-button">
-          <div class="row text-center">
-            <a id="register_user" class="btn button" href="<?= $registration_url ?>">Create Account</a>
+          <div class="row inner-offset-vertical-top">
+            <div class="col-sm-6 col-xs-12">
+              <div class="row">
+                <a id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xs-12 text-right">
+              <div class="row">
+                <a href="<?= $registration_url ?>">Registration</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -81,3 +68,4 @@
 </div>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
         type="text/javascript"></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>

@@ -3,7 +3,8 @@
     <div class="col-xs-12">
       <p>
         Use this form to add keywords and their synonyms. The system will search for the synonyms and the keyword.
-        <br><small>NOTE: to add multiple keywords/synonyms, use a comma ",".</small>
+        <br>
+        <small class="note"><b>NOTE:</b> to add multiple keywords/synonyms, use a comma ",".</small>
       </p>
     </div>
     <div class="col-xs-12">
