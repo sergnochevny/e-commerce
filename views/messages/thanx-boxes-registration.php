@@ -20,7 +20,6 @@
         <div class="col-xs-12 alert-danger danger">
           <button id="close-container" type="button" class="close-container"
                   data-destroy="alert-container"
-                  data-redirect="<?= _A_::$app->router()->UrlTo('authorization'); ?>"
                   aria-hidden="true">×
           </button>
           <?php foreach($error as $msg) : ?>

@@ -2906,6 +2906,9 @@ button.close-container {
     background: 0 0;
     border: 0;
     -webkit-appearance: none;
+    position: absolute;
+    right: 2px;
+    top: 2px;
 }
 
 .close-container {
