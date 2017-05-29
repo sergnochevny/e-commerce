@@ -1,4 +1,7 @@
 <div class="col-xs-12 inner-offset-vertical">
+  <div class="row text-center inner-offset-vertical-bottom">
+    <label>To enable all features of iluvfabrix.com please register or sign-in below</label>
+  </div>
   <div class="row">
     <form method="post" id="authorization" action="<?= _A_::$app->router()->UrlTo('authorization'); ?>"
           class="login">

@@ -195,15 +195,13 @@
         empty($data['pnumber']) || empty($data['pname']) ||
         empty($data['priceyard']) ||
         (!empty($data['priceyard']) && empty((float)$data['priceyard'])) ||
-        (!empty($data['priceyard']) && ((float)$data['priceyard'] < 0)) ||
-        empty($data['image1'])
+        (!empty($data['priceyard']) && ((float)$data['priceyard'] < 0))
       ) {
         $error = [];
         if(empty($data['ldesc'])) $error[] = 'Identify Long Description field !';
         if(empty($data['pnumber'])) $error[] = 'Identify Product Number field !';
         if(empty($data['pname'])) $error[] = 'Identify Product Name field !';
         if(empty($data['priceyard'])) $error[] = 'Identify Price field !';
-        if(empty($data['image1'])) $error[] = 'Identify Main Image!';
         if((!empty($data['priceyard']) && empty((float)$data['priceyard'])) ||
           (!empty($data['priceyard']) && ((float)$data['priceyard'] < 0))
         ) $error[] = "The field 'Price' value must be greater than zero!";
@@ -218,6 +216,8 @@
       if(empty($data['metadescription'])) $data['metadescription'] = $data['sdesc'];
       if(empty($data['metatitle'])) $data['metatitle'] = $data['pname'];
       if(empty($data['metakeywords'])) $data['metakeywords'] = strtolower(implode(',', array_filter(array_map('trim', explode(',', $data['metadescription'])))));
+      if(empty($data['image1'])) $data['pvisible'] = 0;
+
     }
 
     protected function form_handling(&$data = null) {

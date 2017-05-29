@@ -63,7 +63,13 @@
         </div>
       </div>
     </div>
-
+    <div class="col-xs-12">
+      <div class="row inner-offset-vertical text-center">
+        <a data-waitloader class="button" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">
+          No, I would just like to Shop instead
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 <script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
