@@ -61,7 +61,7 @@
                   href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>.
             </p>
 
-            <p>Additional information about <a target="_blank" href="http://www.privcom.gc.ca">Canada's
+            <p>Additional information about <a target="_blank" href="https://www.priv.gc.ca">Canada's
                 Privacy Act</a> can be found here.</p>
 
           </div>
