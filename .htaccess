@@ -1,113 +1,115 @@
 Options +FollowSymLinks
-RewriteEngine On
-RewriteBase /
-#RewriteBase /domains/ILUVFABRIX/app/
-
-#RewriteCond %{HTTP_HOST} !^www\..* [NC]
-#RewriteRule ^(.*) http://www.%{HTTP_HOST}$1 [R=301]
-
-#RewriteCond %{HTTPS} off
-#RewriteCond %{HTTP:X-Forwarded-Proto} !https
-#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} ^(.*)/$
-RewriteRule ^(.*)/$ $1 [R=301,L]
-
-RewriteRule ^resources1/index.html shop [L,QSD,R=301]
-RewriteRule ^resources2/index.html shop [L,QSD,R=301]
-RewriteRule ^resources3/index.html shop [L,QSD,R=301]
-RewriteRule ^resources4/index.html shop [L,QSD,R=301]
-RewriteRule ^resources5/index.html shop [L,QSD,R=301]
-RewriteRule ^resources6/index.html shop [L,QSD,R=301]
-RewriteRule ^resources7/index.html shop [L,QSD,R=301]
-RewriteRule ^designer-fabric/index.html upholstery-fabric/designerfabric/13.htm [L,R=301]
-RewriteRule ^decor-fabric/index.html upholstery-fabric/designerfabric/13.htm [L,R=301]
-RewriteRule ^tapestry-fabric/index.html shop [L,R=301]
-RewriteRule ^wholesale-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^fabric-online/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^curtain-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^decorating-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^online-fabric-store/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^designer-fabrics-care/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^fabric-discount/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^drapery-fabrics/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^chenille-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^upholstery-fabric-2/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^upholstery-fabric-history/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^chintz-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
-RewriteRule ^damask-fabric/index.html upholstery-fabric/damaskfabric/7.htm [L,R=301]
-RewriteRule ^damask-fabrics/index.html upholstery-fabric/damaskfabric/7.htm [L,R=301]
-RewriteRule ^Shabby-chic-fabric/index.html shop [L,R=301]
-RewriteRule ^iluvfabrix/index.html shop [L,R=301]
-RewriteRule ^upholstery-fabric/out-of-stock/(.*)\.htm$ shop [L,R=301]
-
-RewriteRule ^animal-print-fabric/index.html shop [L,R=301]
-RewriteRule ^print-fabric/index.html shop [L,R=301]
-RewriteRule ^cotton-fabric/index.html shop [L,R=301]
-RewriteRule ^more-discount-fabric/index.html shop [L,R=301]
-RewriteRule ^fabric-wholesale/index.html shop [L,R=301]
-RewriteRule ^linen-fabric/index.html shop [L,R=301]
-RewriteRule ^online-fabric/index.html shop [L,R=301]
-RewriteRule ^upholstery-fabric-history-2/index.html shop [L,R=301]
-RewriteRule ^drapery-fabric/index.html shop [L,R=301]
-RewriteRule ^furniture-fabric/index.html shop [L,R=301]
-RewriteRule ^furniture-fabric/index.html shop [L,R=301]
-
-RewriteCond %{REQUEST_URI} (products.php)$
-RewriteCond %{QUERY_STRING} (.*)(?:^|&)(pid=[^&]*)((?:&|$).*)
-RewriteRule ^products.php index.php?redirect=shop/product&%2 [L]
-
-RewriteCond %{REQUEST_URI} (products.php)$
-RewriteCond %{QUERY_STRING} (.*)(?:^|&)thes=([^&]*)((?:&|$).*)
-RewriteCond %2 ^([\w-]+)(?:(?:\+?)(?:\%\d+)(?:\+?))+(.*)$
-RewriteCond %1-%2 ^(.*)$
-RewriteRule ^products.php products.php?thes=%1 [L,QSD]
-
-RewriteCond %{REQUEST_URI} (products.php)$
-RewriteCond %{QUERY_STRING} (.*)(?:^|&)thes=([^&]*)((?:&|$).*)
-RewriteCond %2 ^([\w-]+)$
-RewriteRule ^products.php ${lc:%1} [L,QSD,R=301]
-
-RewriteCond %{REQUEST_URI} (products.php)$
-RewriteCond %{QUERY_STRING} !(.*)(?:^|&)thes=([^&]*)((?:&|$).*)
-RewriteRule ^products.php shop [L,R=301,QSD]
-
-RewriteCond %{REQUEST_URI} !(index.php)$
-RewriteCond %{REQUEST_URI} !(products.php)$
-RewriteRule ^([^\/]*)\.(htm|html|php)$ $1 [L,QSA,R=301]
-
-RewriteRule ^blog/2015/11/iluvfabrix-scandinavian-design-one-sumptuous-colour$	one-sumptuous-colour [L,QSA,R=301]
-RewriteRule ^blog/2015/09/mohair-velvet-chaise-originally-upholstered-in-1920s-our-fabric-9497007n$ mohair-velvet-chaise-originally-upholstered-in-1920-s-our-fabric-9497007n [L,R=301]
-RewriteRule ^blog/2015/06/velvet-fabric-one-of-the-worlds-most-beautiful-fabric-types-of-upholstery-fabric$ velvet-fabric-one-of-the-world-s-most-beautiful-types-of-upholstery-fabric [L,R=301]
-RewriteRule ^blog/2015/04/have-a-look-at-one-of-the-grandest-fabrics-of-them-all-le-tigre-from-scalamandre$ grand-fabric-le-tigre-from-scalamandre [L,R=301]
-RewriteRule ^blog/2015/04/upholstery-fabric-versus-apparel-fabric$	upholstery-fabric-versus-apparel-fabric [L,R=301]
-RewriteRule ^blog/2015/03/fabric-spotlight-linen-fabrics$ fabric-spotlight-linen-fabrics [L,R=301]
-RewriteRule ^blog/2015/03/fabric-spotlight-jacquard-fabric$ fabric-spotlight-jacquard-fabric [L,R=301]
-RewriteRule ^blog/2015/02/fabric-spotlight-damask-fabrics$	fabric-spotlight-damask-fabrics [L,R=301]
-RewriteRule ^blog/2014/11/we-are-well-known-for-having-the-best-prices-anywhere-on-the-worlds-best-mohair-velvet$ we-are-well-known-for-having-the-best-prices-anywhere-on-the-world-s-best-mohair-velvet [L,R=301]
-
-RewriteRule ^upholstery-fabric/specials/(.*)\.htm$ index.php?redirect=specials?page=$1 [L]
-RewriteRule ^upholstery-fabric/(.*)/([0-9]+)\.htm$ index.php?redirect=shop&cat=$2 [L]
-RewriteRule ^upholstery-fabric/(.*)/([0-9]+)-([0-9]+)\.htm$ index.php?redirect=shop&cat=$2 [L]
-RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/favorites/$ index.php?redirect=shop/product?pid=$2 [L]
-RewriteRule ^products/(.*)/([0-9]+)/recommendations/$ index.php?redirect=shop/product?pid=$2 [L]
-RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/SR/(.*)/$ index.php?redirect=shop/product?pid=$2 [L]
-RewriteRule ^products/(.*)/([0-9]+)/SR/(.*)/$ index.php?redirect=shop/product?pid=$2 [L]
-RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/(.*)/$ index.php?redirect=shop/product?pid=$2 [L]
-RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/$ index.php?redirect=shop/product?pid=$2 [L]
-RewriteRule ^products/(.*)/([0-9]+)/$ index.php?redirect=shop/product?pid=$2 [L]
-
-
-RewriteCond %{REQUEST_URI} !\.(css|jpg|jpeg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|map|gz)$
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !(index.php)$
-RewriteCond %{REQUEST_URI} !(products.php)$
-RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]
 
 <IfModule mod_rewrite.c>
+
+    RewriteEngine On
+    RewriteBase /
+    #RewriteBase /domains/ILUVFABRIX/app/
+
+    #RewriteCond %{HTTP_HOST} !^www\..* [NC]
+    #RewriteRule ^(.*) http://www.%{HTTP_HOST}$1 [R=301]
+
+    #RewriteCond %{HTTPS} off
+    #RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    #RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} ^(.*)/$
+    RewriteRule ^(.*)/$ $1 [R=301,L]
+
+    RewriteRule ^resources1/index.html shop [L,QSD,R=301]
+    RewriteRule ^resources2/index.html shop [L,QSD,R=301]
+    RewriteRule ^resources3/index.html shop [L,QSD,R=301]
+    RewriteRule ^resources4/index.html shop [L,QSD,R=301]
+    RewriteRule ^resources5/index.html shop [L,QSD,R=301]
+    RewriteRule ^resources6/index.html shop [L,QSD,R=301]
+    RewriteRule ^resources7/index.html shop [L,QSD,R=301]
+    RewriteRule ^designer-fabric/index.html upholstery-fabric/designerfabric/13.htm [L,R=301]
+    RewriteRule ^decor-fabric/index.html upholstery-fabric/designerfabric/13.htm [L,R=301]
+    RewriteRule ^tapestry-fabric/index.html shop [L,R=301]
+    RewriteRule ^wholesale-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^fabric-online/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^curtain-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^decorating-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^online-fabric-store/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^designer-fabrics-care/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^fabric-discount/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^drapery-fabrics/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^chenille-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^upholstery-fabric-2/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^upholstery-fabric-history/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^chintz-fabric/index.html upholstery-fabric/designer-fabric/13.htm [L,R=301]
+    RewriteRule ^damask-fabric/index.html upholstery-fabric/damaskfabric/7.htm [L,R=301]
+    RewriteRule ^damask-fabrics/index.html upholstery-fabric/damaskfabric/7.htm [L,R=301]
+    RewriteRule ^Shabby-chic-fabric/index.html shop [L,R=301]
+    RewriteRule ^iluvfabrix/index.html shop [L,R=301]
+    RewriteRule ^upholstery-fabric/out-of-stock/(.*)\.htm$ shop [L,R=301]
+
+    RewriteRule ^animal-print-fabric/index.html shop [L,R=301]
+    RewriteRule ^print-fabric/index.html shop [L,R=301]
+    RewriteRule ^cotton-fabric/index.html shop [L,R=301]
+    RewriteRule ^more-discount-fabric/index.html shop [L,R=301]
+    RewriteRule ^fabric-wholesale/index.html shop [L,R=301]
+    RewriteRule ^linen-fabric/index.html shop [L,R=301]
+    RewriteRule ^online-fabric/index.html shop [L,R=301]
+    RewriteRule ^upholstery-fabric-history-2/index.html shop [L,R=301]
+    RewriteRule ^drapery-fabric/index.html shop [L,R=301]
+    RewriteRule ^furniture-fabric/index.html shop [L,R=301]
+    RewriteRule ^furniture-fabric/index.html shop [L,R=301]
+
+    RewriteCond %{REQUEST_URI} (products.php)$
+    RewriteCond %{QUERY_STRING} (.*)(?:^|&)(pid=[^&]*)((?:&|$).*)
+    RewriteRule ^products.php index.php?redirect=shop/product&%2 [L]
+
+    RewriteCond %{REQUEST_URI} (products.php)$
+    RewriteCond %{QUERY_STRING} (.*)(?:^|&)thes=([^&]*)((?:&|$).*)
+    RewriteCond %2 ^([\w-]+)(?:(?:\+?)(?:\%\d+)(?:\+?))+(.*)$
+    RewriteCond %1-%2 ^(.*)$
+    RewriteRule ^products.php products.php?thes=%1 [L,QSD]
+
+    RewriteCond %{REQUEST_URI} (products.php)$
+    RewriteCond %{QUERY_STRING} (.*)(?:^|&)thes=([^&]*)((?:&|$).*)
+    RewriteCond %2 ^([\w-]+)$
+    RewriteRule ^products.php ${lc:%1} [L,QSD,R=301]
+
+    RewriteCond %{REQUEST_URI} (products.php)$
+    RewriteCond %{QUERY_STRING} !(.*)(?:^|&)thes=([^&]*)((?:&|$).*)
+    RewriteRule ^products.php shop [L,R=301,QSD]
+
+    RewriteCond %{REQUEST_URI} !(index.php)$
+    RewriteCond %{REQUEST_URI} !(products.php)$
+    RewriteRule ^([^\/]*)\.(htm|html|php)$ $1 [L,QSA,R=301]
+
+    RewriteRule ^blog/2015/11/iluvfabrix-scandinavian-design-one-sumptuous-colour$	one-sumptuous-colour [L,QSA,R=301]
+    RewriteRule ^blog/2015/09/mohair-velvet-chaise-originally-upholstered-in-1920s-our-fabric-9497007n$ mohair-velvet-chaise-originally-upholstered-in-1920-s-our-fabric-9497007n [L,R=301]
+    RewriteRule ^blog/2015/06/velvet-fabric-one-of-the-worlds-most-beautiful-fabric-types-of-upholstery-fabric$ velvet-fabric-one-of-the-world-s-most-beautiful-types-of-upholstery-fabric [L,R=301]
+    RewriteRule ^blog/2015/04/have-a-look-at-one-of-the-grandest-fabrics-of-them-all-le-tigre-from-scalamandre$ grand-fabric-le-tigre-from-scalamandre [L,R=301]
+    RewriteRule ^blog/2015/04/upholstery-fabric-versus-apparel-fabric$	upholstery-fabric-versus-apparel-fabric [L,R=301]
+    RewriteRule ^blog/2015/03/fabric-spotlight-linen-fabrics$ fabric-spotlight-linen-fabrics [L,R=301]
+    RewriteRule ^blog/2015/03/fabric-spotlight-jacquard-fabric$ fabric-spotlight-jacquard-fabric [L,R=301]
+    RewriteRule ^blog/2015/02/fabric-spotlight-damask-fabrics$	fabric-spotlight-damask-fabrics [L,R=301]
+    RewriteRule ^blog/2014/11/we-are-well-known-for-having-the-best-prices-anywhere-on-the-worlds-best-mohair-velvet$ we-are-well-known-for-having-the-best-prices-anywhere-on-the-world-s-best-mohair-velvet [L,R=301]
+
+    RewriteRule ^upholstery-fabric/specials/(.*)\.htm$ index.php?redirect=specials?page=$1 [L]
+    RewriteRule ^upholstery-fabric/(.*)/([0-9]+)\.htm$ index.php?redirect=shop&cat=$2 [L]
+    RewriteRule ^upholstery-fabric/(.*)/([0-9]+)-([0-9]+)\.htm$ index.php?redirect=shop&cat=$2 [L]
+    RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/favorites/$ index.php?redirect=shop/product?pid=$2 [L]
+    RewriteRule ^products/(.*)/([0-9]+)/recommendations/$ index.php?redirect=shop/product?pid=$2 [L]
+    RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/SR/(.*)/$ index.php?redirect=shop/product?pid=$2 [L]
+    RewriteRule ^products/(.*)/([0-9]+)/SR/(.*)/$ index.php?redirect=shop/product?pid=$2 [L]
+    RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/(.*)/$ index.php?redirect=shop/product?pid=$2 [L]
+    RewriteRule ^products/(.*)/([0-9]+)/([0-9]+)/$ index.php?redirect=shop/product?pid=$2 [L]
+    RewriteRule ^products/(.*)/([0-9]+)/$ index.php?redirect=shop/product?pid=$2 [L]
+
+
+    RewriteCond %{REQUEST_URI} !\.(css|jpg|jpeg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|map|gz)$
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !(index.php)$
+    RewriteCond %{REQUEST_URI} !(products.php)$
+    RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]
+
     RewriteCond %{REQUEST_URI} !\.(css|js)$
     RewriteCond %{HTTP:Accept-encoding} gzip
     RewriteCond %{REQUEST_FILENAME}.gz -f

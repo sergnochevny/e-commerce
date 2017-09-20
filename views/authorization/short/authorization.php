@@ -5,8 +5,7 @@
   <div class="row">
     <form method="post" id="short_authorization" action="<?= _A_::$app->router()->UrlTo('authorization'); ?>"
           class="login">
-      <input type="hidden" name="redirect"
-             value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
+      <input type="hidden" name="redirect" value=""/>
 
       <div class="form-row">
         <label for="username" class="required_field">Email Address/Username</label>
