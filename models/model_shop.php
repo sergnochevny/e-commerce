@@ -127,7 +127,9 @@
       $sSystemDiscount = false;
       $sPriceDiscount = '';
       $rDiscountPrice = 0;
-      $rSystemDiscount = Model_Price::calculateDiscount(DISCOUNT_CATEGORY_ALL, $uid, $aPrds, $priceyard, $shipcost, '', $bTemp, true, $sPriceDiscount, $sSystemDiscount, $shipping, $discountIds);
+      $rSystemDiscount = Model_Price::calculateDiscount(DISCOUNT_CATEGORY_ALL, $uid, $aPrds, $priceyard, $shipcost, '',
+                                                        $bTemp, true, $sPriceDiscount, $sSystemDiscount, $shipping,
+                                                        $discountIds);
       if((strlen($sSystemDiscount) > 0) || ($rSystemDiscount > 0)) {
         $bSystemDiscount = true;
         $rDiscountPrice = $priceyard - $rSystemDiscount;
@@ -196,12 +198,15 @@
         if(!empty($data['image' . $i])) {
           $data['img' . $i . '_filename'] = 'upload/upload/b_' . $data['image' . $i];
           $data['img' . $i . '_filename1'] = 'upload/upload/v_' . $data['image' . $i];
-          if(!(file_exists($data['img' . $i . '_filename']) && is_file($data['img' . $i . '_filename']) && is_readable($data['img' . $i . '_filename']))) {
+          if(!(file_exists($data['img' . $i . '_filename']) && is_file($data['img' . $i . '_filename']) &&
+            is_readable($data['img' . $i . '_filename']))) {
             $data['img' . $i . '_filename'] = "upload/upload/not_image.jpg";
             $data['img' . $i . '_filename1'] = null;
           }
           $data['img' . $i . '_filename'] = _A_::$app->router()->UrlTo($data['img' . $i . '_filename']);
-          $data['img' . $i . '_filename1'] = isset($data['img' . $i . '_filename1']) ? _A_::$app->router()->UrlTo($data['img' . $i . '_filename1']) : null;
+          $data['img' . $i . '_filename1'] = isset($data['img' . $i . '_filename1'])
+            ? _A_::$app->router()->UrlTo($data['img' . $i . '_filename1'])
+            : null;
         }
       }
 
@@ -209,7 +214,7 @@
     }
 
     public static function set_inventory($pid, $inventory = 0) {
-      $q = "update fabrix_products set inventory=" . $inventory;
+      $q = "UPDATE fabrix_products SET inventory=" . $inventory;
       $q .= ($inventory <= 0) ? ", pvisible = 0" : "";
       $q .= " where pid=" . $pid;
       $res = static::query($q);
@@ -256,41 +261,48 @@
       $image_suffix = '';
       switch($type) {
         case 'new':
-          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY dt DESC, pid DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
+          $q .= " and image1 is not null ORDER BY dt DESC, pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'carousel':
           $image_suffix = 'b_';
-          $q = "select a.* from collection c";
+          $q = "SELECT a.* FROM collection c";
           $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 2";
           $q .= " where c.type = 2 order by a.pid desc limit " . $start . "," . $limit;
           break;
         case 'best':
           $image_suffix = 'b_';
-          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and best = '1' and image1 is not null ORDER BY pid DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
+          $q .= " and best = '1' and image1 is not null ORDER BY pid DESC LIMIT " . $start . "," . $limit;
           break;
         case 'bestsellers':
           $image_suffix = 'b_';
-          $q = "select a.* from collection c";
+          $q = "SELECT a.* FROM collection c";
           $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 1";
           $q .= " where c.type = 1 order by a.pid desc limit " . $start . "," . $limit;
           break;
         case 'popular':
           $image_suffix = 'b_';
-          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 and pnumber is not null and pvisible = '1' and image1 is not null ORDER BY popular DESC LIMIT " . $start . "," . $limit;
+          $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
+          $q .= " and image1 is not null ORDER BY popular DESC LIMIT " . $start . "," . $limit;
           break;
         case 'under_20':
-          $q = "select a.* from collection c";
+          $q = "SELECT a.* FROM collection c";
           $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
-          $q .= " where c.type = 3 and c.price <= 20 order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
+          $q .= " where c.type = 3 and c.price > 0 and c.price <= 20";
+          $q .= " order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
           break;
         case 'under_40':
-          $q = "select a.* from collection c";
+          $q = "SELECT a.* FROM collection c";
           $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
-          $q .= " where c.type = 3 and c.price <= 40 order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
+          $q .= " where c.type = 3 and c.price > 20 and c.price <= 40";
+          $q .= " order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
+          break;
         case 'under_60':
-          $q = "select a.* from collection c";
+          $q = "SELECT a.* FROM collection c";
           $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
-          $q .= " where c.type = 3 and c.price <= 40 order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
+          $q .= " where c.type = 3 and c.price > 40 and c.price <= 60";
+          $q .= " order by a.priceyard asc, a.pid desc limit " . $start . "," . $limit;
           break;
       }
       if($result = static::query($q)) {
@@ -319,7 +331,8 @@
           break;
         case 'new':
           $q = "SELECT distinct a.*" .
-            " FROM (SELECT pid FROM fabrix_products WHERE priceyard > 0 and pvisible = '1' and image1 is not null ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
+            " FROM (SELECT pid FROM fabrix_products WHERE priceyard > 0 and pvisible = '1' and image1 is not null" .
+            " ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
             " LEFT JOIN fabrix_product_categories c ON b.pid = c.pid" .
             " LEFT JOIN fabrix_categories a on a.cid = c.cid" .
             " ORDER BY a.displayorder, c.displayorder";
@@ -357,7 +370,7 @@
       $response = 0;
       if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
         $type = static::$list_conditions[$filter['type']];
-        $query = "select COUNT(a.pid) from collection cc";
+        $query = "SELECT COUNT(a.pid) FROM collection cc";
         $query .= " left join fabrix_products a on cc.pid = a.pid and cc.type = " . $type;
         $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
         $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
@@ -387,7 +400,7 @@
       $response = null;
       if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
         $type = static::$list_conditions[$filter['type']];
-        $query = "select DISTINCT a.* from collection cc";
+        $query = "SELECT DISTINCT a.* FROM collection cc";
         $query .= " left join fabrix_products a on cc.pid = a.pid and cc.type = " . $type;
         $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
         $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";

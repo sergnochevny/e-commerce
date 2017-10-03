@@ -47,10 +47,10 @@
 
   <script type='text/javascript'
           src='<?= _A_::$app->router()->UrlTo('views/js/jquery2/jquery-2.2.4.min.js'); ?>'></script>
-  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
   <script type='text/javascript'
           src='<?= _A_::$app->router()->UrlTo('views/js/jquery2/jquery-migrate-1.4.1.min.js'); ?>'></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/bootstrap.min.js'); ?>'></script>
+  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery-ui.min.js'); ?>'></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.min.js'); ?>'></script>
   <script type='text/javascript'
           src='<?= _A_::$app->router()->UrlTo('views/js/jquery.smartmenus.bootstrap.min.js'); ?>'></script>

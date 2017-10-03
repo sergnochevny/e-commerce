@@ -1,11 +1,25 @@
 <?php
 
+  /**
+   * Class Controller_Index
+   */
   Class Controller_Index Extends Controller_Controller {
 
+    /**
+     * @param $row
+     * @param $view
+     * @return mixed
+     */
     protected function build_sitemap_url($row, $view) {
       return $row['loc'];
     }
 
+    /**
+     * @param int $page
+     * @param bool $view
+     * @param int $per_page
+     * @return array|null
+     */
     protected function sitemap_get_list($page = 0, $view = false, $per_page = 1000) {
       $data = [
         [
@@ -92,6 +106,9 @@
       return ($page > 1) ? null : $data;
     }
 
+    /**
+     * @return int
+     */
     public static function sitemap_order() { return 0; }
 
     /**
@@ -156,6 +173,10 @@
       $this->main->error404();
     }
 
+    /**
+     * @param bool $partial
+     * @param bool $required_access
+     */
     public function view($partial = false, $required_access = false) { }
 
 
