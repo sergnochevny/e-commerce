@@ -6,9 +6,9 @@
       <div class="row">
         <?php if(empty($back_url)) {
           $to_shop = true;
-          $back_url = _A_::$app->router()->UrlTo('Shop');
+          $back_url = _A_::$app->router()->UrlTo('shop');
         } ?>
-        <div class="col-sm-2 back_button_container">
+        <div class="col-xs-12 col-sm-2 back_button_container">
           <div class="row">
             <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
               <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -16,15 +16,12 @@
             </a>
           </div>
         </div>
-        <div class="<?= empty($back_url) ? 'col-xs-12' : 'col-sm-8' ?> text-center">
+        <div class="col-xs-12 <?= empty($back_url) ? '' : 'col-sm-8' ?> text-center">
           <h1 class="page-title">Fabric and Upholstery Estimator</h1>
           <h2 class="page-title">
             <small>Please use the table below to help to estimate the amount of fabric you will need.</small>
           </h2>
         </div>
-          <?php if(!empty($back_url)): ?>
-            <div class="col-sm-2"></div>
-          <?php endif; ?>
       </div>
     </div>
 

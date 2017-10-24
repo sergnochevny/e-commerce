@@ -9,7 +9,7 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
   <div class="box col-xs-12">
     <div class="col-xs-12">
       <div class="row">
-        <div class="col-sm-2 back_button_container">
+        <div class="col-xs-12 col-sm-2 back_button_container">
           <div class="row">
             <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
               <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -17,11 +17,10 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
             </a>
           </div>
         </div>
-        <div class="col-sm-8 text-center">
+        <div class="col-xs-12 col-sm-8 text-center">
           <h3 style="margin-bottom: 30px"
               class="product_title product_title_style entry-title"><?= $data['pname']; ?></h3>
         </div>
-        <div class="col-sm-2"></div>
       </div>
     </div>
 

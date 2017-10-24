@@ -1,7 +1,20 @@
-<?php include_once 'views/messages/alert-boxes.php';?>
+<?php include_once 'views/messages/alert-boxes.php'; ?>
 
-<?php if (isset($page_title)) { ?>
-  <div class="col-xs-12 text-center">
+<?php if(empty($back_url)) {
+  $to_shop = true;
+  $back_url = _A_::$app->router()->UrlTo('shop');
+} ?>
+<div class="col-xs-12 col-sm-2 back_button_container">
+  <div class="row">
+    <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+      <?= !empty($to_shop) ? 'To Shop' : 'Back' ?>
+    </a>
+  </div>
+</div>
+
+<?php if(isset($page_title)) { ?>
+  <div class="col-xs-12 <?= empty($back_url) ? '' : 'col-sm-8' ?>  text-center">
     <h1 class="page-title"><?= $page_title; ?></h1>
   </div>
 <?php } ?>
@@ -24,7 +37,7 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="row products">
-        <?= $list; ?>
+      <?= $list; ?>
     </div>
   </div>
 </div>

@@ -1,13 +1,25 @@
 <?php include('views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 box">
-    <div class="col-xs-12 text-center">
+
+    <?php if(empty($back_url)) {
+      $to_shop = true;
+      $back_url = _A_::$app->router()->UrlTo('shop');
+    } ?>
+
+    <div class="col-xs-12 col-sm-2 back_button_container">
       <div class="row">
-        <h1 class="page-title">I Luv Fabrix Newsletter</h1>
-        <h2 class="page-title">
-          <small>DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</small>
-        </h2>
+        <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          <?= !empty($to_shop) ? 'To Shop' : 'Back' ?>
+        </a>
       </div>
+    </div>
+    <div class="col-xs-12 <?= empty($back_url) ? '' : 'col-sm-8' ?>  text-center">
+      <h1 class="page-title">I Luv Fabrix Newsletter</h1>
+      <h2 class="page-title">
+        <small>DESIGNER UPHOLSTERY/ DRAPERY FABRIC SUPERSALE</small>
+      </h2>
     </div>
 
     <?php if(!Controller_User::is_logged()): ?>
