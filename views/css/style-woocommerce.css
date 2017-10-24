@@ -17,6 +17,12 @@
     text-shadow: 1px 1px 1px #000;
 }
 
+.product_details .h1, .product_details .h2, .product_details .h3, .product_details .h4 {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
 .button {
     position: relative;
     text-transform: uppercase;
@@ -769,15 +775,6 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 
 }
 
-#view_matches {
-    color: #667700;
-    text-shadow: 2px 1px 0 #fff;
-}
-
-#view_matches:hover {
-    color: #667700;
-}
-
 .outer-offset-bottom {
     margin-bottom: 15px !important;
 }
@@ -1049,6 +1046,10 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     color: #48520c;
 }
 
+.product_view .price {
+    font-size: 18px;
+}
+
 .sold_out_1 hr, .sold_out_2 hr {
     padding: 0;
     margin: 0;
@@ -1089,6 +1090,10 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 
 .price .amount {
     font-weight: bold;
+}
+
+.product_view .price .amount {
+    font-size: 28px;
 }
 
 .product-price-box ins .amount {

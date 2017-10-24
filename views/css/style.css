@@ -673,7 +673,7 @@ td.product-subtotal {
 }
 
 .row_saleprice strong {
-    font-size: 18px;
+    font-size: 28px;
 }
 
 .pay_ok {
@@ -1838,7 +1838,7 @@ span.opa {
     bottom: 20px;
 }
 
-.special-products .owl-stage-outer {
+.specials-products .owl-stage-outer {
     padding-left: 10px;
     margin-left: -10px;
     padding-right: 10px;

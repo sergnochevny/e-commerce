@@ -22,9 +22,7 @@ var change_text = false;
           alert_container.remove();
         }, timeout);
       }
-    }
-
-    ,
+    },
     change_button_text: function (force) {
       if (force) change_text = false;
       if ($(window).width() < 485) {
@@ -381,8 +379,7 @@ var change_text = false;
       //	horizontal_padding: 20,
       //	opacity: .8,
       //	show_title: false,
-      //  allow_resize: true,
-      allow_expand: true,
+      //  allow_resize: false,
       default_width: 700
     });
 

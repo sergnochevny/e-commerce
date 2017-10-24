@@ -164,7 +164,6 @@
 			if(settings.allow_resize)
 				$(window).bind('scroll.prettyphoto',function(){ _center_overlay(); });
 			
-			
 			$.prettyPhoto.open();
 			
 			return false;
@@ -496,7 +495,8 @@
 		* Set the proper sizes on the containers and animate the content in.
 		*/
 		function _showContent(){
-			$('.pp_loaderIcon').hide();
+
+      $('.pp_loaderIcon').hide();
 
 			// Calculate the opened top position of the pic holder
 			projectedTop = scroll_pos['scrollTop'] + ((windowHeight/2) - (pp_dimensions['containerHeight']/2));
@@ -646,7 +646,6 @@
 			});
 			titleHeight += $pp_title.height();
 			$pp_title.remove();
-			
 			// Get the container size, to resize the holder to the right dimensions
 			pp_contentHeight = height + detailsHeight;
 			pp_contentWidth = width;

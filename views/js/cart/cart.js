@@ -11,49 +11,32 @@
 
     $('body').waitloader('show');
 
-    $.get(url,
-      {
-        pid: pid,
-        qnt: v
-      },
-      function (answer) {
-        var data = JSON.parse(answer);
-        if (data.product) {
-          $(document).trigger('destroy_spinner');
+    $.get(url, {pid: pid, qnt: v}, function (answer) {
+      var data = JSON.parse(answer);
+      if (data.product) {
+        $(document).trigger('destroy_spinner');
 
-          $.when($(parent).replaceWith(data.product)).done(function () {
-              $(document).trigger('init_spinner');
-              $('body').waitloader('remove');
-              $('[data-block=subtotal_items]').load(base_url + 'cart/items_amount');
-              $('[data-block=subtotal]').load(base_url + 'cart/amount');
-              $(document).trigger('calc_shipping_total');
+        $.when($(parent).replaceWith(data.product)).done(function () {
+          $(document).trigger('init_spinner');
+          $('body').waitloader('remove');
+          $('[data-block=subtotal_items]').load(base_url + 'cart/items_amount');
+          $('[data-block=subtotal]').load(base_url + 'cart/amount');
+          $(document).trigger('calc_shipping_total');
+        });
+      }
+      if (data.msg) {
+        $.when(
+          $(data.msg).appendTo('.main-content')
+        ).done(
+          function () {
+            $('#modal').modal('show');
+            $('#modal').on('hidden.bs.modal', function () {
+              $(this).remove();
             });
-        }
-        if (data.msg) {
-          $.when(
-            $(data.msg).appendTo('.main-content')
-          ).done(
-            function () {
-              $('#msg').dialog({
-                draggable: false,
-                dialogClass: 'msg',
-                title: 'Cart',
-                modal: true,
-                zIndex: 10000,
-                autoOpen: true,
-                width: '500',
-                resizable: false,
-                close: function (event, ui) {
-                  $(this).remove();
-                }
-              });
-              $('.msg').css('z-index', '10001');
-              $('.ui-widget-overlay').css('z-index', '10000');
-
-            });
-
-        }
-      });
+          }
+        );
+      }
+    });
   });
 
   $(document).on('click.confirm_action', ".popup a.close", function (event) {
@@ -257,8 +240,8 @@
     var url = $(this).attr('href');
     $.get(url, {}, function (data) {
       $.when($('#content').html(data)).done(function () {
-          $('html, body').stop().animate({scrollTop: 0}, 1000);
-        });
+        $('html, body').stop().animate({scrollTop: 0}, 1000);
+      });
     });
   });
 
@@ -267,8 +250,8 @@
     var url = $(this).attr('href');
     $.get(url, {}, function (data) {
       $.when($('#content').html(data)).done(function () {
-          $('html, body').stop().animate({scrollTop: 0}, 1000);
-        });
+        $('html, body').stop().animate({scrollTop: 0}, 1000);
+      });
     });
   });
 

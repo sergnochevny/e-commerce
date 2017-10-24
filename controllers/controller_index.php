@@ -1,183 +1,140 @@
 <?php
 
+/**
+ * class Controller_Index
+ */
+class Controller_Index extends Controller_Controller{
+
   /**
-   * Class Controller_Index
+   * @param $row
+   * @param $view
+   * @return mixed
    */
-  Class Controller_Index Extends Controller_Controller {
+  protected function build_sitemap_url($row, $view){
+    return $row['loc'];
+  }
 
-    /**
-     * @param $row
-     * @param $view
-     * @return mixed
-     */
-    protected function build_sitemap_url($row, $view) {
-      return $row['loc'];
-    }
+  /**
+   * @param int $page
+   * @param bool $view
+   * @param int $per_page
+   * @return array|null
+   */
+  protected function sitemap_get_list($page = 0, $view = false, $per_page = 1000){
+    $data = [
+      [
+        'loc' => _A_::$app->router()->UrlTo(''), 'changefreq' => 'monthly', 'priority' => 0.9,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('shop'), 'changefreq' => 'daily', 'priority' => 0.7,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('service'), 'changefreq' => 'monthly', 'priority' => 0.7,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('estimator'), 'changefreq' => 'monthly', 'priority' => 0.7,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('newsletter'), 'changefreq' => 'monthly', 'priority' => 0.7,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('privacy'), 'changefreq' => 'monthly', 'priority' => 0.5,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('about'), 'changefreq' => 'monthly', 'priority' => 0.5,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('contact'), 'changefreq' => 'monthly', 'priority' => 0.5,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('shop/specials'), 'changefreq' => 'daily', 'priority' => 0.6,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('clearance'), 'changefreq' => 'daily', 'priority' => 0.6,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('blog/view'), 'changefreq' => 'daily', 'priority' => 0.6,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('prices/view'), 'changefreq' => 'daily', 'priority' => 0.6,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('colors/view'), 'changefreq' => 'daily', 'priority' => 0.6,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('categories/view'), 'changefreq' => 'daily', 'priority' => 0.6,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('patterns/view'), 'changefreq' => 'daily', 'priority' => 0.6,
+      ], [
+        'loc' => _A_::$app->router()->UrlTo('manufacturers/view'), 'changefreq' => 'daily', 'priority' => 0.6,
+      ],
+    ];
 
-    /**
-     * @param int $page
-     * @param bool $view
-     * @param int $per_page
-     * @return array|null
-     */
-    protected function sitemap_get_list($page = 0, $view = false, $per_page = 1000) {
-      $data = [
-        [
-          'loc' => _A_::$app->router()->UrlTo(''),
-          'changefreq' => 'monthly',
-          'priority' => 0.9,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('shop'),
-          'changefreq' => 'daily',
-          'priority' => 0.7,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('service'),
-          'changefreq' => 'monthly',
-          'priority' => 0.7,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('estimator'),
-          'changefreq' => 'monthly',
-          'priority' => 0.7,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('newsletter'),
-          'changefreq' => 'monthly',
-          'priority' => 0.7,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('privacy'),
-          'changefreq' => 'monthly',
-          'priority' => 0.5,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('about'),
-          'changefreq' => 'monthly',
-          'priority' => 0.5,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('contact'),
-          'changefreq' => 'monthly',
-          'priority' => 0.5,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('shop/specials'),
-          'changefreq' => 'daily',
-          'priority' => 0.6,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('clearance'),
-          'changefreq' => 'daily',
-          'priority' => 0.6,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('blog/view'),
-          'changefreq' => 'daily',
-          'priority' => 0.6,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('prices/view'),
-          'changefreq' => 'daily',
-          'priority' => 0.6,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('colors/view'),
-          'changefreq' => 'daily',
-          'priority' => 0.6,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('categories/view'),
-          'changefreq' => 'daily',
-          'priority' => 0.6,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('patterns/view'),
-          'changefreq' => 'daily',
-          'priority' => 0.6,
-        ],
-        [
-          'loc' => _A_::$app->router()->UrlTo('manufacturers/view'),
-          'changefreq' => 'daily',
-          'priority' => 0.6,
-        ],
-      ];
-      return ($page > 1) ? null : $data;
-    }
+    return ($page > 1) ? null : $data;
+  }
 
-    /**
-     * @return int
-     */
-    public static function sitemap_order() { return 0; }
+  /**
+   * @return int
+   */
+  public static function sitemap_order(){
+    return 0;
+  }
 
-    /**
-     * @export
-     */
-    public function index($required_access = true) {
-      $this->main->view('index');
-    }
+  /**
+   * @export
+   */
+  public function index($required_access = true){
+    $this->main->view('index');
+  }
 
-    /**
-     * @export
-     */
-    public function service() {
-      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
-      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
-      $this->main->view('static/service');
-    }
+  /**
+   * @export
+   */
+  public function service(){
+    _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+    if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
+    $this->main->view('static/service');
+  }
 
-    /**
-     * @export
-     */
-    public function estimator() {
-      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
-      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
-      $this->main->view('static/estimate');
-    }
+  /**
+   * @export
+   */
+  public function estimator(){
+    _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+    if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
+    $this->main->view('static/estimate');
+  }
 
-    /**
-     * @export
-     */
-    public function newsletter() {
-      _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
-      if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
-      $this->main->view('static/newsletter');
-    }
+  /**
+   * @export
+   */
+  public function newsletter(){
+    _A_::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+    if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', _A_::$app->server('HTTP_REFERER'));
+    $this->main->view('static/newsletter');
+  }
 
-    /**
-     * @export
-     */
-    public function privacy() {
-      $this->main->view('static/privacy');
-    }
+  /**
+   * @export
+   */
+  public function privacy(){
+    $this->main->view('static/privacy');
+  }
 
-    /**
-     * @export
-     */
-    public function about() {
-      $this->main->view('static/about');
-    }
+  /**
+   * @export
+   */
+  public function about(){
+    $this->main->view('static/about');
+  }
 
-    /**
-     * @export
-     */
-    public function message() {
-      $this->main->message();
-    }
+  /**
+   * @export
+   */
+  public function message(){
+    $this->main->message();
+  }
 
-    /**
-     * @export
-     */
-    public function error404() {
-      $this->main->error404();
-    }
+  /**
+   * @export
+   */
+  public function error404(){
+    $this->main->error404();
+  }
 
-    /**
-     * @param bool $partial
-     * @param bool $required_access
-     */
-    public function view($partial = false, $required_access = false) { }
+  /**
+   * @param bool $partial
+   * @param bool $required_access
+   */
+  public function view($partial = false, $required_access = false){
+  }
 
 
 
@@ -255,4 +212,4 @@
 //        echo $total . ' | ' . $total_break . ' | ' . $total_break_p . ' | ' . $total_break_v;
 //    }
 
-  }
+}

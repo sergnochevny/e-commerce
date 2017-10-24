@@ -2,13 +2,13 @@
 
 (function ($) {
   $(document).ready(function () {
-
-    $.get($('#get_url').val(), {}, function (data) {
-      $('.special-products').html(data).owlCarousel({
+    $.get($('#specials-products_url').val(), {}, function (data) {
+      $('.specials-products').html(data).owlCarousel({
         responsive: {
           0: {items: 1},
           461: {items: 2},
-          992: {items: 3}
+          992: {items: 3},
+          1200: {items: 4}
         },
         margin: 15,
         nav: true,

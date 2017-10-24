@@ -84,7 +84,6 @@
 
 .deleteDragImg:before {
     color: #999;
-    content: "" !important;
     display: block;
     font-family: "Simple-Line-Icons";
     font-size: 60px;
@@ -135,6 +134,33 @@
     text-align: center;
     width: 120px;
     padding-top: 34px;
+}
+
+.AddToCartDragImg:before {
+    color: #999;
+    display: block;
+    font-family: "Simple-Line-Icons";
+    font-size: 60px;
+    line-height: 2em;
+    text-align: center;
+    width: 120px;
+}
+
+.AddToCartDragImg {
+    background-color: #bbb;
+    border-radius: 0 0 0 4px;
+    top: 0;
+    right: 0;
+    color: #fff;
+    height: 120px;
+    position: absolute;
+    width: 120px;
+    z-index: 0;
+    -webkit-transition: background-color .3s;
+    -moz-transition: background-color .3s;
+    -o-transition: background-color .3s;
+    transition: background-color .3s;
+    border: 0;
 }
 
 .ui-draggable-dragging {

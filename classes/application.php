@@ -1,25 +1,25 @@
 <?php
 
-  /**
-   * Class Application
-   * @property \Router router
-   * @property \KeyStorage keystorage
-   */
+/**
+ * Class Application
+ * @property \Router router
+ * @property \KeyStorage keystorage
+ */
 
-  class Application extends Core {
+class Application extends Core{
 
-    protected $keystorage;
+  protected $keystorage;
 
-    protected function init() {
-      parent::init();
-      $this->SelectDB('default');
-      $this->router = new Router($this);
-      $this->keystorage = new KeyStorage();
-      $this->registry()->set('router', $this->router);
-    }
-
-    public function run() {
-      $this->router->start();
-    }
-
+  protected function init(){
+    parent::init();
+    $this->SelectDB('default');
+    $this->router = new Router($this);
+    $this->keystorage = new KeyStorage();
+    $this->registry()->set('router', $this->router);
   }
+
+  public function run(){
+    $this->router->start();
+  }
+
+}
