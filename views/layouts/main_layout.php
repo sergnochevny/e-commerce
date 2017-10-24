@@ -84,7 +84,7 @@
     <?php include('views/copyright.php') ?>
   </footer>
   <?php if(isset($cart_enable)) { ?>
-    <a href="<?= _A_::$app->router()->UrlTo('cart'); ?>" id="cart" rel="nofollow" class="cart-subtotal">
+    <a data-waitloader href="<?= _A_::$app->router()->UrlTo('cart'); ?>" id="cart" rel="nofollow" class="cart-subtotal">
       <i class="simple-icon-handbag"></i>
       <span class="topnav-label">
         <span id="cart_amount" class="amount">

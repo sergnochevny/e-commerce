@@ -40,7 +40,7 @@
 }
 
 .dragZoneArea > img {
-    cursor: move;
+    cursor: -webkit-grab;
     z-index: 0;
     position: absolute;
     -webkit-transition: opacity 1s;
@@ -161,6 +161,7 @@
     -o-transition: background-color .3s;
     transition: background-color .3s;
     border: 0;
+    cursor: pointer;
 }
 
 .ui-draggable-dragging {

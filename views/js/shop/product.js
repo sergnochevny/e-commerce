@@ -116,7 +116,10 @@
 
   $(document).on('click', "#continue", function (event) {
     event.preventDefault();
-    if (back_url) window.location = back_url;
+    if (back_url) {
+      $('#content').waitloader('show');
+      window.location = back_url;
+    }
   });
 
   $('#add_favorites').on('click', function (ev) {

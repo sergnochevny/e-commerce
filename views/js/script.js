@@ -355,6 +355,7 @@ var change_text = false;
           url = $('.image-navigation .nav-next a').attr('href');
         }
         if (url && ( !$('textarea, input').is(':focus') )) {
+          $('#content').waitloader('show');
           window.location = url;
         }
       });
