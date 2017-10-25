@@ -49,5 +49,5 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/short_authorization.min.js'); ?>'
+<script src='<?= _A_::$app->router()->UrlTo('js/authorization/short_authorization.min.js'); ?>'
         type="text/javascript"></script>

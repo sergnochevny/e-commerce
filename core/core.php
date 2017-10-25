@@ -1,25 +1,23 @@
 <?php
 
-include("classes/application.php");
-
 class Core{
 
-    protected $router;
-    protected $registry;
-    protected $session;
-    protected $post;
-    protected $get;
-    protected $server;
-    protected $cookie;
-    protected $request;
+  protected $router;
+  protected $registry;
+  protected $session;
+  protected $post;
+  protected $get;
+  protected $server;
+  protected $cookie;
+  protected $request;
 
-    protected $db;
-    protected $connections;
-    protected $config = [];
+  protected $db;
+  protected $connections;
+  protected $config = [];
 
   public function __construct(){
     $this->init();
-    }
+  }
 
   private function initConfig(){
     $config = $this->getAppConfig();
@@ -53,11 +51,11 @@ class Core{
         'Application is not configured...'
       );
     }
-    }
+  }
 
   private function getAppConfig(){
-    return include('config.php');
-    }
+    return include(APP_PATH . '/config.php');
+  }
 
   private function initDBConnections(){
     $DBS = $this->config('DBS');
@@ -83,11 +81,11 @@ class Core{
         'Application is not configured...'
       );
     }
-    }
+  }
 
   private function initRegistry(){
     $this->registry = new Registry();
-    }
+  }
 
   private function initGlobals(){
     $this->post = array_slice($_POST, 0);
@@ -95,7 +93,7 @@ class Core{
     $this->server = array_slice($_SERVER, 0);
     $this->cookie = array_slice($_COOKIE, 0);
     $this->request = array_slice($_REQUEST, 0);
-    }
+  }
 
   private function initSession(){
     if(!is_null($this->get('pay_notify'))) {
@@ -104,7 +102,7 @@ class Core{
     }
     session_start();
     $this->session = array_filter($_SESSION);
-    }
+  }
 
   protected function init(){
     $this->initConfig();
@@ -112,7 +110,7 @@ class Core{
     $this->initRegistry();
     $this->initGlobals();
     $this->initSession();
-    }
+  }
 
   function __get($name){
     if(property_exists($this, $name)) {
@@ -129,7 +127,7 @@ class Core{
     }
 
     return null;
-    }
+  }
 
   public function __call($name, $arguments){
     $direct_set = strpos($name, 'set') !== false;
@@ -170,23 +168,23 @@ class Core{
     }
 
     return false;
-    }
+  }
 
   public function getArrayProperty($property, $key){
     if(isset($this->{$property}[$key])) return $this->{$property}[$key];
 
     return null;
-    }
+  }
 
   public function getProperty($property){
     if(isset($this->{$property})) return $this->{$property};
 
     return null;
-    }
+  }
 
   public function setProperty($property, $value){
     $this->{$property} = $value;
-    }
+  }
 
   public function setSession($key, $value){
     $this->setArrayProperty('session', $key, $value);
@@ -195,12 +193,12 @@ class Core{
     } else {
       $_SESSION[$key] = $value;
     }
-    }
+  }
 
   public function setArrayProperty($property, $key, $value){
     if(is_null($value)) unset($this->{$property}[$key]);
     else $this->{$property}[$key] = $value;
-    }
+  }
 
   public function setCookie($key, $value){
     $this->setArrayProperty('session', $key, $value);
@@ -211,7 +209,7 @@ class Core{
       $_COOKIE[$key] = $value;
       setcookie($key, $value);
     }
-    }
+  }
 
   public function SelectDB($name){
     if(isset($this->db[$name]) && is_array($this->db[$name])) {
@@ -230,90 +228,29 @@ class Core{
         }
       }
     } else {
-      throw new Exception(
-        strtr('Data Base "{db}" not present in Application',
-          [
-            "{db}" => $name
-          ]
-        )
-      );
+      throw new Exception(strtr('Data Base "{db}" not present in Application', ["{db}" => $name]));
     }
-    }
+  }
 
   public function getDBConnection($name){
     if(isset($this->db[$name]) && is_array($this->db[$name])) {
       return $this->db[$name][1];
     } else {
-      new Exception(
-        strtr('Data Base configuration "{db}" not present in Application',
-          [
-            "{db}" => $name
-          ]
-        )
-      );
+      new Exception(strtr('Data Base configuration "{db}" not present in Application', ["{db}" => $name]));
     }
 
     return null;
-    }
+  }
 
   public function request_is_ajax(){
     return !empty($this->server('HTTP_X_REQUESTED_WITH')) && strtolower($this->server('HTTP_X_REQUESTED_WITH')) == 'xmlhttprequest';
-    }
+  }
 
   public function request_is_post(){
     return $this->server('REQUEST_METHOD') == 'POST';
-    }
+  }
 
   public function request_is_get(){
     return $this->server('REQUEST_METHOD') == 'GET';
-    }
-}
-
-class _A_{
-
-    /* @var $app Application */
-    static public $app;
-
-  static function autoload($className){
-    $filename = strtolower($className) . '.php';
-    $expArr = explode('_', $className);
-    $folder = 'classes';
-    if(file_exists(SITE_PATH . $folder . DS . $filename)) {
-      include_once(SITE_PATH . $folder . DS . $filename);
-
-      return true;
-    }
-    switch(strtolower($expArr[0])) {
-      case 'controller':
-        $folder = 'controllers/base';
-        if(file_exists(SITE_PATH . $folder . DS . $filename)) {
-          include_once(SITE_PATH . $folder . DS . $filename);
-
-          return true;
-        }
-        $folder = 'controllers';
-        break;
-      case 'model':
-        $folder = 'models';
-        break;
-      default:
-        $folder = 'classes';
-        break;
-    }
-    $file = SITE_PATH . $folder . DS . $filename;
-    if(file_exists($file)) {
-      include_once($file);
-
-      return true;
-    }
-
-    return false;
-    }
-
-  public static function start(){
-    spl_autoload_register(['self', 'autoload']);
-    self::$app = new Application();
-    self::$app->run();
-    }
-
+  }
 }

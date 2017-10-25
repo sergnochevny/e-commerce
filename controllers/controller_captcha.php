@@ -23,14 +23,16 @@ class Controller_Captcha extends Controller_Controller{
 
   private function gen_captcha(){
     for($i = 0; $i < $this->length; $i++) $this->key .= $this->use_symbols{mt_rand(0, $this->use_symbols_len - 1)};
-    $im = imagecreatefrompng(dirname(__DIR__) . "/views/images/captcha/back.png");
+    $im = imagecreatefrompng(APP_PATH . "/web/images/captcha/back.png");
     $width = imagesx($im);
     $height = imagesy($im);
     $rc = mt_rand(80, 100);
     $font_color = imagecolorresolve($im, $rc, $rc, 0);
     $px = $this->margin_left;
     For($i = 0; $i < $this->length; $i++) {
-      imagettftext($im, $this->font_size, 0, $px, $this->margin_top, $font_color, dirname(__DIR__) . "/views/fonts/cartoon.ttf", $this->key[$i]);
+      imagettftext($im, $this->font_size, 0, $px, $this->margin_top, $font_color,
+        APP_PATH . "/web/fonts/cartoon.ttf", $this->key[$i]
+      );
       $px += $this->font_width + mt_rand($this->rand_bsimb_min, $this->rand_bsimb_max);
     }
 

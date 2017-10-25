@@ -17,9 +17,9 @@ class Controller_Cart extends Controller_Controller{
 
   private function product_in($pid, &$item, $template = 'product_in'){
     $product = Model_Product::get_by_id($pid);
-    $filename = 'upload/upload/' . $item['image1'];
+    $filename = 'images/products/' . $item['image1'];
     if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
-      $filename = "upload/upload/not_image.jpg";
+      $filename = "images/products/not_image.jpg";
     }
     $img_url = _A_::$app->router()->UrlTo($filename);
 
@@ -78,9 +78,9 @@ class Controller_Cart extends Controller_Controller{
 
   private function sample_in($pid, &$item, $template = 'sample_in'){
     $item = Model_Shop::get_product_params($pid);
-    $filename = 'upload/upload/' . $item['image1'];
+    $filename = 'images/products/' . $item['image1'];
     if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
-      $filename = "upload/upload/not_image.jpg";
+      $filename = "images/products/not_image.jpg";
     }
     $img_url = _A_::$app->router()->UrlTo($filename);
     $this->template->vars('img_url', $img_url);

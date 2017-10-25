@@ -1,4 +1,4 @@
-<?php include('views/index/main_gallery.php'); ?>
+<?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
 
     <div class="col-xs-12 box outer-offset-bottom half-inner-offset-vertical">
@@ -45,5 +45,5 @@
     </div>
 
 </div>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/index/index.js'); ?>' type="text/javascript"></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/index/index.js'); ?>' type="text/javascript"></script>

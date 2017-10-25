@@ -60,9 +60,9 @@ class Model_Shop extends Model_Base{
   public static function prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix = 'b_'){
     $row['sdesc'] = substr($row['sdesc'], 0, 100);
     $row['ldesc'] = substr($row['ldesc'], 0, 100);
-    $filename = 'upload/upload/' . $image_suffix . $row['image1'];
-    if(!(file_exists($filename) && is_file($filename))) {
-      $filename = 'upload/upload/not_image.jpg';
+    $filename = 'images/products/' . $image_suffix . $row['image1'];
+    if(!(file_exists(APP_PATH . '/web/' . $filename) && is_file(APP_PATH . '/web/' . $filename))) {
+      $filename = 'images/products/not_image.jpg';
     }
     $row['filename'] = _A_::$app->router()->UrlTo($filename);
 
@@ -181,10 +181,12 @@ class Model_Shop extends Model_Base{
     $data['in_cart'] = in_array($data['pid'], array_keys($cart_items));
 
     $data['img1_exists'] = true;
-    $data['filename'] = 'upload/upload/' . $data['image1'];
-    $data['filename1'] = 'upload/upload/' . 'v_' . $data['image1'];
-    if(!(file_exists($data['filename']) && is_file($data['filename']) && is_readable($data['filename']))) {
-      $data['filename'] = "upload/upload/not_image.jpg";
+    $data['filename'] = 'images/products/' . $data['image1'];
+    $data['filename1'] = 'images/products/' . 'v_' . $data['image1'];
+    if(!(file_exists(APP_PATH . '/web/' . $data['filename']) &&
+      is_file(APP_PATH . '/web/' . $data['filename']) &&
+      is_readable(APP_PATH . '/web/' . $data['filename']))) {
+      $data['filename'] = "images/products/not_image.jpg";
       $data['filename1'] = null;
       $data['img1_exists'] = false;
     }
@@ -192,15 +194,17 @@ class Model_Shop extends Model_Base{
     $data['filename1'] = isset($data['filename1']) ? _A_::$app->router()->UrlTo($data['filename1']) : null;
     for($i = 2; $i < 6; $i++) {
       if(!empty($data['image' . $i])) {
-        $data['img' . $i . '_filename'] = 'upload/upload/b_' . $data['image' . $i];
-        $data['img' . $i . '_filename1'] = 'upload/upload/v_' . $data['image' . $i];
-        if(!(file_exists($data['img' . $i . '_filename']) && is_file($data['img' . $i . '_filename']) && is_readable($data['img' . $i . '_filename']))) {
-          $data['img' . $i . '_filename'] = "upload/upload/not_image.jpg";
+        $data['img' . $i . '_filename'] = 'images/products/b_' . $data['image' . $i];
+        $data['img' . $i . '_filename1'] = 'images/products/v_' . $data['image' . $i];
+        if(!(file_exists(APP_PATH . '/web/' . $data['img' . $i . '_filename']) &&
+          is_file(APP_PATH . '/web/' . $data['img' . $i . '_filename']) &&
+          is_readable(APP_PATH . '/web/' . $data['img' . $i . '_filename']))) {
+          $data['img' . $i . '_filename'] = "images/products/not_image.jpg";
           $data['img' . $i . '_filename1'] = null;
         }
         $data['img' . $i . '_filename'] = _A_::$app->router()->UrlTo($data['img' . $i . '_filename']);
-        $data['img' . $i . '_filename1'] = isset($data['img' . $i . '_filename1']) ? _A_::$app->router()
-                                                                                              ->UrlTo($data['img' . $i . '_filename1']) : null;
+        $data['img' . $i . '_filename1'] = isset($data['img' . $i . '_filename1']) ?
+          _A_::$app->router()->UrlTo($data['img' . $i . '_filename1']) : null;
       }
     }
 

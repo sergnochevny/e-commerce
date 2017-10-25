@@ -22,17 +22,17 @@ class Controller_Product extends Controller_FormSimple{
   }
 
   private function images($data, $return = false){
-    $not_image = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
-    $data['u_image1'] = empty($data['image1']) || !is_file('upload/upload/' . $data['image1']) ? '' : _A_::$app->router()
-                                                                                                               ->UrlTo('upload/upload/v_' . $data['image1']);
-    $data['u_image2'] = empty($data['image2']) || !is_file('upload/upload/' . $data['image2']) ? '' : _A_::$app->router()
-                                                                                                               ->UrlTo('upload/upload/b_' . $data['image2']);
-    $data['u_image3'] = empty($data['image3']) || !is_file('upload/upload/' . $data['image3']) ? '' : _A_::$app->router()
-                                                                                                               ->UrlTo('upload/upload/b_' . $data['image3']);
-    $data['u_image4'] = empty($data['image4']) || !is_file('upload/upload/' . $data['image4']) ? '' : _A_::$app->router()
-                                                                                                               ->UrlTo('upload/upload/b_' . $data['image4']);
-    $data['u_image5'] = empty($data['image5']) || !is_file('upload/upload/' . $data['image5']) ? '' : _A_::$app->router()
-                                                                                                               ->UrlTo('upload/upload/b_' . $data['image5']);
+    $not_image = _A_::$app->router()->UrlTo('images/products/not_image.jpg');
+    $data['u_image1'] = empty($data['image1']) || !is_file(APP_PATH.'/web/images/products/' . $data['image1']) ? '' :
+      _A_::$app->router()->UrlTo('images/products/v_' . $data['image1']);
+    $data['u_image2'] = empty($data['image2']) || !is_file(APP_PATH.'/web/images/products/' . $data['image2']) ? '' :
+      _A_::$app->router()->UrlTo('images/products/b_' . $data['image2']);
+    $data['u_image3'] = empty($data['image3']) || !is_file(APP_PATH.'/web/images/products/' . $data['image3']) ? '' :
+      _A_::$app->router()->UrlTo('images/products/b_' . $data['image3']);
+    $data['u_image4'] = empty($data['image4']) || !is_file(APP_PATH.'/web/images/products/' . $data['image4']) ? '' :
+      _A_::$app->router()->UrlTo('images/products/b_' . $data['image4']);
+    $data['u_image5'] = empty($data['image5']) || !is_file(APP_PATH.'/web/images/products/' . $data['image5']) ? '' :
+      _A_::$app->router()->UrlTo('images/products/b_' . $data['image5']);
     $this->template->vars('not_image', $not_image);
     $this->template->vars('data', $data);
     if($return) return $this->template->view_layout_return('images');
@@ -50,7 +50,7 @@ class Controller_Product extends Controller_FormSimple{
       }
     } elseif($method == 'images.upload') {
       $idx = !is_null(_A_::$app->post('idx')) ? _A_::$app->post('idx') : 1;
-      $uploaddir = 'upload/upload/';
+      $uploaddir = APP_PATH . '/web/images/products/';
       $file = 't' . uniqid() . '.jpg';
       $ext = strtolower(substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1));
       $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.jpeg'];

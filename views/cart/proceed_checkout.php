@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <div class="col-xs-12">
   <div class="row">
     <div class="col-xs-12 col-sm-2 back_button_container">
@@ -117,7 +117,7 @@
 </div>
 <div>
   <div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>">
-    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/cart/load.min.js'); ?>'></script>
+    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/load.min.js'); ?>'></script>
   </div>
 </div>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/cart/checkout.min.js'); ?>'></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/checkout.min.js'); ?>'></script>

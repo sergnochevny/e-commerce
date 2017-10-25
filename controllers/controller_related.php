@@ -7,7 +7,8 @@ class Controller_Related extends Controller_FormSimple{
       return ['a.pid'];
     } else {
       return [
-        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece', 'a.best', 'a.specials', 'b.cid', 'c.id', 'd.id', 'e.id'
+        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece',
+        'a.best', 'a.specials', 'b.cid', 'c.id', 'd.id', 'e.id'
       ];
     }
   }
@@ -113,7 +114,8 @@ class Controller_Related extends Controller_FormSimple{
    * @export
    */
   public function view($partial = false, $required_access = false){
-    if(_A_::$app->request_is_ajax()) Controller_Controller::get_list(true); else throw new Exception('No Related Products');
+    if(_A_::$app->request_is_ajax()) Controller_Controller::get_list(true);
+    else throw new Exception('No Related Products');
   }
 
   /**

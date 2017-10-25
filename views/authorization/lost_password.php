@@ -5,7 +5,7 @@
         <i class="fa fa-angle-left" aria-hidden="true"></i>
         Back
       </a>
-      <?php include('views/authorization/lost_password_form.php') ?>
+      <?php include(APP_PATH . '/views/authorization/lost_password_form.php') ?>
     </div>
   </div>
 </div>

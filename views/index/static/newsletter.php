@@ -1,4 +1,4 @@
-<?php include('views/index/main_gallery.php'); ?>
+<?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 box">
 
@@ -40,7 +40,7 @@
                   <div class="col-xs-12" data-role="form_content">
                     <div data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
                       <script type='text/javascript'
-                              src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+                              src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
                     </div>
                   </div>
                 </div>
@@ -52,5 +52,5 @@
     <?php endif; ?>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>
 

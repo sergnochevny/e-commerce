@@ -26,7 +26,7 @@ class Model_Matches extends Model_Base{
         foreach($matches_items as $key => $item) {
           $response[$key]['pid'] = $item['pid'];
           $response[$key]['pname'] = $item['pname'];
-          $response[$key]['img'] = _A_::$app->router()->UrlTo('upload/upload/' . $item['img']);
+          $response[$key]['img'] = _A_::$app->router()->UrlTo('images/products/' . $item['img']);
           $response[$key]['top'] = $top;
           $response[$key]['left'] = $left;
           $left += 6;
@@ -57,7 +57,7 @@ class Model_Matches extends Model_Base{
         $product = Model_Product::get_by_id($pid);
 
         if(isset($product['image1'])) {
-          $file_img = 'upload/upload/' . $product['image1'];
+          $file_img = 'images/products/' . $product['image1'];
           if(file_exists($file_img) && is_file($file_img)) {
             $product['image1'] = $suffix_img . $product['image1'];
             $matches_items[] = ['pid' => $pid, 'pname' => $product['pname'], 'img' => $product['image1']];

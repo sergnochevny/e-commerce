@@ -138,8 +138,8 @@ class Model_Blog extends Model_Base{
   public static function delete_img($filename){
     $filename = trim(str_replace('{base_url}', '', $filename), '/\\');
     if(!empty($filename)) {
-      if($filename == basename($filename)) $filename = 'img/blog/' . $filename;
-      if(file_exists($filename)) unlink($filename);
+      if($filename == basename($filename)) $filename = 'images/blog/' . $filename;
+      if(file_exists(APP_PATH . '/web/' . $filename)) unlink(APP_PATH . '/web/' . $filename);
     }
   }
 
@@ -167,8 +167,11 @@ class Model_Blog extends Model_Base{
         if(substr($filename, 0, 1) == 't') {
           static::delete_img($img);
           $filename = 'p' . $id . $filename;
-          if(file_exists("img/blog/" . basename($data['img']))) {
-            rename("img/blog/" . basename($data['img']), "img/blog/" . $filename);
+          if(file_exists(APP_PATH . '/web/' . "images/blog/" . basename($data['img']))) {
+            rename(
+              APP_PATH . '/web/' . "images/blog/" . basename($data['img']),
+              APP_PATH . '/web/' . "images/blog/" . $filename
+            );
           }
           $data['img'] = $filename;
           $result = static::query("DELETE FROM blog_post_img WHERE post_id = '$id'");

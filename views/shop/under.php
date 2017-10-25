@@ -26,7 +26,7 @@
           <?php } ?>
           <figcaption data-product>
             <?php if($row['in_cart']) {
-              include('views/cart/basket.php');
+              include(APP_PATH . '/views/cart/basket.php');
             } else { ?>
               <a data-waitloader class="button add-to-basket" href="<?= $href; ?>">View Details</a>
             <?php } ?>
@@ -49,5 +49,5 @@
   </div>
 <?php endif; ?>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
 

@@ -1,5 +1,5 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('views/css/blog.min.css'); ?>">
-<?php include('views/index/main_gallery.php'); ?>
+<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('css/blog.min.css'); ?>">
+<?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div id="blog" class="col-xs-12 main-content-inner box" role="main">
     <article class="page type-page status-publish entry">
@@ -24,4 +24,4 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/view.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/blog/view.min.js'); ?>' type="text/javascript"></script>

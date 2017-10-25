@@ -189,19 +189,23 @@ class Controller_Blog extends Controller_FormSimple{
   private function image($data, $return = false){
     $file_img = trim(str_replace('{base_url}', '', $data['img']), '/\\');
     if(basename($file_img) == $file_img) {
-      if(file_exists('img/blog/' . $file_img) && is_file('img/blog/' . $file_img) && is_readable('img/blog/' . $file_img)) {
-        $data['img'] = _A_::$app->router()->UrlTo('img/blog/' . $file_img);
+      if(file_exists(APP_PATH . '/web/' . 'images/blog/' . $file_img) &&
+        is_file(APP_PATH . '/web/' . 'images/blog/' . $file_img) &&
+        is_readable(APP_PATH . '/web/' . 'images/blog/' . $file_img)) {
+        $data['img'] = _A_::$app->router()->UrlTo('images/blog/' . $file_img);
         $data['file_img'] = $file_img;
       } else {
-        $data['img'] = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
+        $data['img'] = _A_::$app->router()->UrlTo('images/products/not_image.jpg');
         $data['file_img'] = '';
       }
     } else {
-      if(file_exists($file_img) && is_file($file_img) && is_readable($file_img)) {
+      if(file_exists(APP_PATH . '/web/' . $file_img) &&
+        is_file(APP_PATH . '/web/' . $file_img) &&
+        is_readable(APP_PATH . '/web/' . $file_img)) {
         $data['img'] = _A_::$app->router()->UrlTo($file_img);
         $data['file_img'] = $file_img;
       } else {
-        $data['img'] = _A_::$app->router()->UrlTo('upload/upload/not_image.jpg');
+        $data['img'] = _A_::$app->router()->UrlTo('images/products/not_image.jpg');
         $data['file_img'] = '';
       }
     }
@@ -213,7 +217,7 @@ class Controller_Blog extends Controller_FormSimple{
   private function image_handling(&$data = null){
     $method = _A_::$app->post('method');
     if($method == 'image.upload') {
-      $uploaddir = 'img/blog/';
+      $uploaddir = APP_PATH . '/web/images/blog/';
       $file = 't' . uniqid();
       $ext = substr($_FILES['uploadfile']['name'], strpos($_FILES['uploadfile']['name'], '.'), strlen($_FILES['uploadfile']['name']) - 1);
       $file .= $ext;
@@ -273,10 +277,15 @@ class Controller_Blog extends Controller_FormSimple{
   private function path_img($img){
     $img = trim(str_replace('{base_url}', '', $img), '/\\');
     if(basename($img) == $img) {
-      if(file_exists('img/blog/' . $img) && is_file('img/blog/' . $img) && is_readable('img/blog/' . $img)) $img = 'img/blog/' . $img; else $img = 'upload/upload/not_image.jpg';
+      if(file_exists(APP_PATH . '/web/images/blog/' . $img) &&
+        is_file(APP_PATH . '/web/images/blog/' . $img) &&
+        is_readable(APP_PATH . '/web/images/blog/' . $img)) $img = 'images/blog/' . $img;
+      else $img = 'images/products/not_image.jpg';
     } else {
-      if(!(file_exists($img) && is_file($img) && is_readable($img))) {
-        $img = 'upload/upload/not_image.jpg';
+      if(!(file_exists(APP_PATH . '/web/' . $img) &&
+        is_file(APP_PATH . '/web/' . $img) &&
+        is_readable(APP_PATH . '/web/' . $img))) {
+        $img = 'images/products/not_image.jpg';
       }
     }
 

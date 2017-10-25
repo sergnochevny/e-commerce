@@ -40,7 +40,7 @@
           ?>
           <figcaption>
             <?php if($row['in_cart']) :
-              include('views/cart/basket.php');
+              include(APP_PATH . '/views/cart/basket.php');
             else : ?>
               <?php if(!empty($row['inventory']) && ($row['inventory'] > 0)) : ?>
                 <a data-waitloader class="button add-to-basket" href="<?= $href; ?>">View Details</a>

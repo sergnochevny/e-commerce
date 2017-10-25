@@ -101,9 +101,9 @@ class Model_Clearance extends Model_Base{
         }
       } else {
         while($row = static::fetch_array($result)) {
-          $filename = 'upload/upload/b_' . $row['image1'];
+          $filename = 'images/products/b_' . $row['image1'];
           if(!(file_exists($filename) && is_file($filename))) {
-            $filename = 'upload/upload/not_image.jpg';
+            $filename = 'images/products/not_image.jpg';
           }
           $row['filename'] = _A_::$app->router()->UrlTo($filename);
 

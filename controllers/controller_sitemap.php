@@ -34,7 +34,7 @@ class Controller_Sitemap extends Controller_Base{
     set_time_limit(0);
     ob_start();
     try {
-      $path = SITE_PATH . 'controllers/controller_*.php';
+      $path = APP_PATH . 'controllers/controller_*.php';
       $controllers = [];
       foreach(glob($path) as $file) {
         if(is_readable($file)) {

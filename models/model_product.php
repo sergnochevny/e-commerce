@@ -41,14 +41,14 @@ class Model_Product extends Model_Base{
 
   public static function delete_img($filename){
     if(!empty($filename)) {
-      if(file_exists("upload/upload/" . $filename)) {
-        unlink("upload/upload/" . $filename);
+      if(file_exists(APP_PATH . '/web/' . "images/products/" . $filename)) {
+        unlink(APP_PATH . '/web/' . "images/products/" . $filename);
       }
-      if(file_exists("upload/upload/b_" . $filename)) {
-        unlink("upload/upload/b_" . $filename);
+      if(file_exists(APP_PATH . '/web/' . "images/products/b_" . $filename)) {
+        unlink(APP_PATH . '/web/' . "images/products/b_" . $filename);
       }
-      if(file_exists("upload/upload/v_" . $filename)) {
-        unlink("upload/upload/v_" . $filename);
+      if(file_exists(APP_PATH . '/web/' . "images/products/v_" . $filename)) {
+        unlink(APP_PATH . '/web/' . "images/products/v_" . $filename);
       }
     }
   }
@@ -258,9 +258,9 @@ class Model_Product extends Model_Base{
     if($result = static::query($query)) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_array($result)) {
-        $filename = 'upload/upload/b_' . $row['image1'];
-        if(!(file_exists($filename) && is_file($filename))) {
-          $filename = 'upload/upload/not_image.jpg';
+        $filename = 'images/products/b_' . $row['image1'];
+        if(!(file_exists(APP_PATH . '/web/' . $filename) && is_file(APP_PATH . '/web/' . $filename))) {
+          $filename = 'images/products/not_image.jpg';
         }
         $row['filename'] = _A_::$app->router()->UrlTo($filename);
 
@@ -334,14 +334,14 @@ class Model_Product extends Model_Base{
         if(substr($filename, 0, strlen($pid) + 1) !== 'p' . $pid) {
           static::delete_img($images['image' . $idx]);
           $filename = 'p' . $pid . $filename;
-          if(file_exists("upload/upload/" . $data['image' . $idx])) {
-            rename("upload/upload/" . $data['image' . $idx], "upload/upload/$filename");
+          if(file_exists(APP_PATH . '/web/' . "images/products/" . $data['image' . $idx])) {
+            rename(APP_PATH . '/web/' . "images/products/" . $data['image' . $idx], APP_PATH . '/web/' . "images/products/$filename");
           }
-          if(file_exists("upload/upload/b_" . $data['image' . $idx])) {
-            rename("upload/upload/b_" . $data['image' . $idx], "upload/upload/b_" . $filename);
+          if(file_exists(APP_PATH . '/web/' . "images/products/b_" . $data['image' . $idx])) {
+            rename(APP_PATH . '/web/' . "images/products/b_" . $data['image' . $idx], APP_PATH . '/web/' . "images/products/b_" . $filename);
           }
-          if(file_exists("upload/upload/v_" . $data['image' . $idx])) {
-            rename("upload/upload/v_" . $data['image' . $idx], "upload/upload/v_" . $filename);
+          if(file_exists(APP_PATH . '/web/' . "images/products/v_" . $data['image' . $idx])) {
+            rename(APP_PATH . '/web/' . "images/products/v_" . $data['image' . $idx], APP_PATH . '/web/' . "images/products/v_" . $filename);
           }
           $data['image' . $idx] = $filename;
         }

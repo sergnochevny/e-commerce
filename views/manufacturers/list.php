@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <div class="col-xs-12 text-center">
   <h1 class="page-title">Manufacturers</h1>
 </div>
@@ -39,4 +39,4 @@
 </div>
 
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/simple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>

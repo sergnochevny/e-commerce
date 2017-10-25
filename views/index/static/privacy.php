@@ -1,4 +1,4 @@
-<?php include('views/index/main_gallery.php'); ?>
+<?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 
   <div id="content" class="container inner-offset-top half-outer-offset-bottom">
     <div class="col-xs-12">
@@ -78,4 +78,4 @@
       </div>
     </div>
   </div>
-  <script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
+  <script src='<?= _A_::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>

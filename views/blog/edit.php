@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('upload/styles.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('css/upload.min.css'); ?>">
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
     <div class="col-xs-12">
@@ -25,5 +25,5 @@
   <input type="hidden" data-filemanager="<?= _A_::$app->router()->UrlTo('filemanager/') ?>">
 </div>
 <script src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/edit.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/blog/image.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/blog/edit.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/blog/image.min.js'); ?>' type="text/javascript"></script>

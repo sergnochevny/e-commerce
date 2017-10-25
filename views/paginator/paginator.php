@@ -47,5 +47,5 @@
 <?php if(isset($cat_id)) { ?>
   <input type="hidden" id="current_cat" value="<?= $cat_id; ?>">
 <?php } ?>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/pagination.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/pagination.min.js'); ?>' type="text/javascript"></script>
 

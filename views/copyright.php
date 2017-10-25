@@ -6,7 +6,7 @@
           <p><?= date('Y') ?> Copyright &copy; ILuvFabrix</p>
         </div>
         <div class="footer-credit-right col-md-6 col-xs-12">
-          <p><img src="<?= _A_::$app->router()->UrlTo('views/images/temp/payment.png'); ?>" alt=""></p>
+          <p><img src="<?= _A_::$app->router()->UrlTo('images/payment.png'); ?>" alt=""></p>
         </div>
       </div>
     </div>

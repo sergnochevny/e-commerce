@@ -13,7 +13,7 @@
           </div>
           <div class="col-xs-12" data-role="form_content">
             <div data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
-              <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+              <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
             </div>
           </div>
         </div>

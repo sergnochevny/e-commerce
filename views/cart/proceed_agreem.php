@@ -174,6 +174,6 @@
   </div>
 </div>
 <div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>">
-  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/cart/load.min.js'); ?>'></script>
+  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/load.min.js'); ?>'></script>
 </div>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/cart/checkout.min.js'); ?>'></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/checkout.min.js'); ?>'></script>

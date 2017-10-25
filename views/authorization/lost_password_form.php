@@ -14,7 +14,7 @@
     <span style="color: red;">Be careful, the link is relevant only one hour.</span>
   </div>
 
-  <?php include_once 'views/messages/alert-boxes.php'; ?>
+  <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 
   <div class="entry-content">
     <div class="woocommerce">
@@ -38,5 +38,5 @@
   </div>
 
 </article>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/lost_password_form.min.js'); ?>'
+<script src='<?= _A_::$app->router()->UrlTo('js/authorization/lost_password_form.min.js'); ?>'
         type="text/javascript"></script>

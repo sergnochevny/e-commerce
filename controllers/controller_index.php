@@ -161,7 +161,7 @@ class Controller_Index extends Controller_Controller{
 //            foreach ($f as $idx) {
 //                $img = $images['image' . $idx];
 //                if (!empty($img)) {
-//                    $filename = 'upload/upload/' . $img;
+//                    $filename = 'images/products/' . $img;
 //                    if (file_exists($filename) && is_readable($filename)) {
 //                        $size_img = getimagesize($filename);
 //                        if ($size_img) {
@@ -176,7 +176,7 @@ class Controller_Index extends Controller_Controller{
 //                    } else {
 //                        $total_break++;
 //                    }
-//                    $filename = 'upload/upload/p_' . $img;
+//                    $filename = 'images/products/p_' . $img;
 //                    if (file_exists($filename) && is_readable($filename)) {
 //                        $size_img = getimagesize($filename);
 //                        if ($size_img) {
@@ -191,7 +191,7 @@ class Controller_Index extends Controller_Controller{
 //                    } else {
 //                        $total_break_p++;
 //                    }
-//                    $filename = 'upload/upload/v_' . $img;
+//                    $filename = 'images/products/v_' . $img;
 //                    if (file_exists($filename) && is_readable($filename)) {
 //                        $size_img = getimagesize($filename);
 //                        if ($size_img) {
