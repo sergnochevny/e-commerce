@@ -7,27 +7,27 @@
 include(APP_PATH . '/console/core/core.php');
 include(APP_PATH . '/console/core/application.php');
 
-class _A_{
+class _A_ {
 
   /* @var $app Application */
   static public $app;
 
-  static function autoload($className){
+  static function autoload($className) {
     $filename = strtolower($className) . '.php';
     $expArr = explode('_', $className);
     $folder = 'console/core';
-    if(file_exists(APP_PATH . DS . $folder . DS . $filename)) {
+    if (file_exists(APP_PATH . DS . $folder . DS . $filename)) {
       include_once(APP_PATH . DS . $folder . DS . $filename);
 
       return true;
     }
     $folder = 'core';
-    if(file_exists(APP_PATH . DS . $folder . DS . $filename)) {
+    if (file_exists(APP_PATH . DS . $folder . DS . $filename)) {
       include_once(APP_PATH . DS . $folder . DS . $filename);
 
       return true;
     }
-    switch(strtolower($expArr[0])) {
+    switch (strtolower($expArr[0])) {
       case 'controller':
         $folder = 'console' . DS . 'controllers';
         break;
@@ -39,7 +39,7 @@ class _A_{
         break;
     }
     $file = APP_PATH . DS . $folder . DS . $filename;
-    if(file_exists($file)) {
+    if (file_exists($file)) {
       include_once($file);
 
       return true;
@@ -48,7 +48,7 @@ class _A_{
     return false;
   }
 
-  public static function start(){
+  public static function start() {
     spl_autoload_register(['self', 'autoload']);
     self::$app = new Application();
     self::$app->run();

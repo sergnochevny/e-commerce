@@ -54,6 +54,7 @@ class Core{
 
   private function initDBConnections(){
     $DBS = $this->config('DBS');
+    var_dump($DBS);
     if(isset($DBS) && is_array($DBS)) {
       foreach($DBS as $key => $val) {
         foreach($val as $con => $prms) {
