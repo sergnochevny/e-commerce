@@ -8,5 +8,4 @@
 
 interface DBConnector
 {
- public function DBConnections($host, $dbname, $username, $password);
 }
