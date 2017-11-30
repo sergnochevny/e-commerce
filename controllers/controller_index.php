@@ -73,6 +73,12 @@ class Controller_Index extends Controller_Controller{
   public function index($required_access = true){
     $this->main->view('index');
   }
+    /**
+     * @export
+     */
+  public function test(){
+    $this->main->view('test');
+  }
 
   /**
    * @export
