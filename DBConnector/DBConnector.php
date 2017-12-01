@@ -8,4 +8,5 @@
 
 interface DBConnector
 {
+  public function initConnection($dbname);
 }

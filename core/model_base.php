@@ -146,7 +146,8 @@ class Model_Base{
   }
 
   public static function query($query){
-    $res = mysqli_query(_A_::$app->getDBConnection('default'), $query);
+    $res = _A_::$app->getDBConnection('default')->query($query);
+
     if(!$res) {
       throw new Exception(self::error());
     }

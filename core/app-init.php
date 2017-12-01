@@ -7,42 +7,40 @@
 include(APP_PATH . "/core/core.php");
 include(APP_PATH . "/core/application.php");
 
-class _A_
-{
+class _A_{
 
-    /* @var $app Application */
-    static public $app;
+  /* @var $app Application */
+  static public $app;
 
-    static function autoload($className)
-    {
-        $filename = strtolower($className) . '.php';
-        $expArr = explode('_', $className);
+  static function autoload($className){
+    $filename = strtolower($className) . '.php';
+    $expArr = explode('_', $className);
+    $folder = 'core';
+    if(file_exists(APP_PATH . DS . $folder . DS . $filename)) {
+      include_once(APP_PATH . DS . $folder . DS . $filename);
+
+      return true;
+    }
+    switch(strtolower($expArr[0])) {
+      case 'controller':
+        $folder = 'controllers/base';
+        if(file_exists(APP_PATH . DS . $folder . DS . $filename)) {
+          include_once(APP_PATH . DS . $folder . DS . $filename);
+
+          return true;
+        }
+        $folder = 'controllers';
+        break;
+      case 'model':
+        $folder = 'models';
+        break;
+      default:
         $folder = 'core';
-        if (file_exists(APP_PATH . DS . $folder . DS . $filename)) {
-            include_once(APP_PATH . DS . $folder . DS . $filename);
-
-            return true;
-        }
-        switch (strtolower($expArr[0])) {
-            case 'controller':
-                $folder = 'controllers/base';
-                if (file_exists(APP_PATH . DS . $folder . DS . $filename)) {
-                    include_once(APP_PATH . DS . $folder . DS . $filename);
-
-                    return true;
-                }
-                $folder = 'controllers';
-                break;
-            case 'model':
-                $folder = 'models';
-                break;
-            default:
-                $folder = 'core';
-                break;
-        }
-        $file = APP_PATH . DS . $folder . DS . $filename;
-        if (file_exists($file)) {
-            include_once($file);
+        break;
+    }
+    $file = APP_PATH . DS . $folder . DS . $filename;
+    if(file_exists($file)) {
+      include_once($file);
 
             return true;
         }
@@ -55,10 +53,9 @@ class _A_
         return false;
     }
 
-    public static function start()
-    {
-        spl_autoload_register(['self', 'autoload']);
-        self::$app = new Application();
-        self::$app->run();
-    }
+  public static function start(){
+    spl_autoload_register(['self', 'autoload']);
+    self::$app = new Application();
+    self::$app->run();
+  }
 }
