@@ -1,18 +1,17 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <div class="col-xs-12">
   <div class="row">
-    <div class="col-sm-2 back_button_container">
+    <div class="col-xs-12 col-sm-2 back_button_container">
       <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
         <i class="fa fa-angle-left" aria-hidden="true"></i>
         Back
       </a>
     </div>
-    <div class="col-sm-8 text-center">
+    <div class="col-xs-12 col-sm-8 text-center">
       <div class="row">
         <h4 class="page-title">PLEASE REVIEW AND CONFIRM ORDER</h4>
       </div>
     </div>
-    <div class="col-sm-2"></div>
   </div>
 </div>
 
@@ -116,5 +115,9 @@
     <?php } ?>
   </div>
 </div>
-<div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>"></div>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/cart/checkout.min.js'); ?>'></script>
+<div>
+  <div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>">
+    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/load.min.js'); ?>'></script>
+  </div>
+</div>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/checkout.min.js'); ?>'></script>

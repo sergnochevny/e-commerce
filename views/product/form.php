@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <form id="edit_form" action="<?= $action ?>" method="post">
   <div data-fields_block class="col-xs-12">
     <div class="row">
@@ -215,15 +215,19 @@
         </div>
         <div class="form-row">
           <label for="current_inv"><b>Current inventory:</b></label>
-          <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"  type="text" id="current_inv"
-                 name="inventory" value="<?= $data['inventory']; ?>"
-                 class="input-text ">
+          <input
+            data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+            type="text" id="current_inv"
+            name="inventory" value="<?= $data['inventory']; ?>"
+            class="input-text ">
         </div>
 
         <div class="form-row">
           <label><b>Width:</b></label>
-          <input data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'" type="text" id="m_width" name="width"
-                 value="<?= $data['width']; ?>" class="input-text ">
+          <input
+            data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+            type="text" id="m_width" name="width"
+            value="<?= $data['width']; ?>" class="input-text ">
         </div>
 
         <div class="form-row">
@@ -297,4 +301,4 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/product/form.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/product/form.min.js'); ?>' type="text/javascript"></script>

@@ -2,22 +2,21 @@
   <div class="col-xs-12">
     <div class="row">
 
-      <?php if(!empty($back_url)): ?>
-        <div class="col-sm-2 back_button_container">
-          <div class="row">
-            <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
-              <i class="fa fa-angle-left" aria-hidden="true"></i>
-              Back
-            </a>
-          </div>
+      <?php if(empty($back_url)) {
+        $to_shop = true;
+        $back_url = _A_::$app->router()->UrlTo('shop');
+      } ?>
+      <div class="col-xs-12 col-sm-2 back_button_container">
+        <div class="row">
+          <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            <?= !empty($to_shop) ? 'To Shop' : 'Back' ?>
+          </a>
         </div>
-      <?php endif; ?>
-      <div class="<?= empty($back_url) ? 'col-xs-12' : 'col-sm-8' ?> text-center">
+      </div>
+      <div class="col-xs-12 <?= empty($back_url) ? '' : 'col-sm-8' ?> text-center">
         <h1 class="page-title">Fabric Pattern Tool</h1>
       </div>
-      <?php if(!empty($back_url)): ?>
-        <div class="col-sm-2"></div>
-      <?php endif; ?>
     </div>
   </div>
   <div class="col-xs-12">
@@ -54,7 +53,10 @@
       <div id="dragZone" class="dragZone">
         <div class="dragZoneTitle">Matches Area</div>
         <div id="dragZoneArea" class="dragZoneArea">
-          <div class="deleteDragImg icon-delete"></div>
+          <div
+            class="AddToCartDragImg <?= $cart_not_empty ? 'simple-icon-basket-loaded' : 'simple-icon-basket'; ?>"
+            data-href="<?= _A_::$app->router()->UrlTo('matches/add_to_cart'); ?>"></div>
+          <div class="deleteDragImg simple-icon-trash"></div>
           <div class="detailsDragImg"></div>
           <?= isset($list) ? $list : '' ?>
         </div>
@@ -62,7 +64,7 @@
       <div style="width: 100%" class="text-center inner-offset-vertical" id="b_in_product">
         <?php if(isset($list)): ?>
           <a class="button" id="all_to_basket"
-             href="<?= _A_::$app->router()->UrlTo('matches/all_to_cart'); ?>">
+             href="<?= _A_::$app->router()->UrlTo('matches/add_to_cart'); ?>">
             Add All to Cart
           </a>
           <a class="button" id="clear_matches"

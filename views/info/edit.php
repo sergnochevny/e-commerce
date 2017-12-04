@@ -1,5 +1,5 @@
 <script src="<?= _A_::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/info/edit.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/info/edit.min.js'); ?>' type="text/javascript"></script>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="box col-xs-12">
     <div class="col-xs-12 text-center">

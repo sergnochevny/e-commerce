@@ -195,4 +195,4 @@
     endif;
   ?>
 </form>
-<script src="<?= _A_::$app->router()->UrlTo('views/js/search.min.js'); ?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('js/search.min.js'); ?>"></script>

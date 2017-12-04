@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <h1 class="entry-title">Change Password</h1>
 <div class="entry-content">
   <div class="woocommerce">
@@ -21,5 +21,5 @@
     </form>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/remind/change_password_form.min.js'); ?>'
+<script src='<?= _A_::$app->router()->UrlTo('js/authorization/remind/change_password_form.min.js'); ?>'
         type="text/javascript"></script>

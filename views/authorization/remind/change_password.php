@@ -6,7 +6,7 @@
         Back
       </a>
       <article id="chng_pass" class="page type-page status-publish entry">
-        <?php include('views/remind/change_password_form.php') ?>
+        <?php include(APP_PATH . '/views/remind/change_password_form.php'); ?>
       </article>
     </div>
   </div>

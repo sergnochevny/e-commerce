@@ -13,4 +13,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/shop/shop.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/shop/shop.min.js'); ?>' type="text/javascript"></script>

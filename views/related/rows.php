@@ -4,7 +4,7 @@
     <div class="col-xs-12 col-sm-6  product-item">
       <label class="product-block" style="font-weight: normal; margin-left: 0; height: auto">
         <input data-related_chk data-pid="<?= $row['pid']; ?>" type="checkbox"
-               <?= (isset($related_selected) && in_array($row['pid'], $related_selected))?'checked':'';?>
+          <?= (isset($related_selected) && in_array($row['pid'], $related_selected)) ? 'checked' : ''; ?>
                name="related-select[<?= $row['pid']; ?>]" style="display: none;"/>
         <div class="col-xs-3 col-sm-4 col-md-3 figure">
           <div class="row">

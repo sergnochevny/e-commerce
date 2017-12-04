@@ -1,26 +1,25 @@
 <?php
   $user_id = _A_::$app->get('aid');
   $is_admin = Controller_Admin::is_logged();
-  include_once 'views/messages/alert-boxes.php';
+  include(APP_PATH . '/views/messages/alert-boxes.php');
 ?>
 
 <?php if(isset($back_url)): ?>
   <div class="col-xs-12">
     <div class="row">
-      <div class="col-sm-2 back_button_container">
+      <div class="col-xs-12 col-sm-2 back_button_container">
         <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
           <i class="fa fa-angle-left" aria-hidden="true"></i>
           Back
         </a>
       </div>
-      <div class="col-sm-8 text-center">
+      <div class="col-xs-12 col-sm-8 text-center">
         <div class="row">
           <h3
               class="page-title"><?= (isset($user_id) && !$is_admin) ? $data[0]['username'] : ((!$is_admin) ? 'My' : '') ?>
             Orders</h3>
         </div>
       </div>
-      <div class="col-sm-2"></div>
     </div>
   </div>
 <?php else: ?>
@@ -53,4 +52,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/simple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>

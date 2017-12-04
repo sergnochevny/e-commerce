@@ -337,5 +337,5 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </form>
-<script src="<?= _A_::$app->router()->UrlTo('views/js/char-counter.jquery.min.js'); ?>"></script>
-<script src="<?= _A_::$app->router()->UrlTo('views/js/discount/form.min.js'); ?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('js/char-counter.jquery.min.js'); ?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('js/discount/form.min.js'); ?>"></script>

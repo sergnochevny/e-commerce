@@ -1,19 +1,17 @@
 <?php
 
-class Controller_Paginator extends Controller_Controller
-{
+class Controller_Paginator extends Controller_Controller{
 
-  public function paginator($total_rows, $page, $url, $prms = null, $per_page = 12, $showbypage = 10)
-  {
+  public function paginator($total_rows, $page, $url, $prms = null, $per_page = 12, $showbypage = 10){
     $this->template->vars('per_page', $per_page);
     $this->template->vars('per_page_items', _A_::$app->config('per_page_items'));
 
-    if ($total_rows > $per_page) {
-      if (!is_null(_A_::$app->get('cat'))) $prms['cat'] = _A_::$app->get('cat');
-      if (!is_null(_A_::$app->get('mnf'))) $prms['mnf'] = _A_::$app->get('mnf');
-      if (!is_null(_A_::$app->get('ptrn'))) $prms['ptrn'] = _A_::$app->get('ptrn');
-      if (!is_null(_A_::$app->get('clr'))) $prms['clr'] = _A_::$app->get('clr');
-      if (!is_null(_A_::$app->get('prc'))) $prms['prc'] = _A_::$app->get('prc');
+    if($total_rows > $per_page) {
+      if(!is_null(_A_::$app->get('cat'))) $prms['cat'] = _A_::$app->get('cat');
+      if(!is_null(_A_::$app->get('mnf'))) $prms['mnf'] = _A_::$app->get('mnf');
+      if(!is_null(_A_::$app->get('ptrn'))) $prms['ptrn'] = _A_::$app->get('ptrn');
+      if(!is_null(_A_::$app->get('clr'))) $prms['clr'] = _A_::$app->get('clr');
+      if(!is_null(_A_::$app->get('prc'))) $prms['prc'] = _A_::$app->get('prc');
       $this->template->vars('prms', $prms);
 
       $num_pages = ceil($total_rows / $per_page);
@@ -36,7 +34,6 @@ class Controller_Paginator extends Controller_Controller
       $this->template->vars('next_page', $next_page);
 
       $this->main->template->vars('paginator', $this->template->view_layout_return('paginator'));
-
     }
 
     $this->main->template->vars('show_by', $this->template->view_layout_return('show_by'));

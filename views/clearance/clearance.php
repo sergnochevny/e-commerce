@@ -18,4 +18,4 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/simple/simples.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/simple/simples.min.js'); ?>' type="text/javascript"></script>

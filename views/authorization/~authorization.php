@@ -49,7 +49,7 @@
         </div>
         <div class="col-xs-12">
           <div class="row inner-offset-vertical-top">
-            <a id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
+            <a data-waitloader id="lost_password" href="<?= $lostpassword_url ?>">Lost your password?</a>
           </div>
         </div>
       </div>
@@ -61,8 +61,10 @@
           <div class="col-xs-12 text-center">
             <h4>Register with iluvfabrix:</h4>
           </div>
-          <div class="col-xs-12" data-role="form_content"
-               data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+          <div class="col-xs-12" data-role="form_content">
+            <div data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+              <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
+            </div>
           </div>
         </div>
       </div>
@@ -70,6 +72,5 @@
 
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
+<script src='<?= _A_::$app->router()->UrlTo('js/authorization/authorization.min.js'); ?>'
         type="text/javascript"></script>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
