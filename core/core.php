@@ -56,36 +56,31 @@ class Core{
     return include(APP_PATH . '/config.php');
   }
 
-    private function initDBConnections()
-    {
-        $DBS = $this->config('DBS');
-        if (isset($DBS) && is_array($DBS)) {
-            foreach ($DBS as $key => $val) {
-                foreach ($val as $con => $prms) {
-                    extract($prms);
-                    /* @var $connection
-                     * @var $user
-                     * @var $password
-                     * @var $db
-                     */
-                    $db_connection = new PDOConnector($connection, $user, $password);
-//                    $db_connection = mysqli_connect($connection, $user, $password);
-                    $this->{$key}[$con] = [
-                        'connection' => $db_connection,
-                        'db' => $db
-                    ];
-                    foreach ($db as $key => $db_name) {
-                        $this->db[$key] = [$db_name, $db_connection];
-
-                    }
-                }
-            }
-        } else {
-            new Exception(
-                'Application is not configured...'
-            );
+  private function initDBConnections(){
+    $DBS = $this->config('DBS');
+    if(isset($DBS) && is_array($DBS)) {
+      foreach($DBS as $key => $val) {
+        foreach($val as $con => $prms) {
+          extract($prms);
+          /* @var $connection
+           * @var $user
+           * @var $password
+           * @var $db
+           */
+          $db_connection = new DBConnector($connection, $user, $password);
+          $this->{$key}[$con] = [
+            'connection' => $db_connection,
+            'db' => $db
+          ];
+          foreach($db as $key => $db_name) $this->db[$key] = [$db_name, $db_connection];
         }
+      }
+    } else {
+      new Exception(
+        'Application is not configured...'
+      );
     }
+  }
 
   private function initRegistry(){
     $this->registry = new Registry();
@@ -216,29 +211,21 @@ class Core{
   }
 
   public function SelectDB($name){
-//    if(isset($this->db[$name]) && is_array($this->db[$name])) {
-//      if(!mysqli_select_db($this->db[$name][1], $this->db[$name][0])) {
-//        throw new Exception(
-//          strtr('Data Base "{db}" do not select: {reason}',
-//            [
-//              "{db}" => $name,
-//              '{reason}' => $this->db[$name][1]->error
-//            ]
-//          )
-//        );
-//      } else {
-//        if($this->db[$name][1]->errno > 0) {
-//          throw new Exception($this->db[$name][1]->error);
-//        }
-//      }
-//    } else {
-//      throw new Exception(strtr('Data Base "{db}" not present in Application', ["{db}" => $name]));
-//    }
-
-
-
-    if (isset($this->db[$name]) && is_array($this->db[$name])) {
-      $this->db[$name][1]->initConnection($this->db[$name][0]);
+    if(isset($this->db[$name]) && is_array($this->db[$name])) {
+      if(!mysqli_select_db($this->db[$name][1], $this->db[$name][0])) {
+        throw new Exception(
+          strtr('Data Base "{db}" do not select: {reason}',
+            [
+              "{db}" => $name,
+              '{reason}' => $this->db[$name][1]->error
+            ]
+          )
+        );
+      } else {
+        if($this->db[$name][1]->errno > 0) {
+          throw new Exception($this->db[$name][1]->error);
+        }
+      }
     } else {
       throw new Exception(strtr('Data Base "{db}" not present in Application', ["{db}" => $name]));
     }

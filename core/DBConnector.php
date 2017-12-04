@@ -1,12 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 30/11/17
- * Time: 11:59 AM
- */
-class PDOConnector implements DBConnector {
+class DBConnector{
   public $host;
   public $username;
   public $password;
@@ -21,11 +15,11 @@ class PDOConnector implements DBConnector {
   public function initConnection($dbname) {
     try {
       $this->pdo = new PDO('mysql:host=' . $this->host . ';dbname=' . $dbname, $this->username, $this->password);
-
       return true;
     } catch (PDOException $e) {
-      echo $e->getMessage();
     }
+
+    return false;
   }
 
   public function query($query) {
