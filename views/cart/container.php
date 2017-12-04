@@ -19,4 +19,4 @@
   </div>
 </div>
 <input type="hidden" id="base_url" value="<?= _A_::$app->router()->UrlTo('/'); ?>">
-<script src='<?= _A_::$app->router()->UrlTo('views/js/cart/cart.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/cart/cart.js'); ?>' type="text/javascript"></script>

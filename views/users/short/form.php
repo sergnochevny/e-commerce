@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/thanx-boxes-registration.php'; ?>
+<?php include(APP_PATH . '/views/messages/thanx-boxes-registration.php'); ?>
 <form id="edit_form" action="<?= $action ?>" method="post" class="index__form-wrap">
   <input type="hidden" name="redirect"
          value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
@@ -34,7 +34,8 @@
     <div class="row">
       <div class="col-xs-6 col-sm-6">
         <img height="45" id="captcha_img" src="<?= _A_::$app->router()->UrlTo('captcha') ?>">
-        <a class="pull-right half-inner-offset-top" title="Refresh" id="captcha_refresh" href="javascript:void(0);">
+        <a class="pull-right half-inner-offset-top" tabindex="-1" title="Refresh" id="captcha_refresh"
+           href="javascript:void(0);">
           <i class="fa fa-2x fa-refresh" aria-hidden="true"></i>
         </a>
       </div>
@@ -49,6 +50,6 @@
     </div>
   </div>
 </form>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/captcha/captcha.min.js'); ?>'></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/captcha/captcha.min.js'); ?>'></script>
 <script type='text/javascript'
-        src='<?= _A_::$app->router()->UrlTo('views/js/authorization/registration/form.min.js'); ?>'></script>
+        src='<?= _A_::$app->router()->UrlTo('js/authorization/registration/form.min.js'); ?>'></script>

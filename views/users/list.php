@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 
 <div class="col-xs-12 text-center">
   <h1 class="page-title">Users</h1>
@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
 
 <div class="row">
   <nav class="paging-navigation" role="navigation">
@@ -45,4 +45,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/users/province.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/users/province.min.js'); ?>' type="text/javascript"></script>

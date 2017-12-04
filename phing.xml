@@ -1,7 +1,7 @@
 <project name="make_project" basedir="." default="build">
 
-    <property name="JS_DIR" value="views/js"/>
-    <property name="CSS_DIR" value="views/css"/>
+    <property name="JS_DIR" value="web/js"/>
+    <property name="CSS_DIR" value="web/css"/>
 
     <fileset id="minjs" dir="${JS_DIR}/">
         <exclude name="jquery*/"/>

@@ -11,8 +11,10 @@
           <div class="col-xs-12 text-center">
             <h4>Register with iluvfabrix:</h4>
           </div>
-          <div class="col-xs-12" data-role="form_content"
-               data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+          <div class="col-xs-12" data-role="form_content">
+            <div data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+              <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
+            </div>
           </div>
         </div>
       </div>
@@ -20,6 +22,5 @@
 
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/authorization/authorization.min.js'); ?>'
-        type="text/javascript"></script>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('views/js/load.min.js'); ?>'></script>
+
+

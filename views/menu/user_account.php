@@ -43,9 +43,7 @@
   <a data-link
      href="javascript:void(0);"
      class="dropdown-toggle"
-    <?php if(isset($user_logged) && $user_logged): ?>
-      data-toggle="dropdown"
-    <?php endif; ?>>
+     data-toggle="dropdown">
     <i class="fa fa-user-circle fa-2x visible-xs"></i>
     <span class="topnav-label hidden-xs"><?= $user_logged ? 'My Account' : 'Login'; ?><span class="caret"></span></span>
   </a>
@@ -77,5 +75,14 @@
         </li>
       <?php endif; ?>
     </ul>
+  <?php else: ?>
+    <div class="dropdown-menu topnav-login-dropdown">
+      <div class="col-xs-12" data-role="form_content">
+        <div data-load="<?= _A_::$app->router()->UrlTo('authorization', ['method' => 'short']) ?>">
+          <script type='text/javascript'
+                  src='<?= _A_::$app->router()->UrlTo('js/authorization/load.min.js'); ?>'></script>
+        </div>
+      </div>
+    </div>
   <?php endif; ?>
 </li>

@@ -4,19 +4,17 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="row">
-          <div class="col-sm-2 back_button_container">
+          <div class="col-xs-12 col-sm-2 back_button_container">
             <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
               <i class="fa fa-angle-left" aria-hidden="true"></i>
               Back
             </a>
           </div>
-          <div class="col-sm-8 text-center">
+          <div class="col-xs-12 col-sm-8 text-center">
             <div class="row">
               <h1 class="page-title"><?= $form_title ?></h1>
             </div>
           </div>
-          <div class="col-sm-2"></div>
-
         </div>
       </div>
     </div>
@@ -149,4 +147,4 @@
   <h2 class="text-center">Disable sale countdown</h2>
   <p>Checking this will not include it in the sale countdown on the product list, and product details page.</p>
 </div>
-<script src="<?= _A_::$app->router()->UrlTo('views/js/hints.min.js'); ?>"></script>
+<script src="<?= _A_::$app->router()->UrlTo('js/hints.min.js'); ?>"></script>

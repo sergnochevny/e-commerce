@@ -1,4 +1,4 @@
-<?php include('views/index/main_gallery.php'); ?>
+<?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 
   <div id="content" class="container inner-offset-top half-outer-offset-bottom">
     <div class="col-xs-12">
@@ -61,7 +61,7 @@
                   href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>.
             </p>
 
-            <p>Additional information about <a target="_blank" href="http://www.privcom.gc.ca">Canada's
+            <p>Additional information about <a target="_blank" href="https://www.priv.gc.ca">Canada's
                 Privacy Act</a> can be found here.</p>
 
           </div>
@@ -78,4 +78,4 @@
       </div>
     </div>
   </div>
-  <script src='<?= _A_::$app->router()->UrlTo('views/js/static/static.min.js'); ?>' type="text/javascript"></script>
+  <script src='<?= _A_::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>

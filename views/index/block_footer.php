@@ -5,8 +5,8 @@
         <div class="row">
           <h4 class="section-title">Best Sellers Products</h4>
           <aside id="woocommerce_products-5" class="widget woocommerce widget_products">
-            <div id="bsells_products" class="products product_list_widget"
-                 data-load="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bestsellers']) ?>">
+            <div id="bsells_products" class="products product_list_widget">
+              <div data-load="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'bestsellers']) ?>"></div>
             </div>
           </aside>
         </div>
@@ -15,8 +15,8 @@
         <div class="row footer-widget-row">
           <h4 class="section-title">Popular Textiles</h4>
           <aside id="woocommerce_products-2" class="widget woocommerce widget_products">
-            <div id="popular_products" class="products product_list_widget"
-                 data-load="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'popular']) ?>">
+            <div id="popular_products" class="products product_list_widget">
+              <div data-load="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'popular']) ?>"></div>
             </div>
           </aside>
         </div>
@@ -25,8 +25,8 @@
         <div class="row footer-widget-row-lg">
           <h4 class="section-title">New Products</h4>
           <aside id="woocommerce_products-3" class="widget woocommerce widget_products">
-            <div id="new_products" class="products product_list_widget"
-                 data-load="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'new']) ?>">
+            <div id="new_products" class="products product_list_widget">
+              <div data-load="<?= _A_::$app->router()->UrlTo('shop/widget', ['type' => 'new']) ?>"></div>
             </div>
           </aside>
         </div>

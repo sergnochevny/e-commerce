@@ -175,5 +175,5 @@
     <?php endif; ?>
 </form>
 
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/select.ui.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/select.ui.min.js'); ?>' type="text/javascript"></script>

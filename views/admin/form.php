@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <form id="edit_form" action="<?= $action ?>" method="post">
   <div class="col-md-push-2 col-md-8">
     <div class="form-row">
@@ -24,4 +24,4 @@
     </div>
   </div>
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/formsimple/form.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/form.min.js'); ?>' type="text/javascript"></script>

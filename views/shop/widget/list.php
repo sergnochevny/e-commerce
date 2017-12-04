@@ -4,35 +4,32 @@
       <div class="row">
         <div class="widget-info-container">
           <div class="product-price-box clearfix">
-            <div class="price-header">
-              <?= (($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) || isset($row['saleprice'])) ? 'Price' : ''; ?>
+            <div class="price-header">Price</div>
+            <div class="price">
+              <?= (isset($row['saleprice']) && ($row['price'] != $row['saleprice'])) ? '<hr>' : '' ?>
+              <span class="amount"> <?= $row['format_price']; ?></span>
             </div>
-            <?php if($row['sys_hide_price'] == 0 && $row['hideprice'] == 0) { ?>
-              <div class="price">
-                <?= (isset($row['saleprice']) && ($row['price'] != $row['saleprice'])) ? '<hr>' : '' ?>
-                <span class="amount">
-                <?= $row['format_price']; ?>
-              </span>
+            <?php if(!empty($row['saleprice']) && ($row['price'] != $row['saleprice'])) : ?>
+              <div class="price sale-price">
+                <span class="amount_wd"><?= $row['format_sale_price']; ?></span>
               </div>
-            <?php }
-              if(isset($row['saleprice']) && ($row['price'] != $row['saleprice'])) { ?>
-                <div class="price sale-price">
-                  <span class="amount_wd"><?= $row['format_sale_price']; ?></span>
-                </div>
-              <?php } ?>
+            <?php endif; ?>
           </div>
           <div class="col-xs-6 col-sm-4">
             <div class="row">
               <?php
-                $url_prms['pid'] = $row['pid'];
-                $url_prms['back'] = 'home';
-                $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['cat', 'mnf', 'ptrn', 'clr', 'prc']);
+              $url_prms['pid'] = $row['pid'];
+              $url_prms['back'] = 'home';
+              $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
+                'cat', 'mnf', 'ptrn', 'clr', 'prc'
+              ]);
               ?>
               <a data-waitloader href="<?= $href; ?>" title="<?= $row['pname']; ?>">
                 <figure class=="product-image" style="background-image:url(<?= $row['filename']; ?>)">
                   <figcaption>
-                    <?php if($row['bProductDiscount']) { ?>  <span
-                      class="extra_discount_small">Extra Discount!</span> <?php } ?>
+                    <?php if($row['bProductDiscount']) { ?>
+                      <span class="extra_discount_small">Extra Discount!</span>
+                    <?php } ?>
                   </figcaption>
                 </figure>
               </a>

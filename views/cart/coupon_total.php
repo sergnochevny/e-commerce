@@ -76,4 +76,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('views/js/cart/code.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/cart/code.min.js'); ?>' type="text/javascript"></script>
