@@ -124,7 +124,8 @@ class Model_Orders extends Model_Base{
     $query .= " left join fabrix_specials_usage c on a.oid = c.oid";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;

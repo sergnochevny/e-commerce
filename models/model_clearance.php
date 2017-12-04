@@ -62,7 +62,8 @@ class Model_Clearance extends Model_Base{
     $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;

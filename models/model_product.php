@@ -64,9 +64,11 @@ class Model_Product extends Model_Base{
           $select = implode(',', isset($data['colors']) ? array_keys($data['colors']) : []);
         }
         if(strlen($select) > 0) {
-          $results = static::query("select * from fabrix_color" . " where id in ($select)" . " order by color");
-          while($row = static::fetch_array($results)) {
-            $filters[$row['id']] = $row['color'];
+          if($results = static::query("select * from fabrix_color" . " where id in ($select)" . " order by color")) {
+            while($row = static::fetch_array($results)) {
+              $filters[$row['id']] = $row['color'];
+            }
+            static::free_result($results);
           }
         }
         break;
@@ -77,10 +79,12 @@ class Model_Product extends Model_Base{
           $select = implode(',', isset($data['patterns']) ? array_keys($data['patterns']) : []);
         }
         if(strlen($select) > 0) {
-          $results = static::query("select * from fabrix_patterns" . " where id in ($select)" . " order by pattern");
-          while($row = static::fetch_array($results)) {
-            $filters[$row['id']] = $row['pattern'];
+          if($results = static::query("select * from fabrix_patterns" . " where id in ($select)" . " order by pattern")) {
+            while($row = static::fetch_array($results)) {
+              $filters[$row['id']] = $row['pattern'];
+            }
           }
+          static::free_result($results);
         }
         break;
       case 'categories':
@@ -97,11 +101,14 @@ class Model_Product extends Model_Base{
           }
         }
         if(strlen($select) <= 0) $select = '1';
-        $results = static::query("select a.cid, a.cname, (max(b.display_order)+1) as pos from fabrix_categories a" . " left join fabrix_product_categories b on b.cid = a.cid" . " where a.cid in ($select)" . " group by a.cid, a.cname" . " order by a.cname");
-        while($row = static::fetch_array($results)) {
-          $filters[$row['cid']] = [
-            $row['cname'], isset($categories[$row['cid']]) ? $categories[$row['cid']] : $row['pos']
-          ];
+        if($results = static::query("select a.cid, a.cname, (max(b.display_order)+1) as pos from fabrix_categories a"
+          . " left join fabrix_product_categories b on b.cid = a.cid" . " where a.cid in ($select)" . " group by a.cid, a.cname" . " order by a.cname")) {
+          while($row = static::fetch_array($results)) {
+            $filters[$row['cid']] = [
+              $row['cname'], isset($categories[$row['cid']]) ? $categories[$row['cid']] : $row['pos']
+            ];
+          }
+          static::free_result($results);
         }
         break;
     }
@@ -113,26 +120,38 @@ class Model_Product extends Model_Base{
     switch($type) {
       case 'patterns':
         $results = static::query("select a.* from fabrix_product_patterns b" . " inner join fabrix_patterns a on b.patternId=a.id " . " where b.prodId='$id'" . " order by a.pattern");
-        if($results) while($row = static::fetch_array($results)) {
-          $data[$row['id']] = $row['pattern'];
+        if($results) {
+          while($row = static::fetch_array($results)) {
+            $data[$row['id']] = $row['pattern'];
+          }
+          static::free_result($results);
         }
         break;
       case 'colors':
         $results = static::query("select a.* from fabrix_product_colors b" . " inner join fabrix_color a on b.colorId=a.id " . " where b.prodId='$id'" . " order by a.color");
-        if($results) while($row = static::fetch_array($results)) {
-          $data[$row['id']] = $row['color'];
+        if($results) {
+          while($row = static::fetch_array($results)) {
+            $data[$row['id']] = $row['color'];
+          }
+          static::free_result($results);
         }
         break;
       case 'categories':
         $results = static::query("select a.cid, a.cname, b.display_order from fabrix_product_categories b" . " inner join fabrix_categories a on b.cid=a.cid " . " where b.pid='$id'" . " order by a.cname");
-        if($results) while($row = static::fetch_array($results)) {
-          $data[$row['cid']] = [$row['cname'], $row['display_order']];
+        if($results) {
+          while($row = static::fetch_array($results)) {
+            $data[$row['cid']] = [$row['cname'], $row['display_order']];
+          }
+          static::free_result($results);
         }
         break;
       case 'manufacturers':
         $results = static::query("select a.cid, a.manufacturer" . " from fabrix_manufacturers a" . " order by a.manufacturer");
-        if($results) while($row = static::fetch_array($results)) {
-          $data[$row['id']] = $row['manufacturer'];
+        if($results) {
+          while($row = static::fetch_array($results)) {
+            $data[$row['id']] = $row['manufacturer'];
+          }
+          static::free_result($results);
         }
         break;
     }
@@ -163,9 +182,11 @@ class Model_Product extends Model_Base{
         }
         $q .= " order by color";
         $q .= " limit $start, $filter_limit";
-        $results = static::query($q);
-        while($row = static::fetch_array($results)) {
-          $filter[] = [$row['id'], $row['color']];
+        if($results = static::query($q)) {
+          while($row = static::fetch_array($results)) {
+            $filter[] = [$row['id'], $row['color']];
+          }
+          static::free_result($results);
         }
         break;
       case 'patterns':
@@ -182,9 +203,11 @@ class Model_Product extends Model_Base{
         }
         $q .= " order by pattern";
         $q .= " limit $start, $filter_limit";
-        $results = static::query($q);
-        while($row = static::fetch_array($results)) {
-          $filter[] = [$row['id'], $row['pattern']];
+        if($results = static::query($q)) {
+          while($row = static::fetch_array($results)) {
+            $filter[] = [$row['id'], $row['pattern']];
+          }
+          static::free_result($results);
         }
         break;
       case 'categories':
@@ -201,9 +224,11 @@ class Model_Product extends Model_Base{
         }
         $q .= " order by cname";
         $q .= " limit $start, $filter_limit";
-        $results = static::query($q);
-        while($row = static::fetch_array($results)) {
-          $filter[] = [$row['cid'], $row['cname']];
+        if($results = static::query($q)) {
+          while($row = static::fetch_array($results)) {
+            $filter[] = [$row['cid'], $row['cname']];
+          }
+          static::free_result($results);
         }
     }
 
@@ -234,7 +259,8 @@ class Model_Product extends Model_Base{
     $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;
@@ -277,6 +303,7 @@ class Model_Product extends Model_Base{
         }
         $response[] = $row;
       }
+      static::free_result($result);
     }
 
     return $response;
@@ -295,6 +322,7 @@ class Model_Product extends Model_Base{
       $result = static::query($q);
       if($result) {
         $data = static::fetch_assoc($result);
+        static::free_result($result);
       }
     }
 

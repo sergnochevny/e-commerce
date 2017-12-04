@@ -215,7 +215,8 @@ class Model_Shop extends Model_Base{
     $q = "UPDATE fabrix_products SET inventory=" . $inventory;
     $q .= ($inventory <= 0) ? ", pvisible = 0" : "";
     $q .= " where pid=" . $pid;
-    $res = static::query($q);
+
+    return static::query($q);
   }
 
   public static function get_product_params($pid){
@@ -304,6 +305,7 @@ class Model_Shop extends Model_Base{
       while($row = static::fetch_array($result)) {
         $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix);
       }
+      static::free_result($result);
     }
 
     return $response;
@@ -356,7 +358,8 @@ class Model_Shop extends Model_Base{
         break;
     }
     if($result = static::query($q)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;
@@ -415,7 +418,8 @@ class Model_Shop extends Model_Base{
     }
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;
@@ -455,6 +459,7 @@ class Model_Shop extends Model_Base{
       while($row = static::fetch_array($result)) {
         $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price);
       }
+      static::free_result($result);
     }
 
     return $response;

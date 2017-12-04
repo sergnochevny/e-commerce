@@ -23,7 +23,8 @@ class Model_Blogcategory extends Model_Base{
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);    
     }
 
     return $response;

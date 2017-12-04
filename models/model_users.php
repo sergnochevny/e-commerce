@@ -42,7 +42,8 @@ class Model_Users extends Model_Base{
     $query = "SELECT COUNT(*) FROM " . static::$table;
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;

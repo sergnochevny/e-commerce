@@ -45,8 +45,11 @@ class Model_Blog extends Model_Base{
     }
     if(strlen($select) <= 0) $select = '1';
     $results = static::query("select a.id, a.name, (max(b.order)+1) as pos from blog_groups a" . " left join blog_group_posts b on b.group_id = a.id" . " where a.id in ($select)" . " group by a.id, a.name" . " order by a.name");
-    while($row = static::fetch_array($results)) {
-      $filters[$row['id']] = [$row['name'], isset($categories[$row['id']]) ? $categories[$row['id']] : $row['pos']];
+    if($results) {
+      while($row = static::fetch_array($results)) {
+        $filters[$row['id']] = [$row['name'], isset($categories[$row['id']]) ? $categories[$row['id']] : $row['pos']];
+      }
+      static::free_result($results);
     }
     $data['categories'] = $filters;
   }
@@ -54,8 +57,11 @@ class Model_Blog extends Model_Base{
   public static function get_filter_selected_data($id){
     $data = [];
     $results = static::query("select a.id, a.name, b.order from blog_group_posts b" . " inner join blog_groups a on b.group_id=a.id " . " where b.post_id='$id'" . " order by a.name");
-    if($results) while($row = static::fetch_array($results)) {
-      $data[$row['id']] = [$row['name'], $row['order']];
+    if($results) {
+      while($row = static::fetch_array($results)) {
+        $data[$row['id']] = [$row['name'], $row['order']];
+      }
+      static::free_result($results);
     }
 
     return $data;
@@ -80,10 +86,12 @@ class Model_Blog extends Model_Base{
     $q .= " order by name";
     $q .= " limit $start, $filter_limit";
     $results = static::query($q);
-    while($row = static::fetch_array($results)) {
-      $filter[] = [$row['id'], $row['name']];
+    if($results) {
+      while($row = static::fetch_array($results)) {
+        $filter[] = [$row['id'], $row['name']];
+      }
+      static::free_result($results);
     }
-
     return $filter;
   }
 
@@ -93,7 +101,8 @@ class Model_Blog extends Model_Base{
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;
@@ -113,6 +122,7 @@ class Model_Blog extends Model_Base{
       while($row = static::fetch_array($result)) {
         $response[] = $row;
       }
+      static::free_result($result);
     }
 
     return $response;
@@ -129,6 +139,7 @@ class Model_Blog extends Model_Base{
       $result = static::query($strSQL);
       if($result) {
         $data = static::fetch_assoc($result);
+        static::free_result($result);
       }
     }
 
@@ -151,6 +162,7 @@ class Model_Blog extends Model_Base{
       if($result) {
         $data = static::fetch_assoc($result);
         $filename = $data['img'];
+        static::free_result($result);
       }
     }
 
@@ -251,7 +263,10 @@ class Model_Blog extends Model_Base{
   public static function get_desc_keys($id){
     $data = null;
     $res = static::query("SELECT * FROM blog_post_keys_descriptions WHERE post_id='$id'");
-    if($res && static::num_rows($res) > 0) $data = static::fetch_assoc($res);
+    if($res && static::num_rows($res) > 0) {
+      $data = static::fetch_assoc($res);
+      static::free_result($res);
+    }
 
     return $data;
   }

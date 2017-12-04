@@ -6,9 +6,8 @@ class Model_Address extends Model_Base{
     $list = [];
     $q = "SELECT * FROM fabrix_countries ORDER BY display_order, name";
     if($res = static::query($q)) {
-      while($row = static::fetch_array($res)) {
-        $list[] = $row;
-      }
+      $list[] = static::fetch_array_all($res);
+      static::free_result($res);
     }
 
     return $list;
@@ -18,9 +17,8 @@ class Model_Address extends Model_Base{
     $list = [];
     $q = "SELECT * FROM fabrix_state ORDER BY name";
     if($res = static::query($q)) {
-      while($row = static::fetch_array($res)) {
-        $list[] = $row;
-      }
+      $list[] = static::fetch_array_all($res);
+      static::free_result($res);
     }
 
     return $list;
@@ -30,9 +28,8 @@ class Model_Address extends Model_Base{
     $list = [];
     $q = "SELECT * FROM fabrix_state WHERE country = '$country' ORDER BY name";
     if($res = static::query($q)) {
-      while($row = static::fetch_array($res)) {
-        $list[] = $row;
-      }
+      $list[] = static::fetch_array_all($res);
+      static::free_result($res);
     }
 
     return $list;
@@ -44,6 +41,7 @@ class Model_Address extends Model_Base{
     if($res = static::query($q)) {
       $row = static::fetch_array($res);
       $country = trim($row['name']);
+      static::free_result($res);
     }
 
     return $country;
@@ -55,6 +53,7 @@ class Model_Address extends Model_Base{
     if($res = static::query($q)) {
       $row = static::fetch_array($res);
       $province = trim($row['name']);
+      static::free_result($res);
     }
 
     return $province;

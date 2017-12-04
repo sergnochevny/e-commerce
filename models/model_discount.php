@@ -54,8 +54,8 @@ class Model_Discount extends Model_Base{
     $result = static::query($sSQL) or die(static::error());
     $iCnt = static::num_rows($result);
     if($iCnt == 1) { #verify that it is not this record with the same coupon code
-      $rs = static::fetch_row($result);
-      if($sid == $rs[0]) {
+      $rs = static::fetch_value($result);
+      if($sid == $rs) {
         $iCnt = 0;
       }
     }

@@ -82,17 +82,17 @@ return [
     'error_reporting' => (E_ALL & (~E_DEPRECATED)),
     'always_populate_raw_post_data' => -1,
   ],
-  'date_default_timezone_set' => ['UTC'],
-  'setlocale' => [LC_ALL, 'en_US'],
-  'setlocale' => [LC_TIME, 'UTC'],
+  'date_default_timezone_set' => [['UTC']],
+  'setlocale' => [
+    [LC_ALL, 'en_US'],
+    [LC_TIME, 'UTC']
+  ],
   'DBS' => [
     'connections' => [
       'default' => [
-        'connection' => "localhost",
+        'host' => "localhost",
         'user' => "root",
         'password' => "",
-        //          'user' => "newiluvf",
-        //          'password' => "dd94ZXG6",
         'db' => [
           'default' => 'iluvfabrix'
         ]

@@ -98,8 +98,8 @@ class Model_Price extends Model_Base{
           }
         }
       }
+      static::free_result($result);
     }
-    static::free_result($result);
     #check if we need to return a string here
     $rDiscount = $rDiscount + $rMultDiscount;
 
@@ -175,8 +175,8 @@ class Model_Price extends Model_Base{
           $discountIds[] = $rs['sid'];
         }
       }
+      static::free_result($result);
     }
-    static::free_result($result);
 
     return $bol;
   }
@@ -247,7 +247,7 @@ class Model_Price extends Model_Base{
 
     $result = static::query($sql) or die(static::error());
 
-    while($rs = static::fetch_row($result)) {
+    while($rs = static::fetch_array($result)) {
 
       $iPid = (int)$rs[0];
       $iPrice = (real)$rs[1];
