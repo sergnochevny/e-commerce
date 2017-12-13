@@ -125,7 +125,8 @@ class Model_Shop extends Model_Console{
       $query .= " LEFT JOIN fabrix_products n ON m.pid = n.pid";
     }
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     } else {
       throw new Exception(static::error());
     }

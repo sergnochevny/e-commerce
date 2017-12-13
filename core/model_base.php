@@ -110,7 +110,7 @@ class Model_Base{
 
   public static function transaction(){
     if(!static::$intransaction) {
-      static::$intransaction = mysqli_begin_transaction(_A_::$app->getDBConnection('default'));
+      static::$intransaction = _A_::$app->getDBConnection('default')->begin_tarnsaction();
       if(!static::$intransaction) {
         throw new Exception(self::error());
       }
@@ -122,7 +122,7 @@ class Model_Base{
   public static function commit(){
     $res = !static::$intransaction;
     if(static::$intransaction) {
-      $res = mysqli_commit(_A_::$app->getDBConnection('default'));
+      $res = _A_::$app->getDBConnection('default')->commit();
       if(!$res) {
         throw new Exception(self::error());
       }
@@ -135,7 +135,7 @@ class Model_Base{
   public static function rollback(){
     $res = !static::$intransaction;
     if(static::$intransaction) {
-      $res = mysqli_rollback(_A_::$app->getDBConnection('default'));
+      $res = _A_::$app->getDBConnection('default')->roll_back();
       if(!$res) {
         throw new Exception(self::error());
       }
@@ -145,8 +145,19 @@ class Model_Base{
     return $res;
   }
 
-  public static function query($query){
-    $res = mysqli_query(_A_::$app->getDBConnection('default'), $query);
+  public static function query($query, $prms = null){
+    $res = _A_::$app->getDBConnection('default')->query($query, $prms);
+
+    if(!$res) {
+      throw new Exception(self::error());
+    }
+
+    return $res;
+  }
+
+  public static function exec($query){
+    $res = _A_::$app->getDBConnection('default')->exec($query);
+
     if(!$res) {
       throw new Exception(self::error());
     }
@@ -155,7 +166,7 @@ class Model_Base{
   }
 
   public static function escape($str){
-    return mysqli_real_escape_string(_A_::$app->getDBConnection('default'), $str);
+    return $str;
   }
 
   public static function prepare_for_sql($str){
@@ -163,40 +174,52 @@ class Model_Base{
   }
 
   public static function error(){
-    return mysqli_error(_A_::$app->getDBConnection('default'));
+    return _A_::$app->getDBConnection('default')->error();
   }
 
   public static function last_id(){
-    return mysqli_insert_id(_A_::$app->getDBConnection('default'));
+    return _A_::$app->getDBConnection('default')->last_id();
   }
 
   public static function fetch_assoc($from){
-    if($from) return mysqli_fetch_assoc($from);
+    if($from) return $from->fetch(PDO::FETCH_ASSOC);
 
     return null;
   }
 
-  public static function fetch_array($from, $resulttype = MYSQLI_BOTH){
-    return mysqli_fetch_array($from, $resulttype);
+  public static function fetch_assoc_all($from){
+    if($from) return $from->fetchAll(PDO::FETCH_ASSOC);
+
+    return null;
   }
 
-  public static function fetch_row($from){
-    if($from) return mysqli_fetch_row($from);
+  public static function fetch_array($from, $resulttype = PDO::FETCH_BOTH){
+    return $from->fetch($resulttype);
+  }
+
+  public static function fetch_array_all($from, $resulttype = PDO::FETCH_BOTH){
+    return $from->fetchAll($resulttype);
+  }
+
+  public static function fetch_value($from){
+    if($from) return $from->fetch(PDO::FETCH_COLUMN);
 
     return null;
   }
 
   public static function num_rows($from){
-    if($from) return mysqli_num_rows($from);
+    if($from) return $from->rowCount();
 
     return 0;
   }
 
-  public static function affected_rows(){
-    return mysqli_affected_rows(_A_::$app->getDBConnection('default'));
+  public static function affected_rows($from){
+    if($from) return $from->rowCount();
+
+    return 0;
   }
 
   public static function free_result($result){
-    if($result) mysqli_free_result($result);
+    if($result) $result->closeCursor();
   }
 }

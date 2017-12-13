@@ -50,7 +50,8 @@ class Model_Manufacturers extends Model_Base{
     $query .= " JOIN fabrix_products b ON b.manufacturerId = a.id";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;

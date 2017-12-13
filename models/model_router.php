@@ -26,13 +26,15 @@ class Model_Router extends Model_Base{
 
   public static function get_sef_url($url){
     $sef_url = $url;
-    $sql = "SELECT * FROM url_sef WHERE url = '" . static::escape($url) . "'";
-    $find_result = static::query($sql);
-    if($find_result && static::num_rows($find_result)) {
-      $res = static::fetch_assoc($find_result);
-      $sef_url = $res['sef'];
+    if(!empty($sef_url)) {
+      $sql = "SELECT * FROM url_sef WHERE url = :url";
+      $prms = compact('url');
+      $find_result = static::query($sql, $prms);
+      if($find_result && static::num_rows($find_result)) {
+        $res = static::fetch_assoc($find_result);
+        $sef_url = $res['sef'];
+      }
     }
-
     return $sef_url;
   }
 

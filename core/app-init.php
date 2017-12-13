@@ -42,11 +42,16 @@ class _A_{
     if(file_exists($file)) {
       include_once($file);
 
-      return true;
-    }
+            return true;
+        }
+        if ($className == 'PDOConnector' || $className == 'DBConnector') {
+            $folder = 'DBConnector';
+            include_once(APP_PATH . DS . $folder . DS . $className .'.php');
 
-    return false;
-  }
+            return true;
+        }
+        return false;
+    }
 
   public static function start(){
     spl_autoload_register(['self', 'autoload']);

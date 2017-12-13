@@ -9,7 +9,8 @@ class Model_Admin extends Model_Base{
     $query = "SELECT COUNT(*) FROM " . static::$table;
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;
@@ -25,9 +26,8 @@ class Model_Admin extends Model_Base{
 
     if($result = static::query($query)) {
       $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_array($result)) {
-        $response[] = $row;
-      }
+      $response = static::fetch_array_all($result);
+      static::free_result($result);
     }
 
     return $response;
@@ -37,7 +37,7 @@ class Model_Admin extends Model_Base{
     static::transaction();
     try {
       $strSQL = "DELETE FROM " . static::$table . " WHERE id = $id";
-      static::query($strSQL);
+      static::exec($strSQL);
       static::commit();
     } catch(Exception $e) {
       static::rollback();
@@ -69,6 +69,7 @@ class Model_Admin extends Model_Base{
       $result = static::query($strSQL);
       if($result) {
         $data = static::fetch_assoc($result);
+        static::free_result($result);
       }
     }
 

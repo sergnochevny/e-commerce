@@ -1,0 +1,51 @@
+version: '2'
+services:
+  app:
+    image: apache-php7-dev
+    container_name: iluvfabrix_app
+    restart: always
+    mem_limit: 1G
+    cpu_quota: 50000
+    volumes:
+      - /var/www/iluvfabrix:/app
+      - ./.ssh:/home/alex/.ssh:ro
+    environment:
+      XDEBUG_CONFIG: remote_host=192.168.0.57
+    ports:
+      - 80:80
+    networks:
+      - front
+      - back
+  db:
+    image: mariadb:10
+    container_name: iluvfabrix_db
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - iluvfabrix-db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=iluvfabrix
+    networks:
+      - front
+      - back
+  phpmyadmin:
+        image: 'nazarpc/phpmyadmin:latest'
+        container_name: iluvfabrix_phpmyadmin
+        environment:
+         - ALLOW_ARBITRARY=1
+         - SESSION_TIMEOUT=86400
+         - URL=phpmyadmin
+         - mysql_db_server=db
+        ports: ['30000:80']
+        networks:
+              - front
+              - back
+volumes:
+  iluvfabrix-db-data:
+    driver: local
+networks:
+  front:
+  back:
+

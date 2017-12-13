@@ -22,14 +22,17 @@ class Core{
   private function initConfig(){
     $config = $this->getAppConfig();
     if(is_array($config)) {
-      foreach($config as $key => $value) {
+      foreach($config as $key => $values) {
         if(function_exists($key)) {
-          if(is_array($value)) {
-            if(count(array_filter(array_keys($value), "is_int")) == count($value)) {
-              call_user_func_array($key, $value);
+          if(is_array($values)) {
+            if(count(array_filter(array_keys($values), "is_int")) == count($values)) {
+              foreach($values as $value) {
+                if(!is_array($value)) $value = [$value];
+                call_user_func_array($key, $value);
+              }
             } else {
               $closure = [];
-              foreach($value as $var => $val) {
+              foreach($values as $var => $val) {
                 if($val instanceof Closure)
                   $closure[$var] = $val;
                 else call_user_func_array($key, [$var, $val]);
@@ -40,10 +43,10 @@ class Core{
               }
             }
           } else {
-            call_user_func($key, $value);
+            call_user_func($key, $values);
           }
         } else {
-          $this->config($key, $value);
+          $this->config($key, $values);
         }
       }
     } else {
@@ -63,12 +66,12 @@ class Core{
       foreach($DBS as $key => $val) {
         foreach($val as $con => $prms) {
           extract($prms);
-          /* @var $connection
+          /* @var $host
            * @var $user
            * @var $password
            * @var $db
            */
-          $db_connection = mysqli_connect($connection, $user, $password);
+          $db_connection = new DBC($host, $user, $password);
           $this->{$key}[$con] = [
             'connection' => $db_connection,
             'db' => $db
@@ -213,7 +216,11 @@ class Core{
 
   public function SelectDB($name){
     if(isset($this->db[$name]) && is_array($this->db[$name])) {
-      if(!mysqli_select_db($this->db[$name][1], $this->db[$name][0])) {
+      /**
+       * @var \DBC $connector
+       */
+      $connector = $this->db[$name][1];
+      if(!$connector->initConnection($this->db[$name][0])) {
         throw new Exception(
           strtr('Data Base "{db}" do not select: {reason}',
             [

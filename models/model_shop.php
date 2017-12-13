@@ -215,7 +215,8 @@ class Model_Shop extends Model_Base{
     $q = "UPDATE fabrix_products SET inventory=" . $inventory;
     $q .= ($inventory <= 0) ? ", pvisible = 0" : "";
     $q .= " where pid=" . $pid;
-    $res = static::query($q);
+
+    return static::query($q);
   }
 
   public static function get_product_params($pid){
@@ -304,6 +305,7 @@ class Model_Shop extends Model_Base{
       while($row = static::fetch_array($result)) {
         $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix);
       }
+      static::free_result($result);
     }
 
     return $response;
@@ -356,7 +358,8 @@ class Model_Shop extends Model_Base{
         break;
     }
     if($result = static::query($q)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;
@@ -367,19 +370,40 @@ class Model_Shop extends Model_Base{
     $row_new_count = 50;
     switch($type) {
       case 'all':
-        $q = "SELECT distinct a.*" . " FROM fabrix_categories a" . " LEFT JOIN fabrix_product_categories c on a.cid = c.cid" . " LEFT JOIN fabrix_products b ON b.pid = c.pid" . " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null" . " ORDER BY a.displayorder, c.displayorder";
+        $q = "SELECT distinct a.*" .
+          " FROM fabrix_categories a" .
+          " LEFT JOIN fabrix_product_categories c on a.cid = c.cid" .
+          " LEFT JOIN fabrix_products b ON b.pid = c.pid" .
+          " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null" .
+          " ORDER BY a.displayorder, c.displayorder";
         break;
       case 'new':
-        $q = "SELECT distinct a.*" . " FROM (SELECT pid FROM fabrix_products WHERE priceyard > 0 and pvisible = '1' and image1 is not null" . " ORDER BY dt DESC LIMIT " . $row_new_count . ") b" . " LEFT JOIN fabrix_product_categories c ON b.pid = c.pid" . " LEFT JOIN fabrix_categories a on a.cid = c.cid" . " ORDER BY a.displayorder, c.displayorder";
+        $q = "SELECT distinct a.*" .
+          " FROM (SELECT pid FROM fabrix_products WHERE priceyard > 0 and pvisible = '1' and image1 is not null" .
+          " ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
+          " LEFT JOIN fabrix_product_categories c ON b.pid = c.pid" .
+          " LEFT JOIN fabrix_categories a on a.cid = c.cid" . " ORDER BY a.displayorder, c.displayorder";
         break;
       case 'manufacturer':
-        $q = "SELECT distinct a.*" . " FROM fabrix_products b " . " INNER JOIN fabrix_manufacturers a ON b.manufacturerId = a.id" . " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null" . " ORDER BY b.dt DESC";
+        $q = "SELECT distinct a.*" .
+          " FROM fabrix_products b " .
+          " INNER JOIN fabrix_manufacturers a ON b.manufacturerId = a.id" .
+          " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null" .
+          " ORDER BY b.dt DESC";
         break;
       case 'patterns':
-        $q = "SELECT distinct a.*" . " FROM  fabrix_patterns a" . " LEFT JOIN fabrix_product_patterns c on a.id = c.patternId" . " LEFT JOIN fabrix_products b ON  b.pid = c.prodId" . " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null";
+        $q = "SELECT distinct a.*" .
+          " FROM  fabrix_patterns a" .
+          " LEFT JOIN fabrix_product_patterns c on a.id = c.patternId" .
+          " LEFT JOIN fabrix_products b ON  b.pid = c.prodId" .
+          " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null";
         break;
       case 'blog_category':
-        $q = "SELECT distinct a.*" . " FROM blog_groups a" . " LEFT JOIN blog_group_posts c on a.id = c.group_id" . " LEFT JOIN blog_posts b ON b.ID = c.object_id" . " WHERE b.post_status = 'publish'";
+        $q = "SELECT distinct a.*" .
+          " FROM blog_groups a" .
+          " LEFT JOIN blog_group_posts c on a.id = c.group_id" .
+          " LEFT JOIN blog_posts b ON b.ID = c.object_id" .
+          " WHERE b.post_status = 'publish'";
         break;
     }
     $result = static::query($q);
@@ -415,7 +439,8 @@ class Model_Shop extends Model_Base{
     }
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
-      $response = static::fetch_row($result)[0];
+      $response = static::fetch_value($result);
+      static::free_result($result);
     }
 
     return $response;
@@ -455,6 +480,7 @@ class Model_Shop extends Model_Base{
       while($row = static::fetch_array($result)) {
         $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price);
       }
+      static::free_result($result);
     }
 
     return $response;

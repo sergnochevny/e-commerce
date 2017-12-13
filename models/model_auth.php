@@ -59,6 +59,7 @@ class Model_Auth extends Model_Base{
     $q = "SELECT * FROM fabrix_accounts WHERE email='" . static::escape($mail) . "'";
     $res = static::query($q);
     $res = $res && (static::num_rows($res) > 0);
+    static::free_result($res);
 
     return $res;
   }
@@ -84,6 +85,7 @@ class Model_Auth extends Model_Base{
           return true;
         }
       }
+      static::free_result($res);
     }
 
     return (false);
@@ -105,6 +107,7 @@ class Model_Auth extends Model_Base{
           setcookie('_ar', '');
         }
       }
+      static::free_result($res);
     }
 
     return false;
@@ -114,6 +117,7 @@ class Model_Auth extends Model_Base{
     $q = "SELECT * FROM fabrix_admins WHERE login='" . static::escape($login) . "'";
     $res = static::query($q);
     $res = $res && (static::num_rows($res) > 0);
+    static::free_result($res);
 
     return $res;
   }
@@ -135,10 +139,12 @@ class Model_Auth extends Model_Base{
             $q = "UPDATE fabrix_admins SET rememberme = '" . static::escape($hash) . "' WHERE id = " . self::$admin['id'];
             if(static::query($q)) setcookie('_ar', $hash, time() + 60 * 60 * 24 * 30);
           }
+          static::free_result($res);
 
           return true;
         }
       }
+      static::free_result($res);
     }
 
     return (false);

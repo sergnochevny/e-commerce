@@ -514,7 +514,7 @@ class Model_Price extends Model_Base{
 
     $result = static::query($sql) or die(static::error());
 
-    while($rs = static::fetch_row($result)) {
+    while($rs = static::fetch_array($result)) {
 
       $iPid = (int)$rs[0];
       $iPrice = (real)$rs[1];
@@ -573,8 +573,7 @@ class Model_Price extends Model_Base{
 
     $result = static::query($sSQL) or die(static::error());
     if(static::num_rows($result)) {
-      $rs = static::fetch_row($result);
-      $rRet = (real)$rs[0];
+      $rRet = (real)static::fetch_value($result);
     }
     static::free_result($result);
 
@@ -632,14 +631,14 @@ class Model_Price extends Model_Base{
     $result = static::query($sql);
 
     if($result) {
-      if($rs = static::fetch_row($result)) {
-        $userProvince = $rs[0];
+      if($userProvince = static::fetch_value($result)) {
+        static::free_result($result);
         if(!(empty($userProvince))) {
           $sql = sprintf('SELECT tax_rate FROM fabrix_taxrates WHERE province_state_id = ' . $userProvince);
           $result = static::query($sql);
           if($result) {
-            if($rs = static::fetch_row($result)) {
-              $tax = $rs[0];
+            if($tax = static::fetch_value($result)) {
+              static::free_result($result);
               if(!empty($tax)) return $tax;
             }
           }

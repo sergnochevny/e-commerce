@@ -47,7 +47,7 @@ class KeyStorage{
     $q = "SELECT value FROM key_storage";
     $res = Model_Base::query($q);
     if($res) {
-      while($row = Model_Base::fetch_row($res)) {
+      while($row = Model_Base::fetch_value($res)) {
         $this->storage[$row['key']] = $row['value'];
       }
     } else {
