@@ -1,0 +1,50 @@
+version: '3.4'
+services:
+    app:
+      image: ${IMAGE}
+      container_name: ${NAME}_app
+      env_file:
+        - .env
+      restart: always
+      deploy:
+        resources:
+          limits:
+            memory: 1G
+            cpus: '0.1'
+      volumes:
+        - ./data/images:/app/web/images
+        - ./data/filemanager:/app/web/filemanager
+        - ./data/tinymce:/app/web/tinymce
+        - ./.ssh:/root/.ssh:rw
+      ports:
+        - 127.0.0.1:8987:80
+      networks:
+        - front
+        - back
+    db:
+      image: mariadb:10
+      container_name: ${NAME}_db
+      restart: always
+      volumes:
+        - .${NAME}_db_data:/var/lib/mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=${NAME}
+      networks:
+        - back
+
+    postfix:
+      image: catatnight/postfix
+      container_name: ${NAME}_postfix
+      restart: always
+      expose:
+        - 25
+      environment:
+        - maildomain=${NAME}.ait.com
+        - smtp_user=postfix:postfix
+      networks:
+        - back
+
+networks:
+  front:
+  back:

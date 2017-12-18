@@ -33,5 +33,5 @@
   <!--  </div>-->
 
 </div>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.js'); ?>'></script>
-<script src='<?= _A_::$app->router()->UrlTo('js/index/index.js'); ?>' type="text/javascript"></script>
+<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/index/index.min.js'); ?>' type="text/javascript"></script>

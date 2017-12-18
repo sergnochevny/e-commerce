@@ -242,7 +242,7 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
     <div class="col-xs-12">
       <div class="row">
         <div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'product']) ?>">
-          <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.js'); ?>'></script>
+          <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
         </div>
       </div>
     </div>

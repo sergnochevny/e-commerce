@@ -7,7 +7,7 @@ WORKDIR /
 RUN set -x \
   && apt-get update -qq \
   && apt-get upgrade -y \
-  && apt-get install --assume-yes --force-yes --no-install-recommends \
+  && apt-get install --assume-yes --force-yes \
   apt-utils \
   apt-transport-https \
   curl \
@@ -23,6 +23,7 @@ RUN set -x \
   libssl-dev \
   libxslt-dev \
   libedit-dev \
+  mysql-client \
   wget \
   && /usr/bin/curl -sS https://getcomposer.org/installer |php \
   && /bin/mv composer.phar /usr/local/bin/composer \
@@ -39,22 +40,16 @@ RUN set -x \
 RUN set -x \
   && /usr/local/bin/docker-php-ext-install zip pdo pdo_mysql opcache curl gd intl bz2 xml xsl xmlrpc readline
 
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
-RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini
-RUN echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/php.ini
-RUN echo "xdebug.remote_log=/app/xdebug.log" >> /usr/local/etc/php/php.ini
+USER root
+ADD deploy/docker/app.conf /etc/apache2/sites-enabled/000-app.conf
+ADD deploy/docker/docker-entrypoint.sh /docker-entrypoint.sh
 
-RUN docker-php-ext-install mysqli
-RUN docker-php-ext-enable mysqli
-RUN docker-php-ext-install pdo pdo_mysql
-
-ADD deploy/app.conf /etc/apache2/sites-enabled/000-app.conf
-ADD deploy/docker-entrypoint.sh /docker-entrypoint.sh
-
-WORKDIR /app
+COPY . /app
 
 RUN set -x \
-  && /bin/chown -R www-data:www-data /app && chmod +x /docker-entrypoint.sh
+  && /bin/chown -R www-data:www-data /app \
+  && chmod +x /docker-entrypoint.sh
+
+WORKDIR /app
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

@@ -91,4 +91,4 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('js/blog/form.js'); ?>' type="text/javascript"></script>
+<script src='<?= _A_::$app->router()->UrlTo('js/blog/form.min.js'); ?>' type="text/javascript"></script>
