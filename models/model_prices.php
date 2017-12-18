@@ -22,7 +22,7 @@ class Model_Prices extends Model_Base{
 //        ['min_price' => 200, 'title' => '$200.01 and above'],
 //      ];
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
       if(isset($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter['hidden']["a.priceyard"]) . "'";

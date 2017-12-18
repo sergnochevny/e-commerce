@@ -4,7 +4,7 @@ class Model_Clearance extends Model_Base{
 
   protected static $table = 'fabrix_clearance';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = "";
     if(Controller_Admin::is_logged()) {
       if(!empty($filter["a.pname"])) foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) if(!empty($item)) $result[] = "a.pname LIKE '%" . static::prepare_for_sql($item) . "%'";

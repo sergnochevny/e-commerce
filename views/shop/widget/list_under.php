@@ -28,3 +28,9 @@
     </aside>
   </div>
 </div>
+<div class="clearfix"></div>
+<div class="row bestseller-action-row">
+  <div class="col-xs-12 text-center">
+    <a href="<?= _A_::$app->router()->UrlTo('shop/under'); ?>" class="button button-2x">MORE</a>
+  </div>
+</div>

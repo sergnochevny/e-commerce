@@ -4,7 +4,7 @@ class Model_Colors extends Model_Base{
 
   protected static $table = 'fabrix_color';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
       if(Controller_Admin::is_logged()) {

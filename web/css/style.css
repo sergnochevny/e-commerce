@@ -1601,10 +1601,11 @@ span.opa {
 
 .just-slider-wrap .just-slides .just-slide {
     background-size: cover;
-    background-position: center right;
+    /*background-position: center right;*/
     /*background-color: rgba(255, 255, 255, 0.5);*/
     /*background-blend-mode: hard-light;*/
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
+    cursor: pointer;
 }
 
 @media (max-width: 992px) {

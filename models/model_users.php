@@ -4,7 +4,7 @@ class Model_Users extends Model_Base{
 
   protected static $table = 'fabrix_accounts';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter["email"])))) . "%'";
     if(!empty($filter["full_name"]))
@@ -136,33 +136,8 @@ class Model_Users extends Model_Base{
   public static function save(&$data){
     static::transaction();
     try {
-      extract($data);
       if(isset($data['scenario']) && ($data['scenario'] !== 'short')) {
-        $email = static::escape($email);
-        $bill_firstname = static::escape($bill_firstname);
-        $bill_lastname = static::escape($bill_lastname);
-        $bill_organization = static::escape($bill_organization);
-        $bill_address1 = static::escape($bill_address1);
-        $bill_address2 = static::escape($bill_address2);
-        $bill_province = static::escape($bill_province);
-        $bill_city = static::escape($bill_city);
-        $bill_country = static::escape($bill_country);
-        $bill_postal = static::escape($bill_postal);
-        $bill_phone = static::escape($bill_phone);
-        $bill_fax = static::escape($bill_fax);
-        $bill_email = static::escape($bill_email);
-        $ship_firstname = static::escape($ship_firstname);
-        $ship_lastname = static::escape($ship_lastname);
-        $ship_organization = static::escape($ship_organization);
-        $ship_address1 = static::escape($ship_address1);
-        $ship_address2 = static::escape($ship_address2);
-        $ship_city = static::escape($ship_city);
-        $ship_province = static::escape($ship_province);
-        $ship_country = static::escape($ship_country);
-        $ship_postal = static::escape($ship_postal);
-        $ship_phone = static::escape($ship_phone);
-        $ship_fax = static::escape($ship_fax);
-        $ship_email = static::escape($ship_email);
+        extract($data);
 
         if(!isset($aid)) {
           $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname ," .
@@ -210,10 +185,6 @@ class Model_Users extends Model_Base{
           $q .= "' WHERE  aid = $aid;";
         }
       } else {
-        $email = static::escape($email);
-        $bill_firstname = static::escape($bill_firstname);
-        $bill_lastname = static::escape($bill_lastname);
-
         if(!isset($aid)) {
           $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname)" .
             " VALUES ('$email', '$password', '$bill_firstname', '$bill_lastname')";

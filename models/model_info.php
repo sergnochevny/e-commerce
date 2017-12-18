@@ -4,7 +4,7 @@ class Model_Info extends Model_Base{
 
   protected static $table = 'info_messages';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter['hidden']['id']) && !is_array($filter['hidden']['priceyard'])) $result[] = "a.id = '" . static::prepare_for_sql($filter['hidden']["id"]) . "'";
     if(isset($filter['hidden']['visible'])) $result[] = "visible = '" . static::prepare_for_sql($filter['hidden']["visible"]) . "'";
@@ -76,8 +76,6 @@ class Model_Info extends Model_Base{
     static::transaction();
     try {
       extract($data);
-      $title = static::escape($title);
-      $message = static::escape($message);
       if(isset($f1)) {
         $q = "UPDATE " . static::$table . " SET" . " title='$title'," . " message='$message'," . " visible='$visible'," . " f2='$f2'" . " WHERE f1 ='$f1'";
         $res = static::query($q);

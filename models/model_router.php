@@ -6,11 +6,11 @@ class Model_Router extends Model_Base{
     $_sef_url = $sef_url;
     $itherator = 0;
     while(true) {
-      $sql = "SELECT * FROM url_sef WHERE sef = '" . static::escape($sef_url) . "'";
-      $find_result = static::query($sql);
+      $sql = "SELECT * FROM url_sef WHERE sef = :sef_url";
+      $find_result = static::query($sql, ['sef_url' => $sef_url]);
       if(!($res = static::fetch_assoc($find_result))) {
-        $sql = "REPLACE INTO url_sef(url,sef) VALUES('" . $url . "', '" . static::escape($sef_url) . "')";
-        $res = static::query($sql);
+        $sql = "REPLACE INTO url_sef(url,sef) VALUES(:url, :sef_url)";
+        $res = static::query($sql, ['url' => $url, 'sef_url' => $sef_url]);
         if(!$res) $sef_url = $url;
         break;
       } else {
@@ -35,14 +35,15 @@ class Model_Router extends Model_Base{
         $sef_url = $res['sef'];
       }
     }
+
     return $sef_url;
   }
 
   public static function get_url($sef_url){
     $url = $sef_url;
     if($sef_url != '') {
-      $sql = 'SELECT * FROM url_sef WHERE sef = "' . static::escape($sef_url) . '"';
-      $find_result = static::query($sql);
+      $sql = 'SELECT * FROM url_sef WHERE sef = :sef_url';
+      $find_result = static::query($sql, ['sef_url' => $sef_url]);
       if(static::num_rows($find_result)) {
         $res = static::fetch_assoc($find_result);
         $url = $res['url'];

@@ -77,7 +77,6 @@ class Model_Blogcategory extends Model_Base{
     extract($data);
     static::transaction();
     try {
-      $name = static::escape($name);
       if(isset($id)) {
         $query = 'UPDATE blog_groups SET name = "' . $name . '" WHERE id = ' . $id;
         $res = static::query($query);

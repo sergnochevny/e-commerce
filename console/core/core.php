@@ -9,8 +9,9 @@ class Core{
   protected $connections;
   protected $config = [];
 
-  public function __construct(){
-    $this->init();
+  public function __construct(&$app){
+    $app = $this;
+    $app->init();
   }
 
   private function initConfig(){

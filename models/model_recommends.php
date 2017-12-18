@@ -4,7 +4,7 @@ class Model_Recommends extends Model_Base{
 
   protected static $table = 'fabrix_products';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter["a.pname"])) $result[] = Model_Synonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
     if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::prepare_for_sql($filter["a.piece"]) . "'";

@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 
 <div class="row">
   <div class="col-xs-12">

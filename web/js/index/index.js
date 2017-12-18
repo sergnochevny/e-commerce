@@ -2,8 +2,14 @@
 
 (function ($) {
   $(document).ready(function () {
-    $.get($('#specials-products_url').val(), {}, function (data) {
-      $('.specials-products').html(data).owlCarousel({
+    var wait_loader = '<div class="col-xs-12 text-center">' +
+      '<i class="fa fa-spinner fa-pulse fa-4x"></i><br/>' +
+      '</div>';
+    var url = $('#specials-products_url').val();
+    $('.specials-products-container').html(wait_loader);
+    $.get(url, {}, function (data) {
+      $('.specials-products-container').html(data);
+      $('.specials-products').owlCarousel({
         responsive: {
           0: {items: 1},
           461: {items: 2},
@@ -16,7 +22,8 @@
         autoplay: true,
         loop: false,
         rewind: true,
-        autoplayHoverPause: false,
+        autoplayHoverPause: true,
+        autoplayTimeout: 2000,
         dots: true
       });
     });

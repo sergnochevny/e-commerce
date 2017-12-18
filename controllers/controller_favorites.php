@@ -14,8 +14,10 @@ class Controller_Favorites extends Controller_Simple{
   protected function build_order(&$sort, $view = false, $filter = null){
     parent::build_order($sort, $view, $filter);
     if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
-      $sort = ['z.dt' => 'desc'];
-      $sort = ['a.pid' => 'desc'];
+      $sort = [
+        'z.dt' => 'desc',
+        'a.pid' => 'desc'
+      ];
     }
   }
 

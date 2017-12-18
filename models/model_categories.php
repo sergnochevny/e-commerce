@@ -4,7 +4,7 @@ class Model_Categories extends Model_Base{
 
   protected static $table = 'fabrix_categories';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
       if(Controller_Admin::is_logged()) {
@@ -91,7 +91,6 @@ class Model_Categories extends Model_Base{
     static::transaction();
     try {
       extract($data);
-      $cname = static::escape($cname);
       if(!empty($cid)) {
         $res = static::query("select * from fabrix_categories WHERE cid='$cid'");
         if($res) {

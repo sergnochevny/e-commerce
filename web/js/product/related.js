@@ -45,6 +45,7 @@
               loop: false,
               rewind: true,
               autoplayHoverPause: true,
+              autoplayTimeout: 2000,
               dots: true
             }
           );

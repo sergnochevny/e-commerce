@@ -4,7 +4,7 @@ class Model_Manufacturers extends Model_Base{
 
   protected static $table = 'fabrix_manufacturers';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
       if(Controller_Admin::is_logged()) {

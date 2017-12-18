@@ -4,7 +4,7 @@ class Model_Related extends Model_Base{
 
   protected static $table = 'fabrix_product_related';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . static::prepare_for_sql($filter['hidden']["b.pvisible"]) . "'";
     if(isset($filter['hidden']["b.pnumber"])) $result[] = "b.pnumber is not null";

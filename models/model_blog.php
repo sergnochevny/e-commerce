@@ -4,12 +4,21 @@ class Model_Blog extends Model_Base{
 
   protected static $table = 'blog_posts';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = "";
     if(Controller_Admin::is_logged()) {
-      if(!empty($filter["a.post_title"])) foreach(array_filter(explode(' ', $filter["a.post_title"])) as $item) if(!empty($item)) $result[] = "a.post_title LIKE '%" . static::prepare_for_sql($item) . "%'";
+      if(!empty($filter["a.post_title"])) {
+        foreach(array_filter(explode(' ', $filter["a.post_title"])) as $idx => $item) {
+          if(!empty($item)) {
+            $result[] = "a.post_title LIKE '%:a_post_title" . $idx . "%'";
+            $prms['a_post_tile' . $idx] = static::prepare_for_sql($item);
+          }
+        }
+      }
     } else {
-      if(isset($filter["a.post_title"])) $result[] = Model_Synonyms::build_synonyms_like("a.post_title", $filter["a.post_title"]);
+      if(isset($filter["a.post_title"])) {
+        $result[] = Model_Synonyms::build_synonyms_like("a.post_title", $filter["a.post_title"]);
+      }
     }
     if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . static::prepare_for_sql($filter["a.post_status"]) . "'";
     if(isset($filter["a.post_date"])) {
@@ -92,6 +101,7 @@ class Model_Blog extends Model_Base{
       }
       static::free_result($results);
     }
+
     return $filter;
   }
 
@@ -203,11 +213,11 @@ class Model_Blog extends Model_Base{
     static::transaction();
     try {
       if(isset($id)) {
-        $res = static::query("DELETE FROM " . static::$table . " WHERE id = $id");
-        if($res) $res = static::query("delete from blog_group_posts where post_id = $id");
-        if($res) $res = static::query("delete from blog_post_keys_descriptions where post_id = $id");
+        $res = static::query("DELETE FROM " . static::$table . " WHERE id = :id", ['id' => $id]);
+        if($res) $res = static::query("DELETE FROM blog_group_posts WHERE post_id = :id", ['id' => $id]);
+        if($res) $res = static::query("DELETE FROM blog_post_keys_descriptions WHERE post_id = :id", ['id' => $id]);
         if($res) static::delete_img(static::get_img($id));
-        if($res) $res = static::query("delete from blog_post_img where post_id = $id");
+        if($res) $res = static::query("DELETE FROM blog_post_img WHERE post_id = :id", ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();
@@ -220,35 +230,38 @@ class Model_Blog extends Model_Base{
   public static function save(&$data){
     extract($data);
 
-    $post_title = static::escape($post_title);
-    $keywords = static::escape($keywords);
-    $description = static::escape($description);
-    $post_content = static::escape($post_content);
-
     static::transaction();
     try {
       if(!isset($id)) {
         $date['post_date'] = $post_date = date('Y-m-d H:i:s', time());
-        $q = "INSERT INTO " . static::$table . " (post_author, post_date, post_content, post_title, post_status)" . " VALUES ('$post_author', '$post_date', '$post_content', '$post_title', '$post_status')";
+        $q = "INSERT INTO " . static::$table . " (post_author, post_date, post_content, post_title, post_status)";
+        $q .= " VALUES (:post_author, :post_date, :post_content, :post_title, :post_status)";
+        $prms = compact($post_author, $post_date, $post_content, $post_title, $post_status);
       } else {
         $q = "UPDATE " . static::$table . " SET ";
-        $q .= " post_author = '" . $post_author;
-        $q .= "', post_content = '" . $post_content;
-        $q .= "', post_title = '" . $post_title;
-        $q .= "', post_status = '" . $post_status;
-        $q .= "' WHERE id = $id;";
+        $q .= " post_author = :post_author";
+        $q .= ", post_content = :post_content";
+        $q .= ", post_title = :post_title";
+        $q .= ", post_status = :post_status";
+        $q .= " WHERE id = :id";
+        $prms = compact($post_author, $post_date, $post_content, $post_title, $post_status, $id);
       }
-      $result = static::query($q);
+      $result = static::query($q, $prms);
       if($result && !isset($id)) $id = static::last_id();
-      if($result) $result = static::query("DELETE FROM blog_group_posts WHERE post_id = '$id'");
+      if($result) $result = static::query("DELETE FROM blog_group_posts WHERE post_id = :id", ['id' => $id]);
       if($result) {
         foreach($categories as $group) {
-          if($result) $result = static::query("INSERT INTO blog_group_posts(post_id, group_id) values ('$id', '$group')");
+          if($result) $result = static::query(
+            "INSERT INTO blog_group_posts(post_id, group_id) VALUES (:id, :group)", compact($id, $group)
+          );
           if(!$result) break;
         }
       }
-      if($result) $result = static::query("DELETE FROM blog_post_keys_descriptions WHERE post_id = '$id'");
-      if($result) $result = static::query("INSERT INTO blog_post_keys_descriptions(post_id, keywords, description) values('$id', '$keywords', '$description')");
+      if($result) $result = static::query("DELETE FROM blog_post_keys_descriptions WHERE post_id = :id", ['id' => $id]);
+      if($result) $result = static::query(
+        "INSERT INTO blog_post_keys_descriptions(post_id, keywords, description) VALUES(:id, :keywords, :description)",
+        compact($id, $keywords, $description)
+      );
       if($result) $result = static::update_image($id, $data);
       if(!$result) throw new Exception(static::error());
       static::commit();
@@ -262,7 +275,7 @@ class Model_Blog extends Model_Base{
 
   public static function get_desc_keys($id){
     $data = null;
-    $res = static::query("SELECT * FROM blog_post_keys_descriptions WHERE post_id='$id'");
+    $res = static::query("SELECT * FROM blog_post_keys_descriptions WHERE post_id=:id", ['id' => $id]);
     if($res && static::num_rows($res) > 0) {
       $data = static::fetch_assoc($res);
       static::free_result($res);

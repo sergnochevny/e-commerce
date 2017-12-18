@@ -80,7 +80,7 @@
       <div class="col-xs-12" data-role="form_content">
         <div data-load="<?= _A_::$app->router()->UrlTo('authorization', ['method' => 'short']) ?>">
           <script type='text/javascript'
-                  src='<?= _A_::$app->router()->UrlTo('js/authorization/load.min.js'); ?>'></script>
+                  src='<?= _A_::$app->router()->UrlTo('js/authorization/load.js'); ?>'></script>
         </div>
       </div>
     </div>

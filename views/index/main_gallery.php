@@ -2,7 +2,8 @@
 <div id="slider" class="just-slider-wrap">
   <div class="just-slides just-slider-active owl-carousel owl-theme owl-loaded">
     <div class="just-slide"
-         style="background-image:url(<?= _A_::$app->router()->UrlTo('images/slider/slide2.jpg'); ?>);">
+         style="background-image:url(<?= _A_::$app->router()->UrlTo('images/slider/slide2.jpg'); ?>);"
+         onclick="return location.href = '<?= _A_::$app->router()->UrlTo('shop'); ?>'">
       <div class="col-xs-12">
         <div class="just-slide-inner">
           <div class="just-slide-detail"
@@ -16,4 +17,3 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/index/main_gallery.min.js'); ?>' type="text/javascript"></script>

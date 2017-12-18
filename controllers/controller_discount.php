@@ -88,12 +88,11 @@ class Controller_Discount extends Controller_FormSimple{
   }
 
   protected function build_order(&$sort, $view = false, $filter = null){
-    if($view && $this->scenario() == 'orders') {
-      parent::build_order($sort, $view, $filter);
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) $sort = ['a.order_date' => 'desc'];
-    } else {
-      parent::build_order($sort, $view, $filter);
-      if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+    parent::build_order($sort, $view, $filter);
+    if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
+      if($view && $this->scenario() == 'orders') {
+        $sort = ['a.order_date' => 'desc'];
+      } else {
         $sort = ['date_start' => 'desc'];
       }
     }

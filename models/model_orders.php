@@ -4,7 +4,7 @@ class Model_Orders extends Model_Base{
 
   protected static $table = 'fabrix_orders';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter["a.aid"])) $result[] = "a.aid = '" . static::prepare_for_sql($filter['a.aid']) . "'";
     if(!empty($filter['username'])) foreach(array_filter(explode(' ', $filter['username'])) as $item) if(!empty($item)) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . static::prepare_for_sql($item) . "%'";

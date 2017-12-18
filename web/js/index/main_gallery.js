@@ -13,6 +13,7 @@
         autoplayHoverPause: true,
         dots: true,
         stopOnHover: true,
+        autoplayTimeout: 2000,
         animateOut: 'fadeOut'
       });
 

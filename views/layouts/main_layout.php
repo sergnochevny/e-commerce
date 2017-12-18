@@ -46,9 +46,9 @@
   <link href="<?= _A_::$app->router()->UrlTo('css/multiselect.min.css'); ?>" rel="stylesheet"/>
 
   <script type='text/javascript'
-          src='<?= _A_::$app->router()->UrlTo('js/jquery2/jquery-2.2.4.min.js'); ?>'></script>
+          src='<?= _A_::$app->router()->UrlTo('js/jquery3/jquery-3.1.1.min.js'); ?>'></script>
   <script type='text/javascript'
-          src='<?= _A_::$app->router()->UrlTo('js/jquery2/jquery-migrate-1.4.1.min.js'); ?>'></script>
+          src='<?= _A_::$app->router()->UrlTo('js/jquery3/jquery-migrate-3.0.0.min.js'); ?>'></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/bootstrap.min.js'); ?>'></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/jquery-ui.min.js'); ?>'></script>
   <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/jquery.smartmenus.min.js'); ?>'></script>
@@ -94,7 +94,8 @@
     </a>
     <script type="text/javascript">
       (function ($) {
-        $('span#cart_amount').load('<?= /** @noinspection PhpUndefinedMethodInspection */_A_::$app->router()->UrlTo('cart/amount');?>');
+        $('span#cart_amount').load('<?= /** @noinspection PhpUndefinedMethodInspection */_A_::$app->router()
+                                                                                                  ->UrlTo('cart/amount');?>');
       })(jQuery);
     </script>
   <?php } ?>

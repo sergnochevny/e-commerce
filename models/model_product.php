@@ -4,7 +4,7 @@ class Model_Product extends Model_Base{
 
   protected static $table = 'fabrix_products';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = "";
     if(!empty($filter["a.pname"])) {
       foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) {
@@ -160,11 +160,10 @@ class Model_Product extends Model_Base{
   }
 
   public static function get_filter_data($type, &$count, $start = 0, $search = null){
-    $search = static::escape($search);
     $filter = null;
     $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
     $start = isset($start) ? $start : 0;
-    $search = static::escape(static::sanitize($search));
+    $search = static::sanitize($search);
     switch($type) {
       case 'colors':
         $q = "SELECT count(id) FROM fabrix_color";
@@ -399,15 +398,6 @@ class Model_Product extends Model_Base{
     static::transaction();
     try {
       extract($data);
-
-      $metatitle = static::escape($metatitle);
-      $metadescription = static::escape($metadescription);
-      $metakeywords = static::escape($metakeywords);
-      $pname = static::escape($pname);
-      $sdesc = static::escape($sdesc);
-      $ldesc = static::escape($ldesc);;
-      $stock_number = static::escape($stock_number);
-      $dimensions = static::escape($dimensions);
 
       if(isset($pid)) {
         $sql = "update " . static::$table . " set";

@@ -4,7 +4,7 @@ class Model_Comments extends Model_Base{
 
   protected static $table = 'fabrix_comments';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = '';
     if(isset($filter['a.title'])) $result[] = "a.post_title LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter['a.post_title'])))) . "%'";
     if(isset($filter['a.dt'])) {

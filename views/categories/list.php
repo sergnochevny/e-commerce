@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 
 <div class="col-xs-12 text-center">
   <h1 class="page-title">Types</h1>

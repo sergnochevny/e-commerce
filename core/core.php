@@ -1,24 +1,68 @@
 <?php
 
+/**
+ * Class Core
+ */
 class Core{
 
+  /**
+   * @var
+   */
   protected $router;
+  /**
+   * @var
+   */
   protected $registry;
+  /**
+   * @var
+   */
   protected $session;
+  /**
+   * @var
+   */
   protected $post;
+  /**
+   * @var
+   */
   protected $get;
+  /**
+   * @var
+   */
   protected $server;
+  /**
+   * @var
+   */
   protected $cookie;
+  /**
+   * @var
+   */
   protected $request;
 
+  /**
+   * @var
+   */
   protected $db;
+  /**
+   * @var
+   */
   protected $connections;
+  /**
+   * @var array
+   */
   protected $config = [];
 
-  public function __construct(){
-    $this->init();
+  /**
+   * Core constructor.
+   * @param $app
+   */
+  public function __construct(&$app){
+    $app = $this;
+    $app->init();
   }
 
+  /**
+   *
+   */
   private function initConfig(){
     $config = $this->getAppConfig();
     if(is_array($config)) {
@@ -56,10 +100,16 @@ class Core{
     }
   }
 
+  /**
+   * @return mixed
+   */
   private function getAppConfig(){
     return include(APP_PATH . '/config.php');
   }
 
+  /**
+   *
+   */
   private function initDBConnections(){
     $DBS = $this->config('DBS');
     if(isset($DBS) && is_array($DBS)) {
@@ -86,10 +136,16 @@ class Core{
     }
   }
 
+  /**
+   *
+   */
   private function initRegistry(){
     $this->registry = new Registry();
   }
 
+  /**
+   *
+   */
   private function initGlobals(){
     $this->post = array_slice($_POST, 0);
     $this->get = array_slice($_GET, 0);
@@ -98,6 +154,9 @@ class Core{
     $this->request = array_slice($_REQUEST, 0);
   }
 
+  /**
+   *
+   */
   private function initSession(){
     if(!is_null($this->get('pay_notify'))) {
       $s_id = $this->get('pay_notify');
@@ -107,6 +166,9 @@ class Core{
     $this->session = array_filter($_SESSION);
   }
 
+  /**
+   *
+   */
   protected function init(){
     $this->initConfig();
     $this->initDBConnections();
@@ -115,6 +177,10 @@ class Core{
     $this->initSession();
   }
 
+  /**
+   * @param $name
+   * @return null
+   */
   function __get($name){
     if(property_exists($this, $name)) {
       return $this->$name;
@@ -132,6 +198,11 @@ class Core{
     return null;
   }
 
+  /**
+   * @param $name
+   * @param $arguments
+   * @return bool|mixed
+   */
   public function __call($name, $arguments){
     $direct_set = strpos($name, 'set') !== false;
     $name = strtolower(str_replace(['set', ' '], '', $name));
@@ -173,22 +244,39 @@ class Core{
     return false;
   }
 
+  /**
+   * @param $property
+   * @param $key
+   * @return null
+   */
   public function getArrayProperty($property, $key){
     if(isset($this->{$property}[$key])) return $this->{$property}[$key];
 
     return null;
   }
 
+  /**
+   * @param $property
+   * @return null
+   */
   public function getProperty($property){
     if(isset($this->{$property})) return $this->{$property};
 
     return null;
   }
 
+  /**
+   * @param $property
+   * @param $value
+   */
   public function setProperty($property, $value){
     $this->{$property} = $value;
   }
 
+  /**
+   * @param $key
+   * @param $value
+   */
   public function setSession($key, $value){
     $this->setArrayProperty('session', $key, $value);
     if(is_null($value)) {
@@ -198,11 +286,20 @@ class Core{
     }
   }
 
+  /**
+   * @param $property
+   * @param $key
+   * @param $value
+   */
   public function setArrayProperty($property, $key, $value){
     if(is_null($value)) unset($this->{$property}[$key]);
     else $this->{$property}[$key] = $value;
   }
 
+  /**
+   * @param $key
+   * @param $value
+   */
   public function setCookie($key, $value){
     $this->setArrayProperty('session', $key, $value);
     if(is_null($value)) {
@@ -214,6 +311,10 @@ class Core{
     }
   }
 
+  /**
+   * @param $name
+   * @throws \Exception
+   */
   public function SelectDB($name){
     if(isset($this->db[$name]) && is_array($this->db[$name])) {
       /**
@@ -222,7 +323,7 @@ class Core{
       $connector = $this->db[$name][1];
       if(!$connector->initConnection($this->db[$name][0])) {
         throw new Exception(
-          strtr('Data Base "{db}" do not select: {reason}',
+          strtr('Data Base  "{db}" do not select: {reason}',
             [
               "{db}" => $name,
               '{reason}' => $this->db[$name][1]->error
@@ -239,6 +340,10 @@ class Core{
     }
   }
 
+  /**
+   * @param $name
+   * @return null
+   */
   public function getDBConnection($name){
     if(isset($this->db[$name]) && is_array($this->db[$name])) {
       return $this->db[$name][1];

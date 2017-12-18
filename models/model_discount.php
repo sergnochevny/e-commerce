@@ -4,7 +4,7 @@ class Model_Discount extends Model_Base{
 
   protected static $table = 'fabrix_specials';
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter["scenario"]) && ($filter["scenario"] == 'orders')) {
       if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::prepare_for_sql($filter['hidden']["c.sid"]) . "'";
@@ -132,9 +132,6 @@ class Model_Discount extends Model_Base{
     static::transaction();
     try {
       extract($data);
-      $discount_comment1 = static::escape($discount_comment1);
-      $discount_comment2 = static::escape($discount_comment2);
-      $discount_comment3 = static::escape($discount_comment3);
       if(isset($sid)) {
         $q = "UPDATE " . static::$table . " SET" . " coupon_code='$coupon_code'," . " discount_amount='$discount_amount'," . " discount_amount_type='$discount_amount_type'," . " discount_type='$discount_type'," . " user_type='$user_type'," . " shipping_type='$shipping_type'," . " product_type='$product_type'," . " promotion_type='$promotion_type'," . " required_amount='$required_amount'," . " required_type='$required_type'," . " allow_multiple='$allow_multiple'," . " enabled='$enabled'," . " countdown='$countdown'," . " discount_comment1='$discount_comment1'," . " discount_comment2='$discount_comment2'," . " discount_comment3='$discount_comment3'," . " date_start='$date_start'," . " date_end='$date_end'" . " WHERE sid ='$sid'";
         $res = static::query($q);
@@ -276,7 +273,7 @@ class Model_Discount extends Model_Base{
     $filter = null;
     $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
     $start = isset($start) ? $start : 0;
-    $search = static::escape(self::sanitize($search));
+    $search = self::sanitize($search);
     switch($type) {
       case 'users':
         $q = "SELECT count(aid) FROM fabrix_accounts";

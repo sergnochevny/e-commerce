@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 
 <input data-products_get_list type="hidden"
        value="<?= _A_::$app->router()->UrlTo('clearance', ['method' => 'add']) ?>"/>

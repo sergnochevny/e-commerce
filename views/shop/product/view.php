@@ -139,11 +139,13 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                     <?php if($data['inventory'] > 0) : ?>
                       <div class="button-small-width">
                         <a class="button col-xs-12" id="add_cart"
-                           href="<?= _A_::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
+                           href="<?= _A_::$app->router()
+                                              ->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
                           Add to Cart
                         </a>
                         <a data-waitloader class="button col-xs-12" id="view_cart"
-                           href="<?= _A_::$app->router()->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
+                           href="<?= _A_::$app->router()
+                                              ->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
                           Cart
                         </a>
                       </div>
@@ -240,8 +242,7 @@ $href_related = _A_::$app->router()->UrlTo('related/view', ['pid' => $pid]);
     <div class="col-xs-12">
       <div class="row">
         <div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'product']) ?>">
-          <script type='text/javascript'
-                  src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
+          <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.js'); ?>'></script>
         </div>
       </div>
     </div>

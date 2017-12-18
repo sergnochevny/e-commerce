@@ -97,6 +97,11 @@ abstract class Controller_Controller extends Controller_Base{
         $per_pages[$this->controller][$idx] = $per_page;
         _A_::$app->setSession('per_pages', $per_pages);
       }
+      if(!empty(_A_::$app->get('page'))) {
+        $pages = _A_::$app->session('pages');
+        $pages[$this->controller][$idx] = _A_::$app->get('page');
+        _A_::$app->setSession('pages', $pages);
+      }
       //
       $search = array_filter(_A_::$app->post('search'),
         function($val){
@@ -111,11 +116,7 @@ abstract class Controller_Controller extends Controller_Base{
         if((is_array($search) && !count($search)) || !is_array($search)) $search = null;
       }
       if(isset($search)) {
-        if(!empty(_A_::$app->get('page'))) {
-          $pages = _A_::$app->session('pages');
-          $pages[$this->controller][$idx] = _A_::$app->get('page');
-          _A_::$app->setSession('pages', $pages);
-        } else {
+        if(empty(_A_::$app->get('page'))) {
           $pages = _A_::$app->session('pages');
           if(isset($pages[$this->controller][$idx])) {
             unset($pages[$this->controller][$idx]);

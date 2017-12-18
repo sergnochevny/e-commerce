@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . 'views/messages/alert-boxes.php'); ?>
 <form method="POST" id="edit_form" action="<?= $action; ?>" class="enquiry-form ">
   <section class="just-posts-grid blog-post-edit-in">
     <div class="just-post-row">
@@ -63,8 +63,8 @@
         <div class="col-xs-12">
           <div class="text-center">
             <br/>
-            <a id="save"  href="save" data-modify class="button" style="width: 150px;">Save</a>
-            <a id="cancel"  href="cancel" data-modify class="button" style="width: 150px;">Cancel</a>
+            <a id="save" href="save" data-modify class="button" style="width: 150px;">Save</a>
+            <a id="cancel" href="cancel" data-modify class="button" style="width: 150px;">Cancel</a>
           </div>
         </div>
       </div>
@@ -74,7 +74,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"
+                                                                                         aria-hidden="true"></i>
+          </button>
           <h4 id="modal-title" class="modal-title text-center"></h4>
         </div>
         <div class="modal-body clearfix" style="padding: 0;">

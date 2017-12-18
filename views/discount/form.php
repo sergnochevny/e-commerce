@@ -1,4 +1,4 @@
-<?php include_once 'views/messages/alert-boxes.php'; ?>
+<?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <form method="POST" id="edit_form" action="<?= $action; ?>" class="col-xs-12 col-md-8 col-md-offset-2">
 
   <div class="row">

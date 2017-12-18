@@ -2,7 +2,7 @@
 
 class Model_Console extends Model_Base{
 
-  protected static function build_where(&$filter){
+  protected static function build_where(&$filter, &$prms = null){
     $result_where = "";
     $fields = !empty($filter['fields']) ? $filter['fields'] : [];
     foreach($fields as $field => $condition) {

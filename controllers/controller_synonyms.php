@@ -28,8 +28,8 @@ class Controller_Synonyms extends Controller_Simple{
     $data['synonyms'] = preg_replace("/\r/i", ",", $data['synonyms']);
     $data['keywords'] = preg_replace("/\n/i", ",", $data['keywords']);
     $data['synonyms'] = preg_replace("/\n/i", ",", $data['synonyms']);
-    $data['keywords'] = Model_Base::escape(implode(',', array_filter(array_map('trim', explode(',', $data['keywords'])))));
-    $data['synonyms'] = Model_Base::escape(implode(',', array_filter(array_map('trim', explode(',', $data['synonyms'])))));
+    $data['keywords'] = implode(',', array_filter(array_map('trim', explode(',', $data['keywords']))));
+    $data['synonyms'] = implode(',', array_filter(array_map('trim', explode(',', $data['synonyms']))));
   }
 
   protected function validate(&$data, &$error){

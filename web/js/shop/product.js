@@ -18,7 +18,8 @@
           autoplay: true,
           loop: false,
           rewind: true,
-          autoplayHoverPause: false,
+          autoplayHoverPause: true,
+          autoplayTimeout: 2000,
           dots: true
         });
       }
