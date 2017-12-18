@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon-precomposed" href="<?= _A_::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
   <link rel="apple-touch-startup-image" href="<?= _A_::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
   <link rel='stylesheet' type="text/css"
-        href='<?= _A_::$app->router()->UrlTo('css/woocommerce-smallscreen.css'); ?>'
+        href='<?= _A_::$app->router()->UrlTo('css/woocommerce-smallscreen.min.css'); ?>'
         media='only screen and (max-width: 768px)'/>
 
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('css/font-face.min.css'); ?>'/>
@@ -38,7 +38,7 @@
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('css/prettyPhoto.min.css'); ?>'/>
   <link rel='stylesheet' type="text/css" href='<?= _A_::$app->router()->UrlTo('css/jquery-ui.min.css'); ?>'
         media='all'/>
-  <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/owlcarousel/owl.carousel.css'); ?>">
+  <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/owlcarousel/owl.carousel.min.css'); ?>">
   <link rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/owlcarousel/owl.theme.default.min.css'); ?>">
   <link rel="stylesheet" type="text/css"
         href="<?= _A_::$app->router()->UrlTo('css/tooltipster.bundle.min.css'); ?>"/>
@@ -94,8 +94,7 @@
     </a>
     <script type="text/javascript">
       (function ($) {
-        $('span#cart_amount').load('<?= /** @noinspection PhpUndefinedMethodInspection */_A_::$app->router()
-                                                                                                  ->UrlTo('cart/amount');?>');
+        $('span#cart_amount').load('<?= _A_::$app->router()->UrlTo('cart/amount');?>');
       })(jQuery);
     </script>
   <?php } ?>

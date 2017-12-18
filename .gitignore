@@ -47,3 +47,4 @@ phpinfo.php
 /upload/
 /config.php
 
+/package-lock.json

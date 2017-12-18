@@ -1,10 +1,10 @@
 {
   "name": "iluvfabrix",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "ILuvFabrix",
   "main": "index.php",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo 'Error: no test specified' && exit 1"
   },
   "repository": {
     "type": "git",
@@ -16,10 +16,18 @@
   "author": "AIT Serg Nochevny",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^3.16.0",
-    "eslint-config-google": "^0.7.1",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-plugin-promise": "^3.4.2",
-    "eslint-plugin-standard": "^2.0.1"
+    "del": "^3.0.0",
+    "node-sass": "^4.5.3",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-cache": "^0.5.0",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-imagemin": "^3.4.0",
+    "gulp-minify": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0"
+  },
+  "dependencies": {
+    "psi": "^3.0.0"
   }
 }

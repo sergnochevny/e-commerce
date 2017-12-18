@@ -14,7 +14,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <link charset="UTF-8" rel="apple-touch-startup-image" href="<?= _A_::$app->router()->UrlTo('images/lf-logo.png') ?>">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/woocommerce-smallscreen.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/woocommerce-smallscreen.min.css') ?>"
         type="text/css" media="only screen and (max-width: 768px)">
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/bootstrap.min.css') ?>"
         type="text/css" media="all">
@@ -30,7 +30,7 @@
   <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/webfont.min.css') ?>"
         type="text/css"
         media="all">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/style-theme.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/style-theme.min.css') ?>"
         type="text/css"
         media="all">
   <link charset="UTF-8" rel="stylesheet"
