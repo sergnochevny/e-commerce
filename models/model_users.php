@@ -2,7 +2,7 @@
 
 class Model_Users extends Model_Base{
 
-  protected static $table = 'fabrix_accounts';
+  protected static $table = 'accounts';
 
   protected static function build_where(&$filter, &$prms = null){
     $result = "";
@@ -111,7 +111,7 @@ class Model_Users extends Model_Base{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "select count(*) from fabrix_special_users where aid = $id";
+        $query = "select count(*) from shop_special_users where aid = $id";
         $res = static::query($query);
         if($res) {
           $amount = static::fetch_array($res)[0];
@@ -119,7 +119,7 @@ class Model_Users extends Model_Base{
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-//        $query = "delete from fabrix_special_users WHERE aid = $id";
+//        $query = "delete from shop_special_users WHERE aid = $id";
 //        $res = static::query( $query);
 //        if(!$res) throw new Exception(static::error());
         $query = "DELETE FROM " . static::$table . " WHERE aid = $id";

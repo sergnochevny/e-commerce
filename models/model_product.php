@@ -2,7 +2,7 @@
 
 class Model_Product extends Model_Base{
 
-  protected static $table = 'fabrix_products';
+  protected static $table = 'shop_products';
 
   protected static function build_where(&$filter, &$prms = null){
     $result = "";
@@ -64,7 +64,7 @@ class Model_Product extends Model_Base{
           $select = implode(',', isset($data['colors']) ? array_keys($data['colors']) : []);
         }
         if(strlen($select) > 0) {
-          if($results = static::query("select * from fabrix_color" . " where id in ($select)" . " order by color")) {
+          if($results = static::query("select * from shop_color" . " where id in ($select)" . " order by color")) {
             while($row = static::fetch_array($results)) {
               $filters[$row['id']] = $row['color'];
             }
@@ -79,7 +79,7 @@ class Model_Product extends Model_Base{
           $select = implode(',', isset($data['patterns']) ? array_keys($data['patterns']) : []);
         }
         if(strlen($select) > 0) {
-          if($results = static::query("select * from fabrix_patterns" . " where id in ($select)" . " order by pattern")) {
+          if($results = static::query("select * from shop_patterns" . " where id in ($select)" . " order by pattern")) {
             while($row = static::fetch_array($results)) {
               $filters[$row['id']] = $row['pattern'];
             }
@@ -101,8 +101,8 @@ class Model_Product extends Model_Base{
           }
         }
         if(strlen($select) <= 0) $select = '1';
-        if($results = static::query("select a.cid, a.cname, (max(b.display_order)+1) as pos from fabrix_categories a"
-          . " left join fabrix_product_categories b on b.cid = a.cid" . " where a.cid in ($select)" . " group by a.cid, a.cname" . " order by a.cname")) {
+        if($results = static::query("select a.cid, a.cname, (max(b.display_order)+1) as pos from shop_categories a"
+          . " left join shop_product_categories b on b.cid = a.cid" . " where a.cid in ($select)" . " group by a.cid, a.cname" . " order by a.cname")) {
           while($row = static::fetch_array($results)) {
             $filters[$row['cid']] = [
               $row['cname'], isset($categories[$row['cid']]) ? $categories[$row['cid']] : $row['pos']
@@ -119,7 +119,7 @@ class Model_Product extends Model_Base{
     $data = [];
     switch($type) {
       case 'patterns':
-        $results = static::query("select a.* from fabrix_product_patterns b" . " inner join fabrix_patterns a on b.patternId=a.id " . " where b.prodId='$id'" . " order by a.pattern");
+        $results = static::query("select a.* from shop_product_patterns b" . " inner join shop_patterns a on b.patternId=a.id " . " where b.prodId='$id'" . " order by a.pattern");
         if($results) {
           while($row = static::fetch_array($results)) {
             $data[$row['id']] = $row['pattern'];
@@ -128,7 +128,7 @@ class Model_Product extends Model_Base{
         }
         break;
       case 'colors':
-        $results = static::query("select a.* from fabrix_product_colors b" . " inner join fabrix_color a on b.colorId=a.id " . " where b.prodId='$id'" . " order by a.color");
+        $results = static::query("select a.* from shop_product_colors b" . " inner join shop_color a on b.colorId=a.id " . " where b.prodId='$id'" . " order by a.color");
         if($results) {
           while($row = static::fetch_array($results)) {
             $data[$row['id']] = $row['color'];
@@ -137,7 +137,7 @@ class Model_Product extends Model_Base{
         }
         break;
       case 'categories':
-        $results = static::query("select a.cid, a.cname, b.display_order from fabrix_product_categories b" . " inner join fabrix_categories a on b.cid=a.cid " . " where b.pid='$id'" . " order by a.cname");
+        $results = static::query("select a.cid, a.cname, b.display_order from shop_product_categories b" . " inner join shop_categories a on b.cid=a.cid " . " where b.pid='$id'" . " order by a.cname");
         if($results) {
           while($row = static::fetch_array($results)) {
             $data[$row['cid']] = [$row['cname'], $row['display_order']];
@@ -146,7 +146,7 @@ class Model_Product extends Model_Base{
         }
         break;
       case 'manufacturers':
-        $results = static::query("select a.cid, a.manufacturer" . " from fabrix_manufacturers a" . " order by a.manufacturer");
+        $results = static::query("select a.cid, a.manufacturer" . " from shop_manufacturers a" . " order by a.manufacturer");
         if($results) {
           while($row = static::fetch_array($results)) {
             $data[$row['id']] = $row['manufacturer'];
@@ -166,7 +166,7 @@ class Model_Product extends Model_Base{
     $search = static::sanitize($search);
     switch($type) {
       case 'colors':
-        $q = "SELECT count(id) FROM fabrix_color";
+        $q = "SELECT count(id) FROM shop_color";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where color like '%$search%'";
           $q .= " or color like '%$search%'";
@@ -174,7 +174,7 @@ class Model_Product extends Model_Base{
         $results = static::query($q);
         $row = static::fetch_array($results);
         $count = $row[0];
-        $q = "SELECT * FROM fabrix_color";
+        $q = "SELECT * FROM shop_color";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where color like '%$search%'";
           $q .= " or color like '%$search%'";
@@ -189,14 +189,14 @@ class Model_Product extends Model_Base{
         }
         break;
       case 'patterns':
-        $q = "SELECT count(id) FROM fabrix_patterns";
+        $q = "SELECT count(id) FROM shop_patterns";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where pattern like '%$search%'";
         }
         $results = static::query($q);
         $row = static::fetch_array($results);
         $count = $row[0];
-        $q = "SELECT * FROM fabrix_patterns";
+        $q = "SELECT * FROM shop_patterns";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where pattern like '%$search%'";
         }
@@ -210,14 +210,14 @@ class Model_Product extends Model_Base{
         }
         break;
       case 'categories':
-        $q = "SELECT count(cid) FROM fabrix_categories";
+        $q = "SELECT count(cid) FROM shop_categories";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where cname like '%$search%'";
         }
         $results = static::query($q);
         $row = static::fetch_array($results);
         $count = $row[0];
-        $q = "SELECT * FROM fabrix_categories";
+        $q = "SELECT * FROM shop_categories";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where cname like '%$search%'";
         }
@@ -249,13 +249,13 @@ class Model_Product extends Model_Base{
   public static function get_total_count($filter = null){
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
-    $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-    $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-    $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-    $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-    $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-    $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-    $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+    $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+    $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+    $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+    $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+    $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+    $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+    $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
       $response = static::fetch_value($result);
@@ -269,13 +269,13 @@ class Model_Product extends Model_Base{
     $response = null;
     $query = "SELECT DISTINCT a.* ";
     $query .= " FROM " . static::$table . " a";
-    $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-    $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-    $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-    $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-    $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-    $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-    $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+    $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+    $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+    $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+    $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+    $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+    $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+    $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     $query .= static::build_where($filter);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
@@ -426,12 +426,12 @@ class Model_Product extends Model_Base{
       if($result) {
         $res = true;
         if($res && (count($categories) > 0)) {
-          $res = static::query("select * from fabrix_product_categories  where pid='$pid'");
+          $res = static::query("select * from shop_product_categories  where pid='$pid'");
           if($res) {
             $result = $res;
             while($category = static::fetch_assoc($res)) {
-              $result = $result && static::query("DELETE FROM fabrix_product_categories WHERE pid = " . $category['pid'] . " AND cid = " . $category['cid']);
-              $result = $result && static::query("UPDATE fabrix_product_categories SET display_order=display_order-1 WHERE display_order > " . $category['display_order'] . " AND cid=" . $category['cid']);
+              $result = $result && static::query("DELETE FROM shop_product_categories WHERE pid = " . $category['pid'] . " AND cid = " . $category['cid']);
+              $result = $result && static::query("UPDATE shop_product_categories SET display_order=display_order-1 WHERE display_order > " . $category['display_order'] . " AND cid=" . $category['cid']);
               if(!$result) {
                 $res = $result;
                 break;
@@ -440,8 +440,8 @@ class Model_Product extends Model_Base{
           }
         } elseif($res) {
           if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
-            static::query("DELETE FROM fabrix_product_categories WHERE pid = $pid");
-            $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" . " from fabrix_categories a" . " left join fabrix_product_categories b on a.cid = b.cid" . " where a.cid = 1";
+            static::query("DELETE FROM shop_product_categories WHERE pid = $pid");
+            $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" . " from shop_categories a" . " left join shop_product_categories b on a.cid = b.cid" . " where a.cid = 1";
             $res = static::query($q);
             if($res) {
               $row = static::fetch_array($res, MYSQLI_NUM);
@@ -452,29 +452,29 @@ class Model_Product extends Model_Base{
         }
         if($res) {
           foreach($categories as $cid => $category) {
-            $res = $res && static::query("update fabrix_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
-            $res = $res && static::query("REPLACE INTO fabrix_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
+            $res = $res && static::query("update shop_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
+            $res = $res && static::query("REPLACE INTO shop_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
             if(!$res) break;
           }
         }
-        if($res) $res = $res && static::query("DELETE FROM fabrix_product_colors WHERE prodID='$pid'");
+        if($res) $res = $res && static::query("DELETE FROM shop_product_colors WHERE prodID='$pid'");
         if($res && (count($colors) > 0)) {
           foreach($colors as $colorId) {
-            $res = $res && static::query("REPLACE INTO fabrix_product_colors SET prodID='$pid', colorId='$colorId'");
+            $res = $res && static::query("REPLACE INTO shop_product_colors SET prodID='$pid', colorId='$colorId'");
             if(!$res) break;
           }
         }
-        if($res) $res = $res && static::query("DELETE FROM fabrix_product_patterns WHERE prodID='$pid'");
+        if($res) $res = $res && static::query("DELETE FROM shop_product_patterns WHERE prodID='$pid'");
         if($res && (count($patterns) > 0)) {
           foreach($patterns as $patternId) {
-            $res = $res && static::query("REPLACE INTO fabrix_product_patterns SET prodID='$pid', patternId='$patternId'");
+            $res = $res && static::query("REPLACE INTO shop_product_patterns SET prodID='$pid', patternId='$patternId'");
             if(!$res) break;
           }
         }
-        if($res) $res = $res && static::query("DELETE FROM fabrix_product_related WHERE pid='$pid'");
+        if($res) $res = $res && static::query("DELETE FROM shop_product_related WHERE pid='$pid'");
         if($res && (count($related) > 0)) {
           foreach($related as $r_pid) {
-            $res = $res && static::query("REPLACE INTO fabrix_product_related SET pid='$pid', r_pid='$r_pid'");
+            $res = $res && static::query("REPLACE INTO shop_product_related SET pid='$pid', r_pid='$r_pid'");
             if(!$res) break;
           }
         }
@@ -497,19 +497,19 @@ class Model_Product extends Model_Base{
         $data = static::get_by_id($id);
         $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
         $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_related WHERE pid = $id or r_pid = $id";
+        $query = "DELETE FROM shop_product_related WHERE pid = $id or r_pid = $id";
         if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_clearance WHERE pid = $id";
+        $query = "DELETE FROM shop_clearance WHERE pid = $id";
         if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_favorites WHERE pid = $id";
+        $query = "DELETE FROM shop_product_favorites WHERE pid = $id";
         if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_categories WHERE pid = $id";
+        $query = "DELETE FROM shop_product_categories WHERE pid = $id";
         if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_colors WHERE prodId = $id";
+        $query = "DELETE FROM shop_product_colors WHERE prodId = $id";
         if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_product_patterns WHERE prodId = $id";
+        $query = "DELETE FROM shop_product_patterns WHERE prodId = $id";
         if($res) $res = static::query($query);
-        $query = "DELETE FROM fabrix_specials_products WHERE pid = $id";
+        $query = "DELETE FROM shop_specials_products WHERE pid = $id";
         if($res) $res = static::query($query);
         if(!$res) throw new Exception(static::error());
         static::delete_images($data);

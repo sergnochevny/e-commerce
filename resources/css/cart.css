@@ -1,4 +1,4 @@
-.button {
+.button{
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: 2px solid #222222;
     border-radius: 0;
@@ -11,13 +11,13 @@
     text-transform: uppercase;
 }
 
-.button:hover {
+.button:hover{
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border-color: #cacaca;
     color: #cacaca;
 }
 
-.button.alt {
+.button.alt{
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: 2px solid #ecad25;
     border-radius: 0;
@@ -31,7 +31,7 @@
     text-transform: uppercase;
 }
 
-.button.alt:hover {
+.button.alt:hover{
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border-color: #ecad25;
     color: #ecad25;
@@ -39,7 +39,7 @@
 
 .onsale {
     background: #ecad25 none repeat scroll 0 0;
-    border-radius: 0;
+    border-radius: 50%;
     color: #ffffff;
     font-size: 11px;
     height: 60px;
@@ -139,10 +139,11 @@ form .form-row .inline input {
     text-align: center;
 }
 
+
 .products .product-item .product-inner, .button.products .product-item .product-inner {
     position: relative;
     background-color: rgb(245, 245, 245);
-    border-radius: 0;
+    border-radius: 4px;
     box-shadow: 0 0 10px rgb(191, 191, 191);
 }
 
@@ -321,6 +322,9 @@ form .form-row .inline input {
     line-height: 12px;
     text-transform: capitalize;
 }
+
+
+
 
 .product_list_widget {
     margin: 0 0 20px;

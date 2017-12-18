@@ -16,10 +16,21 @@ gulp.task('css', function () {
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('web/css'));
 });
-
+gulp.task('css-images', function () {
+  return gulp.src(['resources/css/images/**/*.*'])
+    .pipe(gulp.dest('web/css/images'));
+});
+gulp.task('css-jqm-images', function () {
+  return gulp.src(['resources/css/jqmobile/images/**/*.*'])
+    .pipe(gulp.dest('web/css/jqmobile/images'));
+});
+gulp.task('owl-images', function () {
+  return gulp.src(['resources/owlcarousel/*.gif', 'resources/owlcarousel/*.png'])
+    .pipe(gulp.dest('web/css/owlcarousel'));
+});
+gulp.task('images', ['css-images', 'css-jqm-images', 'owl-images']);
 gulp.task('scripts', function () {
   return gulp.src('resources/js/**/*.js')
-    .pipe(gulp.dest('web/js'))
     .pipe(minify({
         ext: {
           min: '.min.js'
@@ -48,7 +59,7 @@ gulp.task('clear', function (callback) {
 });
 
 
-gulp.task('watch', ['clean', 'fonts', 'css', 'scripts'], function () {
+gulp.task('watch', ['clean', 'fonts', 'css', 'scripts', 'images'], function () {
   gulp.watch('resources/sass/**/*.sass', ['sass']);
   gulp.watch('resources/sass/**/*.scss', ['sass']);
   gulp.watch('resources/css/**/*.css', ['css']);

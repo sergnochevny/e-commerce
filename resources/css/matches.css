@@ -62,7 +62,7 @@
     margin: 40px 0 50px;
     position: relative;
     overflow: hidden;
-    border-radius: 0;
+    border-radius: 4px;
 }
 
 .dragZoneTitle {
@@ -76,10 +76,10 @@
     right: 0;
     font-size: 1.52em;
     text-align: center;
-    border-top-right-radius: 0;
-    -moz-border-radius-topright: 0;
-    border-top-left-radius: 0;
-    -moz-border-radius-topleft: 0;
+    border-top-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    border-top-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
 }
 
 .deleteDragImg:before {
@@ -94,7 +94,7 @@
 
 .deleteDragImg {
     background-color: #bbb;
-    border-radius: 0;
+    border-radius: 4px 0 0 0;
     bottom: 0;
     color: #fff;
     height: 120px;
@@ -111,7 +111,7 @@
 
 .detailsDragImg {
     background-color: #666;
-    border-radius: 0;
+    border-radius: 0 4px 0 0;
     color: #FFF;
     height: 120px;
     position: absolute;
@@ -148,7 +148,7 @@
 
 .AddToCartDragImg {
     background-color: #bbb;
-    border-radius: 0;
+    border-radius: 0 0 0 4px;
     top: 0;
     right: 0;
     color: #fff;

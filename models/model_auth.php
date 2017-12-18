@@ -35,7 +35,7 @@ class Model_Auth extends Model_Base{
   }
 
   public static function is_user_remember($remember){
-    $q = "SELECT * FROM fabrix_accounts WHERE remember = :remember";
+    $q = "SELECT * FROM accounts WHERE remember = :remember";
     $res = static::query($q, ['remember' => $remember]);
     if($res) {
       self::$user = static::fetch_assoc($res);
@@ -56,7 +56,7 @@ class Model_Auth extends Model_Base{
   }
 
   public static function is_user($mail){
-    $q = "SELECT * FROM fabrix_accounts WHERE email = :email";
+    $q = "SELECT * FROM accounts WHERE email = :email";
     $res = static::query($q, ['email' => $mail]);
     $result = $res && (static::num_rows($res) > 0);
     static::free_result($res);
@@ -65,7 +65,7 @@ class Model_Auth extends Model_Base{
   }
 
   public static function user_authorize($mail, $password){
-    $q = "SELECT * FROM fabrix_accounts WHERE email=:email";
+    $q = "SELECT * FROM accounts WHERE email=:email";
     $res = static::query($q, ['email' => $mail]);
     if($res) {
       if(static::num_rows($res) > 0) {
@@ -76,7 +76,7 @@ class Model_Auth extends Model_Base{
             $hash = md5($mail) . $hash;
             $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
             $hash = self::hash_($hash, $salt, self::$cost);
-            $q = "UPDATE fabrix_accounts SET remember = :remember WHERE aid = :aid";
+            $q = "UPDATE accounts SET remember = :remember WHERE aid = :aid";
             if(static::query($q, ['remember' => $hash, 'aid' => self::$user['aid']])) {
               setcookie('_r', $hash, time() + 60 * 60 * 24 * 30);
             }
@@ -92,7 +92,7 @@ class Model_Auth extends Model_Base{
   }
 
   public static function is_admin_remember($remember){
-    $q = "SELECT * FROM fabrix_admins WHERE rememberme = :remember";
+    $q = "SELECT * FROM admins WHERE rememberme = :remember";
     $res = static::query($q, ['remember' => $remember]);
     if($res) {
       self::$admin = static::fetch_assoc($res);
@@ -114,7 +114,7 @@ class Model_Auth extends Model_Base{
   }
 
   public static function is_admin($login){
-    $q = "SELECT * FROM fabrix_admins WHERE login=:login";
+    $q = "SELECT * FROM admins WHERE login=:login";
     $res = static::query($q, ['login' => $login]);
     $result = $res && (static::num_rows($res) > 0);
     static::free_result($res);
@@ -123,7 +123,7 @@ class Model_Auth extends Model_Base{
   }
 
   public static function admin_authorize($login, $password){
-    $q = "SELECT * FROM fabrix_admins WHERE login=:login";
+    $q = "SELECT * FROM admins WHERE login=:login";
     $res = static::query($q, ['login' => $login]);
     if($res) {
       self::$admin = static::fetch_assoc($res);
@@ -134,7 +134,7 @@ class Model_Auth extends Model_Base{
             $hash = md5($login) . $hash;
             $salt = md5(!is_null(_A_::$app->server('HTTP_X_FORWARDED_FOR')) ? _A_::$app->server('HTTP_X_FORWARDED_FOR') : _A_::$app->server('REMOTE_ADDR'));
             $hash = self::hash_($hash, $salt, self::$cost);
-            $q = "UPDATE fabrix_admins SET rememberme = :remember WHERE id = :id";
+            $q = "UPDATE admins SET rememberme = :remember WHERE id = :id";
             if(static::query($q, ['remember' => $hash, 'id' => self::$admin['id']])) {
               setcookie('_ar', $hash, time() + 60 * 60 * 24 * 30);
             }

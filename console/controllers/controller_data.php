@@ -68,7 +68,7 @@ class Controller_Data extends Controller_Base{
       }
     } else {
       $sort['b.displayorder'] = 'asc';
-      $sort['fabrix_product_categories.display_order'] = 'asc';
+      $sort['shop_product_categories.display_order'] = 'asc';
     }
   }
 

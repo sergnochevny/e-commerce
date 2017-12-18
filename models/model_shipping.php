@@ -21,7 +21,7 @@ class Model_Shipping extends Model_Base{
         $iQty += $aPrds[++$i];
       }
       #grab the default cids or the weight_ids from the products
-      $query = "SELECT a.weight_id, b.cid " . " FROM fabrix_products a" . " LEFT join fabrix_product_categories b on a.pid = b.pid" . " WHERE a.pid IN (%s);";
+      $query = "SELECT a.weight_id, b.cid " . " FROM shop_products a" . " LEFT join shop_product_categories b on a.pid = b.pid" . " WHERE a.pid IN (%s);";
       $sSQL = sprintf($query, $sPds);
       $result = static::query($sSQL) or die(static::error());
       while($rs = static::fetch_assoc($result)) {

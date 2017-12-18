@@ -2,7 +2,7 @@
 
 class Model_Clearance extends Model_Base{
 
-  protected static $table = 'fabrix_clearance';
+  protected static $table = 'shop_clearance';
 
   protected static function build_where(&$filter, &$prms = null){
     $result = "";
@@ -47,19 +47,19 @@ class Model_Clearance extends Model_Base{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.pid) ";
     if(isset($filter['scenario']) && ($filter['scenario'] == 'add')) {
-      $query .= " FROM fabrix_products a";
+      $query .= " FROM shop_products a";
       $query .= " LEFT JOIN " . static::$table . " z ON a.pid = z.pid";
     } else {
       $query .= " FROM " . static::$table . " z";
-      $query .= " LEFT JOIN fabrix_products a ON a.pid = z.pid";
+      $query .= " LEFT JOIN shop_products a ON a.pid = z.pid";
     }
-    $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-    $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-    $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-    $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-    $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-    $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-    $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+    $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+    $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+    $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+    $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+    $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+    $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+    $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
       $response = static::fetch_value($result);
@@ -73,19 +73,19 @@ class Model_Clearance extends Model_Base{
     $response = null;
     $query = "SELECT DISTINCT z.id, a.* ";
     if(isset($filter['scenario']) && ($filter['scenario'] == 'add')) {
-      $query .= " FROM fabrix_products a";
+      $query .= " FROM shop_products a";
       $query .= " LEFT JOIN " . static::$table . " z ON a.pid = z.pid";
     } else {
       $query .= " FROM " . static::$table . " z";
-      $query .= " LEFT JOIN fabrix_products a ON a.pid = z.pid";
+      $query .= " LEFT JOIN shop_products a ON a.pid = z.pid";
     }
-    $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-    $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-    $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-    $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-    $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-    $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-    $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+    $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+    $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+    $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+    $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+    $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+    $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+    $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     $query .= static::build_where($filter);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
@@ -137,7 +137,7 @@ class Model_Clearance extends Model_Base{
     ];
     if(isset($id)) {
       $q = "SELECT z.id, a.* FROM " . static::$table . " z";
-      $q .= " left join fabrix_products a on z.pid = a.pid";
+      $q .= " left join shop_products a on z.pid = a.pid";
       $q .= " where z.id = '" . $id . "'";
       $result = static::query($q);
       if($result) {

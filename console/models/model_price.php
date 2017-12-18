@@ -43,9 +43,9 @@ class Model_Price extends Model_Base{
     $sSQL = "SELECT DISTINCT s.sid, s.required_type, s.required_amount, s.date_start, s.promotion_type," .
       " s.discount_type, s.shipping_type, s.discount_amount, s.discount_amount_type, s.product_type," .
       " s.allow_multiple, s.coupon_code " .
-      "FROM fabrix_specials s " .
-      "LEFT OUTER JOIN fabrix_specials_users su ON su.sid=s.sid " .
-      "LEFT OUTER JOIN fabrix_specials_products sp ON s.sid = sp.sid " .
+      "FROM shop_specials s " .
+      "LEFT OUTER JOIN shop_specials_users su ON su.sid=s.sid " .
+      "LEFT OUTER JOIN shop_specials_products sp ON s.sid = sp.sid " .
       "WHERE (s.user_type=1";
     $sSQL .= ")";
 
@@ -141,13 +141,13 @@ class Model_Price extends Model_Base{
     $q = "SELECT DISTINCT" .
       " s.discount_type, s.discount_amount, s.discount_amount_type," .
       " IF(s.product_type = 2, p.priceyard, IF(s.product_type = 3,cp.priceyard, mp.priceyard)) as price," .
-      " s.sid" . " FROM fabrix_specials s" .
-      " LEFT JOIN fabrix_specials_users su ON su.sid=s.sid" .
-      " LEFT JOIN fabrix_specials_products sp ON s.sid = sp.sid AND (s.product_type = sp.stype)" .
-      " LEFT JOIN fabrix_products p ON sp.pid = p.pid AND (s.product_type = 2)" .
-      " LEFT JOIN fabrix_product_categories c ON sp.pid = c.cid AND (s.product_type = 3)" .
-      " LEFT JOIN fabrix_products cp ON c.pid = cp.pid" .
-      " LEFT JOIN fabrix_products mp ON sp.pid = mp.manufacturerId  AND (s.product_type = 4)" .
+      " s.sid" . " FROM shop_specials s" .
+      " LEFT JOIN shop_specials_users su ON su.sid=s.sid" .
+      " LEFT JOIN shop_specials_products sp ON s.sid = sp.sid AND (s.product_type = sp.stype)" .
+      " LEFT JOIN shop_products p ON sp.pid = p.pid AND (s.product_type = 2)" .
+      " LEFT JOIN shop_product_categories c ON sp.pid = c.cid AND (s.product_type = 3)" .
+      " LEFT JOIN shop_products cp ON c.pid = cp.pid" .
+      " LEFT JOIN shop_products mp ON sp.pid = mp.manufacturerId  AND (s.product_type = 4)" .
       " WHERE" .
       " (s.user_type=1) AND" .
       " (((s.product_type = 2) AND (sp.pid IN (%u))) OR ((s.product_type = 3) AND (cp.pid IN (%u))) OR ((s.product_type = 4) AND (mp.pid IN (%u)))) AND" .
@@ -243,7 +243,7 @@ class Model_Price extends Model_Base{
     $rTtl = 0;
 
     #get the list of all the products that this special applies to, narrow down to only those that may be in the cart
-    $sql = sprintf("SELECT sp.pid, p.priceyard FROM fabrix_specials_products sp INNER JOIN fabrix_products p ON sp.pid = p.pid WHERE sp.sid=%u AND sp.pid IN (%s);", $iSid, $sPds);
+    $sql = sprintf("SELECT sp.pid, p.priceyard FROM shop_specials_products sp INNER JOIN shop_products p ON sp.pid = p.pid WHERE sp.sid=%u AND sp.pid IN (%s);", $iSid, $sPds);
 
     $result = static::query($sql) or die(static::error());
 

@@ -191,7 +191,7 @@ a img.aligncenter {
     max-width: 100%;
     margin-bottom: 20px;
     padding: 0 5px;
-    border-radius: 0;
+    border-radius: 4px;
 }
 
 .wp-caption.aligncenter {
@@ -244,7 +244,7 @@ a img.aligncenter {
 
 .gallery .thumbnail img {
     width: 100%;
-    border-radius: 0;
+    border-radius: 3px;
 }
 
 .gallery .caption,
@@ -288,7 +288,7 @@ a img.aligncenter {
 
 .screen-reader-text:hover, .screen-reader-text:active, .screen-reader-text:focus {
     background-color: #f1f1f1;
-    border-radius: 0;
+    border-radius: 3px;
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
     clip: auto !important;
     color: #21759b;
@@ -576,7 +576,7 @@ a img.aligncenter {
     background-color: #ffffff;
     border: 1px solid #ccc;
     border-top: none;
-    border-radius: 0;
+    border-radius: 0 0 4px 4px;
     -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.175);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.175);
     -webkit-background-clip: padding-box;
@@ -761,7 +761,7 @@ a img.aligncenter {
     position: absolute;
     width: 30px;
     height: 4px;
-    border-radius: 0;
+    border-radius: 3px;
     background: #000;
     transform-origin: 100% 50%;
     transition: all 750ms ease-in-out;
@@ -1069,7 +1069,7 @@ a img.aligncenter {
 }
 
 .paging-navigation ul.pagination li span {
-    border-radius: 0;
+    border-radius: 2px;
 }
 
 .paging-navigation ul.pagination li .page-numbers {
@@ -1081,7 +1081,7 @@ a img.aligncenter {
     border: 2px solid rgba(69, 86, 0, 0.8);
     /*border: 1px solid #999;*/
     text-transform: uppercase;
-    border-radius: 0;
+    border-radius: 2px;
     /*box-shadow: 0 0 3px 1px #dbdbdb inset;*/
 }
 
@@ -1123,7 +1123,7 @@ a img.aligncenter {
     color: #999;
     border: 1px solid #999;
     text-transform: uppercase;
-    border-radius: 0;
+    border-radius: 2px;
 }
 
 .paging-navigation ul.pagination li .page-number-s:hover {
@@ -1266,7 +1266,7 @@ table.table-bordered center a {
 -------------------------------------------------------------- */
 .entry-media {
     background: #f5f5f5;
-    border-radius: 0;
+    border-radius: 4px;
     margin-bottom: 50px;
 }
 
@@ -1402,7 +1402,7 @@ table.table-bordered center a {
     position: relative;
     margin-bottom: 20px;
     padding: 10px 20px;
-    border-radius: 0;
+    border-radius: 25px;
 }
 
 .chat-text:before {
@@ -1441,7 +1441,7 @@ table.table-bordered center a {
 .chat-speaker-9 .chat-text:before {
     left: -7px;
     border-left: 20px solid #e5e5ea;
-    border-bottom-right-radius: 0;
+    border-bottom-right-radius: 16px 14px;
 }
 
 .chat-speaker-1 .chat-text:after,
@@ -1450,7 +1450,7 @@ table.table-bordered center a {
 .chat-speaker-7 .chat-text:after,
 .chat-speaker-9 .chat-text:after {
     left: 4px;
-    border-bottom-right-radius: 0;
+    border-bottom-right-radius: 10px;
 }
 
 .chat-speaker-2 .chat-text,
@@ -1471,7 +1471,7 @@ table.table-bordered center a {
 .chat-speaker-10 .chat-text:before {
     right: -7px;
     border-right: 20px solid #667700;
-    border-bottom-left-radius: 0;
+    border-bottom-left-radius: 16px 14px;
 }
 
 .chat-speaker-2 .chat-text:after,
@@ -1480,7 +1480,7 @@ table.table-bordered center a {
 .chat-speaker-8 .chat-text:after,
 .chat-speaker-10 .chat-text:after {
     right: -56px;
-    border-bottom-left-radius: 0;
+    border-bottom-left-radius: 10px;
 }
 
 /* format link, status, quote */
@@ -1535,7 +1535,7 @@ table.table-bordered center a {
 .comments-area {
     margin: 40px 0 0;
     border-top: 1px solid #cacaca;
-    border-radius: 0;
+    border-radius: 2px;
     background: #ffffff;
     font-size: 13px;
 }
@@ -1584,11 +1584,11 @@ table.table-bordered center a {
     border: none;
     width: 40px;
     height: 40px;
-    border-radius: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
-    -oborder-radius: 0;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -oborder-radius: 50%;
 }
 
 .comments-area ol.comment-list li.comment .comment-body,
@@ -1622,7 +1622,7 @@ table.table-bordered center a {
 
 .comments-area ol.comment-list li.comment .comment-body .comment-meta .comment-author .avatar,
 .comments-area ul.comment-list li.comment .comment-body .comment-meta .comment-author .avatar {
-    border-radius: 0;
+    border-radius: 50%;
 }
 
 .comments-area ol.comment-list li.comment .comment-body .comment-meta .author-meta h5,
@@ -2101,7 +2101,7 @@ table.table-bordered center a {
     background: rgba(251, 251, 251, 0.5);
     box-shadow: 0 0 10px #999;
     border-top: 1px solid #dedede;
-    border-radius: 0;
+    border-radius: 4px;
 }
 
 .contact-form h2.section-title {
@@ -2124,7 +2124,7 @@ table.table-bordered center a {
 .contact-form form#contact-form .forms select {
     background-color: #fff;
     border: 1px solid #b0b0b0;
-    border-radius: 0;
+    border-radius: 4px;
     box-shadow: 0 0 3px 1px #dbdbdb inset;
     font-size: 12px;
     /*height: 36px;*/
@@ -2135,7 +2135,7 @@ table.table-bordered center a {
 .contact-form form#contact-form .forms textarea {
     background-color: #fff;
     border: 1px solid #b0b0b0;
-    border-radius: 0;
+    border-radius: 4px;
     box-shadow: 0 0 3px 1px #dbdbdb inset;
     resize: none;
     min-height: 100px;
@@ -2173,7 +2173,7 @@ table.table-bordered center a {
 
 .cart-subtotal {
     background-color: #eeeeee;
-    border-radius: 0;
+    border-radius: 5px 5px 0 0;
     bottom: -2px;
     box-shadow: 0 0 2px 0 #000;
     display: block;
@@ -2326,7 +2326,7 @@ sup {
         font-weight: 800;
         border: 3px solid rgba(69, 86, 0, 0.8);
         text-transform: uppercase;
-        border-radius: 0;
+        border-radius: 4px;
     }
 }
 

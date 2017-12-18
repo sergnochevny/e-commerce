@@ -4,7 +4,7 @@ class Model_Shop extends Model_Base{
 
   protected static $list_conditions = ['bestsellers' => 1, 'specials' => 2, 'under' => 3];
 
-  protected static $table = 'fabrix_products';
+  protected static $table = 'shop_products';
 
   protected static function build_where(&$filter, &$prms = null){
     $result_where = "";
@@ -212,7 +212,7 @@ class Model_Shop extends Model_Base{
   }
 
   public static function set_inventory($pid, $inventory = 0){
-    $q = "UPDATE fabrix_products SET inventory=" . $inventory;
+    $q = "UPDATE shop_products SET inventory=" . $inventory;
     $q .= ($inventory <= 0) ? ", pvisible = 0" : "";
     $q .= " where pid=" . $pid;
 
@@ -244,7 +244,7 @@ class Model_Shop extends Model_Base{
   }
 
   public static function inc_popular($pid){
-    static::query("update fabrix_products set popular = popular+1 WHERE pid='$pid'");
+    static::query("update shop_products set popular = popular+1 WHERE pid='$pid'");
   }
 
   public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows){
@@ -253,46 +253,46 @@ class Model_Shop extends Model_Base{
     $image_suffix = '';
     switch($type) {
       case 'new':
-        $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
+        $q = "SELECT * FROM shop_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
         $q .= " and image1 is not null ORDER BY dt DESC LIMIT " . $start . "," . $limit;
         break;
       case 'carousel':
         $image_suffix = 'b_';
         $q = "SELECT DISTINCT a.* FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 2";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 2";
         $q .= " where c.type = 2 and a.image1 is not null limit " . $start . "," . $limit;
         break;
       case 'best':
         $image_suffix = 'b_';
-        $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
+        $q = "SELECT * FROM shop_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
         $q .= " and best = '1' and image1 is not null LIMIT " . $start . "," . $limit;
         break;
       case 'bestsellers':
         $image_suffix = 'b_';
         $q = "SELECT DISTINCT a.* FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 1";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 1";
         $q .= " where c.type = 1 and a.image1 is not null limit " . $start . "," . $limit;
         break;
       case 'popular':
         $image_suffix = 'b_';
-        $q = "SELECT * FROM fabrix_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
+        $q = "SELECT * FROM shop_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
         $q .= " and image1 is not null LIMIT " . $start . "," . $limit;
         break;
       case 'under_20':
         $q = "SELECT DISTINCT a.* FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 3";
         $q .= " where c.type = 3 and c.price > 0 and c.price <= 20 and a.image1 is not null";
         $q .= " limit " . $start . "," . $limit;
         break;
       case 'under_40':
         $q = "SELECT DISTINCT a.* FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 3";
         $q .= " where c.type = 3 and c.price > 20 and c.price <= 40 and a.image1 is not null";
         $q .= " limit " . $start . "," . $limit;
         break;
       case 'under_60':
         $q = "SELECT DISTINCT a.* FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 3";
         $q .= " where c.type = 3 and c.price > 40 and c.price <= 60 and a.image1 is not null";
         $q .= " limit " . $start . "," . $limit;
         break;
@@ -316,44 +316,44 @@ class Model_Shop extends Model_Base{
     $q = "";
     switch($type) {
       case 'new':
-        $q = "SELECT COUNT(pid) FROM fabrix_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
+        $q = "SELECT COUNT(pid) FROM shop_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
         $q .= " and image1 is not null";
         break;
       case 'carousel':
         $image_suffix = 'b_';
         $q = "SELECT COUNT(DISTINCT a.pid) FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 2";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 2";
         $q .= " where c.type = 2 and a.image1 is not null";
         break;
       case 'best':
         $image_suffix = 'b_';
-        $q = "SELECT COUNT(pid) FROM fabrix_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
+        $q = "SELECT COUNT(pid) FROM shop_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
         $q .= " and best = '1' and image1 is not null";
         break;
       case 'bestsellers':
         $image_suffix = 'b_';
         $q = "SELECT COUNT(DISTINCT a.pid) FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 1";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 1";
         $q .= " where c.type = 1 and a.image1 is not null";
         break;
       case 'popular':
         $image_suffix = 'b_';
-        $q = "SELECT COUNT(pid) FROM fabrix_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
+        $q = "SELECT COUNT(pid) FROM shop_products WHERE priceyard > 0 AND pnumber IS NOT NULL AND pvisible = '1'";
         $q .= " and image1 is not null";
         break;
       case 'under_20':
         $q = "SELECT COUNT(DISTINCT a.pid) FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 3";
         $q .= " where c.type = 3 and c.price > 0 and c.price <= 20 and a.image1 is not null";
         break;
       case 'under_40':
         $q = "SELECT COUNT(DISTINCT a.pid) FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 3";
         $q .= " where c.type = 3 and c.price > 20 and c.price <= 40 and a.image1 is not null";
         break;
       case 'under_60':
         $q = "SELECT COUNT(DISTINCT a.pid) FROM collection c";
-        $q .= " left join fabrix_products a on c.pid = a.pid and c.type = 3";
+        $q .= " left join shop_products a on c.pid = a.pid and c.type = 3";
         $q .= " where c.type = 3 and c.price > 40 and c.price <= 60 and a.image1 is not null";
         break;
     }
@@ -371,31 +371,31 @@ class Model_Shop extends Model_Base{
     switch($type) {
       case 'all':
         $q = "SELECT distinct a.*" .
-          " FROM fabrix_categories a" .
-          " LEFT JOIN fabrix_product_categories c on a.cid = c.cid" .
-          " LEFT JOIN fabrix_products b ON b.pid = c.pid" .
+          " FROM shop_categories a" .
+          " LEFT JOIN shop_product_categories c on a.cid = c.cid" .
+          " LEFT JOIN shop_products b ON b.pid = c.pid" .
           " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null" .
           " ORDER BY a.displayorder, c.displayorder";
         break;
       case 'new':
         $q = "SELECT distinct a.*" .
-          " FROM (SELECT pid FROM fabrix_products WHERE priceyard > 0 and pvisible = '1' and image1 is not null" .
+          " FROM (SELECT pid FROM shop_products WHERE priceyard > 0 and pvisible = '1' and image1 is not null" .
           " ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
-          " LEFT JOIN fabrix_product_categories c ON b.pid = c.pid" .
-          " LEFT JOIN fabrix_categories a on a.cid = c.cid" . " ORDER BY a.displayorder, c.displayorder";
+          " LEFT JOIN shop_product_categories c ON b.pid = c.pid" .
+          " LEFT JOIN shop_categories a on a.cid = c.cid" . " ORDER BY a.displayorder, c.displayorder";
         break;
       case 'manufacturer':
         $q = "SELECT distinct a.*" .
-          " FROM fabrix_products b " .
-          " INNER JOIN fabrix_manufacturers a ON b.manufacturerId = a.id" .
+          " FROM shop_products b " .
+          " INNER JOIN shop_manufacturers a ON b.manufacturerId = a.id" .
           " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null" .
           " ORDER BY b.dt DESC";
         break;
       case 'patterns':
         $q = "SELECT distinct a.*" .
-          " FROM  fabrix_patterns a" .
-          " LEFT JOIN fabrix_product_patterns c on a.id = c.patternId" .
-          " LEFT JOIN fabrix_products b ON  b.pid = c.prodId" .
+          " FROM  shop_patterns a" .
+          " LEFT JOIN shop_product_patterns c on a.id = c.patternId" .
+          " LEFT JOIN shop_products b ON  b.pid = c.prodId" .
           " WHERE b.priceyard > 0 and b.pvisible = '1' and b.image1 is not null";
         break;
       case 'blog_category':
@@ -419,23 +419,23 @@ class Model_Shop extends Model_Base{
     if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
       $type = static::$list_conditions[$filter['type']];
       $query = "SELECT COUNT(a.pid) FROM collection cc";
-      $query .= " left join fabrix_products a on cc.pid = a.pid and cc.type = " . $type;
-      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+      $query .= " left join shop_products a on cc.pid = a.pid and cc.type = " . $type;
+      $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+      $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+      $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+      $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+      $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+      $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+      $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     } else {
       $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " a";
-      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+      $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+      $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+      $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+      $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+      $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+      $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+      $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
@@ -451,23 +451,23 @@ class Model_Shop extends Model_Base{
     if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
       $type = static::$list_conditions[$filter['type']];
       $query = "SELECT DISTINCT a.* FROM collection cc";
-      $query .= " left join fabrix_products a on cc.pid = a.pid and cc.type = " . $type;
-      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+      $query .= " left join shop_products a on cc.pid = a.pid and cc.type = " . $type;
+      $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+      $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+      $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+      $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+      $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+      $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+      $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     } else {
       $query = "SELECT DISTINCT a.* FROM " . static::$table . " a";
-      $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-      $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-      $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-      $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-      $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-      $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-      $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+      $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+      $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+      $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+      $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+      $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+      $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+      $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
     $query .= static::build_where($filter);
     $query .= static::build_order($sort);

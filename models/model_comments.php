@@ -2,7 +2,7 @@
 
 class Model_Comments extends Model_Base{
 
-  protected static $table = 'fabrix_comments';
+  protected static $table = 'comments';
 
   protected static function build_where(&$filter, &$prms = null){
     $result = '';
@@ -40,7 +40,7 @@ class Model_Comments extends Model_Base{
   public static function get_total_count($filter = null){
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
-    $query .= " LEFT JOIN fabrix_accounts b ON b.aid = a.userid";
+    $query .= " LEFT JOIN accounts b ON b.aid = a.userid";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
       $response = static::fetch_value($result);
@@ -54,7 +54,7 @@ class Model_Comments extends Model_Base{
     $response = null;
     $query = "SELECT a.*, b.email ";
     $query .= " FROM " . static::$table . " a";
-    $query .= " LEFT JOIN fabrix_accounts b ON b.aid = a.userid";
+    $query .= " LEFT JOIN accounts b ON b.aid = a.userid";
     $query .= static::build_where($filter);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";

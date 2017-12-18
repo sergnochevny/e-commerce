@@ -47,7 +47,7 @@ class Controller_Clearance extends Controller_FormSimple{
   protected function build_order(&$sort, $view = false, $filter = null){
     if($view) {
       $sort['b.displayorder'] = 'asc';
-      $sort['fabrix_product_categories.display_order'] = 'asc';
+      $sort['shop_product_categories.display_order'] = 'asc';
     } else {
       if($this->scenario() == 'add') {
         $sort = ['a.pid' => 'desc'];

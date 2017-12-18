@@ -5,7 +5,7 @@ class Model_User extends Model_Base{
   /**
    * @var string
    */
-  protected static $table = 'fabrix_accounts';
+  protected static $table = 'accounts';
 
   /**
    * @param $email

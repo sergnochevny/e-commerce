@@ -2,7 +2,7 @@
 
 class Model_Discount extends Model_Base{
 
-  protected static $table = 'fabrix_specials';
+  protected static $table = 'shop_specials';
 
   protected static function build_where(&$filter, &$prms = null){
     $result = "";
@@ -91,9 +91,9 @@ class Model_Discount extends Model_Base{
     $res = 0;
     if(isset($filter['scenario']) && ($filter['scenario'] == 'orders')) {
       $q = "SELECT COUNT(DISTINCT a.oid)";
-      $q .= " from fabrix_orders a";
-      $q .= " left join fabrix_accounts b on a.aid = b.aid";
-      $q .= " left join fabrix_specials_usage c on a.oid = c.oid";
+      $q .= " from shop_orders a";
+      $q .= " left join accounts b on a.aid = b.aid";
+      $q .= " left join shop_specials_usage c on a.oid = c.oid";
     } else $q = "SELECT COUNT(sid) FROM " . static::$table;
     $q .= self::build_where($filter);
     $result = static::query($q);
@@ -110,9 +110,9 @@ class Model_Discount extends Model_Base{
     if(isset($filter['scenario']) && ($filter['scenario'] == 'orders')) {
       $q = "select";
       $q .= " DISTINCT a.*, CONCAT(b.bill_firstname,' ',b.bill_lastname) as username";
-      $q .= " from fabrix_orders a";
-      $q .= " left join fabrix_accounts b on a.aid = b.aid";
-      $q .= " left join fabrix_specials_usage c on a.oid = c.oid";
+      $q .= " from shop_orders a";
+      $q .= " left join accounts b on a.aid = b.aid";
+      $q .= " left join shop_specials_usage c on a.oid = c.oid";
     } else $q = "SELECT * FROM " . static::$table;
     $q .= self::build_where($filter);
     $q .= static::build_order($sort);
@@ -142,19 +142,19 @@ class Model_Discount extends Model_Base{
         if($res) $sid = static::last_id();
       }
       if($res) {
-        $res = static::query("DELETE FROM fabrix_specials_users WHERE sid ='$sid'");
+        $res = static::query("DELETE FROM shop_specials_users WHERE sid ='$sid'");
         if($res && ($user_type == 4)) {
           foreach($users as $aid) {
-            $res = static::query("INSERT INTO  fabrix_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
+            $res = static::query("INSERT INTO  shop_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
             if(!$res) break;
           }
         }
       }
       if($res) {
-        $res = static::query("DELETE FROM fabrix_specials_products WHERE sid='$sid'");
+        $res = static::query("DELETE FROM shop_specials_products WHERE sid='$sid'");
         if($res && isset($product_type) && ($product_type > 1)) {
           foreach($filter_products as $pid) {
-            $res = static::query("INSERT INTO  fabrix_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
+            $res = static::query("INSERT INTO  shop_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
             if(!$res) break;
           }
         }
@@ -180,7 +180,7 @@ class Model_Discount extends Model_Base{
       }
       if($user_type == '4') {
         if(strlen($select > 1)) {
-          $results = static::query("select * from fabrix_accounts" . " where aid in($select)" . " order by email, bill_firstname, bill_lastname");
+          $results = static::query("select * from accounts" . " where aid in($select)" . " order by email, bill_firstname, bill_lastname");
           while($row = static::fetch_array($results)) {
             $users[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
           }
@@ -199,7 +199,7 @@ class Model_Discount extends Model_Base{
             $select = implode(',', isset($data['prod_select']) ? array_keys($data['prod_select']) : []);
           }
           if(strlen($select) > 0) {
-            $results = static::query("select * from fabrix_products" . " where pid in ($select)" . " order by pnumber, pname");
+            $results = static::query("select * from shop_products" . " where pid in ($select)" . " order by pnumber, pname");
             while($row = static::fetch_array($results)) {
               $filter_products[$row[0]] = $row[2] . '-' . $row[1];
             }
@@ -212,7 +212,7 @@ class Model_Discount extends Model_Base{
             $select = implode(',', isset($data['mnf_select']) ? array_keys($data['mnf_select']) : []);
           }
           if(strlen($select) > 0) {
-            $results = static::query("select * from fabrix_manufacturers" . " where id in ($select)" . " order by manufacturer");
+            $results = static::query("select * from shop_manufacturers" . " where id in ($select)" . " order by manufacturer");
             while($row = static::fetch_array($results)) {
               $filter_products[$row[0]] = $row[1];
             }
@@ -225,7 +225,7 @@ class Model_Discount extends Model_Base{
             $select = implode(',', isset($data['cat_select']) ? array_keys($data['cat_select']) : []);
           }
           if(strlen($select) > 0) {
-            $results = static::query("select * from fabrix_categories " . " where cid in ($select)" . " order by cname");
+            $results = static::query("select * from shop_categories " . " where cid in ($select)" . " order by cname");
             while($row = static::fetch_array($results)) {
               $filter_products[$row[0]] = $row[1];
             }
@@ -241,25 +241,25 @@ class Model_Discount extends Model_Base{
     $data = [];
     switch($type) {
       case 'users':
-        $results = static::query("select a.* from fabrix_specials_users b" . " inner join fabrix_accounts a on b.aid=a.aid " . " where sid='$id'" . " order by a.email, a.bill_firstname, a.bill_lastname");
+        $results = static::query("select a.* from shop_specials_users b" . " inner join accounts a on b.aid=a.aid " . " where sid='$id'" . " order by a.email, a.bill_firstname, a.bill_lastname");
         if($results) while($row = static::fetch_array($results)) {
           $data[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
         }
         break;
       case 'prod':
-        $results = static::query("select a.* from fabrix_specials_products b" . " inner join fabrix_products a on b.pid=a.pid " . " where b.sid='$id' and b.stype = 2" . " order by a.pnumber, a.pname");
+        $results = static::query("select a.* from shop_specials_products b" . " inner join shop_products a on b.pid=a.pid " . " where b.sid='$id' and b.stype = 2" . " order by a.pnumber, a.pname");
         if($results) while($row = static::fetch_array($results)) {
           $data[$row[0]] = $row[2] . '-' . $row[1];
         }
         break;
       case 'mnf':
-        $results = static::query("select a.* from fabrix_specials_products b" . " inner join fabrix_manufacturers a on b.pid=a.id " . " where b.sid='$id' and b.stype = 4" . " order by a.manufacturer");
+        $results = static::query("select a.* from shop_specials_products b" . " inner join shop_manufacturers a on b.pid=a.id " . " where b.sid='$id' and b.stype = 4" . " order by a.manufacturer");
         if($results) while($row = static::fetch_array($results)) {
           $data[$row[0]] = $row[1];
         }
         break;
       case 'cat':
-        $results = static::query("select a.* from fabrix_specials_products b" . " inner join fabrix_categories a on b.pid=a.cid " . " where b.sid='$id' and b.stype = 3" . " order by a.cname");
+        $results = static::query("select a.* from shop_specials_products b" . " inner join shop_categories a on b.pid=a.cid " . " where b.sid='$id' and b.stype = 3" . " order by a.cname");
         if($results) while($row = static::fetch_array($results)) {
           $data[$row[0]] = $row[1];
         }
@@ -276,7 +276,7 @@ class Model_Discount extends Model_Base{
     $search = self::sanitize($search);
     switch($type) {
       case 'users':
-        $q = "SELECT count(aid) FROM fabrix_accounts";
+        $q = "SELECT count(aid) FROM accounts";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where bill_firstname like '%$search%'";
           $q .= " or bill_lastname like '%$search%'";
@@ -285,7 +285,7 @@ class Model_Discount extends Model_Base{
         $results = static::query($q);
         $row = static::fetch_array($results);
         $count = $row[0];
-        $q = "SELECT * FROM fabrix_accounts";
+        $q = "SELECT * FROM accounts";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where bill_firstname like '%$search%'";
           $q .= " or bill_lastname like '%$search%'";
@@ -299,7 +299,7 @@ class Model_Discount extends Model_Base{
         }
         break;
       case 'prod':
-        $q = "SELECT count(pid) FROM fabrix_products";
+        $q = "SELECT count(pid) FROM shop_products";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where pnumber like '%$search%'";
           $q .= " or pname like '%$search%'";
@@ -307,7 +307,7 @@ class Model_Discount extends Model_Base{
         $results = static::query($q);
         $row = static::fetch_array($results);
         $count = $row[0];
-        $q = "SELECT * FROM fabrix_products";
+        $q = "SELECT * FROM shop_products";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where pnumber like '%$search%'";
           $q .= " or pname like '%$search%'";
@@ -320,14 +320,14 @@ class Model_Discount extends Model_Base{
         }
         break;
       case 'mnf':
-        $q = "SELECT count(id) FROM fabrix_manufacturers";
+        $q = "SELECT count(id) FROM shop_manufacturers";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where manufacturer like '%$search%'";
         }
         $results = static::query($q);
         $row = static::fetch_array($results);
         $count = $row[0];
-        $q = "SELECT * FROM fabrix_manufacturers";
+        $q = "SELECT * FROM shop_manufacturers";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where manufacturer like '%$search%'";
         }
@@ -339,14 +339,14 @@ class Model_Discount extends Model_Base{
         }
         break;
       case 'cat':
-        $q = "SELECT count(cid) FROM fabrix_categories";
+        $q = "SELECT count(cid) FROM shop_categories";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where cname like '%$search%'";
         }
         $results = static::query($q);
         $row = static::fetch_array($results);
         $count = $row[0];
-        $q = "SELECT * FROM fabrix_categories";
+        $q = "SELECT * FROM shop_categories";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where cname like '%$search%'";
         }
@@ -364,9 +364,9 @@ class Model_Discount extends Model_Base{
   public static function delete($id){
     static::transaction();
     try {
-      static::query("DELETE FROM fabrix_specials_products WHERE sid='$id'");
-      static::query("DELETE FROM fabrix_specials_users WHERE sid='$id'");
-      static::query("DELETE FROM fabrix_specials_usage WHERE sid='$id'");
+      static::query("DELETE FROM shop_specials_products WHERE sid='$id'");
+      static::query("DELETE FROM shop_specials_users WHERE sid='$id'");
+      static::query("DELETE FROM shop_specials_usage WHERE sid='$id'");
       static::query("DELETE FROM " . static::$table . " WHERE sid = '$id'");
       static::commit();
     } catch(Exception $e) {

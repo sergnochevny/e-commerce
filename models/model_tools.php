@@ -8,31 +8,31 @@ class Model_Tools extends Model_Base{
     switch($type) {
       case 'all':
         $q = "SELECT distinct a.*" .
-          " FROM fabrix_categories a" .
-          " LEFT JOIN fabrix_product_categories c on a.cid = c.cid" .
-          " LEFT JOIN fabrix_products b ON b.pid = c.pid" .
+          " FROM shop_categories a" .
+          " LEFT JOIN shop_product_categories c on a.cid = c.cid" .
+          " LEFT JOIN shop_products b ON b.pid = c.pid" .
           " WHERE b.priceyard > 0 and b.pvisible = '1'" .
           " ORDER BY a.displayorder";
         break;
       case 'new':
         $q = "SELECT distinct a.*" .
-          " FROM (SELECT pid FROM fabrix_products WHERE priceyard > 0 and pvisible = '1' ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
-          " LEFT JOIN fabrix_product_categories c ON b.pid = c.pid" .
-          " LEFT JOIN fabrix_categories a on a.cid = c.cid" .
+          " FROM (SELECT pid FROM shop_products WHERE priceyard > 0 and pvisible = '1' ORDER BY dt DESC LIMIT " . $row_new_count . ") b" .
+          " LEFT JOIN shop_product_categories c ON b.pid = c.pid" .
+          " LEFT JOIN shop_categories a on a.cid = c.cid" .
           " ORDER BY a.displayorder";
         break;
       case 'manufacturer':
         $q = "SELECT distinct a.*" .
-          " FROM fabrix_products b " .
-          " INNER JOIN fabrix_manufacturers a ON b.manufacturerId = a.id" .
+          " FROM shop_products b " .
+          " INNER JOIN shop_manufacturers a ON b.manufacturerId = a.id" .
           " WHERE b.priceyard > 0 and b.pvisible = '1'" .
           " ORDER BY b.dt DESC";
         break;
       case 'patterns':
         $q = "SELECT distinct a.*" .
-          " FROM  fabrix_patterns a" .
-          " LEFT JOIN fabrix_product_patterns c on a.id = c.patternId" .
-          " LEFT JOIN fabrix_products b ON  b.pid = c.prodId" .
+          " FROM  shop_patterns a" .
+          " LEFT JOIN shop_product_patterns c on a.id = c.patternId" .
+          " LEFT JOIN shop_products b ON  b.pid = c.prodId" .
           " WHERE b.priceyard > 0 and b.pvisible = '1'";
         break;
       case 'blog_category':

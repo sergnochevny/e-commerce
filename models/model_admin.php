@@ -2,7 +2,7 @@
 
 class Model_Admin extends Model_Base{
 
-  protected static $table = 'fabrix_admins';
+  protected static $table = 'admins';
 
   /**
    * @param null $filter

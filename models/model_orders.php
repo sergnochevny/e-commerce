@@ -2,7 +2,7 @@
 
 class Model_Orders extends Model_Base{
 
-  protected static $table = 'fabrix_orders';
+  protected static $table = 'shop_orders';
 
   protected static function build_where(&$filter, &$prms = null){
     $result = "";
@@ -44,9 +44,9 @@ class Model_Orders extends Model_Base{
                 fo.*
                   
                 FROM
-                    fabrix_order_details fod
+                    shop_order_details fod
                 LEFT JOIN
-                    fabrix_orders fo
+                    shop_orders fo
                 ON
                     fod.order_id = fo.oid
                 WHERE
@@ -99,9 +99,9 @@ class Model_Orders extends Model_Base{
 
   public static function get_list_by_discount_id($id){
     if(isset($id)) {
-      $query = "SELECT orders.*, CONCAT(users.bill_firstname,' ',users.bill_lastname) AS username FROM fabrix_specials_usage spec_usage ";
-      $query .= "LEFT JOIN fabrix_orders orders ON spec_usage.oid = orders.oid ";
-      $query .= "LEFT JOIN fabrix_accounts users ON orders.aid = users.aid ";
+      $query = "SELECT orders.*, CONCAT(users.bill_firstname,' ',users.bill_lastname) AS username FROM shop_specials_usage spec_usage ";
+      $query .= "LEFT JOIN shop_orders orders ON spec_usage.oid = orders.oid ";
+      $query .= "LEFT JOIN shop_accounts users ON orders.aid = users.aid ";
       $query .= "WHERE spec_usage.sid = '$id'";
       if($result = static::query($query)) {
         $rows = [];
@@ -119,9 +119,9 @@ class Model_Orders extends Model_Base{
   public static function get_total_count($filter = null){
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.oid)";
-    $query .= " from fabrix_orders a";
-    $query .= " left join fabrix_accounts b on a.aid = b.aid";
-    $query .= " left join fabrix_specials_usage c on a.oid = c.oid";
+    $query .= " from shop_orders a";
+    $query .= " left join shop_accounts b on a.aid = b.aid";
+    $query .= " left join shop_specials_usage c on a.oid = c.oid";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
       $response = static::fetch_value($result);
@@ -135,9 +135,9 @@ class Model_Orders extends Model_Base{
     $response = null;
     $query = "select";
     $query .= " DISTINCT a.*, CONCAT(b.bill_firstname,' ',b.bill_lastname) as username";
-    $query .= " from fabrix_orders a";
-    $query .= " left join fabrix_accounts b on a.aid = b.aid";
-    $query .= " left join fabrix_specials_usage c on a.oid = c.oid";
+    $query .= " from shop_orders a";
+    $query .= " left join shop_accounts b on a.aid = b.aid";
+    $query .= " left join shop_specials_usage c on a.oid = c.oid";
     $query .= static::build_where($filter);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
@@ -156,7 +156,7 @@ class Model_Orders extends Model_Base{
 
     $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
 
-    $q = "INSERT INTO fabrix_orders (" . "aid, trid, shipping_type, shipping_cost, on_roll," . " roll_cost, express_samples, on_handling, handling, shipping_discount," . " coupon_discount, total_discount, taxes, total, order_date," . " samples_express_cost, samples_single_cost, samples_multiple_cost," . " samples_additional_cost, samples_products_cost, samples_min_qty," . " samples_max_qty)" . " VALUES (%u, '%s', %u, %01.2f, %u," . " %01.2f, %u, %u, %01.2f, %01.2f," . " %01.2f, %01.2f, %01.2f, %01.2f, %u," . " %01.2f, %01.2f, %01.2f," . " %01.2f, %01.2f, %01.2f," . " %01.2f)";
+    $q = "INSERT INTO shop_orders (" . "aid, trid, shipping_type, shipping_cost, on_roll," . " roll_cost, express_samples, on_handling, handling, shipping_discount," . " coupon_discount, total_discount, taxes, total, order_date," . " samples_express_cost, samples_single_cost, samples_multiple_cost," . " samples_additional_cost, samples_products_cost, samples_min_qty," . " samples_max_qty)" . " VALUES (%u, '%s', %u, %01.2f, %u," . " %01.2f, %u, %u, %01.2f, %01.2f," . " %01.2f, %01.2f, %01.2f, %01.2f, %u," . " %01.2f, %01.2f, %01.2f," . " %01.2f, %01.2f, %01.2f," . " %01.2f)";
 
     $sSQL = sprintf($q, $aid, $trid, $shipping_type, str_replace(",", "", $shipping_cost), $on_roll, str_replace(",", "", RATE_ROLL), str_replace(",", "", $express_samples), $handling, str_replace(",", "", $rate_handling), str_replace(",", "", $shipping_discount), str_replace(",", "", $coupon_discount), str_replace(",", "", $total_discount), str_replace(",", "", $taxes), str_replace(",", "", $total), time(), (!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), (!is_null(_A_::$app->keyStorage()->shop_samples_price_single) ? _A_::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE), (!is_null(_A_::$app->keyStorage()->shop_samples_price_multiple) ? _A_::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE), (!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL), (!empty($data['shop_samples_price_with_products']) ? $data['shop_samples_price_with_products'] : SAMPLES_PRICE_WITH_PRODUCTS), (!empty($data['shop_samples_qty_multiple_min']) ? $data['shop_samples_qty_multiple_min'] : SAMPLES_QTY_MULTIPLE_MIN), (!empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX));
 
@@ -167,7 +167,7 @@ class Model_Orders extends Model_Base{
   }
 
   public static function insert_order_detail($order_id, $product_id, $product_number, $product_name, $quantity, $price, $discount, $sale_price, $is_sample = 0){
-    $q = "INSERT INTO  fabrix_order_details " . "(order_id, product_id, product_number, product_name, quantity, price, discount, sale_price, is_sample)" . " VALUES (%u, %u,'%s', '%s', '%s','%s', '%s', '%s', %u);";
+    $q = "INSERT INTO  shop_order_details " . "(order_id, product_id, product_number, product_name, quantity, price, discount, sale_price, is_sample)" . " VALUES (%u, %u,'%s', '%s', '%s','%s', '%s', '%s', %u);";
     $sql = sprintf($q, $order_id, $product_id, $product_number, $product_name, $quantity, $price, $discount, $sale_price, $is_sample);
     $res = static::query($sql);
 
@@ -177,17 +177,17 @@ class Model_Orders extends Model_Base{
   public static function save_discount_usage($discountIds, $oid){
     if(isset($discountIds) && is_array($discountIds) && (count($discountIds) > 0)) {
       $discounts = array_unique($discountIds, SORT_NUMERIC);
-      $delete = sprintf("DELETE FROM fabrix_specials_usage WHERE oid = %u", $oid);
+      $delete = sprintf("DELETE FROM shop_specials_usage WHERE oid = %u", $oid);
       $res = static::query($delete);
       foreach($discounts as $sid) {
-        $sSQL = sprintf("INSERT INTO fabrix_specials_usage (sid, oid) VALUES (%u, %u)", $sid, $oid);
+        $sSQL = sprintf("INSERT INTO shop_specials_usage (sid, oid) VALUES (%u, %u)", $sid, $oid);
         static::query($sSQL);
       }
     }
   }
 
   public static function get_order_details($oid){
-    $results = static::query("select * from fabrix_order_details WHERE order_id='$oid'");
+    $results = static::query("select * from shop_order_details WHERE order_id='$oid'");
     if($results) {
       $rows = [];
       while($row = static::fetch_array($results)) {

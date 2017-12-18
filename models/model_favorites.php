@@ -2,7 +2,7 @@
 
 class Model_Favorites extends Model_Base{
 
-  protected static $table = 'fabrix_product_favorites';
+  protected static $table = 'shop_product_favorites';
 
   protected static function build_where(&$filter, &$prms = null){
     $result = "";
@@ -55,14 +55,14 @@ class Model_Favorites extends Model_Base{
   public static function get_total_count($filter = null){
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.pid) FROM " . static::$table . " z";
-    $query .= " LEFT JOIN fabrix_products a ON a.pid = z.pid";
-    $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-    $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-    $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-    $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-    $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-    $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-    $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+    $query .= " LEFT JOIN shop_products a ON a.pid = z.pid";
+    $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+    $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+    $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+    $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+    $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+    $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+    $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
       $response = static::fetch_value($result);
@@ -75,14 +75,14 @@ class Model_Favorites extends Model_Base{
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
     $response = null;
     $query = "SELECT DISTINCT z.id, a.* FROM " . static::$table . " z";
-    $query .= " LEFT JOIN fabrix_products a ON a.pid = z.pid";
-    $query .= " LEFT JOIN fabrix_product_categories ON a.pid = fabrix_product_categories.pid";
-    $query .= " LEFT JOIN fabrix_categories b ON fabrix_product_categories.cid = b.cid";
-    $query .= " LEFT JOIN fabrix_product_colors ON a.pid = fabrix_product_colors.prodId";
-    $query .= " LEFT JOIN fabrix_color c ON fabrix_product_colors.colorId = c.id";
-    $query .= " LEFT JOIN fabrix_product_patterns ON a.pid = fabrix_product_patterns.prodId";
-    $query .= " LEFT JOIN fabrix_patterns d ON d.id = fabrix_product_patterns.patternId";
-    $query .= " LEFT JOIN fabrix_manufacturers e ON a.manufacturerId = e.id";
+    $query .= " LEFT JOIN shop_products a ON a.pid = z.pid";
+    $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
+    $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";
+    $query .= " LEFT JOIN shop_product_colors ON a.pid = shop_product_colors.prodId";
+    $query .= " LEFT JOIN shop_color c ON shop_product_colors.colorId = c.id";
+    $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
+    $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
+    $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     $query .= static::build_where($filter);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";

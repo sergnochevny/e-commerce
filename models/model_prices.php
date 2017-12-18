@@ -2,7 +2,7 @@
 
 class Model_Prices extends Model_Base{
 
-  protected static $table = 'fabrix_products';
+  protected static $table = 'shop_products';
 
   public static $price_parceling = [
     1 => ['max_price' => 15, 'title' => '$15.00 and under'],

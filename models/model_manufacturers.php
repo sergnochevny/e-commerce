@@ -2,7 +2,7 @@
 
 class Model_Manufacturers extends Model_Base{
 
-  protected static $table = 'fabrix_manufacturers';
+  protected static $table = 'shop_manufacturers';
 
   protected static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
@@ -47,7 +47,7 @@ class Model_Manufacturers extends Model_Base{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
-    $query .= " JOIN fabrix_products b ON b.manufacturerId = a.id";
+    $query .= " JOIN shop_products b ON b.manufacturerId = a.id";
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
       $response = static::fetch_value($result);
@@ -62,7 +62,7 @@ class Model_Manufacturers extends Model_Base{
     $query = "SELECT a.id, a.manufacturer, count(b.pid) AS amount";
     $query .= " FROM " . static::$table . " a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
-    $query .= " JOIN fabrix_products b ON b.manufacturerId = a.id";
+    $query .= " JOIN shop_products b ON b.manufacturerId = a.id";
     $query .= static::build_where($filter);
     $query .= " GROUP BY a.id, a.manufacturer";
     $query .= static::build_order($sort);
@@ -105,7 +105,7 @@ class Model_Manufacturers extends Model_Base{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "select count(*) from fabrix_products where manufacturerId = $id";
+        $query = "select count(*) from shop_products where manufacturerId = $id";
         $res = static::query($query);
         if($res) {
           $amount = static::fetch_array($res)[0];

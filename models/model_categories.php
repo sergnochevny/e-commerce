@@ -2,7 +2,7 @@
 
 class Model_Categories extends Model_Base{
 
-  protected static $table = 'fabrix_categories';
+  protected static $table = 'shop_categories';
 
   protected static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
@@ -34,8 +34,8 @@ class Model_Categories extends Model_Base{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.cid) FROM " . self::$table . " a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
-    $query .= " JOIN fabrix_product_categories b ON b.cid = a.cid";
-    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.pid" : '';
+    $query .= " JOIN shop_product_categories b ON b.cid = a.cid";
+    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.pid" : '';
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
       $response = static::fetch_value($result);
@@ -48,10 +48,10 @@ class Model_Categories extends Model_Base{
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
     $response = null;
     $query = "SELECT DISTINCT a.*, count(b.pid) AS amount";
-    $query .= " FROM fabrix_categories a";
+    $query .= " FROM shop_categories a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
-    $query .= " JOIN fabrix_product_categories b ON b.cid = a.cid";
-    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.pid" : '';
+    $query .= " JOIN shop_product_categories b ON b.cid = a.cid";
+    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.pid" : '';
     $query .= static::build_where($filter);
     $query .= " GROUP BY a.cid, a.cname";
     $query .= static::build_order($sort);
@@ -72,13 +72,13 @@ class Model_Categories extends Model_Base{
       'cid' => $id, 'cname' => '', 'displayorder' => ''
     ];
     if(!isset($id)) {
-      $result = static::query("SELECT max(displayorder)+1 FROM fabrix_categories");
+      $result = static::query("SELECT max(displayorder)+1 FROM shop_categories");
       if($result) {
         $row = static::fetch_array($result);
         $data['displayorder'] = $row[0];
       }
     } else {
-      $result = static::query("select * from fabrix_categories WHERE cid='$id'");
+      $result = static::query("select * from shop_categories WHERE cid='$id'");
       if($result) {
         $data = static::fetch_array($result);
       }
@@ -92,19 +92,19 @@ class Model_Categories extends Model_Base{
     try {
       extract($data);
       if(!empty($cid)) {
-        $res = static::query("select * from fabrix_categories WHERE cid='$cid'");
+        $res = static::query("select * from shop_categories WHERE cid='$cid'");
         if($res) {
           $row = static::fetch_array($res);
           $_displayorder = $row['displayorder'];
           if($_displayorder != $displayorder) {
-            if($res) $res = static::query("update fabrix_categories set displayorder=displayorder-1 WHERE displayorder > $_displayorder");
-            if($res) $res = static::query("update fabrix_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
+            if($res) $res = static::query("update shop_categories set displayorder=displayorder-1 WHERE displayorder > $_displayorder");
+            if($res) $res = static::query("update shop_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
           }
-          if($res) $res = static::query("update fabrix_categories set cname='$cname', displayorder='$displayorder' WHERE cid ='$cid'");
+          if($res) $res = static::query("update shop_categories set cname='$cname', displayorder='$displayorder' WHERE cid ='$cid'");
         }
       } else {
-        $res = static::query("update fabrix_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
-        if($res) $res = static::query("insert fabrix_categories set cname='$cname', displayorder='$displayorder'");
+        $res = static::query("update shop_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
+        if($res) $res = static::query("insert shop_categories set cname='$cname', displayorder='$displayorder'");
         if($res) $cid = static::last_id();
       }
       if(!$res) throw new Exception(static::error());
@@ -121,7 +121,7 @@ class Model_Categories extends Model_Base{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "select count(*) from fabrix_product_categories where cid = $id";
+        $query = "select count(*) from shop_product_categories where cid = $id";
         $res = static::query($query);
         if($res) {
           $amount = static::fetch_array($res)[0];
@@ -129,10 +129,10 @@ class Model_Categories extends Model_Base{
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "delete from fabrix_product_categories WHERE cid = $id";
+        $query = "delete from shop_product_categories WHERE cid = $id";
         $res = static::query($query);
         if(!$res) throw new Exception(static::error());
-        $query = "DELETE FROM fabrix_categories WHERE cid = $id";
+        $query = "DELETE FROM shop_categories WHERE cid = $id";
         $res = static::query($query);
         if(!$res) throw new Exception(static::error());
       }

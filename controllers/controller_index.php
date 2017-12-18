@@ -73,12 +73,6 @@ class Controller_Index extends Controller_Controller{
   public function index($required_access = true){
     $this->main->view('index');
   }
-    /**
-     * @export
-     */
-  public function test(){
-    $this->main->view('test');
-  }
 
   /**
    * @export
@@ -147,13 +141,13 @@ class Controller_Index extends Controller_Controller{
 //    function show_break_img_count()
 //    {
 //        set_time_limit(14400);
-//        $q_total = "SELECT COUNT(*) FROM fabrix_products a" .
+//        $q_total = "SELECT COUNT(*) FROM shop_products a" .
 //            " WHERE a.priceyard > 0 and a.pnumber is not null and a.pvisible = '1'";
 //        $res = mysqli_query(_A_::$app->getDBConnection('default'), $q_total);
 //        $total = mysqli_fetch_row($res);
 //        $total = $total[0];
 //
-//        $q = "SELECT pid FROM fabrix_products a" .
+//        $q = "SELECT pid FROM shop_products a" .
 //            " WHERE a.priceyard > 0 and a.pnumber is not null and a.pvisible = '1'";
 //        $res = mysqli_query(_A_::$app->getDBConnection('default'), $q);
 //        $model = new Model_Users();

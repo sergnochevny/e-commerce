@@ -103,7 +103,8 @@ abstract class Controller_Controller extends Controller_Base{
         _A_::$app->setSession('pages', $pages);
       }
       //
-      $search = array_filter(_A_::$app->post('search'),
+      $search = _A_::$app->post('search');
+      $search = array_filter(is_array($search) ? $search : [],
         function($val){
           if(is_array($val)) return !empty(array_filter($val));
 
@@ -124,7 +125,8 @@ abstract class Controller_Controller extends Controller_Base{
           }
         }
         //
-        $search = array_filter(_A_::$app->post('search'),
+        $search = _A_::$app->post('search');
+        $search = array_filter(is_array($search) ? $search : [],
           function($val){
             if(is_array($val)) return !empty(array_filter($val));
 

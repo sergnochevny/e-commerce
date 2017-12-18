@@ -14,7 +14,7 @@ class Controller_Recommends extends Controller_Controller{
   }
 
   protected function build_search_filter(&$filter, $view = false){
-    $hidden["fabrix_orders.aid"] = Controller_User::get_from_session()['aid'];
+    $hidden["shop_orders.aid"] = Controller_User::get_from_session()['aid'];
     $hidden['a.pnumber'] = 'null';
     if(!isset($filter['hidden']['a.priceyard'])) $hidden['a.priceyard'] = '0.00';
     $hidden['a.pvisible'] = '1';
@@ -42,7 +42,7 @@ class Controller_Recommends extends Controller_Controller{
         }
       }
 
-      unset($filter['hidden']["fabrix_orders.aid"]);
+      unset($filter['hidden']["shop_orders.aid"]);
     }
 
     return $res;
@@ -50,7 +50,7 @@ class Controller_Recommends extends Controller_Controller{
 
   protected function build_order(&$sort, $view = false, $filter = null){
     $sort['b.displayorder'] = 'asc';
-    $sort['fabrix_product_categories.display_order'] = 'asc';
+    $sort['shop_product_categories.display_order'] = 'asc';
   }
 
   protected function before_search_form_layout(&$search_data, $view = false){

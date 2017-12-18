@@ -2,7 +2,7 @@
 
 class Model_Patterns extends Model_Base{
 
-  protected static $table = 'fabrix_patterns';
+  protected static $table = 'shop_patterns';
 
   protected static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
@@ -47,8 +47,8 @@ class Model_Patterns extends Model_Base{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
-    $query .= " JOIN fabrix_product_patterns b ON b.patternId = a.id";
-    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.prodId" : '';
+    $query .= " JOIN shop_product_patterns b ON b.patternId = a.id";
+    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
     $query .= static::build_where($filter);
     if($result = static::query($query)) {
       $response = static::fetch_value($result);
@@ -63,8 +63,8 @@ class Model_Patterns extends Model_Base{
     $query = "SELECT a.id, a.pattern, count(b.prodId) AS amount";
     $query .= " FROM " . static::$table . " a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
-    $query .= " JOIN fabrix_product_patterns b ON b.patternId = a.id";
-    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN fabrix_products c ON c.pid = b.prodId" : '';
+    $query .= " JOIN shop_product_patterns b ON b.patternId = a.id";
+    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
     $query .= static::build_where($filter);
     $query .= " GROUP BY a.id, a.pattern";
     $query .= static::build_order($sort);
@@ -107,7 +107,7 @@ class Model_Patterns extends Model_Base{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "select count(*) from fabrix_product_patterns where patternId = $id";
+        $query = "select count(*) from shop_product_patterns where patternId = $id";
         $res = static::query($query);
         if($res) {
           $amount = static::fetch_array($res)[0];
