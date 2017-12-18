@@ -3,6 +3,7 @@
 var gulp = require('gulp'),
   minify = require('gulp-minify'),
   rename = require('gulp-rename'),
+  imagemin = require('gulp-imagemin'),
   del = require('del'),
   cache = require('gulp-cache'),
   cleanCSS = require('gulp-clean-css'),
@@ -28,6 +29,17 @@ gulp.task('owl-images', function () {
   return gulp.src(['resources/owlcarousel/*.gif', 'resources/owlcarousel/*.png'])
     .pipe(gulp.dest('web/css/owlcarousel'));
 });
+
+gulp.task('shop-images', function () {
+  return gulp.src(['resources/images/**/*.*'])
+    .pipe(imagemin([
+      imagemin.gifsicle({interlaced: true}),
+      imagemin.jpegtran({progressive: true}),
+      imagemin.optipng({optimizationLevel: 5})
+    ]))
+    .pipe(gulp.dest('web/images'));
+});
+
 gulp.task('images', ['css-images', 'css-jqm-images', 'owl-images']);
 gulp.task('scripts', function () {
   return gulp.src('resources/js/**/*.js')

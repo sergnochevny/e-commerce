@@ -21,7 +21,7 @@ build:
 deploy:
   stage: deploy
   only: 
-  - master
+  - serg
   script:
     - mkdir /deploy-gl/$CI_PROJECT_NAME || echo "Dir already $CI_PROJECT_NAME exists"
     - mkdir /deploy-gl/$CI_PROJECT_NAME/data || echo "Dir already $CI_PROJECT_NAME/data exists"
