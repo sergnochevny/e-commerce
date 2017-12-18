@@ -9,10 +9,10 @@
       var destination = $(this).attr('aria-controls');
       var dest = $('#' + destination);
       if (dest.hasClass('in')) {
-            dest.removeClass('in')
+        dest.removeClass('in')
       } else {
-            dest.addClass('in')
-        }
+        dest.addClass('in')
+      }
     }
   );
 

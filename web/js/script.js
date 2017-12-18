@@ -354,7 +354,7 @@ var change_text = false;
         else if (e.which === 39) {  // Right arrow key code
           url = $('.image-navigation .nav-next a').attr('href');
         }
-        if (url && ( !$('textarea, input').is(':focus') )) {
+        if (url && (!$('textarea, input').is(':focus'))) {
           $('#content').waitloader('show');
           window.location = url;
         }

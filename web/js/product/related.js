@@ -37,7 +37,7 @@
         if (!owl) {
           $('[data-carousel]').owlCarousel(
             {
-              responsive: {0: {items: 1}, 520: {items: 2}, 820: {items: 3}, 990:{items: 4}},
+              responsive: {0: {items: 1}, 520: {items: 2}, 820: {items: 3}, 990: {items: 4}},
               margin: 15,
               nav: true,
               navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
@@ -67,7 +67,7 @@
         );
       }
       if (!$('[data-related] .product-item').length) owl.destroy();
-      else  owl.refresh();
+      else owl.refresh();
     }
   );
 
@@ -89,7 +89,7 @@
         }
       );
       if (!$('[data-related] .product-item').length) owl.destroy();
-      else  owl.refresh();
+      else owl.refresh();
     }
   );
 

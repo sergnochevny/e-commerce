@@ -3,7 +3,7 @@
   $(document).off('.search_action');
 
   $(document).on('click', 'div.tabs ul.tabNavigation a',
-    function() {
+    function () {
       var tabContainers = $('div.tabs div[data-role=tab]');
       tabContainers.hide();
       tabContainers.filter(this.hash).show();
