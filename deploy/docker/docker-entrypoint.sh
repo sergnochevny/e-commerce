@@ -4,7 +4,7 @@ set -ex
 cp -rf /app/deploy/config /app
 
 if [ -f /app/deploy/db.sql ]; then
-   mysql -uroot -proot -hiluvfabrix_db boxoffice < /app/deploy/db.sql
+   mysql -uroot -proot -hiluvfabrix_db iluvfabrix < /app/deploy/db.sql
 fi
 
 rm -rf /app/deploy
