@@ -5,7 +5,7 @@ cd /app/
 
 npm i
 npm i npm
-npm run build
+npm run images
 
 cp -rf /app/deploy/config/* /app
 
