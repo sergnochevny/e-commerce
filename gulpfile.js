@@ -7,6 +7,7 @@ var gulp = require('gulp'),
   del = require('del'),
   cache = require('gulp-cache'),
   cleanCSS = require('gulp-clean-css'),
+  imageResize = require('gulp-image-resize'),
   autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('css', function () {
@@ -56,7 +57,7 @@ gulp.task('scripts', function () {
 
 gulp.task('fonts', function () {
   return gulp.src([
-    'resources/fonts/**/*.*',
+    'resources/fonts/**/*.*'
   ]).pipe(gulp.dest('web/fonts'));
 });
 
