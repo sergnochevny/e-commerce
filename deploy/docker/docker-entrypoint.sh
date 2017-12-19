@@ -1,7 +1,7 @@
 #!/bin/sh
 set -ex
 
-cp -rf /app/deploy/config /app
+cp -rf /app/deploy/config/* /app
 
 if [ -f /app/deploy/db.sql ]; then
    mysql -uroot -proot -hiluvfabrix_db iluvfabrix < /app/deploy/db.sql
