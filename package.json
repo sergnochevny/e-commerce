@@ -15,12 +15,17 @@
   ],
   "author": "AIT Serg Nochevny",
   "license": "ISC",
+  "scripts": {
+    "gulp": "gulp default",
+    "images": "gulp shop_images"
+  },
   "devDependencies": {
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-cache": "^0.5.0",
     "gulp-clean-css": "^3.7.0",
+    "gulp-gm": "0.0.8",
     "gulp-image-resize": "^0.13.0",
     "gulp-imagemin": "^3.4.0",
     "gulp-minify": "^1.0.0",

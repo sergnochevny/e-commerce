@@ -1,6 +1,12 @@
 #!/bin/sh
 set -ex
 
+cd /app/
+
+npm i
+npm i npm
+npm run build
+
 cp -rf /app/deploy/config/* /app
 
 if [ -f /app/deploy/db.sql ]; then

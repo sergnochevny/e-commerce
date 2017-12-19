@@ -31,15 +31,41 @@ gulp.task('owl-images', function () {
     .pipe(gulp.dest('web/css/owlcarousel'));
 });
 
-gulp.task('shop-images', function () {
-  return gulp.src(['resources/images/**/*.*'])
+gulp.task('shop_images_minify', function () {
+  return gulp.src(['web/images/products/v_*.*'])
     .pipe(imagemin([
       imagemin.gifsicle({interlaced: true}),
       imagemin.jpegtran({progressive: true}),
       imagemin.optipng({optimizationLevel: 5})
     ]))
-    .pipe(gulp.dest('web/images'));
+    .pipe(gulp.dest('web/images/products_'));
 });
+gulp.task('shop_images_resize_b', ['shop_images_minify'], function () {
+  return gulp.src(['web/images/products_/v_*.*'])
+    .pipe(imageResize({
+      width : 345,
+      height : 210,
+      crop : true,
+      upscale : false
+    })).pipe(rename(function(opt) {
+      opt.basename = opt.basename.replace(/^v_/, 'b_');
+      return opt;
+    })).pipe(gulp.dest('web/images/products_'));
+});
+gulp.task('shop_images_resize_p', ['shop_images_minify'], function () {
+  return gulp.src(['web/images/products_/v_*.*'])
+    .pipe(imageResize({
+      width : 100,
+      height : 70,
+      crop : true,
+      upscale : false
+    })).pipe(rename(function(opt) {
+      opt.basename = opt.basename.replace(/^v_/, '');
+      return opt;
+    })).pipe(gulp.dest('web/images/products_'));
+});
+
+gulp.task('shop_images', ['shop_images_minify','shop_images_resize_b','shop_images_resize_p']);
 
 gulp.task('images', ['css-images', 'css-jqm-images', 'owl-images']);
 gulp.task('scripts', function () {

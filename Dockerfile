@@ -24,6 +24,8 @@ RUN set -x \
   libxslt-dev \
   libedit-dev \
   mysql-client \
+  imagemagick \
+  graphicsmagick \
   wget \
   && /usr/bin/curl -sS https://getcomposer.org/installer |php \
   && /bin/mv composer.phar /usr/local/bin/composer \
@@ -33,6 +35,9 @@ RUN set -x \
   && ln -sfT /dev/stderr "/var/log/apache2/error.log" \
   && ln -sfT /dev/stdout "/var/log/apache2/access.log" \
   && ln -sfT /dev/stdout "/var/log/apache2/other_vhosts_access.log" \
+  && curl -sL https://deb.nodesource.com/setup_8.x | bash -\
+  && apt install -y nodejs \
+  && npm install npm@latest -g \
   && apt-get clean \
   && apt-get autoremove -y \
   && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archives/*.deb
