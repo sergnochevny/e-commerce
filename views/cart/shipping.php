@@ -1,6 +1,11 @@
 <?php
-  $rate_handling = (!is_null(_A_::$app->keyStorage()->shop_rate_handling) ? _A_::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
-  $rate_roll = (!is_null(_A_::$app->keyStorage()->shop_rate_roll) ? _A_::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
+
+use app\core\App;
+
+?>
+<?php
+  $rate_handling = (!is_null(App::$app->keyStorage()->shop_rate_handling) ? App::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+  $rate_roll = (!is_null(App::$app->keyStorage()->shop_rate_roll) ? App::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
 ?>
 <div class="col-xs-12 table-list-row">
   <div class="row">

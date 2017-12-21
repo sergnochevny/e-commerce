@@ -45,7 +45,12 @@ phpinfo.php
 /template_formsimple/
 /images/
 /upload/
-/config.php
+/config/web.php
 
 /package-lock.json
 /resources/images/
+/web/css/
+/web/fonts/
+/web/js/
+/config/console.php
+/vendor/

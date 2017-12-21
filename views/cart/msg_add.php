@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div id="modal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -16,7 +21,7 @@
       </div>
       <div class="modal-footer">
         <button data-dismiss="modal" aria-hidden="true" title="Go to Shop Page" class="button pull-left">Continue Shopping</button>
-          <a class="button" href="<?= _A_::$app->router()->UrlTo('cart'); ?>">Go to Cart</a>
+          <a class="button" href="<?= App::$app->router()->UrlTo('cart'); ?>">Go to Cart</a>
       </div>
     </div>
   </div>

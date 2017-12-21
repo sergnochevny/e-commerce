@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
 
@@ -12,8 +17,8 @@
             <h4>Register with iluvfabrix:</h4>
           </div>
           <div class="col-xs-12" data-role="form_content">
-            <div data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
-              <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
+            <div data-load="<?= App::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+              <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
             </div>
           </div>
         </div>

@@ -1,3 +1,9 @@
+<?php
+
+use app\core\App;
+
+?>
+
 <?php include(APP_PATH . 'views/messages/alert-boxes.php'); ?>
 <form id="edit_form" action="<?= $action ?>" method="post">
   <div data-fields_block class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 info_form">
@@ -39,4 +45,4 @@
     </div>
   </div>
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('js/info/form.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/info/form.min.js'); ?>' type="text/javascript"></script>

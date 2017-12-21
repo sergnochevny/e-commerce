@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 
   <div id="content" class="container inner-offset-top half-outer-offset-bottom">
@@ -58,7 +63,7 @@
             </ol>
             <p>For questions or comments regarding
               this policy please contact us by <a
-                  href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a>.
+                  href="mailto:<?= App::$app->keyStorage()->system_info_email; ?>"><?= App::$app->keyStorage()->system_info_email; ?></a>.
             </p>
 
             <p>Additional information about <a target="_blank" href="https://www.priv.gc.ca">Canada's
@@ -78,4 +83,4 @@
       </div>
     </div>
   </div>
-  <script src='<?= _A_::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>
+  <script src='<?= App::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>

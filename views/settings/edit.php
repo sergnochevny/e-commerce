@@ -1,4 +1,9 @@
-<script src='<?= _A_::$app->router()->UrlTo('js/settings/edit.min.js'); ?>' type="text/javascript"></script>
+<?php
+
+use app\core\App;
+
+?>
+<script src='<?= App::$app->router()->UrlTo('js/settings/edit.min.js'); ?>' type="text/javascript"></script>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="box col-xs-12">
     <div class="row">
@@ -297,4 +302,4 @@
   <h2 class="text-center">Disable sale countdown</h2>
   <p>Checking this will not include it in the sale countdown on the product list, and product details page.</p>
 </div>
-<script src="<?= _A_::$app->router()->UrlTo('js/hints.min.js'); ?>"></script>
+<script src="<?= App::$app->router()->UrlTo('js/hints.min.js'); ?>"></script>

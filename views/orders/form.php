@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <form id="edit_form" action="<?= $action ?>" data-title="<?= $form_title ?>" style="margin-bottom: 0">
   <div class="row">
     <div class="col-xs-4">
@@ -32,5 +37,5 @@
     </div>
   </div>
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('js/simple/form.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('js/orders/form.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/simple/form.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/orders/form.min.js'); ?>' type="text/javascript"></script>

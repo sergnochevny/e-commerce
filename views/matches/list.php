@@ -1,10 +1,16 @@
+<?php
+
+use app\core\App;
+
+?>
+
 <section class="just-posts-grid">
   <div class="col-xs-12">
     <div class="row">
 
       <?php if(empty($back_url)) {
         $to_shop = true;
-        $back_url = _A_::$app->router()->UrlTo('shop');
+        $back_url = App::$app->router()->UrlTo('shop');
       } ?>
       <div class="col-xs-12 col-sm-2 back_button_container">
         <div class="row">
@@ -55,7 +61,7 @@
         <div id="dragZoneArea" class="dragZoneArea">
           <div
             class="AddToCartDragImg <?= $cart_not_empty ? 'simple-icon-basket-loaded' : 'simple-icon-basket'; ?>"
-            data-href="<?= _A_::$app->router()->UrlTo('matches/add_to_cart'); ?>"></div>
+            data-href="<?= App::$app->router()->UrlTo('matches/add_to_cart'); ?>"></div>
           <div class="deleteDragImg simple-icon-trash"></div>
           <div class="detailsDragImg"></div>
           <?= isset($list) ? $list : '' ?>
@@ -64,15 +70,15 @@
       <div style="width: 100%" class="text-center inner-offset-vertical" id="b_in_product">
         <?php if(isset($list)): ?>
           <a class="button" id="all_to_basket"
-             href="<?= _A_::$app->router()->UrlTo('matches/add_to_cart'); ?>">
+             href="<?= App::$app->router()->UrlTo('matches/add_to_cart'); ?>">
             Add All to Cart
           </a>
           <a class="button" id="clear_matches"
-             href="<?= _A_::$app->router()->UrlTo('matches/clear'); ?>">
+             href="<?= App::$app->router()->UrlTo('matches/clear'); ?>">
             Clear Matches
           </a>
         <?php else: ?>
-          <a class="button" href="<?= _A_::$app->router()->UrlTo('shop'); ?>">
+          <a class="button" href="<?= App::$app->router()->UrlTo('shop'); ?>">
             Go shopping
           </a>
         <?php endif; ?>

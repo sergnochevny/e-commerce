@@ -1,7 +1,13 @@
-<?php if(!Controller_User::is_logged()) : ?>
+<?php
+
+use app\core\App;
+use controllers\ControllerUser;
+
+?>
+<?php if(!ControllerUser::is_logged()) : ?>
   <li class="dropdown">
     <a class="dropdown-toggle" data-waitloader data-link title="Newsletter"
-       href="<?= _A_::$app->router()->UrlTo('newsletter') ?>">
+       href="<?= App::$app->router()->UrlTo('newsletter') ?>">
       <i class="fa fa-newspaper-o fa-2x visible-xs"></i>
       <span class="topnav-label hidden-xs">Newsletter</span>
     </a>
@@ -9,7 +15,7 @@
 <?php endif; ?>
 <li class="dropdown">
   <a class="dropdown-toggle" data-waitloader data-link title="Service"
-     href="<?= _A_::$app->router()->UrlTo('service') ?>">
+     href="<?= App::$app->router()->UrlTo('service') ?>">
     <i class="fa fa-cog fa-2x visible-xs"></i>
     <span class="topnav-label hidden-xs">Service</span>
   </a>
@@ -22,17 +28,17 @@
   </a>
   <ul class="dropdown-menu topnav-about-dropdown">
     <li class="menu-item menu-item-type-post_type menu-item-object-page">
-      <a data-waitloader data-link title="About us" href="<?= _A_::$app->router()->UrlTo('about') ?>">
+      <a data-waitloader data-link title="About us" href="<?= App::$app->router()->UrlTo('about') ?>">
         About Us
       </a>
     </li>
     <li class="menu-item menu-item-type-post_type menu-item-object-page">
-      <a data-waitloader data-link title="Contact Us" href="<?= _A_::$app->router()->UrlTo('contact') ?>">
+      <a data-waitloader data-link title="Contact Us" href="<?= App::$app->router()->UrlTo('contact') ?>">
         Contact Us
       </a>
     </li>
     <li class="menu-item menu-item-type-post_type menu-item-object-page">
-      <a data-waitloader data-link title="Blog" href="<?= _A_::$app->router()->UrlTo('blog/view') ?>">
+      <a data-waitloader data-link title="Blog" href="<?= App::$app->router()->UrlTo('blog/view') ?>">
         Blog
       </a>
     </li>
@@ -50,26 +56,26 @@
   <?php if(isset($user_logged) && $user_logged): ?>
     <ul class="dropdown-menu topnav-account-dropdown">
       <li>
-        <a data-waitloader data-link title="My Orders" href="<?= _A_::$app->router()->UrlTo('orders'); ?>">
+        <a data-waitloader data-link title="My Orders" href="<?= App::$app->router()->UrlTo('orders'); ?>">
           My Orders
         </a>
         <hr>
       </li>
       <li>
-        <a data-waitloader data-link title="View My Cart" href="<?= _A_::$app->router()->UrlTo('cart'); ?>">
+        <a data-waitloader data-link title="View My Cart" href="<?= App::$app->router()->UrlTo('cart'); ?>">
           View My Cart
         </a>
         <hr>
       </li>
       <li>
-        <a data-waitloader data-link title="My Profile" href="<?= _A_::$app->router()->UrlTo('user/change'); ?>">
+        <a data-waitloader data-link title="My Profile" href="<?= App::$app->router()->UrlTo('user/change'); ?>">
           My Profile
         </a>
       </li>
       <?php if(isset($user_logged) && $user_logged): ?>
         <li>
           <a data-waitloader data-link title="Log Out" id="log_out"
-             href="<?= _A_::$app->router()->UrlTo('user/log_out'); ?>">
+             href="<?= App::$app->router()->UrlTo('user/log_out'); ?>">
             Log Out
           </a>
         </li>
@@ -78,9 +84,9 @@
   <?php else: ?>
     <div class="dropdown-menu topnav-login-dropdown">
       <div class="col-xs-12" data-role="form_content">
-        <div data-load="<?= _A_::$app->router()->UrlTo('authorization', ['method' => 'short']) ?>">
+        <div data-load="<?= App::$app->router()->UrlTo('authorization', ['method' => 'short']) ?>">
           <script type='text/javascript'
-                  src='<?= _A_::$app->router()->UrlTo('js/authorization/load.min.js'); ?>'></script>
+                  src='<?= App::$app->router()->UrlTo('js/authorization/load.min.js'); ?>'></script>
         </div>
       </div>
     </div>

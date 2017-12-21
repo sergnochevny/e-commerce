@@ -1,3 +1,10 @@
+<?php
+
+use app\core\App;
+use controllers\ControllerAdmin;
+use controllers\ControllerUser;
+
+?>
 <?php if(isset($rows) && count($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
@@ -11,8 +18,8 @@
               $order['sort'] = 'trid';
               $order['order'] = 'desc';
             }
-            $order['sid'] = _A_::$app->get('sid');
-            $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
+            $order['sid'] = App::$app->get('sid');
+            $sort_url = App::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Order
@@ -23,7 +30,7 @@
             <?php endif; ?>
           </a>
         </div>
-        <?php if(Controller_Admin::is_logged()): ?>
+        <?php if(ControllerAdmin::is_logged()): ?>
           <?php
           if(isset($sort['username'])) {
             $order['sort'] = 'username';
@@ -32,8 +39,8 @@
             $order['sort'] = 'username';
             $order['order'] = 'desc';
           }
-          $order['sid'] = _A_::$app->get('sid');
-          $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
+          $order['sid'] = App::$app->get('sid');
+          $sort_url = App::$app->router()->UrlTo('discount/view', $order);
           ?>
           <div class="col-sm-2 col">
             <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -55,8 +62,8 @@
               $order['sort'] = 'a.order_date';
               $order['order'] = 'desc';
             }
-            $order['sid'] = _A_::$app->get('sid');
-            $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
+            $order['sid'] = App::$app->get('sid');
+            $sort_url = App::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Date
@@ -76,8 +83,8 @@
               $order['sort'] = 'a.status';
               $order['order'] = 'desc';
             }
-            $order['sid'] = _A_::$app->get('sid');
-            $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
+            $order['sid'] = App::$app->get('sid');
+            $sort_url = App::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Status
@@ -97,8 +104,8 @@
               $order['sort'] = 'a.total';
               $order['order'] = 'desc';
             }
-            $order['sid'] = _A_::$app->get('sid');
-            $sort_url = _A_::$app->router()->UrlTo('discount/view', $order);
+            $order['sid'] = App::$app->get('sid');
+            $sort_url = App::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Total
@@ -120,9 +127,9 @@
     <?php foreach($rows as $row): ?>
       <?php
       $prms['oid'] = $row['oid'];
-      $prms['sid'] = _A_::$app->get('sid');
+      $prms['sid'] = App::$app->get('sid');
       $prms['discount'] = true;
-      $view_url = _A_::$app->router()->UrlTo('orders/view', $prms);
+      $view_url = App::$app->router()->UrlTo('orders/view', $prms);
       ?>
       <div class="col-xs-12 table-list-row">
         <div class="row">
@@ -134,7 +141,7 @@
               <div class="row cut-text-in-one-line"><?= $row['trid'] ?></div>
             </div>
           </div>
-          <?php if(!isset($user_id) && !Controller_User::is_logged()): ?>
+          <?php if(!isset($user_id) && !ControllerUser::is_logged()): ?>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
               <div class="col-xs-4 visible-xs">
                 <div class="row">Customer</div>

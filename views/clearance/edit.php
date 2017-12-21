@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="box col-xs-12">
     <div class="row">
@@ -23,4 +28,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/clearance/edit.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/clearance/edit.min.js'); ?>' type="text/javascript"></script>

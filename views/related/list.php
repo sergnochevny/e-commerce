@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="col-xs-12">
   <div class="col-xs-12 text-center">
     <div class="h3" style="padding-bottom: 15px">Select Related Fabrics</div>
@@ -38,4 +43,4 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <form action="<?= $action ?>" method="post" data-search class="col-xs-12 recommends_filter">
   <div class="row">
     <div class="col-xs-12 annotation">
@@ -9,7 +14,7 @@
         </p>
         <p>
           iLuvFabrix values your feedback. Please
-          <a data-waitloader href="<?= _A_::$app->router()->UrlTo('contact'); ?>">contact us</a>
+          <a data-waitloader href="<?= App::$app->router()->UrlTo('contact'); ?>">contact us</a>
           with any suggestions or comments on how this feature works.
         </p>
       </div>
@@ -175,5 +180,5 @@
     <?php endif; ?>
 </form>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('js/select.ui.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/select.ui.min.js'); ?>' type="text/javascript"></script>

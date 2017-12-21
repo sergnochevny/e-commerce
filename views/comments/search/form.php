@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <form action="<?= $action ?>" method="post" data-search class="col-xs-12">
   <div class="row">
     <div class="col-xs-12 panel panel-default search-panel">
@@ -87,4 +92,4 @@
     </div>
   </div>
 </form>
-<script src="<?= _A_::$app->router()->UrlTo('js/search.min.js'); ?>"></script>
+<script src="<?= App::$app->router()->UrlTo('js/search.min.js'); ?>"></script>

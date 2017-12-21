@@ -1,5 +1,10 @@
 <?php
-  if((!empty(_A_::$app->get('cat')))) $prms['cat'] = _A_::$app->get('cat');
+
+use app\core\App;
+
+?>
+<?php
+  if((!empty(App::$app->get('cat')))) $prms['cat'] = App::$app->get('cat');
 
   if(count($rows) > 0): ?>
     <section class="just-posts-grid">
@@ -7,7 +12,7 @@
         <?php foreach($rows as $row): ?>
           <?php
           $prms = ['id' => $row['id']];
-          $post_href = _A_::$app->router()->UrlTo('blog/view', $prms, $row['post_title']);
+          $post_href = App::$app->router()->UrlTo('blog/view', $prms, $row['post_title']);
           ?>
           <div class="just-post col-xs-12 col-sm-6 col-md-4">
             <div class="just-post-image">

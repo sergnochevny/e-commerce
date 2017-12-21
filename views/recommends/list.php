@@ -1,6 +1,11 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(empty($back_url)) {
   $to_shop = true;
-  $back_url = _A_::$app->router()->UrlTo('shop');
+  $back_url = App::$app->router()->UrlTo('shop');
 } ?>
 <?php if(isset($search['firstpage'])) : ?>
   <div class="row">
@@ -43,24 +48,24 @@
   <div class="col-xs-12 search-result-header">
     <div class="row">
       <div class="col-sm-6">
-        <?php if(!empty(_A_::$app->get('cat')) || !empty(_A_::$app->get('mnf')) ||
-          !empty(_A_::$app->get('ptrn')) || !empty(_A_::$app->get('clr')) || !is_null(_A_::$app->get('prc'))
+        <?php if(!empty(App::$app->get('cat')) || !empty(App::$app->get('mnf')) ||
+          !empty(App::$app->get('ptrn')) || !empty(App::$app->get('clr')) || !is_null(App::$app->get('prc'))
         ) : ?>
           <p class="woocommerce-result-count">
             <?php
-            if(!empty(_A_::$app->get('cat'))) {
+            if(!empty(App::$app->get('cat'))) {
               echo 'CATEGORY: ' . $category_name;
             }
-            if(!empty(_A_::$app->get('mnf'))) {
+            if(!empty(App::$app->get('mnf'))) {
               echo 'MANUFACTURER: ' . $mnf_name;
             }
-            if(!empty(_A_::$app->get('ptrn'))) {
+            if(!empty(App::$app->get('ptrn'))) {
               echo 'PATTERN: ' . $ptrn_name;
             }
-            if(!empty(_A_::$app->get('clr'))) {
+            if(!empty(App::$app->get('clr'))) {
               echo 'COLOR: ' . $color_name;
             }
-            if(!is_null(_A_::$app->get('prc'))) {
+            if(!is_null(App::$app->get('prc'))) {
               echo 'PRICE: ' . ((isset($prc_from) && !empty($prc_from)) ? ' $' . number_format($prc_from, 2) : ' $0.00') . ((isset($prc_to) && !empty($prc_to)) ? ' - $' . number_format($prc_to, 2) : ' and above');
             }
             ?>
@@ -92,4 +97,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

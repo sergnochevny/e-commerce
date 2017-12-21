@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">
@@ -19,7 +24,7 @@
             <span class="extra_discount">Extra Discount!</span>
           <?php }
           $url_prms['pid'] = $row['pid'];
-          $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
             'cat', 'mnf', 'ptrn', 'clr', 'prc'
           ]);
           ?>

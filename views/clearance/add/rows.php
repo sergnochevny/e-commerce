@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
     <?php $prms['pid'] = $row['pid']; ?>
@@ -9,7 +14,7 @@
             $prms = !empty($row['id']) ? ['id' => $row['id']] : null;
             if($scenario == 'add') $prms['method'] = $scenario;
           ?>
-               data-action="<?= _A_::$app->router()->UrlTo('clearance' . DS . (!empty($row['id']) ? 'delete' : 'add'), $prms); ?>"
+               data-action="<?= App::$app->router()->UrlTo('clearance' . DS . (!empty($row['id']) ? 'delete' : 'add'), $prms); ?>"
                data-pid="<?= $row['pid'];?>"
                name="clearance-select[<?= $row['pid']; ?>]" style="display: none;"/>
         <div class="col-xs-3 col-sm-4 col-md-3 figure">

@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="col-xs-12 col-sm-6 col-md-4">
   <div class="row">
     <h4 class="section-title">Under $20</h4>
@@ -31,6 +36,6 @@
 <div class="clearfix"></div>
 <div class="row bestseller-action-row">
   <div class="col-xs-12 text-center">
-    <a href="<?= _A_::$app->router()->UrlTo('shop/under'); ?>" class="button button-2x">MORE</a>
+    <a href="<?= App::$app->router()->UrlTo('shop/under'); ?>" class="button button-2x">MORE</a>
   </div>
 </div>

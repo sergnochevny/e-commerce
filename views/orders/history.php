@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div id="content" class="col-xs-12 main-content-inner box" role="main">
 
@@ -8,7 +13,7 @@
           <div class="col-xs-11" style="padding-right: 0;">
             <div class="row">
               <input type="text" style="width: 100%"
-                     value="<?= (!is_null(_A_::$app->get('orders_search_query')) ? _A_::$app->get('orders_search_query') : null) ?>"
+                     value="<?= (!is_null(App::$app->get('orders_search_query')) ? App::$app->get('orders_search_query') : null) ?>"
                      name="orders_search_query" class="col-lg-12" placeholder="Search...">
             </div>
           </div>

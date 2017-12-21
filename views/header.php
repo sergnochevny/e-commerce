@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <header class="site-header">
   <div class="header-topnav">
     <div class="container">
@@ -13,7 +18,7 @@
                    data-toggle="dropdown">
                   <i class="fa fa-2x fa-search" aria-hidden="true"></i>
                   <form id="f_search" role="search" method="post" class="header-search hidden"
-                        action="<?= _A_::$app->router()->UrlTo('shop'); ?>">
+                        action="<?= App::$app->router()->UrlTo('shop'); ?>">
                     <label class="screen-reader-text" for="s">Search for:</label>
                     <input id="search" type="search" class="search-field"
                            placeholder="Search Products&hellip;"
@@ -37,9 +42,9 @@
         <div class="col-logo">
           <div class="row">
             <div class="navbar-header">
-              <a data-waitloader class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
+              <a data-waitloader class="navbar-brand" href="<?= App::$app->router()->UrlTo('/'); ?>">
                 <div class="site-with-image">
-                  <img class="site-logo" src="<?= _A_::$app->router()->UrlTo('images/logo.png'); ?>" alt=""/>
+                  <img class="site-logo" src="<?= App::$app->router()->UrlTo('images/logo.png'); ?>" alt=""/>
                 </div>
               </a>
             </div>

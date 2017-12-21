@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="col-xs-12 cart-legend-view">
   <div class="col-sm-12 text-center">
     <div class="row">
@@ -20,16 +25,16 @@
     <div class="row">
       <div class="col-sm-6">1) Sample 1:</div>
       <div
-          class="col-sm-6"><?= '$' . number_format((!is_null(_A_::$app->keyStorage()->shop_samples_price_single) ? _A_::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE), 2); ?></div>
+          class="col-sm-6"><?= '$' . number_format((!is_null(App::$app->keyStorage()->shop_samples_price_single) ? App::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE), 2); ?></div>
       <div class="col-sm-6">2) Samples 2 - 5:</div>
       <div
-          class="col-sm-6"><?= '$' . number_format((!is_null(_A_::$app->keyStorage()->shop_samples_price_multiple) ? _A_::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE), 2); ?></div>
+          class="col-sm-6"><?= '$' . number_format((!is_null(App::$app->keyStorage()->shop_samples_price_multiple) ? App::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE), 2); ?></div>
       <div class="col-sm-6">3) Samples 6 & over:</div>
       <div class="col-sm-6"><?= '$' . number_format(!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL, 2); ?> / sample</div>
       <?php if(!(isset($cart_items) && strlen($cart_items) > 0)): ?>
         <div class="col-sm-6">4) Courier delivery surcharge:</div>
         <div
-            class="col-sm-6"><?= '$' . number_format((!is_null(_A_::$app->keyStorage()->shop_samples_price_express_shipping) ? _A_::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), 2); ?></div>
+            class="col-sm-6"><?= '$' . number_format((!is_null(App::$app->keyStorage()->shop_samples_price_express_shipping) ? App::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), 2); ?></div>
       <?php endif; ?>
     </div>
   </div>

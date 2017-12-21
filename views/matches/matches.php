@@ -1,6 +1,12 @@
-<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('css/simple-line-icons.css'); ?>'
+<?php
+
+use app\core\App;
+
+?>
+
+<link rel='stylesheet' charset="UTF-8" href='<?php echo App::$app->router()->UrlTo('css/simple-line-icons.css'); ?>'
       type='text/css' media='all'/>
-<link rel='stylesheet' charset="UTF-8" href='<?php echo _A_::$app->router()->UrlTo('css/matches.min.css'); ?>'
+<link rel='stylesheet' charset="UTF-8" href='<?php echo App::$app->router()->UrlTo('css/matches.min.css'); ?>'
       type='text/css' media='all'/>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
   <div class="entry-content box">
@@ -11,4 +17,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/matches/matches.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/matches/matches.min.js'); ?>' type="text/javascript"></script>

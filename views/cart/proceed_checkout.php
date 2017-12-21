@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <div class="col-xs-12">
   <div class="row">
@@ -110,14 +115,14 @@
     ) { ?>
 
       <a data-block="proceed_agreem_button" style="margin-top: 15px" class="checkout-button button alt wc-forward"
-         href="<?= _A_::$app->router()->UrlTo('cart/proceed_agreem') ?>">
+         href="<?= App::$app->router()->UrlTo('cart/proceed_agreem') ?>">
         Proceed to Agreement</a>
     <?php } ?>
   </div>
 </div>
 <div>
-  <div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>">
-    <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/load.min.js'); ?>'></script>
+  <div data-load="<?= App::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>">
+    <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/cart/load.min.js'); ?>'></script>
   </div>
 </div>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/checkout.min.js'); ?>'></script>
+<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/cart/checkout.min.js'); ?>'></script>

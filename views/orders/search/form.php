@@ -1,3 +1,9 @@
+<?php
+
+use app\core\App;
+use controllers\ControllerUser;
+
+?>
 <form action="<?= $action ?>" method="post" data-search class="col-xs-12">
   <div class="row">
     <div class="col-xs-12 panel panel-default search-panel">
@@ -44,10 +50,10 @@
                      value="<?= isset($search['a.trid']) ? $search['a.trid'] : '' ?>">
             </div>
           </div>
-          <div class="col-sm-6" <?= Controller_User::is_logged()?'disabled':''?>>
+          <div class="col-sm-6" <?= ControllerUser::is_logged()?'disabled':''?>>
             <div class="form-row">
               <label>Customer:</label>
-              <input type="text" class="input-text" <?= Controller_User::is_logged()?'disabled':''?> placeholder="Like ..." name="search[username]"
+              <input type="text" class="input-text" <?= ControllerUser::is_logged()?'disabled':''?> placeholder="Like ..." name="search[username]"
                      value="<?= isset($search['username']) ? $search['username'] : '' ?>">
             </div>
           </div>
@@ -96,4 +102,4 @@
     </div>
   </div>
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('js/search.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/search.min.js'); ?>' type="text/javascript"></script>

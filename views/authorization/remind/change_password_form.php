@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <h1 class="entry-title">Change Password</h1>
 <div class="entry-content">
@@ -21,5 +26,5 @@
     </form>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/authorization/remind/change_password_form.min.js'); ?>'
+<script src='<?= App::$app->router()->UrlTo('js/authorization/remind/change_password_form.min.js'); ?>'
         type="text/javascript"></script>

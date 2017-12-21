@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="col-xs-12 text-center">
   <h1 class="page-title">Products</h1>
 </div>
@@ -9,7 +14,7 @@
 
     <div class="row">
       <div class="col-xs-5 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('product/add'); ?>" data-modify class="button">
+        <a href="<?= App::$app->router()->UrlTo('product/add'); ?>" data-modify class="button">
           ADD PRODUCT
         </a>
       </div>
@@ -39,4 +44,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

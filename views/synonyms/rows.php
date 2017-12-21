@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(sizeof($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
@@ -11,7 +16,7 @@
               $order['sort'] = 'keywords';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('synonyms', $order);
+            $sort_url = App::$app->router()->UrlTo('synonyms', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Keywords
@@ -31,7 +36,7 @@
               $order['sort'] = 'synonyms';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('synonyms', $order);
+            $sort_url = App::$app->router()->UrlTo('synonyms', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Synonyms
@@ -71,10 +76,10 @@
             </div>
           </div>
           <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
-            <a data-modify href="<?= _A_::$app->router()->UrlTo('synonyms/edit', $prms) ?>">
+            <a data-modify href="<?= App::$app->router()->UrlTo('synonyms/edit', $prms) ?>">
               <i class="fa fa-2x fa-pencil"></i>
             </a>
-            <a href="<?= _A_::$app->router()->UrlTo('synonyms/delete', $prms) ?>" data-delete rel="nofollow"
+            <a href="<?= App::$app->router()->UrlTo('synonyms/delete', $prms) ?>" data-delete rel="nofollow"
                class="text-danger">
               <i class=" fa fa-2x fa-trash-o"></i>
             </a>

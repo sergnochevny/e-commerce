@@ -1,8 +1,13 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 
 <?php if(empty($back_url)) {
   $to_shop = true;
-  $back_url = _A_::$app->router()->UrlTo('shop');
+  $back_url = App::$app->router()->UrlTo('shop');
 } ?>
 <div class="col-xs-12 col-sm-2 back_button_container">
   <div class="row">
@@ -53,4 +58,4 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>

@@ -1,3 +1,10 @@
+<?php
+
+use app\core\App;
+use controllers\ControllerAdmin;
+use controllers\ControllerUser;
+
+?>
 <?php if(isset($rows) && count($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
@@ -11,7 +18,7 @@
               $order['sort'] = 'trid';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+            $sort_url = App::$app->router()->UrlTo('orders', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Order
@@ -22,7 +29,7 @@
             <?php endif; ?>
           </a>
         </div>
-        <?php if(Controller_Admin::is_logged()): ?>
+        <?php if(ControllerAdmin::is_logged()): ?>
           <?php
           if(isset($sort['username'])) {
             $order['sort'] = 'username';
@@ -31,7 +38,7 @@
             $order['sort'] = 'username';
             $order['order'] = 'desc';
           }
-          $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+          $sort_url = App::$app->router()->UrlTo('orders', $order);
           ?>
           <div class="col-sm-2 col">
             <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
@@ -53,7 +60,7 @@
               $order['sort'] = 'a.order_date';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+            $sort_url = App::$app->router()->UrlTo('orders', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Date
@@ -73,7 +80,7 @@
               $order['sort'] = 'a.status';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+            $sort_url = App::$app->router()->UrlTo('orders', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Status
@@ -93,7 +100,7 @@
               $order['sort'] = 'a.total';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('orders', $order);
+            $sort_url = App::$app->router()->UrlTo('orders', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Total
@@ -114,8 +121,8 @@
     </div>
     <?php
       $edit = true;
-      if(!is_null(_A_::$app->get('aid'))) {
-        $prms['aid'] = _A_::$app->get('aid');
+      if(!is_null(App::$app->get('aid'))) {
+        $prms['aid'] = App::$app->get('aid');
         $prms['user'] = 1;
         $edit = false;
       }
@@ -123,8 +130,8 @@
     <?php foreach($rows as $row): ?>
       <?php
       $prms['oid'] = $row['oid'];
-      $edit_url = _A_::$app->router()->UrlTo('orders/edit', $prms);
-      $view_url = _A_::$app->router()->UrlTo('orders/view', $prms);
+      $edit_url = App::$app->router()->UrlTo('orders/edit', $prms);
+      $view_url = App::$app->router()->UrlTo('orders/view', $prms);
       ?>
       <div class="col-xs-12 table-list-row">
         <div class="row">
@@ -136,7 +143,7 @@
               <div class="row cut-text-in-one-line"><?= $row['trid'] ?></div>
             </div>
           </div>
-          <?php if(!isset($user_id) && !Controller_User::is_logged()): ?>
+          <?php if(!isset($user_id) && !ControllerUser::is_logged()): ?>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
               <div class="col-xs-4 visible-xs">
                 <div class="row">Customer</div>
@@ -175,10 +182,10 @@
           </div>
 
           <div class="col-xs-12 col-sm-1 text-right action-buttons">
-            <?php if(Controller_Admin::is_logged() && $edit): ?>
+            <?php if(ControllerAdmin::is_logged() && $edit): ?>
               <a title="Edit Order Parameters" class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-2x fa-pencil"></i></a>
             <?php endif; ?>
-            <a class="<?= (!(Controller_Admin::is_logged() && $edit)) ? 'no-float' : ''; ?>" data-waitloader
+            <a class="<?= (!(ControllerAdmin::is_logged() && $edit)) ? 'no-float' : ''; ?>" data-waitloader
                title="View Order Details" href="<?= $view_url ?>"><i class="fa fa-2x fa-file-text"></i></a>
           </div>
         </div>

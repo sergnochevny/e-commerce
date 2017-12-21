@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 box">
@@ -6,7 +11,7 @@
       <div class="row">
         <?php if(empty($back_url)) {
           $to_shop = true;
-          $back_url = _A_::$app->router()->UrlTo('shop');
+          $back_url = App::$app->router()->UrlTo('shop');
         } ?>
         <div class="col-xs-12 col-sm-2 back_button_container">
           <div class="row">
@@ -32,7 +37,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>3 SEAT SOFA</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/01.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/01.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -48,7 +53,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>LOVESEAT</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/02.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/02.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -62,7 +67,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>LOVESEAT</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/03.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/03.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -76,7 +81,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>CHAIR</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/04.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/04.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -90,7 +95,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>CHAIR</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/05.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/05.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -104,7 +109,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>CHAIR</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/06.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/06.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -118,7 +123,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>CHAIR</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/07.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/07.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -132,7 +137,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>CHAIR</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/08.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/08.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -146,7 +151,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>CHAIR</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/09.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/09.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -160,7 +165,7 @@
             <div class="cont-item-wrap">
               <div class="head-cont">
                 <h4>OTTOMAN</h4>
-                <img src="<?= _A_::$app->router()->UrlTo('images/furniture/10.png'); ?>" alt="img">
+                <img src="<?= App::$app->router()->UrlTo('images/furniture/10.png'); ?>" alt="img">
               </div>
               <div class="desc-cont">
                 <h5>Estimated Yards:</h5>
@@ -175,4 +180,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>

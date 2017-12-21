@@ -65,6 +65,15 @@ gulp.task('shop_images_resize_p', ['shop_images_minify'], function () {
     })).pipe(gulp.dest('web/images/products_'));
 });
 
+gulp.task('refactor_controllers', function () {
+  return gulp.src(['controllers/controller_*.php'])
+    .pipe(rename(function(opt) {
+      opt.basename = opt.basename.replace(/^controller_/, '');
+      opt.basename = 'Controller' + opt.basename.charAt(0).toUpperCase() + opt.basename.slice(1);
+      return opt;
+    })).pipe(gulp.dest('controllers'));
+});
+
 gulp.task('shop_images', ['shop_images_minify','shop_images_resize_b','shop_images_resize_p']);
 
 gulp.task('images', ['css-images', 'css-jqm-images', 'owl-images']);
@@ -104,4 +113,5 @@ gulp.task('watch', ['clean', 'fonts', 'css', 'scripts', 'images'], function () {
   gulp.watch('resources/css/**/*.css', ['css']);
   gulp.watch('resources/js/**/*.js', ['scripts']);
 });
+gulp.task('build', ['clean', 'fonts', 'css', 'scripts', 'images']);
 gulp.task('default', ['watch']);

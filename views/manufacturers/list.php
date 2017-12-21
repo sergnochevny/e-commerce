@@ -1,3 +1,9 @@
+<?php
+
+use app\core\App;
+
+?>
+
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <div class="col-xs-12 text-center">
   <h1 class="page-title">Manufacturers</h1>
@@ -10,7 +16,7 @@
 
     <div class="row">
       <div class="col-xs-5 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('manufacturers/add'); ?>" data-modify class="button">
+        <a href="<?= App::$app->router()->UrlTo('manufacturers/add'); ?>" data-modify class="button">
           ADD MANUFACTURER
         </a>
       </div>
@@ -39,4 +45,4 @@
 </div>
 
 
-<script src='<?= _A_::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>

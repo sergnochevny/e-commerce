@@ -1,0 +1,99 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "8887e863132b4a4f8f6a38bcbcfa223d",
+    "packages": [
+        {
+            "name": "app/core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.ait.com:other/app-core.git",
+                "reference": "197b21693b448cef845208932907334266be9467"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/197b21693b448cef845208932907334266be9467.zip",
+                "reference": "197b21693b448cef845208932907334266be9467",
+                "shasum": null,
+                "mirrors": [
+                    {
+                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "app\\core\\": ""
+                }
+            },
+            "authors": [
+                {
+                    "name": "Serg Nochevny",
+                    "email": "serg.nochevny@engineering.ait.com"
+                }
+            ],
+            "description": "App Core",
+            "time": "2017-12-20T14:24:34+00:00"
+        },
+        {
+            "name": "installer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.ait.com:other/installer.git",
+                "reference": "549b669bf9688de69fa33eba57f64ce43ba40f4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://tp.ait.com/repo/private/dists/installer/9999999-dev/549b669bf9688de69fa33eba57f64ce43ba40f4e.zip",
+                "reference": "549b669bf9688de69fa33eba57f64ce43ba40f4e",
+                "shasum": null,
+                "mirrors": [
+                    {
+                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "installer\\": ""
+                }
+            },
+            "authors": [
+                {
+                    "name": "Serg Nochevny",
+                    "email": "serg.nochevny@engineering.ait.com"
+                }
+            ],
+            "description": "composer installer",
+            "time": "2017-12-19T17:44:46+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "installer": 20,
+        "app/core": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.0"
+    },
+    "platform-dev": []
+}

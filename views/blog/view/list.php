@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="row">
   <div class="col-xs-12">
 
@@ -5,7 +10,7 @@
       <div class="col-xs-12 search-result-header">
         <div class="row">
           <div class="col-sm-6">
-            <?php if(!empty(_A_::$app->get('cat'))): ?>
+            <?php if(!empty(App::$app->get('cat'))): ?>
                 <p class="woocommerce-result-count">
                   CATEGORY: <?= $category_name ?> '<br/>
                 </p>
@@ -40,4 +45,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

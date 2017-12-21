@@ -1,10 +1,15 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content">
   <div class="container inner-offset-top half-outer-offset-bottom">
     <div class="box">
       <div class="col-xs-12">
         <div class="row">
-          <?php $back_url = _A_::$app->router()->UrlTo('shop'); ?>
+          <?php $back_url = App::$app->router()->UrlTo('shop'); ?>
 
           <div class="col-xs-12 col-sm-2 back_button_container">
             <div class="row">
@@ -44,4 +49,4 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>

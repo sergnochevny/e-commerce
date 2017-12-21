@@ -1,51 +1,56 @@
+<?php
+
+use app\core\App;
+
+?>
 <html xmlns="http://www.w3.org/1999/xhtml"
       class="js_active">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title><?= _A_::$app->keyStorage()->system_site_name; ?></title>
-  <meta name="KeyWords" content="<?= _A_::$app->keyStorage()->system_site_name; ?>">
-  <meta name="Description" content="<?= _A_::$app->keyStorage()->system_site_name; ?>">
-  <link charset="UTF-8" rel="icon" href="<?= _A_::$app->router()->UrlTo('images/lf-logo.png') ?>">
-  <link charset="UTF-8" rel="shortcut icon" href="<?= _A_::$app->router()->UrlTo('images/lf-logo.png') ?>">
-  <link charset="UTF-8" rel="apple-touch-icon" href="<?= _A_::$app->router()->UrlTo('images/lf-logo.png') ?>">
+  <title><?= App::$app->keyStorage()->system_site_name; ?></title>
+  <meta name="KeyWords" content="<?= App::$app->keyStorage()->system_site_name; ?>">
+  <meta name="Description" content="<?= App::$app->keyStorage()->system_site_name; ?>">
+  <link charset="UTF-8" rel="icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png') ?>">
+  <link charset="UTF-8" rel="shortcut icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png') ?>">
+  <link charset="UTF-8" rel="apple-touch-icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png') ?>">
   <link charset="UTF-8" rel="apple-touch-icon-precomposed"
-        href="<?= _A_::$app->router()->UrlTo('images/lf-logo.png') ?>">
+        href="<?= App::$app->router()->UrlTo('images/lf-logo.png') ?>">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <link charset="UTF-8" rel="apple-touch-startup-image" href="<?= _A_::$app->router()->UrlTo('images/lf-logo.png') ?>">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/woocommerce-smallscreen.min.css') ?>"
+  <link charset="UTF-8" rel="apple-touch-startup-image" href="<?= App::$app->router()->UrlTo('images/lf-logo.png') ?>">
+  <link charset="UTF-8" rel="stylesheet" href="<?= App::$app->router()->UrlTo('css/woocommerce-smallscreen.min.css') ?>"
         type="text/css" media="only screen and (max-width: 768px)">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/bootstrap.min.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= App::$app->router()->UrlTo('css/bootstrap.min.css') ?>"
         type="text/css" media="all">
   <link charset="UTF-8" rel="stylesheet" id="just-smartmenu-css"
-        href="<?= _A_::$app->router()->UrlTo('css/jquery.smartmenus.bootstrap.min.css') ?>" type="text/css"
+        href="<?= App::$app->router()->UrlTo('css/jquery.smartmenus.bootstrap.min.css') ?>" type="text/css"
         media="all">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/font-awesome.min.scss') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= App::$app->router()->UrlTo('css/font-awesome.min.scss') ?>"
         type="text/css" media="all">
   <link charset="UTF-8" rel="stylesheet"
-        href="<?= _A_::$app->router()->UrlTo('css/simple-line-icons.min.css') ?>"
+        href="<?= App::$app->router()->UrlTo('css/simple-line-icons.min.css') ?>"
         type="text/css"
         media="all">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/webfont.min.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= App::$app->router()->UrlTo('css/webfont.min.css') ?>"
         type="text/css"
         media="all">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/style-theme.min.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= App::$app->router()->UrlTo('css/style-theme.min.css') ?>"
         type="text/css"
         media="all">
   <link charset="UTF-8" rel="stylesheet"
-        href="<?= _A_::$app->router()->UrlTo('css/style-woocommerce.min.css') ?>"
+        href="<?= App::$app->router()->UrlTo('css/style-woocommerce.min.css') ?>"
   <!--        type="text/css"-->
   <!--        media="all">-->
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/style-shortcodes.min.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= App::$app->router()->UrlTo('css/style-shortcodes.min.css') ?>"
         type="text/css"
         media="all">
-  <link charset="UTF-8" rel="stylesheet" href="<?= _A_::$app->router()->UrlTo('css/prettyPhoto.min.css') ?>"
+  <link charset="UTF-8" rel="stylesheet" href="<?= App::$app->router()->UrlTo('css/prettyPhoto.min.css') ?>"
         type="text/css"
         media="all">
 
   <link charset="UTF-8" rel="stylesheet" id="just-style-css"
-        href="<?= _A_::$app->router()->UrlTo('css/style.min.css') ?>"
+        href="<?= App::$app->router()->UrlTo('css/style.min.css') ?>"
         type="text/css" media="all">
 </head>
 
@@ -70,9 +75,9 @@
           <div class="row">
             <div class="col-md-2 col-lg-2">
               <div class="navbar-header">
-                <a class="navbar-brand" href="<?= _A_::$app->router()->UrlTo('/'); ?>">
+                <a class="navbar-brand" href="<?= App::$app->router()->UrlTo('/'); ?>">
                   <div class="site-with-image">
-                    <img class="site-logo" src="<?= _A_::$app->router()->UrlTo('images/logo.gif'); ?>" alt="">
+                    <img class="site-logo" src="<?= App::$app->router()->UrlTo('images/logo.gif'); ?>" alt="">
                   </div>
                 </a>
               </div>

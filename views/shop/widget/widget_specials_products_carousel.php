@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <h3 class="section-title">Specials</h3>
 <div class="col-xs-12">
   <div class="row">
@@ -10,7 +15,7 @@
               <?php
               $url_prms['pid'] = $row['pid'];
               $url_prms['back'] = 'home';
-              $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
+              $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
                 'cat', 'mnf', 'ptrn', 'clr', 'prc'
               ]);
               ?>

@@ -1,9 +1,15 @@
+<?php
+
+use app\core\App;
+
+?>
+
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
     <?php $prms['mnf'] = $row['id']; ?>
     <div class="col-xs-6 col-sm-3 list-item">
       <div class="list-inner">
-        <a data-waitloader data-sb href="<?= _A_::$app->router()->UrlTo('shop', $prms, $row['manufacturer']); ?>">
+        <a data-waitloader data-sb href="<?= App::$app->router()->UrlTo('shop', $prms, $row['manufacturer']); ?>">
           <div class="item-name"><?= $row['manufacturer']; ?></div>
         </a>
       </div>

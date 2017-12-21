@@ -1,4 +1,10 @@
-<?php $is_admin = Controller_Admin::is_logged(); ?>
+<?php
+
+use app\core\App;
+use controllers\ControllerAdmin;
+
+?>
+<?php $is_admin = ControllerAdmin::is_logged(); ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <?php if(!$is_admin): ?>
     <div class="col-xs-12 col-md-2">
@@ -13,4 +19,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/shop/shop.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/shop/shop.min.js'); ?>' type="text/javascript"></script>

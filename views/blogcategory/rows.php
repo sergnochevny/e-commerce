@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(sizeof($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
@@ -11,7 +16,7 @@
               $order['sort'] = 'a.name';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('blogcategory', $order);
+            $sort_url = App::$app->router()->UrlTo('blogcategory', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Name
@@ -42,11 +47,11 @@
           </div>
           <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
             <a class="update"
-               data-modify href="<?= _A_::$app->router()->UrlTo('blogcategory/edit', $prms); ?>">
+               data-modify href="<?= App::$app->router()->UrlTo('blogcategory/edit', $prms); ?>">
               <i class="fa fa-2x fa-pencil"></i>
             </a>
             <a class="text-danger <?= $row[2] > 0 ? 'disabled' : 'delete'; ?>"
-               data-delete href="<?= _A_::$app->router()->UrlTo('blogcategory/delete', $prms); ?>">
+               data-delete href="<?= App::$app->router()->UrlTo('blogcategory/delete', $prms); ?>">
               <i class="fa fa-2x fa-trash"></i>
             </a>
           </div>

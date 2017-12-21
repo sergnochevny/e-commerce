@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(isset($cart_items) && count($cart_items) > 0): ?>
   <div class="col-sm-12 inner-offset-top" data-block="coupon_section">
     <div class="row">
@@ -76,4 +81,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/cart/code.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/cart/code.min.js'); ?>' type="text/javascript"></script>

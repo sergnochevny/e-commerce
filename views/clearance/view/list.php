@@ -1,4 +1,9 @@
-<?php $back_url = _A_::$app->router()->UrlTo('shop'); ?>
+<?php
+
+use app\core\App;
+
+?>
+<?php $back_url = App::$app->router()->UrlTo('shop'); ?>
 
 <div class="col-xs-12 col-sm-2 back_button_container">
   <div class="row">
@@ -44,4 +49,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

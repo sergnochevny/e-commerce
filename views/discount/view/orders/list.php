@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="row">
   <div class="col-xs-12 text-center" style="margin-top: 30px">
     <h3>ORDERS</h3>
@@ -26,4 +31,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

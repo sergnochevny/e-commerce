@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(isset($warning) || isset($error)) : ?>
   <div class="col-xs-12 alert-container">
     <div class="row">
@@ -6,7 +11,7 @@
           <button id="close-container" type="button" class="close-container"
                   data-waitloader
                   data-destroy="alert-container"
-                  data-redirect="<?= _A_::$app->router()->UrlTo('authorization'); ?>"
+                  data-redirect="<?= App::$app->router()->UrlTo('authorization'); ?>"
                   aria-hidden="true">×
           </button>
           <?php foreach($warning as $msg): ?>

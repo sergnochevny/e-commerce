@@ -1,3 +1,9 @@
+<?php
+
+use app\core\App;
+
+?>
+
 <div id="modal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -20,7 +26,7 @@
         <button data-dismiss="modal" aria-hidden="true" title="Go to Shop Page" class="button pull-left">
           Continue Shopping
         </button>
-        <a class="button" href="<?= _A_::$app->router()->UrlTo('matches'); ?>">Matches</a>
+        <a class="button" href="<?= App::$app->router()->UrlTo('matches'); ?>">Matches</a>
       </div>
     </div>
   </div>

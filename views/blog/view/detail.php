@@ -1,4 +1,9 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('css/blog.min.css'); ?>">
+<?php
+
+use app\core\App;
+
+?>
+<link rel="stylesheet" type="text/css" href="<?= App::$app->router()->UrlTo('css/blog.min.css'); ?>">
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="box col-xs-12">
 
@@ -20,7 +25,7 @@
           </div>
 
         </div>
-        <?php if(isset($data['img']) && !$data['img'] == _A_::$app->router()->UrlTo('images/products/not_image.jpg')) { ?>
+        <?php if(isset($data['img']) && !$data['img'] == App::$app->router()->UrlTo('images/products/not_image.jpg')) { ?>
             <div class="row">
               <div class="just-post-image" style="background-image: url('<?= $data['img']; ?>'); height: 220px"></div>
             </div>

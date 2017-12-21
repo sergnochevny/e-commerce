@@ -1,10 +1,16 @@
+<?php
+
+use app\core\App;
+use controllers\ControllerUser;
+
+?>
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 box">
 
     <?php if(empty($back_url)) {
       $to_shop = true;
-      $back_url = _A_::$app->router()->UrlTo('shop');
+      $back_url = App::$app->router()->UrlTo('shop');
     } ?>
 
     <div class="col-xs-12 col-sm-2 back_button_container">
@@ -22,7 +28,7 @@
       </h2>
     </div>
 
-    <?php if(!Controller_User::is_logged()): ?>
+    <?php if(!ControllerUser::is_logged()): ?>
       <div class="col-xs-12">
         <div class="row">
           <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
@@ -38,9 +44,9 @@
               <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                 <div class="row">
                   <div class="col-xs-12" data-role="form_content">
-                    <div data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+                    <div data-load="<?= App::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
                       <script type='text/javascript'
-                              src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
+                              src='<?= App::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
                     </div>
                   </div>
                 </div>
@@ -52,5 +58,5 @@
     <?php endif; ?>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>
 

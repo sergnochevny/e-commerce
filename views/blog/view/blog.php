@@ -1,9 +1,14 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('css/blog.min.css'); ?>">
+<?php
+
+use app\core\App;
+
+?>
+<link rel="stylesheet" type="text/css" href="<?= App::$app->router()->UrlTo('css/blog.min.css'); ?>">
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div id="blog" class="col-xs-12 main-content-inner box" role="main">
     <article class="page type-page status-publish entry">
-      <?php $back_url = _A_::$app->router()->UrlTo('shop'); ?>
+      <?php $back_url = App::$app->router()->UrlTo('shop'); ?>
 
       <div class="col-xs-12 col-sm-2 back_button_container">
         <div class="row">
@@ -24,4 +29,4 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/blog/view.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/blog/view.min.js'); ?>' type="text/javascript"></script>

@@ -1,0 +1,44 @@
+{
+    "name": "Iluvfabrix",
+    "description": "Iluvfabrix",
+    "keywords": [
+        "Iluvfabrix"
+    ],
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0",
+        "installer": "dev-master",
+        "app/core": "dev-master"
+    },
+    "require-dev": {
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "installer-paths": {
+                "npm-asset-library": "vendor/npm",
+                "bower-asset-library": "vendor/bower"
+            }
+        }
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "installer\\Installer::postInstall"
+        ],
+        "post-install-cmd": [
+            "installer\\Installer::postInstall"
+        ]
+    },
+    "extra": {
+        "installer\\Installer::postInstall": {
+            "copyFiles": [
+                {
+                    "config/def/web.php": "config/web.php",
+                    "config/def/console.php": "config/console.php"
+                }
+            ]
+        }
+    }
+}

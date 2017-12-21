@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(sizeof($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
@@ -11,7 +16,7 @@
               $order['sort'] = 'email';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('comments', $order);
+            $sort_url = App::$app->router()->UrlTo('comments', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Email
@@ -31,7 +36,7 @@
               $order['sort'] = 'title';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('comments', $order);
+            $sort_url = App::$app->router()->UrlTo('comments', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Title
@@ -51,7 +56,7 @@
               $order['sort'] = 'dt';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('comments', $order);
+            $sort_url = App::$app->router()->UrlTo('comments', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Date
@@ -109,7 +114,7 @@
                 <a class="comment-moderated-action <?= $row['moderated'] == '0' ? '' : 'text-danger'; ?>"
                    data-status="<?= $row['moderated'] == '1' ? '0' : '1' ?>"
                    data-id="<?= $row['id'] ?>"
-                   href="<?= _A_::$app->router()->UrlTo('comments/moderate', $prms) ?>">
+                   href="<?= App::$app->router()->UrlTo('comments/moderate', $prms) ?>">
                   <?= $row['moderated'] == '0' ? 'Publish' : 'Hide'; ?>
                 </a>
               </div>
@@ -117,15 +122,15 @@
           </div>
           <div class="col-xs-12 col-sm-1 text-right action-buttons">
             <a data-modify
-               href="<?= _A_::$app->router()->UrlTo('comments/edit', $prms) ?>"
+               href="<?= App::$app->router()->UrlTo('comments/edit', $prms) ?>"
                title="Edit comment"><i class="fa fa-2x fa-pencil"></i>
             </a>
             <a data-view class="text-success view-comment"
-               href="<?= _A_::$app->router()->UrlTo('comments/view', $prms) ?>"
+               href="<?= App::$app->router()->UrlTo('comments/view', $prms) ?>"
                title="View comment"><i class="fa fa-2x fa-eye"></i>
             </a>
             <a data-delete class="text-danger del_user"
-               href="<?= _A_::$app->router()->UrlTo('comments/delete', $prms); ?>"
+               href="<?= App::$app->router()->UrlTo('comments/delete', $prms); ?>"
                title="Delete comment"><i class=" fa fa-2x fa-trash-o"></i>
             </a>
           </div>

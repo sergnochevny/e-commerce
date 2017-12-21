@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">
@@ -31,10 +36,10 @@
           <?php
           $url_prms['pid'] = $row['pid'];
           $url_prms['back'] = 'favorites';
-          $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
             'cat', 'mnf', 'ptrn', 'clr', 'prc'
           ]);
-          $del_href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
+          $del_href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
             'cat', 'mnf', 'ptrn', 'clr', 'prc'
           ]);
           ?>
@@ -47,7 +52,7 @@
               <?php endif; ?>
             <?php endif; ?>
             <a data-delete
-               href="<?= _A_::$app->router()->UrlTo('favorites/delete', ['id' => $row['id']]); ?>"
+               href="<?= App::$app->router()->UrlTo('favorites/delete', ['id' => $row['id']]); ?>"
                rel="nofollow"
                class="button icon-delete add_to_cart_button product_type_simple"></a>
           </figcaption>

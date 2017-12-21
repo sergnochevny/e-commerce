@@ -1,3 +1,9 @@
+<?php
+
+use app\core\App;
+
+?>
+
 <div class="col-xs-12 pull-right">
   <div class="row text-center">
     <h3 class="page-title sb">Manufacturer</h3>
@@ -27,4 +33,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

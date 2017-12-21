@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="row">
   <div class="col-xs-12">
     <div class="row">
@@ -35,8 +40,8 @@
     <p>
       Phone at: <a href="tel:9155870200">(915) 587-0200</a><br>
       Email: <a
-          href="mailto:<?= _A_::$app->keyStorage()->system_info_email; ?>"><?= _A_::$app->keyStorage()->system_info_email; ?></a><br>
-      Address: <a href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router->host; ?></a> (Division
+          href="mailto:<?= App::$app->keyStorage()->system_info_email; ?>"><?= App::$app->keyStorage()->system_info_email; ?></a><br>
+      Address: <a href="<?= App::$app->router()->base_url; ?>"><?= App::$app->router->host; ?></a> (Division
       of Fabric Love LLC)<br>
       211 Teramar Way<br>
       El Paso, Texas, 79922<br>
@@ -61,12 +66,12 @@
     </p>
     <p>
       It is up to the sole discretion of <a
-          href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?></a> / Fabric Love
+          href="<?= App::$app->router()->base_url; ?>"><?= App::$app->router()->host; ?></a> / Fabric Love
       LLC. to decide whether your purchase
       qualifies for any sort of remedy. Should <a
-          href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?></a> / Fabric Love
+          href="<?= App::$app->router()->base_url; ?>"><?= App::$app->router()->host; ?></a> / Fabric Love
       LLC. accept a return (at
-      <a href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?>’s</a> sole
+      <a href="<?= App::$app->router()->base_url; ?>"><?= App::$app->router()->host; ?>’s</a> sole
       discretion), we will generate and provide you with a Return Authorization
       Number. No fabric return will be accepted by our warehouse without a Return Authorization Number marked
       and clearly visible on the outside of the return package. Any fabric returned without such a number will
@@ -74,13 +79,13 @@
     </p>
     <p>
       If a return is authorized by <a
-          href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?></a> / Fabric Love
+          href="<?= App::$app->router()->base_url; ?>"><?= App::$app->router()->host; ?></a> / Fabric Love
       LLC., all return shipping costs and
       customs duties or taxes, if any, are to be paid in their entirety by the purchaser, unless otherwise
       agreed to in advance of the return by <a
-          href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router()->host; ?></a> / Fabric Love
+          href="<?= App::$app->router()->base_url; ?>"><?= App::$app->router()->host; ?></a> / Fabric Love
       LLC. Depending on the nature of
-      the issue, <a href="<?= _A_::$app->router()->base_url; ?>"><?= _A_::$app->router->host; ?></a> / Fabric
+      the issue, <a href="<?= App::$app->router()->base_url; ?>"><?= App::$app->router->host; ?></a> / Fabric
       Love LLC. may be unable to provide any sort of rectification.
       However, as we do want to keep our customers happy, we always endeavor to find a mutually agreeable
       solution to the problem which may, in certain cases, allow for the return of a fabric, usually
@@ -92,7 +97,7 @@
     <p>
       Your personal information is never under any circumstances shared with any other individuals or
       organizations. For a complete understanding of our Privacy Policy, please click the following link:
-      <a href="<?= _A_::$app->router()->UrlTo('privacy'); ?>">privacy policy.</a>
+      <a href="<?= App::$app->router()->UrlTo('privacy'); ?>">privacy policy.</a>
     </p>
     <p><h6><b>Security Information</b></h6></p>
     <p>All purchase transactions made on our site are fully and completely secure.</p>
@@ -173,7 +178,7 @@
     </div>
   </div>
 </div>
-<div data-load="<?= _A_::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>">
-  <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/load.min.js'); ?>'></script>
+<div data-load="<?= App::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>">
+  <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/cart/load.min.js'); ?>'></script>
 </div>
-<script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/cart/checkout.min.js'); ?>'></script>
+<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/cart/checkout.min.js'); ?>'></script>

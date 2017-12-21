@@ -1,9 +1,15 @@
+<?php
+
+use app\core\App;
+use controllers\ControllerAdmin;
+
+?>
 <?php if(isset($rows) && (count($rows) > 0)): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
       <div class="row">
         <div class="col-sm-4 col">Order</div>
-        <?php if(Controller_Admin::is_logged()): ?>
+        <?php if(ControllerAdmin::is_logged()): ?>
           <div class="col-sm-2 col">Customer</div>
         <?php endif; ?>
         <div class="col-sm-2 col">Date</div>
@@ -13,9 +19,9 @@
       <?php foreach($rows as $row): ?>
         <?php
         $prms['oid'] = $row['oid'];
-        $prms['sid'] = _A_::$app->get('sid');
+        $prms['sid'] = App::$app->get('sid');
         $prms['discount'] = true;
-        $view_url = _A_::$app->router()->UrlTo('orders/view', $prms);
+        $view_url = App::$app->router()->UrlTo('orders/view', $prms);
         ?>
         <div class="col-xs-12 table-list-row">
           <div class="row">

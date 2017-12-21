@@ -1,4 +1,10 @@
-<?php if(Controller_Admin::is_logged()): ?>
+<?php
+
+use app\core\App;
+use controllers\ControllerAdmin;
+
+?>
+<?php if(ControllerAdmin::is_logged()): ?>
   <button type="button" class="navbar-toggle toggle-menu" data-toggle="collapse"
           data-target=".site-navigation .navbar-collapse" id="menu-button">
     <div class="hamburger">
@@ -15,31 +21,31 @@
               style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Overview"
-                 href="<?= _A_::$app->router()->UrlTo('product'); ?>">Overview</a>
+                 href="<?= App::$app->router()->UrlTo('product'); ?>">Overview</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Categories"
-                 href="<?= _A_::$app->router()->UrlTo('categories'); ?>">Types</a>
+                 href="<?= App::$app->router()->UrlTo('categories'); ?>">Types</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Manufacturers"
-                 href="<?= _A_::$app->router()->UrlTo('manufacturers'); ?>">Manufacturers</a>
+                 href="<?= App::$app->router()->UrlTo('manufacturers'); ?>">Manufacturers</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Colors"
-                 href="<?= _A_::$app->router()->UrlTo('colors'); ?>">Colors</a>
+                 href="<?= App::$app->router()->UrlTo('colors'); ?>">Colors</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Patterns"
-                 href="<?= _A_::$app->router()->UrlTo('patterns'); ?>">Patterns</a>
+                 href="<?= App::$app->router()->UrlTo('patterns'); ?>">Patterns</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Clearance"
-                 href="<?= _A_::$app->router()->UrlTo('clearance'); ?>">Clearance</a>
+                 href="<?= App::$app->router()->UrlTo('clearance'); ?>">Clearance</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Synonyms"
-                 href="<?= _A_::$app->router()->UrlTo('synonyms'); ?>">Synonyms</a>
+                 href="<?= App::$app->router()->UrlTo('synonyms'); ?>">Synonyms</a>
             </li>
           </ul>
         </li>
@@ -50,24 +56,24 @@
               style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="On Home Page"
-                 href="<?= _A_::$app->router()->UrlTo('info/edit', ['method' => 'home']); ?>">On Home Page</a>
+                 href="<?= App::$app->router()->UrlTo('info/edit', ['method' => 'home']); ?>">On Home Page</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="On Product Page"
-                 href="<?= _A_::$app->router()->UrlTo('info/edit', ['method' => 'product']); ?>">On Product Page</a>
+                 href="<?= App::$app->router()->UrlTo('info/edit', ['method' => 'product']); ?>">On Product Page</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="On Cart"
-                 href="<?= _A_::$app->router()->UrlTo('info/edit', ['method' => 'cart']); ?>">On Cart</a>
+                 href="<?= App::$app->router()->UrlTo('info/edit', ['method' => 'cart']); ?>">On Cart</a>
             </li>
           </ul>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="Discounts"
-             href="<?= _A_::$app->router()->UrlTo('discount'); ?>">Discounts</a>
+             href="<?= App::$app->router()->UrlTo('discount'); ?>">Discounts</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="Users" href="<?= _A_::$app->router()->UrlTo('users'); ?>">Users</a>
+          <a data-waitloader data-link title="Users" href="<?= App::$app->router()->UrlTo('users'); ?>">Users</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a title="Blog" aria-haspopup="true" class="has-submenu" href="javascript:void(0);">Blog<span class="caret"></span></a>
@@ -75,20 +81,20 @@
               style="width: 20em; display: none; top: auto; left: 0px; margin-left: -139.734px; margin-top: 0px; min-width: 10em; max-width: 20em;">
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Blog Overview"
-                 href="<?= _A_::$app->router()->UrlTo('blog'); ?>">Overview</a>
+                 href="<?= App::$app->router()->UrlTo('blog'); ?>">Overview</a>
             </li>
             <li class="menu-item menu-item-type-post_type menu-item-object-product">
               <a data-waitloader data-link title="Blog Categories"
-                 href="<?= _A_::$app->router()->UrlTo('blogcategory'); ?>">Categories</a>
+                 href="<?= App::$app->router()->UrlTo('blogcategory'); ?>">Categories</a>
             </li>
           </ul>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
-          <a data-waitloader data-link title="All Orders" href="<?= _A_::$app->router()->UrlTo('orders'); ?>">Orders</a>
+          <a data-waitloader data-link title="All Orders" href="<?= App::$app->router()->UrlTo('orders'); ?>">Orders</a>
         </li>
         <li class="menu-item menu-item-type-post_type menu-item-object-page">
           <a data-waitloader data-link title="System Settings"
-             href="<?= _A_::$app->router()->UrlTo('settings/edit'); ?>">Settings</a>
+             href="<?= App::$app->router()->UrlTo('settings/edit'); ?>">Settings</a>
         </li>
       </ul>
     </div>

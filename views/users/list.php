@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 
 <div class="col-xs-12 text-center">
@@ -11,10 +16,10 @@
 
     <div class="row">
       <div class="col-xs-5 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('users/add'); ?>" data-modify class="button">
+        <a href="<?= App::$app->router()->UrlTo('users/add'); ?>" data-modify class="button">
           REGISTER USER
         </a>
-        <a href="<?= _A_::$app->router()->UrlTo('users', ['method' => 'csv']); ?>" class="button icon"
+        <a href="<?= App::$app->router()->UrlTo('users', ['method' => 'csv']); ?>" class="button icon"
            title="Expost users list in csv">
           <i class="fa fa-2x fa-floppy-o" aria-hidden="true"></i>
         </a>
@@ -34,7 +39,7 @@
   </div>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
 
 <div class="row">
   <nav class="paging-navigation" role="navigation">
@@ -45,4 +50,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/users/province.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/users/province.min.js'); ?>' type="text/javascript"></script>

@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . 'views/messages/alert-boxes.php'); ?>
 <form method="POST" id="edit_form" action="<?= $action; ?>" class="enquiry-form ">
   <section class="just-posts-grid blog-post-edit-in">
@@ -91,4 +96,4 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('js/blog/form.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/blog/form.min.js'); ?>' type="text/javascript"></script>

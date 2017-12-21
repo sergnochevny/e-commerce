@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
     <?php $prms['id'] = $row['id'];
@@ -15,9 +20,9 @@
         </div>
         <figure class="product-image-box" style="background-image: url(<?= $row['filename']; ?>)">
           <figcaption>
-            <a data-delete title="Delete from Clearance" href="<?= _A_::$app->router()->UrlTo('clearance/delete', $prms); ?>" rel="nofollow"
+            <a data-delete title="Delete from Clearance" href="<?= App::$app->router()->UrlTo('clearance/delete', $prms); ?>" rel="nofollow"
                class="button icon-delete add_to_cart_button   product_type_simple"></a>
-            <a data-waitloader title="Edit Product" href="<?= _A_::$app->router()->UrlTo('product/edit', $url_prms); ?>"
+            <a data-waitloader title="Edit Product" href="<?= App::$app->router()->UrlTo('product/edit', $url_prms); ?>"
                class="button product-button icon-modify">
             </a>
           </figcaption>

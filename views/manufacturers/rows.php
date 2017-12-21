@@ -1,3 +1,9 @@
+<?php
+
+use app\core\App;
+
+?>
+
 <?php if(sizeof($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
@@ -11,7 +17,7 @@
               $order['sort'] = 'a.manufacturer';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('manufacturers', $order);
+            $sort_url = App::$app->router()->UrlTo('manufacturers', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Manufacturer
@@ -31,7 +37,7 @@
               $order['sort'] = 'amount';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('manufacturers', $order);
+            $sort_url = App::$app->router()->UrlTo('manufacturers', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Products
@@ -71,10 +77,10 @@
             </div>
           </div>
           <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
-            <a data-modify href="<?= _A_::$app->router()->UrlTo('manufacturers/edit', $prms) ?>">
+            <a data-modify href="<?= App::$app->router()->UrlTo('manufacturers/edit', $prms) ?>">
               <i class="fa fa-2x fa-pencil"></i>
             </a>
-            <a href="<?= _A_::$app->router()->UrlTo('manufacturers/delete', $prms) ?>" data-delete rel="nofollow"
+            <a href="<?= App::$app->router()->UrlTo('manufacturers/delete', $prms) ?>" data-delete rel="nofollow"
                class="text-danger <?= ($row['amount'] > 0) ? 'disabled' : '' ?>">
               <i class=" fa fa-2x fa-trash-o"></i>
             </a>

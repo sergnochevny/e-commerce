@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">
@@ -21,7 +26,7 @@
           $url_prms['pid'] = $row[0];
           $url_prms['back'] = 'recommends';
           if(!empty($scenario)) $url_prms['method'] = $scenario;
-          $href = _A_::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
             'method', 'cat', 'mnf', 'ptrn', 'clr', 'prc'
           ]);
           ?>

@@ -1,6 +1,11 @@
-<link rel="stylesheet" type="text/css" href="<?= _A_::$app->router()->UrlTo('css/upload.min.css'); ?>">
-<script src='<?= _A_::$app->router()->UrlTo('js/product/images.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('js/product/related.min.js'); ?>' type="text/javascript"></script>
+<?php
+
+use app\core\App;
+
+?>
+<link rel="stylesheet" type="text/css" href="<?= App::$app->router()->UrlTo('css/upload.min.css'); ?>">
+<script src='<?= App::$app->router()->UrlTo('js/product/images.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/product/related.min.js'); ?>' type="text/javascript"></script>
 
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 box">

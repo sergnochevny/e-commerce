@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <form method="POST" id="edit_form" action="<?= $action; ?>" class="col-xs-12 col-md-10 col-md-offset-1"
       xmlns="http://www.w3.org/1999/html">
@@ -641,6 +646,6 @@
   </div>
   <input type="hidden" name="current_tab" value="<?= (isset($data['current_tab']) ? $data['current_tab'] : 1) ?>">
 </form>
-<script src="<?= _A_::$app->router()->UrlTo('js/char-counter.jquery.min.js'); ?>"></script>
-<script src="<?= _A_::$app->router()->UrlTo('js/settings/form.min.js'); ?>"></script>
-<script src="<?= _A_::$app->router()->UrlTo('js/formsimple/form.min.js'); ?>"></script>
+<script src="<?= App::$app->router()->UrlTo('js/char-counter.jquery.min.js'); ?>"></script>
+<script src="<?= App::$app->router()->UrlTo('js/settings/form.min.js'); ?>"></script>
+<script src="<?= App::$app->router()->UrlTo('js/formsimple/form.min.js'); ?>"></script>

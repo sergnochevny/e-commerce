@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(sizeof($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
@@ -11,7 +16,7 @@
               $order['sort'] = 'discount_amount';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('discount', $order);
+            $sort_url = App::$app->router()->UrlTo('discount', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Details
@@ -31,7 +36,7 @@
               $order['sort'] = 'enabled';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('discount', $order);
+            $sort_url = App::$app->router()->UrlTo('discount', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             On
@@ -51,7 +56,7 @@
               $order['sort'] = 'allow_multiple';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('discount', $order);
+            $sort_url = App::$app->router()->UrlTo('discount', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Multiple
@@ -71,7 +76,7 @@
               $order['sort'] = 'coupon_code';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('discount', $order);
+            $sort_url = App::$app->router()->UrlTo('discount', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Coupon
@@ -91,7 +96,7 @@
               $order['sort'] = 'date_start';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('discount', $order);
+            $sort_url = App::$app->router()->UrlTo('discount', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Starts
@@ -111,7 +116,7 @@
               $order['sort'] = 'date_end';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('discount', $order);
+            $sort_url = App::$app->router()->UrlTo('discount', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Ends
@@ -189,17 +194,17 @@
             </div>
           </div>
           <div class="col-xs-12 col-sm-2 col-md-2 col-lg-1 text-right action-buttons">
-            <a data-waitloader rel="nofollow" title="Edit" href="<?= _A_::$app->router()->UrlTo('discount/edit', $prms); ?>">
+            <a data-waitloader rel="nofollow" title="Edit" href="<?= App::$app->router()->UrlTo('discount/edit', $prms); ?>">
               <i class="fa fa-2x fa-pencil"></i>
             </a>
             <a data-waitloader class="text-success" rel="nofollow"
                title="View Details"
-               href="<?= _A_::$app->router()->UrlTo('discount/view', $prms); ?>">
+               href="<?= App::$app->router()->UrlTo('discount/view', $prms); ?>">
               <i class="fa fa-2x fa-file-text"></i>
             </a>
             <a data-delete class="text-danger" rel="nofollow"
                title="Delete"
-               href="<?= _A_::$app->router()->UrlTo('discount/delete', $prms); ?>">
+               href="<?= App::$app->router()->UrlTo('discount/delete', $prms); ?>">
               <i class=" fa fa-2x fa-trash-o"></i>
             </a>
           </div>

@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <form id="edit_form" action="<?= $action ?>" method="post">
   <div class="col-md-push-2 col-md-8 col-xs-12">
@@ -266,6 +271,6 @@
     </div>
   </div>
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('js/users/province.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('js/users/form.js'); ?>' type="text/javascript"></script>
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/form.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/users/province.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/users/form.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/form.js'); ?>' type="text/javascript"></script>

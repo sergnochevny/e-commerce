@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="filter_select_panel row form-row">
   <div class="col-xs-12 search_panel">
     <div class="input-group">
@@ -42,7 +47,7 @@
           </li>
         <?php endforeach; ?>
         <?php
-          $filter_limit = (!is_null(_A_::$app->keyStorage()->system_filter_amount) ? _A_::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
+          $filter_limit = (!is_null(App::$app->keyStorage()->system_filter_amount) ? App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
           if(isset($filter_data_start) && isset($total) && !((ceil($filter_data_start / $filter_limit) + 1) >= ceil($total / $filter_limit))):?>
             <li class="select_item">
               <div class="col-xs-12">
@@ -63,4 +68,4 @@
   <input type="hidden" name="filter_start_<?= $filter_type; ?>" value="<?= $filter_data_start; ?>">
 </div>
 <div class="clearfix"></div>
-<script src='<?= _A_::$app->router()->UrlTo('js/select.ui.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/select.ui.min.js'); ?>' type="text/javascript"></script>

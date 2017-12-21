@@ -1,9 +1,14 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="col-xs-12 inner-offset-vertical">
   <div class="row text-center inner-offset-vertical-bottom">
     <label>To enable all features of iluvfabrix.com please register or sign-in below</label>
   </div>
   <div class="row">
-    <form method="post" id="short_authorization" action="<?= _A_::$app->router()->UrlTo('authorization'); ?>"
+    <form method="post" id="short_authorization" action="<?= App::$app->router()->UrlTo('authorization'); ?>"
           class="login">
       <input type="hidden" name="redirect" value=""/>
 
@@ -49,5 +54,5 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/authorization/short_authorization.min.js'); ?>'
+<script src='<?= App::$app->router()->UrlTo('js/authorization/short_authorization.min.js'); ?>'
         type="text/javascript"></script>

@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div id="content" class="col-xs-12 main-content-inner box" role="main">
     <?= $list; ?>
@@ -16,4 +21,4 @@
       <input id="confirm_no" type="button" value="No" class="button"/>
   </div>
 </div>
-  <script src='<?= _A_::$app->router()->UrlTo('js/simple/simples.min.js'); ?>' type="text/javascript"></script>
+  <script src='<?= App::$app->router()->UrlTo('js/simple/simples.min.js'); ?>' type="text/javascript"></script>

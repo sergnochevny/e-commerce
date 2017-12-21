@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 
 <div class="col-xs-12 text-center">
@@ -11,7 +16,7 @@
 
     <div class="row">
       <div class="col-xs-5 action-button-add">
-        <a href="<?= _A_::$app->router()->UrlTo('blog/add'); ?>" data-modify class="button">
+        <a href="<?= App::$app->router()->UrlTo('blog/add'); ?>" data-modify class="button">
           ADD POST
         </a>
       </div>
@@ -43,4 +48,4 @@
 </div>
 
 
-<script src='<?= _A_::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

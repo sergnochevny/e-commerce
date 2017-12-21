@@ -8,4 +8,4 @@
     </div>
   </div>
 </form>
-<script src='<?= _A_::$app->router()->UrlTo('js/simple/form.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/simple/form.min.js'); ?>' type="text/javascript"></script>

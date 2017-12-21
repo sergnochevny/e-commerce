@@ -1,7 +1,12 @@
 <?php
-  $user_id = _A_::$app->get('aid');
-  $is_admin = Controller_Admin::is_logged();
-  include(APP_PATH . '/views/messages/alert-boxes.php');
+
+use app\core\App;
+use controllers\ControllerAdmin;
+
+$user_id = App::$app->get('aid');
+$is_admin = ControllerAdmin::is_logged();
+include(APP_PATH . '/views/messages/alert-boxes.php');
+
 ?>
 
 <?php if(isset($back_url)): ?>
@@ -16,7 +21,7 @@
       <div class="col-xs-12 col-sm-8 text-center">
         <div class="row">
           <h3
-              class="page-title"><?= (isset($user_id) && !$is_admin) ? $data[0]['username'] : ((!$is_admin) ? 'My' : '') ?>
+            class="page-title"><?= (isset($user_id) && !$is_admin) ? $data[0]['username'] : ((!$is_admin) ? 'My' : '') ?>
             Orders</h3>
         </div>
       </div>
@@ -52,4 +57,4 @@
   </nav>
 </div>
 
-<script src='<?= _A_::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>

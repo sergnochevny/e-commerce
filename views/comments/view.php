@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="row">
   <div class="col-xs-12 modal-view" data-title="<?= $view_title ?>">
     <div class="row">
@@ -21,4 +26,4 @@
     </div>
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/comments/view.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/comments/view.min.js'); ?>' type="text/javascript"></script>

@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <?php if(count($rows) > 0): ?>
   <div class="data-view">
     <div class="col-xs-12 table-list-header hidden-xs">
@@ -11,7 +16,7 @@
               $order['sort'] = 'a.color';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('colors', $order);
+            $sort_url = App::$app->router()->UrlTo('colors', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Name
@@ -31,7 +36,7 @@
               $order['sort'] = 'amount';
               $order['order'] = 'desc';
             }
-            $sort_url = _A_::$app->router()->UrlTo('colors', $order);
+            $sort_url = App::$app->router()->UrlTo('colors', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Products
@@ -69,10 +74,10 @@
             </div>
           </div>
           <div class="col-xs-12 col-sm-1 col-md-1 text-right action-buttons">
-            <a data-modify href="<?= _A_::$app->router()->UrlTo('colors/edit', $prms) ?>">
+            <a data-modify href="<?= App::$app->router()->UrlTo('colors/edit', $prms) ?>">
               <i class="fa fa-2x fa-pencil"></i>
             </a>
-            <a href="<?= _A_::$app->router()->UrlTo('colors/delete', $prms) ?>" data-delete rel="nofollow"
+            <a href="<?= App::$app->router()->UrlTo('colors/delete', $prms) ?>" data-delete rel="nofollow"
                class="text-danger <?= ($row[2] > 0) ? 'disabled' : '' ?>">
               <i class=" fa fa-2x fa-trash-o"></i>
             </a>

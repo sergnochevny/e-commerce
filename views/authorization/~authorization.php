@@ -12,10 +12,10 @@
       <div class="col-xs-12 panel panel-default panel-default-vertical-sizing authorize-panel">
         <div class="col-xs-12">
           <div class="row">
-            <form method="post" id="authorization" action="<?= _A_::$app->router()->UrlTo('authorization'); ?>"
+            <form method="post" id="authorization" action="<?= App::$app->router()->UrlTo('authorization'); ?>"
                   class="login">
               <input type="hidden" name="redirect"
-                     value="<?= isset($redirect) ? $redirect : _A_::$app->router()->UrlTo('/'); ?>"/>
+                     value="<?= isset($redirect) ? $redirect : App::$app->router()->UrlTo('/'); ?>"/>
 
               <div class="form-row">
                 <label for="username" class="required_field">Email Address/Username</label>
@@ -62,8 +62,8 @@
             <h4>Register with iluvfabrix:</h4>
           </div>
           <div class="col-xs-12" data-role="form_content">
-            <div data-load="<?= _A_::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
-              <script type='text/javascript' src='<?= _A_::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
+            <div data-load="<?= App::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+              <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
             </div>
           </div>
         </div>
@@ -72,5 +72,5 @@
 
   </div>
 </div>
-<script src='<?= _A_::$app->router()->UrlTo('js/authorization/authorization.min.js'); ?>'
+<script src='<?= App::$app->router()->UrlTo('js/authorization/authorization.min.js'); ?>'
         type="text/javascript"></script>
