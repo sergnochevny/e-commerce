@@ -85,8 +85,8 @@ class ModelClearance extends ModelBase{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     }
@@ -120,11 +120,11 @@ class ModelClearance extends ModelBase{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
 
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
@@ -167,6 +167,7 @@ class ModelClearance extends ModelBase{
    * @throws \Exception
    */
   public static function get_by_id($id){
+    $prms = [];
     $data = [
       'id' => $id, 'pid' => null, 'metadescription' => '', 'metakeywords' => '', 'metatitle' => '', 'pname' => '',
       'pnumber' => '', 'width' => '', 'inventory' => '0.00', 'priceyard' => '0.00', 'hideprice' => 0,
@@ -178,7 +179,7 @@ class ModelClearance extends ModelBase{
       $q = "SELECT z.id, a.* FROM " . static::$table . " z";
       $q .= " left join shop_products a on z.pid = a.pid";
       $q .= " where z.id = '" . $id . "'";
-      $result = static::query($q);
+      $result = static::query($q, $prms);
       if($result) {
         $data = static::fetch_assoc($result);
       }
@@ -222,11 +223,12 @@ class ModelClearance extends ModelBase{
    * @throws \Exception
    */
   public static function delete($id){
+    $prms = [];
     static::transaction();
     try {
       if(isset($id)) {
         $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

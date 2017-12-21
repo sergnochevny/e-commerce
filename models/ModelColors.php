@@ -43,7 +43,7 @@ class ModelColors extends ModelBase{
         $result = (!empty($result) ? " WHERE " . $result : '');
       }
     } else {
-      $result = parent::build_where($filter);
+      $result = parent::build_where($filter, $prms);
     }
 
     return $result;
@@ -55,12 +55,13 @@ class ModelColors extends ModelBase{
    * @throws \Exception
    */
   public static function get_by_id($id){
+    $prms = [];
     $response = [
       'id' => $id, 'color' => ''
     ];
     if(isset($id)) {
       $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
-      $result = static::query($query);
+      $result = static::query($query, $prms);
       if($result) $response = static::fetch_assoc($result);
     }
 
@@ -78,8 +79,8 @@ class ModelColors extends ModelBase{
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
     $query .= " JOIN shop_product_colors b ON b.colorId = a.id";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
-    $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     }
@@ -103,12 +104,12 @@ class ModelColors extends ModelBase{
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
     $query .= " JOIN shop_product_colors b ON b.colorId = a.id";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     $query .= " GROUP BY a.id, a.color";
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_array($result)) {
         $response[] = $row;
@@ -125,15 +126,16 @@ class ModelColors extends ModelBase{
    */
   public static function save(&$data){
     static::transaction();
+    $prms = [];
     try {
       extract($data);
       if(isset($id)) {
         $query = 'UPDATE ' . static::$table . ' SET color ="' . $color . '" WHERE id =' . $id;
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         if(!$res) throw new Exception(static::error());
       } else {
         $query = 'INSERT INTO ' . static::$table . '(color) VALUE ("' . $color . '")';
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }
@@ -151,11 +153,12 @@ class ModelColors extends ModelBase{
    * @throws \Exception
    */
   public static function delete($id){
+    $prms = [];
     static::transaction();
     try {
       if(isset($id)) {
         $query = "SELECT COUNT(*) FROM shop_product_colors WHERE colorId = $id";
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         if($res) {
           $amount = static::fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
@@ -163,7 +166,7 @@ class ModelColors extends ModelBase{
           }
         }
         $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

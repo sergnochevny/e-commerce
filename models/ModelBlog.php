@@ -94,7 +94,13 @@ class ModelBlog extends ModelBase{
    */
   public static function get_filter_selected_data($id){
     $data = [];
-    $results = static::query("select a.id, a.name, b.order from blog_group_posts b" . " inner join blog_groups a on b.group_id=a.id " . " where b.post_id='$id'" . " order by a.name");
+    $results = static::query(
+      "SELECT a.id, a.name, b.order FROM blog_group_posts b" .
+      " INNER JOIN blog_groups a ON b.group_id=a.id " .
+      " WHERE b.post_id=:id" .
+      " ORDER BY a.name",
+      ['id' => $id]
+    );
     if($results) {
       while($row = static::fetch_array($results)) {
         $data[$row['id']] = [$row['name'], $row['order']];
@@ -114,23 +120,27 @@ class ModelBlog extends ModelBase{
    */
   public static function get_filter_data(&$count, $start = 0, $search = null){
     $filter = null;
-    $filter_limit = (!is_null(App::$app->keyStorage()->system_filter_amount) ? App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
+    $prms = [];
+    $filter_limit = (!is_null(App::$app->keyStorage()->system_filter_amount) ?
+      App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
     $start = isset($start) ? $start : 0;
     $search = static::prepare_for_sql($search);
     $q = "SELECT count(id) FROM blog_groups";
     if(isset($search) && (strlen($search) > 0)) {
-      $q .= " where name like '%$search%'";
+      $q .= " where name like :search";
+      $prms['search'] = '%' . $search . '%';
     }
-    $results = static::query($q);
+    $results = static::query($q, $prms);
     $row = static::fetch_array($results);
     $count = $row[0];
     $q = "SELECT * FROM blog_groups";
     if(isset($search) && (strlen($search) > 0)) {
-      $q .= " where name like '%$search%'";
+      $q .= " where name like :search";
+      $prms['search'] = '%' . $search . '%';
     }
     $q .= " order by name";
     $q .= " limit $start, $filter_limit";
-    $results = static::query($q);
+    $results = static::query($q, $prms);
     if($results) {
       while($row = static::fetch_array($results)) {
         $filter[] = [$row['id'], $row['name']];
@@ -150,8 +160,8 @@ class ModelBlog extends ModelBase{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
-    $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     }
@@ -173,11 +183,11 @@ class ModelBlog extends ModelBase{
     $query = "SELECT DISTINCT a.* ";
     $query .= " FROM " . static::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_array($result)) {
         $response[] = $row;

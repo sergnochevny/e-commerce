@@ -101,6 +101,7 @@ class ModelDiscount extends ModelBase{
    * @throws \Exception
    */
   public static function get_by_id($id){
+    $prms = [];
     $data = [
       'sid' => $id, 'discount_comment1' => '', 'discount_comment2' => '', 'discount_comment3' => '',
       'discount_amount' => '0.00', 'coupon_code' => '', 'allow_multiple' => 0,
@@ -112,7 +113,7 @@ class ModelDiscount extends ModelBase{
     ];
     if(isset($id)) {
       $q = "SELECT * FROM " . static::$table . " WHERE sid = '" . $id . "'";
-      $result = static::query($q);
+      $result = static::query($q, $prms);
       if($result) {
         $data = static::fetch_assoc($result);
       }
@@ -128,6 +129,7 @@ class ModelDiscount extends ModelBase{
    */
   public static function get_total_count($filter = null){
     $res = 0;
+    $prms = [];
     if(isset($filter['scenario']) && ($filter['scenario'] == 'orders')) {
       $q = "SELECT COUNT(DISTINCT a.oid)";
       $q .= " from shop_orders a";
@@ -135,7 +137,7 @@ class ModelDiscount extends ModelBase{
       $q .= " left join shop_specials_usage c on a.oid = c.oid";
     } else $q = "SELECT COUNT(sid) FROM " . static::$table;
     $q .= self::build_where($filter);
-    $result = static::query($q);
+    $result = static::query($q, $prms);
     if($result) {
       $row = static::fetch_array($result);
       $res = $row[0];
@@ -155,6 +157,7 @@ class ModelDiscount extends ModelBase{
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
     $res = null;
+    $prms = [];
     if(isset($filter['scenario']) && ($filter['scenario'] == 'orders')) {
       $q = "select";
       $q .= " DISTINCT a.*, CONCAT(b.bill_firstname,' ',b.bill_lastname) as username";
@@ -165,7 +168,7 @@ class ModelDiscount extends ModelBase{
     $q .= self::build_where($filter);
     $q .= static::build_order($sort);
     if($limit != 0) $q .= " LIMIT $start, $limit";
-    $result = static::query($q);
+    $result = static::query($q, $prms);
     if($result) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_assoc($result)) {
@@ -183,15 +186,16 @@ class ModelDiscount extends ModelBase{
    */
   public static function save(&$data){
     static::transaction();
+    $prms = [];
     try {
       extract($data);
       if(isset($sid)) {
         $q = "UPDATE " . static::$table . " SET" . " coupon_code='$coupon_code'," . " discount_amount='$discount_amount'," . " discount_amount_type='$discount_amount_type'," . " discount_type='$discount_type'," . " user_type='$user_type'," . " shipping_type='$shipping_type'," . " product_type='$product_type'," . " promotion_type='$promotion_type'," . " required_amount='$required_amount'," . " required_type='$required_type'," . " allow_multiple='$allow_multiple'," . " enabled='$enabled'," . " countdown='$countdown'," . " discount_comment1='$discount_comment1'," . " discount_comment2='$discount_comment2'," . " discount_comment3='$discount_comment3'," . " date_start='$date_start'," . " date_end='$date_end'" . " WHERE sid ='$sid'";
-        $res = static::query($q);
+        $res = static::query($q, $prms);
       } else {
         $q = "INSERT INTO " . static::$table . " SET" . " coupon_code='$coupon_code'," . " discount_amount='$discount_amount'," . " discount_amount_type='$discount_amount_type'," . " discount_type='$discount_type'," . " user_type='$user_type'," . " shipping_type='$shipping_type'," . " product_type='$product_type'," . " promotion_type='$promotion_type'," . " required_amount='$required_amount'," . " required_type='$required_type'," . " allow_multiple='$allow_multiple'," . " enabled='$enabled'," . " countdown='$countdown'," . " discount_comment1='$discount_comment1'," . " discount_comment2='$discount_comment2'," . " discount_comment3='$discount_comment3'," . " date_start='$date_start'," . " date_end='$date_end'";
 
-        $res = static::query($q);
+        $res = static::query($q, $prms);
         if($res) $sid = static::last_id();
       }
       if($res) {
@@ -405,7 +409,7 @@ class ModelDiscount extends ModelBase{
         }
         $q .= " order by manufacturer";
         $q .= " limit $start, $filter_limit";
-        $results = static::query($q);
+        $results = static::query($q, $prms);
         while($row = static::fetch_array($results)) {
           $filter[] = [$row[0], $row[1]];
         }

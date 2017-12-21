@@ -47,6 +47,7 @@ class ModelShop extends ModelConsole{
    */
   public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows){
     $response = null;
+    $prms = [];
     $q = "";
     switch($type) {
       case 'new':
@@ -113,7 +114,7 @@ class ModelShop extends ModelConsole{
         $q .= "ORDER BY a.pid DESC LIMIT " . $start . "," . $limit;
         break;
     }
-    if($result = static::query($q)) {
+    if($result = static::query($q, $prms)) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_assoc($result)) {
         $response[] = self::prepare_layout_product($row);
@@ -146,13 +147,13 @@ class ModelShop extends ModelConsole{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
       $query .= " GROUP BY a.pid";
       $query .= " ORDER BY s DESC) m";
       $query .= " LEFT JOIN shop_products n ON m.pid = n.pid";
     }
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     } else {
@@ -188,7 +189,7 @@ class ModelShop extends ModelConsole{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
       $query .= " GROUP BY a.pid";
     }
@@ -198,7 +199,7 @@ class ModelShop extends ModelConsole{
       $query .= ") m";
       $query .= " LEFT JOIN shop_products n ON m.pid = n.pid";
     }
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_assoc($result)) {
         if($prepare) {

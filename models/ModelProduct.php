@@ -305,8 +305,8 @@ class ModelProduct extends ModelBase{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     }
@@ -334,11 +334,11 @@ class ModelProduct extends ModelBase{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_array($result)) {
         $filename = 'images/products/b_' . $row['image1'];
@@ -523,7 +523,7 @@ class ModelProduct extends ModelBase{
           if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
             static::query("DELETE FROM shop_product_categories WHERE pid = $pid");
             $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" . " from shop_categories a" . " left join shop_product_categories b on a.cid = b.cid" . " where a.cid = 1";
-            $res = static::query($q);
+            $res = static::query($q, $prms);
             if($res) {
               $row = static::fetch_array($res, MYSQLI_NUM);
               $categories = [$row['cid'] => $row['pos']];
@@ -581,21 +581,21 @@ class ModelProduct extends ModelBase{
       if(isset($id)) {
         $data = static::get_by_id($id);
         $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         $query = "DELETE FROM shop_product_related WHERE pid = $id or r_pid = $id";
-        if($res) $res = static::query($query);
+        if($res) $res = static::query($query, $prms);
         $query = "DELETE FROM shop_clearance WHERE pid = $id";
-        if($res) $res = static::query($query);
+        if($res) $res = static::query($query, $prms);
         $query = "DELETE FROM shop_product_favorites WHERE pid = $id";
-        if($res) $res = static::query($query);
+        if($res) $res = static::query($query, $prms);
         $query = "DELETE FROM shop_product_categories WHERE pid = $id";
-        if($res) $res = static::query($query);
+        if($res) $res = static::query($query, $prms);
         $query = "DELETE FROM shop_product_colors WHERE prodId = $id";
-        if($res) $res = static::query($query);
+        if($res) $res = static::query($query, $prms);
         $query = "DELETE FROM shop_product_patterns WHERE prodId = $id";
-        if($res) $res = static::query($query);
+        if($res) $res = static::query($query, $prms);
         $query = "DELETE FROM shop_specials_products WHERE pid = $id";
-        if($res) $res = static::query($query);
+        if($res) $res = static::query($query, $prms);
         if(!$res) throw new Exception(static::error());
         static::delete_images($data);
       }
@@ -611,7 +611,7 @@ class ModelProduct extends ModelBase{
 //      if(!empty(trim($condition))) {
 //        $query = "select * from " . static::$table . " WHERE " . $condition;
 //        $query .= " LIMIT 0, 1";
-//        $results = static::query($query);
+//        $results = static::query($query, $prms);
 //        if ($results && !empty($row = static::fetch_assoc($results)))  $res = $row['pid'];
 //      }
 //      return $res;

@@ -3,6 +3,7 @@
 namespace models;
 
 use app\core\model\ModelBase;
+use ErrorException;
 use Exception;
 
 /**

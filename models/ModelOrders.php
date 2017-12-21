@@ -165,7 +165,7 @@ class ModelOrders extends ModelBase{
     $query .= " from shop_orders a";
     $query .= " left join shop_accounts b on a.aid = b.aid";
     $query .= " left join shop_specials_usage c on a.oid = c.oid";
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     if($result = static::query($query)) {
       $response = static::fetch_value($result);
       static::free_result($result);
@@ -190,8 +190,8 @@ class ModelOrders extends ModelBase{
     $query .= " from shop_orders a";
     $query .= " left join shop_accounts b on a.aid = b.aid";
     $query .= " left join shop_specials_usage c on a.oid = c.oid";
-    $query .= static::build_where($filter);
-    $query .= static::build_order($sort);
+    $query .= static::build_where($filter, $prms);
+    $query .= static::build_order($sort, $prms);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
     if($result = static::query($query)) {

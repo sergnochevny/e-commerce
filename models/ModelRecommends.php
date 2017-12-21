@@ -103,8 +103,8 @@ class ModelRecommends extends ModelBase{
       $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
     if(!empty($query)) {
-      $query .= static::build_where($filter);
-      if($result = static::query($query)) {
+      $query .= static::build_where($filter, $prms);
+      if($result = static::query($query, $prms)) {
         $response = static::fetch_value($result);
         static::free_result($result);
       }
@@ -148,10 +148,10 @@ class ModelRecommends extends ModelBase{
       $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
     if(!empty($query)) {
-      $query .= static::build_where($filter);
+      $query .= static::build_where($filter, $prms);
       $query .= static::build_order($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
-      if($result = static::query($query)) {
+      if($result = static::query($query, $prms)) {
         $res_count_rows = static::num_rows($result);
         $sys_hide_price = ModelPrice::sysHideAllRegularPrices();
         $cart_items = isset(App::$app->session('cart')['items']) ? App::$app->session('cart')['items'] : [];

@@ -6,8 +6,6 @@ use app\core\App;
 use controllers\ControllerAdmin;
 use app\core\model\ModelBase;
 use controllers\ControllerMatches;
-use controllers\ControllerUser;
-use Exception;
 
 /**
  * Class ModelShop
@@ -29,29 +27,32 @@ class ModelShop extends ModelBase{
     $result_where = "";
     if(ControllerAdmin::is_logged()) {
       if(!empty($filter["a.pname"])) foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) if(!empty($item)) $result[] = "a.pname LIKE '%" . static::prepare_for_sql($item) . "%'";
+      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . static::prepare_for_sql($filter["a.pvisible"]) . "'";
+      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::prepare_for_sql($filter["a.piece"]) . "'";
+      if(isset($filter["a.dt"])) {
+        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::prepare_for_sql($filter["a.dt"]["from"]) . "'" : "") . (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::prepare_for_sql($filter["a.dt"]["to"]) . "'" : "");
+        if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
+      }
+      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::prepare_for_sql($filter["a.pnumber"]) . "%'";
+      if(isset($filter["a.best"])) $result[] = "a.best = '" . static::prepare_for_sql($filter["a.best"]) . "'";
+      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::prepare_for_sql($filter["a.specials"]) . "'";
+      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::prepare_for_sql($filter["b.cid"]) . "'";
+      if(isset($filter["c.id"])) $result[] = "c.id = '" . static::prepare_for_sql($filter["c.id"]) . "'";
+      if(isset($filter["d.id"])) $result[] = "d.id = '" . static::prepare_for_sql($filter["d.id"]) . "'";
+      if(isset($filter["e.id"])) $result[] = "e.id = '" . static::prepare_for_sql($filter["e.id"]) . "'";
+      if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter["a.priceyard"]['from']) . "'";
+      if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::prepare_for_sql($filter["a.priceyard"]['to']) . "'";
+      if(!empty($result) && (count($result) > 0)) {
+        if(strlen(trim(implode(" AND ", $result))) > 0) {
+          $filter['active'] = true;
+        }
+      }
     } else {
-      if(isset($filter["a.pname"])) $result[] = ModelSynonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
-    }
-    if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . static::prepare_for_sql($filter["a.pvisible"]) . "'";
-    if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::prepare_for_sql($filter["a.piece"]) . "'";
-    if(isset($filter["a.dt"])) {
-      $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::prepare_for_sql($filter["a.dt"]["from"]) . "'" : "") . (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::prepare_for_sql($filter["a.dt"]["to"]) . "'" : "");
-      if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
-    }
-    if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::prepare_for_sql($filter["a.pnumber"]) . "%'";
-    if(isset($filter["a.best"])) $result[] = "a.best = '" . static::prepare_for_sql($filter["a.best"]) . "'";
-    if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::prepare_for_sql($filter["a.specials"]) . "'";
-    if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::prepare_for_sql($filter["b.cid"]) . "'";
-    if(isset($filter["c.id"])) $result[] = "c.id = '" . static::prepare_for_sql($filter["c.id"]) . "'";
-    if(isset($filter["d.id"])) $result[] = "d.id = '" . static::prepare_for_sql($filter["d.id"]) . "'";
-    if(isset($filter["e.id"])) $result[] = "e.id = '" . static::prepare_for_sql($filter["e.id"]) . "'";
-    if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter["a.priceyard"]['from']) . "'";
-    if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::prepare_for_sql($filter["a.priceyard"]['to']) . "'";
-    if(!empty($result) && (count($result) > 0)) {
-      if(strlen(trim(implode(" AND ", $result))) > 0) {
-        $filter['active'] = true;
+      if(isset($filter["a.pname"])) {
+        $result[] = ModelSynonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
       }
     }
+
     if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter['hidden']["a.priceyard"]) . "'";
     if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . static::prepare_for_sql($filter['hidden']["a.pvisible"]) . "'";
     if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
@@ -280,7 +281,6 @@ class ModelShop extends ModelBase{
   /**
    * @param $pid
    * @return mixed
-   * @throws \Exception
    */
   public static function get_product($pid){
     self::inc_popular($pid);
@@ -514,8 +514,8 @@ class ModelShop extends ModelBase{
       $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
       $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
-    $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     }
@@ -555,10 +555,10 @@ class ModelShop extends ModelBase{
       $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
       $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
       $sys_hide_price = ModelPrice::sysHideAllRegularPrices();
       $cart_items = isset(App::$app->session('cart')['items']) ? App::$app->session('cart')['items'] : [];

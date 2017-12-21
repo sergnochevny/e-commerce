@@ -43,8 +43,8 @@ class ModelBlogcategory extends ModelBase{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . self::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
-    $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);    
     }
@@ -66,11 +66,11 @@ class ModelBlogcategory extends ModelBase{
     $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount ";
     $q .= " FROM " . self::$table . " a";
     $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
-    $q .= static::build_where($filter);
+    $q .= static::build_where($filter, $prms);
     $q .= " GROUP BY a.id, a.name";
     $q .= static::build_order($sort);
     if($limit != 0) $q .= " LIMIT $start, $limit";
-    $result = static::query($q);
+    $result = static::query($q, $prms);
     if($result) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_array($result)) {

@@ -59,8 +59,8 @@ class ModelUsers extends ModelBase{
   public static function get_total_count($filter = null){
     $response = 0;
     $query = "SELECT COUNT(*) FROM " . static::$table;
-    $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     }
@@ -81,11 +81,11 @@ class ModelUsers extends ModelBase{
     $response = null;
     $query = "SELECT * , CONCAT(bill_firstname, ' ', bill_lastname) as full_name";
     $query .= " FROM " . static::$table;
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_array($result)) {
         $response[] = $row;
@@ -160,7 +160,7 @@ class ModelUsers extends ModelBase{
 //        $res = static::query( $query);
 //        if(!$res) throw new Exception(static::error());
         $query = "DELETE FROM " . static::$table . " WHERE aid = $id";
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

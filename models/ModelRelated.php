@@ -64,8 +64,8 @@ class ModelRelated extends ModelBase{
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= " LEFT JOIN shop_products b ON b.pid = a.r_pid";
     $query .= " LEFT JOIN shop_products c ON c.pid = a.pid";
-    $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     }
@@ -87,11 +87,11 @@ class ModelRelated extends ModelBase{
     $query = "SELECT DISTINCT c.pid AS cpid, c.pname AS cpname, b.* FROM " . static::$table . " a";
     $query .= " LEFT JOIN shop_products b ON b.pid = a.r_pid";
     $query .= " LEFT JOIN shop_products c ON c.pid = a.pid";
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
       $sys_hide_price = ModelPrice::sysHideAllRegularPrices();
       $cart_items = isset(App::$app->session('cart')['items']) ? App::$app->session('cart')['items'] : [];

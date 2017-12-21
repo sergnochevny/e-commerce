@@ -51,7 +51,7 @@ class ModelPrices extends ModelBase{
         $result = (!empty($result) ? " WHERE " . $result : '');
       }
     } else {
-      $result = parent::build_where($filter);
+      $result = parent::build_where($filter, $prms);
     }
 
     return $result;
@@ -105,7 +105,7 @@ class ModelPrices extends ModelBase{
 //      $response = null;
 //      $query = "SELECT COUNT(a.pid) as count";
 //      $query .= " FROM " . static::$table . " a";
-//      $query .= static::build_where($filter);
+//      $query .= static::build_where($filter, $prms);
 //      $query .= static::build_order($sort);
 //
 //      $res_count_rows = PRICE_GROUPS_COUNT;
@@ -125,7 +125,7 @@ class ModelPrices extends ModelBase{
 //            $query .= "SELECT MIN(s.priceyard) as min_price, MAX(s.priceyard) as max_price";
 //            $query .= " FROM (";
 //            $query .= "SELECT * FROM " . static::$table . " a";
-//            $query .= static::build_where($filter);
+//            $query .= static::build_where($filter, $prms);
 //            $query .= " ORDER BY a.priceyard";
 //            $query .= " LIMIT " . $from . "," . $step;
 //            $query .= ") s";
@@ -143,7 +143,7 @@ class ModelPrices extends ModelBase{
 //            $query = "SELECT MIN(s.priceyard) as min_price, MAX(s.priceyard) as max_price";
 //            $query .= " FROM (";
 //            $query .= "SELECT * FROM " . static::$table . " a";
-//            $query .= static::build_where($filter);
+//            $query .= static::build_where($filter, $prms);
 //            $query .= " ORDER BY a.priceyard";
 //            $query .= " LIMIT " . $from . "," . $step;
 //            $query .= ") s";

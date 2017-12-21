@@ -62,8 +62,8 @@ class ModelConsole extends ModelBase{
   public static function get_total_count($filter = null){
     $response = 0;
     $query = "SELECT COUNT(*) FROM " . static::$table;
-    if(!empty($filter)) $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    if(!empty($filter)) $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     } else {
@@ -82,9 +82,9 @@ class ModelConsole extends ModelBase{
     $data = null;
     if(!empty($filter)) {
       $query = "SELECT * FROM " . static::$table;
-      $query .= static::build_where($filter);
+      $query .= static::build_where($filter, $prms);
       $query .= static::build_order($sort);
-      $result = static::query($query);
+      $result = static::query($query, $prms);
       if($result) {
         $data = static::fetch_assoc($result);
       } else {
@@ -108,10 +108,10 @@ class ModelConsole extends ModelBase{
   public static function get_list($prepare, $start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
     $response = null;
     $query = "SELECT * FROM " . static::$table;
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_assoc($result)) {
         $response[] = $row;
@@ -129,6 +129,7 @@ class ModelConsole extends ModelBase{
    * @throws \Exception
    */
   public static function save($data){
+    $prms = [];
     $res = false;
     if(!empty($data)) {
       $query = "REPLACE INTO `" . static::$table . "`";
@@ -139,7 +140,7 @@ class ModelConsole extends ModelBase{
         $values .= (strlen($values) ? ", " : "") . "'" . static::prepare_for_sql($value) . "'";
       }
       $query .= "(" . $fields . ") VALUES(" . $values . ")";
-      if(!static::query($query)) throw new Exception(static::error());
+      if(!static::query($query, $prms)) throw new Exception(static::error());
     }
 
     return $res;
@@ -151,9 +152,9 @@ class ModelConsole extends ModelBase{
    */
   public static function delete($where){
     $query = "DELETE FROM " . static::$table;
-    $query .= static::build_where($where);
+    $query .= static::build_where($where, $prms);
     try {
-      if(!($res = static::query($query))) throw new Exception(static::error());
+      if(!($res = static::query($query, $prms))) throw new Exception(static::error());
     } catch(Exception $e) {
     }
 

@@ -47,12 +47,13 @@ class ModelComments extends ModelBase{
    * @throws \Exception
    */
   public static function get_by_id($id){
+    $prms = [];
     $response = [
       'id' => $id, 'title' => '', 'dt' => time(), 'user_id' => '', 'moderated' => '0'
     ];
     if(isset($id)) {
       $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
-      $result = static::query($query);
+      $result = static::query($query, $prms);
       if($result) $response = static::fetch_assoc($result);
     }
 
@@ -68,8 +69,8 @@ class ModelComments extends ModelBase{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= " LEFT JOIN accounts b ON b.aid = a.userid";
-    $query .= static::build_where($filter);
-    if($result = static::query($query)) {
+    $query .= static::build_where($filter, $prms);
+    if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
       static::free_result($result);
     }
@@ -91,11 +92,11 @@ class ModelComments extends ModelBase{
     $query = "SELECT a.*, b.email ";
     $query .= " FROM " . static::$table . " a";
     $query .= " LEFT JOIN accounts b ON b.aid = a.userid";
-    $query .= static::build_where($filter);
+    $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query)) {
+    if($result = static::query($query, $prms)) {
       $res_count_rows = static::num_rows($result);
       while($row = static::fetch_array($result)) {
         $response[] = $row;
@@ -112,15 +113,16 @@ class ModelComments extends ModelBase{
    */
   public static function save(&$data){
     static::transaction();
+    $prms = [];
     try {
       extract($data);
       if(isset($id)) {
         $query = 'UPDATE ' . static::$table . ' SET `title` = "' . $title . '", `data` = "' . $data . '",`moderated` = "' . $moderated . '" WHERE id =' . $id;
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         if(!$res) throw new Exception(static::error());
       } else {
         $query = 'INSERT INTO ' . static::$table . '(title, data, moderated) VALUE ("' . $title . '","' . $data . '","' . $moderated . '")';
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }
@@ -141,10 +143,11 @@ class ModelComments extends ModelBase{
    */
   public static function moderate($id, $action){
     static::transaction();
+    $prms = [];
     try {
       $query = 'UPDATE ' . static::$table . ' SET `moderated` = "' . $action . '" WHERE id =' . $id;
 
-      return static::query($query) ? true : false;
+      return static::query($query, $prms) ? true : false;
       static::commit();
     } catch(Exception $e) {
       static::rollback();
@@ -158,10 +161,11 @@ class ModelComments extends ModelBase{
    */
   public static function delete($id){
     static::transaction();
+    $prms = [];
     try {
       if(isset($id)) {
         $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = static::query($query);
+        $res = static::query($query, $prms);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

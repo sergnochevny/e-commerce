@@ -698,7 +698,7 @@ class ModelPrice extends ModelBase{
     }
 
     if(strlen($query) > 0) {
-      $result = static::query($query) or die(static::error());
+      $result = static::query($query, $prms) or die(static::error());
       $rs = static::fetch_assoc($result);
 
       return $rs['next_date'];
