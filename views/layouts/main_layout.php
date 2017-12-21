@@ -23,6 +23,28 @@ use app\core\App;
   <link rel="apple-touch-icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
   <link rel="apple-touch-icon-precomposed" href="<?= App::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
   <link rel="apple-touch-startup-image" href="<?= App::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
+
+  <style>
+    .loader {
+      background: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      color: #000;
+      width: 100%;
+      height: 100%;
+      z-index: 1000000000000;
+    }
+
+    .loader i {
+      position: relative;
+      left: 50vw;
+      top: 50vh;
+      margin-left: -28px;
+      margin-top: -28px;
+    }
+  </style>
+
   <link rel='stylesheet' type="text/css"
         href='<?= App::$app->router()->UrlTo('css/woocommerce-smallscreen.min.css'); ?>'
         media='only screen and (max-width: 768px)'/>
@@ -76,6 +98,8 @@ use app\core\App;
 </head>
 <body class="woocommerce woocommerce-page">
 <input type="hidden" id="base_url" value="<?= App::$app->router()->UrlTo('/'); ?>">
+
+<?php include("loader.php"); ?>
 
 <div class="scroll">
   <div class="site-container">

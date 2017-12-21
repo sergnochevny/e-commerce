@@ -26,7 +26,7 @@
   });
 
   $(document).on('dblclick', "img.product_img_holder", function (event) {
-    $('#content').waitloader('show');
+    $('body').waitloader('show');
     window.location = $(this).attr('data-detail_url');
   });
 
@@ -36,11 +36,11 @@
       var url = $(ui.draggable).attr('data-delete_url');
       var data = new FormData();
 
-      $('#content').waitloader('show');
+      $('body').waitloader('show');
       $.postdata(this, url, data,
         function (data) {
           $(ui.draggable).remove();
-          $('#content').waitloader('remove');
+          $('body').waitloader('remove');
         }
       )
     }
@@ -49,13 +49,13 @@
   $('.detailsDragImg').droppable({
     hoverClass: "ui-state-hover",
     drop: function (event, ui) {
-      $('#content').waitloader('show');
+      $('body').waitloader('show');
       window.location = $(ui.draggable).attr('data-detail_url');
     }
   });
 
   $('.AddToCartDragImg').on('click', function () {
-    $('#content').waitloader('show');
+    $('body').waitloader('show');
     window.location = base_url + 'cart';
   });
 
@@ -71,13 +71,15 @@
       products.push($(ui.draggable).attr('data-id'));
       products = JSON.stringify(products);
       data.append('data', products);
-      $('#content').waitloader('show');
+      $('body').waitloader('show');
 
       $.postdata(this, url, data, function (data) {
         $.when(
-          $('#content').waitloader('remove'),
+          $('body').waitloader('show'),
           $(data).appendTo('#content'),
-          $('span#cart_amount').load(load_url)
+          $('span#cart_amount').load(load_url).done(function(){
+            $('body').waitloader('remove');
+          })
         ).done(function () {
           $($this).removeClass('simple-icon-basket').addClass('simple-icon-basket-loaded');
           $('#modal').modal('show').on('hidden.bs.modal', function () {
@@ -93,12 +95,12 @@
     var data = new FormData();
 
     ev.preventDefault();
-    $('#content').waitloader('show');
+    $('body').waitloader('show');
     $.postdata(this, url, data, function (data) {
       $('img.product_img_holder').each(function () {
         $(this).remove();
       });
-      $('#content').waitloader('remove');
+      $('body').waitloader('remove');
     });
   });
 
@@ -115,13 +117,15 @@
     ev.preventDefault();
     products = JSON.stringify(products);
     data.append('data', products);
-    $('#content').waitloader('show');
+    $('body').waitloader('show');
 
     $.postdata(this, url, data, function (data) {
+      $('body').waitloader('show');
       $.when(
-        $('#content').waitloader('remove'),
         $(data).appendTo('#content'),
-        $('span#cart_amount').load(load_url)
+        $('span#cart_amount').load(load_url).done(function(){
+          $('body').waitloader('remove');
+        })
       ).done(function () {
         $('#clear_matches').trigger('click');
         $('#modal').modal('show').on('hidden.bs.modal', function () {

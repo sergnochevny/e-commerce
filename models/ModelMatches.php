@@ -39,6 +39,7 @@ class ModelMatches extends ModelBase{
    * @param null $filter
    * @param null $sort
    * @return null
+   * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
     $response = null;

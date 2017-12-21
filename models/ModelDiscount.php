@@ -54,6 +54,7 @@ class ModelDiscount extends ModelBase{
   /**
    * @param $sid
    * @return string
+   * @throws \Exception
    */
   public static function generateCouponCode($sid){
     $sCde = "";
@@ -63,7 +64,7 @@ class ModelDiscount extends ModelBase{
       $sCde .= $char;
     }
     while(self::checkCouponCode($sid, $sCde)) {
-      $sCde = self::generateCouponCode();
+      $sCde = self::generateCouponCode($sid);
     }
 
     return $sCde;

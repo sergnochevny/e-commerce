@@ -199,7 +199,7 @@
       var related = $('[data-edit_related]');
       var url = $('[data-related_get_list]').val();
       $(this_).hide();
-      $(related).waitloader('show');
+      $('body').waitloader('show');
       related.load(url, function () {
         $('[data-fields_block]').hide();
         $('[data-submit_btn]').hide();
@@ -217,6 +217,7 @@
           );
         }
         $('body').stop().animate({scrollTop: 0});
+        $('body').waitloader('remove');
       });
     }
   );

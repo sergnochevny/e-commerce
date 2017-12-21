@@ -15,11 +15,12 @@
 
   $('#edit_form').on('submit', function (event) {
     event.preventDefault();
-    $('#content').waitloader('show');
+    $('body').waitloader('show');
     var url = $(this).attr('action');
     var data = new FormData(this);
     $.postdata(this, url, data, function (data) {
       $('#content').html(data);
+      $('body').waitloader('remove');
     });
   });
 

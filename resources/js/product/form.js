@@ -175,10 +175,12 @@
     if (!$(this).is('.disabled')) {
       var href = $(this).attr('href');
       $("#confirm_action").on('click.confirm_action', function (event) {
-        $('#content').waitloader('show');
+        $('body').waitloader('show');
         event.preventDefault();
         $("#confirm_dialog").removeClass('overlay_display');
-        $('#content').load(href);
+        $('#content').load(href).done(function(){
+          $('body').waitloader('remove');
+        });
         $("#confirm_action").off('click.confirm_action');
       });
       $("#confirm_dialog").addClass('overlay_display');

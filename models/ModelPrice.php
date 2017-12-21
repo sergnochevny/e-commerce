@@ -301,6 +301,7 @@ class ModelPrice extends ModelBase{
    * @param $uid
    * @param $rPrice
    * @return bool
+   * @throws \Exception
    */
   public static function checkDiscountApplies($rs, $uid, $rPrice){
     $bDoDiscount = false;
@@ -633,6 +634,7 @@ class ModelPrice extends ModelBase{
   /**
    * @param $uid
    * @return int
+   * @throws \Exception
    */
   public static function getUserType($uid){
 

@@ -9,9 +9,10 @@
     var data = new FormData(this);
     var container = $(this).parents('[data-role=form_content]');
     if (container.length == 0) container = $(this).parent();
-    $(container).waitloader('show');
+    $('body').waitloader('show');
     $.postdata(this, url, data, function (data) {
       container.html(data);
+      $('body').waitloader('remove');
     });
   });
 

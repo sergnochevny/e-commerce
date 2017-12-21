@@ -6,7 +6,7 @@
   var related = $('[data-related]');
   var related_href = $('[data-href_related]');
   if (related_href.length) {
-    $(related).waitloader('show');
+    $('body').waitloader('show');
     var url = related_href.val();
     related.load(url,
       function () {
@@ -22,6 +22,7 @@
           autoplayTimeout: 2000,
           dots: true
         });
+        $('body').waitloader('remove');
       }
     );
   }
@@ -119,7 +120,7 @@
   $(document).on('click', "#continue", function (event) {
     event.preventDefault();
     if (back_url) {
-      $('#content').waitloader('show');
+      $('body').waitloader('show');
       window.location = back_url;
     }
   });
@@ -148,8 +149,8 @@
 
         if ($('#modal').length > 0) {
           $('#modal').modal('show');
-          $('body').waitloader('remove');
         }
+        $('body').waitloader('remove');
       });
     });
   });

@@ -2,7 +2,6 @@
 
 namespace models;
 
-use app\core\App;
 use app\core\model\ModelBase;
 use Exception;
 

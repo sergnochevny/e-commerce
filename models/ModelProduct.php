@@ -276,6 +276,7 @@ class ModelProduct extends ModelBase{
 
   /**
    * @return array
+   * @throws \Exception
    */
   public static function get_manufacturers(){
     $data = [];

@@ -5,6 +5,9 @@ namespace models;
 use app\core\App;
 use controllers\ControllerAdmin;
 use app\core\model\ModelBase;
+use controllers\ControllerMatches;
+use controllers\ControllerUser;
+use Exception;
 
 /**
  * Class ModelShop
@@ -79,6 +82,7 @@ class ModelShop extends ModelBase{
    * @param $sys_hide_price
    * @param string $image_suffix
    * @return mixed
+   * @throws \Exception
    */
   public static function prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix = 'b_'){
     $row['sdesc'] = substr($row['sdesc'], 0, 100);
@@ -119,6 +123,7 @@ class ModelShop extends ModelBase{
    * @param $cart
    * @param $sys_hide_price
    * @return mixed
+   * @throws \Exception
    */
   public static function prepare_layout_product_detail($data, $cart, $sys_hide_price){
     if(ControllerMatches::product_in($data['pid'])) $data['in_matches'] = true;
@@ -257,6 +262,7 @@ class ModelShop extends ModelBase{
   /**
    * @param $pid
    * @return array
+   * @throws \Exception
    */
   public static function get_product_params($pid){
 
@@ -274,6 +280,7 @@ class ModelShop extends ModelBase{
   /**
    * @param $pid
    * @return mixed
+   * @throws \Exception
    */
   public static function get_product($pid){
     self::inc_popular($pid);
