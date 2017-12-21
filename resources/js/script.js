@@ -233,10 +233,10 @@ var change_text = false;
           if (_waitloader_counter <= 0) {
             _waitloader_counter = 0;
             if (_loader.length > 0) {
-              _loader.fadeOut(1000);
+              _loader.fadeOut(2000);
             } else {
               if (_waitloader.length > 0) {
-                $.when(_waitloader.fadeOut(1000))
+                $.when(_waitloader.fadeOut(2000))
                   .done(function () {
                     _waitloader.remove();
                   });

@@ -1947,7 +1947,7 @@ span[role=combobox].ui-button:hover {
 
 span[role=combobox].ui-state-active .ui-icon,
 span[role=combobox].ui-button:active .ui-icon {
-    background-image: url(images/ui-icons_777777_256x240.png);
+    background-image: url('/css/images/ui-icons_777777_256x240.png');
 }
 
 .ui-selectmenu-open > ul {
