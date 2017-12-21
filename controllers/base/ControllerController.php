@@ -399,6 +399,7 @@ abstract class ControllerController extends ControllerBase{
    * @param $row
    * @param $view
    * @return array
+   * @throws \Exception
    */
   protected function build_sitemap_item($row, $view){
     $loc = $this->build_sitemap_url($row, $view);
@@ -473,6 +474,7 @@ abstract class ControllerController extends ControllerBase{
   /**
    * @param \Closure $function
    * @param bool $view
+   * @throws \Exception
    */
   public function sitemap(Closure $function, $view = false){
     $data = null;
