@@ -66,7 +66,6 @@ return [
     'CAPTCHA_RELEVANT' => 300,
 
     'SHOP_SPECIALS_AMOUNT' => 30,
-    'SHOP_UNDER_AMOUNT' => 1000,
     'SHOP_BSELLS_AMOUNT' => 60,
 
     'PRICE_GROUPS_COUNT' => 24,

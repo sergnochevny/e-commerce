@@ -11,6 +11,8 @@ if [ -f /app/deploy/db.sql ]; then
    mysql -uroot -proot -hiluvfabrix_db iluvfabrix < /app/deploy/db.sql
 fi
 
+cp -rf /app/deploy/config /app
+
 cd /app
 composer -g config http-basic.tp.ait.com tp tp \
     && composer -g config repositories.ait composer https://tp.ait.com/repo/private/ \
@@ -19,8 +21,6 @@ composer -g config http-basic.tp.ait.com tp tp \
     && composer -g config -l \
     && composer global require "fxp/composer-asset-plugin:^1.2.0" --no-interaction \
     && composer install --no-interaction
-
-cp -rf /app/deploy/config/* /app
 
 rm -rf /app/deploy
 rm -rf /app/deploy.dev
