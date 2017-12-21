@@ -134,7 +134,7 @@ abstract class ControllerSimple extends ControllerController{
       try {
         $data['scenario'] = $this->scenario();
         $this->before_save($data);
-        $id = forward_static_call_array([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'save'], [&$data]);
+        $id = forward_static_call_array([$this->model_name, 'save'], [&$data]);
         $this->after_save($id, $data);
         $warning = [$this->save_warning];
         $result = true;
