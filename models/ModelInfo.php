@@ -21,7 +21,7 @@ class ModelInfo extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter['hidden']['id']) && !is_array($filter['hidden']['priceyard'])) $result[] = "a.id = '" . static::prepare_for_sql($filter['hidden']["id"]) . "'";
     if(isset($filter['hidden']['visible'])) $result[] = "visible = '" . static::prepare_for_sql($filter['hidden']["visible"]) . "'";

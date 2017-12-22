@@ -21,7 +21,7 @@ class ModelComments extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result = '';
     if(isset($filter['a.title'])) $result[] = "a.post_title LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter['a.post_title'])))) . "%'";
     if(isset($filter['a.dt'])) {

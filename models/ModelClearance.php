@@ -24,43 +24,8 @@ class ModelClearance extends ModelBase{
    * @return array|string
    * @throws \Exception
    */
-  protected static function build_where(&$filter, &$prms = null){
-    $result = "";
-    if(ControllerAdmin::is_logged()) {
-      if(!empty($filter["a.pname"])) foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) if(!empty($item)) $result[] = "a.pname LIKE '%" . static::prepare_for_sql($item) . "%'";
-    } else {
-      if(isset($filter["a.pname"])) $result[] = ModelSynonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
-    }
-    if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . static::prepare_for_sql($filter["a.pvisible"]) . "'";
-    if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::prepare_for_sql($filter["a.piece"]) . "'";
-    if(isset($filter["a.dt"])) {
-      $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::prepare_for_sql($filter["a.dt"]["from"]) . "'" : "") . (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::prepare_for_sql($filter["a.dt"]["to"]) . "'" : "");
-      if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
-    }
-    if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::prepare_for_sql($filter["a.pnumber"]) . "%'";
-    if(isset($filter["a.best"])) $result[] = "a.best = '" . static::prepare_for_sql($filter["a.best"]) . "'";
-    if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::prepare_for_sql($filter["a.specials"]) . "'";
-    if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::prepare_for_sql($filter["b.cid"]) . "'";
-    if(isset($filter["c.id"])) $result[] = "c.id = '" . static::prepare_for_sql($filter["c.id"]) . "'";
-    if(isset($filter["d.id"])) $result[] = "d.id = '" . static::prepare_for_sql($filter["d.id"]) . "'";
-    if(isset($filter["e.id"])) $result[] = "e.id = '" . static::prepare_for_sql($filter["e.id"]) . "'";
-    if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter["a.priceyard"]['from']) . "'";
-    if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::prepare_for_sql($filter["a.priceyard"]['to']) . "'";
-    if(!empty($result) && (count($result) > 0)) {
-      if(strlen(trim(implode(" AND ", $result))) > 0) {
-        $filter['active'] = true;
-      }
-    }
-    if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter['hidden']["a.priceyard"]) . "'";
-    if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . static::prepare_for_sql($filter['hidden']["a.pvisible"]) . "'";
-    if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
-    if(isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";
-    if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
-      $result = (!empty($result) ? " WHERE " . $result : '');
-    }
-
-    return $result;
+  public static function build_where(&$filter, &$prms = null){
+    return ModelShop::build_where($filter, $prms);
   }
 
   /**

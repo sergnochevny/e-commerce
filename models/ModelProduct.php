@@ -22,7 +22,7 @@ class ModelProduct extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result = "";
     if(!empty($filter["a.pname"])) {
       foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) {

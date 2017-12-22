@@ -1,6 +1,7 @@
 <?php
 
 use app\core\App;
+use controllers\ControllerAdmin;
 
 ?>
 <form action="<?= $action ?>" method="post" data-search class="col-xs-12">
@@ -11,44 +12,44 @@ use app\core\App;
           <div class="row">
             <div class="col-xs-1 col-sm-1"><i class="fa fa-2x fa-search"></i></div>
             <div class="h4 col-xs-10 search-result-list comment-text">
-              <?php if (isset($search['a.pname'])): ?>
+              <?php if(isset($search['a.pname'])): ?>
                 <div class="label label-search-info">Name like:<?= $search['a.pname'] ?></div>
               <?php endif; ?>
-              <?php if (isset($search['a.pnumber'])): ?>
+              <?php if(isset($search['a.pnumber'])): ?>
                 <div class="label label-search-info">Product number like: <?= $search['a.pnumber'] ?></div>
               <?php endif; ?>
-              <?php if (isset($search['b.cid'])): ?>
+              <?php if(isset($search['b.cid'])): ?>
                 <div class="label label-search-info">Category: <?= $search['categories'][$search['b.cid']] ?></div>
               <?php endif; ?>
-              <?php if (isset($search['c.id'])): ?>
+              <?php if(isset($search['c.id'])): ?>
                 <div class="label label-search-info">Color: <?= $search['colors'][$search['c.id']] ?></div>
               <?php endif; ?>
-              <?php if (isset($search['e.id'])): ?>
+              <?php if(isset($search['e.id'])): ?>
                 <div class="label label-search-info">Manufacturer: <?= $search['manufacturers'][$search['e.id']] ?>
                 </div>
               <?php endif; ?>
-              <?php if (isset($search['a.pvisible'])): ?>
+              <?php if(isset($search['a.pvisible'])): ?>
                 <div class="label label-search-info">
                   Visibile: <?= isset($search['a.pvisible']) && $search['a.pvisible'] == 1 ? 'YES' : 'NO' ?>
                 </div>
               <?php endif; ?>
-              <?php if (isset($search['a.best'])): ?>
+              <?php if(isset($search['a.best'])): ?>
                 <div class="label label-search-info">Best
                   textiles: <?= isset($search['a.best']) && $search['a.best'] == 1 ? 'YES' : 'NO' ?></div>
               <?php endif; ?>
-              <?php if (isset($search['a.specials'])): ?>
+              <?php if(isset($search['a.specials'])): ?>
                 <div class="label label-search-info">
                   Specials: <?= isset($search['a.specials']) && $search['a.specials'] == 1 ? 'YES' : 'NO' ?></div>
               <?php endif; ?>
-              <?php if (isset($search['a.piece'])): ?>
+              <?php if(isset($search['a.piece'])): ?>
                 <div class="label label-search-info">
                   Piece: <?= isset($search['a.piece']) && $search['a.piece'] == 1 ? 'YES' : 'NO' ?></div>
               <?php endif; ?>
-              <?php if (!empty($search['a.dt']['from'])): ?>
+              <?php if(!empty($search['a.dt']['from'])): ?>
                 <div class="label label-search-info">
                   Date from: <?= $search['a.dt']['from'] ?></div>
               <?php endif; ?>
-              <?php if (!empty($search['a.dt']['to'])): ?>
+              <?php if(!empty($search['a.dt']['to'])): ?>
                 <div class="label label-search-info">
                   Date to: <?= $search['a.dt']['to'] ?></div>
               <?php endif; ?>
@@ -86,8 +87,8 @@ use app\core\App;
               <label>Specific category</label>
               <select name="search[b.cid]">
                 <option value="" <?= isset($search['b.cid']) ? '' : 'selected' ?>>Any</option>
-                <?php if (isset($search['categories'])):
-                  foreach ($search['categories'] as $key => $val): ?>
+                <?php if(isset($search['categories'])):
+                  foreach($search['categories'] as $key => $val): ?>
                     <option
                       value="<?= $key ?>" <?= (isset($search['b.cid']) && ($key == $search['b.cid'])) ? 'selected' : '' ?>>
                       <?= $val ?>
@@ -102,8 +103,8 @@ use app\core\App;
               <label>Specific manufacturer</label>
               <select name="search[e.id]">
                 <option value="" <?= isset($search['e.id']) ? '' : 'selected' ?>>Any</option>
-                <?php if (isset($search['manufacturers'])):
-                  foreach ($search['manufacturers'] as $key => $val):?>
+                <?php if(isset($search['manufacturers'])):
+                  foreach($search['manufacturers'] as $key => $val):?>
                     <option
                       value="<?= $key ?>" <?= (isset($search['e.id']) && ($key == $search['e.id'])) ? 'selected' : '' ?>>
                       <?= $val ?>
@@ -162,8 +163,8 @@ use app\core\App;
               <label>In specific color</label>
               <select name="search[c.id]">
                 <option value="" <?= isset($search['c.id']) ? '' : 'selected' ?>>Any</option>
-                <?php if (isset($search['colors'])):
-                  foreach ($search['colors'] as $key => $val):?>
+                <?php if(isset($search['colors'])):
+                  foreach($search['colors'] as $key => $val):?>
                     <option
                       value="<?= $key ?>" <?= (isset($search['c.id']) && ($key == $search['c.id'])) ? 'selected' : '' ?>>
                       <?= $val ?>
@@ -178,8 +179,8 @@ use app\core\App;
               <label>With specific pattern</label>
               <select name="search[d.id]">
                 <option value="" <?= isset($search['d.id']) ? '' : 'selected' ?>>Any</option>
-                <?php if (isset($search['patterns'])):
-                  foreach ($search['patterns'] as $key => $val):?>
+                <?php if(isset($search['patterns'])):
+                  foreach($search['patterns'] as $key => $val):?>
                     <option
                       value="<?= $key ?>" <?= (isset($search['d.id']) && ($key == $search['d.id'])) ? 'selected' : '' ?>>
                       <?= $val ?>
@@ -234,5 +235,20 @@ use app\core\App;
       </div>
     </div>
   </div>
+
+  <?php
+  if(isset($search['hidden'])):
+    foreach($search['hidden'] as $field_name => $field_value):?>
+      <?php if(is_array($field_value)): ?>
+        <input type="hidden" name="search[hidden][<?= $field_name ?>][from]" value="<?= $field_value['from'] ?>"/>
+        <input type="hidden" name="search[hidden][<?= $field_name ?>][to]" value="<?= $field_value['to'] ?>"/>
+      <?php else: ?>
+        <input type="hidden" name="search[hidden][<?= $field_name ?>]" value="<?= $field_value ?>"/>
+      <?php endif; ?>
+    <?php
+    endforeach;
+  endif;
+  ?>
+
 </form>
 <script src="<?= App::$app->router()->UrlTo('js/search.min.js'); ?>"></script>

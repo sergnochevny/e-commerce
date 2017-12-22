@@ -747,15 +747,15 @@ class ModelPrice extends ModelBase{
    */
   public static function user_TaxRate($aid){
 
-    $sql = sprintf('SELECT bill_province FROM shop_accounts WHERE aid =' . $aid);
-    $result = static::query($sql);
+    $sql = 'SELECT bill_province FROM accounts WHERE aid = :aid';
+    $result = static::query($sql, ['aid' => $aid]);
 
     if($result) {
       if($userProvince = static::fetch_value($result)) {
         static::free_result($result);
         if(!(empty($userProvince))) {
-          $sql = sprintf('SELECT tax_rate FROM shop_taxrates WHERE province_state_id = ' . $userProvince);
-          $result = static::query($sql);
+          $sql = 'SELECT tax_rate FROM shop_taxrates WHERE province_state_id = :userProvince';
+          $result = static::query($sql, ['userProvince' => $userProvince]);
           if($result) {
             if($tax = static::fetch_value($result)) {
               static::free_result($result);

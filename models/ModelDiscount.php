@@ -22,7 +22,7 @@ class ModelDiscount extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter["scenario"]) && ($filter["scenario"] == 'orders')) {
       if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::prepare_for_sql($filter['hidden']["c.sid"]) . "'";

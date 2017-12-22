@@ -22,7 +22,7 @@ class ModelOrders extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter["a.aid"])) $result[] = "a.aid = '" . static::prepare_for_sql($filter['a.aid']) . "'";
     if(!empty($filter['username'])) foreach(array_filter(explode(' ', $filter['username'])) as $item) if(!empty($item)) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . static::prepare_for_sql($item) . "%'";
@@ -139,7 +139,7 @@ class ModelOrders extends ModelBase{
     if(isset($id)) {
       $query = "SELECT orders.*, CONCAT(users.bill_firstname,' ',users.bill_lastname) AS username FROM shop_specials_usage spec_usage ";
       $query .= "LEFT JOIN shop_orders orders ON spec_usage.oid = orders.oid ";
-      $query .= "LEFT JOIN shop_accounts users ON orders.aid = users.aid ";
+      $query .= "LEFT JOIN accounts users ON orders.aid = users.aid ";
       $query .= "WHERE spec_usage.sid = '$id'";
       if($result = static::query($query)) {
         $rows = [];
@@ -163,7 +163,7 @@ class ModelOrders extends ModelBase{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.oid)";
     $query .= " from shop_orders a";
-    $query .= " left join shop_accounts b on a.aid = b.aid";
+    $query .= " left join accounts b on a.aid = b.aid";
     $query .= " left join shop_specials_usage c on a.oid = c.oid";
     $query .= static::build_where($filter, $prms);
     if($result = static::query($query)) {
@@ -188,7 +188,7 @@ class ModelOrders extends ModelBase{
     $query = "select";
     $query .= " DISTINCT a.*, CONCAT(b.bill_firstname,' ',b.bill_lastname) as username";
     $query .= " from shop_orders a";
-    $query .= " left join shop_accounts b on a.aid = b.aid";
+    $query .= " left join accounts b on a.aid = b.aid";
     $query .= " left join shop_specials_usage c on a.oid = c.oid";
     $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort, $prms);

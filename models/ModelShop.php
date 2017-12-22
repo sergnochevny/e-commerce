@@ -25,7 +25,7 @@ class ModelShop extends ModelBase{
    * @return string
    * @throws \Exception
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result_where = "";
     $prms = [];
     if(ControllerAdmin::is_logged()) {

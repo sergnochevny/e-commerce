@@ -190,19 +190,6 @@ use controllers\ControllerAdmin;
       </div>
     </div>
 
-    <?php
-    if(isset($search['hidden'])):
-      foreach($search['hidden'] as $field_name => $field_value):?>
-        <?php if(is_array($field_value)): ?>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>][from]" value="<?= $field_value['from'] ?>"/>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>][to]" value="<?= $field_value['to'] ?>"/>
-        <?php else: ?>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>]" value="<?= $field_value ?>"/>
-        <?php endif; ?>
-      <?php
-      endforeach;
-    endif;
-    ?>
   <?php else : ?>
     <div class="row">
       <div class="col-xs-12 panel panel-default search-panel">
@@ -245,19 +232,19 @@ use controllers\ControllerAdmin;
       </div>
     </div>
 
-    <?php
-    if(isset($search['hidden'])):
-      foreach($search['hidden'] as $field_name => $field_value):?>
-        <?php if(is_array($field_value)): ?>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>][from]" value="<?= $field_value['from'] ?>"/>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>][to]" value="<?= $field_value['to'] ?>"/>
-        <?php else: ?>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>]" value="<?= $field_value ?>"/>
-        <?php endif; ?>
-      <?php
-      endforeach;
-    endif;
-    ?>
   <?php endif; ?>
+  <?php
+  if(isset($search['hidden'])):
+    foreach($search['hidden'] as $field_name => $field_value):?>
+      <?php if(is_array($field_value)): ?>
+        <input type="hidden" name="search[hidden][<?= $field_name ?>][from]" value="<?= $field_value['from'] ?>"/>
+        <input type="hidden" name="search[hidden][<?= $field_name ?>][to]" value="<?= $field_value['to'] ?>"/>
+      <?php else: ?>
+        <input type="hidden" name="search[hidden][<?= $field_name ?>]" value="<?= $field_value ?>"/>
+      <?php endif; ?>
+    <?php
+    endforeach;
+  endif;
+  ?>
 </form>
 <script src="<?= App::$app->router()->UrlTo('js/search.min.js'); ?>"></script>

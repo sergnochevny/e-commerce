@@ -178,6 +178,7 @@ class ControllerClearance extends ControllerFormSimple{
    */
   public function view($partial = false, $required_access = false){
     $this->template->vars('cart_enable', '_');
+    App::$app->setSession('sidebar_idx', 7);
     parent::view($partial, $required_access);
   }
 

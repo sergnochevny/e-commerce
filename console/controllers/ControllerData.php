@@ -2,7 +2,7 @@
 namespace console\controllers;
 
 use app\core\App;
-use console\core\controller\ControllerBase;
+use app\core\console\controller\ControllerBase;
 use console\models\ModelCollection;
 use console\models\ModelCollectionTrigger;
 use console\models\ModelConsole;
@@ -85,6 +85,7 @@ class ControllerData extends ControllerBase{
    * @param string $type
    * @param int $limit
    * @return array|null
+   * @throws \Exception
    */
   protected function get_list_by_type($type = 'last', $limit = 60){
     $filter['type'] = $type;

@@ -18,7 +18,7 @@ class ModelUsers extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter["email"])))) . "%'";
     if(!empty($filter["full_name"]))

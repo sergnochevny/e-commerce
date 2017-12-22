@@ -24,7 +24,7 @@ class ModelBlog extends ModelBase{
    * @return array|string
    * @throws \Exception
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result = "";
     if(ControllerAdmin::is_logged()) {
       if(!empty($filter["a.post_title"])) {

@@ -23,7 +23,7 @@ class ModelManufacturers extends ModelBase{
    * @return array|string
    * @throws \Exception
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
       if(ControllerAdmin::is_logged()) {

@@ -4,6 +4,7 @@ namespace models;
 
 use app\core\App;
 use app\core\model\ModelBase;
+use controllers\ControllerAdmin;
 use Exception;
 
 /**
@@ -23,7 +24,7 @@ class ModelFavorites extends ModelBase{
    * @return array|string
    * @throws \Exception
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result = "";
     if(ControllerAdmin::is_logged()) {
       if(!empty($filter["a.pname"])) foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) if(!empty($item)) $result[] = "a.pname LIKE '%" . static::prepare_for_sql($item) . "%'";
@@ -66,8 +67,8 @@ class ModelFavorites extends ModelBase{
   public static function get_by_id($pid, $aid){
     $data = null;
     $q = "SELECT * FROM " . self::$table;
-    $q .= " where pid = '$pid' and aid = '$aid'";
-    $res = static::query($q);
+    $q .= " where pid = :pid and aid = :aid";
+    $res = static::query($q, compact($pid, $aid));
     if($res) {
       $data = static::fetch_assoc($res);
     } else {
@@ -147,8 +148,8 @@ class ModelFavorites extends ModelBase{
     static::transaction();
     try {
       extract($data);
-      $query = "REPLACE INTO " . static::$table . " (aid, pid) VALUE ('" . $aid . "','" . $pid . "')";
-      $res = static::query($query);
+      $query = "REPLACE INTO " . static::$table . " (aid, pid) VALUE (:aid ,:pid)";
+      $res = static::query($query, compact($aid, $pid));
       if(!$res) throw new Exception(static::error());
       $id = static::last_id();
       static::commit();
@@ -168,8 +169,8 @@ class ModelFavorites extends ModelBase{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "DELETE FROM  " . static::$table . " WHERE id = $id";
-        $res = static::query($query);
+        $query = "DELETE FROM  " . static::$table . " WHERE id = :id";
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

@@ -22,7 +22,7 @@ class ModelRecommends extends ModelBase{
    * @return array|string
    * @throws \Exception
    */
-  protected static function build_where(&$filter, &$prms = null){
+  public static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter["a.pname"])) $result[] = ModelSynonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
     if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::prepare_for_sql($filter["a.piece"]) . "'";
