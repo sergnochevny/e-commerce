@@ -34,23 +34,19 @@ crashlytics-build.properties
 fabric.properties
 
 /modal_windows/
-images/products/
-img/
-images/
-views/images/
 discount.txt
 fabrix_comments.sql
 leack.php
 phpinfo.php
-/template_formsimple/
-/images/
 /upload/
 /config/web.php
 
 /package-lock.json
-/resources/images/
 /web/css/
 /web/fonts/
 /web/js/
 /config/console.php
 /vendor/
+
+/resources/css/jqmobile/images/
+/web/images/
