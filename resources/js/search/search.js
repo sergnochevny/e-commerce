@@ -27,8 +27,8 @@
     var sort = $('form[data-sort]');
     if (sort.length) {
       var form = new FormData(sort[0]);
-      for (var [key, value] of form.entries()) {
-        data.append(key, value);
+      for (var key in form.keys()) {
+        if(form.hasOwnProperty(key)) data.append(key, form.get(key));
       }
     }
     var limit = $('[data-limit]');
