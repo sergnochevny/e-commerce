@@ -15,7 +15,7 @@ use controllers\ControllerUser;
               $order['sort'] = 'a.trid';
               $order['order'] = ($sort['a.trid'] == 'desc' ? 'asc' : 'desc');
             } else {
-              $order['sort'] = 'trid';
+              $order['sort'] = 'a.trid';
               $order['order'] = 'desc';
             }
             $sort_url = App::$app->router()->UrlTo('orders', $order);
