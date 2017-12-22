@@ -3,7 +3,8 @@
 use app\core\App;
 
 $pid = $data['pid'];
-$ahref = 'mailto:' . App::$app->keyStorage()->system_info_email . '?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
+$ahref = 'mailto:' . App::$app->keyStorage()->system_info_email . '?subject=' .
+  rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
 $mhref = App::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
 $href_related = App::$app->router()->UrlTo('related/view', ['pid' => $pid]);
 ?>
@@ -142,13 +143,13 @@ $href_related = App::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                     <?php if($data['inventory'] > 0) : ?>
                       <div class="button-small-width">
                         <a class="button col-xs-12" id="add_cart"
-                           href="<?= App::$app->router()
-                                              ->UrlTo('cart/add', ['pid' => $pid]) ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
+                           href="<?= App::$app->router()->UrlTo('cart/add', ['pid' => $pid]) ?>"
+                          <?= (isset($data['in_cart']) && $data['in_cart']) ? 'style="display: none;"' : ''; ?>>
                           Add to Cart
                         </a>
                         <a data-waitloader class="button col-xs-12" id="view_cart"
-                           href="<?= App::$app->router()
-                                              ->UrlTo('cart') ?>" <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
+                           href="<?= App::$app->router()->UrlTo('cart') ?>"
+                          <?= (isset($data['in_cart']) && $data['in_cart']) ? '' : 'style="display: none;"'; ?>>
                           Cart
                         </a>
                       </div>
@@ -158,7 +159,7 @@ $href_related = App::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                         <a id="add_samples_cart" class="button col-xs-12"
                            href="<?= App::$app->router()->UrlTo('cart/add_samples', ['pid' => $pid]) ?>"
                           <?= (isset($data['in_samples_cart']) && $data['in_samples_cart']) ? 'style="display: none;"' : ''; ?>>
-                          Add Samples
+                          Order a Sample
                         </a>
                       </div>
                     <?php endif; ?>
@@ -186,8 +187,8 @@ $href_related = App::$app->router()->UrlTo('related/view', ['pid' => $pid]);
                           Add to Matches
                         </a>
                         <a data-waitloader class="button col-xs-12" id="view_matches"
-                           href="<?= App::$app->router()
-                                              ->UrlTo('matches'); ?>" <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
+                           href="<?= App::$app->router()->UrlTo('matches'); ?>"
+                          <?= (isset($data['in_matches']) && $data['in_matches']) ? '' : 'style="display: none;"'; ?>>
                           Matches
                         </a>
                       </div>

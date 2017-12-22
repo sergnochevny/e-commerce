@@ -1043,7 +1043,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 
 .price {
     margin: 15px 0 0 0;
-    color: #48520c;
+    color: rgba(222, 50, 42, 0.8);
 }
 
 .product_view .price {

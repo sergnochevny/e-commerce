@@ -391,6 +391,7 @@
 }
 .just-slider-wrap .just-slides .just-slide .just-slide-inner {
   padding-top: 190px;
+  cursor: pointer;
 }
 .just-slider-wrap .just-slides .just-slide .just-slide-inner .just-slide-detail {
     background-color: rgba(0, 0, 0, 0.7);
