@@ -1,19 +1,17 @@
 #!/bin/sh
 set -ex
 
-cd /app/
-
-npm i
-npm i npm
-npm run build
+cp -rf /app/deploy/config /app
 
 if [ -f /app/deploy/db.sql ]; then
    mysql -uroot -proot -hiluvfabrix_db iluvfabrix < /app/deploy/db.sql
 fi
 
-cp -rf /app/deploy/config /app
-
 cd /app
+
+npm i
+npm i npm
+npm run build
 composer -g config http-basic.tp.ait.com tp tp \
     && composer -g config repositories.ait composer https://tp.ait.com/repo/private/ \
     && composer -g config repositories.ait_packagist composer https://tp.ait.com/repo/packagist/ \
@@ -26,6 +24,8 @@ rm -rf /app/deploy
 rm -rf /app/deploy.dev
 rm -rf /app/resources
 rm -rf /app/node_modules
+
+cd /
 
 /bin/chown -R www-data:www-data /app
 /bin/chmod -R 775 /app/web/images

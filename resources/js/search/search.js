@@ -52,7 +52,8 @@
     event.stopPropagation();
     var search = $('form[data-search]');
     if (search.length) {
-      search.attr('action', $(this).attr('href')).trigger('submit');
+      search.attr('action', $(this).attr('href'));
+      search.trigger('submit');
     } else {
       var data = new FormData();
       data.append('search[null]', 'null');
@@ -74,7 +75,8 @@
     event.stopPropagation();
     var search = $('form[data-search]');
     if (search.length) {
-      search.attr('action', $(this).attr('href')).trigger('submit');
+      search.attr('action', $(this).attr('href'));
+      search.trigger('submit');
     } else {
       var data = new FormData();
       data.append('search[null]', 'null');
@@ -96,7 +98,8 @@
     event.stopPropagation();
     var search = $('form[data-search]');
     if (search.length) {
-      search.attr('action', window.location.href).trigger('submit');
+      search.attr('action', window.location.href);
+      search.trigger('submit');
     } else {
       var data = new FormData();
       data.append('search[null]', 'null');
