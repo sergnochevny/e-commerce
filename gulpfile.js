@@ -8,7 +8,8 @@ var gulp = require('gulp'),
   cache = require('gulp-cache'),
   cleanCSS = require('gulp-clean-css'),
   imageResize = require('gulp-image-resize'),
-  autoprefixer = require('gulp-autoprefixer');
+  autoprefixer = require('gulp-autoprefixer'),
+  debug = require('gulp-debug');
 
 gulp.task('css', function () {
   return gulp
@@ -19,16 +20,19 @@ gulp.task('css', function () {
     .pipe(gulp.dest('web/css'));
 });
 gulp.task('css-images', function () {
-  return gulp.src(['resources/css/images/**/*.*'])
-    .pipe(gulp.dest('web/css/images'));
+  return gulp.src(['resources/css/images/**/*'], {base: 'resources/css/'})
+    .pipe(debug({title: 'css images:'}))
+    .pipe(gulp.dest('web/css/'));
 });
 gulp.task('css-jqm-images', function () {
-  return gulp.src(['resources/css/jqmobile/images/**/*.*'])
-    .pipe(gulp.dest('web/css/jqmobile/images'));
+  return gulp.src(['resources/css/jqmobile/images/**/*'], {base: 'resources/css/jqmobile/'})
+    .pipe(debug({title: 'jqmobile images:'}))
+    .pipe(gulp.dest('web/css/jqmobile/'));
 });
 gulp.task('owl-images', function () {
-  return gulp.src(['resources/owlcarousel/*.gif', 'resources/owlcarousel/*.png'])
-    .pipe(gulp.dest('web/css/owlcarousel'));
+  return gulp.src(['resources/css/owlcarousel/**/*.{gif,jpg,png,svg}'], {base: 'resources/css/'})
+    .pipe(debug({title: 'owlcarousel images:'}))
+    .pipe(gulp.dest('web/css/'));
 });
 
 gulp.task('shop_images_minify', function () {
@@ -43,11 +47,11 @@ gulp.task('shop_images_minify', function () {
 gulp.task('shop_images_resize_b', ['shop_images_minify'], function () {
   return gulp.src(['web/images/products_/v_*.*'])
     .pipe(imageResize({
-      width : 345,
-      height : 210,
-      crop : true,
-      upscale : false
-    })).pipe(rename(function(opt) {
+      width: 345,
+      height: 210,
+      crop: true,
+      upscale: false
+    })).pipe(rename(function (opt) {
       opt.basename = opt.basename.replace(/^v_/, 'b_');
       return opt;
     })).pipe(gulp.dest('web/images/products_'));
@@ -55,11 +59,11 @@ gulp.task('shop_images_resize_b', ['shop_images_minify'], function () {
 gulp.task('shop_images_resize_p', ['shop_images_minify'], function () {
   return gulp.src(['web/images/products_/v_*.*'])
     .pipe(imageResize({
-      width : 100,
-      height : 70,
-      crop : true,
-      upscale : false
-    })).pipe(rename(function(opt) {
+      width: 100,
+      height: 70,
+      crop: true,
+      upscale: false
+    })).pipe(rename(function (opt) {
       opt.basename = opt.basename.replace(/^v_/, '');
       return opt;
     })).pipe(gulp.dest('web/images/products_'));
@@ -67,14 +71,14 @@ gulp.task('shop_images_resize_p', ['shop_images_minify'], function () {
 
 gulp.task('refactor_controllers', function () {
   return gulp.src(['controllers/controller_*.php'])
-    .pipe(rename(function(opt) {
+    .pipe(rename(function (opt) {
       opt.basename = opt.basename.replace(/^controller_/, '');
       opt.basename = 'Controller' + opt.basename.charAt(0).toUpperCase() + opt.basename.slice(1);
       return opt;
     })).pipe(gulp.dest('controllers'));
 });
 
-gulp.task('shop_images', ['shop_images_minify','shop_images_resize_b','shop_images_resize_p']);
+gulp.task('shop_images', ['shop_images_minify', 'shop_images_resize_b', 'shop_images_resize_p']);
 
 gulp.task('images', ['css-images', 'css-jqm-images', 'owl-images']);
 gulp.task('scripts', function () {
