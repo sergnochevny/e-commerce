@@ -18,9 +18,10 @@
     var search = $('[data-products_block] form[data-search]');
     var data = new FormData();
     if (search.length) {
-      (new FormData(search[0])).forEach(function (value, key) {
+      var form = new FormData(search[0]);
+      for (var [key, value] of form.entries()) {
         data.append(key, value);
-      });
+      }
     }
     _postdata(this, url, data,
       function () {

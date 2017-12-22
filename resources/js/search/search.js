@@ -26,9 +26,10 @@
     }
     var sort = $('form[data-sort]');
     if (sort.length) {
-      (new FormData(sort[0])).forEach(function (value, key) {
+      var form = new FormData(sort[0]);
+      for (var [key, value] of form.entries()) {
         data.append(key, value);
-      });
+      }
     }
     var limit = $('[data-limit]');
     if (limit.length) data.append('per_page', limit.val());
