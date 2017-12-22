@@ -167,7 +167,6 @@ class ModelClearance extends ModelBase{
    * @throws \Exception
    */
   public static function get_by_id($id){
-    $prms = [];
     $data = [
       'id' => $id, 'pid' => null, 'metadescription' => '', 'metakeywords' => '', 'metatitle' => '', 'pname' => '',
       'pnumber' => '', 'width' => '', 'inventory' => '0.00', 'priceyard' => '0.00', 'hideprice' => 0,
@@ -178,8 +177,8 @@ class ModelClearance extends ModelBase{
     if(isset($id)) {
       $q = "SELECT z.id, a.* FROM " . static::$table . " z";
       $q .= " left join shop_products a on z.pid = a.pid";
-      $q .= " where z.id = '" . $id . "'";
-      $result = static::query($q, $prms);
+      $q .= " where z.id = :id";
+      $result = static::query($q, ['id' => $id]);
       if($result) {
         $data = static::fetch_assoc($result);
       }
@@ -197,15 +196,14 @@ class ModelClearance extends ModelBase{
     static::transaction();
     try {
       extract($data);
-      if(isset($pid) & isset($id)) {
+      if(isset($pid) && isset($id)) {
         $sql = "update " . static::$table . " set";
-        $sql .= " pid='$pid'";
-        $sql .= " where id ='$id'";
-        $result = static::query($sql);
-      } else {
-        $sql = "INSERT INTO " . static::$table . " SET";
-        $sql .= " pid='$pid'";
-        $result = static::query($sql);
+        $sql .= " pid= :pid";
+        $sql .= " where id = :id";
+        $result = static::query($sql, compact($id, $pid));
+      } elseif(isset($pid)) {
+        $sql = "INSERT INTO " . static::$table . " SET pid= :pid";
+        $result = static::query($sql, ['pid' => $pid]);
         if($result) $id = static::last_id();
       }
       if(!$result) throw new Exception(static::error());
@@ -223,12 +221,11 @@ class ModelClearance extends ModelBase{
    * @throws \Exception
    */
   public static function delete($id){
-    $prms = [];
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = static::query($query, $prms);
+        $query = "DELETE FROM " . static::$table . " WHERE id = :id";
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

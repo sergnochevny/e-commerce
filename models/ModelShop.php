@@ -6,6 +6,8 @@ use app\core\App;
 use controllers\ControllerAdmin;
 use app\core\model\ModelBase;
 use controllers\ControllerMatches;
+use controllers\ControllerUser;
+use Exception;
 
 /**
  * Class ModelShop
@@ -25,23 +27,64 @@ class ModelShop extends ModelBase{
    */
   protected static function build_where(&$filter, &$prms = null){
     $result_where = "";
+    $prms = [];
     if(ControllerAdmin::is_logged()) {
       if(!empty($filter["a.pname"])) foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) if(!empty($item)) $result[] = "a.pname LIKE '%" . static::prepare_for_sql($item) . "%'";
-      if(isset($filter["a.pvisible"])) $result[] = "a.pvisible = '" . static::prepare_for_sql($filter["a.pvisible"]) . "'";
-      if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::prepare_for_sql($filter["a.piece"]) . "'";
+
       if(isset($filter["a.dt"])) {
-        $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::prepare_for_sql($filter["a.dt"]["from"]) . "'" : "") . (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::prepare_for_sql($filter["a.dt"]["to"]) . "'" : "");
+        $where = '';
+        if(!empty($filter["a.dt"]['from'])) {
+          $where = "a.dt >= :adt_from";
+          $prms['adt_from'] = $filter["a.dt"]["from"];
+        }
+        if(!empty($filter["a.dt"]['to'])) {
+          $where .= " AND a.dt <= :adt_to";
+          $prms['adt_to'] = $filter["a.dt"]["to"];
+        }
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::prepare_for_sql($filter["a.pnumber"]) . "%'";
-      if(isset($filter["a.best"])) $result[] = "a.best = '" . static::prepare_for_sql($filter["a.best"]) . "'";
-      if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::prepare_for_sql($filter["a.specials"]) . "'";
-      if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::prepare_for_sql($filter["b.cid"]) . "'";
-      if(isset($filter["c.id"])) $result[] = "c.id = '" . static::prepare_for_sql($filter["c.id"]) . "'";
-      if(isset($filter["d.id"])) $result[] = "d.id = '" . static::prepare_for_sql($filter["d.id"]) . "'";
-      if(isset($filter["e.id"])) $result[] = "e.id = '" . static::prepare_for_sql($filter["e.id"]) . "'";
-      if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter["a.priceyard"]['from']) . "'";
-      if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::prepare_for_sql($filter["a.priceyard"]['to']) . "'";
+      if(isset($filter['a.piece'])) { $result[] = "a.piece = :apiece";  $prms['apiece'] = $filter["a.piece"]; }
+      if(isset($filter['a.pvisible'])) {
+        $result[] = "a.pvisible = :apvisible";
+        $prms['apvisible'] = $filter["a.pvisible"];
+      }
+      if(isset($filter["a.pnumber"])) {
+        $result[] = "a.pnumber LIKE :apnumber";
+        $prms['apnumber'] = '%' . $filter["a.pnumber"] . '%';
+      }
+      if(isset($filter["b.cid"])) {
+        $result[] = "b.cid = :bcid";
+        $prms['hbcid'] = $filter["b.cid"];
+      }
+      if(isset($filter["c.id"])) {
+        $result[] = "c.id = :cid";
+        $prms['hcid'] = $filter["c.id"];
+      }
+      if(isset($filter["d.id"])) {
+        $result[] = "d.id = :did";
+        $prms['hdid'] = $filter["d.id"];
+      }
+      if(isset($filter["e.id"])) {
+        $result[] = "e.id = :eid";
+        $prms['heid'] = $filter["e.id"];
+      }
+      if(isset($filter["a.best"])) {
+        $result[] = "a.best = :abest";
+        $prms['habest'] = $filter["a.best"];
+      }
+      if(isset($filter["a.specials"])) {
+        $result[] = "a.specials = :aspecials";
+        $prms['haspecials'] = $filter["a.specials"];
+      }
+      if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) {
+        $result[] = "a.priceyard > :apriceyard_from";
+        $prms['hapriceyard_from'] = $filter["a.priceyard"]['from'];
+      }
+      if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) {
+        $result[] = "a.priceyard <= :apriceyard_to";
+        $prms['hapriceyard_to'] = $filter["a.priceyard"]['to'];
+      }
+
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
@@ -49,22 +92,69 @@ class ModelShop extends ModelBase{
       }
     } else {
       if(isset($filter["a.pname"])) {
-        $result[] = ModelSynonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
+        $conditions[] = ModelSynonyms::build_synonyms_like_p("a.pname", $filter["a.pname"]);
+        $conditions[] = ModelSynonyms::build_synonyms_like_p("b.cname", $filter["a.pname"]);
+        $conditions[] = ModelSynonyms::build_synonyms_like_p("c.color", $filter["a.pname"]);
+        $conditions[] = ModelSynonyms::build_synonyms_like_p("d.pattern", $filter["a.pname"]);
+        $conditions[] = ModelSynonyms::build_synonyms_like_P("e.manufacturer", $filter["a.pname"]);
+        $condition = '';
+        foreach($conditions as $item) {
+          if(!empty($condition)) $condition .= ' OR ';
+          $condition .= $item[0];
+          $prms = array_merge($prms, $item[1]);
+        }
+        $result[] = $condition;
+      }
+      if(!empty($result) && (count($result) > 0)) {
+        if(strlen(trim(implode(" AND ", $result))) > 0) {
+          $filter['active'] = true;
+        }
       }
     }
 
-    if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter['hidden']["a.priceyard"]) . "'";
-    if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . static::prepare_for_sql($filter['hidden']["a.pvisible"]) . "'";
+    if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) {
+      $result[] = "a.priceyard > :hapriceyard";
+      $prms['hapriceyard'] = $filter['hidden']["a.priceyard"];
+    }
+    if(isset($filter['hidden']['a.pvisible'])) {
+      $result[] = "a.pvisible = :hapvisible";
+      $prms['hapvisible'] = $filter['hidden']["a.pvisible"];
+    }
     if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
     if(isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";
-    if(isset($filter['hidden']["b.cid"])) $result[] = "b.cid = '" . static::prepare_for_sql($filter['hidden']["b.cid"]) . "'";
-    if(isset($filter['hidden']["c.id"])) $result[] = "c.id = '" . static::prepare_for_sql($filter['hidden']["c.id"]) . "'";
-    if(isset($filter['hidden']["d.id"])) $result[] = "d.id = '" . static::prepare_for_sql($filter['hidden']["d.id"]) . "'";
-    if(isset($filter['hidden']["e.id"])) $result[] = "e.id = '" . static::prepare_for_sql($filter['hidden']["e.id"]) . "'";
-    if(isset($filter['hidden']["a.best"])) $result[] = "a.best = '" . static::prepare_for_sql($filter['hidden']["a.best"]) . "'";
-    if(isset($filter['hidden']["a.specials"])) $result[] = "a.specials = '" . static::prepare_for_sql($filter['hidden']["a.specials"]) . "'";
-    if(isset($filter['hidden']["a.priceyard"]['from']) && !empty((float)$filter['hidden']["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter['hidden']["a.priceyard"]['from']) . "'";
-    if(isset($filter['hidden']["a.priceyard"]['to']) && !empty((float)$filter['hidden']["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::prepare_for_sql($filter['hidden']["a.priceyard"]['to']) . "'";
+    if(isset($filter['hidden']["b.cid"])) {
+      $result[] = "b.cid = :hbcid";
+      $prms['hbcid'] = $filter['hidden']["b.cid"];
+    }
+    if(isset($filter['hidden']["c.id"])) {
+      $result[] = "c.id = :hcid";
+      $prms['hcid'] = $filter['hidden']["c.id"];
+    }
+    if(isset($filter['hidden']["d.id"])) {
+      $result[] = "d.id = :hdid";
+      $prms['hdid'] = $filter['hidden']["d.id"];
+    }
+    if(isset($filter['hidden']["e.id"])) {
+      $result[] = "e.id = :heid";
+      $prms['heid'] = $filter['hidden']["e.id"];
+    }
+    if(isset($filter['hidden']["a.best"])) {
+      $result[] = "a.best = :habest";
+      $prms['habest'] = $filter['hidden']["a.best"];
+    }
+    if(isset($filter['hidden']["a.specials"])) {
+      $result[] = "a.specials = :haspecials";
+      $prms['haspecials'] = $filter['hidden']["a.specials"];
+    }
+    if(isset($filter['hidden']["a.priceyard"]['from']) && !empty((float)$filter['hidden']["a.priceyard"]['from'])) {
+      $result[] = "a.priceyard > :hapriceyard_from";
+      $prms['hapriceyard_from'] = $filter['hidden']["a.priceyard"]['from'];
+    }
+    if(isset($filter['hidden']["a.priceyard"]['to']) && !empty((float)$filter['hidden']["a.priceyard"]['to'])) {
+      $result[] = "a.priceyard <= :hapriceyard_to";
+      $prms['hapriceyard_to'] = $filter['hidden']["a.priceyard"]['to'];
+    }
+
     if(!empty($result) && (count($result) > 0)) {
       $result_where = implode(" AND ", $result);
       if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
@@ -281,6 +371,7 @@ class ModelShop extends ModelBase{
   /**
    * @param $pid
    * @return mixed
+   * @throws \Exception
    */
   public static function get_product($pid){
     self::inc_popular($pid);

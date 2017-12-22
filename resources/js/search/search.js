@@ -16,7 +16,8 @@
     if (reset) {
       data = new FormData();
       data.append('search[reset]', true);
-      $('#f_search')[0] && $('#f_search')[0].reset().addClass('hidden');
+      $('#f_search').addClass('hidden');
+      $('#f_search')[0] && $('#f_search')[0].reset();
     } else {
       if ($('[name="search[a.pname]"]').length) {
         $('#search').attr('value', $('[name="search[a.pname]"]').attr('value'));

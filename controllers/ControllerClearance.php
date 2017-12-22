@@ -139,6 +139,7 @@ class ControllerClearance extends ControllerFormSimple{
 
   /**
    * @param null $data
+   * @throws \Exception
    */
   protected function before_form_layout(&$data = null){
     if($this->scenario() !== 'add') {

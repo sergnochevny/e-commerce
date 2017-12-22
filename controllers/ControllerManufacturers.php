@@ -1,5 +1,7 @@
 <?php
 
+namespace controllers;
+
 use app\core\App;
 use controllers\base\ControllerSimple;
 use models\ModelManufacturers;
