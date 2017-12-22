@@ -60,9 +60,10 @@
       data.append('search[null]', 'null');
       var sort = $('form[data-sort]');
       if (sort.length) {
-        (new FormData(sort[0])).forEach(function (value, key) {
-          data.append(key, value);
-        });
+        var form = new FormData(sort[0]);
+        for (var key in form.keys()) {
+          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+        }
       }
       var limit = $('[data-limit]');
       if (limit.length) data.append('per_page', limit.val());
@@ -83,9 +84,10 @@
       data.append('search[null]', 'null');
       var sort = $('form[data-sort]');
       if (sort.length) {
-        (new FormData(sort[0])).forEach(function (value, key) {
-          data.append(key, value);
-        });
+        var form = new FormData(sort[0]);
+        for (var key in form.keys()) {
+          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+        }
       }
       var limit = $('[data-limit]');
       if (limit.length) data.append('per_page', limit.val());
@@ -106,9 +108,10 @@
       data.append('search[null]', 'null');
       var sort = $('form[data-sort]');
       if (sort.length) {
-        (new FormData(sort[0])).forEach(function (value, key) {
-          data.append(key, value);
-        });
+        var form = new FormData(sort[0]);
+        for (var key in form.keys()) {
+          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+        }
       }
       var limit = $('[data-limit]');
       if (limit.length) data.append('per_page', limit.val());

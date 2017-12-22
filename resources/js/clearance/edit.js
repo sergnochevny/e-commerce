@@ -19,8 +19,8 @@
     var data = new FormData();
     if (search.length) {
       var form = new FormData(search[0]);
-      for (var [key, value] of form.entries()) {
-        data.append(key, value);
+      for (var key in form.keys()) {
+        if(form.hasOwnProperty(key)) data.append(key, form.get(key));
       }
     }
     _postdata(this, url, data,
@@ -43,9 +43,10 @@
       var data = new FormData();
       var search = $('[data-products_block] form[data-search]');
       if (search.length) {
-        (new FormData(search[0])).forEach(function (value, key) {
-          data.append(key, value);
-        });
+        var form = new FormData(search[0]);
+        for (var key in form.keys()) {
+          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+        }
       }
       if (this.checked) {
         data.append('pid', $(this).attr('data-pid'));
@@ -76,9 +77,10 @@
       }
       var sort = $('[data-products_block] form[data-sort]');
       if (sort.length) {
-        (new FormData(sort[0])).forEach(function (value, key) {
-          data.append(key, value);
-        });
+        var form = new FormData(sort[0]);
+        for (var key in form.keys()) {
+          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+        }
       }
       _postdata(this, $(this).attr('action'), data);
     }
@@ -111,9 +113,10 @@
         var data = new FormData();
         var sort = $('[data-products_block] form[data-sort]');
         if (sort.length) {
-          (new FormData(sort[0])).forEach(function (value, key) {
-            data.append(key, value);
-          });
+          var form = new FormData(sort[0]);
+          for (var key in form.keys()) {
+            if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+          }
         }
         _postdata(this, $(this).attr('href'), data);
       }
@@ -131,9 +134,10 @@
         var data = new FormData();
         var sort = $('[data-products_block] form[data-sort]');
         if (sort.length) {
-          (new FormData(sort[0])).forEach(function (value, key) {
-            data.append(key, value);
-          });
+          var form = new FormData(sort[0]);
+          for (var key in form.keys()) {
+            if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+          }
         }
         _postdata(this, $(this).attr('href'), data);
       }

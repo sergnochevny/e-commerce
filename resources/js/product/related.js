@@ -128,9 +128,10 @@
       }
       var sort = $('[data-related_block] form[data-sort]');
       if (sort.length) {
-        (new FormData(sort[0])).forEach(function (value, key) {
-          data.append(key, value);
-        });
+        var form = new FormData(sort[0]);
+        for (var key in form.keys()) {
+          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+        }
       }
       _postdata(this, $(this).attr('action'), data);
     }
@@ -163,9 +164,10 @@
         var data = new FormData();
         var sort = $('[data-related_block] form[data-sort]');
         if (sort.length) {
-          (new FormData(sort[0])).forEach(function (value, key) {
-            data.append(key, value);
-          });
+          var form = new FormData(sort[0]);
+          for (var key in form.keys()) {
+            if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+          }
         }
         _postdata(this, $(this).attr('href'), data);
       }
@@ -183,9 +185,10 @@
         var data = new FormData();
         var sort = $('[data-related_block] form[data-sort]');
         if (sort.length) {
-          (new FormData(sort[0])).forEach(function (value, key) {
-            data.append(key, value);
-          });
+          var form = new FormData(sort[0]);
+          for (var key in form.keys()) {
+            if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+          }
         }
         _postdata(this, $(this).attr('href'), data);
       }
