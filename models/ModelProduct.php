@@ -350,14 +350,8 @@ class ModelProduct extends ModelBase{
         $price = $row['priceyard'];
         $inventory = $row['inventory'];
         $piece = $row['piece'];
-        if($piece == 1 && $inventory > 0) {
-          $price = $price * $inventory;
-          $row['price'] = "$" . number_format($price, 2);
-          $row['format_price'] = sprintf('%s <sup>per piece</sup>', $price);
-        } else {
-          $row['price'] = "$" . number_format($price, 2);
-          $row['format_price'] = sprintf('%s <sup>per yard</sup>', $price);
-        }
+        $row['price'] = ModelPrice::getPrintPrice($price, $format_price, $inventory, $piece);
+        $row['format_price'] = $format_price;
         $response[] = $row;
       }
       static::free_result($result);
