@@ -1306,11 +1306,24 @@ form[data-search] > .row > .panel > .panel-heading {
     background-color: transparent;
 }
 
+.search-panel .search-reset {
+    position: absolute;
+    top: 7px;
+    right: 13vh;
+    color: red;
+    border: 0;
+    background-color: transparent;
+}
+
+.search-panel .search-button{
+    position: absolute;
+}
+
 .footer-credit-right img {
     width: 261px;
 }
 
-.search-result-list .reset:hover {
+.search-result-list .reset:hover, .search-panel .search-reset:hover {
     color: darkred !important;
 }
 
@@ -1612,6 +1625,14 @@ span.opa {
         right: -20px;
     }
 
+    .search-panel .search-button{
+        right: 15px;
+    }
+
+    .search-panel .search-reset {
+        /*right: 80px;*/
+    }
+
     .just-slider-wrap .just-slides .just-slide {
         min-height: 500px;
     }
@@ -1631,9 +1652,14 @@ span.opa {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .search-result-list .reset {
         right: 10px;
+    }
+
+    .search-panel .search-reset {
+        right: 22vh;
+        top: 10px;
     }
 
     .product-in-cart-image, .sample-in-cart-image {
@@ -1702,10 +1728,6 @@ span.opa {
         font-size: 180%;
     }
 
-    .widget {
-        font-size: 13px;
-    }
-
     .b_modify_images_main_pic {
         margin-bottom: 15px;
     }
@@ -1733,6 +1755,29 @@ span.opa {
         width: 100%;
     }
 }
+
+@media (max-width: 680px) {
+    .search-panel .search-reset {
+        right: 20vh;
+    }
+}
+
+@media (max-width: 570px) {
+    .search-panel .search-reset {
+        right: 18vh;
+    }
+}
+
+@media (max-width: 450px) {
+    .search-panel .search-button{
+        right: 5px;
+    }
+
+    .search-panel .search-reset {
+        right: 80px;
+    }
+}
+
 
 @media screen and (max-width: 320px) {
     .b_modify_images_main_pic {
@@ -1920,6 +1965,17 @@ span[role=combobox] {
     padding: 12px 10px;
     width: 100% !important;
     margin-bottom: 0;
+}
+
+@media ( max-width: 768px) {
+    span[role=combobox] {
+        font-size: 16px;
+        padding: 16px 20px;
+    }
+
+    .page-limit-selector {
+        width: 80px;
+    }
 }
 
 span[role=combobox].ui-button:focus, span[role=combobox].ui-button:active {

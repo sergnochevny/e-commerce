@@ -1109,6 +1109,12 @@ a img.aligncenter {
     text-shadow: 2px 1px 0 #666;
 }
 
+@media (max-width: 768px) {
+    .paging-navigation ul.pagination li.active .page-numbers {
+        min-width: 55px;
+    }
+}
+
 .paging-navigation ul.pagination li .page-numbers.noclicable,
 .paging-navigation ul.pagination li .page-numbers.noclicable:hover {
     background-color: #fff;

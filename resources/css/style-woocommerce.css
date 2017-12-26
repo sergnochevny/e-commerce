@@ -287,11 +287,9 @@ span#b_in_product {
 
 .ui-input-text input {
     background-color: rgba(255, 255, 255, 0);
-    /*border: 1px solid #DDD;*/
     border-radius: 2px !important;
     -webkit-border-radius: 2px !important;
     -moz-border-radius: 2px !important;
-    /*box-shadow: 0 0 0 #DDD !important;*/
     box-shadow: none;
     font-size: 12px;
     height: 40px;
@@ -301,14 +299,19 @@ span#b_in_product {
     -moz-transition: all .15s ease-in;
     -o-transition: all .15s ease-in;
     transition: all .15s ease-in;
-}
-
-.ui-input-text input {
-
-    box-shadow: none;
     border: none;
     margin: 0;
-    padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+    .ui-input-text{
+        height: 62px;
+    }
+    .ui-input-text input {
+        font-size: 16px;
+        height: 60px;
+        padding: 16px 20px;
+    }
 }
 
 .ui-input-text.focus,
@@ -1941,6 +1944,18 @@ ul.product_list_widget li dl dd p {
     -webkit-box-shadow: 0 2px 10px #DDD;
     -moz-box-shadow: 0 2px 10px #DDD;
     box-shadow: 0 2px 10px #DDD;
+}
+
+.search-panel .one-field .form-row{
+    margin: 0;
+}
+
+.search-panel .one-field .form-row .ui-input-text{
+    margin: 0;
+}
+
+.search-panel .one-field .form-row .ui-input-text input{
+    margin: 0;
 }
 
 .search-panel > .panel-body {
