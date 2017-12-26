@@ -166,6 +166,7 @@ class ControllerFavorites extends ControllerSimple{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function add($required_access = false){
@@ -175,6 +176,7 @@ class ControllerFavorites extends ControllerSimple{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function delete($required_access = false){

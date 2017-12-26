@@ -112,6 +112,7 @@ class ControllerMatches extends ControllerFormSimple{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function add($required_access = true){
@@ -121,6 +122,7 @@ class ControllerMatches extends ControllerFormSimple{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function delete($required_access = true){
