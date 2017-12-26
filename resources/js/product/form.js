@@ -147,16 +147,20 @@
     data.append('filter-type', $(this).attr('data-filter-type'));
     postdata(this, url, data, null,
       function (response) {
-        var data = JSON.parse(response);
-        $.when(
-          $(destination).html(data[0]),
-          $('#modal_content').html(data[1])
-        ).done(
-          function () {
-            setEvToFilter();
-            setEvToFilterSearch();
-          }
-        );
+        try {
+          var data = JSON.parse(response);
+          $.when(
+            $(destination).html(data[0]),
+            $('#modal_content').html(data[1])
+          ).done(
+            function () {
+              setEvToFilter();
+              setEvToFilterSearch();
+            }
+          );
+        } catch (e) {
+          $(destination).html(data);
+        }
       }
     );
   }
@@ -178,7 +182,7 @@
         $('body').waitloader('show');
         event.preventDefault();
         $("#confirm_dialog").removeClass('overlay_display');
-        $('#content').load(href).done(function(){
+        $('#content').load(href).done(function () {
           $('body').waitloader('remove');
         });
         $("#confirm_action").off('click.confirm_action');

@@ -165,7 +165,7 @@ class ModelClearance extends ModelBase{
         $sql = "update " . static::$table . " set";
         $sql .= " pid= :pid";
         $sql .= " where id = :id";
-        $result = static::query($sql, compact($id, $pid));
+        $result = static::query($sql, ['id' => $id, 'pid' => $pid]);
       } elseif(isset($pid)) {
         $sql = "INSERT INTO " . static::$table . " SET pid= :pid";
         $result = static::query($sql, ['pid' => $pid]);

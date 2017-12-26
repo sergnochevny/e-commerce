@@ -44,7 +44,7 @@ class ModelUser extends ModelBase{
     static::transaction();
     try {
       $q = "update " . static::$table . " set remind = :remind, remind_time = :date where aid = :user_id";
-      $res = static::query($q, compact($remind, $date, $user_id));
+      $res = static::query($q, ['remind' => $remind, 'date' => $date, 'user_id' => $user_id]);
       static::commit();
     } catch(Exception $e) {
       static::rollback();
@@ -63,7 +63,7 @@ class ModelUser extends ModelBase{
     static::transaction();
     try {
       $q = "update " . static::$table . " set remind = NULL, remind_time = NULL where aid = :user_id";
-      $res = static::query($q, compact($user_id));
+      $res = static::query($q, ['user_id' => $user_id]);
       static::commit();
     } catch(Exception $e) {
       static::rollback();
@@ -108,7 +108,7 @@ class ModelUser extends ModelBase{
    */
   public static function remind_exist($remind){
     $q = "SELECT * FROM " . static::$table . " WHERE remind = :remind";
-    $result = static::query($q, compact($remind));
+    $result = static::query($q, ['remind' => $remind]);
 
     return (!$result || static::num_rows($result) > 0);
   }
@@ -121,7 +121,7 @@ class ModelUser extends ModelBase{
   public static function get_by_remind($remind){
     $user = null;
     $strSQL = "SELECT * FROM " . static::$table . " WHERE remind = :remind";
-    $result = static::query($strSQL, compact($remind));
+    $result = static::query($strSQL, ['remind' => $remind]);
     if($result) {
       $user = static::fetch_assoc($result);
     }
@@ -138,7 +138,7 @@ class ModelUser extends ModelBase{
     static::transaction();
     try {
       $q = "UPDATE " . static::$table . " SET password = :password WHERE aid = :user_id";
-      $result = static::query($q, compact($password, $user_id));
+      $result = static::query($q, ['password' => $password, 'user_id' => $user_id]);
       if(!$result) throw new Exception(static::error());
       static::commit();
     } catch(Exception $e) {

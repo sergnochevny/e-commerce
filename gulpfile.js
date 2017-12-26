@@ -34,6 +34,11 @@ gulp.task('owl-images', function () {
     .pipe(debug({title: 'owlcarousel images:'}))
     .pipe(gulp.dest('web/css/'));
 });
+gulp.task('other-images', function () {
+  return gulp.src(['resources/images/**/*'], {base: 'resources/images/'})
+    .pipe(debug({title: 'other images:'}))
+    .pipe(gulp.dest('web/images/'));
+});
 
 gulp.task('shop_images_minify', function () {
   return gulp.src(['web/images/products/v_*.*'])
@@ -80,7 +85,7 @@ gulp.task('refactor_controllers', function () {
 
 gulp.task('shop_images', ['shop_images_minify', 'shop_images_resize_b', 'shop_images_resize_p']);
 
-gulp.task('images', ['css-images', 'css-jqm-images', 'owl-images']);
+gulp.task('images', ['other-images', 'css-images', 'css-jqm-images', 'owl-images']);
 gulp.task('scripts', function () {
   return gulp.src('resources/js/**/*.js')
     .pipe(minify({

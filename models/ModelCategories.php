@@ -176,7 +176,7 @@ class ModelCategories extends ModelBase{
 
             $res = static::query(
               "UPDATE shop_categories SET cname=:cname, displayorder=:displayorder WHERE cid=:cid",
-              compact($cid, $cname, $displayorder)
+              ['cid' => $cid, 'cname' => $cname, 'displayorder' => $displayorder]
             );
           }
         }
@@ -187,7 +187,7 @@ class ModelCategories extends ModelBase{
         );
         if($res) $res = static::query(
           "insert shop_categories set cname=:cname, displayorder=:displayorder",
-          compact($cname, $displayorder)
+          ['cname' => $cname, 'displayorder' => $displayorder]
         );
         if($res) $cid = static::last_id();
       }

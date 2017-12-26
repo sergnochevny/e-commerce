@@ -37,26 +37,30 @@
     var url = $(this).attr('href');
     $('body').waitloader('show');
     $.get(url, {}, function (answer) {
-      var data = JSON.parse(answer);
-      $.when(
-        $(data.msg).appendTo('#content'),
-        $('span#cart_amount').html(data.sum)
-      ).done(function () {
+      try {
+        var data = JSON.parse(answer);
+        $.when(
+          $(data.msg).appendTo('#content'),
+          $('span#cart_amount').html(data.sum)
+        ).done(function () {
 
-        $('#add_cart').stop().hide().addClass('visible-item');
-        $('#view_cart').stop().show().removeClass('visible-item');
+          $('#add_cart').stop().hide().addClass('visible-item');
+          $('#view_cart').stop().show().removeClass('visible-item');
 
-        $('#modal').on('hidden.bs.modal',
-          function () {
-            $(this).remove();
-          }
-        );
+          $('#modal').on('hidden.bs.modal',
+            function () {
+              $(this).remove();
+            }
+          );
 
-        if ($('#modal').length > 0) {
-          $('#modal').modal('show');
           $('body').waitloader('remove');
-        }
-      });
+          if ($('#modal').length > 0) {
+            $('#modal').modal('show');
+          }
+        });
+      } catch (e) {
+        $('#content').html(data);
+      }
     });
   });
 
@@ -65,55 +69,64 @@
     var url = $(this).attr('href');
     $('body').waitloader('show');
     $.get(url, {}, function (answer) {
-      var data = JSON.parse(answer);
-      $.when(
-        $(data.msg).appendTo('#content'),
-        $('span#cart_amount').html(data.sum)
-      ).done(function () {
+      try {
+        var data = JSON.parse(answer);
+        $.when(
+          $(data.msg).appendTo('#content'),
+          $('span#cart_amount').html(data.sum)
+        ).done(function () {
 
-        $('#add_samples_cart').stop().hide().addClass('visible-item');
+          $('#add_samples_cart').stop().hide().addClass('visible-item');
 
-        $('#modal').on('hidden.bs.modal',
-          function () {
-            $(this).remove();
-          }
-        );
+          $('#modal').on('hidden.bs.modal',
+            function () {
+              $(this).remove();
+            }
+          );
 
-        if ($('#modal').length > 0) {
-          $('#modal').modal('show');
           $('body').waitloader('remove');
-        }
-      });
+          if ($('#modal').length > 0) {
+            $('#modal').modal('show');
+          }
+        });
+      } catch (e) {
+        $('#content').html(data);
+      }
     });
   });
 
   $('#add_matches').on('click', function (ev) {
+    debugger;
     ev.preventDefault();
     $('body').waitloader('show');
     var url = $(this).attr('href');
     var data = new FormData();
     $.postdata(this, url, data, function (data) {
-      var answer = JSON.parse(data);
-      $.when(
-        $(answer.data).appendTo('#content')
-      ).done(function () {
+      try {
+        var answer = JSON.parse(data);
+        $.when(
+          $(answer.data).appendTo('#content')
+        ).done(function () {
 
-        if (answer.added == 1) {
-          $('#add_matches').stop().hide();
-          $('#view_matches').stop().show().addClass('btn-row');
-        }
-
-        $('#modal').on('hidden.bs.modal',
-          function () {
-            $(this).remove();
+          if (answer.added == 1) {
+            $('#add_matches').stop().hide();
+            $('#view_matches').stop().show().addClass('btn-row');
           }
-        );
 
-        if ($('#modal').length > 0) {
-          $('#modal').modal('show');
+          $('#modal').on('hidden.bs.modal',
+            function () {
+              $(this).remove();
+            }
+          );
+
           $('body').waitloader('remove');
-        }
-      });
+          if ($('#modal').length > 0) {
+            $('#modal').modal('show');
+          }
+        });
+      } catch (e) {
+        $('#content').html(data);
+      }
     });
   });
 
@@ -133,7 +146,6 @@
     var data = new FormData();
     data.append('pid', pid);
     $.postdata(this, url, data, function (data) {
-      $('body').waitloader('show');
       $.when(
         $(data).appendTo('#content')
       ).done(function () {
@@ -147,10 +159,10 @@
           }
         );
 
+        $('body').waitloader('remove');
         if ($('#modal').length > 0) {
           $('#modal').modal('show');
         }
-        $('body').waitloader('remove');
       });
     });
   });

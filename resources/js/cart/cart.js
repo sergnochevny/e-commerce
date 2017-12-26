@@ -12,29 +12,33 @@
     $('body').waitloader('show');
 
     $.get(url, {pid: pid, qnt: v}, function (answer) {
-      var data = JSON.parse(answer);
-      if (data.product) {
-        $(document).trigger('destroy_spinner');
+      try {
+        var data = JSON.parse(answer);
+        if (data.product) {
+          $(document).trigger('destroy_spinner');
 
-        $.when($(parent).replaceWith(data.product)).done(function () {
-          $(document).trigger('init_spinner');
-          $('body').waitloader('remove');
-          $('[data-block=subtotal_items]').load(base_url + 'cart/items_amount');
-          $('[data-block=subtotal]').load(base_url + 'cart/amount');
-          $(document).trigger('calc_shipping_total');
-        });
-      }
-      if (data.msg) {
-        $.when(
-          $(data.msg).appendTo('.main-content')
-        ).done(
-          function () {
-            $('#modal').modal('show');
-            $('#modal').on('hidden.bs.modal', function () {
-              $(this).remove();
-            });
-          }
-        );
+          $.when($(parent).replaceWith(data.product)).done(function () {
+            $(document).trigger('init_spinner');
+            $('body').waitloader('remove');
+            $('[data-block=subtotal_items]').load(base_url + 'cart/items_amount');
+            $('[data-block=subtotal]').load(base_url + 'cart/amount');
+            $(document).trigger('calc_shipping_total');
+          });
+        }
+        if (data.msg) {
+          $.when(
+            $(data.msg).appendTo('.main-content')
+          ).done(
+            function () {
+              $('#modal').modal('show');
+              $('#modal').on('hidden.bs.modal', function () {
+                $(this).remove();
+              });
+            }
+          );
+        }
+      } catch (e) {
+        $('.main-content').html(data);
       }
     });
   });

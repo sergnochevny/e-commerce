@@ -73,7 +73,7 @@ class ModelColors extends ModelBase{
     ];
     if(isset($id)) {
       $query = "SELECT * FROM " . static::$table . " WHERE id=:id";
-      $result = static::query($query, compact($id));
+      $result = static::query($query, ['id' => $id]);
       if($result) $response = static::fetch_assoc($result);
     }
 
@@ -146,11 +146,11 @@ class ModelColors extends ModelBase{
        */
       if(isset($id)) {
         $query = 'UPDATE ' . static::$table . ' SET color = :color WHERE id = :id';
-        $res = static::query($query, compact($color, $id));
+        $res = static::query($query, $data);
         if(!$res) throw new Exception(static::error());
       } else {
         $query = 'INSERT INTO ' . static::$table . '(color) VALUE (:color)';
-        $res = static::query($query, compact($color));
+        $res = static::query($query, $data);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }
@@ -172,7 +172,7 @@ class ModelColors extends ModelBase{
     try {
       if(isset($id)) {
         $query = "SELECT COUNT(*) FROM shop_product_colors WHERE colorId = :id";
-        $res = static::query($query, compact($id));
+        $res = static::query($query, ['id' => $id]);
         if($res) {
           $amount = static::fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
@@ -180,7 +180,7 @@ class ModelColors extends ModelBase{
           }
         }
         $query = "DELETE FROM " . static::$table . " WHERE id = :id";
-        $res = static::query($query, compact($id));
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

@@ -115,7 +115,7 @@ class ControllerMatches extends ControllerFormSimple{
    * @throws \Exception
    */
   public function add($required_access = true){
-    $this->main->is_user_authorized();
+//    $this->main->is_user_authorized();
     if($this->form_handling($data) && App::$app->request_is_post()) parent::add(false); else throw new Exception('404');
   }
 

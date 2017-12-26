@@ -235,8 +235,8 @@ class ModelBlog extends ModelBase{
       'post_title' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...', 'post_status' => '',
     ];
     if(isset($id)) {
-      $strSQL = "SELECT * FROM " . static::$table . " WHERE id = '" . $id . "'";
-      $result = static::query($strSQL);
+      $strSQL = "SELECT * FROM " . static::$table . " WHERE id = :id";
+      $result = static::query($strSQL, ['id' => $id]);
       if($result) {
         $data = static::fetch_assoc($result);
         static::free_result($result);
@@ -342,14 +342,28 @@ class ModelBlog extends ModelBase{
    */
   public static function save(&$data){
     extract($data);
-
+    /**
+     * @var string $post_author
+     * @var string $post_date
+     * @var string $post_content
+     * @var string $post_title
+     * @var string $post_status
+     * @var string $categories
+     * @var string $keywords
+     * @var string $description
+     * @var integer $id
+     */
     static::transaction();
     try {
       if(!isset($id)) {
         $date['post_date'] = $post_date = date('Y-m-d H:i:s', time());
-        $q = "INSERT INTO " . static::$table . " (post_author, post_date, post_content, post_title, post_status)";
-        $q .= " VALUES (:post_author, :post_date, :post_content, :post_title, :post_status)";
-        $prms = compact($post_author, $post_date, $post_content, $post_title, $post_status);
+        $q = 'INSERT INTO ' . static::$table;
+        $q .= ' (post_author, post_date, post_content, post_title, post_status)';
+        $q .= ' VALUES (:post_author, :post_date, :post_content, :post_title, :post_status)';
+        $prms = [
+          'post_author' => $post_author, 'post_date' => $post_date, 'post_content' => $post_content,
+          'post_title' => $post_title, 'post_status' => $post_status
+        ];
       } else {
         $q = "UPDATE " . static::$table . " SET ";
         $q .= " post_author = :post_author";
@@ -357,7 +371,10 @@ class ModelBlog extends ModelBase{
         $q .= ", post_title = :post_title";
         $q .= ", post_status = :post_status";
         $q .= " WHERE id = :id";
-        $prms = compact($post_author, $post_date, $post_content, $post_title, $post_status, $id);
+        $prms = [
+          'post_author' => $post_author, 'post_date' => $post_date, 'post_content' => $post_content,
+          'post_title' => $post_title, 'post_status' => $post_status, 'id' => $id
+        ];
       }
       $result = static::query($q, $prms);
       if($result && !isset($id)) $id = static::last_id();
@@ -365,7 +382,8 @@ class ModelBlog extends ModelBase{
       if($result) {
         foreach($categories as $group) {
           if($result) $result = static::query(
-            "INSERT INTO blog_group_posts(post_id, group_id) VALUES (:id, :group)", compact($id, $group)
+            "INSERT INTO blog_group_posts(post_id, group_id) VALUES (:id, :group)",
+            ['id' => $id, 'group' => $group]
           );
           if(!$result) break;
         }
@@ -373,7 +391,7 @@ class ModelBlog extends ModelBase{
       if($result) $result = static::query("DELETE FROM blog_post_keys_descriptions WHERE post_id = :id", ['id' => $id]);
       if($result) $result = static::query(
         "INSERT INTO blog_post_keys_descriptions(post_id, keywords, description) VALUES(:id, :keywords, :description)",
-        compact($id, $keywords, $description)
+        ['id' => $id, 'keywords' => $keywords, 'description' => $description]
       );
       if($result) $result = static::update_image($id, $data);
       if(!$result) throw new Exception(static::error());

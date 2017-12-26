@@ -68,7 +68,7 @@ class ModelFavorites extends ModelBase{
     $data = null;
     $q = "SELECT * FROM " . self::$table;
     $q .= " where pid = :pid and aid = :aid";
-    $res = static::query($q, compact($pid, $aid));
+    $res = static::query($q, ['aid' => $aid, 'pid' => $pid]);
     if($res) {
       $data = static::fetch_assoc($res);
     } else {
@@ -148,8 +148,12 @@ class ModelFavorites extends ModelBase{
     static::transaction();
     try {
       extract($data);
-      $query = "REPLACE INTO " . static::$table . " (aid, pid) VALUE (:aid ,:pid)";
-      $res = static::query($query, compact($aid, $pid));
+      /**
+       * @var integer $aid
+       * @var integer $pid
+       */
+      $query = "REPLACE INTO " . static::$table . " (aid, pid) VALUE (:aid, :pid)";
+      $res = static::query($query, ['aid' => $aid, 'pid' => $pid]);
       if(!$res) throw new Exception(static::error());
       $id = static::last_id();
       static::commit();

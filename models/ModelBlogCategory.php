@@ -123,11 +123,11 @@ class ModelBlogCategory extends ModelBase{
     try {
       if(isset($id)) {
         $query = 'UPDATE blog_groups SET name = :name WHERE id = :id';
-        $res = static::query($query, compact($id, $name));
+        $res = static::query($query, $data);
         if(!$res) throw new Exception(static::error());
       } else {
         $query = 'INSERT INTO blog_groups (name) VALUE (:name)';
-        $res = static::query($query, compact($name));
+        $res = static::query($query, $data);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }

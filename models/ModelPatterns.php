@@ -75,7 +75,7 @@ class ModelPatterns extends ModelBase{
     ];
     if(isset($id)) {
       $query = "SELECT * FROM " . static::$table . " WHERE id=:id";
-      $result = static::query($query, compact($id));
+      $result = static::query($query, ['id' => $id]);
       if($result) $response = static::fetch_assoc($result);
     }
 
@@ -149,11 +149,11 @@ class ModelPatterns extends ModelBase{
        */
       if(isset($id)) {
         $query = "UPDATE " . static::$table . " SET pattern = :pattern WHERE id = :id";
-        $res = static::query($query, compact($pattern, $id));
+        $res = static::query($query, ['pattern' => $pattern, 'id' => $id]);
         if(!$res) throw new Exception(static::error());
       } else {
         $query = "INSERT INTO " . static::$table . " (pattern) VALUE (:pattern)";
-        $res = static::query($query, compact($pattern));
+        $res = static::query($query, ['pattern' => $pattern]);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }
@@ -175,7 +175,7 @@ class ModelPatterns extends ModelBase{
     try {
       if(isset($id)) {
         $query = "SELECT count(*) FROM shop_product_patterns WHERE patternId = :id";
-        $res = static::query($query, compact($id));
+        $res = static::query($query, ['id' => $id]);
         if($res) {
           $amount = static::fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
@@ -183,7 +183,7 @@ class ModelPatterns extends ModelBase{
           }
         }
         $query = "DELETE FROM  " . static::$table . " WHERE id = :id";
-        $res = static::query($query, compact($id));
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

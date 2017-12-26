@@ -182,11 +182,11 @@ class ModelSynonyms extends ModelBase{
        */
       if(isset($id)) {
         $query = "UPDATE " . static::$table . " SET keywords = :keywords, synonyms = :synonyms WHERE id = :id";
-        $res = static::query($query, compact($keywords, $synonyms, $id));
+        $res = static::query($query, ['keywords' => $keywords, 'synonyms' => $synonyms, 'id' => $id]);
         if(!$res) throw new Exception(static::error());
       } else {
         $query = "INSERT INTO " . static::$table . " (keywords, synonyms) VALUE (:keywords, :synonyms)";
-        $res = static::query($query, compact($keywords, $synonyms));
+        $res = static::query($query, ['keywords' => $keywords, 'synonyms' => $synonyms]);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }
@@ -208,7 +208,7 @@ class ModelSynonyms extends ModelBase{
     try {
       if(isset($id)) {
         $query = "DELETE FROM " . static::$table . " WHERE id = :id";
-        $res = static::query($query,['id'=>$id]);
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();
