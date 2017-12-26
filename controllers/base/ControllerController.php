@@ -145,7 +145,7 @@ abstract class ControllerController extends ControllerBase{
   /**
    * @param $filter
    * @param $view
-   * @return [][]|array|null|string
+   * @return array|null|string
    */
   protected function load_search_filter($filter, $view){
     //  Implementation save the search context

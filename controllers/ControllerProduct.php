@@ -51,7 +51,7 @@ class ControllerProduct extends ControllerFormSimple{
     $this->template->vars('selected', $selected);
     $this->template->vars('filter', $filter);
     if($return) return $this->template->view_layout_return('filter/select');
-    $this->template->view_layout('filter/select');
+    return $this->template->view_layout('filter/select');
   }
 
   /**
@@ -168,7 +168,7 @@ class ControllerProduct extends ControllerFormSimple{
     $this->template->vars('destination', $type);
     $this->template->vars('title', 'Select ' . ucfirst($type));
     if($return) return $this->template->view_layout_return('filter/filter');
-    $this->template->view_layout('filter/filter');
+    return $this->template->view_layout('filter/filter');
   }
 
   /**
@@ -182,7 +182,7 @@ class ControllerProduct extends ControllerFormSimple{
     $this->template->vars('selected', is_array($selected) ? $selected : [$selected]);
     $this->template->vars('data', is_array($data) ? $data : [$data]);
     if($return) return $this->template->view_layout_return('select');
-    $this->template->view_layout('select');
+    return $this->template->view_layout('select');
   }
 
   /**
@@ -204,7 +204,7 @@ class ControllerProduct extends ControllerFormSimple{
     $this->template->vars('rows', $rows);
     $this->template->vars('list', $this->template->view_layout_return('related/rows'));
     if($return) return $this->main->view_layout_return('related/list');
-    $this->main->view_layout('related/list');
+    return $this->main->view_layout('related/list');
   }
 
   /**

@@ -81,13 +81,14 @@ class ControllerMain extends ControllerBase{
   /**
    * @param $page
    * @param null $data
+   * @return mixed
    * @throws \Exception
    */
   public function view_layout($page, $data = null){
     if(isset($data)) {
       $this->template->vars('data', $data);
     }
-    $this->template->view_layout($page);
+    return $this->template->view_layout($page);
   }
 
   /**

@@ -102,6 +102,8 @@ class ControllerOrders extends ControllerSimple{
 
   /**
    * @export
+   * @param bool $partial
+   * @param bool $required_access
    * @throws \Exception
    */
 

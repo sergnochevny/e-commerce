@@ -102,7 +102,7 @@ abstract class ControllerSimple extends ControllerController{
     $this->template->vars('scenario', $this->scenario());
     $this->template->vars('action', $action);
     if($return) return $this->main->view_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
-    $this->main->view_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
+    return $this->main->view_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
   }
 
   /**
@@ -150,6 +150,7 @@ abstract class ControllerSimple extends ControllerController{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function add($required_access = true){
@@ -159,6 +160,8 @@ abstract class ControllerSimple extends ControllerController{
 
   /**
    * @export
+   * @param bool $partial
+   * @param bool $required_access
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){
@@ -178,6 +181,7 @@ abstract class ControllerSimple extends ControllerController{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function edit($required_access = true){
@@ -187,6 +191,7 @@ abstract class ControllerSimple extends ControllerController{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function delete($required_access = true){

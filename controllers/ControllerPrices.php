@@ -70,6 +70,8 @@ class ControllerPrices extends ControllerSimple{
 
   /**
    * @export
+   * @param bool $partial
+   * @param bool $required_access
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){

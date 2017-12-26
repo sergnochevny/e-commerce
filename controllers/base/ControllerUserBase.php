@@ -12,7 +12,7 @@ use models\ModelAuth;
 class ControllerUserBase extends ControllerController{
 
   /**
-   * @return [][]|string
+   * @return array|string
    */
   public static function get_from_session(){
     return App::$app->session('user');

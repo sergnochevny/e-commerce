@@ -136,13 +136,13 @@ class ControllerBlog extends ControllerFormSimple{
     $textarr = static::html_split($haystack);
     $changed = false;
     if(1 === count($replace_pairs)) {
-      foreach($replace_pairs as $needle => $replace) ;
-      for($i = 1, $c = count($textarr); $i < $c; $i += 2) {
-        if(false !== strpos($textarr[$i], $needle)) {
-          $textarr[$i] = str_replace($needle, $replace, $textarr[$i]);
-          $changed = true;
+      foreach($replace_pairs as $needle => $replace)
+        for($i = 1, $c = count($textarr); $i < $c; $i += 2) {
+          if(false !== strpos($textarr[$i], $needle)) {
+            $textarr[$i] = str_replace($needle, $replace, $textarr[$i]);
+            $changed = true;
+          }
         }
-      }
     } else {
       $needles = array_keys($replace_pairs);
       for($i = 1, $c = count($textarr); $i < $c; $i += 2) {
@@ -237,7 +237,7 @@ class ControllerBlog extends ControllerFormSimple{
     $this->template->vars('selected', $selected);
     $this->template->vars('filter', $filter);
     if($return) return $this->template->view_layout_return('filter/select');
-    $this->template->view_layout('filter/select');
+    return $this->template->view_layout('filter/select');
   }
 
   /**
@@ -271,7 +271,7 @@ class ControllerBlog extends ControllerFormSimple{
     }
     $this->template->vars('data', $data);
     if($return) return $this->template->view_layout_return('image');
-    $this->template->view_layout('image');
+    return $this->template->view_layout('image');
   }
 
   /**
@@ -345,7 +345,8 @@ class ControllerBlog extends ControllerFormSimple{
     $this->template->vars('destination', 'categories');
     $this->template->vars('title', 'Select Types');
     if($return) return $this->template->view_layout_return('filter/filter');
-    $this->template->view_layout('filter/filter');
+
+    return $this->template->view_layout('filter/filter');
   }
 
   /**
