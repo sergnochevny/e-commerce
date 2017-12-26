@@ -1946,22 +1946,27 @@ ul.product_list_widget li dl dd p {
     box-shadow: 0 2px 10px #DDD;
 }
 
-.search-panel .one-field .form-row{
+.search-panel .one-field .form-row,
+.search-panel-wide .one-field .form-row{
     margin: 0;
 }
 
-.search-panel .one-field .form-row .ui-input-text{
+.search-panel .one-field .form-row .ui-input-text,
+.search-panel-wide .one-field .form-row .ui-input-text{
     margin: 0;
 }
 
-.search-panel .one-field .form-row .ui-input-text input{
+.search-panel .one-field .form-row .ui-input-text input,
+.search-panel-wide .one-field .form-row .ui-input-text input{
     margin: 0;
 }
 
+.search-panel-wide > .panel-body,
 .search-panel > .panel-body {
     margin-bottom: 0;
 }
 
+.search-panel-wide > .panel-footer,
 .search-panel > .panel-footer {
     padding: 15px;
     background-color: #FFF;

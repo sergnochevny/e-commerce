@@ -201,8 +201,11 @@ use controllers\ControllerAdmin;
             </div>
           </div>
           <div class="col-xs-2 col-sm-1">
-            <?= isset($search['active']) ? '<a data-search_reset href="javascript:void(0)" title="Reset search" class="search-reset"><i class="fa fa-2x fa-times" 
-aria-hidden="true"></i></a>' : '' ?>
+            <?php if(isset($search['active'])): ?>
+              <a data-search_reset href="javascript:void(0)" title="Reset search" class="search-reset">
+                <i class="fa fa-2x fa-times" aria-hidden="true"></i>
+              </a>
+            <?php endif; ?>
             <a data-search_submit class="pull-right search-button" href="<?= $action ?>">
               <i class="fa fa-3x fa-search"></i>
             </a>

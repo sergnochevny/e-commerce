@@ -5,7 +5,7 @@ namespace controllers;
 use app\core\App;
 use controllers\base\ControllerFormSimple;
 use models\ModelBlog;
-use models\ModelBlogcategory;
+use models\ModelBlogCategory;
 
 /**
  * Class ControllerBlog
@@ -397,6 +397,7 @@ class ControllerBlog extends ControllerFormSimple{
 
   /**
    * @param $data
+   * @throws \Exception
    */
   protected function before_save(&$data){
     if(!isset($data[$this->id_field])) $data['post_author'] = ControllerAdmin::get_from_session();
@@ -458,7 +459,7 @@ class ControllerBlog extends ControllerFormSimple{
   protected function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
     if($view) {
-      $filter = ['a.post_status' => 'publish'];
+      $filter['a.post_status'] = 'publish';
       if(!empty(App::$app->get('cat'))) {
         $filter['b.group_id'] = App::$app->get('cat');
       }
@@ -546,7 +547,7 @@ class ControllerBlog extends ControllerFormSimple{
    */
   protected function before_list_layout($view = false){
     if(!empty(App::$app->get('cat'))) {
-      $category_name = ModelBlogcategory::get_by_id(App::$app->get('cat'))['name'];
+      $category_name = ModelBlogCategory::get_by_id(App::$app->get('cat'))['name'];
       if(!empty($category_name)) {
         $this->template->setMeta('description', $category_name);
         $this->template->setMeta('keywords', strtolower($category_name) . ',' . implode(',', array_filter(explode(' ', strtolower($category_name)))));
@@ -563,7 +564,7 @@ class ControllerBlog extends ControllerFormSimple{
    */
   protected function before_search_form_layout(&$search_data, $view = false){
     $categories = [];
-    $rows = ModelBlogcategory::get_list(0, 0, $res_count);
+    $rows = ModelBlogCategory::get_list(0, 0, $res_count);
     foreach($rows as $row) $categories[$row['id']] = $row['name'];
 
     $search_data['categories'] = $categories;

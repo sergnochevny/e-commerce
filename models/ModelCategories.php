@@ -26,18 +26,32 @@ class ModelCategories extends ModelBase{
   public static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
-      if(ControllerAdmin::is_logged()) {
-        if(!empty($filter["a.cname"])) foreach(array_filter(explode(' ', $filter["a.cname"])) as $item) if(!empty($item)) $result[] = "a.cname LIKE '%" . static::prepare_for_sql($item) . "%'";
-      } else {
-        if(isset($filter["a.cname"])) $result[] = ModelSynonyms::build_synonyms_like("a.cname", $filter["a.cname"]);
+      $prms = [];
+      if(!empty($filter["a.cname"])) {
+        if(ControllerAdmin::is_logged()) {
+          foreach(array_filter(explode(' ', $filter["a.cname"])) as $idx => $item) {
+            if(!empty($item)) {
+              $result[] = "a.cname LIKE :a_cname" . $idx . "";
+              $prms['a_cname' . $idx] = '%' . $item . '%';
+            }
+          }
+        } else {
+          list($result[], $prms) = ModelSynonyms::build_synonyms_like_p("a.cname", $filter["a.cname"]);
+        }
       }
-      if(isset($filter["a.cid"])) $result[] = "a.cid = '" . static::prepare_for_sql($filter["a.cid"]) . "'";
+      if(isset($filter["a.cid"])) {
+        $result[] = "a.cid = :a_cid";
+        $prms['a_cid'] = $filter["a.cid"];
+      }
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . static::prepare_for_sql($filter['hidden']["c.pvisible"]) . "'";
+      if(isset($filter['hidden']['c.pvisible'])) {
+        $result[] = "c.pvisible = :hc_pvisible";
+        $prms['hc_pvisible'] = $filter['hidden']["c.pvisible"];
+      }
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         $result = (!empty($result) ? " WHERE " . $result : '');
@@ -116,7 +130,7 @@ class ModelCategories extends ModelBase{
         $data['displayorder'] = $row[0];
       }
     } else {
-      $result = static::query("select * from shop_categories WHERE cid='$id'");
+      $result = static::query("SELECT * FROM shop_categories WHERE cid= :cid", ['cid' => $id]);
       if($result) {
         $data = static::fetch_array($result);
       }
@@ -134,20 +148,47 @@ class ModelCategories extends ModelBase{
     static::transaction();
     try {
       extract($data);
+      /**
+       * @var integer $displayorder
+       * @var integer $cid
+       * @var string $cname
+       */
       if(!empty($cid)) {
-        $res = static::query("select * from shop_categories WHERE cid='$cid'");
+        $res = static::query("SELECT * FROM shop_categories WHERE cid=:cid", ['cid' => $cid]);
         if($res) {
           $row = static::fetch_array($res);
           $_displayorder = $row['displayorder'];
           if($_displayorder != $displayorder) {
-            if($res) $res = static::query("update shop_categories set displayorder=displayorder-1 WHERE displayorder > $_displayorder");
-            if($res) $res = static::query("update shop_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
+            if($res) {
+              $res = static::query(
+                "UPDATE shop_categories SET displayorder=displayorder-1 WHERE displayorder > :do",
+                ['do' => $_displayorder]
+              );
+            }
+            if($res) {
+              $res = static::query(
+                "UPDATE shop_categories SET displayorder=displayorder+1 WHERE displayorder >= :do",
+                ['do' => $displayorder]
+              );
+            }
           }
-          if($res) $res = static::query("update shop_categories set cname='$cname', displayorder='$displayorder' WHERE cid ='$cid'");
+          if($res) {
+
+            $res = static::query(
+              "UPDATE shop_categories SET cname=:cname, displayorder=:displayorder WHERE cid=:cid",
+              compact($cid, $cname, $displayorder)
+            );
+          }
         }
       } else {
-        $res = static::query("update shop_categories set displayorder=displayorder+1 WHERE displayorder >= $displayorder");
-        if($res) $res = static::query("insert shop_categories set cname='$cname', displayorder='$displayorder'");
+        $res = static::query(
+          "UPDATE shop_categories SET displayorder=displayorder+1 WHERE displayorder >= :do",
+          ['do' => $displayorder]
+        );
+        if($res) $res = static::query(
+          "insert shop_categories set cname=:cname, displayorder=:displayorder",
+          compact($cname, $displayorder)
+        );
         if($res) $cid = static::last_id();
       }
       if(!$res) throw new Exception(static::error());
@@ -161,26 +202,26 @@ class ModelCategories extends ModelBase{
   }
 
   /**
-   * @param $id
+   * @param $cid
    * @throws \Exception
    */
-  public static function delete($id){
+  public static function delete($cid){
     static::transaction();
     try {
-      if(isset($id)) {
-        $query = "select count(*) from shop_product_categories where cid = $id";
-        $res = static::query($query);
+      if(isset($cid)) {
+        $query = "SELECT count(*) FROM shop_product_categories WHERE cid = :cid";
+        $res = static::query($query, ['cid' => $cid]);
         if($res) {
           $amount = static::fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "delete from shop_product_categories WHERE cid = $id";
-        $res = static::query($query);
+        $query = "DELETE FROM shop_product_categories WHERE cid = :cid";
+        $res = static::query($query, ['cid', $cid]);
         if(!$res) throw new Exception(static::error());
-        $query = "DELETE FROM shop_categories WHERE cid = $id";
-        $res = static::query($query);
+        $query = "DELETE FROM shop_categories WHERE cid = :cid";
+        $res = static::query($query, ['cid' => $cid]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

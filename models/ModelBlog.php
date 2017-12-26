@@ -26,26 +26,49 @@ class ModelBlog extends ModelBase{
    */
   public static function build_where(&$filter, &$prms = null){
     $result = "";
+    $prms = [];
     if(ControllerAdmin::is_logged()) {
       if(!empty($filter["a.post_title"])) {
         foreach(array_filter(explode(' ', $filter["a.post_title"])) as $idx => $item) {
           if(!empty($item)) {
-            $result[] = "a.post_title LIKE '%:a_post_title" . $idx . "%'";
-            $prms['a_post_tile' . $idx] = static::prepare_for_sql($item);
+            $result[] = "a.post_title LIKE :a_post_title" . $idx . "";
+            $prms['a_post_title' . $idx] = '%' . $item . '%';
           }
         }
       }
     } else {
       if(isset($filter["a.post_title"])) {
-        $result[] = ModelSynonyms::build_synonyms_like("a.post_title", $filter["a.post_title"]);
+        $conditions[] = ModelSynonyms::build_synonyms_like_p("a.post_title", $filter["a.post_title"]);
+        $conditions[] = ModelSynonyms::build_synonyms_like_p("c.name", $filter["a.post_title"]);
+        $condition = '';
+        foreach($conditions as $item) {
+          if(!empty($condition)) $condition .= ' OR ';
+          $condition .= $item[0];
+          $prms = array_merge($prms, $item[1]);
+        }
+        $result[] = $condition;
       }
     }
-    if(isset($filter["a.post_status"])) $result[] = "a.post_status = '" . static::prepare_for_sql($filter["a.post_status"]) . "'";
+    if(isset($filter["a.post_status"])) {
+      $result[] = "a.post_status = :a_post_status";
+      $prms['a_post_status'] = $filter["a.post_status"];
+    }
     if(isset($filter["a.post_date"])) {
-      $where = (!empty($filter["a.post_date"]['from']) ? "a.post_date >= '" . static::prepare_for_sql($filter["a.post_date"]["from"]) . "'" : "") . (!empty($filter["a.post_date"]['to']) ? " AND a.post_date <= '" . static::prepare_for_sql($filter["a.post_date"]["to"]) . "'" : "");
+      $where = '';
+      if(!empty($filter["a.post_date"]['from'])) {
+        $where = "a.dt >= :a_pdt_from";
+        $prms['a_pdt_from'] = $filter["a.post_date"]["from"];
+      }
+      if(!empty($filter["a.post_date"]['to'])) {
+        $where .= " AND a.dt <= :a_pdt_to";
+        $prms['a_pdt_to'] = $filter["a.post_date"]["to"];
+      }
       if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
     }
-    if(isset($filter["b.group_id"])) $result[] = "b.group_id = '" . static::prepare_for_sql($filter["b.group_id"]) . "'";
+    if(isset($filter["b.group_id"])) {
+      $result[] = "b.group_id = :b_group_id";
+      $prms['b_group_id'] = $filter["b.group_id"];
+    }
     if(!empty($result) && (count($result) > 0)) {
       $result = implode(" AND ", $result);
       if(strlen(trim($result)) > 0) {
@@ -160,6 +183,7 @@ class ModelBlog extends ModelBase{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
+    $query .= " LEFT JOIN blog_groups c ON b.group_id = c.id ";
     $query .= static::build_where($filter, $prms);
     if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
@@ -183,6 +207,7 @@ class ModelBlog extends ModelBase{
     $query = "SELECT DISTINCT a.* ";
     $query .= " FROM " . static::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
+    $query .= " LEFT JOIN blog_groups c ON b.group_id = c.id ";
     $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";

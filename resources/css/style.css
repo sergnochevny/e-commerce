@@ -1314,6 +1314,18 @@ form[data-search] > .row > .panel > .panel-heading {
     border: 0;
     background-color: transparent;
 }
+.search-panel.search-wide .search-reset {
+    right: 15vh;
+}
+
+@media (min-width: 1200px){
+    .search-panel .search-reset {
+        right: 15vh;
+    }
+    .search-panel.search-wide .search-reset {
+        right: 18vh;
+    }
+}
 
 .search-panel .search-button{
     position: absolute;
@@ -1661,6 +1673,9 @@ span.opa {
         right: 22vh;
         top: 10px;
     }
+    .search-panel.search-wide .search-reset {
+        right: 22vh;
+    }
 
     .product-in-cart-image, .sample-in-cart-image {
         margin-bottom: 15px;
@@ -1760,10 +1775,16 @@ span.opa {
     .search-panel .search-reset {
         right: 20vh;
     }
+    .search-panel.search-wide .search-reset {
+        right: 20vh;
+    }
 }
 
 @media (max-width: 570px) {
     .search-panel .search-reset {
+        right: 18vh;
+    }
+    .search-panel.search-wide .search-reset {
         right: 18vh;
     }
 }
@@ -1774,6 +1795,9 @@ span.opa {
     }
 
     .search-panel .search-reset {
+        right: 80px;
+    }
+    .search-panel.search-wide .search-reset {
         right: 80px;
     }
 }

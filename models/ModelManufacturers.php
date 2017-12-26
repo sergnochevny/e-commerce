@@ -26,18 +26,26 @@ class ModelManufacturers extends ModelBase{
   public static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
-      if(ControllerAdmin::is_logged()) {
-        if(!empty($filter["a.manufacturer"])) foreach(array_filter(explode(' ', $filter["a.manufacturer"])) as $item) if(!empty($item)) $result[] = "a.manufacturer LIKE '%" . static::prepare_for_sql($item) . "%'";
-      } else {
-        if(isset($filter["a.manufacturer"])) $result[] = ModelSynonyms::build_synonyms_like("a.manufacturer", $filter["a.manufacturer"]);
+      if(!empty($filter["a.manufacturer"])) {
+        if(ControllerAdmin::is_logged()) {
+          if(!empty($filter["a.manufacturer"])) foreach(array_filter(explode(' ', $filter["a.manufacturer"])) as $item) if(!empty($item)) $result[] = "a.manufacturer LIKE '%" . static::prepare_for_sql($item) . "%'";
+        } else {
+          if(isset($filter["a.manufacturer"])) $result[] = ModelSynonyms::build_synonyms_like("a.manufacturer", $filter["a.manufacturer"]);
+        }
       }
-      if(isset($filter["id"])) $result[] = "a.id = '" . static::prepare_for_sql($filter["a.id"]) . "'";
+      if(isset($filter["a.id"])) {
+        $result[] = "a.id = :a_id";
+        $prms['a_id'] = $filter["a.id"];
+      }
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . static::prepare_for_sql($filter['hidden']["b.pvisible"]) . "'";
+      if(isset($filter['hidden']['c.pvisible'])) {
+        $result[] = "c.pvisible = :hc_pvisible";
+        $prms['hc_pvisible'] = $filter['hidden']["c.pvisible"];
+      }
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         $result = (!empty($result) ? " WHERE " . $result : '');

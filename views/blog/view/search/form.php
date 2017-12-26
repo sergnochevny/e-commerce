@@ -3,19 +3,20 @@
 use app\core\App;
 
 ?>
-<form action="<?= $action ?>" method="post" data-search>
-  <div class="panel panel-default search-panel">
+<form action="<?= $action ?>" method="post" data-search class="">
+  <div class="panel panel-default search-panel search-wide">
     <div class="panel-heading one-field">
       <div class="row">
         <div class="col-xs-10 col-sm-11">
           <div class="form-row">
-            <input type="text" class="input-text" placeholder="Manufacturer Name: Like ..."
-                   name="search[a.manufacturer]"
-                   value="<?= isset($search['a.manufacturer']) ? $search['a.manufacturer'] : '' ?>">
+            <input type="text" class="input-text"
+                   placeholder="Post or Category Title: Like ..."
+                   name="search[a.post_title]"
+                   value="<?= isset($search['a.post_title']) ? $search['a.post_title'] : '' ?>">
           </div>
         </div>
         <div class="col-xs-2 col-sm-1">
-          <?php if(isset($search['active'])): ?>
+          <? if(isset($search['active'])): ?>
             <a data-search_reset href="javascript:void(0)" title="Reset search" class="search-reset">
               <i class="fa fa-2x fa-times" aria-hidden="true"></i>
             </a>
@@ -24,6 +25,7 @@ use app\core\App;
             <i class="fa fa-3x fa-search"></i>
           </a>
         </div>
+
       </div>
     </div>
   </div>

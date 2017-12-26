@@ -4,7 +4,7 @@ namespace controllers;
 
 use app\core\App;
 use controllers\base\ControllerSimple;
-use models\ModelBlogcategory;
+use models\ModelBlogCategory;
 
 /**
  * Class ControllerBlogCategory
@@ -34,7 +34,7 @@ class ControllerBlogCategory extends ControllerSimple{
   protected function load(&$data){
     $data = [
       $this->id_field => App::$app->get($this->id_field),
-      'name' => ModelBlogcategory::sanitize(App::$app->post('name')),
+      'name' => ModelBlogCategory::sanitize(App::$app->post('name')),
     ];
   }
 

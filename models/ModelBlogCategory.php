@@ -9,7 +9,7 @@ use Exception;
  * Class ModelBlogcategory
  * @package models
  */
-class ModelBlogcategory extends ModelBase{
+class ModelBlogCategory extends ModelBase{
 
   /**
    * @var string
@@ -26,8 +26,8 @@ class ModelBlogcategory extends ModelBase{
       'id' => '', 'name' => '',
     ];
     if(isset($id)) {
-      $query = "SELECT * FROM blog_groups WHERE id = '$id'";
-      $result = static::query($query);
+      $query = "SELECT * FROM blog_groups WHERE id = :id";
+      $result = static::query($query, ['id' => $id]);
       if($result) $response = static::fetch_assoc($result);
     }
 
@@ -46,7 +46,7 @@ class ModelBlogcategory extends ModelBase{
     $query .= static::build_where($filter, $prms);
     if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
-      static::free_result($result);    
+      static::free_result($result);
     }
 
     return $response;
@@ -89,16 +89,16 @@ class ModelBlogcategory extends ModelBase{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "SELECT COUNT(*) FROM blog_group_posts WHERE id = $id";
-        $res = static::query($query);
+        $query = "SELECT COUNT(*) FROM blog_group_posts WHERE id = :id";
+        $res = static::query($query, ['id' => $id]);
         if($res) {
           $amount = static::fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "DELETE FROM blog_groups WHERE id = $id";
-        $res = static::query($query);
+        $query = "DELETE FROM blog_groups WHERE id = :id";
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();
@@ -115,15 +115,19 @@ class ModelBlogcategory extends ModelBase{
    */
   public static function save(&$data){
     extract($data);
+    /**
+     * @var $id
+     * @var string $name
+     */
     static::transaction();
     try {
       if(isset($id)) {
-        $query = 'UPDATE blog_groups SET name = "' . $name . '" WHERE id = ' . $id;
-        $res = static::query($query);
+        $query = 'UPDATE blog_groups SET name = :name WHERE id = :id';
+        $res = static::query($query, compact($id, $name));
         if(!$res) throw new Exception(static::error());
       } else {
-        $query = 'INSERT INTO blog_groups (name) VALUE ("' . $name . '")';
-        $res = static::query($query);
+        $query = 'INSERT INTO blog_groups (name) VALUE (:name)';
+        $res = static::query($query, compact($name));
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }

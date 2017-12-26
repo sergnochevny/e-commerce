@@ -26,18 +26,31 @@ class ModelColors extends ModelBase{
   public static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
-      if(ControllerAdmin::is_logged()) {
-        if(!empty($filter["a.color"])) foreach(array_filter(explode(' ', $filter["a.color"])) as $item) if(!empty($item)) $result[] = "a.color LIKE '%" . static::prepare_for_sql($item) . "%'";
-      } else {
-        if(isset($filter["a.color"])) $result[] = ModelSynonyms::build_synonyms_like("a.color", $filter["a.color"]);
+      if(!empty($filter["a.color"])) {
+        if(ControllerAdmin::is_logged()) {
+          foreach(array_filter(explode(' ', $filter["a.color"])) as $idx => $item) {
+            if(!empty($item)) {
+              $result[] = "a.color LIKE :a_color" . $idx . "";
+              $prms['a_color' . $idx] = '%' . $item . '%';
+            }
+          }
+        } else {
+          list($result[], $prms) = ModelSynonyms::build_synonyms_like_p("a.color", $filter["a.color"]);
+        }
       }
-      if(isset($filter["a.id"])) $result[] = "a.id = '" . static::prepare_for_sql($filter["a.id"]) . "'";
+      if(isset($filter["a.id"])) {
+        $result[] = "a.id = :a_id";
+        $prms['a_id'] = $filter["a.id"];
+      }
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
         }
       }
-      if(isset($filter['hidden']['c.pvisible'])) $result[] = "c.pvisible = '" . static::prepare_for_sql($filter['hidden']["c.pvisible"]) . "'";
+      if(isset($filter['hidden']['c.pvisible'])) {
+        $result[] = "c.pvisible = :hc_pvisible";
+        $prms['hc_pvisible'] = $filter['hidden']["c.pvisible"];
+      }
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         $result = (!empty($result) ? " WHERE " . $result : '');
@@ -55,13 +68,12 @@ class ModelColors extends ModelBase{
    * @throws \Exception
    */
   public static function get_by_id($id){
-    $prms = [];
     $response = [
       'id' => $id, 'color' => ''
     ];
     if(isset($id)) {
-      $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
-      $result = static::query($query, $prms);
+      $query = "SELECT * FROM " . static::$table . " WHERE id=:id";
+      $result = static::query($query, compact($id));
       if($result) $response = static::fetch_assoc($result);
     }
 
@@ -126,16 +138,19 @@ class ModelColors extends ModelBase{
    */
   public static function save(&$data){
     static::transaction();
-    $prms = [];
     try {
       extract($data);
+      /**
+       * @var integer $id
+       * @var string $color
+       */
       if(isset($id)) {
-        $query = 'UPDATE ' . static::$table . ' SET color ="' . $color . '" WHERE id =' . $id;
-        $res = static::query($query, $prms);
+        $query = 'UPDATE ' . static::$table . ' SET color = :color WHERE id = :id';
+        $res = static::query($query, compact($color, $id));
         if(!$res) throw new Exception(static::error());
       } else {
-        $query = 'INSERT INTO ' . static::$table . '(color) VALUE ("' . $color . '")';
-        $res = static::query($query, $prms);
+        $query = 'INSERT INTO ' . static::$table . '(color) VALUE (:color)';
+        $res = static::query($query, compact($color));
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }
@@ -153,20 +168,19 @@ class ModelColors extends ModelBase{
    * @throws \Exception
    */
   public static function delete($id){
-    $prms = [];
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "SELECT COUNT(*) FROM shop_product_colors WHERE colorId = $id";
-        $res = static::query($query, $prms);
+        $query = "SELECT COUNT(*) FROM shop_product_colors WHERE colorId = :id";
+        $res = static::query($query, compact($id));
         if($res) {
           $amount = static::fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = static::query($query, $prms);
+        $query = "DELETE FROM " . static::$table . " WHERE id = :id";
+        $res = static::query($query, compact($id));
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

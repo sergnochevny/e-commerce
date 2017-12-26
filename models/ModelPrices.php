@@ -44,8 +44,15 @@ class ModelPrices extends ModelBase{
   public static function build_where(&$filter, &$prms = null){
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
-      if(isset($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter['hidden']["a.priceyard"]) . "'";
-      if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . static::prepare_for_sql($filter['hidden']["a.pvisible"]) . "'";
+      $prms = [];
+      if(isset($filter['hidden']['a.priceyard'])) {
+        $result[] = "a.priceyard > :ha_priceyard";
+        $prms['ha_priceyard'] = $filter['hidden']["a.priceyard"];
+      }
+      if(isset($filter['hidden']['a.pvisible'])) {
+        $result[] = "a.pvisible = :hc_pvisible";
+        $prms['hc_pvisible'] = $filter['hidden']["a.pvisible"];
+      }
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);
         $result = (!empty($result) ? " WHERE " . $result : '');
