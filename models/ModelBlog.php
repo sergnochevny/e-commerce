@@ -49,10 +49,6 @@ class ModelBlog extends ModelBase{
         $result[] = $condition;
       }
     }
-    if(isset($filter["a.post_status"])) {
-      $result[] = "a.post_status = :a_post_status";
-      $prms['a_post_status'] = $filter["a.post_status"];
-    }
     if(isset($filter["a.post_date"])) {
       $where = '';
       if(!empty($filter["a.post_date"]['from'])) {
@@ -69,12 +65,23 @@ class ModelBlog extends ModelBase{
       $result[] = "b.group_id = :b_group_id";
       $prms['b_group_id'] = $filter["b.group_id"];
     }
+    if(isset($filter["a.post_status"])) {
+      $result[] = "a.post_status = :a_post_status";
+      $prms['a_post_status'] = $filter["a.post_status"];
+    }
+
     if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
-      if(strlen(trim($result)) > 0) {
-        $result = " WHERE " . $result;
+      if(strlen(trim(implode(" AND ", $result))) > 0) {
         $filter['active'] = true;
       }
+    }
+    if(isset($filter['hidden']["a.post_status"])) {
+      $result[] = "a.post_status = :ha_post_status";
+      $prms['ha_post_status'] = $filter['hidden']["a.post_status"];
+    }
+    if(!empty($result) && (count($result) > 0)) {
+      $result = implode(" AND ", $result);
+      $result = (!empty($result) ? " WHERE " . $result : '');
     }
 
     return $result;

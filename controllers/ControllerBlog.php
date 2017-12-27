@@ -460,7 +460,7 @@ class ControllerBlog extends ControllerFormSimple{
   protected function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
     if($view) {
-      $filter['a.post_status'] = 'publish';
+      $filter['hidden']['a.post_status'] = 'publish';
       if(!empty(App::$app->get('cat'))) {
         $filter['b.group_id'] = App::$app->get('cat');
       }
