@@ -256,7 +256,8 @@ class ControllerSettings extends ControllerFormSimple{
    * @param null $data
    */
   protected function before_form_layout(&$data = null){
-    $csv_fields_dlm = (!is_null(App::$app->keyStorage()->system_csv_fields_dlm) ? App::$app->keyStorage()->system_csv_fields_dlm : ',');
+    $csv_fields_dlm = !is_null(App::$app->keyStorage()->system_csv_fields_dlm) ?
+      App::$app->keyStorage()->system_csv_fields_dlm : ',';
     $data['system_csv_fields'] = explode($csv_fields_dlm, $data['system_csv_fields']);
     $data['system_csv_fields_avail'] = array_diff($this->csv_fields_avail, $data['system_csv_fields']);
   }

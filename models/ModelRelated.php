@@ -24,10 +24,17 @@ class ModelRelated extends ModelBase{
    */
   public static function build_where(&$filter, &$prms = null){
     $result = "";
-    if(isset($filter['hidden']['b.pvisible'])) $result[] = "b.pvisible = '" . static::prepare_for_sql($filter['hidden']["b.pvisible"]) . "'";
-    if(isset($filter['hidden']["b.pnumber"])) $result[] = "b.pnumber is not null";
-    if(isset($filter['hidden']["b.image1"])) $result[] = "b.image1 is not null";
-    if(isset($filter['hidden']["a.pid"])) $result[] = "a.pid = '" . static::prepare_for_sql($filter['hidden']["a.pid"]) . "'";
+    if(isset($filter['hidden']['a.pvisible'])) {
+      $result[] = "a.pvisible = :hapvisible";
+      $prms['hapvisible'] = $filter['hidden']["a.pvisible"];
+    }
+    if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
+    if(isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";
+
+    if(isset($filter['hidden']["a.pid"])) {
+      $result[] = "a.pid = :ha_pid";
+      $prms['ha_pid'] = $filter['hidden']["a.pid"];
+    }
     if(!empty($result) && (count($result) > 0)) {
       $result = implode(" AND ", $result);
     }
@@ -46,8 +53,8 @@ class ModelRelated extends ModelBase{
       'id' => $id, 'pid' => '', 'r_pid' => ''
     ];
     if(isset($id)) {
-      $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
-      $result = static::query($query);
+      $query = "SELECT * FROM " . static::$table . " WHERE id=:id";
+      $result = static::query($query, ['id' => $id]);
       if($result) $response = static::fetch_assoc($result);
     }
 
@@ -112,13 +119,8 @@ class ModelRelated extends ModelBase{
   public static function save(&$data){
     static::transaction();
     try {
-      extract($data);
-      /**
-       * @var integer $pid
-       * @var integer $r_pid
-       */
-      $query = "REPLACE INTO " . static::$table . " (pid, r_pid) VALUE ('" . $pid . "', '" . $r_pid . "')";
-      $res = static::query($query);
+      $query = "REPLACE INTO " . static::$table . "(pid, r_pid) VALUE (:pid, :r_pid)";
+      $res = static::query($query, $data);
       if(!$res) throw new Exception(static::error());
       $id = static::last_id();
       static::commit();
@@ -138,8 +140,8 @@ class ModelRelated extends ModelBase{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "DELETE FROM  " . static::$table . " WHERE id = $id";
-        $res = static::query($query);
+        $query = "DELETE FROM  " . static::$table . " WHERE id = :id";
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

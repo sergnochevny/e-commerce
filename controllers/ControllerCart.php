@@ -92,6 +92,7 @@ class ControllerCart extends ControllerController{
 
   /**
    * @param string $template
+   * @throws \Exception
    */
   private function samples_in($template = 'sample_in'){
     $cart_samples_items = isset(App::$app->session('cart')['samples_items']) ? App::$app->session('cart')['samples_items'] : [];

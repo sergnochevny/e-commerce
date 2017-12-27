@@ -29,7 +29,14 @@ class ModelShop extends ModelBase{
     $result_where = "";
     $prms = [];
     if(ControllerAdmin::is_logged()) {
-      if(!empty($filter["a.pname"])) foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) if(!empty($item)) $result[] = "a.pname LIKE '%" . static::prepare_for_sql($item) . "%'";
+      if(!empty($filter["a.pname"])) {
+        foreach(array_filter(explode(' ', $filter["a.pname"])) as $idx => $item) {
+          if(!empty($item)) {
+            $result[] = "a.pname LIKE :a_pname" . $idx . "";
+            $prms['a_pname' . $idx] = '%' . $item . '%';
+          }
+        }
+      }
 
       if(isset($filter["a.dt"])) {
         $where = '';
@@ -54,35 +61,35 @@ class ModelShop extends ModelBase{
       }
       if(isset($filter["b.cid"])) {
         $result[] = "b.cid = :bcid";
-        $prms['hbcid'] = $filter["b.cid"];
+        $prms['bcid'] = $filter["b.cid"];
       }
       if(isset($filter["c.id"])) {
         $result[] = "c.id = :cid";
-        $prms['hcid'] = $filter["c.id"];
+        $prms['cid'] = $filter["c.id"];
       }
       if(isset($filter["d.id"])) {
         $result[] = "d.id = :did";
-        $prms['hdid'] = $filter["d.id"];
+        $prms['did'] = $filter["d.id"];
       }
       if(isset($filter["e.id"])) {
         $result[] = "e.id = :eid";
-        $prms['heid'] = $filter["e.id"];
+        $prms['eid'] = $filter["e.id"];
       }
       if(isset($filter["a.best"])) {
         $result[] = "a.best = :abest";
-        $prms['habest'] = $filter["a.best"];
+        $prms['abest'] = $filter["a.best"];
       }
       if(isset($filter["a.specials"])) {
         $result[] = "a.specials = :aspecials";
-        $prms['haspecials'] = $filter["a.specials"];
+        $prms['aspecials'] = $filter["a.specials"];
       }
       if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) {
         $result[] = "a.priceyard > :apriceyard_from";
-        $prms['hapriceyard_from'] = $filter["a.priceyard"]['from'];
+        $prms['apriceyard_from'] = $filter["a.priceyard"]['from'];
       }
       if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) {
         $result[] = "a.priceyard <= :apriceyard_to";
-        $prms['hapriceyard_to'] = $filter["a.priceyard"]['to'];
+        $prms['apriceyard_to'] = $filter["a.priceyard"]['to'];
       }
 
       if(!empty($result) && (count($result) > 0)) {

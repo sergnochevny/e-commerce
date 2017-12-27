@@ -27,10 +27,17 @@ class ModelManufacturers extends ModelBase{
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
       if(!empty($filter["a.manufacturer"])) {
-        if(ControllerAdmin::is_logged()) {
-          if(!empty($filter["a.manufacturer"])) foreach(array_filter(explode(' ', $filter["a.manufacturer"])) as $item) if(!empty($item)) $result[] = "a.manufacturer LIKE '%" . static::prepare_for_sql($item) . "%'";
-        } else {
-          if(isset($filter["a.manufacturer"])) $result[] = ModelSynonyms::build_synonyms_like("a.manufacturer", $filter["a.manufacturer"]);
+        if(!empty($filter["a.manufacturer"])) {
+          if(ControllerAdmin::is_logged()) {
+            foreach(array_filter(explode(' ', $filter["a.manufacturer"])) as $idx => $item) {
+              if(!empty($item)) {
+                $result[] = "a.manufacturer LIKE :a_manufacturer" . $idx . "";
+                $prms['a_manufacturer' . $idx] = '%' . $item . '%';
+              }
+            }
+          } else {
+            list($result[], $prms) = ModelSynonyms::build_synonyms_like_p("a.manufacturer", $filter["a.manufacturer"]);
+          }
         }
       }
       if(isset($filter["a.id"])) {
@@ -67,8 +74,8 @@ class ModelManufacturers extends ModelBase{
       'id' => $id, 'manufacturer' => ''
     ];
     if(isset($id)) {
-      $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
-      $result = static::query($query);
+      $query = "SELECT * FROM " . static::$table . " WHERE id=:id";
+      $result = static::query($query, ['id' => $id]);
       if($result) $response = static::fetch_assoc($result);
     }
 
@@ -133,13 +140,17 @@ class ModelManufacturers extends ModelBase{
     static::transaction();
     try {
       extract($data);
+      /**
+       * @var string $manufacturer
+       * @var integer $id
+       */
       if(isset($id)) {
-        $query = "UPDATE " . static::$table . " SET manufacturer ='" . $manufacturer . "' WHERE id =" . $id;
-        $res = static::query($query);
+        $query = "UPDATE " . static::$table . " SET manufacturer = :manufacturer WHERE id = :id";
+        $res = static::query($query, ['id' => $id, 'manufacturer' => $manufacturer]);
         if(!$res) throw new Exception(static::error());
       } else {
-        $query = "INSERT INTO " . static::$table . " (manufacturer) VALUE ('" . $manufacturer . "')";
-        $res = static::query($query);
+        $query = "INSERT INTO " . static::$table . "(manufacturer) VALUE (:manufacturer)";
+        $res = static::query($query, ['manufacturer' => $manufacturer]);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }
@@ -160,16 +171,16 @@ class ModelManufacturers extends ModelBase{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "select count(*) from shop_products where manufacturerId = $id";
-        $res = static::query($query);
+        $query = "SELECT count(*) FROM shop_products WHERE manufacturerId = :id";
+        $res = static::query($query, ['id' => $id]);
         if($res) {
           $amount = static::fetch_array($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-        $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = static::query($query);
+        $query = "DELETE FROM " . static::$table . " WHERE id = :id";
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

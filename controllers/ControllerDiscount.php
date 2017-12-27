@@ -47,7 +47,8 @@ class ControllerDiscount extends ControllerFormSimple{
     $this->template->vars('destination', 'filter_products');
     $this->template->vars('title', $title);
     if($return) return $this->template->view_layout_return('filter/filter');
-    $this->template->view_layout('filter/filter');
+
+    return $this->template->view_layout('filter/filter');
   }
 
   /**
@@ -64,7 +65,8 @@ class ControllerDiscount extends ControllerFormSimple{
     $this->template->vars('destination', 'users');
     $this->template->vars('title', 'Select Users');
     if($return) return $this->template->view_layout_return('filter/filter');
-    $this->template->view_layout('filter/filter');
+
+    return $this->template->view_layout('filter/filter');
   }
 
   /**
@@ -88,7 +90,8 @@ class ControllerDiscount extends ControllerFormSimple{
     $this->template->vars('selected', $selected);
     $this->template->vars('filter', $filter);
     if($return) return $this->template->view_layout_return('filter/select');
-    $this->template->view_layout('filter/select');
+
+    return $this->template->view_layout('filter/select');
   }
 
   /**
@@ -115,13 +118,11 @@ class ControllerDiscount extends ControllerFormSimple{
    * @throws \Exception
    */
   private function selected_filter($data, $return = false){
-    if(App::$app->post('type') === 'users') {
-      if($return) return $this->generate_users_filter($data, $return);
-      $this->generate_users_filter($data, $return);
-    } else {
-      if($return) return $this->generate_users_filter($data, $return);
-      $this->generate_prod_filter($data, $return);
+    if($return || (App::$app->post('type') === 'users')) {
+      return $this->generate_users_filter($data, $return);
     }
+
+    return $this->generate_prod_filter($data, $return);
   }
 
   /**
@@ -169,6 +170,7 @@ class ControllerDiscount extends ControllerFormSimple{
 
   /**
    * @param $data
+   * @throws \Exception
    */
   protected function load(&$data){
     $data[$this->id_field] = App::$app->get($this->id_field);
@@ -304,6 +306,8 @@ class ControllerDiscount extends ControllerFormSimple{
 
   /**
    * @export
+   * @param bool $partial
+   * @param bool $required_access
    * @throws \Exception
    */
   public function view($partial = true, $required_access = true){

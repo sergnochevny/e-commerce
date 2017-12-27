@@ -89,7 +89,9 @@ class ModelBlog extends ModelBase{
     $filters = [];
     $categories = isset($data['categories']) ? array_keys($data['categories']) : [];
     if(isset($data['categories_select']) || isset($data['categories'])) {
-      $select = implode(',', array_merge(isset($data['categories_select']) ? $data['categories_select'] : [], $categories));
+      $select = implode(',', array_merge(isset($data['categories_select']) ?
+          $data['categories_select'] : [], $categories)
+      );
       $categories = $data['categories'];
     } else {
       $data['categories'] = self::get_filter_selected_data($id);
@@ -100,7 +102,13 @@ class ModelBlog extends ModelBase{
       }
     }
     if(strlen($select) <= 0) $select = '1';
-    $results = static::query("select a.id, a.name, (max(b.order)+1) as pos from blog_groups a" . " left join blog_group_posts b on b.group_id = a.id" . " where a.id in ($select)" . " group by a.id, a.name" . " order by a.name");
+    $results = static::query(
+      "select a.id, a.name, (max(b.order)+1) as pos from blog_groups a" .
+      " left join blog_group_posts b on b.group_id = a.id" .
+      " where a.id in ($select)" .
+      " group by a.id, a.name" .
+      " order by a.name"
+    );
     if($results) {
       while($row = static::fetch_array($results)) {
         $filters[$row['id']] = [$row['name'], isset($categories[$row['id']]) ? $categories[$row['id']] : $row['pos']];
@@ -144,8 +152,8 @@ class ModelBlog extends ModelBase{
   public static function get_filter_data(&$count, $start = 0, $search = null){
     $filter = null;
     $prms = [];
-    $filter_limit = (!is_null(App::$app->keyStorage()->system_filter_amount) ?
-      App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
+    $filter_limit = !is_null(App::$app->keyStorage()->system_filter_amount) ?
+      App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT;
     $start = isset($start) ? $start : 0;
     $search = static::prepare_for_sql($search);
     $q = "SELECT count(id) FROM blog_groups";
@@ -230,9 +238,16 @@ class ModelBlog extends ModelBase{
    */
   public static function get_by_id($id){
     $data = [
-      'id' => $id, 'post_author' => '', 'post_date' => date('Y-m-d H:i:s', time()),
-      'post_content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore" . " et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " . " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " . "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui " . "officia deserunt mollit anim id est laborum...",
-      'post_title' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...', 'post_status' => '',
+      'id' => $id,
+      'post_author' => '',
+      'post_date' => date('Y-m-d H:i:s', time()),
+      'post_content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore" .
+        " et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " .
+        " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " .
+        "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui " .
+        "officia deserunt mollit anim id est laborum...",
+      'post_title' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+      'post_status' => '',
     ];
     if(isset($id)) {
       $strSQL = "SELECT * FROM " . static::$table . " WHERE id = :id";
@@ -265,8 +280,8 @@ class ModelBlog extends ModelBase{
   public static function get_img($id){
     $filename = null;
     if(isset($id)) {
-      $strSQL = "SELECT * FROM blog_post_img WHERE post_id = '" . $id . "'";
-      $result = static::query($strSQL);
+      $strSQL = "SELECT * FROM blog_post_img WHERE post_id = :id";
+      $result = static::query($strSQL, ['id' => $id]);
       if($result) {
         $data = static::fetch_assoc($result);
         $filename = $data['img'];
@@ -300,8 +315,13 @@ class ModelBlog extends ModelBase{
             );
           }
           $data['img'] = $filename;
-          $result = static::query("DELETE FROM blog_post_img WHERE post_id = '$id'");
-          if($result) $result = static::query("INSERT INTO blog_post_img(post_id, img) values('$id', '$filename')");
+          $result = static::query("DELETE FROM blog_post_img WHERE post_id = :id", ['id' => $id]);
+          if($result) {
+            $result = static::query(
+              "INSERT INTO blog_post_img(post_id, img) VALUES(:id, :filename)",
+              ['id' => $id, 'filename' => $filename]
+            );
+          }
         }
       }
       static::commit();

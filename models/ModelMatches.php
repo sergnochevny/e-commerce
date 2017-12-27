@@ -72,7 +72,8 @@ class ModelMatches extends ModelBase{
     extract($data);
     $added = false;
     if(!empty($pid)) {
-      $matches_items = isset(App::$app->session('matches')['items']) ? App::$app->session('matches')['items'] : [];
+      $matches_items = isset(App::$app->session('matches')['items']) ?
+        App::$app->session('matches')['items'] : [];
       $item_added = false;
       if(count($matches_items) > 0) {
         foreach($matches_items as $key => $item) {
@@ -108,7 +109,8 @@ class ModelMatches extends ModelBase{
    */
   public static function delete($id){
     if(!empty($id)) {
-      $matches_items = isset(App::$app->session('matches')['items']) ? App::$app->session('matches')['items'] : [];
+      $matches_items = isset(App::$app->session('matches')['items']) ?
+        App::$app->session('matches')['items'] : [];
       if(count($matches_items) > 0) {
         foreach($matches_items as $key => $item) {
           if($item['pid'] == $id) {

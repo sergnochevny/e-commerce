@@ -90,6 +90,7 @@ class ControllerContact extends ControllerSimple{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function index($required_access = true){

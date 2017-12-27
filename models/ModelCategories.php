@@ -98,7 +98,8 @@ class ModelCategories extends ModelBase{
     $query .= " FROM shop_categories a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
     $query .= " JOIN shop_product_categories b ON b.cid = a.cid";
-    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.pid" : '';
+    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ?
+      " INNER JOIN shop_products c ON c.pid = b.pid" : '';
     $query .= static::build_where($filter, $prms);
     $query .= " GROUP BY a.cid, a.cname";
     $query .= static::build_order($sort, $prms);

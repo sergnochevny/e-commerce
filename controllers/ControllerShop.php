@@ -509,7 +509,9 @@ class ControllerShop extends ControllerController{
   public function bestsellers(){
     $this->template->vars('cart_enable', '_');
     $this->page_title = 'Best Sellers';
-    $list = $this->get_list_by_type('bestsellers', (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ? App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT));
+    $list = $this->get_list_by_type('bestsellers', (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ?
+      App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT)
+    );
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
     $this->main->view('shop');
@@ -523,7 +525,9 @@ class ControllerShop extends ControllerController{
   public function under(){
     $this->template->vars('cart_enable', '_');
     $this->page_title = 'Under $100';
-    $list = $this->get_list_by_type('under', (!is_null(App::$app->keyStorage()->shop_under_amount) ? App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT));
+    $list = $this->get_list_by_type('under', (!is_null(App::$app->keyStorage()->shop_under_amount) ?
+      App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT)
+    );
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
     $this->main->view('shop');

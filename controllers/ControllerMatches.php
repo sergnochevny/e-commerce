@@ -33,7 +33,9 @@ class ControllerMatches extends ControllerFormSimple{
   protected function after_save($id, &$data){
     $data['message'] = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
     if(!$id) {
-      $data['message'] = empty($data[$this->id_field]) ? 'Error with added fabric to Matches.' : 'Error with adding fabric to Matches.<br> Main image of the fabric is empty.';
+      $data['message'] = empty($data[$this->id_field]) ?
+        'Error with added fabric to Matches.' :
+        'Error with adding fabric to Matches.<br> Main image of the fabric is empty.';
     }
     $data['res'] = $id ? 1 : 0;
   }
@@ -116,8 +118,9 @@ class ControllerMatches extends ControllerFormSimple{
    * @throws \Exception
    */
   public function add($required_access = true){
-//    $this->main->is_user_authorized();
-    if($this->form_handling($data) && App::$app->request_is_post()) parent::add(false); else throw new Exception('404');
+    if($this->form_handling($data) && App::$app->request_is_post()) {
+      parent::add(false);
+    } else throw new Exception('404');
   }
 
   /**

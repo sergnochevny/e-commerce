@@ -92,7 +92,8 @@ class ModelPatterns extends ModelBase{
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
     $query .= " JOIN shop_product_patterns b ON b.patternId = a.id";
-    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
+    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ?
+      " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
     $query .= static::build_where($filter, $prms);
     if($result = static::query($query, $prms)) {
       $response = static::fetch_value($result);
@@ -117,7 +118,8 @@ class ModelPatterns extends ModelBase{
     $query .= " FROM " . static::$table . " a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
     $query .= " JOIN shop_product_patterns b ON b.patternId = a.id";
-    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
+    $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ?
+      " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
     $query .= static::build_where($filter, $prms);
     $query .= " GROUP BY a.id, a.pattern";
     $query .= static::build_order($sort, $prms);

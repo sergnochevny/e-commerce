@@ -24,28 +24,73 @@ class ModelProduct extends ModelBase{
    */
   public static function build_where(&$filter, &$prms = null){
     $result = "";
-    if(!empty($filter["a.pname"])) {
-      foreach(array_filter(explode(' ', $filter["a.pname"])) as $item) {
-        if(!empty($item)) $result[] = "a.pname LIKE '%" . static::prepare_for_sql($item) . "%'";
+    if(isset($filter["a.pname"])) {
+      foreach(array_filter(explode(' ', $filter["a.pname"])) as $idx => $item) {
+        if(!empty($item)) {
+          $result[] = "a.pname LIKE :a_pname" . $idx . "";
+          $prms['a_pname' . $idx] = '%' . $item . '%';
+        }
       }
     }
-    if(isset($filter["a.pvisible"])) {
-      $result[] = "a.pvisible = '" . static::prepare_for_sql($filter["a.pvisible"]) . "'";
+    if(isset($filter['a.pvisible'])) {
+      $result[] = "a.pvisible = :apvisible";
+      $prms['apvisible'] = $filter["a.pvisible"];
     }
-    if(isset($filter["a.piece"])) {
-      $result[] = "a.piece = '" . static::prepare_for_sql($filter["a.piece"]) . "'";
+    if(isset($filter["a.pnumber"])) {
+      $result[] = "a.pnumber LIKE :apnumber";
+      $prms['apnumber'] = '%' . $filter["a.pnumber"] . '%';
     }
     if(isset($filter["a.dt"])) {
-      $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::prepare_for_sql($filter["a.dt"]["from"]) . "'" : "") . (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::prepare_for_sql($filter["a.dt"]["to"]) . "'" : "");
+      $where = '';
+      if(!empty($filter["a.dt"]['from'])) {
+        $where = "a.dt >= :adt_from";
+        $prms['adt_from'] = $filter["a.dt"]["from"];
+      }
+      if(!empty($filter["a.dt"]['to'])) {
+        $where .= " AND a.dt <= :adt_to";
+        $prms['adt_to'] = $filter["a.dt"]["to"];
+      }
       if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
     }
-    if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::prepare_for_sql($filter["a.pnumber"]) . "%'";
-    if(isset($filter["a.best"])) $result[] = "a.best = '" . static::prepare_for_sql($filter["a.best"]) . "'";
-    if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::prepare_for_sql($filter["a.specials"]) . "'";
-    if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::prepare_for_sql($filter["b.cid"]) . "'";
-    if(isset($filter["c.id"])) $result[] = "c.id = '" . static::prepare_for_sql($filter["c.id"]) . "'";
-    if(isset($filter["d.id"])) $result[] = "d.id = '" . static::prepare_for_sql($filter["d.id"]) . "'";
-    if(isset($filter["e.id"])) $result[] = "e.id = '" . static::prepare_for_sql($filter["e.id"]) . "'";
+
+    if(isset($filter["b.cid"])) {
+      $result[] = "b.cid = :bcid";
+      $prms['bcid'] = $filter["b.cid"];
+    }
+    if(isset($filter["c.id"])) {
+      $result[] = "c.id = :cid";
+      $prms['cid'] = $filter["c.id"];
+    }
+    if(isset($filter["d.id"])) {
+      $result[] = "d.id = :did";
+      $prms['did'] = $filter["d.id"];
+    }
+    if(isset($filter["e.id"])) {
+      $result[] = "e.id = :eid";
+      $prms['eid'] = $filter["e.id"];
+    }
+    if(isset($filter["a.best"])) {
+      $result[] = "a.best = :abest";
+      $prms['abest'] = $filter["a.best"];
+    }
+    if(isset($filter["a.specials"])) {
+      $result[] = "a.specials = :aspecials";
+      $prms['aspecials'] = $filter["a.specials"];
+    }
+    if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) {
+      $result[] = "a.priceyard > :apriceyard_from";
+      $prms['apriceyard_from'] = $filter["a.priceyard"]['from'];
+    }
+    if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) {
+      $result[] = "a.priceyard <= :apriceyard_to";
+      $prms['apriceyard_to'] = $filter["a.priceyard"]['to'];
+    }
+
+    if(isset($filter['a.piece'])) {
+      $result[] = "a.piece = :apiece";
+      $prms['apiece'] = $filter["a.piece"];
+    }
+
     if(!empty($result) && (count($result) > 0)) {
       $result = implode(" AND ", $result);
       if(strlen(trim($result)) > 0) {
@@ -90,7 +135,7 @@ class ModelProduct extends ModelBase{
           $select = implode(',', isset($data['colors']) ? array_keys($data['colors']) : []);
         }
         if(strlen($select) > 0) {
-          if($results = static::query("select * from shop_color" . " where id in ($select)" . " order by color")) {
+          if($results = static::query("select * from shop_color where id in ($select) order by color")) {
             while($row = static::fetch_array($results)) {
               $filters[$row['id']] = $row['color'];
             }
@@ -105,7 +150,12 @@ class ModelProduct extends ModelBase{
           $select = implode(',', isset($data['patterns']) ? array_keys($data['patterns']) : []);
         }
         if(strlen($select) > 0) {
-          if($results = static::query("select * from shop_patterns" . " where id in ($select)" . " order by pattern")) {
+          if($results = static::query(
+            "select * " .
+            "from shop_patterns" .
+            " where id in ($select)" .
+            " order by pattern"
+          )) {
             while($row = static::fetch_array($results)) {
               $filters[$row['id']] = $row['pattern'];
             }
@@ -127,8 +177,14 @@ class ModelProduct extends ModelBase{
           }
         }
         if(strlen($select) <= 0) $select = '1';
-        if($results = static::query("select a.cid, a.cname, (max(b.display_order)+1) as pos from shop_categories a"
-          . " left join shop_product_categories b on b.cid = a.cid" . " where a.cid in ($select)" . " group by a.cid, a.cname" . " order by a.cname")) {
+        if($results = static::query(
+          "select a.cid, a.cname, (max(b.display_order)+1) as pos " .
+          "from shop_categories a" .
+          " left join shop_product_categories b on b.cid = a.cid" .
+          " where a.cid in ($select)" .
+          " group by a.cid, a.cname" .
+          " order by a.cname"
+        )) {
           while($row = static::fetch_array($results)) {
             $filters[$row['cid']] = [
               $row['cname'], isset($categories[$row['cid']]) ? $categories[$row['cid']] : $row['pos']
@@ -151,7 +207,14 @@ class ModelProduct extends ModelBase{
     $data = [];
     switch($type) {
       case 'patterns':
-        $results = static::query("select a.* from shop_product_patterns b" . " inner join shop_patterns a on b.patternId=a.id " . " where b.prodId='$id'" . " order by a.pattern");
+        $results = static::query(
+          "select a.* " .
+          "from shop_product_patterns b" .
+          " inner join shop_patterns a on b.patternId=a.id " .
+          " where b.prodId=:id" .
+          " order by a.pattern",
+          ['id' => $id]
+        );
         if($results) {
           while($row = static::fetch_array($results)) {
             $data[$row['id']] = $row['pattern'];
@@ -160,7 +223,14 @@ class ModelProduct extends ModelBase{
         }
         break;
       case 'colors':
-        $results = static::query("select a.* from shop_product_colors b" . " inner join shop_color a on b.colorId=a.id " . " where b.prodId='$id'" . " order by a.color");
+        $results = static::query(
+          "select a.* " .
+          "from shop_product_colors b" .
+          " inner join shop_color a on b.colorId=a.id " .
+          " where b.prodId=:id" .
+          " order by a.color",
+          ['id' => $id]
+        );
         if($results) {
           while($row = static::fetch_array($results)) {
             $data[$row['id']] = $row['color'];
@@ -169,7 +239,14 @@ class ModelProduct extends ModelBase{
         }
         break;
       case 'categories':
-        $results = static::query("select a.cid, a.cname, b.display_order from shop_product_categories b" . " inner join shop_categories a on b.cid=a.cid " . " where b.pid='$id'" . " order by a.cname");
+        $results = static::query(
+          "select a.cid, a.cname, b.display_order " .
+          "from shop_product_categories b" .
+          " inner join shop_categories a on b.cid=a.cid " .
+          " where b.pid=:id" .
+          " order by a.cname",
+          ['id' => $id]
+        );
         if($results) {
           while($row = static::fetch_array($results)) {
             $data[$row['cid']] = [$row['cname'], $row['display_order']];
@@ -178,7 +255,11 @@ class ModelProduct extends ModelBase{
         }
         break;
       case 'manufacturers':
-        $results = static::query("select a.cid, a.manufacturer" . " from shop_manufacturers a" . " order by a.manufacturer");
+        $results = static::query(
+          "select a.cid, a.manufacturer" .
+          " from shop_manufacturers a" .
+          " order by a.manufacturer"
+        );
         if($results) {
           while($row = static::fetch_array($results)) {
             $data[$row['id']] = $row['manufacturer'];
@@ -201,27 +282,25 @@ class ModelProduct extends ModelBase{
    */
   public static function get_filter_data($type, &$count, $start = 0, $search = null){
     $filter = null;
-    $filter_limit = (!is_null(App::$app->keyStorage()->system_filter_amount) ? App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
+    $filter_limit = !is_null(App::$app->keyStorage()->system_filter_amount) ?
+      App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT;
     $start = isset($start) ? $start : 0;
     $search = static::sanitize($search);
     switch($type) {
       case 'colors':
         $q = "SELECT count(id) FROM shop_color";
         if(isset($search) && (strlen($search) > 0)) {
-          $q .= " where color like '%$search%'";
-          $q .= " or color like '%$search%'";
+          $q .= " where color like :search";
         }
-        $results = static::query($q);
-        $row = static::fetch_array($results);
-        $count = $row[0];
+        $results = static::query($q, ['search' => '%' . $search . '%']);
+        $count = static::fetch_value($results);
         $q = "SELECT * FROM shop_color";
         if(isset($search) && (strlen($search) > 0)) {
-          $q .= " where color like '%$search%'";
-          $q .= " or color like '%$search%'";
+          $q .= " where color like :search";
         }
         $q .= " order by color";
         $q .= " limit $start, $filter_limit";
-        if($results = static::query($q)) {
+        if($results = static::query($q, ['search' => '%' . $search . '%'])) {
           while($row = static::fetch_array($results)) {
             $filter[] = [$row['id'], $row['color']];
           }
@@ -231,18 +310,17 @@ class ModelProduct extends ModelBase{
       case 'patterns':
         $q = "SELECT count(id) FROM shop_patterns";
         if(isset($search) && (strlen($search) > 0)) {
-          $q .= " where pattern like '%$search%'";
+          $q .= " where pattern like :search";
         }
-        $results = static::query($q);
-        $row = static::fetch_array($results);
-        $count = $row[0];
+        $results = static::query($q, ['search' => '%' . $search . '%']);
+        $count = static::fetch_value($results);
         $q = "SELECT * FROM shop_patterns";
         if(isset($search) && (strlen($search) > 0)) {
-          $q .= " where pattern like '%$search%'";
+          $q .= " where pattern like :search";
         }
         $q .= " order by pattern";
         $q .= " limit $start, $filter_limit";
-        if($results = static::query($q)) {
+        if($results = static::query($q, ['search' => '%' . $search . '%'])) {
           while($row = static::fetch_array($results)) {
             $filter[] = [$row['id'], $row['pattern']];
           }
@@ -252,18 +330,17 @@ class ModelProduct extends ModelBase{
       case 'categories':
         $q = "SELECT count(cid) FROM shop_categories";
         if(isset($search) && (strlen($search) > 0)) {
-          $q .= " where cname like '%$search%'";
+          $q .= " where cname like :search";
         }
-        $results = static::query($q);
-        $row = static::fetch_array($results);
-        $count = $row[0];
+        $results = static::query($q, ['search' => '%' . $search . '%']);
+        $count = static::fetch_value($results);
         $q = "SELECT * FROM shop_categories";
         if(isset($search) && (strlen($search) > 0)) {
-          $q .= " where cname like '%$search%'";
+          $q .= " where cname like :search";
         }
         $q .= " order by cname";
         $q .= " limit $start, $filter_limit";
-        if($results = static::query($q)) {
+        if($results = static::query($q, ['search' => '%' . $search . '%'])) {
           while($row = static::fetch_array($results)) {
             $filter[] = [$row['cid'], $row['cname']];
           }
@@ -374,8 +451,8 @@ class ModelProduct extends ModelBase{
       'image4' => '', 'image5' => ''
     ];
     if(isset($id)) {
-      $q = "SELECT * FROM " . static::$table . " WHERE pid = '" . $id . "'";
-      $result = static::query($q);
+      $q = "SELECT * FROM " . static::$table . " WHERE pid = :id";
+      $result = static::query($q, ['id' => $id]);
       if($result) {
         $data = static::fetch_assoc($result);
         static::free_result($result);
@@ -449,9 +526,12 @@ class ModelProduct extends ModelBase{
      * @var string $image4
      * @var string $image5
      */
-    $q = "update " . static::$table . " set" . " image1='$image1', image2='$image2', image3='$image3'," . " image4='$image4', image5='$image5' where pid = '$pid'";
+    $q = "update " . static::$table .
+      " set" .
+      " image1=:image1, image2=:image2, image3=:image3," .
+      " image4=:image4, image5=:image5 where pid = :pid";
 
-    return static::query($q);
+    return static::query($q, array_merge($data, ['pid' => $pid]));
   }
 
   /**

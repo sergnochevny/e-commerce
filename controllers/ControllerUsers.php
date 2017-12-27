@@ -70,8 +70,10 @@ class ControllerUsers extends ControllerFormSimple{
     $this->main->is_admin_authorized();
     $this->build_order($sort);
     $filter = null;
-    $csv_fields_dlm = (!is_null(App::$app->keyStorage()->system_csv_fields_dlm) ? App::$app->keyStorage()->system_csv_fields_dlm : ',');
-    $csv_fields = (!is_null(App::$app->keyStorage()->system_csv_fields) ? App::$app->keyStorage()->system_csv_fields : CSV_FIELDS);
+    $csv_fields_dlm = !is_null(App::$app->keyStorage()->system_csv_fields_dlm) ?
+      App::$app->keyStorage()->system_csv_fields_dlm : ',';
+    $csv_fields = !is_null(App::$app->keyStorage()->system_csv_fields) ?
+      App::$app->keyStorage()->system_csv_fields : CSV_FIELDS;
     if(!empty($csv_fields)) $csv_fields = explode($csv_fields_dlm, $csv_fields);
     if(!is_array($csv_fields) || (is_array($csv_fields) && (count($csv_fields) <= 0))) $csv_fields = [
       'email', 'bill_firstname', 'bill_lastname'
@@ -85,7 +87,8 @@ class ControllerUsers extends ControllerFormSimple{
       ob_end_clean();
     }
     header('Content-Description: File Transfer');
-    $gz_use = (!is_null(App::$app->keyStorage()->system_csv_use_gz) ? App::$app->keyStorage()->system_csv_use_gz : CSV_USE_GZ);
+    $gz_use = !is_null(App::$app->keyStorage()->system_csv_use_gz) ?
+      App::$app->keyStorage()->system_csv_use_gz : CSV_USE_GZ;
     if(function_exists('gzopen') && ($gz_use == '1')) {
       header('Content-Type: application/octet-stream');
       header('Content-Disposition: attachment; filename="users.csv.gz"');

@@ -106,7 +106,7 @@ class ControllerInfo extends ControllerFormSimple{
     $this->template->vars('data', $data);
     $this->template->vars('action', $action);
     if($return) return $this->main->view_layout_return('form');
-    $this->main->view_layout('form');
+    return $this->main->view_layout('form');
   }
 
   /**
@@ -164,6 +164,8 @@ class ControllerInfo extends ControllerFormSimple{
 
   /**
    * @export
+   * @param bool $partial
+   * @param bool $required_access
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){

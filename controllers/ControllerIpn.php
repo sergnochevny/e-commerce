@@ -20,6 +20,8 @@ class ControllerIpn extends ControllerController{
 
   /**
    * @export
+   * @param bool $required_access
+   * @return bool
    */
   public function index($required_access = true){
     if(!is_null(App::$app->get('pay_notify'))) {

@@ -66,8 +66,8 @@ class ModelAdmin extends ModelBase{
   public static function delete($id){
     static::transaction();
     try {
-      $strSQL = "DELETE FROM " . static::$table . " WHERE id = " . $id;
-      static::exec($strSQL);
+      $strSQL = "DELETE FROM " . static::$table . " WHERE id = :id";
+      static::exec($strSQL, ['id' => $id]);
       static::commit();
     } catch(Exception $e) {
       static::rollback();
@@ -150,6 +150,7 @@ class ModelAdmin extends ModelBase{
     /**
      * @var string $login
      * @var string $password
+     * @var integer $id
      */
     static::transaction();
     try {

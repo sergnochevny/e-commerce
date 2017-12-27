@@ -23,13 +23,30 @@ class ModelComments extends ModelBase{
    */
   public static function build_where(&$filter, &$prms = null){
     $result = '';
-    if(isset($filter['a.title'])) $result[] = "a.post_title LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter['a.post_title'])))) . "%'";
-    if(isset($filter['a.dt'])) {
-      $where = (!empty($filter['a.dt']['from']) ? "a.dt >= '" . static::prepare_for_sql($filter['a.dt']['from']) . "'" : "") . (!empty($filter['a.dt']['to']) ? " AND a.dt <= '" . static::prepare_for_sql($filter['a.dt']['to']) . "'" : "");
+    if(isset($filter['a.title'])) {
+      $result[] = "a.post_title LIKE :a_post_title";
+      $prms['a_post_title'] = "%" . implode('%', array_filter(explode(' ', $filter['a.post_title']))) . "%";
+    }
+    if(isset($filter["a.dt"])) {
+      $where = '';
+      if(!empty($filter["a.dt"]['from'])) {
+        $where = "a.dt >= :adt_from";
+        $prms['adt_from'] = $filter["a.dt"]["from"];
+      }
+      if(!empty($filter["a.dt"]['to'])) {
+        $where .= " AND a.dt <= :adt_to";
+        $prms['adt_to'] = $filter["a.dt"]["to"];
+      }
       if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
     }
-    if(isset($filter['b.email'])) $result[] = "b.email LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter['b.email'])))) . "%'";
-    if(isset($filter['a.moderated'])) $result[] = "a.moderated = '" . static::prepare_for_sql($filter['a.moderated']) . "'";
+    if(isset($filter['b.email'])) {
+      $result[] = "b.email LIKE :b_email";
+      $prms['b_email'] = "%" . implode('%', array_filter(explode(' ', $filter['b.email']))) . "%'";
+    }
+    if(isset($filter['a.moderated'])) {
+      $result[] = "a.moderated = :a_moderated";
+      $prms['a_moderated'] = $filter['a.moderated'];
+    }
     if(!empty($result) && (count($result) > 0)) {
       $result = implode(" AND ", $result);
       if(strlen(trim($result)) > 0) {
@@ -47,13 +64,12 @@ class ModelComments extends ModelBase{
    * @throws \Exception
    */
   public static function get_by_id($id){
-    $prms = [];
     $response = [
       'id' => $id, 'title' => '', 'dt' => time(), 'user_id' => '', 'moderated' => '0'
     ];
     if(isset($id)) {
-      $query = "SELECT * FROM " . static::$table . " WHERE id='$id'";
-      $result = static::query($query, $prms);
+      $query = "SELECT * FROM " . static::$table . " WHERE id= :id";
+      $result = static::query($query, ['id' => $id]);
       if($result) $response = static::fetch_assoc($result);
     }
 
@@ -113,16 +129,14 @@ class ModelComments extends ModelBase{
    */
   public static function save(&$data){
     static::transaction();
-    $prms = [];
     try {
-      extract($data);
-      if(isset($id)) {
-        $query = 'UPDATE ' . static::$table . ' SET `title` = "' . $title . '", `data` = "' . $data . '",`moderated` = "' . $moderated . '" WHERE id =' . $id;
-        $res = static::query($query, $prms);
+      if(!empty($data['id'])) {
+        $query = 'UPDATE ' . static::$table . ' SET `title` = :title, `data` = :data, `moderated` = :moderated WHERE id = :id';
+        $res = static::query($query, $data);
         if(!$res) throw new Exception(static::error());
       } else {
-        $query = 'INSERT INTO ' . static::$table . '(title, data, moderated) VALUE ("' . $title . '","' . $data . '","' . $moderated . '")';
-        $res = static::query($query, $prms);
+        $query = 'INSERT INTO ' . static::$table . '(`title`, `data`, `moderated`) VALUE (:title, :data, :moderated)';
+        $res = static::query($query, $data);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }
@@ -143,9 +157,9 @@ class ModelComments extends ModelBase{
    */
   public static function moderate($id, $action){
     static::transaction();
-    $prms = [];
     try {
-      $query = 'UPDATE ' . static::$table . ' SET `moderated` = "' . $action . '" WHERE id =' . $id;
+      $query = 'UPDATE ' . static::$table . ' SET moderated = :action WHERE id = :id';
+      $prms = ['action' => $action, 'id' => $id];
 
       return static::query($query, $prms) ? true : false;
       static::commit();
@@ -161,11 +175,10 @@ class ModelComments extends ModelBase{
    */
   public static function delete($id){
     static::transaction();
-    $prms = [];
     try {
       if(isset($id)) {
-        $query = "DELETE FROM " . static::$table . " WHERE id = $id";
-        $res = static::query($query, $prms);
+        $query = "DELETE FROM " . static::$table . " WHERE id = :id";
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();

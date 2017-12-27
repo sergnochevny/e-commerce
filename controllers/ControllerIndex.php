@@ -28,39 +28,22 @@ class ControllerIndex extends ControllerController{
    */
   protected function sitemap_get_list($page = 0, $view = false, $per_page = 1000){
     $data = [
-      [
-        'loc' => App::$app->router()->UrlTo(''), 'changefreq' => 'monthly', 'priority' => 0.9,
-      ], [
-        'loc' => App::$app->router()->UrlTo('shop'), 'changefreq' => 'daily', 'priority' => 0.7,
-      ], [
-        'loc' => App::$app->router()->UrlTo('service'), 'changefreq' => 'monthly', 'priority' => 0.7,
-      ], [
-        'loc' => App::$app->router()->UrlTo('estimator'), 'changefreq' => 'monthly', 'priority' => 0.7,
-      ], [
-        'loc' => App::$app->router()->UrlTo('newsletter'), 'changefreq' => 'monthly', 'priority' => 0.7,
-      ], [
-        'loc' => App::$app->router()->UrlTo('privacy'), 'changefreq' => 'monthly', 'priority' => 0.5,
-      ], [
-        'loc' => App::$app->router()->UrlTo('about'), 'changefreq' => 'monthly', 'priority' => 0.5,
-      ], [
-        'loc' => App::$app->router()->UrlTo('contact'), 'changefreq' => 'monthly', 'priority' => 0.5,
-      ], [
-        'loc' => App::$app->router()->UrlTo('shop/specials'), 'changefreq' => 'daily', 'priority' => 0.6,
-      ], [
-        'loc' => App::$app->router()->UrlTo('clearance'), 'changefreq' => 'daily', 'priority' => 0.6,
-      ], [
-        'loc' => App::$app->router()->UrlTo('blog/view'), 'changefreq' => 'daily', 'priority' => 0.6,
-      ], [
-        'loc' => App::$app->router()->UrlTo('prices/view'), 'changefreq' => 'daily', 'priority' => 0.6,
-      ], [
-        'loc' => App::$app->router()->UrlTo('colors/view'), 'changefreq' => 'daily', 'priority' => 0.6,
-      ], [
-        'loc' => App::$app->router()->UrlTo('categories/view'), 'changefreq' => 'daily', 'priority' => 0.6,
-      ], [
-        'loc' => App::$app->router()->UrlTo('patterns/view'), 'changefreq' => 'daily', 'priority' => 0.6,
-      ], [
-        'loc' => App::$app->router()->UrlTo('manufacturers/view'), 'changefreq' => 'daily', 'priority' => 0.6,
-      ],
+      ['loc' => App::$app->router()->UrlTo(''), 'changefreq' => 'monthly', 'priority' => 0.9,],
+      ['loc' => App::$app->router()->UrlTo('shop'), 'changefreq' => 'daily', 'priority' => 0.7,],
+      ['loc' => App::$app->router()->UrlTo('service'), 'changefreq' => 'monthly', 'priority' => 0.7,],
+      ['loc' => App::$app->router()->UrlTo('estimator'), 'changefreq' => 'monthly', 'priority' => 0.7,],
+      ['loc' => App::$app->router()->UrlTo('newsletter'), 'changefreq' => 'monthly', 'priority' => 0.7,],
+      ['loc' => App::$app->router()->UrlTo('privacy'), 'changefreq' => 'monthly', 'priority' => 0.5,],
+      ['loc' => App::$app->router()->UrlTo('about'), 'changefreq' => 'monthly', 'priority' => 0.5,],
+      ['loc' => App::$app->router()->UrlTo('contact'), 'changefreq' => 'monthly', 'priority' => 0.5,],
+      ['loc' => App::$app->router()->UrlTo('shop/specials'), 'changefreq' => 'daily', 'priority' => 0.6,],
+      ['loc' => App::$app->router()->UrlTo('clearance'), 'changefreq' => 'daily', 'priority' => 0.6,],
+      ['loc' => App::$app->router()->UrlTo('blog/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
+      ['loc' => App::$app->router()->UrlTo('prices/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
+      ['loc' => App::$app->router()->UrlTo('colors/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
+      ['loc' => App::$app->router()->UrlTo('categories/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
+      ['loc' => App::$app->router()->UrlTo('patterns/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
+      ['loc' => App::$app->router()->UrlTo('manufacturers/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
     ];
 
     return ($page > 1) ? null : $data;
@@ -75,6 +58,7 @@ class ControllerIndex extends ControllerController{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function index($required_access = true){
@@ -87,7 +71,9 @@ class ControllerIndex extends ControllerController{
    */
   public function service(){
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
-    if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+    if($controller == 'shop' && $action == 'product') {
+      $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+    }
     $this->main->view('static/service');
   }
 
@@ -97,7 +83,9 @@ class ControllerIndex extends ControllerController{
    */
   public function estimator(){
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
-    if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+    if($controller == 'shop' && $action == 'product') {
+      $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+    }
     $this->main->view('static/estimate');
   }
 
@@ -107,7 +95,9 @@ class ControllerIndex extends ControllerController{
    */
   public function newsletter(){
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
-    if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+    if($controller == 'shop' && $action == 'product') {
+      $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+    }
     $this->main->view('static/newsletter');
   }
 

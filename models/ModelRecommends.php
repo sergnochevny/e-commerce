@@ -24,21 +24,47 @@ class ModelRecommends extends ModelBase{
    */
   public static function build_where(&$filter, &$prms = null){
     $result = "";
-    if(isset($filter["a.pname"])) $result[] = ModelSynonyms::build_synonyms_like("a.pname", $filter["a.pname"]);
-    if(isset($filter["a.piece"])) $result[] = "a.piece = '" . static::prepare_for_sql($filter["a.piece"]) . "'";
+    if(isset($filter["a.pname"])) {
+      list($result[], $prms) = ModelSynonyms::build_synonyms_like_p("a.pname", $filter["a.pname"]);
+    }
+    if(isset($filter['a.piece'])) {
+      $result[] = "a.piece = :apiece";
+      $prms['apiece'] = $filter["a.piece"];
+    }
     if(isset($filter["a.dt"])) {
-      $where = (!empty($filter["a.dt"]['from']) ? "a.dt >= '" . static::prepare_for_sql($filter["a.dt"]["from"]) . "'" : "") . (!empty($filter["a.dt"]['to']) ? " AND a.dt <= '" . static::prepare_for_sql($filter["a.dt"]["to"]) . "'" : "");
+      $where = '';
+      if(!empty($filter["a.dt"]['from'])) {
+        $where = "a.dt >= :adt_from";
+        $prms['adt_from'] = $filter["a.dt"]["from"];
+      }
+      if(!empty($filter["a.dt"]['to'])) {
+        $where .= " AND a.dt <= :adt_to";
+        $prms['adt_to'] = $filter["a.dt"]["to"];
+      }
       if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
     }
-    if(isset($filter["a.pnumber"])) $result[] = "a.pnumber LIKE '%" . static::prepare_for_sql($filter["a.pnumber"]) . "%'";
-    if(isset($filter["a.best"])) $result[] = "a.best = '" . static::prepare_for_sql($filter["a.best"]) . "'";
-    if(isset($filter["a.specials"])) $result[] = "a.specials = '" . static::prepare_for_sql($filter["a.specials"]) . "'";
-    if(isset($filter["b.cid"])) $result[] = "b.cid = '" . static::prepare_for_sql($filter["b.cid"]) . "'";
+    if(isset($filter["a.pnumber"])) {
+      $result[] = "a.pnumber LIKE :apnumber";
+      $prms['apnumber'] = '%' . $filter["a.pnumber"] . '%';
+    }
+    if(isset($filter["a.best"])) {
+      $result[] = "a.best = :abest";
+      $prms['abest'] = $filter["a.best"];
+    }
+    if(isset($filter["a.specials"])) {
+      $result[] = "a.specials = :aspecials";
+      $prms['aspecials'] = $filter["a.specials"];
+    }
+    if(isset($filter["b.cid"])) {
+      $result[] = "b.cid = :bcid";
+      $prms['bcid'] = $filter["b.cid"];
+    }
     if(!empty($filter["c.id"])) {
       if(is_array($filter["c.id"])) {
         $result[] = "c.id in (" . implode(',', $filter["c.id"]) . ")";
       } else {
-        $result[] = "c.id = '" . static::prepare_for_sql($filter["c.id"]) . "'";
+        $result[] = "c.id = :cid";
+        $prms['cid'] = $filter["c.id"];
       }
     }
     if(!empty($filter["d.id"])) {
@@ -48,20 +74,42 @@ class ModelRecommends extends ModelBase{
         $result[] = "d.id = '" . static::prepare_for_sql($filter["d.id"]) . "'";
       }
     }
-    if(isset($filter["e.id"])) $result[] = "e.id = '" . static::prepare_for_sql($filter["e.id"]) . "'";
-    if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter["a.priceyard"]['from']) . "'";
-    if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) $result[] = "a.priceyard <= '" . static::prepare_for_sql($filter["a.priceyard"]['to']) . "'";
+    if(isset($filter["e.id"])) {
+      $result[] = "e.id = :eid";
+      $prms['heid'] = $filter["e.id"];
+    }
+
+    if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) {
+      $result[] = "a.priceyard > :apriceyard_from";
+      $prms['hapriceyard_from'] = $filter["a.priceyard"]['from'];
+    }
+    if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) {
+      $result[] = "a.priceyard <= :apriceyard_to";
+      $prms['hapriceyard_to'] = $filter["a.priceyard"]['to'];
+    }
+
     if(!empty($result) && (count($result) > 0)) {
       if(strlen(trim(implode(" AND ", $result))) > 0) {
         $filter['active'] = true;
       }
     }
 
-    if(isset($filter['hidden']["shop_orders.aid"])) $result[] = "shop_orders.aid = '" . static::prepare_for_sql($filter['hidden']["shop_orders.aid"]) . "'";
-    if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) $result[] = "a.priceyard > '" . static::prepare_for_sql($filter['hidden']["a.priceyard"]) . "'";
-    if(isset($filter['hidden']['a.pvisible'])) $result[] = "a.pvisible = '" . static::prepare_for_sql($filter['hidden']["a.pvisible"]) . "'";
+    if(isset($filter['hidden']["shop_orders.aid"])) {
+      $result[] = "shop_orders.aid = :hshop_orders_aid";
+      $prms['hshop_orders_aid'] =$filter['hidden']["shop_orders.aid"];
+    }
+
+    if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) {
+      $result[] = "a.priceyard > :hapriceyard";
+      $prms['hapriceyard'] = $filter['hidden']["a.priceyard"];
+    }
+    if(isset($filter['hidden']['a.pvisible'])) {
+      $result[] = "a.pvisible = :hapvisible";
+      $prms['hapvisible'] = $filter['hidden']["a.pvisible"];
+    }
     if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
     if(isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";
+
     if(!empty($result)) {
       if(!empty($result) && (count($result) > 0)) {
         $result = implode(" AND ", $result);

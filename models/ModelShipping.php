@@ -125,7 +125,11 @@ class ModelShipping extends ModelBase{
               break;
             case MEDIUM_FABRIC:
             default:
-              $iTtl += ($iQty - (!is_null(App::$app->keyStorage()->shop_yrds_for_multiplier) ? App::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER)) * (!is_null(App::$app->keyStorage()->shop_rate_ground_medium_multiplier) ? App::$app->keyStorage()->shop_rate_ground_medium_multiplier : RATE_GROUND_MEDIUM_MULTIPLIER);
+              $iTtl += ($iQty - (!is_null(App::$app->keyStorage()->shop_yrds_for_multiplier) ?
+                    App::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER)) *
+                (!is_null(App::$app->keyStorage()->shop_rate_ground_medium_multiplier) ?
+                  App::$app->keyStorage()->shop_rate_ground_medium_multiplier :
+                  RATE_GROUND_MEDIUM_MULTIPLIER);
               break;
           }
         }

@@ -34,7 +34,8 @@ class ControllerUser extends ControllerUserBase{
    */
   public function user(){
     if(!$this->is_authorized()) {
-      if((App::$app->request_is_post()) && !is_null(App::$app->post('login')) && !is_null(App::$app->post('pass'))) {
+      if((App::$app->request_is_post()) && !is_null(App::$app->post('login')) &&
+        !is_null(App::$app->post('pass'))) {
         if(empty(App::$app->post('login')) && empty(App::$app->post('pass'))) exit('Empty Email or Password field');
         $email = App::$app->post('login');
         $password = App::$app->post('pass');
@@ -44,8 +45,9 @@ class ControllerUser extends ControllerUserBase{
         $this->redirect($url);
       } else {
 
-        $redirect = !is_null(App::$app->get('url')) ? App::$app->get('url') : urlencode(base64_encode(App::$app->router()
-                                                                                                               ->UrlTo('shop')));
+        $redirect = !is_null(App::$app->get('url')) ?
+          App::$app->get('url') :
+          urlencode(base64_encode(App::$app->router()->UrlTo('shop')));
         $prms = null;
         if(!is_null(App::$app->get('url'))) $prms['url'] = App::$app->get('url');
         $registration_url = App::$app->router()->UrlTo('authorization/registration', $prms);

@@ -164,11 +164,13 @@ class ControllerRelated extends ControllerFormSimple{
     (new Paginator($this->main))->paginator($total, $page, $this->controller, null, $per_page);
     $this->before_list_layout($view);
     if($return) return $this->main->view_layout_return('list');
-    $this->main->view_layout('list');
+    return $this->main->view_layout('list');
   }
 
   /**
    * @export
+   * @param bool $partial
+   * @param bool $required_access
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){
@@ -178,6 +180,7 @@ class ControllerRelated extends ControllerFormSimple{
 
   /**
    * @export
+   * @param bool $required_access
    * @throws \Exception
    */
   public function index($required_access = true){

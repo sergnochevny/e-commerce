@@ -84,7 +84,9 @@ class ModelAuth extends ModelBase{
         $mail = self::$user['email'];
         $hash = self::$user['password'];
         $hash = md5($mail) . $hash;
-        $salt = md5(!is_null(App::$app->server('HTTP_X_FORWARDED_FOR')) ? App::$app->server('HTTP_X_FORWARDED_FOR') : App::$app->server('REMOTE_ADDR'));
+        $salt = md5(!is_null(App::$app->server('HTTP_X_FORWARDED_FOR')) ?
+          App::$app->server('HTTP_X_FORWARDED_FOR') : App::$app->server('REMOTE_ADDR')
+        );
         if($remember == self::hash_($hash, $salt, self::$cost)) {
           return true;
         } else {
@@ -126,7 +128,9 @@ class ModelAuth extends ModelBase{
         if($hash == self::check($password, $hash)) {
           if(!is_null(App::$app->post('rememberme')) && App::$app->post('rememberme') == 1) {
             $hash = md5($mail) . $hash;
-            $salt = md5(!is_null(App::$app->server('HTTP_X_FORWARDED_FOR')) ? App::$app->server('HTTP_X_FORWARDED_FOR') : App::$app->server('REMOTE_ADDR'));
+            $salt = md5(!is_null(App::$app->server('HTTP_X_FORWARDED_FOR')) ?
+              App::$app->server('HTTP_X_FORWARDED_FOR') : App::$app->server('REMOTE_ADDR')
+            );
             $hash = self::hash_($hash, $salt, self::$cost);
             $q = "UPDATE accounts SET remember = :remember WHERE aid = :aid";
             if(static::query($q, ['remember' => $hash, 'aid' => self::$user['aid']])) {
@@ -157,7 +161,9 @@ class ModelAuth extends ModelBase{
         $login = self::$admin['login'];
         $hash = self::$admin['password'];
         $hash = md5($login) . $hash;
-        $salt = md5(!is_null(App::$app->server('HTTP_X_FORWARDED_FOR')) ? App::$app->server('HTTP_X_FORWARDED_FOR') : App::$app->server('REMOTE_ADDR'));
+        $salt = md5(!is_null(App::$app->server('HTTP_X_FORWARDED_FOR')) ?
+          App::$app->server('HTTP_X_FORWARDED_FOR') : App::$app->server('REMOTE_ADDR')
+        );
         if($remember == self::hash_($hash, $salt, self::$cost)) {
           return true;
         } else {
@@ -200,7 +206,9 @@ class ModelAuth extends ModelBase{
         if($hash == self::check($password, $hash)) {
           if(!is_null(App::$app->post('rememberme')) && App::$app->post('rememberme') == 1) {
             $hash = md5($login) . $hash;
-            $salt = md5(!is_null(App::$app->server('HTTP_X_FORWARDED_FOR')) ? App::$app->server('HTTP_X_FORWARDED_FOR') : App::$app->server('REMOTE_ADDR'));
+            $salt = md5(!is_null(App::$app->server('HTTP_X_FORWARDED_FOR')) ?
+              App::$app->server('HTTP_X_FORWARDED_FOR') : App::$app->server('REMOTE_ADDR')
+            );
             $hash = self::hash_($hash, $salt, self::$cost);
             $q = "UPDATE admins SET rememberme = :remember WHERE id = :id";
             if(static::query($q, ['remember' => $hash, 'id' => self::$admin['id']])) {

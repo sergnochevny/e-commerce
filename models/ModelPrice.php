@@ -15,7 +15,9 @@ class ModelPrice extends ModelBase{
    * @return bool
    */
   public static function sysHideAllRegularPrices(){
-    $hideAllRegularPrices = (bool)(!is_null(App::$app->keyStorage()->system_hide_all_regular_prices) ? App::$app->keyStorage()->system_hide_all_regular_prices : HIDE_REGULAR_PRICE);
+    $hideAllRegularPrices = (bool)(!is_null(App::$app->keyStorage()->system_hide_all_regular_prices) ?
+      App::$app->keyStorage()->system_hide_all_regular_prices : HIDE_REGULAR_PRICE
+    );
     if(!isset($hideAllRegularPrices)) $hideAllRegularPrices = false;
 
     return $hideAllRegularPrices;
