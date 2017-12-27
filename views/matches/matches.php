@@ -4,7 +4,8 @@ use app\core\App;
 
 ?>
 
-<link rel='stylesheet' charset="UTF-8" href='<?php echo App::$app->router()->UrlTo('css/simple-line-icons.css'); ?>'
+<link rel='stylesheet' charset="UTF-8" href='<?php echo App::$app->router()->UrlTo('css/simple-line-icons.min.css');
+?>'
       type='text/css' media='all'/>
 <link rel='stylesheet' charset="UTF-8" href='<?php echo App::$app->router()->UrlTo('css/matches.min.css'); ?>'
       type='text/css' media='all'/>
