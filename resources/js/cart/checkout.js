@@ -2,4 +2,4 @@
 
   $.danger_remove(8000);
 
-})(jQuery);
+})(window.jQuery || window.$);

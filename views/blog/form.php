@@ -79,8 +79,8 @@ use app\core\App;
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"
-                                                                                         aria-hidden="true"></i>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="fa fa-times" aria-hidden="true"></i>
           </button>
           <h4 id="modal-title" class="modal-title text-center"></h4>
         </div>

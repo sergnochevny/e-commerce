@@ -249,8 +249,8 @@ class ControllerAuthorization extends ControllerController{
       } else {
         //TODO process of change password
         $user_id = App::$app->get('user_id');
-        $remind = App::$app->get('remind');
-        if(isset($remind)) {
+        $remind = App::$app->post('remind');
+        if(isset($user_id) && isset($remind)) {
           if(ModelUser::exist(null, $user_id)) {
             $user = ModelUsers::get_by_id($user_id);
             if(isset($user)) {

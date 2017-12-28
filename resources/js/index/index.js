@@ -1,6 +1,6 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
+
   $(document).ready(function () {
     var wait_loader = '<div class="col-xs-12 text-center">' +
       '<i class="fa fa-spinner fa-pulse fa-4x"></i><br/>' +
@@ -45,4 +45,4 @@
     }
   );
 
-})(jQuery);
+})(window.jQuery || window.$);

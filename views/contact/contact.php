@@ -50,3 +50,5 @@ use app\core\App;
 </div>
 
 <script src='<?= App::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>
+<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/captcha/captcha.min.js'); ?>'></script>
+<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/formsimple/simples.min.js'); ?>'></script>

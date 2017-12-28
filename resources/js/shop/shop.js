@@ -1,5 +1,6 @@
-'use strict';
 (function ($) {
+  'use srtict';
+
   var base_url = $('#base_url').val();
 
   $(document).off('.basket');
@@ -25,4 +26,4 @@
     event.stopPropagation();
   });
 
-})(jQuery);
+})(window.jQuery || window.$);

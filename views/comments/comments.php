@@ -37,7 +37,7 @@ use app\core\App;
         </div>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary save-data" href="javascript:void(0)" data-dismiss="modal">Save</a>
+        <a class="btn btn-primary save-data" href="javascript:void(0)" >Save</a>
         <a class="btn btn-default" href="javascript:void(0)" data-dismiss="modal">Cancel</a>
       </div>
     </div><!-- /.modal-content -->

@@ -1,6 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
 
   $("input").inputmask();
 
@@ -328,4 +327,4 @@
 
   $('form#edit_form').init_input();
 
-})(jQuery);
+})(window.jQuery || window.$);

@@ -1,13 +1,15 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
+
   $(document).on('click.confirm_action', ".popup a.close", function (event) {
+    event.preventDefault();
     $("#confirm_action").off('click.confirm_action');
     $("#confirm_dialog").removeClass('overlay_display');
     $('body').css('overflow', 'auto');
   });
 
   $(document).on('click.confirm_action', "#confirm_no", function (event) {
+    event.preventDefault();
     $(".popup a.close").trigger('click');
   });
 
@@ -117,4 +119,4 @@
   });
 
 
-})(jQuery);
+})(window.jQuery || window.$);

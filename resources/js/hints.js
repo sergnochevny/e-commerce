@@ -1,6 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use strict';
 
   $(document).on('click', ".overlay", function (event) {
     $(this).removeClass('overlay_display');
@@ -10,4 +9,4 @@
     $("div" + target).addClass('overlay_display');
   });
 
-})(jQuery);
+})(window.jQuery || window.$);

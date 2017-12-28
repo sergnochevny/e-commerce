@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:other/app-core.git",
-                "reference": "0568bd8a55420af712e2a4e9706554816c75e9fb"
+                "reference": "35a9ff7ce263852499b9307ebe1a899893dec7cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/0568bd8a55420af712e2a4e9706554816c75e9fb.zip",
-                "reference": "0568bd8a55420af712e2a4e9706554816c75e9fb",
+                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/35a9ff7ce263852499b9307ebe1a899893dec7cf.zip",
+                "reference": "35a9ff7ce263852499b9307ebe1a899893dec7cf",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -42,7 +42,7 @@
                 }
             ],
             "description": "App Core",
-            "time": "2017-12-26T19:40:42+00:00"
+            "time": "2017-12-28T18:09:41+00:00"
         },
         {
             "name": "installer",

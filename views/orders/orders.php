@@ -21,7 +21,7 @@ use app\core\App;
         </div>
       </div>
       <div class="modal-footer">
-        <input type="button" class="button save-data" href="save" data-dismiss="modal" value="Save"/>
+        <input type="button" class="button save-data" href="save" value="Save"/>
         <input type="button" class="button" data-dismiss="modal" value="Cancel"/>
       </div>
     </div><!-- /.modal-content -->

@@ -16,7 +16,7 @@ use app\core\App;
 
     <div class="row">
       <div class="col-xs-5 action-button-add">
-        <a href="<?= App::$app->router()->UrlTo('categories/add'); ?>" data-modify class="button">
+        <a href="<?= App::$app->router()->UrlTo('colors/add'); ?>" data-modify class="button">
           ADD COLOR
         </a>
       </div>

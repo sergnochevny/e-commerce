@@ -1,5 +1,4 @@
-'use strict';
-
 (function ($) {
+  'use strict';
   $('html, body').stop().animate({scrollTop: 0}, 1000);
-})(jQuery);
+})(window.jQuery || window.$);

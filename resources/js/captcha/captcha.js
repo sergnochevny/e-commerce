@@ -1,8 +1,7 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
 
-  $('#captcha_refresh').on('click',
+  $(document).on('click', '#captcha_refresh',
     function (event) {
       event.preventDefault();
       if ($(this).is('[disabled]')) return false;
@@ -22,4 +21,4 @@
     }
   );
 
-})(jQuery);
+})(window.jQuery || window.$);

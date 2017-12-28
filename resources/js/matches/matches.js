@@ -1,6 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
 
   var a = 1,
     base_url = $('#base_url').val();
@@ -135,4 +134,4 @@
     });
   });
 
-})(jQuery);
+})(window.jQuery || window.$);

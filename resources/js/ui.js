@@ -1,5 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
+
   $('body').init_input();
-})(jQuery);
+})(window.jQuery || window.$);

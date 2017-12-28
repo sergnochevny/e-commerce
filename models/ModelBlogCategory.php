@@ -89,7 +89,7 @@ class ModelBlogCategory extends ModelBase{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "SELECT COUNT(*) FROM blog_group_posts WHERE id = :id";
+        $query = "SELECT COUNT(*) FROM blog_group_posts WHERE group_id = :id";
         $res = static::query($query, ['id' => $id]);
         if($res) {
           $amount = static::fetch_array($res)[0];
@@ -123,11 +123,11 @@ class ModelBlogCategory extends ModelBase{
     try {
       if(isset($id)) {
         $query = 'UPDATE blog_groups SET name = :name WHERE id = :id';
-        $res = static::query($query, $data);
+        $res = static::query($query, ['id' => $id, 'name' => $name]);
         if(!$res) throw new Exception(static::error());
       } else {
         $query = 'INSERT INTO blog_groups (name) VALUE (:name)';
-        $res = static::query($query, $data);
+        $res = static::query($query, ['name' => $name]);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }

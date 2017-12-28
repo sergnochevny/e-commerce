@@ -1,6 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
 
   $('#date-from').datepicker({
     dateFormat: 'mm/dd/yy',
@@ -19,4 +18,4 @@
   $('[data-restrict]').restrict();
   $("input").inputmask();
 
-})(jQuery);
+})(window.jQuery || window.$);

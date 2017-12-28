@@ -27,5 +27,8 @@ use app\core\App;
 
   </div>
 </div>
+<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/captcha/captcha.min.js'); ?>'></script>
+<script type='text/javascript'
+        src='<?= App::$app->router()->UrlTo('js/authorization/registration/script.min.js'); ?>'></script>
 
 

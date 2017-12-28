@@ -1,8 +1,7 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
 
-  $("[data-change-province]").on('change',
+  $(document).on('change', "[data-change-province]",
     function (event) {
       event.preventDefault();
       var url = $(this).parents('form').attr('action');
@@ -25,4 +24,4 @@
     }
   );
 
-})(jQuery);
+})(window.jQuery || window.$);

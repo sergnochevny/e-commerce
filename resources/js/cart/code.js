@@ -1,5 +1,4 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
   $('#coupon_code_init').init_input();
-})(jQuery);
+})(window.jQuery || window.$);

@@ -1,11 +1,9 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
 
-  $("input").inputmask();
-
-  $("#edit_form [name=ship_as_billing]").on('change',
+  $(document).on('change', "#edit_form [name=ship_as_billing]",
     function (event) {
+      event.preventDefault();
       var destination = $(this).attr('aria-controls');
       var dest = $('#' + destination);
       if (dest.hasClass('in')) {
@@ -16,4 +14,4 @@
     }
   );
 
-})(jQuery);
+})(window.jQuery || window.$);

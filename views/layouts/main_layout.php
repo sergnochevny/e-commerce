@@ -125,7 +125,7 @@ use app\core\App;
     <script type="text/javascript">
       (function ($) {
         $('span#cart_amount').load('<?= App::$app->router()->UrlTo('cart/amount');?>');
-      })(jQuery);
+      })(window.jQuery || window.$);
     </script>
   <?php } ?>
 </div>

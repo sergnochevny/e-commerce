@@ -237,6 +237,7 @@ class ControllerBlog extends ControllerFormSimple{
     $this->template->vars('selected', $selected);
     $this->template->vars('filter', $filter);
     if($return) return $this->template->view_layout_return('filter/select');
+
     return $this->template->view_layout('filter/select');
   }
 
@@ -271,6 +272,7 @@ class ControllerBlog extends ControllerFormSimple{
     }
     $this->template->vars('data', $data);
     if($return) return $this->template->view_layout_return('image');
+
     return $this->template->view_layout('image');
   }
 
@@ -402,10 +404,8 @@ class ControllerBlog extends ControllerFormSimple{
    */
   protected function before_save(&$data){
     if(!isset($data[$this->id_field])) $data['post_author'] = ControllerAdmin::get_from_session();
-    $data['post_title'] = addslashes(trim(html_entity_decode(($data['post_title']))));
-    $data['keywords'] = addslashes(trim(html_entity_decode(($data['keywords']))));
-    $data['description'] = addslashes(trim(html_entity_decode(($data['description']))));
-    $data['post_content'] = addslashes(html_entity_decode(static::convertation(($data['post_content']))));
+    $data['post_content'] = static::convertation(($data['post_content']));
+    $data['post_date'] = date('Y-m-d H:i:s', strtotime($data['post_date']));
   }
 
   /**
@@ -429,9 +429,9 @@ class ControllerBlog extends ControllerFormSimple{
    * @throws \Exception
    */
   protected function form_after_get_data(&$data = null){
-    $desckeys = ModelBlog::get_desc_keys($data[$this->id_field]);
-    $data['description'] = $desckeys['description'];
-    $data['keywords'] = $desckeys['keywords'];
+    $tmp = ModelBlog::get_desc_keys($data[$this->id_field]);
+    $data['description'] = $tmp['description'];
+    $data['keywords'] = $tmp['keywords'];
     $data['img'] = ModelBlog::get_img($data[$this->id_field]);
   }
 

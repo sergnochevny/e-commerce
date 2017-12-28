@@ -1,5 +1,6 @@
-'use strict';
 (function ($) {
+  'use strict';
+
   $.widget('gregpopov.charCounter', {
     options: {
       charsLimit: null,
@@ -39,4 +40,4 @@
       return message;
     }
   });
-})(jQuery);
+})(window.jQuery || window.$);

@@ -1,6 +1,6 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
+
   var base_url = $('#base_url').val();
   var back_url = $('#back_url').attr('href');
   var related = $('[data-related]');
@@ -167,4 +167,4 @@
     });
   });
 
-})(jQuery);
+})(window.jQuery || window.$);

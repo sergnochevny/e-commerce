@@ -14,6 +14,7 @@
 
   $(document).on('change', '[data-related_chk]',
     function (event) {
+      event.preventDefault();
       var owl = $('[data-carousel]').data('owl.carousel');
       var pid = $(this).attr('data-pid');
       if (this.checked) {
@@ -130,7 +131,7 @@
       if (sort.length) {
         var form = new FormData(sort[0]);
         for (var key in form.keys()) {
-          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+          if (form.hasOwnProperty(key)) data.append(key, form.get(key));
         }
       }
       _postdata(this, $(this).attr('action'), data);
@@ -166,7 +167,7 @@
         if (sort.length) {
           var form = new FormData(sort[0]);
           for (var key in form.keys()) {
-            if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+            if (form.hasOwnProperty(key)) data.append(key, form.get(key));
           }
         }
         _postdata(this, $(this).attr('href'), data);
@@ -187,7 +188,7 @@
         if (sort.length) {
           var form = new FormData(sort[0]);
           for (var key in form.keys()) {
-            if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+            if (form.hasOwnProperty(key)) data.append(key, form.get(key));
           }
         }
         _postdata(this, $(this).attr('href'), data);
@@ -227,4 +228,4 @@
 
   $.change_button_text();
 
-})(jQuery);
+})(window.jQuery || window.$);

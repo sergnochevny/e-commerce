@@ -72,5 +72,4 @@ use app\core\App;
         </div>
     </div>
 </form>
-<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/captcha/captcha.min.js'); ?>'></script>
 <script src='<?= App::$app->router()->UrlTo('js/formsimple/form.min.js'); ?>' type="text/javascript"></script>

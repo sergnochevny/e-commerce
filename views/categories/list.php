@@ -17,7 +17,7 @@ use app\core\App;
     <div class="row">
       <div class="col-xs-5 action-button-add">
         <a href="<?= App::$app->router()->UrlTo('categories/add'); ?>" data-modify class="button">
-          ADD CATEGORY
+          ADD TYPE
         </a>
       </div>
       <div class="col-xs-7 search-result-container text-right">

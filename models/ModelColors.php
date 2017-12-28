@@ -146,11 +146,11 @@ class ModelColors extends ModelBase{
        */
       if(isset($id)) {
         $query = 'UPDATE ' . static::$table . ' SET color = :color WHERE id = :id';
-        $res = static::query($query, $data);
+        $res = static::query($query, ['id' => $id, 'color' => $color]);
         if(!$res) throw new Exception(static::error());
       } else {
         $query = 'INSERT INTO ' . static::$table . '(color) VALUE (:color)';
-        $res = static::query($query, $data);
+        $res = static::query($query, ['color' => $color]);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }

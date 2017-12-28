@@ -1,6 +1,6 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
+
   $(document).ready(
     function (event) {
 
@@ -19,4 +19,4 @@
 
     }
   );
-})(jQuery);
+})(window.jQuery || window.$);

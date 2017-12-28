@@ -1,3 +1,8 @@
+<?php
+
+use app\core\App;
+
+?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 box">
     <div id="lost_password_container">
@@ -9,3 +14,5 @@
     </div>
   </div>
 </div>
+<script src='<?= App::$app->router()->UrlTo('js/authorization/lost_password.min.js'); ?>'
+        type="text/javascript"></script>

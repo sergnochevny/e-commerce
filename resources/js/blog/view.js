@@ -1,6 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
   $(document).ready(
     function (event) {
       setTimeout(function () {
@@ -8,4 +7,4 @@
       }, 300);
     }
   );
-})(jQuery);
+})(window.jQuery || window.$);

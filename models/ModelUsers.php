@@ -130,8 +130,8 @@ class ModelUsers extends ModelBase{
       'ship_email' => ''
     ];
     if(isset($id)) {
-      $strSQL = "SELECT * FROM " . static::$table . " WHERE aid = '" . $id . "'";
-      $result = static::query($strSQL);
+      $strSQL = "SELECT * FROM " . static::$table . " WHERE aid = :id";
+      $result = static::query($strSQL, ['id' => $id]);
       if($result) {
         $data = static::fetch_assoc($result);
       }
@@ -148,19 +148,19 @@ class ModelUsers extends ModelBase{
     static::transaction();
     try {
       if(isset($id)) {
-        $query = "select count(*) from shop_special_users where aid = $id";
-        $res = static::query($query);
+        $query = "SELECT count(*) FROM shop_specials_users WHERE aid = :id";
+        $res = static::query($query, ['id' => $id]);
         if($res) {
-          $amount = static::fetch_array($res)[0];
+          $amount = static::fetch_value($res);
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
-//        $query = "delete from shop_special_users WHERE aid = $id";
-//        $res = static::query( $query);
+//        $query = "DELETE FROM shop_specials_users WHERE aid = :id";
+//        $res = static::query($query, ['id' => $id]);
 //        if(!$res) throw new Exception(static::error());
-        $query = "DELETE FROM " . static::$table . " WHERE aid = $id";
-        $res = static::query($query, $prms);
+        $query = "DELETE FROM " . static::$table . " WHERE aid = :id";
+        $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
       }
       static::commit();
@@ -178,70 +178,137 @@ class ModelUsers extends ModelBase{
   public static function save(&$data){
     static::transaction();
     try {
+      extract($data);
+      /**
+       * @var string $email
+       * @var string $password
+       * @var string $bill_firstname
+       * @var string $bill_lastname
+       * @var string $bill_organization
+       * @var string $bill_address1
+       * @var string $bill_address2
+       * @var string $bill_province
+       * @var string $bill_city
+       * @var string $bill_country
+       * @var string $bill_postal
+       * @var string $bill_phone
+       * @var string $bill_fax
+       * @var string $bill_email
+       * @var string $ship_firstname
+       * @var string $ship_lastname
+       * @var string $ship_organization
+       * @var string $ship_address1
+       * @var string $ship_address2
+       * @var string $ship_city
+       * @var string $ship_province
+       * @var string $ship_country
+       * @var string $ship_postal
+       * @var string $ship_phone
+       * @var string $ship_fax
+       * @var string $ship_email
+       */
       if(isset($data['scenario']) && ($data['scenario'] !== 'short')) {
-        extract($data);
-
+        $prms = [
+          'email' => $email,
+          'bill_firstname' => $bill_firstname,
+          'bill_lastname' => $bill_lastname,
+          'bill_organization' => $bill_organization,
+          'bill_address1' => $bill_address1,
+          'bill_address2' => $bill_address2,
+          'bill_province' => $bill_province,
+          'bill_city' => $bill_city,
+          'bill_country' => $bill_country,
+          'bill_postal' => $bill_postal,
+          'bill_phone' => $bill_phone,
+          'bill_fax' => $bill_fax,
+          'bill_email' => $bill_email,
+          'ship_firstname' => $ship_firstname,
+          'ship_lastname' => $ship_lastname,
+          'ship_organization' => $ship_organization,
+          'ship_address1' => $ship_address1,
+          'ship_address2' => $ship_address2,
+          'ship_city' => $ship_city,
+          'ship_province' => $ship_province,
+          'ship_country' => $ship_country,
+          'ship_postal' => $ship_postal,
+          'ship_phone' => $ship_phone,
+          'ship_fax' => $ship_fax,
+          'ship_email' => $ship_email
+        ];
+        if(isset($password) && (strlen($password) > 0)) {
+          $prms['password'] = $password;
+        }
         if(!isset($aid)) {
-          $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname ," .
-            " bill_organization , bill_address1 , bill_address2 , bill_province ," .
-            " bill_city , bill_country , bill_postal , bill_phone , bill_fax , bill_email , " .
-            "ship_firstname , ship_lastname , ship_organization , ship_address1 , ship_address2 , " .
-            "ship_city , ship_province , ship_country , ship_postal , " .
-            "ship_phone , ship_fax , ship_email , get_newsletter , login_counter)" .
-            " VALUES ('$email', '$password', '$bill_firstname', '$bill_lastname'," .
-            " '$bill_organization', '$bill_address1', '$bill_address2', '$bill_province', " .
-            " '$bill_city', '$bill_country', '$bill_postal', '$bill_phone', '$bill_fax', '$bill_email', " .
-            " '$ship_firstname', '$ship_lastname', '$ship_organization', '$ship_address1', '$ship_address2', " .
-            " '$ship_city', '$ship_province', '$ship_country', '$ship_postal', " .
-            " '$ship_phone', '$ship_fax', '$ship_email', '1', '0')";
+          $q = "INSERT INTO " . static::$table . " (email, password, bill_firstname, bill_lastname," .
+            " bill_organization, bill_address1, bill_address2, bill_province," .
+            " bill_city, bill_country, bill_postal, bill_phone, bill_fax, bill_email," .
+            " ship_firstname, ship_lastname, ship_organization, ship_address1, ship_address2," .
+            " ship_city, ship_province, ship_country, ship_postal," .
+            " ship_phone, ship_fax, ship_email, get_newsletter, login_counter)" .
+            " VALUES (:email, :password, :bill_firstname, :bill_lastname," .
+            " :bill_organization, :bill_address1, :bill_address2, :bill_province, " .
+            " :bill_city, :bill_country, :bill_postal, :bill_phone, :bill_fax, :bill_email, " .
+            " :ship_firstname, :ship_lastname, :ship_organization, :ship_address1, :ship_address2, " .
+            " :ship_city, :ship_province, :ship_country, :ship_postal, " .
+            " :ship_phone, :ship_fax, :ship_email, 1, 0)";
         } else {
           $q = "UPDATE " . static::$table . " SET " .
-            " email = '" . $email .
-            "',bill_firstname =  '" . $bill_firstname .
-            "',bill_lastname =  '" . $bill_lastname .
-            "',bill_organization =  '" . $bill_organization .
-            "',bill_address1 =  '" . $bill_address1 .
-            "',bill_address2 =  '" . $bill_address2 .
-            "',bill_province =  '" . $bill_province .
-            "',bill_city =  '" . $bill_city .
-            "',bill_country =  '" . $bill_country .
-            "',bill_postal =  '" . $bill_postal .
-            "',bill_phone =  '" . $bill_phone .
-            "',bill_fax =  '" . $bill_fax .
-            "',bill_email =  '" . $bill_email .
-            "',ship_firstname =  '" . $ship_firstname .
-            "',ship_lastname =  '" . $ship_lastname .
-            "',ship_organization =  '" . $ship_organization .
-            "',ship_address1 =  '" . $ship_address1 .
-            "',ship_address2 =  '" . $ship_address2 .
-            "',ship_city =  '" . $ship_city .
-            "',ship_province =  '" . $ship_province .
-            "',ship_country =  '" . $ship_country .
-            "',ship_postal =  '" . $ship_postal .
-            "',ship_phone =  '" . $ship_phone .
-            "',ship_fax =  '" . $ship_fax .
-            "',ship_email =  '" . $ship_email;
+            " email = :email" .
+            ", bill_firstname = :bill_firstname" .
+            ", bill_lastname = :bill_lastname" .
+            ", bill_organization = :bill_organization" .
+            ", bill_address1 = :bill_address1" .
+            ", bill_address2 = :bill_address2" .
+            ", bill_province = :bill_province" .
+            ", bill_city = :bill_city" .
+            ", bill_country = :bill_country" .
+            ", bill_postal = :bill_postal" .
+            ", bill_phone = :bill_phone" .
+            ", bill_fax = :bill_fax" .
+            ", bill_email = :bill_email" .
+            ", ship_firstname = :ship_firstname" .
+            ", ship_lastname = :ship_lastname" .
+            ", ship_organization = :ship_organization" .
+            ", ship_address1 = :ship_address1" .
+            ", ship_address2 = :ship_address2" .
+            ", ship_city = :ship_city" .
+            ", ship_province = :ship_province" .
+            ", ship_country = :ship_country" .
+            ", ship_postal = :ship_postal" .
+            ", ship_phone = :ship_phone" .
+            ", ship_fax = :ship_fax" .
+            ", ship_email = :ship_email";
           if(isset($password) && (strlen($password) > 0)) {
-            $q .= "',password =  '" . $password;
+            $q .= ", password = :password";
           }
-          $q .= "' WHERE  aid = $aid;";
+          $q .= " WHERE aid = :aid;";
+          $prms['aid'] = $aid;
         }
       } else {
         if(!isset($aid)) {
           $q = "INSERT INTO " . static::$table . " (email , password , bill_firstname , bill_lastname)" .
-            " VALUES ('$email', '$password', '$bill_firstname', '$bill_lastname')";
+            " VALUES (:email, :password, :bill_firstname, :bill_lastname)";
+          $prms = [
+            'email' => $email,
+            'bill_firstname' => $bill_firstname,
+            'bill_lastname' => $bill_lastname,
+            'password' => $password
+          ];
         } else {
           $q = "UPDATE " . static::$table . " SET " .
-            " email = '" . $email .
-            "',bill_firstname =  '" . $bill_firstname .
-            "',bill_lastname =  '" . $bill_lastname;
+            " email = :email" .
+            ", bill_firstname = :bill_firstname" .
+            ", bill_lastname =  :bill_lastname";
+          $prms = ['email' => $email, 'bill_firstname' => $bill_firstname, 'bill_lastname' => $bill_lastname];
           if(isset($password) && (strlen($password) > 0)) {
-            $q .= "',password =  '" . $password;
+            $q .= ", password = :password";
+            $prms['password'] = $password;
           }
-          $q .= "' WHERE  aid = $aid;";
+          $q .= " WHERE aid = :aid";
+          $prms['aid'] = $aid;
         }
       }
-      $result = static::query($q);
+      $result = static::query($q, $prms);
       if(!$result) throw new Exception(static::error());
       if(!isset($aid)) {
         $aid = static::last_id();

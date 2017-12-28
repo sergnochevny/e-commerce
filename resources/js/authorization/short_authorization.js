@@ -1,6 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use strict';
 
   $("input").inputmask();
 
@@ -36,4 +35,4 @@
 
   $('#short_authorization').init_input();
 
-})(jQuery);
+})(window.jQuery || window.$);

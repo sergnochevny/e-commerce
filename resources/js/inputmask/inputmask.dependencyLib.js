@@ -5,4 +5,4 @@
 * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
 * Version: 3.3.4-101
 */
-!function(a){"function"==typeof define&&define.amd?define("inputmask.dependencyLib",["jquery"],a):"object"==typeof exports?module.exports=a(require("jquery")):a(jQuery)}(function(a){return window.dependencyLib=a,a});
+!function(a){"function"==typeof define&&define.amd?define("inputmask.dependencyLib",["jquery"],a):"object"==typeof exports?module.exports=a(require("jquery")):a(window.jQuery || window.$)}(function(a){return window.dependencyLib=a,a});

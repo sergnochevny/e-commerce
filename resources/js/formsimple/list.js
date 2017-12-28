@@ -1,8 +1,7 @@
-'use strict';
-
 (function ($) {
+  'use strict';
 
   $.danger_remove(8000);
   $('body').init_input();
 
-})(jQuery);
+})(window.jQuery || window.$);

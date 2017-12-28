@@ -130,13 +130,20 @@ class ModelComments extends ModelBase{
   public static function save(&$data){
     static::transaction();
     try {
+      extract($data);
+      /**
+       * @var integer $id
+       * @var string $data
+       * @var string $moderated
+       * @var string $title
+       */
       if(!empty($data['id'])) {
         $query = 'UPDATE ' . static::$table . ' SET `title` = :title, `data` = :data, `moderated` = :moderated WHERE id = :id';
-        $res = static::query($query, $data);
+        $res = static::query($query, ['id' => $id, 'title' => $title, 'data' => $data, 'moderated' => $moderated]);
         if(!$res) throw new Exception(static::error());
       } else {
         $query = 'INSERT INTO ' . static::$table . '(`title`, `data`, `moderated`) VALUE (:title, :data, :moderated)';
-        $res = static::query($query, $data);
+        $res = static::query($query, ['title' => $title, 'data' => $data, 'moderated' => $moderated]);
         if(!$res) throw new Exception(static::error());
         $id = static::last_id();
       }

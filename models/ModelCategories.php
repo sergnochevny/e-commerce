@@ -219,7 +219,7 @@ class ModelCategories extends ModelBase{
           }
         }
         $query = "DELETE FROM shop_product_categories WHERE cid = :cid";
-        $res = static::query($query, ['cid', $cid]);
+        $res = static::query($query, ['cid' => $cid]);
         if(!$res) throw new Exception(static::error());
         $query = "DELETE FROM shop_categories WHERE cid = :cid";
         $res = static::query($query, ['cid' => $cid]);

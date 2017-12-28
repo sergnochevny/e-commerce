@@ -2,4 +2,4 @@
 
 (function ($) {
   $('.filter_select_panel').init_input();
-})(jQuery);
+})(window.jQuery || window.$);

@@ -1,6 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use srtict';
 
   var status = $('#status');
 
@@ -53,4 +52,4 @@
     }
   );
 
-})(jQuery);
+})(window.jQuery || window.$);

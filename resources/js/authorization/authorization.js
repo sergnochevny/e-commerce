@@ -1,6 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use strict';
 
   $("input").inputmask();
 
@@ -14,7 +13,7 @@
         function (data) {
           $.when(results.html(data)).done(
             function () {
-              if (results.children('script').length == 0) {
+              if (results.children('script').length === 0) {
                 setTimeout(function () {
                   results.html('');
                 }, 3000);
@@ -36,4 +35,4 @@
 
   $('#authorization').init_input();
 
-})(jQuery);
+})(window.jQuery || window.$);

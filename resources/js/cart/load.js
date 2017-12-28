@@ -1,9 +1,9 @@
-'use strict';
 var currentScript = document.currentScript || (function () {
   var scripts = document.getElementsByTagName('script');
   return scripts[scripts.length - 1];
 })();
 (function ($, me) {
+  'use srtict';
   var wait_loader = '<div class="col-xs-12 text-center">' +
     '<i class="fa fa-spinner fa-pulse fa-4x"></i><br/>' +
     '</div>';

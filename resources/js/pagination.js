@@ -1,6 +1,5 @@
-'use strict';
-
 (function ($) {
+  'use strict';
   $.change_button_text(true);
-})(jQuery);
+})(window.jQuery || window.$);
 

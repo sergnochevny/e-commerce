@@ -1,4 +1,5 @@
 (function ($) {
+
   var base_url = $('#base_url').val();
 
   $(document).on('change', 'input[data-role=quantity]', function (event) {
@@ -44,11 +45,13 @@
   });
 
   $(document).on('click.confirm_action', ".popup a.close", function (event) {
+    event.preventDefault();
     $("#confirm_action").off('click.confirm_action');
     $("#confirm_dialog").removeClass('overlay_display');
   });
 
   $(document).on('click.confirm_action', "#confirm_no", function (event) {
+    event.preventDefault();
     $(".popup a.close").trigger('click');
   });
 
@@ -141,7 +144,8 @@
     }
   );
 
-  $(document).on('remove_inputs', function () {
+  $(document).on('remove_inputs', function (event) {
+    event.preventDefault();
     $('[data-block=div_subtotal_table]').remove();
     $('[data-block=products-cart-list]').remove();
     $('[data-block=proceed_button]').remove();
@@ -150,12 +154,13 @@
     $('.cont-shop').text('Go shopping')
   });
 
-  $(document).on('init_spinner', function () {
+  $(document).on('init_spinner', function (event) {
+    event.preventDefault();
     var whole;
     $('input[data-role=quantity]').each(
       function (idx) {
         whole = $(this).attr('data-whole');
-        if (whole == 1) {
+        if (whole === 1) {
           $(this).spinner({
             max: 1000000,
             min: 1,
@@ -179,7 +184,8 @@
     );
   });
 
-  $(document).on('destroy_spinner', function () {
+  $(document).on('destroy_spinner', function (event) {
+    event.preventDefault();
     $('input[data-role=quantity]').each(function (idx) {
       $(this).spinner("destroy");
     });
@@ -190,7 +196,8 @@
   });
 
   $(document).on('calc_shipping_total',
-    function () {
+    function (event) {
+      event.preventDefault();
       var url = base_url + 'cart/shipping_calc';
       var stotal_url = base_url + 'cart/get_subtotal_ship';
       var data = new FormData();
@@ -218,7 +225,8 @@
     }
   );
 
-  $(document).on('calc_total', function () {
+  $(document).on('calc_total', function (event) {
+    event.preventDefault();
     var url = base_url + 'cart/coupon_total_calc';
     var data = new FormData();
     data.append('emty', true);
@@ -228,15 +236,19 @@
   });
 
   $(document).on('change', '[data-block=select_ship]', function (event) {
+    event.preventDefault();
     $(document).trigger('calc_shipping_total');
   });
   $(document).on('change', '[data-block=roll]', function (event) {
+    event.preventDefault();
     $(document).trigger('calc_shipping_total');
   });
   $(document).on('change', '[data-block=express_samples]', function (event) {
+    event.preventDefault();
     $(document).trigger('calc_shipping_total');
   });
   $(document).on('click', '[data-block=apply_coupon]', function (event) {
+    event.preventDefault();
     $(document).trigger('calc_shipping_total');
   });
   $(document).on('click', '[data-block=proceed_button]', function (event) {
@@ -260,13 +272,15 @@
   });
 
   $(document).on('change', '[data-block=agreeterm]', function (event) {
+    event.preventDefault();
     $('[data-block=container_proceed_pay]').toggle(this.checked);
   });
 
   $(document).on('submit', '[data-block=paypal_form]', function (event) {
+    event.preventDefault();
     var url = base_url + 'cart/pay_mail';
     $('body').waitloader('show');
     $.get(url);
   });
 
-})(jQuery);
+})(window.jQuery || window.$);

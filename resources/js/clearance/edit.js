@@ -148,4 +148,4 @@
 
   $.change_button_text();
 
-})(jQuery);
+})(window.jQuery || window.$);

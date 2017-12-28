@@ -119,8 +119,13 @@ class ModelRelated extends ModelBase{
   public static function save(&$data){
     static::transaction();
     try {
+      extract($data);
+      /**
+       * @var integer $pid
+       * @var integer $r_id
+       */
       $query = "REPLACE INTO " . static::$table . "(pid, r_pid) VALUE (:pid, :r_pid)";
-      $res = static::query($query, $data);
+      $res = static::query($query, ['pid' => $pid, 'r_id' => $r_id ]);
       if(!$res) throw new Exception(static::error());
       $id = static::last_id();
       static::commit();
