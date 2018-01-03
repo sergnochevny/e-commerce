@@ -1,5 +1,5 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
   $(document).on('change', "#edit_form [name=ship_as_billing]",
     function (event) {

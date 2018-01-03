@@ -1,5 +1,5 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
   $(document).on('submit', '#psw_form',
     function (event) {
@@ -10,9 +10,7 @@
         $('#chng_pass').html(data);
       });
     }
-  );
-
-  $(document).on('click', '#bchange',
+  ).on('click', '#bchange',
     function (event) {
       event.preventDefault();
       $('#psw_form').trigger('submit');

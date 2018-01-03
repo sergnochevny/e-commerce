@@ -107,14 +107,14 @@ class ModelProduct extends ModelBase{
    */
   public static function delete_img($filename){
     if(!empty($filename)) {
-      if(file_exists(APP_PATH . '/web/' . "images/products/" . $filename)) {
-        unlink(APP_PATH . '/web/' . "images/products/" . $filename);
+      if(file_exists(APP_PATH . '/web/images/products/' . $filename)) {
+        unlink(APP_PATH . '/web/images/products/' . $filename);
       }
-      if(file_exists(APP_PATH . '/web/' . "images/products/b_" . $filename)) {
-        unlink(APP_PATH . '/web/' . "images/products/b_" . $filename);
+      if(file_exists(APP_PATH . '/web/images/products/b_' . $filename)) {
+        unlink(APP_PATH . '/web/images/products/b_' . $filename);
       }
-      if(file_exists(APP_PATH . '/web/' . "images/products/v_" . $filename)) {
-        unlink(APP_PATH . '/web/' . "images/products/v_" . $filename);
+      if(file_exists(APP_PATH . '/web/images/products/v_' . $filename)) {
+        unlink(APP_PATH . '/web/images/products/v_' . $filename);
       }
     }
   }
@@ -451,12 +451,16 @@ class ModelProduct extends ModelBase{
       'image4' => '', 'image5' => ''
     ];
     if(isset($id)) {
-      $q = "SELECT * FROM " . static::$table . " WHERE pid = :id";
-      $result = static::query($q, ['id' => $id]);
+      $q = "SELECT * FROM " . static::$table . " WHERE pid = :pid";
+      $result = static::query($q, ['pid' => $id]);
       if($result) {
         $data = static::fetch_assoc($result);
         static::free_result($result);
       }
+    }
+
+    if ($data === false){
+      throw new Exception('Data set is empty!');
     }
 
     return $data;
@@ -505,14 +509,17 @@ class ModelProduct extends ModelBase{
         if(substr($filename, 0, strlen($pid) + 1) !== 'p' . $pid) {
           static::delete_img($images['image' . $idx]);
           $filename = 'p' . $pid . $filename;
-          if(file_exists(APP_PATH . '/web/' . "images/products/" . $data['image' . $idx])) {
-            rename(APP_PATH . '/web/' . "images/products/" . $data['image' . $idx], APP_PATH . '/web/' . "images/products/$filename");
+          if(file_exists(APP_PATH . '/web/images/products/' . $data['image' . $idx])) {
+            rename(APP_PATH . '/web/images/products/' . $data['image' . $idx],
+              APP_PATH . '/web/images/products/' . $filename);
           }
-          if(file_exists(APP_PATH . '/web/' . "images/products/b_" . $data['image' . $idx])) {
-            rename(APP_PATH . '/web/' . "images/products/b_" . $data['image' . $idx], APP_PATH . '/web/' . "images/products/b_" . $filename);
+          if(file_exists(APP_PATH . '/web/images/products/b_' . $data['image' . $idx])) {
+            rename(APP_PATH . '/web/images/products/b_' . $data['image' . $idx],
+              APP_PATH . '/web/images/products/b_' . $filename);
           }
-          if(file_exists(APP_PATH . '/web/' . "images/products/v_" . $data['image' . $idx])) {
-            rename(APP_PATH . '/web/' . "images/products/v_" . $data['image' . $idx], APP_PATH . '/web/' . "images/products/v_" . $filename);
+          if(file_exists(APP_PATH . '/web/images/products/v_' . $data['image' . $idx])) {
+            rename(APP_PATH . '/web/images/products/v_' . $data['image' . $idx],
+              APP_PATH . '/web/images/products/v_' . $filename);
           }
           $data['image' . $idx] = $filename;
         }
@@ -531,7 +538,10 @@ class ModelProduct extends ModelBase{
       " image1=:image1, image2=:image2, image3=:image3," .
       " image4=:image4, image5=:image5 where pid = :pid";
 
-    return static::query($q, array_merge($data, ['pid' => $pid]));
+    return static::query($q, [
+      'image1' => $image1, 'image2' => $image2, 'image3' => $image3,
+      'image4' => $image4, 'image5' => $image5, 'pid' => $pid
+    ]);
   }
 
   /**
@@ -553,25 +563,74 @@ class ModelProduct extends ModelBase{
     static::transaction();
     try {
       extract($data);
-
+      /**
+       * @var integer $pid
+       * @var string $weight_id
+       * @var string $manufacturerId
+       * @var string $specials
+       * @var string $inventory
+       * @var string $dimensions
+       * @var string $hideprice
+       * @var string $stock_number
+       * @var string $priceyard
+       * @var string $width
+       * @var string $pnumber
+       * @var string $pvisible
+       * @var string $metatitle
+       * @var string $metakeywords
+       * @var string $metadescription
+       * @var string $ldesc
+       * @var string $pname
+       * @var string $sdesc
+       * @var string $best
+       * @var string $piece
+       * @var string $whole
+       * @var array $categories
+       * @var array $colors
+       * @var array $patterns
+       * @var array $related
+       */
+      $prms = [
+        'specials' => $specials, 'inventory' => $inventory,
+        'dimensions' => $dimensions, 'hideprice' => $hideprice, 'stock_number' => $stock_number,
+        'priceyard' => $priceyard, 'width' => $width, 'pnumber' => $pnumber, 'pvisible' => $pvisible,
+        'metatitle' => $metatitle, 'metakeywords' => $metakeywords, 'metadescription' => $metadescription,
+        'ldesc' => $ldesc, 'pname' => $pname, 'sdesc' => $sdesc, 'best' => $best, "piece" => $piece,
+        'whole' => $whole
+      ];
       if(isset($pid)) {
-        $sql = "update " . static::$table . " set";
-        if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
-        $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
-        $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
-        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
-        $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
-        $sql .= " piece='$piece', whole = '$whole'  WHERE pid ='$pid'";
-        $result = static::query($sql);
+        $prms['pid'] = $pid;
+        $sql = "UPDATE " . static::$table . " SET";
+        if(!empty($manufacturerId) && ($manufacturerId != 0)) {
+          $sql .= " manufacturerId=:manufacturerId,";
+          $prms['manufacturerId'] = $manufacturerId;
+        }
+        if(!empty($weight_id) && ($weight_id != 0)) {
+          $sql .= " weight_id=:weight_id,";
+          $prms['weight_id'] = $weight_id;
+        }
+        $sql .= " specials=:specials, inventory=:inventory,";
+        $sql .= " dimensions=:dimensions, hideprice=:hideprice, stock_number=:stock_number, priceyard=:priceyard,";
+        $sql .= " width=:width, pnumber=:pnumber, pvisible=:pvisible, metatitle=:metatitle, metakeywords=:metakeywords,";
+        $sql .= " metadescription=:metadescription, ldesc=:ldesc, pname=:pname, sdesc=:sdesc, best=:best,";
+        $sql .= " piece=:piece, whole = :whole  WHERE pid =:pid";
+        $result = static::query($sql, $prms);
       } else {
         $sql = "INSERT INTO " . static::$table . " SET";
-        if(!empty($manufacturerId) && ($manufacturerId != 0)) $sql .= " manufacturerId='$manufacturerId',";
-        $sql .= " weight_id='$weight_id', specials='$specials', inventory='$inventory',";
-        $sql .= " dimensions='$dimensions', hideprice='$hideprice', stock_number='$stock_number', priceyard='$priceyard',";
-        $sql .= " width='$width', pnumber='$pnumber', pvisible='$pvisible', metatitle='$metatitle', metakeywords='$metakeywords',";
-        $sql .= " metadescription='$metadescription', ldesc='$ldesc', pname='$pname', sdesc='$sdesc', best='$best',";
-        $sql .= " piece='$piece', whole = '$whole'";
-        $result = static::query($sql);
+        if(!empty($manufacturerId) && ($manufacturerId != 0)) {
+          $sql .= " manufacturerId=:manufacturerId,";
+          $prms['manufacturerId'] = $manufacturerId;
+        }
+        if(!empty($weight_id) && ($weight_id != 0)) {
+          $sql .= " weight_id=:weight_id,";
+          $prms['weight_id'] = $weight_id;
+        }
+        $sql .= " specials=:specials, inventory=:inventory,";
+        $sql .= " dimensions=:dimensions, hideprice=:hideprice, stock_number=:stock_number, priceyard=:priceyard,";
+        $sql .= " width=:width, pnumber=:pnumber, pvisible=:pvisible, metatitle=:metatitle, metakeywords=:metakeywords,";
+        $sql .= " metadescription=:metadescription, ldesc=:ldesc, pname=:pname, sdesc=:sdesc, best=:best,";
+        $sql .= " piece=:piece, whole = :whole  WHERE pid =:pid";
+        $result = static::query($sql, $prms);
         if($result) {
           $pid = static::last_id();
           $data['pid'] = $pid;
@@ -581,12 +640,19 @@ class ModelProduct extends ModelBase{
       if($result) {
         $res = true;
         if($res && (count($categories) > 0)) {
-          $res = static::query("select * from shop_product_categories  where pid='$pid'");
+          $res = static::query("SELECT * FROM shop_product_categories  WHERE pid=:pid", ['pid' => $pid]);
           if($res) {
             $result = $res;
             while($category = static::fetch_assoc($res)) {
-              $result = $result && static::query("DELETE FROM shop_product_categories WHERE pid = " . $category['pid'] . " AND cid = " . $category['cid']);
-              $result = $result && static::query("UPDATE shop_product_categories SET display_order=display_order-1 WHERE display_order > " . $category['display_order'] . " AND cid=" . $category['cid']);
+              $result = $result && static::query(
+                  "DELETE FROM shop_product_categories WHERE pid = :pid AND cid = :cid",
+                  ['pid' => $category['pid'], 'cid' => $category['cid']]
+                );
+              $result = $result && static::query(
+                  "UPDATE shop_product_categories SET display_order=display_order-1 " .
+                  "WHERE display_order > :display_order AND cid=:cid",
+                  ['display_order' => $category['display_order'], 'cid' => $category['cid']]
+                );
               if(!$result) {
                 $res = $result;
                 break;
@@ -595,9 +661,12 @@ class ModelProduct extends ModelBase{
           }
         } elseif($res) {
           if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
-            static::query("DELETE FROM shop_product_categories WHERE pid = $pid");
-            $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" . " from shop_categories a" . " left join shop_product_categories b on a.cid = b.cid" . " where a.cid = 1";
-            $res = static::query($q, $prms);
+            static::query("DELETE FROM shop_product_categories WHERE pid = :pid", ['pid' => $pid]);
+            $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" .
+              " from shop_categories a" .
+              " left join shop_product_categories b on a.cid = b.cid" .
+              " where a.cid = 1";
+            $res = static::query($q);
             if($res) {
               $row = static::fetch_array($res, MYSQLI_NUM);
               $categories = [$row['cid'] => $row['pos']];
@@ -607,29 +676,50 @@ class ModelProduct extends ModelBase{
         }
         if($res) {
           foreach($categories as $cid => $category) {
-            $res = $res && static::query("update shop_product_categories SET display_order=display_order+1 where display_order >= " . $category . " and cid='$cid'");
-            $res = $res && static::query("REPLACE INTO shop_product_categories SET pid='$pid', cid='$cid', display_order = '$category'");
+            $res = $res && static::query(
+                "UPDATE shop_product_categories SET display_order=display_order+1 " .
+                "WHERE display_order >= :display_order AND cid=:cid",
+                ['display_order' => $category, "cid" => $cid]
+              );
+            $res = $res && static::query(
+                'REPLACE INTO shop_product_categories SET pid=:pid, cid=:cid, display_order = :display_order',
+                ['pid' => $pid, 'cid' => $cid, 'display_order' => $category]
+              );
             if(!$res) break;
           }
         }
-        if($res) $res = $res && static::query("DELETE FROM shop_product_colors WHERE prodID='$pid'");
+        if($res) $res = $res && static::query(
+            'DELETE FROM shop_product_colors WHERE prodID=:pid',
+            ['pid' => $pid]
+          );
         if($res && (count($colors) > 0)) {
           foreach($colors as $colorId) {
-            $res = $res && static::query("REPLACE INTO shop_product_colors SET prodID='$pid', colorId='$colorId'");
+            $res = $res && static::query(
+                'REPLACE INTO shop_product_colors SET prodID=:pid, colorId=:cid',
+                ['pid' => $pid, 'cid' => $colorId]
+              );
             if(!$res) break;
           }
         }
-        if($res) $res = $res && static::query("DELETE FROM shop_product_patterns WHERE prodID='$pid'");
+        if($res) $res = $res && static::query(
+            'DELETE FROM shop_product_patterns WHERE prodID=:pid',
+            ['pid' => $pid]
+          );
         if($res && (count($patterns) > 0)) {
           foreach($patterns as $patternId) {
-            $res = $res && static::query("REPLACE INTO shop_product_patterns SET prodID='$pid', patternId='$patternId'");
+            $res = $res && static::query(
+                'REPLACE INTO shop_product_patterns SET prodID=:pid, patternId=:patternId',
+                ['pid' => $pid, 'patternId' => $patternId]
+              );
             if(!$res) break;
           }
         }
-        if($res) $res = $res && static::query("DELETE FROM shop_product_related WHERE pid='$pid'");
+        if($res) $res = $res && static::query('DELETE FROM shop_product_related WHERE  pid=:pid', ['pid' => $pid]);
         if($res && (count($related) > 0)) {
           foreach($related as $r_pid) {
-            $res = $res && static::query("REPLACE INTO shop_product_related SET pid='$pid', r_pid='$r_pid'");
+            $res = $res && static::query('REPLACE INTO shop_product_related SET pid=:pid, r_pid=r_id',
+                ['pid' => $pid, 'r_id' => $r_pid]
+              );
             if(!$res) break;
           }
         }
@@ -654,22 +744,22 @@ class ModelProduct extends ModelBase{
     try {
       if(isset($id)) {
         $data = static::get_by_id($id);
-        $query = "DELETE FROM " . static::$table . " WHERE pid = $id";
-        $res = static::query($query, $prms);
-        $query = "DELETE FROM shop_product_related WHERE pid = $id or r_pid = $id";
-        if($res) $res = static::query($query, $prms);
-        $query = "DELETE FROM shop_clearance WHERE pid = $id";
-        if($res) $res = static::query($query, $prms);
-        $query = "DELETE FROM shop_product_favorites WHERE pid = $id";
-        if($res) $res = static::query($query, $prms);
-        $query = "DELETE FROM shop_product_categories WHERE pid = $id";
-        if($res) $res = static::query($query, $prms);
-        $query = "DELETE FROM shop_product_colors WHERE prodId = $id";
-        if($res) $res = static::query($query, $prms);
-        $query = "DELETE FROM shop_product_patterns WHERE prodId = $id";
-        if($res) $res = static::query($query, $prms);
-        $query = "DELETE FROM shop_specials_products WHERE pid = $id";
-        if($res) $res = static::query($query, $prms);
+        $query = "DELETE FROM " . static::$table . " WHERE pid = :id";
+        $res = static::query($query, ['id' => $id]);
+        $query = "DELETE FROM shop_product_related WHERE pid = :id OR r_pid = :r_id";
+        if($res) $res = static::query($query, ['id' => $id, 'r_id' => $id]);
+        $query = "DELETE FROM shop_clearance WHERE pid = :id";
+        if($res) $res = static::query($query, ['id' => $id]);
+        $query = "DELETE FROM shop_product_favorites WHERE pid = :id";
+        if($res) $res = static::query($query, ['id' => $id]);
+        $query = "DELETE FROM shop_product_categories WHERE pid = :id";
+        if($res) $res = static::query($query, ['id' => $id]);
+        $query = "DELETE FROM shop_product_colors WHERE prodId = :id";
+        if($res) $res = static::query($query, ['id' => $id]);
+        $query = "DELETE FROM shop_product_patterns WHERE prodId = :id";
+        if($res) $res = static::query($query, ['id' => $id]);
+        $query = "DELETE FROM shop_specials_products WHERE pid = :id";
+        if($res) $res = static::query($query, ['id' => $id]);
         if(!$res) throw new Exception(static::error());
         static::delete_images($data);
       }

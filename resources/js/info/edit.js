@@ -1,14 +1,12 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
   $(document).on('click', '#submit',
     function (event) {
       event.preventDefault();
       $(this).parents('form').trigger('submit', [true]);
     }
-  );
-
-  $(document).on('submit', "form#edit_form",
+  ).on('submit', "form#edit_form",
     function (event, submit) {
       event.preventDefault();
       if (submit) {
@@ -23,9 +21,7 @@
         });
       }
     }
-  );
-
-  $(document).on('tiny_init',
+  ).on('tiny_init',
     function (event) {
       tinymce.init(
         {

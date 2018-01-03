@@ -40,7 +40,7 @@ class ModelSettings extends ModelBase{
 
       'shop_rate_express_light' => (!is_null(App::$app->keyStorage()->shop_rate_express_light) ? App::$app->keyStorage()->shop_rate_express_light : RATE_EXPRESS_LIGHT),
       'shop_rate_express_light_multiplier' => (!is_null(App::$app->keyStorage()->shop_rate_express_light_multiplier) ? App::$app->keyStorage()->shop_rate_express_light_multiplier : RATE_EXPRESS_LIGHT_MULTIPLIER),
-      'shop_rate_express_medium' => (!is_null(App::$app->keyStorage()->shop_rate_express_medium) ? App::$app->keyStorage()->shop_shop_rate_express_medium : RATE_EXPRESS_MEDIUM),
+      'shop_rate_express_medium' => (!is_null(App::$app->keyStorage()->shop_rate_express_medium) ? App::$app->keyStorage()->shop_rate_express_medium : RATE_EXPRESS_MEDIUM),
       'shop_rate_express_medium_multiplier' => (!is_null(App::$app->keyStorage()->shop_rate_express_medium_multiplier) ? App::$app->keyStorage()->shop_rate_express_medium_multiplier : RATE_EXPRESS_MEDIUM_MULTIPLIER),
       'shop_rate_express_heavy' => (!is_null(App::$app->keyStorage()->shop_rate_express_heavy) ? App::$app->keyStorage()->shop_rate_express_heavy : RATE_EXPRESS_HEAVY),
       'shop_rate_express_heavy_multiplier' => (!is_null(App::$app->keyStorage()->shop_rate_express_heavy_multiplier) ? App::$app->keyStorage()->shop_rate_express_heavy_multiplier : RATE_EXPRESS_HEAVY_MULTIPLIER),

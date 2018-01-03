@@ -14,9 +14,7 @@
         $('body').waitloader('remove');
       });
     }
-  );
-
-  $(document).on('click', 'form input[data-role=submit]',
+  ).on('click', 'form input[data-role=submit]',
     function (event) {
       event.preventDefault();
       $(this).parents('form').trigger('submit', [true]);

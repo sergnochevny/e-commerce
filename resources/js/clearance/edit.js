@@ -32,9 +32,7 @@
     );
   }
 
-  $(document).off('.search_action');
-
-  $(document).on('change', '[data-clearance_chk]',
+  $(document).off('.search_action').on('change', '[data-clearance_chk]',
     function (event) {
       event.preventDefault();
       event.stopPropagation();
@@ -53,6 +51,7 @@
         var callback = function (data) {
           $.when($('[data-role=form_content]').html(data)).done(function () {
             LoadFormContent();
+            $('body').waitloader('remove');
           });
         };
       } else {
@@ -63,9 +62,7 @@
       }
       $.postdata(this, url, data, callback, false);
     }
-  );
-
-  $(document).on('submit.search_action', '[data-products_block] form[data-search]',
+  ).on('submit.search_action', '[data-products_block] form[data-search]',
     function (event, reset) {
       event.stopPropagation();
       event.preventDefault();
@@ -84,25 +81,19 @@
       }
       _postdata(this, $(this).attr('action'), data);
     }
-  );
-
-  $(document).on('click.search_action', '[data-products_block] form[data-search] [data-search_reset]',
+  ).on('click.search_action', '[data-products_block] form[data-search] [data-search_reset]',
     function (event) {
       event.preventDefault();
       event.stopPropagation();
       $('[data-products_block] form[data-search]').trigger('submit', [true]);
     }
-  );
-
-  $(document).on('click.search_action', '[data-products_block] form[data-search] [data-search_submit]',
+  ).on('click.search_action', '[data-products_block] form[data-search] [data-search_submit]',
     function (event) {
       event.preventDefault();
       event.stopPropagation();
       $('[data-products_block] form[data-search]').trigger('submit');
     }
-  );
-
-  $(document).on('click.search_action', '[data-products_block] [data-to_page]',
+  ).on('click.search_action', '[data-products_block] [data-to_page]',
     function (event) {
       event.preventDefault();
       event.stopPropagation();
@@ -121,9 +112,7 @@
         _postdata(this, $(this).attr('href'), data);
       }
     }
-  );
-
-  $(document).on('click.search_action', '[data-products_block] [data-sort]',
+  ).on('click.search_action', '[data-products_block] [data-sort]',
     function (event) {
       event.preventDefault();
       event.stopPropagation();

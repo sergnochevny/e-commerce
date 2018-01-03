@@ -81,13 +81,15 @@ class ControllerAuthorization extends ControllerController{
     $prms = null;
 
     if($this->is_admin_logged()) {
-      $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-                                                                                                          ->UrlTo('product');
+      $url = !is_null(App::$app->get('url')) ?
+        base64_decode(urldecode(App::$app->get('url'))) :
+        App::$app->router()->UrlTo('product');
       $this->redirect($url);
     }
     if($this->is_user_logged()) {
-      $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-                                                                                                          ->UrlTo('shop');
+      $url = !is_null(App::$app->get('url')) ?
+        base64_decode(urldecode(App::$app->get('url'))) :
+        App::$app->router()->UrlTo('shop');
       $this->redirect($url);
     }
     if($this->is_set_admin_remember()) {
@@ -95,8 +97,9 @@ class ControllerAuthorization extends ControllerController{
       if(ModelAuth::is_admin_remember($remember)) {
         $admin = ModelAuth::get_admin_data();
         App::$app->setSession('_a', $admin['id']);
-        $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-                                                                                                            ->UrlTo('product');
+        $url = !is_null(App::$app->get('url')) ?
+          base64_decode(urldecode(App::$app->get('url'))) :
+          App::$app->router()->UrlTo('product');
         $this->redirect($url);
       }
     }
@@ -106,13 +109,15 @@ class ControllerAuthorization extends ControllerController{
         $user = ModelAuth::get_user_data();
         App::$app->setSession('_', $user['aid']);
         App::$app->setSession('user', $user);
-        $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-                                                                                                            ->UrlTo('shop');
+        $url = !is_null(App::$app->get('url')) ?
+          base64_decode(urldecode(App::$app->get('url'))) :
+          App::$app->router()->UrlTo('shop');
         $this->redirect($url);
       }
     }
 
-    if((App::$app->request_is_post()) && !is_null(App::$app->post('login')) && !is_null(App::$app->post('pass'))) {
+    if((App::$app->request_is_post()) && !is_null(App::$app->post('login')) &&
+      !is_null(App::$app->post('pass'))) {
       if(empty(App::$app->post('login'))) exit('Empty Email/Username field');
       if(empty(App::$app->post('pass'))) exit('Empty Password field');
 
@@ -161,13 +166,15 @@ class ControllerAuthorization extends ControllerController{
     $prms = null;
 
     if($this->is_admin_logged()) {
-      $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-                                                                                                          ->UrlTo('product');
+      $url = !is_null(App::$app->get('url')) ?
+        base64_decode(urldecode(App::$app->get('url'))) :
+        App::$app->router()->UrlTo('product');
       $this->redirect($url);
     }
     if($this->is_user_logged()) {
-      $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-                                                                                                          ->UrlTo('shop');
+      $url = !is_null(App::$app->get('url')) ?
+        base64_decode(urldecode(App::$app->get('url'))) :
+        App::$app->router()->UrlTo('shop');
       $this->redirect($url);
     }
     if($this->is_set_admin_remember()) {
@@ -175,8 +182,9 @@ class ControllerAuthorization extends ControllerController{
       if(ModelAuth::is_admin_remember($remember)) {
         $admin = ModelAuth::get_admin_data();
         App::$app->setSession('_a', $admin['id']);
-        $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-                                                                                                            ->UrlTo('product');
+        $url = !is_null(App::$app->get('url')) ?
+          base64_decode(urldecode(App::$app->get('url'))) :
+          App::$app->router()->UrlTo('product');
         $this->redirect($url);
       }
     }
@@ -186,8 +194,9 @@ class ControllerAuthorization extends ControllerController{
         $user = ModelAuth::get_user_data();
         App::$app->setSession('_', $user['aid']);
         App::$app->setSession('user', $user);
-        $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-                                                                                                            ->UrlTo('shop');
+        $url = !is_null(App::$app->get('url')) ?
+          base64_decode(urldecode(App::$app->get('url'))) :
+          App::$app->router()->UrlTo('shop');
         $this->redirect($url);
       }
     }
@@ -237,8 +246,9 @@ class ControllerAuthorization extends ControllerController{
         $date = date('Y-m-d H:i:s', time());
         $remind = ModelAuth::generate_hash($date);
         if(ModelUser::set_remind_for_change_pass($remind, $date, $user_id)) {
-          $remind_url = App::$app->router()
-                                 ->UrlTo('authorization/lost_password', ['remind' => urlencode(base64_encode($remind))]);
+          $remind_url = App::$app->router()->UrlTo('authorization/lost_password',
+            ['remind' => urlencode(base64_encode($remind))]
+          );
           if($this->send_remind($email, $remind_url)) {
 
             $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!';

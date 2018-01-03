@@ -265,6 +265,10 @@ class ModelBlog extends ModelBase{
       }
     }
 
+    if ($data === false){
+      throw new Exception('Data set is empty!');
+    }
+
     return $data;
   }
 

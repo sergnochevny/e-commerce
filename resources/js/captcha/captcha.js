@@ -1,5 +1,5 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
   $(document).on('click', '#captcha_refresh',
     function (event) {

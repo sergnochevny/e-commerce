@@ -11,9 +11,7 @@
         }
       );
     }
-  );
-
-  $(document).on('click', '#blost', function (event) {
+  ).on('click', '#blost', function (event) {
     event.preventDefault();
     $('#lost_password_form').trigger('submit');
   });

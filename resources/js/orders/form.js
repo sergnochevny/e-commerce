@@ -1,5 +1,5 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
   $('#dateFrom').datepicker({
     dateFormat: 'mm/dd/yy',

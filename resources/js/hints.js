@@ -2,6 +2,7 @@
   'use strict';
 
   $(document).on('click', ".overlay", function (event) {
+    event.preventDefault();
     $(this).removeClass('overlay_display');
   }).on('click', 'i[data-promotion]', function (event) {
     event.preventDefault();

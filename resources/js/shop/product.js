@@ -1,5 +1,5 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
   var base_url = $('#base_url').val();
   var back_url = $('#back_url').attr('href');
@@ -30,9 +30,7 @@
   $(document).on('click.confirm_action', ".popup a.close", function (event) {
     $("#confirm_dialog").removeClass('overlay_display');
     $('body').css('overflow', 'auto');
-  });
-
-  $('#add_cart').on('click', function (event) {
+  }).on('click', '#add_cart', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
     $('body').waitloader('show');
@@ -62,9 +60,7 @@
         $('#content').html(data);
       }
     });
-  });
-
-  $('#add_samples_cart').on('click', function (event) {
+  }).on('click', '#add_samples_cart', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
     $('body').waitloader('show');
@@ -93,10 +89,7 @@
         $('#content').html(data);
       }
     });
-  });
-
-  $('#add_matches').on('click', function (ev) {
-    debugger;
+  }).on('click', '#add_matches', function (ev) {
     ev.preventDefault();
     $('body').waitloader('show');
     var url = $(this).attr('href');
@@ -108,7 +101,7 @@
           $(answer.data).appendTo('#content')
         ).done(function () {
 
-          if (answer.added == 1) {
+          if (answer.added === 1) {
             $('#add_matches').stop().hide();
             $('#view_matches').stop().show().addClass('btn-row');
           }
@@ -128,17 +121,13 @@
         $('#content').html(data);
       }
     });
-  });
-
-  $(document).on('click', "#continue", function (event) {
+  }).on('click', "#continue", function (event) {
     event.preventDefault();
     if (back_url) {
       $('body').waitloader('show');
       window.location = back_url;
     }
-  });
-
-  $('#add_favorites').on('click', function (ev) {
+  }).on('click', '#add_favorites', function (ev) {
     ev.preventDefault();
     $('body').waitloader('show');
     var url = $(this).attr('href');

@@ -1,5 +1,5 @@
 function sendComment(address) {
-  'use srtict';
+  'use strict';
   var title = jQuery("#comment_title").attr("value"),
     data = jQuery("#comment_data").attr("value");
 

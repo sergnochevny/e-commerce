@@ -1,5 +1,5 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
   var a = 1,
     base_url = $('#base_url').val();
@@ -22,9 +22,7 @@
     revert: function (dropped) {
       return (dropped && $(dropped).hasClass('AddToCartDragImg'));
     }
-  });
-
-  $(document).on('dblclick', "img.product_img_holder", function (event) {
+  }).on('dblclick', "img.product_img_holder", function (event) {
     $('body').waitloader('show');
     window.location = $(this).attr('data-detail_url');
   });

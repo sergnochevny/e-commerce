@@ -1,7 +1,19 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
-  $(document).ready(function () {
+  $(document).on('click', '[data-product]',
+    function (event) {
+      event.preventDefault();
+      if ($(this).find(' > a').length) {
+        $('body').waitloader('show');
+        location.href = $(this).find(' > a').attr('href');
+      }
+    }
+  ).on('click', '[data-product] > a',
+    function (event) {
+      event.stopPropagation();
+    }
+  ).ready(function () {
     var wait_loader = '<div class="col-xs-12 text-center">' +
       '<i class="fa fa-spinner fa-pulse fa-4x"></i><br/>' +
       '</div>';
@@ -28,21 +40,5 @@
       });
     });
   });
-
-  $(document).on('click', '[data-product]',
-    function (event) {
-      event.preventDefault();
-      if ($(this).find(' > a').length) {
-        $('body').waitloader('show');
-        location.href = $(this).find(' > a').attr('href');
-      }
-    }
-  );
-
-  $(document).on('click', '[data-product] > a',
-    function (event) {
-      event.stopPropagation();
-    }
-  );
 
 })(window.jQuery || window.$);

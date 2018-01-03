@@ -153,3 +153,4 @@ use app\core\App;
   <p>Checking this will not include it in the sale countdown on the product list, and product details page.</p>
 </div>
 <script src="<?= App::$app->router()->UrlTo('js/hints.min.js'); ?>"></script>
+<script src="<?= App::$app->router()->UrlTo('js/discount/edit.min.js'); ?>"></script>

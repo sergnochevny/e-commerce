@@ -129,6 +129,10 @@ class ModelFavorites extends ModelBase{
       throw new Exception(static::error());
     }
 
+    if ($data === false){
+      throw new Exception('Data set is empty!');
+    }
+
     return $data;
   }
 

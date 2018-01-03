@@ -1,45 +1,10 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
-  $(document).on('click.confirm_action', ".popup a.close", function (event) {
-    event.preventDefault();
-    $("#confirm_action").off('click.confirm_action');
-    $("#confirm_dialog").removeClass('overlay_display');
-    $('body').css('overflow', 'auto');
-  });
-
-  $(document).on('click.confirm_action', "#confirm_no", function (event) {
-    event.preventDefault();
-    $(".popup a.close").trigger('click');
-  });
-
-  $(document).on('click', 'a.del_user',
-    function (event) {
-      event.preventDefault();
-      var href = $(this).attr('href');
-      $("#dialog-text").html("You confirm the removal?");
-
-      $("#confirm_action").on('click.confirm_action',
-        function (event) {
-          event.preventDefault();
-          $('#content').load(href);
-          $("#confirm_dialog").removeClass('overlay_display');
-          $('body').css('overflow', 'auto');
-          $("#confirm_action").off('click.confirm_action');
-        }
-      );
-
-      $("#confirm_dialog").addClass('overlay_display');
-      $('body').css('overflow', 'hidden');
-    }
-  );
-
-  $('#publish-comment').on('click', function (e) {
+  $(document).on('click', '#publish-comment', function (e) {
     e.preventDefault();
 
-  });
-
-  $(document).on('click', 'a.public_comment', function (event) {
+  }).on('click', 'a.public_comment', function (event) {
     event.preventDefault();
     var href = $(this).attr('href');
     var mode = "";
@@ -59,7 +24,35 @@
     $("#confirm_dialog").addClass('overlay_display');
     $('body').css('overflow', 'hidden');
   });
-  $(document).on('click', 'a.view-comment',
+
+  $(document).on('click.confirm_action', ".popup a.close", function (event) {
+    event.preventDefault();
+    $("#confirm_action").off('click.confirm_action');
+    $("#confirm_dialog").removeClass('overlay_display');
+    $('body').css('overflow', 'auto');
+  }).on('click.confirm_action', "#confirm_no", function (event) {
+    event.preventDefault();
+    $(".popup a.close").trigger('click');
+  }).on('click', 'a.del_user',
+    function (event) {
+      event.preventDefault();
+      var href = $(this).attr('href');
+      $("#dialog-text").html("You confirm the removal?");
+
+      $("#confirm_action").on('click.confirm_action',
+        function (event) {
+          event.preventDefault();
+          $('#content').load(href);
+          $("#confirm_dialog").removeClass('overlay_display');
+          $('body').css('overflow', 'auto');
+          $("#confirm_action").off('click.confirm_action');
+        }
+      );
+
+      $("#confirm_dialog").addClass('overlay_display');
+      $('body').css('overflow', 'hidden');
+    }
+  ).on('click', 'a.view-comment',
     function (event) {
       event.preventDefault();
       var href = $(this).attr('href');
@@ -77,8 +70,7 @@
       $("#comment-view-dialog").addClass('overlay_display');
       $('body').css('overflow', 'hidden');
     }
-  );
-  $(document).on('click', 'a.edit-comment',
+  ).on('click', 'a.edit-comment',
     function (event) {
       event.preventDefault();
       var href = $(this).attr('href'),

@@ -1,5 +1,5 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
   $(document).on('change', "[data-change-province]",
     function (event) {

@@ -1,5 +1,5 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
   var status = $('#status');
 
@@ -32,9 +32,7 @@
       event.preventDefault();
       $('#uploadfile').trigger('click');
     }
-  );
-
-  $(document).on('change', '#uploadfile',
+  ).on('change', '#uploadfile',
     function (event) {
       event.preventDefault();
 

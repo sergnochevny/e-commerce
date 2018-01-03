@@ -1,7 +1,7 @@
 (function ($) {
-  'use srtict';
+  'use strict';
 
-  $('#modal').on('hidden.bs.modal', function () {
+  $(document).on('hidden.bs.modal', '#modal', function () {
     $('#modal').find('.modal-footer').stop().show();
   });
 })(window.jQuery || window.$);

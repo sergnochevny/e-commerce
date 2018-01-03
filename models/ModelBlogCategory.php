@@ -31,6 +31,9 @@ class ModelBlogCategory extends ModelBase{
       if($result) $response = static::fetch_assoc($result);
     }
 
+    if ($response === false){
+      throw new Exception('Data set is empty!');
+    }
     return $response;
   }
 

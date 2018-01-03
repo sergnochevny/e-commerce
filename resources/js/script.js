@@ -8,8 +8,8 @@ window.addEventListener('pagehide', function (event) {
 var change_text = false;
 
 (function ($) {
-  'use srtict';
-  
+  'use strict';
+
   var _waitloader_counter = 0;
 
   $.extend({
@@ -269,6 +269,10 @@ var change_text = false;
     }
   });
 
+  $(window).on('resize', function () {
+    $.change_button_text();
+  });
+
   $(document).on('submit', '#f_search',
     function (event) {
       event.preventDefault();
@@ -284,25 +288,13 @@ var change_text = false;
         }
       );
     }
-  );
-
-  $(document).on('click', '#b_search', function (event) {
+  ).on('click', '#b_search', function (event) {
     $('#f_search').trigger('submit');
-  });
-
-  $(window).on('resize', function () {
-    $.change_button_text();
-  });
-
-  $(document).on('click', '#menu-button', function () {
+  }).on('click', '#menu-button', function () {
     $(document.body).toggleClass('menu-open');
-  });
-
-  $(document).on('click', '.search-call', function () {
+  }).on('click', '.search-call', function () {
     $(this).children('form').toggleClass('hidden');
-  });
-
-  $(document).on('click', '[data-search] .panel-heading', function () {
+  }).on('click', '[data-search] .panel-heading', function (event) {
     var body = $(this).next('.panel-body');
     var footer = body.next('.panel-footer');
 
@@ -317,53 +309,39 @@ var change_text = false;
       $(this).addClass('collapsed');
       $(this).find('.sr-ds').children('.fa').addClass('fa-rotate-90');
     }
-  });
-
-  $(document).on('click', '[data-waitloader]', function (event) {
+  }).on('click', '[data-waitloader]', function (event) {
     $('body').waitloader('show');
-  });
-
-  $(document).on('focus', 'input[type=text], input[type=textarea], input[type=number], input[type=email], input[type=password], select',
+  }).on('focus', 'input[type=text], input[type=textarea], input[type=number], input[type=email], input[type=password], select',
     function (event) {
       $(this).parent().addClass('focus')
     }
-  );
-  $(document).on('focus', 'textarea',
-    function (event) {
-      $(this).addClass('focus')
-    }
-  );
-
-  $(document).on('focusout', '.focus input , textarea.focus',
-    function (event) {
-      $(this).parent().removeClass('focus')
-    }
-  );
-  $(document).on('focusout', 'textarea.focus',
+  ).on('focusout', 'textarea.focus',
     function (event) {
       $(this).removeClass('focus')
     }
-  );
-
-  $(document).on('click', '[data-destroy]',
+  ).on('click', '[data-destroy]',
     function (event) {
       var container = $(this).data('destroy');
       if (container) {
         $('.' + container).remove();
       }
     }
-  );
-
-  $(document).on('click', '[data-redirect]',
+  ).on('click', '[data-redirect]',
     function (event) {
       var redirect = $(this).data('redirect');
       if (redirect) {
         window.location.href = redirect;
       }
     }
-  );
-
-  $(document).ready(function () {
+  ).on('focus', 'textarea',
+    function (event) {
+      $(this).addClass('focus')
+    }
+  ).on('focusout', '.focus input , textarea.focus',
+    function (event) {
+      $(this).parent().removeClass('focus')
+    }
+  ).ready(function () {
 
     var body = $('body');
     /* Keyboard image navigation */

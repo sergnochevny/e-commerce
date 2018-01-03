@@ -44,4 +44,4 @@ use app\core\App;
   </nav>
 </div>
 
-<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<script src='<?= App::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>

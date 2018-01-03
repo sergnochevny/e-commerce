@@ -43,12 +43,14 @@ class ControllerClearance extends ControllerFormSimple{
   protected function search_fields($view = false){
     if($view) {
       $fields = [
-        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece', 'a.best', 'a.specials', 'b.cid', 'c.id', 'd.id',
+        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece', 'a.best',
+        'a.specials', 'b.cid', 'c.id', 'd.id',
         'e.id', 'a.priceyard'
       ];
     } else {
       $fields = [
-        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece', 'a.best', 'a.specials', 'b.cid', 'c.id', 'd.id', 'e.id'
+        'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece', 'a.best',
+        'a.specials', 'b.cid', 'c.id', 'd.id', 'e.id'
       ];
     }
 

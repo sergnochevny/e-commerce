@@ -12,12 +12,13 @@
   $(document).on('submit.search_action', 'form[data-search]', function (event, reset) {
     event.preventDefault();
     event.stopPropagation();
-    var data = {};
+    var data = {},
+      f_search = $('#f_search');
     if (reset) {
       data = new FormData();
       data.append('search[reset]', true);
-      $('#f_search').addClass('hidden');
-      $('#f_search')[0] && $('#f_search')[0].reset();
+      f_search.addClass('hidden');
+      f_search[0] && f_search[0].reset();
     } else {
       if ($('[name="search[a.pname]"]').length) {
         $('#search').attr('value', $('[name="search[a.pname]"]').attr('value'));
@@ -34,21 +35,15 @@
     var limit = $('[data-limit]');
     if (limit.length) data.append('per_page', limit.val());
     postdata(this, $(this).attr('action'), data);
-  });
-
-  $(document).on('click.search_action', '[data-search_reset]', function (event) {
+  }).on('click.search_action', '[data-search_reset]', function (event) {
     event.preventDefault();
     event.stopPropagation();
     $('form[data-search]').trigger('submit', [true]);
-  });
-
-  $(document).on('click.search_action', '[data-search_submit]', function (event) {
+  }).on('click.search_action', '[data-search_submit]', function (event) {
     event.preventDefault();
     event.stopPropagation();
     $('form[data-search]').trigger('submit');
-  });
-
-  $(document).on('click.search_action', '[data-to_page]', function (event) {
+  }).on('click.search_action', '[data-to_page]', function (event) {
     event.preventDefault();
     event.stopPropagation();
     var search = $('form[data-search]');
@@ -70,9 +65,7 @@
 
       postdata(this, $(this).attr('href'), data);
     }
-  });
-
-  $(document).on('click.search_action', '[data-sort]', function (event) {
+  }).on('click.search_action', '[data-sort]', function (event) {
     event.preventDefault();
     event.stopPropagation();
     var search = $('form[data-search]');
@@ -94,9 +87,7 @@
 
       postdata(this, $(this).attr('href'), data);
     }
-  });
-
-  $(document).on('change.search_action', '[data-limit]', function (event) {
+  }).on('change.search_action', '[data-limit]', function (event) {
     event.preventDefault();
     event.stopPropagation();
     var search = $('form[data-search]');
@@ -118,9 +109,7 @@
 
       postdata(this, window.location.href, data);
     }
-  });
-
-  $(document).on('selectmenuchange.search_action', '[data-limit]',
+  }).on('selectmenuchange.search_action', '[data-limit]',
     function (event) {
       $(this).trigger('change');
     }

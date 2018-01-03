@@ -1,8 +1,6 @@
 (function ($) {
 
-  $(document).off('.search_action');
-
-  $(document).on('click', 'div.tabs ul.tabNavigation a',
+  $(document).off('.search_action').on('click', 'div.tabs ul.tabNavigation a',
     function (event) {
       event.preventDefault();
       var tabContainers = $('div.tabs div[data-role=tab]');
@@ -13,9 +11,7 @@
       $('input[name=current_tab]').val($(this).attr('data-tab_index'));
       return false;
     }
-  );
-
-  $(document).on('click', "[data-append]", function (event) {
+  ).on('click', "[data-append]", function (event) {
     event.preventDefault();
     var element = $(this).parents('li');
     element.find('input[type=checkbox]').attr('checked', 'checked');
@@ -25,9 +21,7 @@
       element.fadeIn(500);
     });
     $("ul[data-sortable]").trigger('sortupdate');
-  });
-
-  $(document).on('click', "[data-remove]", function (event) {
+  }).on('click', "[data-remove]", function (event) {
     event.preventDefault();
     var element = $(this).parents('li');
     element.find('input[type=checkbox]').removeAttr('checked');
@@ -37,9 +31,7 @@
       element.fadeIn(500);
     });
     $("ul[data-sortable]").trigger('sortupdate');
-  });
-
-  $(document).on("click", '[data-move_up]', function () {
+  }).on("click", '[data-move_up]', function () {
     var element = $(this).parents('li');
     var element_prev = element.prev();
     element.fadeOut(500, function () {
@@ -47,9 +39,7 @@
       element.fadeIn(500);
     });
     $("ul[data-sortable]").trigger('sortupdate');
-  });
-
-  $(document).on("click", '[data-move_down]', function () {
+  }).on("click", '[data-move_down]', function () {
     var element = $(this).parents('li');
     var element_next = element.next();
     element.fadeOut(500, function () {

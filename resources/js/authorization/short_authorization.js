@@ -1,38 +1,34 @@
 (function ($) {
   'use strict';
 
-  $("input").inputmask();
-
-  $('#short_authorization').on('submit',
+  $(document).on('submit', '#short_authorization',
     function (event) {
       event.preventDefault();
       var data = new FormData(this);
       var url = $(this).attr('action');
-      var results = $('.results');
+      var results = $(this).find('.results');
       $.postdata(this, url, data,
         function (data) {
+          $('body').waitloader('show');
           $.when(results.html(data)).done(
             function () {
-              if (results.children('script').length == 0) {
+              if (results.children('script').length === 0) {
+                $('body').waitloader('remove');
                 setTimeout(function () {
                   results.html('');
-                }, 3000);
+                }, 5000);
               }
             }
           );
         }
       );
     }
-  );
-
-  $('#short_login').on('click',
+  ).on('click', '#short_login',
     function (event) {
       event.preventDefault();
       var action = $(this).attr('href');
       $('#short_authorization').attr('action', action).trigger('submit');
     }
   );
-
-  $('#short_authorization').init_input();
 
 })(window.jQuery || window.$);

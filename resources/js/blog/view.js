@@ -1,5 +1,5 @@
 (function ($) {
-  'use srtict';
+  'use strict';
   $(document).ready(
     function (event) {
       setTimeout(function () {

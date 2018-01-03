@@ -42,20 +42,14 @@
         $('.main-content').html(data);
       }
     });
-  });
-
-  $(document).on('click.confirm_action', ".popup a.close", function (event) {
+  }).on('click.confirm_action', ".popup a.close", function (event) {
     event.preventDefault();
     $("#confirm_action").off('click.confirm_action');
     $("#confirm_dialog").removeClass('overlay_display');
-  });
-
-  $(document).on('click.confirm_action', "#confirm_no", function (event) {
+  }).on('click.confirm_action', "#confirm_no", function (event) {
     event.preventDefault();
     $(".popup a.close").trigger('click');
-  });
-
-  $(document).on('click', '[data-block=del_product_cart]',
+  }).on('click', '[data-block=del_product_cart]',
     function (event) {
       event.preventDefault();
       var url = $(this).attr('href');
@@ -106,9 +100,7 @@
       $("#confirm_dialog").addClass('overlay_display');
 
     }
-  );
-
-  $(document).on('click', '[data-block=del_sample_cart]',
+  ).on('click', '[data-block=del_sample_cart]',
     function (event) {
       event.preventDefault();
       var url = $(this).attr('href');
@@ -142,9 +134,7 @@
       $("#confirm_dialog").addClass('overlay_display');
 
     }
-  );
-
-  $(document).on('remove_inputs', function (event) {
+  ).on('remove_inputs', function (event) {
     event.preventDefault();
     $('[data-block=div_subtotal_table]').remove();
     $('[data-block=products-cart-list]').remove();
@@ -152,9 +142,7 @@
     $('[data-block=coupon_section]').remove();
     $('.page-title').text('Your cart is empty, yet...');
     $('.cont-shop').text('Go shopping')
-  });
-
-  $(document).on('init_spinner', function (event) {
+  }).on('init_spinner', function (event) {
     event.preventDefault();
     var whole;
     $('input[data-role=quantity]').each(
@@ -182,20 +170,12 @@
         }
       }
     );
-  });
-
-  $(document).on('destroy_spinner', function (event) {
+  }).on('destroy_spinner', function (event) {
     event.preventDefault();
     $('input[data-role=quantity]').each(function (idx) {
       $(this).spinner("destroy");
     });
-  });
-
-  $(document).ready(function (event) {
-    $(this).trigger('init_spinner');
-  });
-
-  $(document).on('calc_shipping_total',
+  }).on('calc_shipping_total',
     function (event) {
       event.preventDefault();
       var url = base_url + 'cart/shipping_calc';
@@ -223,9 +203,7 @@
         }
       );
     }
-  );
-
-  $(document).on('calc_total', function (event) {
+  ).on('calc_total', function (event) {
     event.preventDefault();
     var url = base_url + 'cart/coupon_total_calc';
     var data = new FormData();
@@ -233,25 +211,19 @@
     $.postdata(this, url, data, function (data) {
       $('[data-block=coupon_total]').html(data);
     });
-  });
-
-  $(document).on('change', '[data-block=select_ship]', function (event) {
+  }).on('change', '[data-block=select_ship]', function (event) {
     event.preventDefault();
     $(document).trigger('calc_shipping_total');
-  });
-  $(document).on('change', '[data-block=roll]', function (event) {
+  }).on('change', '[data-block=roll]', function (event) {
     event.preventDefault();
     $(document).trigger('calc_shipping_total');
-  });
-  $(document).on('change', '[data-block=express_samples]', function (event) {
+  }).on('change', '[data-block=express_samples]', function (event) {
     event.preventDefault();
     $(document).trigger('calc_shipping_total');
-  });
-  $(document).on('click', '[data-block=apply_coupon]', function (event) {
+  }).on('click', '[data-block=apply_coupon]', function (event) {
     event.preventDefault();
     $(document).trigger('calc_shipping_total');
-  });
-  $(document).on('click', '[data-block=proceed_button]', function (event) {
+  }).on('click', '[data-block=proceed_button]', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
     $.get(url, {}, function (data) {
@@ -259,9 +231,7 @@
         $('html, body').stop().animate({scrollTop: 0}, 1000);
       });
     });
-  });
-
-  $(document).on('click', '[data-block=proceed_agreem_button]', function (event) {
+  }).on('click', '[data-block=proceed_agreem_button]', function (event) {
     event.preventDefault();
     var url = $(this).attr('href');
     $.get(url, {}, function (data) {
@@ -269,18 +239,16 @@
         $('html, body').stop().animate({scrollTop: 0}, 1000);
       });
     });
-  });
-
-  $(document).on('change', '[data-block=agreeterm]', function (event) {
+  }).on('change', '[data-block=agreeterm]', function (event) {
     event.preventDefault();
     $('[data-block=container_proceed_pay]').toggle(this.checked);
-  });
-
-  $(document).on('submit', '[data-block=paypal_form]', function (event) {
+  }).on('submit', '[data-block=paypal_form]', function (event) {
     event.preventDefault();
     var url = base_url + 'cart/pay_mail';
     $('body').waitloader('show');
     $.get(url);
+  }).ready(function (event) {
+    $(this).trigger('init_spinner');
   });
 
 })(window.jQuery || window.$);

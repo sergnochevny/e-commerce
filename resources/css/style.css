@@ -3002,3 +3002,7 @@ button.close-container {
     opacity: .8;
     filter: alpha(opacity=80);
 }
+.results{
+    display: block;
+    margin-top: 15px;
+}

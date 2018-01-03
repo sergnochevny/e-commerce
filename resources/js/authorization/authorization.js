@@ -1,14 +1,12 @@
 (function ($) {
   'use strict';
 
-  $("input").inputmask();
-
-  $('#authorization').on('submit',
+  $(document).on('submit', '#authorization',
     function (event) {
       event.preventDefault();
       var data = new FormData(this);
       var url = $(this).attr('action');
-      var results = $('.results');
+      var results = $(this).find('.results');
       $.postdata(this, url, data,
         function (data) {
           $.when(results.html(data)).done(
@@ -16,23 +14,19 @@
               if (results.children('script').length === 0) {
                 setTimeout(function () {
                   results.html('');
-                }, 3000);
+                }, 5000);
               }
             }
           );
         }
       );
     }
-  );
-
-  $('#login').on('click',
+  ).on('click', '#login',
     function (event) {
       event.preventDefault();
       var action = $(this).attr('href');
       $('#authorization').attr('action', action).trigger('submit');
     }
   );
-
-  $('#authorization').init_input();
 
 })(window.jQuery || window.$);

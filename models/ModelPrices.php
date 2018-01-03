@@ -85,6 +85,9 @@ class ModelPrices extends ModelBase{
       $response['id'] = $id;
     }
 
+    if ($response === false){
+      throw new Exception('Data set is empty!');
+    }
     return $response;
   }
 
