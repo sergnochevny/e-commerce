@@ -89,13 +89,13 @@ gulp.task('images', ['other-images', 'css-images', 'css-jqm-images', 'owl-images
 gulp.task('scripts', function () {
   return gulp.src('resources/js/**/*.js')
     .pipe(rename({suffix: '.min'}))
-    // .pipe(minify({
-    //     ext: {
-    //       min: '.min.js'
-    //     },
-    //     noSource: true
-    //   })
-    // )
+    .pipe(minify({
+        ext: {
+          min: '.min.js'
+        },
+        noSource: true
+      })
+    )
     .pipe(gulp.dest('web/js'));
 
 });
