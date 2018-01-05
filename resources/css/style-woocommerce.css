@@ -1,16 +1,3 @@
-/*--------------------------------------------------------------
->>> TABLE OF CONTENTS:
-----------------------------------------------------------------
-1.0 GLOBAL STYLE
-2.0 SHOP PAGE
-3.0 SINGLE PRODUCT
-4.0 CART PAGE
-5.0 CHECKOUT PAGE
-6.0 MY ACCOUNT PAGE
-7.0 WIDGETS
---------------------------------------------------------------------*/
-/* 1.0 GLOBAL STYLE
--------------------------------------------------------------- */
 .h1, .h2, .h3, .h4 {
     color: #670;
     text-transform: capitalize;
@@ -304,9 +291,10 @@ span#b_in_product {
 }
 
 @media (max-width: 768px) {
-    .ui-input-text{
+    .ui-input-text {
         height: 62px;
     }
+
     .ui-input-text input {
         font-size: 16px;
         height: 60px;
@@ -1947,17 +1935,17 @@ ul.product_list_widget li dl dd p {
 }
 
 .search-panel .one-field .form-row,
-.search-panel-wide .one-field .form-row{
+.search-panel-wide .one-field .form-row {
     margin: 0;
 }
 
 .search-panel .one-field .form-row .ui-input-text,
-.search-panel-wide .one-field .form-row .ui-input-text{
+.search-panel-wide .one-field .form-row .ui-input-text {
     margin: 0;
 }
 
 .search-panel .one-field .form-row .ui-input-text input,
-.search-panel-wide .one-field .form-row .ui-input-text input{
+.search-panel-wide .one-field .form-row .ui-input-text input {
     margin: 0;
 }
 
@@ -2657,15 +2645,15 @@ i[data-promotion] {
     z-index: 99999999;
 }
 
-.product_view .block-info{
+.product_view .block-info {
     margin-top: 30px;
 }
 
-.product_view .related .products .owl-item{
+.product_view .related .products .owl-item {
     margin-top: 0;
 }
 
-.related .products.owl-carousel .owl-stage-outer{
+.related .products.owl-carousel .owl-stage-outer {
     margin-left: -7px;
     padding-left: 7px;
     margin-right: -7px;
