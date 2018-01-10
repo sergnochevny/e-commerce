@@ -88,7 +88,6 @@ gulp.task('shop_images', ['shop_images_minify', 'shop_images_resize_b', 'shop_im
 gulp.task('images', ['other-images', 'css-images', 'css-jqm-images', 'owl-images']);
 gulp.task('scripts', function () {
   return gulp.src('resources/js/**/*.js')
-    .pipe(rename({suffix: '.min'}))
     .pipe(minify({
         ext: {
           min: '.min.js'
