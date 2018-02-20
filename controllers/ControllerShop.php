@@ -70,56 +70,6 @@ class ControllerShop extends ControllerController{
       $res['a.pname'] = App::$app->post('s');
       $filter['a.pname'] = $search;
     }
-    if(!empty(App::$app->get('mnf'))) {
-      $mnf_id = App::$app->get('mnf');
-      if($mnf = ModelManufacturers::get_by_id($mnf_id)) $mnf_name = $mnf['manufacturer'];
-      $this->template->vars('mnf_name', isset($mnf_name) ? $mnf_name : null);
-      unset($filter['e.id']);
-      unset($res['e.id']);
-      $filter['hidden']['e.id'] = $mnf_id;
-      $res['hidden']['e.id'] = $mnf_id;
-      App::$app->setSession('sidebar_idx', 1);
-    }
-    if(!empty(App::$app->get('cat'))) {
-      $cid = App::$app->get('cat');
-      if($category = ModelCategories::get_by_id($cid)) $category_name = $category['cname'];
-      $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
-      unset($filter['b.cid']);
-      unset($res['b.cid']);
-      $filter['hidden']['b.cid'] = $cid;
-      $res['hidden']['b.cid'] = $cid;
-      App::$app->setSession('sidebar_idx', 2);
-    }
-    if(!empty(App::$app->get('ptrn'))) {
-      $ptrn_id = App::$app->get('ptrn');
-      if($ptrn = ModelPatterns::get_by_id($ptrn_id)) $ptrn_name = $ptrn['pattern'];
-      $this->template->vars('ptrn_name', isset($ptrn_name) ? $ptrn_name : null);
-      unset($filter['d.id']);
-      unset($res['d.id']);
-      $filter['hidden']['d.id'] = $ptrn_id;
-      $res['hidden']['d.id'] = $ptrn_id;
-      App::$app->setSession('sidebar_idx', 3);
-    }
-    if(!empty(App::$app->get('clr'))) {
-      $clr_id = App::$app->get('clr');
-      if($clr = ModelColors::get_by_id($clr_id)) $color_name = $clr['color'];
-      $this->template->vars('color_name', isset($color_name) ? $color_name : null);
-      unset($filter['c.id']);
-      unset($res['c.id']);
-      $filter['hidden']['c.id'] = $clr_id;
-      $res['hidden']['c.id'] = $clr_id;
-      App::$app->setSession('sidebar_idx', 4);
-    }
-    if(!is_null(App::$app->get('prc'))) {
-      $prc_id = App::$app->get('prc');
-      if($prc = ModelPrices::get_by_id($prc_id)) {
-        unset($filter['hidden']['a.priceyard']);
-        $filter['hidden']['a.priceyard']['from'] = (isset($prc['min_price']) ? $prc['min_price'] : null);
-        $filter['hidden']['a.priceyard']['to'] = (isset($prc['max_price']) ? $prc['max_price'] : null);
-        $this->template->vars('prc_from', isset($filter['hidden']['a.priceyard']['from']) ? $filter['hidden']['a.priceyard']['from'] : null);
-        $this->template->vars('prc_to', isset($filter['hidden']['a.priceyard']['to']) ? $filter['hidden']['a.priceyard']['to'] : null);
-      };
-    }
     if(isset($type)) {
       $filter['type'] = $type;
       $res['type'] = $type;

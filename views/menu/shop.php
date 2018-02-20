@@ -3,12 +3,7 @@
 use app\core\App;
 
 ?>
-<div class="col-xs-12 title hidden-sm hidden-xs">
-  <div class="row no-offset-right outer-offset-bottom">
-    <b>Organize Fabrics by</b>
-  </div>
-</div>
-<div class="shop__sidebar">
+<div class="shop__sidebar bar_menu">
   <nav>
     <ul class="shop__sidebar-list">
       <li class="shop__sidebar-item">
@@ -16,6 +11,25 @@ use app\core\App;
            href="<?= App::$app->router()->UrlTo('shop') ?>"
            class="shop__sidebar-link<?= (!isset($idx) || ($idx == 0)) ? ' active' : '' ?>">All Fabrics</a>
       </li>
+      <li class="shop__sidebar-item">
+        <a data-waitloader data-index="5" title="Specials Fabrics"
+           href="<?= App::$app->router()->UrlTo('shop/specials', null, 'specials') ?>"
+           class="shop__sidebar-link<?= (isset($idx) && ($idx == 6)) ? ' active' : '' ?>">Specials</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<!-- filter begin -->
+<div class="col-xs-12 title">
+  <div class="row no-offset-right outer-offset-top half-outer-offset-bottom">
+    <b>Organize Fabrics by:</b>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="shop__sidebar bar_filter">
+  <nav>
+    <ul class="shop__sidebar-list">
       <li class="shop__sidebar-item">
         <a data-waitloader data-index="0" title="Filter by Manufacturer"
            href="<?= App::$app->router()->UrlTo('manufacturers/view', null, 'manufacturer') ?>"
@@ -41,12 +55,8 @@ use app\core\App;
            href="<?= App::$app->router()->UrlTo('prices/view', null, 'price') ?>"
            class="shop__sidebar-link<?= (isset($idx) && ($idx == 5)) ? ' active' : '' ?>">Price</a>
       </li>
-      <li class="shop__sidebar-item">
-        <a data-waitloader data-index="5" title="Specials Fabrics"
-           href="<?= App::$app->router()->UrlTo('shop/specials', null, 'specials') ?>"
-           class="shop__sidebar-link<?= (isset($idx) && ($idx == 6)) ? ' active' : '' ?>">Specials</a>
-      </li>
     </ul>
   </nav>
 </div>
+<!-- filter end -->
 
