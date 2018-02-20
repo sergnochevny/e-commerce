@@ -24,9 +24,7 @@ use app\core\App;
             <span class="extra_discount">Extra Discount!</span>
           <?php }
           $url_prms['pid'] = $row['pid'];
-          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
-            'cat', 'mnf', 'ptrn', 'clr', 'prc'
-          ]);
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname']);
           ?>
 
           <figcaption data-product>

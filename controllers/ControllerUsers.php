@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerFormSimple;
+use classes\controllers\ControllerFormSimple;
 use models\ModelAddress;
 use models\ModelAuth;
 use models\ModelUser;

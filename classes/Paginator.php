@@ -1,9 +1,14 @@
 <?php
 
-namespace controllers\base;
+namespace classes;
 
 use app\core\App;
+use classes\controllers\ControllerController;
 
+/**
+ * Class Paginator
+ * @package classes
+ */
 class Paginator extends ControllerController{
 
   /**
@@ -20,13 +25,6 @@ class Paginator extends ControllerController{
     $this->template->vars('per_page_items', App::$app->config('per_page_items'));
 
     if($total_rows > $per_page) {
-      if(!is_null(App::$app->get('cat'))) $prms['cat'] = App::$app->get('cat');
-      if(!is_null(App::$app->get('mnf'))) $prms['mnf'] = App::$app->get('mnf');
-      if(!is_null(App::$app->get('ptrn'))) $prms['ptrn'] = App::$app->get('ptrn');
-      if(!is_null(App::$app->get('clr'))) $prms['clr'] = App::$app->get('clr');
-      if(!is_null(App::$app->get('prc'))) $prms['prc'] = App::$app->get('prc');
-      $this->template->vars('prms', $prms);
-
       $num_pages = ceil($total_rows / $per_page);
       $last_page = $num_pages;
       $nav_start = floor(($page - 1) / $showbypage) * $showbypage + 1;

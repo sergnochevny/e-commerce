@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerSimple;
+use classes\controllers\ControllerSimple;
 
 /**
  * Class ControllerPrices
@@ -28,20 +28,6 @@ class ControllerPrices extends ControllerSimple{
    * @return mixed|void
    */
   protected function validate(&$data, &$error){
-  }
-
-  /**
-   * @param $row
-   * @param $view
-   * @return string
-   * @throws \Exception
-   */
-  protected function build_sitemap_url($row, $view){
-    $prms = ['prc' => $row[$this->id_field]];
-    $url = 'shop';
-    $sef = $row[$this->name_field];
-
-    return App::$app->router()->UrlTo($url, $prms, $sef);
   }
 
   /**
@@ -79,11 +65,5 @@ class ControllerPrices extends ControllerSimple{
     App::$app->setSession('sidebar_idx', 5);
     parent::view($partial, $required_access);
   }
-
-  /**
-   * @return int|null
-   */
-  public static function sitemap_order(){
-    return 5;
-  }
+  
 }

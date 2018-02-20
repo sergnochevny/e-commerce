@@ -18,31 +18,16 @@ use app\core\App;
   <?php if(isset($canonical_url)): ?>
     <link rel="canonical" href="<?= $canonical_url ?>"/>
   <?php endif; ?>
-  <link rel="icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
-  <link rel="shortcut icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
-  <link rel="apple-touch-icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
-  <link rel="apple-touch-icon-precomposed" href="<?= App::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
-  <link rel="apple-touch-startup-image" href="<?= App::$app->router()->UrlTo('images/lf-logo.png'); ?>"/>
+
+  <link rel="icon" href="<?= App::$app->router()->UrlTo('images/favicon.png'); ?>"/>
+  <link rel="shortcut icon" href="<?= App::$app->router()->UrlTo('images/favicon.png'); ?>"/>
+  <link rel="apple-touch-icon" href="<?= App::$app->router()->UrlTo('images/favicon.png'); ?>"/>
+  <link rel="apple-touch-icon-precomposed" href="<?= App::$app->router()->UrlTo('images/favicon.png'); ?>"/>
+  <link rel="apple-touch-startup-image" href="<?= App::$app->router()->UrlTo('images/favicon.png'); ?>"/>
 
   <style>
-    .loader {
-      background: #fff;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1000000000000;
-    }
-
-    .loader i {
-      position: relative;
-      left: 50vw;
-      color: #000;
-      top: 50vh;
-      margin-left: -28px;
-      margin-top: -28px;
-    }
+    .loader {background: #fff; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000000000000;}
+    .loader i {position: relative; left: 50vw; color: #000; top: 50vh; margin-left: -28px; margin-top: -28px;}
   </style>
 
   <link rel='stylesheet' type="text/css"

@@ -25,9 +25,7 @@ use app\core\App;
               <?php
               $url_prms['pid'] = $row['pid'];
               $url_prms['back'] = 'home';
-              $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
-                'cat', 'mnf', 'ptrn', 'clr', 'prc'
-              ]);
+              $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname']);
               ?>
               <a data-waitloader href="<?= $href; ?>" title="<?= $row['pname']; ?>">
                 <figure class=="product-image" style="background-image:url(<?= $row['filename']; ?>)">

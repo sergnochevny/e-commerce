@@ -36,12 +36,8 @@ use app\core\App;
           <?php
           $url_prms['pid'] = $row['pid'];
           $url_prms['back'] = 'favorites';
-          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
-            'cat', 'mnf', 'ptrn', 'clr', 'prc'
-          ]);
-          $del_href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
-            'cat', 'mnf', 'ptrn', 'clr', 'prc'
-          ]);
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname']);
+          $del_href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname']);
           ?>
           <figcaption>
             <?php if($row['in_cart']) :

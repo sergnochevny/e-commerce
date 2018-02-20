@@ -25,9 +25,7 @@ use app\core\App;
           <?php }
           $url_prms['pid'] = $row['pid'];
           $url_prms['back'] = 'shop';
-          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
-            'cat', 'mnf', 'ptrn', 'clr', 'prc'
-          ]);
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname']);
           ?>
           <figcaption data-product>
             <?php if($row['in_cart']) :

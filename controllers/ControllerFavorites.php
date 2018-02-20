@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerSimple;
+use classes\controllers\ControllerSimple;
 use Exception;
 use models\ModelCategories;
 use models\ModelColors;

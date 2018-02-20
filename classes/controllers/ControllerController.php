@@ -1,10 +1,11 @@
 <?php
 
-namespace controllers\base;
+namespace classes\controllers;
 
 use app\core\App;
 use app\core\controller\ControllerBase;
 use app\core\model\ModelBase;
+use classes\Paginator;
 use Closure;
 use controllers\ControllerAdmin;
 use Exception;
@@ -31,7 +32,7 @@ abstract class ControllerController extends ControllerBase{
   public function __construct(ControllerBase $main = null){
     $this->layouts = App::$app->config('layouts');
     parent::__construct();
-    if(isset($main) && (strpos(get_class($main), 'Controller') !== false )) {
+    if(isset($main) && (strpos(get_class($main), 'Controller') !== false)) {
       $this->main = $main;
     } else {
       $this->main = new ControllerMain($this);
@@ -398,12 +399,20 @@ abstract class ControllerController extends ControllerBase{
   /**
    * @param $row
    * @param $view
+   * @param string $changefreq
+   * @param $priority
    * @return array
    * @throws \Exception
    */
-  protected function build_sitemap_item($row, $view){
+  protected function build_sitemap_item($row, $view, $changefreq = 'monthly', $priority = 0.5){
     $loc = $this->build_sitemap_url($row, $view);
-    $item = ['loc' => $loc, 'changefreq' => 'monthly', 'priority' => 0.5,];
+    if(!empty($row['changefreq'])){
+      $changefreq = $row['changefreq'];
+    }
+    if(!empty($row['priority'])){
+      $priority = $row['priority'];
+    }
+    $item = ['loc' => $loc, 'changefreq' => $changefreq, 'priority' => $priority];
     if(!empty($this->data_field)) $item['lastmod'] = date('Y-m-d', strtotime($row[$this->data_field]));
 
     return $item;
@@ -480,7 +489,9 @@ abstract class ControllerController extends ControllerBase{
     $data = null;
     $page = 1;
     while($rows = $this->sitemap_get_list($page++)) {
-      foreach($rows as $row) $data[] = $this->build_sitemap_item($row, $view);
+      foreach($rows as $row) {
+        $data[] = $this->build_sitemap_item($row, $view);
+      }
       $function->__invoke($data);
     }
   }

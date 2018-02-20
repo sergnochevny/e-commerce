@@ -28,30 +28,7 @@ use app\core\App;
   <div class="row">
     <div class="col-xs-12 search-result-header">
       <div class="row">
-        <div class="col-sm-6">
-          <?php if(!empty(App::$app->get('cat')) || !empty(App::$app->get('mnf')) || !empty(App::$app->get('ptrn')) || !empty(App::$app->get('clr')) || !is_null(App::$app->get('prc'))) : ?>
-            <p class="woocommerce-result-count">
-              <?php
-              if(!empty(App::$app->get('cat'))) {
-                echo 'CATEGORY: ' . $category_name;
-              }
-              if(!empty(App::$app->get('mnf'))) {
-                echo 'MANUFACTURER: ' . $mnf_name;
-              }
-              if(!empty(App::$app->get('ptrn'))) {
-                echo 'PATTERN: ' . $ptrn_name;
-              }
-              if(!empty(App::$app->get('clr'))) {
-                echo 'COLOR: ' . $color_name;
-              }
-              if(!is_null(App::$app->get('prc'))) {
-                echo 'PRICE: ' . ((isset($prc_from) && !empty($prc_from)) ? ' $' . number_format($prc_from, 2) : ' $0.00') . ((isset($prc_to) && !empty($prc_to)) ? ' - $' . number_format($prc_to, 2) : ' and above');
-              }
-              ?>
-            </p>
-          <?php endif; ?>
-        </div>
-        <div class="col-sm-6 search-result-container text-right">
+        <div class="col-sm-offset-6 col-sm-6 search-result-container text-right">
           <span class="search-result">Showing <?= $count_rows; ?> results</span>
           <?= isset($show_by) ? $show_by : ''; ?>
         </div>

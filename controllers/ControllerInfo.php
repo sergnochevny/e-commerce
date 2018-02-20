@@ -3,8 +3,8 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerController;
-use controllers\base\ControllerFormSimple;
+use classes\controllers\ControllerController;
+use classes\controllers\ControllerFormSimple;
 use models\ModelProduct;
 
 /**
@@ -17,19 +17,28 @@ class ControllerInfo extends ControllerFormSimple{
    * @var string
    */
   protected $id_field = 'id';
+
   /**
    * @var string
    */
   protected $_scenario = 'home';
+
   /**
    * @var array
    */
-  protected $resolved_scenario = ['home' => 1, 'product' => 2, 'cart' => 3];
+  protected $resolved_scenario = [
+    'home' => 1,
+    'product' => 2,
+    'cart' => 3
+  ];
+
   /**
    * @var array
    */
   protected $title_scenario = [
-    'home' => 'Notice on Home Page', 'product' => 'Notice on Product Page', 'cart' => 'Notice with timeout on Cart'
+    'home' => 'Notice on Home Page',
+    'product' => 'Notice on Product Page',
+    'cart' => 'Notice with timeout on Cart'
   ];
 
   /**
@@ -51,7 +60,9 @@ class ControllerInfo extends ControllerFormSimple{
    * @return bool|mixed
    */
   protected function validate(&$data, &$error){
-    if(empty($data['title']) || empty($data['message']) || (empty($data['f2']) && ($this->scenario() == 'cart')) || ((!empty($data['f2']) && ((float)$data['f2'] <= 0)) && ($this->scenario() == 'cart'))) {
+    if(empty($data['title']) || empty($data['message']) ||
+      (empty($data['f2']) && ($this->scenario() == 'cart')) ||
+      ((!empty($data['f2']) && ((float)$data['f2'] <= 0)) && ($this->scenario() == 'cart'))) {
       $error = [];
       if(empty($data['title'])) $error[] = 'Identify <b>Title</b> field !';
       if(empty($data['message'])) $error[] = 'Identify <b>Content</b> field !';
@@ -106,6 +117,7 @@ class ControllerInfo extends ControllerFormSimple{
     $this->template->vars('data', $data);
     $this->template->vars('action', $action);
     if($return) return $this->main->view_layout_return('form');
+
     return $this->main->view_layout('form');
   }
 

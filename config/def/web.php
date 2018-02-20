@@ -101,5 +101,5 @@ return [
   ],
   'layouts' => "main_layout",
   'per_page_items' => ['6', '12', '24'],
-  'errorHandler' => 'inc\ErrorHandler'
+  'errorHandler' => 'classes\ErrorHandler'
 ];

@@ -3,8 +3,8 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerController;
-use controllers\base\ControllerFormSimple;
+use classes\controllers\ControllerController;
+use classes\controllers\ControllerFormSimple;
 use models\ModelDiscount;
 
 /**

@@ -10,9 +10,7 @@ use app\core\App;
         <span class="on-sale">New!</span>
         <?php
         $url_prms['pid'] = $row['pid'];
-        $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
-          'cat', 'mnf', 'ptrn', 'clr', 'prc'
-        ]);
+        $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname']);
         ?>
         <div class="product-price-box clearfix">
           <div class="price-header">Price</div>

@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerSimple;
+use classes\controllers\ControllerSimple;
 use models\ModelOrders;
 use models\ModelSamples;
 

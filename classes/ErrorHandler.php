@@ -4,15 +4,15 @@
  * Time: 10:14
  */
 
-namespace inc;
+namespace classes;
 
 use app\core\App;
 use app\core\ErrorHandlerInterface;
-use controllers\base\ControllerMain;
+use classes\controllers\ControllerMain;
 
 /**
  * Class ErrorHandler
- * @package inc
+ * @package classes
  */
 class ErrorHandler implements ErrorHandlerInterface{
 

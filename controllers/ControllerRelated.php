@@ -3,9 +3,9 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerController;
-use controllers\base\ControllerFormSimple;
-use controllers\base\Paginator;
+use classes\controllers\ControllerController;
+use classes\controllers\ControllerFormSimple;
+use classes\Paginator;
 use Exception;
 use models\ModelCategories;
 use models\ModelColors;

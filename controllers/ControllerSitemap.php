@@ -48,11 +48,11 @@ class ControllerSitemap extends ControllerBase{
     set_time_limit(0);
     ob_start();
     try {
-      $path = APP_PATH . 'controllers/controller_*.php';
+      $path = APP_PATH . '/controllers/Controller*.php';
       $controllers = [];
       foreach(glob($path) as $file) {
         if(is_readable($file)) {
-          $controller = str_replace('.php', '', strtolower(basename($file)));
+          $controller = 'controllers\\' . str_replace('.php', '', basename($file));
           if(is_callable([$controller, 'sitemap']) && is_callable([$controller, 'sitemap_order'])) {
             $idx = forward_static_call([$controller, 'sitemap_order']);
             $view = forward_static_call([$controller, 'sitemap_view']);
@@ -65,8 +65,12 @@ class ControllerSitemap extends ControllerBase{
         list($class, $view) = $item;
         $controller = new $class();
         if(is_array($view)) {
-          foreach($view as $view_item) forward_static_call([$controller, 'sitemap'], $build_sitemap_rows, $view_item);
-        } else forward_static_call([$controller, 'sitemap'], $build_sitemap_rows, $view);
+          foreach($view as $view_item) {
+            forward_static_call([$controller, 'sitemap'], $build_sitemap_rows, $view_item);
+          }
+        } else {
+          forward_static_call([$controller, 'sitemap'], $build_sitemap_rows, $view);
+        }
         unset($controller);
       }
     } catch(Exception $e) {

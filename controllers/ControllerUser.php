@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerUserBase;
+use classes\controllers\ControllerUserBase;
 
 /**
  * Class ControllerUser

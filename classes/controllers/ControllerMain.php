@@ -3,7 +3,7 @@
  * Copyright (c) 2017. AIT
  */
 
-namespace controllers\base;
+namespace classes\controllers;
 
 use app\core\App;
 use app\core\controller\ControllerBase;

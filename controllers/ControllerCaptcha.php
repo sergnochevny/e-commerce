@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerController;
+use classes\controllers\ControllerController;
 use app\core\controller\ControllerBase;
 use models\ModelAuth;
 

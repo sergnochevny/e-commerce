@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerSimple;
+use classes\controllers\ControllerSimple;
 use models\ModelColors;
 
 /**
@@ -85,20 +85,6 @@ class ControllerColors extends ControllerSimple{
   }
 
   /**
-   * @param $row
-   * @param $view
-   * @return string
-   * @throws \Exception
-   */
-  protected function build_sitemap_url($row, $view){
-    $prms = ['clr' => $row[$this->id_field]];
-    $url = 'shop';
-    $sef = $row[$this->name_field];
-
-    return App::$app->router()->UrlTo($url, $prms, $sef);
-  }
-
-  /**
    * @export
    * @param bool $partial
    * @param bool $required_access
@@ -110,10 +96,4 @@ class ControllerColors extends ControllerSimple{
     parent::view($partial, $required_access);
   }
 
-  /**
-   * @return int|null
-   */
-  public static function sitemap_order(){
-    return 4;
-  }
 }

@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerController;
+use classes\controllers\ControllerController;
 use models\ModelAuth;
 use models\ModelUser;
 use models\ModelUsers;
@@ -277,7 +277,7 @@ class ControllerAuthorization extends ControllerController{
                       $hash = ModelAuth::generate_hash($password);
                       ModelUser::update_password($hash, $user_id);
                       ModelUser::clean_remind($user_id);
-                      $message = 'Congratulattions. Your Password has been changed succesfully!<br>';
+                      $message = 'Your Password has been changed succesfully!<br>';
                       $message .= 'Now you can go to the <a href="' . App::$app->router()
                                                                                ->UrlTo('authorization') . '">login form</a> and use it.';
                       $this->main->template->vars('message', $message);

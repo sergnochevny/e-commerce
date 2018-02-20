@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerSimple;
+use classes\controllers\ControllerSimple;
 use models\ModelCategories;
 
 /**
@@ -95,20 +95,6 @@ class ControllerCategories extends ControllerSimple{
   }
 
   /**
-   * @param $row
-   * @param $view
-   * @return string
-   * @throws \Exception
-   */
-  protected function build_sitemap_url($row, $view){
-    $prms = ['cat' => $row[$this->id_field]];
-    $url = 'shop';
-    $sef = $row[$this->name_field];
-
-    return App::$app->router()->UrlTo($url, $prms, $sef);
-  }
-
-  /**
    * @export
    * @param bool $partial
    * @param bool $required_access
@@ -118,13 +104,6 @@ class ControllerCategories extends ControllerSimple{
     $this->template->vars('cart_enable', '_');
     App::$app->setSession('sidebar_idx', 2);
     parent::view($partial, $required_access);
-  }
-
-  /**
-   * @return int|null
-   */
-  public static function sitemap_order(){
-    return 3;
   }
 
 }

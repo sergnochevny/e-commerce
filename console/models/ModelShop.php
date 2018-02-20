@@ -18,6 +18,7 @@ class ModelShop extends ModelConsole{
   /**
    * @param $row
    * @return mixed
+   * @throws \Exception
    */
   public static function prepare_layout_product($row){
     $pid = $row['pid'];

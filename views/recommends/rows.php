@@ -26,11 +26,7 @@ use app\core\App;
           $url_prms['pid'] = $row[0];
           $url_prms['back'] = 'recommends';
           if(!empty($scenario)) $url_prms['method'] = $scenario;
-          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], [
-            'method', 'cat', 'mnf', 'ptrn', 'clr', 'prc'
-          ]);
-          ?>
-
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['method']); ?>
           <figcaption data-product>
             <?php if($row['in_cart']) :
               include(APP_PATH . '/views/cart/basket.php');

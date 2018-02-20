@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerFormSimple;
+use classes\controllers\ControllerFormSimple;
 use models\ModelBlog;
 use models\ModelBlogCategory;
 

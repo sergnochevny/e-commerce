@@ -3,9 +3,9 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerAdminBase;
-use controllers\base\ControllerController;
-use controllers\base\Paginator;
+use classes\controllers\ControllerAdminBase;
+use classes\controllers\ControllerController;
+use classes\Paginator;
 use models\ModelCategories;
 use models\ModelColors;
 use models\ModelManufacturers;
@@ -145,11 +145,6 @@ class ControllerShop extends ControllerController{
     $search_data['colors'] = $colors;
     $search_data['manufacturers'] = $manufacturers;
     $type = isset($search_data['type']) ? $search_data['type'] : null;
-    if(!empty(App::$app->get('cat'))) $url_prms['cat'] = App::$app->get('cat');
-    if(!empty(App::$app->get('mnf'))) $url_prms['mnf'] = App::$app->get('mnf');
-    if(!empty(App::$app->get('ptrn'))) $url_prms['ptrn'] = App::$app->get('ptrn');
-    if(!empty(App::$app->get('clr'))) $url_prms['clr'] = App::$app->get('clr');
-    if(!empty(App::$app->get('prc'))) $url_prms['prc'] = App::$app->get('prc');
 
     if(isset($type)) $this->template->vars('action', App::$app->router()->UrlTo($this->controller . DS . $type));
     if(isset($url_prms)) $this->template->vars('action', App::$app->router()->UrlTo($this->controller, $url_prms));
@@ -163,52 +158,6 @@ class ControllerShop extends ControllerController{
    */
   protected function after_get_list(&$rows, $view = false, $type = null){
     $url_prms = null;
-    if(!empty(App::$app->get('cat'))) {
-      $url_prms['cat'] = App::$app->get('cat');
-      $data = ModelCategories::get_by_id(App::$app->get('cat'));
-      if(!empty($data['cname'])) {
-        $this->template->setMeta('description', $data['cname']);
-        $this->template->setMeta('keywords', strtolower($data['cname']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['cname'])))));
-        $this->template->setMeta('title', $data['cname']);
-      }
-    };
-    if(!empty(App::$app->get('mnf'))) {
-      $url_prms['mnf'] = App::$app->get('mnf');
-      $data = ModelManufacturers::get_by_id(App::$app->get('mnf'));
-      if(!empty($data['manufacturer'])) {
-        $this->template->setMeta('description', $data['manufacturer']);
-        $this->template->setMeta('keywords', strtolower($data['manufacturer']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['manufacturer'])))));
-        $this->template->setMeta('title', $data['manufacturer']);
-      }
-    }
-    if(!empty(App::$app->get('ptrn'))) {
-      $url_prms['ptrn'] = App::$app->get('ptrn');
-      $data = ModelPatterns::get_by_id(App::$app->get('ptrn'));
-      if(!empty($data['pattern'])) {
-        $this->template->setMeta('description', $data['pattern']);
-        $this->template->setMeta('keywords', strtolower($data['pattern']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['pattern'])))));
-        $this->template->setMeta('title', $data['pattern']);
-      }
-    }
-    if(!empty(App::$app->get('clr'))) {
-      $url_prms['clr'] = App::$app->get('clr');
-      $data = ModelColors::get_by_id(App::$app->get('clr'));
-      if(!empty($data['color'])) {
-        $this->template->setMeta('description', $data['color']);
-        $this->template->setMeta('keywords', strtolower($data['color']) . ',' . implode(',', array_filter(explode(' ', strtolower($data['color'])))));
-        $this->template->setMeta('title', $data['color']);
-      }
-    }
-    if(!empty(App::$app->get('prc'))) {
-      $url_prms['prc'] = App::$app->get('prc');
-      $data = ModelPrices::get_by_id(App::$app->get('prc'));
-      if(!empty($data['title'])) {
-        $title = 'Fabrics Prices Range ' . $data['title'];
-        $this->template->setMeta('description', $title);
-        $this->template->setMeta('keywords', strtolower($title) . ',' . implode(',', array_filter(explode(' ', strtolower($title)))));
-        $this->template->setMeta('title', $title);
-      }
-    }
     if(isset($type)) $url_prms['back'] = $type;
     $this->template->vars('url_prms', $url_prms);
   }
@@ -302,11 +251,6 @@ class ControllerShop extends ControllerController{
   protected function build_back_url(&$back_url = null, &$prms = null){
     $prms = null;
     if((!empty(App::$app->get('method')))) $prms['method'] = App::$app->get('method');
-    if((!empty(App::$app->get('cat')))) $prms['cat'] = App::$app->get('cat');
-    if((!empty(App::$app->get('mnf')))) $prms['mnf'] = App::$app->get('mnf');
-    if((!empty(App::$app->get('ptrn')))) $prms['ptrn'] = App::$app->get('ptrn');
-    if((!empty(App::$app->get('clr')))) $prms['clr'] = App::$app->get('clr');
-    if((!empty(App::$app->get('prc')))) $prms['prc'] = App::$app->get('prc');
     if(!is_null(App::$app->get('back'))) {
       $back = App::$app->get('back');
       if(in_array($back, ['matches', 'cart', 'shop', 'favorites', 'clearance', 'home', 'recommends'])) {
@@ -328,11 +272,6 @@ class ControllerShop extends ControllerController{
    */
   protected function load_search_filter_get_idx($filter, $view = false){
     $idx = ControllerAdminBase::is_logged() . '_' . $view;
-    if((!empty(App::$app->get('cat')))) $idx .= '_cat_' . App::$app->get('cat') . '_';
-    if((!empty(App::$app->get('mnf')))) $idx .= '_mnf_' . App::$app->get('mnf') . '_';
-    if((!empty(App::$app->get('ptrn')))) $idx .= '_ptrn_' . App::$app->get('ptrn') . '_';
-    if((!empty(App::$app->get('clr')))) $idx .= '_clr_' . App::$app->get('clr') . '_';
-    if((!empty(App::$app->get('prc')))) $idx .= '_prc_' . App::$app->get('prc') . '_';
     $idx .= (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
     $idx = !empty($idx) ? $idx : 0;
 
@@ -342,38 +281,22 @@ class ControllerShop extends ControllerController{
   /**
    * @param $row
    * @param $view
-   * @return string|void
-   */
-  protected function build_sitemap_url($row, $view){
-  }
-
-  /**
-   * @param $row
-   * @param $view
-   * @return array
+   * @return string
    * @throws \Exception
    */
-  protected function build_sitemap_item($row, $view){
+  protected function build_sitemap_url($row, $view){
     $prms = [$this->id_field => $row[$this->id_field]];
     $url = 'shop/product';
     $sef = $row[$this->name_field];
-    $loc = App::$app->router()->UrlTo($url, $prms, $sef);
-    $item = ['loc' => $loc, 'changefreq' => 'daily', 'priority' => 0.5,];
-    if(!empty($this->data_field)) $item['lastmod'] = date('Y-m-d', strtotime($row[$this->data_field]));
 
-    return $item;
+    return App::$app->router()->UrlTo($url, $prms, $sef);
   }
 
   /**
-   * @return array|null
+   * @inheritdoc
    */
-  public static function urlto_sef_ignore_prms(){
-    return [
-      'product' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'], 'specials' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
-      'under' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'], 'last' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
-      'popular' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'], 'best' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
-      'bestsellers' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'], 'widget' => ['cat', 'mnf', 'ptrn', 'clr', 'prc'],
-    ];
+  protected function build_sitemap_item($row, $view, $changefreq = 'daily', $priority = 0.5){
+    return parent::build_sitemap_item($row, $view, $changefreq, $priority);
   }
 
   /**

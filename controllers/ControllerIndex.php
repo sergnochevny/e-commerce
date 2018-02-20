@@ -3,7 +3,7 @@
 namespace controllers;
 
 use app\core\App;
-use controllers\base\ControllerController;
+use classes\controllers\ControllerController;
 
 /**
  * class ControllerIndex
@@ -38,12 +38,7 @@ class ControllerIndex extends ControllerController{
       ['loc' => App::$app->router()->UrlTo('contact'), 'changefreq' => 'monthly', 'priority' => 0.5,],
       ['loc' => App::$app->router()->UrlTo('shop/specials'), 'changefreq' => 'daily', 'priority' => 0.6,],
       ['loc' => App::$app->router()->UrlTo('clearance'), 'changefreq' => 'daily', 'priority' => 0.6,],
-      ['loc' => App::$app->router()->UrlTo('blog/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
-      ['loc' => App::$app->router()->UrlTo('prices/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
-      ['loc' => App::$app->router()->UrlTo('colors/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
-      ['loc' => App::$app->router()->UrlTo('categories/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
-      ['loc' => App::$app->router()->UrlTo('patterns/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
-      ['loc' => App::$app->router()->UrlTo('manufacturers/view'), 'changefreq' => 'daily', 'priority' => 0.6,],
+      ['loc' => App::$app->router()->UrlTo('blog/view'), 'changefreq' => 'daily', 'priority' => 0.6,]
     ];
 
     return ($page > 1) ? null : $data;
