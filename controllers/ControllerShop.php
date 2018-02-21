@@ -527,6 +527,23 @@ class ControllerShop extends ControllerController{
     return 6;
   }
 
+  /**
+   * @export
+   */
+  public function filter(){
+    $search_form = $this->build_search_filter($filter, $view);
+    $idx = $this->load_search_filter_get_idx($filter, $view);
+    $pages = App::$app->session('pages');
+    $per_pages = App::$app->session('per_pages');
+    $sort = $this->load_sort($filter, $view);
+    $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
+    $per_page = !empty($per_pages[$this->controller][$idx]) ? $per_pages[$this->controller][$idx] : $this->per_page;
+    if(App::$app->request_is_ajax()) {
+      return json_encode([]);
+    }
+
+    return $this->shop();
+  }
 //    /**
 //     * @export
 //     */
