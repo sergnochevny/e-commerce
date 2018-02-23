@@ -25,6 +25,10 @@ abstract class ControllerController extends ControllerBase{
   protected $view_title;
   protected $page_title;
 
+  protected $reset = [
+    'reset' => 'all'
+  ];
+
   /**
    * ControllerController constructor.
    * @param ControllerBase|null $main
@@ -147,6 +151,7 @@ abstract class ControllerController extends ControllerBase{
    * @param $filter
    * @param $view
    * @return array|null|string
+   * @throws \InvalidArgumentException
    */
   protected function load_search_filter($filter, $view){
     //  Implementation save the search context
@@ -197,24 +202,45 @@ abstract class ControllerController extends ControllerBase{
         );
         //App::$app->post('search');
         $filters = App::$app->session('filters');
-        if(!isset($search['reset'])) {
-          $filters[$this->controller][$idx] = $search;
-        } else {
-          unset($filters[$this->controller][$idx]);
+        foreach($this->reset as $reset => $fields) {
+          if(!isset($search[$reset])) {
+            if(!is_array($fields)) {
+              if($fields === 'all') {
+                $filters[$this->controller][$idx] = $search;
+              } else {
+                throw new \InvalidArgumentException('Invalid $reset member in ' . static::class);
+              }
+            } else {
+              foreach($fields as $field) {
+                if(!empty($search[$field])) {
+                  $filters[$this->controller][$idx][$field] = $search[$field];
+                }
+              }
+            }
+          } else {
+            if(!is_array($fields)) {
+              if($fields === 'all') {
+                unset($filters[$this->controller][$idx]);
+              } else {
+                throw new \InvalidArgumentException('Invalid $reset member in ' . static::class);
+              }
+            } else {
+              foreach($fields as $field) {
+                if(!empty($filters[$this->controller][$idx][$field])) {
+                  unset($filters[$this->controller][$idx][$field]);
+                }
+              }
+            }
+          }
         }
         App::$app->setSession('filters', $filters);
-      } else {
-        $filters = App::$app->session('filters');
-        if(isset($filters[$this->controller][$idx])) {
-          $search = $filters[$this->controller][$idx];
-        } else return null;
       }
-    } else {
-      $filters = App::$app->session('filters');
-      if(isset($filters[$this->controller][$idx])) {
-        $search = $filters[$this->controller][$idx];
-      } else return null;
     }
+
+    $filters = App::$app->session('filters');
+    if(isset($filters[$this->controller][$idx])) {
+      $search = $filters[$this->controller][$idx];
+    } else $search = null;
 
     return $search;
   }
@@ -223,6 +249,7 @@ abstract class ControllerController extends ControllerBase{
    * @param $filter
    * @param bool $view
    * @return array|null
+   * @throws \InvalidArgumentException
    */
   protected function build_search_filter(&$filter, $view = false){
     $search_form = null;
@@ -406,10 +433,10 @@ abstract class ControllerController extends ControllerBase{
    */
   protected function build_sitemap_item($row, $view, $changefreq = 'monthly', $priority = 0.5){
     $loc = $this->build_sitemap_url($row, $view);
-    if(!empty($row['changefreq'])){
+    if(!empty($row['changefreq'])) {
       $changefreq = $row['changefreq'];
     }
-    if(!empty($row['priority'])){
+    if(!empty($row['priority'])) {
       $priority = $row['priority'];
     }
     $item = ['loc' => $loc, 'changefreq' => $changefreq, 'priority' => $priority];

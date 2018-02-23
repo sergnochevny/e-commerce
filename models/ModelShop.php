@@ -28,6 +28,7 @@ class ModelShop extends ModelBase{
   public static function build_where(&$filter, &$prms = null){
     $result_where = "";
     $prms = [];
+
     if(ControllerAdmin::is_logged()) {
       if(!empty($filter["a.pname"])) {
         foreach(array_filter(explode(' ', $filter["a.pname"])) as $idx => $item) {
@@ -37,7 +38,6 @@ class ModelShop extends ModelBase{
           }
         }
       }
-
       if(isset($filter["a.dt"])) {
         $where = '';
         if(!empty($filter["a.dt"]['from'])) {
@@ -50,7 +50,10 @@ class ModelShop extends ModelBase{
         }
         if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
       }
-      if(isset($filter['a.piece'])) { $result[] = "a.piece = :apiece";  $prms['apiece'] = $filter["a.piece"]; }
+      if(isset($filter['a.piece'])) {
+        $result[] = "a.piece = :apiece";
+        $prms['apiece'] = $filter["a.piece"];
+      }
       if(isset($filter['a.pvisible'])) {
         $result[] = "a.pvisible = :apvisible";
         $prms['apvisible'] = $filter["a.pvisible"];
@@ -91,7 +94,6 @@ class ModelShop extends ModelBase{
         $result[] = "a.priceyard <= :apriceyard_to";
         $prms['apriceyard_to'] = $filter["a.priceyard"]['to'];
       }
-
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
@@ -110,11 +112,59 @@ class ModelShop extends ModelBase{
           $condition .= $item[0];
           $prms = array_merge($prms, $item[1]);
         }
-        $result[] = $condition;
+        if(!empty($condition)) {
+          $result[] = "(" . $condition . ")";
+        }
       }
       if(!empty($result) && (count($result) > 0)) {
         if(strlen(trim(implode(" AND ", $result))) > 0) {
           $filter['active'] = true;
+        }
+      }
+
+      if(isset($filter["b.cid"])) {
+        if(is_array($filter["b.cid"])) {
+          $result[] = "b.cid in (" . static::build_in_sql_prm($filter["b.cid"], 'bcid') . ")";
+        } else {
+          $result[] = "b.cid = :bcid";
+        }
+        $prms['bcid'] = $filter["b.cid"];
+      }
+      if(isset($filter["c.id"])) {
+        if(is_array($filter["c.id"])) {
+          $result[] = "c.id in (" . static::build_in_sql_prm($filter["c.id"], 'cid') . ")";
+        } else {
+          $result[] = "c.id = :cid";
+        }
+        $prms['cid'] = $filter["c.id"];
+      }
+      if(isset($filter["d.id"])) {
+        if(is_array($filter["d.id"])) {
+          $result[] = "d.id in (" . static::build_in_sql_prm($filter["d.id"], 'did') . ")";
+        } else {
+          $result[] = "d.id = :did";
+        }
+        $prms['did'] = $filter["d.id"];
+      }
+      if(isset($filter["e.id"])) {
+        if(is_array($filter["e.id"])) {
+          $result[] = "e.id in (" . static::build_in_sql_prm($filter["e.id"], 'eid') . ")";
+        } else {
+          $result[] = "e.id = :eid";
+        }
+        $prms['eid'] = $filter["e.id"];
+      }
+      if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) {
+        $result[] = "a.priceyard > :apriceyard_from";
+        $prms['apriceyard_from'] = $filter["a.priceyard"]['from'];
+      }
+      if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) {
+        $result[] = "a.priceyard <= :apriceyard_to";
+        $prms['apriceyard_to'] = $filter["a.priceyard"]['to'];
+      }
+      if(!empty($result) && (count($result) > 0)) {
+        if(strlen(trim(implode(" AND ", $result))) > 0) {
+          $filter['active_filter'] = true;
         }
       }
     }
@@ -396,7 +446,7 @@ class ModelShop extends ModelBase{
    * @throws \Exception
    */
   public static function inc_popular($pid){
-    static::query("update shop_products set popular = popular+1 WHERE pid='$pid'");
+    static::query("UPDATE shop_products SET popular = popular+1 WHERE pid='$pid'");
   }
 
   /**

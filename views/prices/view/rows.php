@@ -8,7 +8,7 @@ use app\core\App;
     <?php $prms = ['prc' => $key]; ?>
     <div class="col-xs-6 col-sm-3 list-item">
       <div class="list-inner">
-        <a data-waitloader data-filter data-filter_from_to
+        <a data-filter data-filter_from_to
            href="<?= App::$app->router()->UrlTo('shop/filter', $prms); ?>"
            data-from="<?= isset($row['min_price']) ? $row['min_price'] : ''; ?>"
            data-to="<?= isset($row['max_price']) ? $row['max_price'] : ''; ?>">

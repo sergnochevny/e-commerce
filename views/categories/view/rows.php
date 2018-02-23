@@ -8,7 +8,7 @@ use app\core\App;
     <?php $prms['cat'] = $row['cid']; ?>
     <div class="col-xs-6 col-sm-3 list-item">
       <div class="list-inner">
-        <a data-waitloader data-filter href="<?= App::$app->router()->UrlTo('shop/filter', $prms); ?>">
+        <a data-filter href="<?= App::$app->router()->UrlTo('shop/filter', $prms); ?>">
           <div class="item-name"><?= $row['cname']; ?></div>
         </a>
       </div>

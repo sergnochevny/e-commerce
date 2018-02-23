@@ -37,13 +37,21 @@ class ControllerShop extends ControllerController{
    */
   protected $page_title = "Online Fabric Store";
 
+  protected $reset = [
+    'reset' => ['a.pname'],
+    'reset_filter' => [
+      'b.cid', 'c.id', 'd.id', 'e.id',
+    ]
+  ];
+
   /**
    * @param bool $view
    * @return array|null
    */
   protected function search_fields($view = false){
     return [
-      'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece', 'a.best', 'a.specials', 'b.cid', 'c.id', 'd.id', 'e.id',
+      'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber', 'a.piece',
+      'a.best', 'a.specials', 'b.cid', 'c.id', 'd.id', 'e.id',
       'a.priceyard'
     ];
   }
@@ -57,6 +65,35 @@ class ControllerShop extends ControllerController{
   protected function build_search_filter(&$filter, $view = false){
     $search = null;
     $type = isset($filter['type']) ? $filter['type'] : null;
+
+    if(!empty(App::$app->get('mnf'))) {
+      $mnf_id = App::$app->get('mnf');
+      $search['e.id'][] = $mnf_id;
+    }
+    if(!empty(App::$app->get('cat'))) {
+      $cid = App::$app->get('cat');
+      $search['b.cid'] = $cid;
+    }
+    if(!empty(App::$app->get('ptrn'))) {
+      $ptrn_id = App::$app->get('ptrn');
+      $search['d.id'][] = $ptrn_id;
+    }
+    if(!empty(App::$app->get('clr'))) {
+      $clr_id = App::$app->get('clr');
+      $search['c.id'][] = $clr_id;
+    }
+    if(!is_null(App::$app->get('prc'))) {
+      $prc_id = App::$app->get('prc');
+      if($prc = ModelPrices::get_by_id($prc_id)) {
+        $search['a.priceyard'][]['from'] = (isset($prc['min_price']) ? $prc['min_price'] : null);
+        $search['a.priceyard'][]['to'] = (isset($prc['max_price']) ? $prc['max_price'] : null);
+      };
+    }
+    if(!empty($search)) {
+      App::$app->post('search', $search);
+      $search = null;
+    }
+
     $res = parent::build_search_filter($filter, $view);
     App::$app->setSession('sidebar_idx', 0);
     $filter['hidden']['a.pnumber'] = 'null';
@@ -121,31 +158,7 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   protected function before_search_form_layout(&$search_data, $view = false){
-    $categories = [];
-    $filter = null;
-    $res_count = 0;
-    $sort = ['a.cname' => 'asc'];
-    $rows = ModelCategories::get_list(0, 0, $res_count, $filter, $sort);
-    foreach($rows as $row) $categories[$row['cid']] = $row['cname'];
-    $patterns = [];
-    $sort = ['a.pattern' => 'asc'];
-    $rows = ModelPatterns::get_list(0, 0, $res_count, $filter, $sort);
-    foreach($rows as $row) $patterns[$row['id']] = $row['pattern'];
-    $colors = [];
-    $sort = ['a.color' => 'asc'];
-    $rows = ModelColors::get_list(0, 0, $res_count, $filter, $sort);
-    foreach($rows as $row) $colors[$row['id']] = $row['color'];
-    $manufacturers = [];
-    $sort = ['a.manufacturer' => 'asc'];
-    $rows = ModelManufacturers::get_list(0, 0, $res_count, $filter, $sort);
-    foreach($rows as $row) $manufacturers[$row['id']] = $row['manufacturer'];
-
-    $search_data['categories'] = $categories;
-    $search_data['patterns'] = $patterns;
-    $search_data['colors'] = $colors;
-    $search_data['manufacturers'] = $manufacturers;
     $type = isset($search_data['type']) ? $search_data['type'] : null;
-
     if(isset($type)) $this->template->vars('action', App::$app->router()->UrlTo($this->controller . DS . $type));
     if(isset($url_prms)) $this->template->vars('action', App::$app->router()->UrlTo($this->controller, $url_prms));
   }
@@ -325,19 +338,6 @@ class ControllerShop extends ControllerController{
    * @export
    * @throws \Exception
    */
-  public function last(){
-    $this->template->vars('cart_enable', '_');
-    $this->page_title = "What's New";
-    $list = $this->get_list_by_type('last', 50);
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->template->vars('list', $list);
-    $this->main->view('shop');
-  }
-
-  /**
-   * @export
-   * @throws \Exception
-   */
   public function specials(){
     $this->template->vars('cart_enable', '_');
     $this->page_title = "Discount Decorator and Designer Fabrics";
@@ -346,63 +346,8 @@ class ControllerShop extends ControllerController{
     $list = $this->get_list_by_type('specials', (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    $this->main->view('shop');
-  }
 
-  /**
-   * @export
-   * @throws \Exception
-   */
-  public function popular(){
-    $this->template->vars('cart_enable', '_');
-    $this->page_title = 'Popular Textiles';
-    $list = $this->get_list_by_type('popular', 360);
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->template->vars('list', $list);
-    $this->main->view('shop');
-  }
-
-  /**
-   * @export
-   * @throws \Exception
-   */
-  public function best(){
-    $this->template->vars('cart_enable', '_');
-    $this->page_title = 'Best Textiles';
-    $list = $this->get_list_by_type('best', 360);
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->template->vars('list', $list);
-    $this->main->view('shop');
-  }
-
-  /**
-   * @export
-   * @throws \Exception
-   */
-  public function bestsellers(){
-    $this->template->vars('cart_enable', '_');
-    $this->page_title = 'Best Sellers';
-    $list = $this->get_list_by_type('bestsellers', (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ?
-      App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT)
-    );
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->template->vars('list', $list);
-    $this->main->view('shop');
-  }
-
-  /**
-   * @export
-   * @throws \Exception
-   * @throws \Exception
-   */
-  public function under(){
-    $this->template->vars('cart_enable', '_');
-    $this->page_title = 'Under $100';
-    $list = $this->get_list_by_type('under', (!is_null(App::$app->keyStorage()->shop_under_amount) ?
-      App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT)
-    );
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->template->vars('list', $list);
+    $this->template->vars('filter', $list);
     $this->main->view('shop');
   }
 
@@ -529,21 +474,87 @@ class ControllerShop extends ControllerController{
 
   /**
    * @export
+   * @throws \Exception
    */
   public function filter(){
-    $search_form = $this->build_search_filter($filter, $view);
-    $idx = $this->load_search_filter_get_idx($filter, $view);
-    $pages = App::$app->session('pages');
-    $per_pages = App::$app->session('per_pages');
-    $sort = $this->load_sort($filter, $view);
-    $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
-    $per_page = !empty($per_pages[$this->controller][$idx]) ? $per_pages[$this->controller][$idx] : $this->per_page;
+    $res = $this->build_search_filter($filter);
     if(App::$app->request_is_ajax()) {
-      return json_encode([]);
+      exit(json_encode($res));
     }
 
     return $this->shop();
   }
+
+//  /**
+//   * @export
+//   * @throws \Exception
+//   */
+//  public function popular(){
+//    $this->template->vars('cart_enable', '_');
+//    $this->page_title = 'Popular Textiles';
+//    $list = $this->get_list_by_type('popular', 360);
+//    if(App::$app->request_is_ajax()) exit($list);
+//    $this->template->vars('list', $list);
+//    $this->main->view('shop');
+//  }
+//
+//  /**
+//   * @export
+//   * @throws \Exception
+//   */
+//  public function last(){
+//    $this->template->vars('cart_enable', '_');
+//    $this->page_title = "What's New";
+//    $list = $this->get_list_by_type('last', 50);
+//    if(App::$app->request_is_ajax()) exit($list);
+//    $this->template->vars('list', $list);
+//    $this->main->view('shop');
+//  }
+//
+//  /**
+//   * @export
+//   * @throws \Exception
+//   */
+//  public function best(){
+//    $this->template->vars('cart_enable', '_');
+//    $this->page_title = 'Best Textiles';
+//    $list = $this->get_list_by_type('best', 360);
+//    if(App::$app->request_is_ajax()) exit($list);
+//    $this->template->vars('list', $list);
+//    $this->main->view('shop');
+//  }
+//
+//  /**
+//   * @export
+//   * @throws \Exception
+//   */
+//  public function bestsellers(){
+//    $this->template->vars('cart_enable', '_');
+//    $this->page_title = 'Best Sellers';
+//    $list = $this->get_list_by_type('bestsellers', (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ?
+//      App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT)
+//    );
+//    if(App::$app->request_is_ajax()) exit($list);
+//    $this->template->vars('list', $list);
+//    $this->main->view('shop');
+//  }
+//
+//  /**
+//   * @export
+//   * @throws \Exception
+//   * @throws \Exception
+//   */
+//  public function under(){
+//    $this->template->vars('cart_enable', '_');
+//    $this->page_title = 'Under $100';
+//    $list = $this->get_list_by_type('under', (!is_null(App::$app->keyStorage()->shop_under_amount) ?
+//      App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT)
+//    );
+//    if(App::$app->request_is_ajax()) exit($list);
+//    $this->template->vars('list', $list);
+//    $this->main->view('shop');
+//  }
+//
 //    /**
 //     * @export
 //     */
