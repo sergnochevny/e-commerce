@@ -3,12 +3,21 @@
 use app\core\App;
 
 ?>
+
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
-    <?php $prms['ptrn'] = $row['id']; ?>
-    <div class="col-xs-6 col-sm-3 list-item">
+    <?php
+    $prm = 'd.id';
+    $data_filter_item_active = false;
+    if(!empty($filter[$prm])) {
+      $data_filter_item_active = in_array($row['id'], $filter[$prm]);
+    }
+    ?>
+    <div class="col-xs-6 col-sm-3 list-item" <?= $data_filter_item_active ? 'data-filter-item-active' : ''; ?>>
       <div class="list-inner">
-        <a data-filter href="<?= App::$app->router()->UrlTo('shop/filter', $prms); ?>">
+        <a data-filter data-filter-prm="<?= $prm; ?>" data-filter-val=<?= $row['id']; ?>
+        <?= $data_filter_item_active ? 'data-filter-item-active' : ''; ?>
+        href="<?= App::$app->router()->UrlTo('shop/filter'); ?>">
           <div class="item-name"><?= $row['pattern']; ?></div>
         </a>
       </div>

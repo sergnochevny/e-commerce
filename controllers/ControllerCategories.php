@@ -102,6 +102,11 @@ class ControllerCategories extends ControllerSimple{
    */
   public function view($partial = false, $required_access = false){
     $this->template->vars('cart_enable', '_');
+    $filter = $this->load_search_filter_by_controller('shop');
+    if(!empty($filter) && is_array($filter)) {
+      $filter['active_filter'] = !empty(array_filter($filter));
+    }
+    $this->template->vars('filter', $filter);
     App::$app->setSession('sidebar_idx', 2);
     parent::view($partial, $required_access);
   }

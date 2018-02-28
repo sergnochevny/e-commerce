@@ -4,7 +4,7 @@ use app\core\App;
 use controllers\ControllerAdmin;
 
 ?>
-<form action="<?= $action ?>" method="post" data-search>
+<form action="<?= $action ?>" method="post" data-search data-filter-additional>
   <?php if(ControllerAdmin::is_logged()): ?>
     <div class="row">
       <div class="col-xs-12 panel panel-default search-panel">

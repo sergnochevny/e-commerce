@@ -29,8 +29,10 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
     text-decoration: none;
+    -webkit-transition: .3s ease;
+    -o-transition: .3s ease;
     transition: .3s ease;
-    color: #667700;
+    color: #670;
 }
 
 a:focus, a:hover {
@@ -2320,3 +2322,10 @@ sup {
     }
 }
 
+a {
+    text-decoration: none;
+    -webkit-transition: .3s ease;
+    -o-transition: .3s ease;
+    transition: .3s ease;
+    color: #670;
+}

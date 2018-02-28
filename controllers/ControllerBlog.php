@@ -456,6 +456,7 @@ class ControllerBlog extends ControllerFormSimple{
    * @param $filter
    * @param bool $view
    * @return array|null
+   * @throws \InvalidArgumentException
    */
   protected function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
@@ -472,9 +473,11 @@ class ControllerBlog extends ControllerFormSimple{
   /**
    * @param $rows
    * @param bool $view
+   * @param $filter
+   * @param null $search_form
    * @throws \Exception
    */
-  protected function after_get_list(&$rows, $view = false){
+  protected function after_get_list(&$rows, $view = false, &$filter = null, &$search_form = null){
     if(isset($rows)) {
       foreach($rows as $key => $row) {
         $rows[$key]['post_title'] = stripslashes($row['post_title']);

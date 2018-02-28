@@ -116,9 +116,11 @@ class ControllerRelated extends ControllerFormSimple{
   /**
    * @param $rows
    * @param bool $view
+   * @param $filter
+   * @param null $search_form
    * @throws \Exception
    */
-  protected function after_get_list(&$rows, $view = false){
+  protected function after_get_list(&$rows, $view = false, &$filter = null, &$search_form = null){
     $related_selected = [];
     $pid = App::$app->get('pid');
     if(isset($pid)) {
@@ -153,7 +155,7 @@ class ControllerRelated extends ControllerFormSimple{
     $start = (($page - 1) * $per_page);
     $res_count_rows = 0;
     $rows = ModelProduct::get_list($start, $per_page, $res_count_rows, $filter, $sort);
-    $this->after_get_list($rows, $view);
+    $this->after_get_list($rows, $view, $filter, $search_form);
     $c_product->after_get_list($rows, $view);
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
     $this->search_form($search_form, $view);

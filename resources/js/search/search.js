@@ -24,12 +24,24 @@
         $('#search').attr('value', $('[name="search[a.pname]"]').attr('value'));
       }
       data = new FormData(this);
+      if ($(this).is('[data-filter-additional]') && ($('[data-filter-storage]').length > 0)) {
+        var filter = JSON.parse($('[data-filter-storage]').attr('data-filter-storage')) || {};
+        Object.keys(filter).forEach(function (key) {
+          if (Array.isArray(filter[key])) {
+            filter[key].forEach(function (item) {
+              data.append('search[' + key + '][]', item);
+            });
+          } else {
+            data.append('search[' + key + ']', filter[key]);
+          }
+        });
+      }
     }
     var sort = $('form[data-sort]');
     if (sort.length) {
       var form = new FormData(sort[0]);
       for (var key in form.keys()) {
-        if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+        if (form.hasOwnProperty(key)) data.append(key, form.get(key));
       }
     }
     var limit = $('[data-limit]');
@@ -57,7 +69,7 @@
       if (sort.length) {
         var form = new FormData(sort[0]);
         for (var key in form.keys()) {
-          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+          if (form.hasOwnProperty(key)) data.append(key, form.get(key));
         }
       }
       var limit = $('[data-limit]');
@@ -79,7 +91,7 @@
       if (sort.length) {
         var form = new FormData(sort[0]);
         for (var key in form.keys()) {
-          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+          if (form.hasOwnProperty(key)) data.append(key, form.get(key));
         }
       }
       var limit = $('[data-limit]');
@@ -101,7 +113,7 @@
       if (sort.length) {
         var form = new FormData(sort[0]);
         for (var key in form.keys()) {
-          if(form.hasOwnProperty(key)) data.append(key, form.get(key));
+          if (form.hasOwnProperty(key)) data.append(key, form.get(key));
         }
       }
       var limit = $('[data-limit]');

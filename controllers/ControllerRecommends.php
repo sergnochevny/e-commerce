@@ -124,8 +124,10 @@ class ControllerRecommends extends ControllerController{
    * @param $rows
    * @param bool $view
    * @param null $type
+   * @param $filter
+   * @param null $search_form
    */
-  protected function after_get_list(&$rows, $view = false, $type = null){
+  protected function after_get_list(&$rows, $view = false, &$filter = null, &$search_form = null, $type = null){
     $url_prms = null;
     if(isset($type)) $url_prms['back'] = 'recommends';
     $this->template->vars('url_prms', $url_prms);
@@ -135,6 +137,7 @@ class ControllerRecommends extends ControllerController{
    * @param $filter
    * @param $view
    * @return array|null|string
+   * @throws \InvalidArgumentException
    */
   protected function load_search_filter($filter, $view){
     $search = null;
@@ -208,7 +211,7 @@ class ControllerRecommends extends ControllerController{
       $rows = forward_static_call_array([$this->model_name, 'get_list'], [
         $start, $per_page, &$res_count_rows, &$filter, &$sort
       ]);
-      $this->after_get_list($rows, $view);
+      $this->after_get_list($rows, $view, $filter, $search_form);
       if(isset($filter['active'])) $search_form['active'] = $filter['active'];
       $this->template->vars('scenario', $this->scenario());
       $this->search_form($search_form, $view);

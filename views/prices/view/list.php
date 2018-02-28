@@ -15,8 +15,8 @@ use app\core\App;
   </div>
 </div>
 <div class="col-xs-12">
-  <div class="row products-wrap">
-    <div class="products product_groups">
+  <div class="row filters-wrap">
+    <div class="products filters-groups">
       <?= $list; ?>
     </div>
   </div>

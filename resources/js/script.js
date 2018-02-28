@@ -52,8 +52,8 @@ var change_text = false;
     }
     ,
     /*$.post function replacement*/
-    postdata: function (this_, url, data, callback, loader) {
-      if (typeof loader == 'undefined') loader = true;
+    postdata: function (this_, url, data, success, error, loader) {
+      if (typeof loader === 'undefined') loader = true;
       if (loader) $('body').waitloader('show');
       $.ajax({
         type: 'POST',
@@ -63,8 +63,8 @@ var change_text = false;
         processData: false,
         contentType: false,
         success: function (data) {
-          if (callback) {
-            $.when(callback.call(this_, data)).done(function () {
+          if (success && (typeof success === 'function')) {
+            $.when(success.call(this_, data)).done(function () {
               if (loader) $('body').waitloader('remove');
             });
           } else {
@@ -72,9 +72,16 @@ var change_text = false;
           }
         },
         error: function (xhr, str) {
-          alert('Error: ' + xhr.responseCode);
-          if (loader) $('body').waitloader('remove');
-        },
+          if (error && (typeof error === 'function')) {
+            $.when(error.call(this_, xhr, str)).done(function () {
+              alert('Error: ' + xhr.responseCode);
+              if (loader) $('body').waitloader('remove');
+            });
+          } else{
+            alert('Error: ' + xhr.responseCode);
+            if (loader) $('body').waitloader('remove');
+          }
+        }
       });
     }
   });

@@ -60,7 +60,7 @@
           $('body').waitloader('remove');
         };
       }
-      $.postdata(this, url, data, callback, false);
+      $.postdata(this, url, data, callback, false, false);
     }
   ).on('submit.search_action', '[data-products_block] form[data-search]',
     function (event, reset) {

@@ -157,8 +157,10 @@ class ControllerClearance extends ControllerFormSimple{
    * @param $rows
    * @param bool $view
    * @param null $type
+   * @param null $filter
+   * @param null $search_form
    */
-  protected function after_get_list(&$rows, $view = false, $type = null){
+  protected function after_get_list(&$rows, $view = false, &$filter = null, &$search_form = null, $type = null){
     $url_prms = null;
     if($view) {
       $url_prms['back'] = urlencode(base64_encode('clearance/view'));

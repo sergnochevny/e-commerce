@@ -49,6 +49,7 @@ class ControllerColors extends ControllerSimple{
    * @param $filter
    * @param bool $view
    * @return array|null
+   * @throws \InvalidArgumentException
    */
   protected function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
@@ -92,6 +93,11 @@ class ControllerColors extends ControllerSimple{
    */
   public function view($partial = false, $required_access = false){
     $this->template->vars('cart_enable', '_');
+    $filter = $this->load_search_filter_by_controller('shop');
+    if(!empty($filter) && is_array($filter)) {
+      $filter['active_filter'] = !empty(array_filter($filter));
+    }
+    $this->template->vars('filter', $filter);
     App::$app->setSession('sidebar_idx', 4);
     parent::view($partial, $required_access);
   }

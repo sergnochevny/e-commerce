@@ -6,10 +6,6 @@ use app\core\App;
 use classes\controllers\ControllerAdminBase;
 use classes\controllers\ControllerController;
 use classes\Paginator;
-use models\ModelCategories;
-use models\ModelColors;
-use models\ModelManufacturers;
-use models\ModelPatterns;
 use models\ModelPrices;
 use models\ModelSamples;
 use models\ModelShop;
@@ -63,35 +59,14 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   protected function build_search_filter(&$filter, $view = false){
-    $search = null;
-    $type = isset($filter['type']) ? $filter['type'] : null;
 
-    if(!empty(App::$app->get('mnf'))) {
-      $mnf_id = App::$app->get('mnf');
-      $search['e.id'][] = $mnf_id;
-    }
-    if(!empty(App::$app->get('cat'))) {
-      $cid = App::$app->get('cat');
-      $search['b.cid'] = $cid;
-    }
-    if(!empty(App::$app->get('ptrn'))) {
-      $ptrn_id = App::$app->get('ptrn');
-      $search['d.id'][] = $ptrn_id;
-    }
-    if(!empty(App::$app->get('clr'))) {
-      $clr_id = App::$app->get('clr');
-      $search['c.id'][] = $clr_id;
-    }
+    $type = isset($filter['type']) ? $filter['type'] : null;
     if(!is_null(App::$app->get('prc'))) {
       $prc_id = App::$app->get('prc');
       if($prc = ModelPrices::get_by_id($prc_id)) {
         $search['a.priceyard'][]['from'] = (isset($prc['min_price']) ? $prc['min_price'] : null);
         $search['a.priceyard'][]['to'] = (isset($prc['max_price']) ? $prc['max_price'] : null);
       };
-    }
-    if(!empty($search)) {
-      App::$app->post('search', $search);
-      $search = null;
     }
 
     $res = parent::build_search_filter($filter, $view);
@@ -167,10 +142,19 @@ class ControllerShop extends ControllerController{
    * @param $rows
    * @param bool $view
    * @param null $type
-   * @throws \Exception
+   * @param $filter
+   * @param null $search_form
    */
-  protected function after_get_list(&$rows, $view = false, $type = null){
+  protected function after_get_list(&$rows, $view = false, &$filter = null, &$search_form = null, $type = null){
     $url_prms = null;
+    $filter_form = array_filter($search_form,
+      function($key){
+        return in_array($key, $this->reset['reset_filter']);
+      },
+      ARRAY_FILTER_USE_KEY
+    );
+    if(isset($filter['active_filter'])) $filter_form['active_filter'] = $filter['active_filter'];
+    $this->template->vars('filter', $filter_form);
     if(isset($type)) $url_prms['back'] = $type;
     $this->template->vars('url_prms', $url_prms);
   }
@@ -199,7 +183,7 @@ class ControllerShop extends ControllerController{
     $limit = $per_page;
     if($total < ($start + $per_page)) $limit = $total - $start;
     $rows = ModelShop::get_list($start, $limit, $res_count_rows, $filter, $sort);
-    $this->after_get_list($rows, false, $type);
+    $this->after_get_list($rows, false, $filter, $search_form, $type);
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
     $this->search_form($search_form);
     $this->template->vars('rows', $rows);
@@ -479,6 +463,10 @@ class ControllerShop extends ControllerController{
   public function filter(){
     $res = $this->build_search_filter($filter);
     if(App::$app->request_is_ajax()) {
+      if(!empty($res) && is_array($res)) {
+        $res['active_filter'] = !empty(array_filter($res));
+      }
+
       exit(json_encode($res));
     }
 
