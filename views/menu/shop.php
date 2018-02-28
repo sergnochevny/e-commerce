@@ -27,9 +27,9 @@ use app\core\App;
   </div>
 </div>
 <div class="clear"></div>
-<div class="shop__sidebar bar_filter" data-filter-storage='<?=json_encode($filter);?>'>
+<div class="shop__sidebar bar_filter" data-filter-storage='<?= json_encode($filter_form); ?>'>
   <nav>
-    <ul class="shop__sidebar-list">
+    <ul class="shop__sidebar-list shop__sidebar-w-filter">
       <li class="shop__sidebar-item">
         <a data-waitloader data-index="0" title="Filter by Manufacturer"
            href="<?= App::$app->router()->UrlTo('manufacturers/view', null, 'manufacturer') ?>"
@@ -54,6 +54,20 @@ use app\core\App;
         <a data-waitloader data-index="4" title="Filter by Price"
            href="<?= App::$app->router()->UrlTo('prices/view', null, 'price') ?>"
            class="shop__sidebar-link<?= (isset($idx) && ($idx == 5)) ? ' active' : '' ?>">Price</a>
+      </li>
+    </ul>
+    <ul class="shop__sidebar-list">
+      <li class="shop__sidebar-item shop__sidebar-buttons">
+        <a data-waitloader title="Apply Filter"
+           href="<?= App::$app->router()->UrlTo('shop') ?>"
+           class="shop__sidebar-link shop__sidebar-filter-apply">
+          Apply
+        </a>
+        <a data-waitloader title="Reset Filter" data-filter-reset
+           href="<?= App::$app->router()->UrlTo('shop') ?>"
+           class="shop__sidebar-link shop__sidebar-filter-reset">
+          Reset
+        </a>
       </li>
     </ul>
   </nav>

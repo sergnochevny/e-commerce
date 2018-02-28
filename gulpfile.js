@@ -15,7 +15,7 @@ gulp.task('css', function () {
   return gulp
     .src('resources/css/**/*.css')
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-    .pipe(cleanCSS({level: 2}))
+//    .pipe(cleanCSS({level: 2}))
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('web/css'));
 });

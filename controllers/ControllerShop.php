@@ -156,7 +156,7 @@ class ControllerShop extends ControllerController{
         ARRAY_FILTER_USE_KEY
       );
     if(isset($filter['active_filter'])) $filter_form['active_filter'] = $filter['active_filter'];
-    $this->template->vars('filter', $filter_form);
+    $this->template->vars('filter_form', $filter_form);
     if(isset($type)) $url_prms['back'] = $type;
     $this->template->vars('url_prms', $url_prms);
   }

@@ -95,7 +95,7 @@ class ControllerManufacturers extends ControllerSimple{
     if(!empty($filter) && is_array($filter)) {
       $filter['active_filter'] = !empty(array_filter($filter));
     }
-    $this->template->vars('filter', $filter);
+    $this->template->vars('filter_form', $filter);
     App::$app->setSession('sidebar_idx', 1);
     parent::view($partial, $required_access);
   }
