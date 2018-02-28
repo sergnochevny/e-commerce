@@ -147,12 +147,14 @@ class ControllerShop extends ControllerController{
    */
   protected function after_get_list(&$rows, $view = false, &$filter = null, &$search_form = null, $type = null){
     $url_prms = null;
-    $filter_form = array_filter($search_form,
-      function($key){
-        return in_array($key, $this->reset['reset_filter']);
-      },
-      ARRAY_FILTER_USE_KEY
-    );
+    $filter_form = $search_form;
+    if(!empty($filter_form))
+      $filter_form = array_filter($filter_form,
+        function($key){
+          return in_array($key, $this->reset['reset_filter']);
+        },
+        ARRAY_FILTER_USE_KEY
+      );
     if(isset($filter['active_filter'])) $filter_form['active_filter'] = $filter['active_filter'];
     $this->template->vars('filter', $filter_form);
     if(isset($type)) $url_prms['back'] = $type;
