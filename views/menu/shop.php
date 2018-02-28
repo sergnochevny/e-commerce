@@ -58,14 +58,16 @@ use app\core\App;
     </ul>
     <ul class="shop__sidebar-list">
       <li class="shop__sidebar-item shop__sidebar-buttons">
-        <a data-waitloader title="Apply Filter"
+        <a data-waitloader title="Apply Filter" data-filter-apply
            href="<?= App::$app->router()->UrlTo('shop') ?>"
-           class="shop__sidebar-link shop__sidebar-filter-apply">
+           class="shop__sidebar-link shop__sidebar-filter-apply"
+          <?= empty($filter_form['active_filter']) ? 'disabled' : '' ?>>
           Apply
         </a>
-        <a data-waitloader title="Reset Filter" data-filter-reset
-           href="<?= App::$app->router()->UrlTo('shop') ?>"
-           class="shop__sidebar-link shop__sidebar-filter-reset">
+        <a title="Reset Filter" data-filter-reset
+           href="<?= App::$app->router()->UrlTo('shop/filter') ?>"
+           class="shop__sidebar-link shop__sidebar-filter-reset"
+          <?= empty($filter_form['active_filter']) ? 'disabled' : '' ?>>
           Reset
         </a>
       </li>

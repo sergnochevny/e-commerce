@@ -77,7 +77,7 @@ var change_text = false;
               alert('Error: ' + xhr.responseCode);
               if (loader) $('body').waitloader('remove');
             });
-          } else{
+          } else {
             alert('Error: ' + xhr.responseCode);
             if (loader) $('body').waitloader('remove');
           }
@@ -317,7 +317,7 @@ var change_text = false;
       $(this).find('.sr-ds').children('.fa').addClass('fa-rotate-90');
     }
   }).on('click', '[data-waitloader]', function (event) {
-    $('body').waitloader('show');
+    if (!$(this).is('[disabled]')) $('body').waitloader('show');
   }).on('focus', 'input[type=text], input[type=textarea], input[type=number], input[type=email], input[type=password], select',
     function (event) {
       $(this).parent().addClass('focus')

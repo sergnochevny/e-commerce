@@ -171,16 +171,7 @@ abstract class ControllerController extends ControllerBase{
         $pages[$this->controller][$idx] = App::$app->get('page');
         App::$app->setSession('pages', $pages);
       }
-      //
-      $search = App::$app->post('search');
-      $search = array_filter(is_array($search) ? $search : [],
-        function($val){
-          if(is_array($val)) return !empty(array_filter($val));
-
-          return !empty($val);
-        }
-      );
-      //App::$app->post('search');
+      $search = $this->search_from_post();
       if(isset($search)) {
         if(isset($search['hidden'])) unset($search['hidden']);
         if((is_array($search) && !count($search)) || !is_array($search)) $search = null;
@@ -193,16 +184,8 @@ abstract class ControllerController extends ControllerBase{
             App::$app->setSession('pages', $pages);
           }
         }
-        //
-        $search = App::$app->post('search');
-        $search = array_filter(is_array($search) ? $search : [],
-          function($val){
-            if(is_array($val)) return !empty(array_filter($val));
-
-            return !empty($val);
-          }
-        );
-        //App::$app->post('search');
+        $search = $this->search_from_post();
+        if(isset($search['active_filter'])) unset($search['active_filter']);
         $filters = App::$app->session('filters');
         if(!isset($search['reset']) && !isset($search['reset_filter'])) {
           $filters[$this->controller][$idx] = $search;
@@ -446,6 +429,22 @@ abstract class ControllerController extends ControllerBase{
     if(!empty($this->data_field)) $item['lastmod'] = date('Y-m-d', strtotime($row[$this->data_field]));
 
     return $item;
+  }
+
+  /**
+   * @return [][]|array|string
+   */
+  protected function search_from_post(){
+    $search = App::$app->post('search');
+    $search = array_filter(is_array($search) ? $search : [],
+      function($val){
+        if(is_array($val)) return !empty(array_filter($val));
+
+        return !empty($val);
+      }
+    );
+
+    return $search;
   }
 
   /**

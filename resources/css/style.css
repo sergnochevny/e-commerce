@@ -13,6 +13,12 @@ a:focus {
     outline: none;
 }
 
+a[disabled]{
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 .panel-default-vertical-sizing {
     padding-top: 25px;
     padding-bottom: 15px;
@@ -1316,14 +1322,7 @@ form[data-search] > .row > .panel > .panel-heading {
 }
 
 .search-panel.search-wide .search-reset {
-    right: 15vh;
-}
-
-@media (min-width: 1200px) {
-
-    .search-panel.search-wide .search-reset {
-        right: 18vh;
-    }
+    right: 140%;
 }
 
 .search-panel .search-button {
@@ -1640,10 +1639,6 @@ span.opa {
         right: 15px;
     }
 
-    .search-panel .search-reset {
-        /*right: 80px;*/
-    }
-
     .just-slider-wrap .just-slides .just-slide {
         min-height: 500px;
     }
@@ -1670,10 +1665,6 @@ span.opa {
 
     .search-panel .search-reset {
         top: 10px;
-    }
-
-    .search-panel.search-wide .search-reset {
-        right: 22vh;
     }
 
     .product-in-cart-image, .sample-in-cart-image {
@@ -1770,35 +1761,6 @@ span.opa {
     }
 }
 
-@media (max-width: 680px) {
-
-    .search-panel.search-wide .search-reset {
-        right: 20vh;
-    }
-}
-
-@media (max-width: 570px) {
-    .search-panel .search-reset {
-    }
-
-    .search-panel.search-wide .search-reset {
-        right: 18vh;
-    }
-}
-
-@media (max-width: 450px) {
-    .search-panel .search-button {
-        right: 5px;
-    }
-
-    .search-panel .search-reset {
-        right: 80px;
-    }
-
-    .search-panel.search-wide .search-reset {
-        right: 80px;
-    }
-}
 
 @media screen and (max-width: 320px) {
     .b_modify_images_main_pic {
@@ -2149,12 +2111,18 @@ span[role=combobox].ui-button:active .ui-icon {
 
 
 .shop__sidebar .shop__sidebar-list .shop__sidebar-item .shop__sidebar-link:hover {
-    color: #666 !important;
+    color: #666;
     text-shadow: 1px 1px 0 #fff;
 }
 
+.shop__sidebar .shop__sidebar-list .shop__sidebar-item .shop__sidebar-link:hover[disabled] {
+    color: #fff;
+    text-shadow: 1px 1px 0 #666;
+    cursor: default;
+}
+
 .shop__sidebar .shop__sidebar-list .shop__sidebar-item .shop__sidebar-link.active {
-    color: #666 !important;
+    color: #666;
     text-shadow: 1px 1px 0 #fff;
 }
 

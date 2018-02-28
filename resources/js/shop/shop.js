@@ -3,7 +3,17 @@
 
   var base_url = $('#base_url').val();
 
-  $(document).off('.basket').on('click', '.shop__sidebar-list a[data-index]',
+  $(document).off('.basket')
+    .on('click', '.shop__sidebar-list a',
+      function (event) {
+        if ($(this).is('[disabled]')) {
+          event.preventDefault();
+          event.stopPropagation();
+          return false;
+        }
+        return true;
+      }
+    ).on('click', '.shop__sidebar-list a[data-index]',
     function (event) {
       $('.shop__sidebar-list .active').removeClass('active');
       $(this).addClass('active');
@@ -28,7 +38,7 @@
         data,
         el = $(this);
       if ($('form[data-filter-additional]').length > 0) {
-        data = new FormData($('form[data-filter-additional]'));
+        data = new FormData($('form[data-filter-additional]')[0]);
       } else {
         data = new FormData();
       }
@@ -57,9 +67,9 @@
           data.append('search[' + key + ']', filter[key]);
         }
       });
-      $('body').waitloader('show');
       $.postdata(this, url, data,
         function (data) {
+          var filter = JSON.parse(data);
           if (!el.is('[data-filter-item-active]')) {
             el.attr('data-filter-item-active', true);
             el.parents('.list-item').attr('data-filter-item-active', true);
@@ -67,13 +77,75 @@
             el.removeAttr('data-filter-item-active');
             el.parents('.list-item').removeAttr('data-filter-item-active');
           }
+          if (filter.hasOwnProperty('active_filter')) {
+            $('.shop__sidebar-buttons a').removeAttr('disabled');
+          } else {
+            $('.shop__sidebar-buttons a').attr('disabled', true);
+          }
           $('[data-filter-storage]').attr('data-filter-storage', data);
-          $('body').waitloader('remove');
-        },
-        function (xhr, str) {
-          $('body').waitloader('remove');
-        }, false
+        }
       );
+    }
+  ).on('click', 'a[data-filter-apply]',
+    function (event) {
+      return !event.defaultPrevented;
+      // if (!event.defaultPrevented) {
+      //     event.preventDefault();
+      //     var filter = JSON.parse($('[data-filter-storage]').attr('data-filter-storage')) || {},
+      //       url = this.href,
+      //       data;
+      //     if ($('form[data-filter-additional]').length > 0) {
+      //       data = new FormData($('form[data-filter-additional]')[0]);
+      //       var limit = $('[data-limit]');
+      //       if (limit.length) data.append('per_page', limit.val());
+      //       var sort = $('form[data-sort]');
+      //       if (sort.length) {
+      //         var form = new FormData(sort[0]);
+      //         for (var key in form.keys()) {
+      //           if (form.hasOwnProperty(key)) data.append(key, form.get(key));
+      //         }
+      //       }
+      //     } else {
+      //       data = new FormData();
+      //     }
+      //     Object.keys(filter).forEach(function (key) {
+      //       if (Array.isArray(filter[key])) {
+      //         filter[key].forEach(function (item) {
+      //           data.append('search[' + key + '][]', item);
+      //         });
+      //       } else {
+      //         data.append('search[' + key + ']', filter[key]);
+      //       }
+      //     });
+      //     $.postdata(this, url, data,
+      //       function (data) {
+      //         debugger;
+      //         if (window.location.href !== url) window.history.pushState(null, null, url);
+      //         $('#content').html(data);
+      //         $('body').waitloader('remove');
+      //       }
+      //     );
+      //     return false;
+      // }
+      // return true;
+    }
+  ).on('click', 'a[data-filter-reset]',
+    function (event) {
+      if (!event.defaultPrevented) {
+        event.preventDefault();
+        var url = this.href,
+          data = new FormData();
+        data.append('search[reset_filter]', true);
+        $.postdata(this, url, data,
+          function (data) {
+            $('[data-filter-storage]').attr('data-filter-storage', data);
+            $('.shop__sidebar-buttons a').attr('disabled', true);
+            $('form[data-search]').trigger('submit');
+          }
+        );
+        return false;
+      }
+      return true;
     }
   );
 
