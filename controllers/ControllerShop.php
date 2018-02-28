@@ -147,7 +147,7 @@ class ControllerShop extends ControllerController{
    */
   protected function after_get_list(&$rows, $view = false, &$filter = null, &$search_form = null, $type = null){
     $url_prms = null;
-    $filter_form = $search_form;
+    $filter_form = !empty($search_form) ? array_slice($search_form, 0) : [];
     if(!empty($filter_form))
       $filter_form = array_filter($filter_form,
         function($key){
