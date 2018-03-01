@@ -9,8 +9,8 @@ use app\core\App;
     <?php
     $prm = 'e.id';
     $data_filter_item_active = false;
-    if(!empty($filter_form[$prm])) {
-      $data_filter_item_active = in_array($row['id'], $filter_form[$prm]);
+    if(!empty($filter[$prm])) {
+      $data_filter_item_active = in_array($row['id'], $filter[$prm]);
     }
     ?>
     <div class="col-xs-6 col-sm-3 list-item" <?= $data_filter_item_active ? 'data-filter-item-active' : ''; ?>>

@@ -4,12 +4,12 @@ use app\core\App;
 
 ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
-  <div class="col-xs-12 col-md-2">
+  <div class="col-xs-12 col-md-20-prc">
     <div class="row w_search">
       <?= isset($shop_menu) ? $shop_menu : ''; ?>
     </div>
   </div>
-  <div class="col-xs-12 col-md-10 pull-right main-content-inner-side box" role="main">
+  <div class="col-xs-12 col-md-80-prc pull-right main-content-inner-side box" role="main">
     <div id="content" class="content">
       <?= $list; ?>
     </div>

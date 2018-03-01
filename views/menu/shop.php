@@ -27,33 +27,68 @@ use app\core\App;
   </div>
 </div>
 <div class="clear"></div>
-<div class="shop__sidebar bar_filter" data-filter-storage='<?= json_encode($filter_form); ?>'>
+<div class="shop__sidebar bar_filter" data-filter-storage='<?= json_encode($filter); ?>'>
   <nav>
     <ul class="shop__sidebar-list shop__sidebar-w-filter">
-      <li class="shop__sidebar-item">
+      <?php $prm = "e.id"; ?>
+      <li class="shop__sidebar-item" data-filter-prm="<?= $prm; ?>">
         <a data-waitloader data-index="0" title="Filter by Manufacturer"
            href="<?= App::$app->router()->UrlTo('manufacturers/view', null, 'manufacturer') ?>"
            class="shop__sidebar-link<?= (isset($idx) && ($idx == 1)) ? ' active' : '' ?>">Manufacturer</a>
+        <a title="Clear Filter by Manufacturer" data-link-clear-filter
+           href="<?= App::$app->router()->UrlTo('shop/filter') ?>"
+          <?= !empty($filter[$prm]) ? '' : 'disabled' ?>
+           class="shop__sidebar-link-filter-clear">
+          <i class="fa fa-filter"></i>
+        </a>
       </li>
-      <li class="shop__sidebar-item">
+      <?php $prm = "b.cid"; ?>
+      <li class="shop__sidebar-item" data-filter-prm="<?= $prm; ?>">
         <a data-waitloader data-index="1" title="Filter by Type/Category"
            href="<?= App::$app->router()->UrlTo('categories/view', null, 'type') ?>"
            class="shop__sidebar-link<?= (isset($idx) && ($idx == 2)) ? ' active' : '' ?>">Type</a>
+        <a title="Clear Filter by Type" data-link-clear-filter
+           href="<?= App::$app->router()->UrlTo('shop/filter') ?>"
+          <?= !empty($filter[$prm]) ? '' : 'disabled' ?>
+           class="shop__sidebar-link-filter-clear">
+          <i class="fa fa-filter"></i>
+        </a>
       </li>
-      <li class="shop__sidebar-item">
+      <?php $prm = "d.id"; ?>
+      <li class="shop__sidebar-item" data-filter-prm="<?= $prm; ?>">
         <a data-waitloader data-index="2" title="Filter by Pattern"
            href="<?= App::$app->router()->UrlTo('patterns/view', null, 'pattern') ?>"
            class="shop__sidebar-link<?= (isset($idx) && ($idx == 3)) ? ' active' : '' ?>">Pattern</a>
+        <a title="Clear Filter by Pattern" data-link-clear-filter
+           href="<?= App::$app->router()->UrlTo('shop/filter') ?>"
+          <?= !empty($filter[$prm]) ? '' : 'disabled' ?>
+           class="shop__sidebar-link-filter-clear">
+          <i class="fa fa-filter"></i>
+        </a>
       </li>
-      <li class="shop__sidebar-item">
+      <?php $prm = "c.id"; ?>
+      <li class="shop__sidebar-item" data-filter-prm="<?= $prm; ?>">
         <a data-waitloader data-index="3" title="Filter by Color"
            href="<?= App::$app->router()->UrlTo('colors/view', null, 'color') ?>"
            class="shop__sidebar-link<?= (isset($idx) && ($idx == 4)) ? ' active' : '' ?>">Color</a>
+        <a title="Clear Filter by Color" data-link-clear-filter
+           href="<?= App::$app->router()->UrlTo('shop/filter') ?>"
+          <?= !empty($filter[$prm]) ? '' : 'disabled' ?>
+           class="shop__sidebar-link-filter-clear">
+          <i class="fa fa-filter"></i>
+        </a>
       </li>
-      <li class="shop__sidebar-item">
+      <?php $prm = "--"; ?>
+      <li class="shop__sidebar-item" data-filter-prm="<?= $prm; ?>">
         <a data-waitloader data-index="4" title="Filter by Price"
            href="<?= App::$app->router()->UrlTo('prices/view', null, 'price') ?>"
            class="shop__sidebar-link<?= (isset($idx) && ($idx == 5)) ? ' active' : '' ?>">Price</a>
+        <a title="Clear Filter by Price" data-link-clear-filter
+           href="<?= App::$app->router()->UrlTo('shop/filter') ?>"
+          <?= !empty($filter[$prm]) ? '' : 'disabled' ?>
+           class="shop__sidebar-link-filter-clear">
+          <i class="fa fa-filter"></i>
+        </a>
       </li>
     </ul>
     <ul class="shop__sidebar-list">
@@ -61,13 +96,13 @@ use app\core\App;
         <a data-waitloader title="Apply Filter" data-filter-apply
            href="<?= App::$app->router()->UrlTo('shop') ?>"
            class="shop__sidebar-link shop__sidebar-filter-apply"
-          <?= empty($filter_form['active_filter']) ? 'disabled' : '' ?>>
+          <?= empty($filter['active_filter']) ? 'disabled' : '' ?>>
           Apply
         </a>
         <a title="Reset Filter" data-filter-reset
            href="<?= App::$app->router()->UrlTo('shop/filter') ?>"
            class="shop__sidebar-link shop__sidebar-filter-reset"
-          <?= empty($filter_form['active_filter']) ? 'disabled' : '' ?>>
+          <?= empty($filter['active_filter']) ? 'disabled' : '' ?>>
           Reset
         </a>
       </li>

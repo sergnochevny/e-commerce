@@ -147,16 +147,17 @@ class ControllerShop extends ControllerController{
    */
   protected function after_get_list(&$rows, $view = false, &$filter = null, &$search_form = null, $type = null){
     $url_prms = null;
-    $filter_form = !empty($search_form) ? array_slice($search_form, 0) : [];
-    if(!empty($filter_form))
-      $filter_form = array_filter($filter_form,
+    $main_filter = !empty($search_form) ? array_slice($search_form, 0) : [];
+    if(!empty($main_filter)) {
+      $main_filter = array_filter($main_filter,
         function($key){
           return in_array($key, $this->reset['reset_filter']);
         },
         ARRAY_FILTER_USE_KEY
       );
-    if(isset($filter['active_filter'])) $filter_form['active_filter'] = $filter['active_filter'];
-    $this->template->vars('filter_form', $filter_form);
+    }
+    if(!empty($main_filter)) $main_filter['active_filter'] = !empty($main_filter);
+    $this->template->vars('filter', $main_filter);
     if(isset($type)) $url_prms['back'] = $type;
     $this->template->vars('url_prms', $url_prms);
   }
@@ -332,8 +333,6 @@ class ControllerShop extends ControllerController{
     $list = $this->get_list_by_type('specials', (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-
-    $this->template->vars('filter', $list);
     $this->main->view('shop');
   }
 
@@ -463,13 +462,19 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   public function filter(){
-    $res = $this->build_search_filter($filter);
+    $main_filter = $this->build_search_filter($filter);
     if(App::$app->request_is_ajax()) {
-      if(!empty($res) && is_array($res)) {
-        $res['active_filter'] = !empty(array_filter($res));
-      }
+      if(!empty($main_filter) && is_array($main_filter)) {
+        $main_filter = array_filter($main_filter,
+          function($key){
+            return in_array($key, $this->reset['reset_filter']);
+          },
+          ARRAY_FILTER_USE_KEY
+        );
 
-      exit(json_encode($res));
+        if(!empty($main_filter)) $main_filter['active_filter'] = !empty(array_filter($main_filter));
+      }
+      exit(json_encode($main_filter));
     }
 
     return $this->shop();
