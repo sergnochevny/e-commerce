@@ -99,6 +99,16 @@ return [
       ]
     ]
   ],
+  'mailer' => [
+    'transport' => [
+      'class' => 'Swift_SmtpTransport',
+      'host' => 'mail.studionovi.co',
+      'username' => 'test@studionovi.co',
+      'password' => 'ik}oqqI1A,LX',
+      'port' => '465',
+      'encryption' => 'ssl',
+    ],
+  ],
   'layouts' => "main_layout",
   'per_page_items' => ['6', '12', '24'],
   'errorHandler' => 'classes\ErrorHandler'
