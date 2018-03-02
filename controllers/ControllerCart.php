@@ -48,7 +48,8 @@ class ControllerCart extends ControllerController{
     if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
       $filename = "images/products/not_image.jpg";
     }
-    $img_url = App::$app->router()->UrlTo($filename);
+    $img_url = App::$app->router()
+      ->UrlTo($filename);
 
     $cart = App::$app->session('cart');
     $price = $product['priceyard'];
@@ -119,7 +120,8 @@ class ControllerCart extends ControllerController{
     if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
       $filename = "images/products/not_image.jpg";
     }
-    $img_url = App::$app->router()->UrlTo($filename);
+    $img_url = App::$app->router()
+      ->UrlTo($filename);
     $this->template->vars('img_url', $img_url);
     $this->template->vars('item', $item);
     $this->template->vars('pid', $pid);
@@ -183,7 +185,8 @@ class ControllerCart extends ControllerController{
         $cart_items = isset(App::$app->session('cart')['items']) ? App::$app->session('cart')['items'] : [];
         $cart_samples_items = isset(App::$app->session('cart')['samples_items']) ? App::$app->session('cart')['samples_items'] : [];
         if((count($cart_samples_items) == 0) && (count($cart_items) == 0)) {
-          $url = App::$app->router()->UrlTo('shop');
+          $url = App::$app->router()
+            ->UrlTo('shop');
           $this->redirect($url);
         }
         $pdiscount = 0;
@@ -268,14 +271,17 @@ class ControllerCart extends ControllerController{
             App::$app->setSession('cart', null);
           } else {
             ModelOrders::rollback();
-            $this->redirect(App::$app->router()->UrlTo('shop'));
+            $this->redirect(App::$app->router()
+              ->UrlTo('shop'));
           }
           ModelOrders::commit();
         } catch(Exception $e) {
           ModelOrders::rollback();
         }
-      } else $this->redirect(App::$app->router()->UrlTo('shop'));
-    } else $this->redirect(App::$app->router()->UrlTo('shop'));
+      } else $this->redirect(App::$app->router()
+        ->UrlTo('shop'));
+    } else $this->redirect(App::$app->router()
+      ->UrlTo('shop'));
   }
 
   /**
@@ -291,7 +297,6 @@ class ControllerCart extends ControllerController{
       $ship_lastname = trim($user['ship_lastname']);
 
       $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
-      $headers = "From: \"I Luv Fabrix\"<" . App::$app->keyStorage()->system_info_email . "\n";
       if($demo == 1) {
         $body = "                !!!THIS IS A TEST!!!                  \n\n";
         $body .= "Hi, $ship_firstname $ship_lastname ($email) \n\n";
@@ -302,32 +307,39 @@ class ControllerCart extends ControllerController{
       }
       $body = $body . "Thank you for your purchase. The following items will be shipped to you.\n";
 
-      $ma['headers'] = $headers;
       $ma['subject'] = $subject;
       $ma['body'] = $body;
 
       $ma = $this->prepare_before_pay_mail($ma);
       if(isset($ma)) {
-        $headers = $ma['headers'];
         $subject = $ma['subject'];
         $body = $ma['body'];
 
-        mail($email, $subject, $body, $headers);
-
-        $headers = "From: Web Customer <$email>\n";
-
-        if($demo == 1) {
-          mail(App::$app->keyStorage()->system_info_email, $subject, $body, $headers);
-          mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
-          mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
-          mail("max@maxportland.com", $subject, $body, $headers);
-          mail("sergnochevny@studionovi.co", $subject, $body, $headers);
-        } else {
-          mail(App::$app->keyStorage()->system_info_email, $subject, $body, $headers);
-          mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
-          mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
-          mail("max@maxportland.com", $subject, $body, $headers);
+        $mailer = App::$app->getMailer();
+        if(!empty($email)) {
+          $messages[] = $mailer->compose(['text' => 'thanx_mail-text'], ['body' => $body])
+            ->setSubject($subject)
+            ->setTo([$email])
+            ->setReplyTo([App::$app->keyStorage()->system_info_email])
+            ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
         }
+
+        $emails = [
+          App::$app->keyStorage()->system_info_email,
+          "iluvfabrixsales@gmail.com"
+        ];
+        if($demo == 1) {
+          $emails = ["sergnochevny@studionovi.co"];
+        }
+        foreach($emails as $email) {
+          $messages[] = $mailer->compose(['text' => 'thanx_mail-text'], ['body' => $body])
+            ->setSubject($subject)
+            ->setTo([$email])
+            ->setReplyTo([App::$app->keyStorage()->system_info_email])
+            ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+        }
+
+        if(!empty($messages)) $mailer->sendMultiple($messages);
       }
     }
   }
@@ -342,7 +354,6 @@ class ControllerCart extends ControllerController{
     $rollcost = 0;
     $express_samples_cost = 0;
     $total = 0;
-    $headers = $ma['headers'];
     $subject = $ma['subject'];
     $body = $ma['body'];
 
@@ -483,7 +494,6 @@ class ControllerCart extends ControllerController{
       $body = $body . "$ship_phone\n";
       $body = $body . "$ship_fax\n\n";
 
-      $ma['headers'] = $headers;
       $ma['subject'] = $subject;
       $ma['body'] = $body;
     }
@@ -726,7 +736,8 @@ class ControllerCart extends ControllerController{
    */
   protected function proceed_checkout_prepare(){
     $prms = null;
-    $back_url = App::$app->router()->UrlTo('cart');
+    $back_url = App::$app->router()
+      ->UrlTo('cart');
     $this->main->template->vars('back_url', $back_url);
     ob_start();
     $this->products_in('product_in_proceed');
@@ -752,10 +763,12 @@ class ControllerCart extends ControllerController{
     $this->proceed_bill_ship();
     $bill_ship_info = ob_get_contents();
     ob_end_clean();
-    $back_url = App::$app->router()->UrlTo('cart', ['proceed' => 1]);
+    $back_url = App::$app->router()
+      ->UrlTo('cart', ['proceed' => 1]);
 
     $prms['url'] = urlencode(base64_encode($back_url));
-    $change_user_url = App::$app->router()->UrlTo('user/change', $prms);
+    $change_user_url = App::$app->router()
+      ->UrlTo('user/change', $prms);
 
     $this->main->template->vars('cart_items', $cart_items);
     $this->main->template->vars('cart_samples_items', $cart_samples_items);
@@ -1010,35 +1023,33 @@ class ControllerCart extends ControllerController{
         $subject = "I Luv Fabrix purchase confirmation ";
       }
 
-      $headers = "From: \"I Luv Fabrix\"<" . App::$app->keyStorage()->system_info_email . ">\n";
       $body = $body . "\n";
-
-      $ma['headers'] = $headers;
       $ma['subject'] = $subject;
       $ma['body'] = $body;
 
       $ma = $this->prepare_before_pay_mail($ma);
       if(isset($ma)) {
-        $headers = $ma['headers'];
         $subject = $ma['subject'];
         $body = $ma['body'];
 
+        $mailer = App::$app->getMailer();
+        $emails = [
+          App::$app->keyStorage()->system_info_email,
+          "lanny1952@gmail.com",
+          "iluvfabrixsales@gmail.com"
+        ];
         if($demo == 1) {
-          mail("dev@9thsphere.com", $subject, $body, $headers);
-          mail(App::$app->keyStorage()->system_info_email, $subject, $body, $headers);
-          mail("max@maxportland.com", $subject, $body, $headers);
-          mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
-          mail("lanny1952@gmail.com", $subject, $body, $headers);
-          mail(App::$app->keyStorage()->system_info_email, $subject, $body, $headers);
-          mail("sergnochevny@studionovi.co", $subject, $body, $headers);
-        } else {
-          mail("dev@9thsphere.com", $subject, $body, $headers);
-          mail("info@iluvfabrix.com", $subject, $body, $headers);
-          mail("max@maxportland.com", $subject, $body, $headers);
-          mail("mmitchell_houston@yahoo.com", $subject, $body, $headers);
-          mail("lanny1952@gmail.com", $subject, $body, $headers);
-          mail("iluvfabrixsales@gmail.com", $subject, $body, $headers);
+          $emails = ["sergnochevny@studionovi.co"];
         }
+        foreach($emails as $email) {
+          $messages[] = $mailer->compose(['text' => 'thanx_mail-text'], ['body' => $body])
+            ->setSubject($subject)
+            ->setTo([$email])
+            ->setReplyTo([App::$app->keyStorage()->system_info_email])
+            ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+        }
+
+        if(!empty($messages)) $mailer->sendMultiple($messages);
       }
     }
   }
@@ -1061,7 +1072,8 @@ class ControllerCart extends ControllerController{
     $paypal_url = App::$app->keyStorage()->paypal_url;
     if(!empty($paypal_business) && !empty($paypal_url)) {
       $prms = null;
-      $back_url = App::$app->router()->UrlTo('cart', ['proceed' => true]);
+      $back_url = App::$app->router()
+        ->UrlTo('cart', ['proceed' => true]);
       $this->template->vars('back_url', $back_url);
       $total = App::$app->session('cart')['total'];
       $this->template->vars('total', $total);
@@ -1111,10 +1123,14 @@ class ControllerCart extends ControllerController{
         $paypal['url'] = $paypal_url;
 
         $paypal['cmd'] = "_xclick";
-        $paypal['image_url'] = App::$app->router()->UrlTo('/');
-        $paypal['return'] = App::$app->router()->UrlTo('cart', ['pay_ok' => true, 'trid' => $trid]);
-        $paypal['cancel_return'] = App::$app->router()->UrlTo("cart", ['pay_error' => true]);
-        $paypal['notify_url'] = App::$app->router()->UrlTo("ipn", ['pay_notify' => session_id()]);
+        $paypal['image_url'] = App::$app->router()
+          ->UrlTo('/');
+        $paypal['return'] = App::$app->router()
+          ->UrlTo('cart', ['pay_ok' => true, 'trid' => $trid]);
+        $paypal['cancel_return'] = App::$app->router()
+          ->UrlTo("cart", ['pay_error' => true]);
+        $paypal['notify_url'] = App::$app->router()
+          ->UrlTo("ipn", ['pay_notify' => session_id()]);
         $paypal['rm'] = "1";
         $paypal['currency_code'] = "USD";
         $paypal['lc'] = "US";

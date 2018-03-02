@@ -13,9 +13,12 @@ class ControllerUser extends ControllerUserBase{
 
   /**
    * @param $email
+   * @throws \Exception
    */
   public static function sendWelcomeEmail($email){
-    $headers = "From: \"I Luv Fabrix\"<" . App::$app->keyStorage()->system_info_email . ">\n";
+
+    $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
+
     $subject = "Thank you for registering with iluvfabrix.com";
     $body = "Thank you for registering with iluvfabrix.com.\n";
     $body .= "\n";
@@ -25,7 +28,20 @@ class ControllerUser extends ControllerUserBase{
     $body .= "\n";
     $body .= "Once again, thank you, and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
 
-    mail($email, $subject, $body, $headers);
+    $mailer = App::$app->getMailer();
+    $emails = [$email];
+    if($demo == 1) {
+      $emails[] = "sergnochevny@studionovi.co";
+    }
+    foreach($emails as $email) {
+      $messages[] = $mailer->compose(['text' => 'welcome_mail-text'], ['body' => $body])
+        ->setSubject($subject)
+        ->setTo([$email])
+        ->setReplyTo([App::$app->keyStorage()->system_info_email])
+        ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+    }
+
+    if(!empty($messages)) $mailer->sendMultiple($messages);
   }
 
   /**

@@ -22,6 +22,7 @@ class ControllerIpn extends ControllerController{
    * @export
    * @param bool $required_access
    * @return bool
+   * @throws \Exception
    */
   public function index($required_access = true){
     if(!is_null(App::$app->get('pay_notify'))) {
@@ -75,7 +76,19 @@ class ControllerIpn extends ControllerController{
           $body = ob_get_clean();
           ob_end_clean();
           file_put_contents('notify.log', $body, FILE_APPEND);
-          mail('sergnochevny@studionovi.co', 'PayPall Payment', $body);
+
+          $subject = 'PayPall Payment';
+          $emails[] = "sergnochevny@studionovi.co";
+
+          $mailer = App::$app->getMailer();
+          foreach($emails as $email) {
+            $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
+              ->setSubject($subject)
+              ->setTo([$email])
+              ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+          }
+
+          if(!empty($messages)) $mailer->sendMultiple($messages);
         }
 
         $cart = App::$app->session('cart');

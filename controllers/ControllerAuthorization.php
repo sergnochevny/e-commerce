@@ -66,11 +66,23 @@ class ControllerAuthorization extends ControllerController{
   private function send_remind($email, $remind_url){
     $subject = "ILuvFabrix. Change Password.";
     $this->template->vars('remind_url', $remind_url);
-    $message = $this->template->view_layout_return('remind/message');
-    $headers = "MIME-Version: 1.0' \r\n";
-    $headers .= "Content-Type: text/html; charset=UTF-8 \r\n";
+    $body = $this->template->view_layout_return('remind/message');
+    $headers = ["MIME-Version: 1.0'"=>"Content-Type: text/html; charset=UTF-8 \r\n"];
+    $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
 
-    return mail($email, $subject, $message, $headers);
+    $mailer = App::$app->getMailer();
+    $emails = [$email];
+    if($demo == 1) {
+      $emails[] = "sergnochevny@studionovi.co";
+    }
+    foreach($emails as $email) {
+      $messages[] = $mailer->compose(['html' => 'mail-text'], ['body' => $body])
+        ->setSubject($subject)
+        ->setTo([$email])
+        ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+    }
+
+    if(!empty($messages)) $mailer->sendMultiple($messages);
   }
 
   /**

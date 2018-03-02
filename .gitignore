@@ -48,3 +48,4 @@ phpinfo.php
 /config/console.php
 /vendor/
 /web/images/
+/runtime/

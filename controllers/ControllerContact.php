@@ -14,14 +14,30 @@ class ControllerContact extends ControllerSimple{
 
   /**
    * @param null $data
+   * @return bool
+   * @throws \Exception
    */
   private function sendMessage($data = null){
     if(isset($data) && is_array($data)) {
-      $headers = "From: " . $data['name'] . "<" . $data['email'] . ">\n";
+      $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
+
       $subject = $data['subject'];
       $body = $data['comments'];
       $email = App::$app->keyStorage()->system_info_email;
-      mail($email, $subject, $body, $headers);
+
+      $mailer = App::$app->getMailer();
+      $emails = [$email];
+      if($demo == 1) {
+        $emails[] = "sergnochevny@studionovi.co";
+      }
+      foreach($emails as $email) {
+        $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
+          ->setSubject($subject)
+          ->setTo([$email])
+          ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+      }
+
+      return !empty($messages) && $mailer->sendMultiple($messages);
     }
   }
 
