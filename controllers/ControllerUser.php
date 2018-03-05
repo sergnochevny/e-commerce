@@ -16,7 +16,6 @@ class ControllerUser extends ControllerUserBase{
    * @throws \Exception
    */
   public static function sendWelcomeEmail($email){
-
     $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
 
     $subject = "Thank you for registering with iluvfabrix.com";
@@ -31,8 +30,13 @@ class ControllerUser extends ControllerUserBase{
     $mailer = App::$app->getMailer();
     $emails = [$email];
     if($demo == 1) {
-      $emails[] = "sergnochevny@studionovi.co";
+      $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
     }
+    array_walk($emails, function(&$item){
+      $item = trim($item);
+    });
+    $emails = array_unique($emails);
+
     foreach($emails as $email) {
       $messages[] = $mailer->compose(['text' => 'welcome_mail-text'], ['body' => $body])
         ->setSubject($subject)

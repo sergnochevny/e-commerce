@@ -78,7 +78,12 @@ class ControllerIpn extends ControllerController{
           file_put_contents('notify.log', $body, FILE_APPEND);
 
           $subject = 'PayPall Payment';
-          $emails[] = "sergnochevny@studionovi.co";
+
+          $emails = explode(',', App::$app->keyStorage()->system_emails_admins);
+          array_walk($emails, function(&$item){
+            $item = trim($item);
+          });
+          $emails = array_unique($emails);
 
           $mailer = App::$app->getMailer();
           foreach($emails as $email) {

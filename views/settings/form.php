@@ -13,7 +13,8 @@ use app\core\App;
         <ul class="tabNavigation">
           <li><a class="" data-tab_index="1" href="#first">System</a></li>
           <li><a class="" data-tab_index="2" href="#second">Shop</a></li>
-          <li><a class="" data-tab_index="3" href="#third">Shop Widgets</a></li>
+          <li><a class="" data-tab_index="3" href="#third">Widgets</a></li>
+          <li><a class="" data-tab_index="4" href="#fourth">Emails</a></li>
         </ul>
       </div>
     </div>
@@ -27,17 +28,7 @@ use app\core\App;
             </div>
             <div class="col-xs-12">
               <div class="row">
-                <div class="col-xs-12">
-                  <label class="required_field">
-                    Site Name
-                  </label>
-                  <i class="fa fa-question-circle" data-promotion="" href="#system_site_name"></i>
-                  <div class="form-row">
-                    <input type="text" name="system_site_name" class="input-text"
-                           value="<?= $data['system_site_name']; ?>"/>
-                  </div>
-                </div>
-                <div class="col-xs-12">
+                <div class="col-xs-12 col-sm-3">
                   <div class="form-row">
                     <label>
                       <input type="checkbox" name="system_enable_sef" value="1"
@@ -46,6 +37,16 @@ use app\core\App;
                       Enable SEF
                     </label>
                     <i class="fa fa-question-circle" data-promotion="" href="#system_enable_sef"></i>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                  <label class="required_field">
+                    Site Name
+                  </label>
+                  <i class="fa fa-question-circle" data-promotion="" href="#system_site_name"></i>
+                  <div class="form-row">
+                    <input type="text" name="system_site_name" class="input-text"
+                           value="<?= $data['system_site_name']; ?>"/>
                   </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
@@ -89,17 +90,7 @@ use app\core\App;
                     </select>
                   </div>
                 </div>
-                <div class="col-xs-12">
-                  <label class="required_field">
-                    System Information Email
-                  </label>
-                  <i class="fa fa-question-circle" data-promotion="" href="#system_info_email"></i>
-                  <div class="form-row">
-                    <input type="email" name="system_info_email" class="input-text"
-                           value="<?= $data['system_info_email']; ?>"/>
-                  </div>
-                </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                   <label>
                     <input type="checkbox" name="system_csv_use_gz" value="1"
                       <?= (isset($data['system_csv_use_gz']) && $data['system_csv_use_gz'] == '1') ? 'checked' : '' ?>
@@ -108,7 +99,7 @@ use app\core\App;
                   </label>
                   <i class="fa fa-question-circle" data-promotion="" href="#system_csv_use_gz"></i>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                   <label class="required_field">
                     Export Users CSV, fields delimiter
                   </label>
@@ -137,7 +128,7 @@ use app\core\App;
                     desired place or use the action spots)
                   </small>
                 </div>
-                <div data-csv_export_fields class="export-fields col-xs-12">
+                <div data-csv_export_fields class="settings-group col-xs-12">
                   <div class="box">
                     <div class="col-xs-12 col-sm-6 col-sm-halfoffset-right">
                       <div class="col-xs-12">
@@ -586,7 +577,7 @@ use app\core\App;
         <div data-role="tab" class="row" id="third" style="display: none;">
           <div class="row">
             <div class="col-xs-12 text-center">
-              <h3>Shop Wigets</h3>
+              <h3>Wigets</h3>
             </div>
             <div class="col-xs-12">
               <div class="row">
@@ -634,9 +625,177 @@ use app\core\App;
             </div>
           </div>
         </div>
-      </div>
 
+        <div data-role="tab" class="row" id="fourth" style="display: none;">
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              <h3>Emails</h3>
+            </div>
+            <div class="col-xs-12">
+              <div class="row">
+
+                <div class="col-xs-12">
+                  <label class="required_field">
+                    SMTP Server Settings
+                  </label>
+                  <small class="hint">(get this settins from admins)</small>
+                </div>
+                <div class="settings-group col-xs-12">
+                  <div class="box">
+                    <div class="col-xs-6 col-sm-6">
+                      <div class="form-row">
+                        <label>
+                          <input type="checkbox" name="system_emails_debug" value="1"
+                            <?= (isset($data['system_emails_debug']) && $data['system_emails_debug'] == '1') ? 'checked' : '' ?>
+                                 class="input-checkbox">
+                          Debug emails
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6">
+                      <div class="form-row">
+                        <label class="required_field">
+                          Host
+                        </label>
+                        <i class="fa fa-question-circle" data-promotion="" href="emails_host"></i>
+                        <input
+                          data-inputmask-regex="[a-z0-9_/.]*"
+                          type="text"
+                          placeholder="smtp.example.com"
+                          name="system_emails_host" class="input-text"
+                          <?php if(!empty($data['system_emails_host'])): ?>
+                            value="<?= $data['system_emails_host']; ?>"
+                          <?php endif; ?>
+                        />
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                      <div class="form-row">
+                        <label class="required_field">
+                          User Name
+                        </label>
+                        <i class="fa fa-question-circle" data-promotion="" href="#emails_user_name"></i>
+                        <input
+                          data-inputmask="'alias': 'email'"
+                          placeholder="username@example.com"
+                          type="text"
+                          name="system_emails_user_name" class="input-text"
+                          <?php if(!empty($data['system_emails_user_name'])): ?>
+                            value="<?= $data['system_emails_user_name']; ?>"
+                          <?php endif; ?>
+                        />
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                      <div class="form-row">
+                        <label class="required_field">
+                          Password
+                        </label>
+                        <i class="fa fa-question-circle" data-promotion="" href="#emails_password"></i>
+                        <input
+                          type="password"
+                          placeholder="*************"
+                          name="system_emails_password" class="input-password"
+                          <?php if(!empty($data['system_emails_password'])): ?>
+                            value="<?= $data['system_emails_password']; ?>"
+                          <?php endif; ?>
+                        />
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                      <div class="form-row">
+                        <label class="required_field">
+                          Port
+                        </label>
+                        <i class="fa fa-question-circle" data-promotion="" href="#emails_port"></i>
+                        <input data-inputmask="'alias': 'integer', 'groupSize': '5',
+                      'allowMinus': 'false', 'allowPlus':'false',
+                      'max': '65535', 'min': '1'"
+                               type="text"
+                               placeholder="25"
+                               name="system_emails_port" class="input-text"
+                          <?php if(!empty($data['system_emails_port'])): ?>
+                            value="<?= number_format($data['system_emails_port'], 0, ".", ""); ?>"
+                          <?php endif; ?>
+                        />
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                      <label class="required_field">
+                        Encryption
+                      </label>
+                      <i class="fa fa-question-circle" data-promotion="" href="#system_emails_encryption"></i>
+                      <div class="form-row">
+                        <select name="system_emails_encryption" class="input-text">
+                          <option value="" <?= empty($data['system_emails_encryption']) ? 'selected' : ''; ?>>
+                            none
+                          </option>
+                          <option value="tls" <?= ($data['system_emails_encryption'] == 'tls') ? 'selected' : ''; ?>>
+                            tls
+                          </option>
+                          <option value="ssl" <?= ($data['system_emails_encryption'] == 'ssl') ? 'selected' : ''; ?>>
+                            ssl
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <label class="required_field">
+                    System Information Email
+                  </label>
+                  <i class="fa fa-question-circle" data-promotion="" href="#system_info_email"></i>
+                  <div class="form-row">
+                    <input type="email" name="system_info_email" class="input-text"
+                           value="<?= $data['system_info_email']; ?>"/>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <label class="required_field">
+                    Send From Email Address
+                  </label>
+                  <i class="fa fa-question-circle" data-promotion="" href="#system_send_from_email"></i>
+                  <div class="form-row">
+                    <input type="email" name="system_send_from_email" class="input-text"
+                           value="<?= $data['system_send_from_email']; ?>"/>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <label class="required_field">
+                    Admins' Email Addresses
+                  </label>
+                  <i class="fa fa-question-circle" data-promotion="" href="#system_emails_admins"></i>
+                  <small class="hint">(You can specify several values separated by a comma.)</small>
+                  <div class="form-row">
+                    <input type="text" name="system_emails_admins" class="input-text"
+                           value="<?= $data['system_emails_admins']; ?>"/>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <label class="required_field">
+                    Sellers' Email Addresses
+                  </label>
+                  <i class="fa fa-question-circle" data-promotion="" href="#system_emails_sellers"></i>
+                  <small class="hint">(You can specify several values separated by a comma.)</small>
+                  <div class="form-row">
+                    <input type="text" name="system_emails_sellers" class="input-text"
+                           value="<?= $data['system_emails_sellers']; ?>"/>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
+
   </div>
 
   <div class="row">

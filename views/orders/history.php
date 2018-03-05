@@ -47,11 +47,13 @@ use app\core\App;
     </table>
   </div>
 
-  <nav role="navigation" class="paging-navigation">
-    <h4 class="sr-only">Navigation</h4>
-    <ul class='pagination'>
-      <?= isset($paginator) ? $paginator : ''; ?>
-    </ul>
-  </nav>
+  <?php if(isset($paginator)): ?>
+    <nav role="navigation" class="paging-navigation">
+      <h4 class="sr-only">Navigation</h4>
+      <ul class='pagination'>
+        <?= isset($paginator) ? $paginator : ''; ?>
+      </ul>
+    </nav>
+  <?php endif; ?>
 
 </div>

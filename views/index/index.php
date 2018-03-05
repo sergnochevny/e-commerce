@@ -7,7 +7,7 @@ use app\core\App;
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
 
   <div class="col-xs-12 box outer-offset-bottom half-inner-offset-vertical">
-    <div>
+    <div class="block-info">
       <div data-load="<?= App::$app->router()->UrlTo('info/view', ['method' => 'home']) ?>"></div>
     </div>
   </div>

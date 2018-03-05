@@ -34,13 +34,15 @@ use app\core\App;
     </nav>
   </div>
 
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="text-center">
-        <a data-related_add_ok class="button" href="ok" style="width: 150px;">Ok</a>
+  <?php if(isset($paginator)): ?>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="text-center">
+          <a data-related_add_ok class="button" href="ok" style="width: 150px;">Ok</a>
+        </div>
       </div>
     </div>
-  </div>
+  <?php endif; ?>
 </div>
 
 <script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

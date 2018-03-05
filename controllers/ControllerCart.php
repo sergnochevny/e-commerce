@@ -324,13 +324,13 @@ class ControllerCart extends ControllerController{
             ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
         }
 
-        $emails = [
-          App::$app->keyStorage()->system_info_email,
-          "iluvfabrixsales@gmail.com"
-        ];
-        if($demo == 1) {
-          $emails = ["sergnochevny@studionovi.co"];
-        }
+        $emails = [App::$app->keyStorage()->system_info_email];
+        $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
+        array_walk($emails, function(&$item){
+          $item = trim($item);
+        });
+        $emails = array_unique($emails);
+
         foreach($emails as $email) {
           $messages[] = $mailer->compose(['text' => 'thanx_mail-text'], ['body' => $body])
             ->setSubject($subject)
@@ -1033,14 +1033,17 @@ class ControllerCart extends ControllerController{
         $body = $ma['body'];
 
         $mailer = App::$app->getMailer();
-        $emails = [
-          App::$app->keyStorage()->system_info_email,
-          "lanny1952@gmail.com",
-          "iluvfabrixsales@gmail.com"
-        ];
+
+        $emails = explode(',', App::$app->keyStorage()->system_emails_sellers);
+        $emails = array_merge([ App::$app->keyStorage()->system_info_email ], $emails);
         if($demo == 1) {
-          $emails = ["sergnochevny@studionovi.co"];
+          $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
         }
+        array_walk($emails, function(&$item){
+          $item = trim($item);
+        });
+        $emails = array_unique($emails);
+
         foreach($emails as $email) {
           $messages[] = $mailer->compose(['text' => 'thanx_mail-text'], ['body' => $body])
             ->setSubject($subject)

@@ -325,21 +325,6 @@ class ControllerShop extends ControllerController{
    * @export
    * @throws \Exception
    */
-  public function specials(){
-    $this->template->vars('cart_enable', '_');
-    $this->page_title = "Discount Decorator and Designer Fabrics";
-    $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates.<br>All items available on a FIRST COME, FIRST SERVED basis only.';
-    $this->main->template->vars('annotation', $annotation);
-    $list = $this->get_list_by_type('specials', (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->template->vars('list', $list);
-    $this->main->view('shop');
-  }
-
-  /**
-   * @export
-   * @throws \Exception
-   */
   public function widget(){
     switch(App::$app->get('type')) {
       case 'popular':
@@ -480,75 +465,91 @@ class ControllerShop extends ControllerController{
     return $this->shop();
   }
 
-//  /**
-//   * @export
-//   * @throws \Exception
-//   */
-//  public function popular(){
-//    $this->template->vars('cart_enable', '_');
-//    $this->page_title = 'Popular Textiles';
-//    $list = $this->get_list_by_type('popular', 360);
-//    if(App::$app->request_is_ajax()) exit($list);
-//    $this->template->vars('list', $list);
-//    $this->main->view('shop');
-//  }
-//
-//  /**
-//   * @export
-//   * @throws \Exception
-//   */
-//  public function last(){
-//    $this->template->vars('cart_enable', '_');
-//    $this->page_title = "What's New";
-//    $list = $this->get_list_by_type('last', 50);
-//    if(App::$app->request_is_ajax()) exit($list);
-//    $this->template->vars('list', $list);
-//    $this->main->view('shop');
-//  }
-//
-//  /**
-//   * @export
-//   * @throws \Exception
-//   */
-//  public function best(){
-//    $this->template->vars('cart_enable', '_');
-//    $this->page_title = 'Best Textiles';
-//    $list = $this->get_list_by_type('best', 360);
-//    if(App::$app->request_is_ajax()) exit($list);
-//    $this->template->vars('list', $list);
-//    $this->main->view('shop');
-//  }
-//
-//  /**
-//   * @export
-//   * @throws \Exception
-//   */
-//  public function bestsellers(){
-//    $this->template->vars('cart_enable', '_');
-//    $this->page_title = 'Best Sellers';
-//    $list = $this->get_list_by_type('bestsellers', (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ?
-//      App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT)
-//    );
-//    if(App::$app->request_is_ajax()) exit($list);
-//    $this->template->vars('list', $list);
-//    $this->main->view('shop');
-//  }
-//
-//  /**
-//   * @export
-//   * @throws \Exception
-//   * @throws \Exception
-//   */
-//  public function under(){
-//    $this->template->vars('cart_enable', '_');
-//    $this->page_title = 'Under $100';
-//    $list = $this->get_list_by_type('under', (!is_null(App::$app->keyStorage()->shop_under_amount) ?
-//      App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT)
-//    );
-//    if(App::$app->request_is_ajax()) exit($list);
-//    $this->template->vars('list', $list);
-//    $this->main->view('shop');
-//  }
+  /**
+   * @export
+   * @throws \Exception
+   */
+  public function specials(){
+    $this->template->vars('cart_enable', '_');
+    $this->page_title = "Discount Decorator and Designer Fabrics";
+    $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates. All items available on a FIRST COME, FIRST SERVED basis only.';
+    $this->main->template->vars('annotation', $annotation);
+    $list = $this->get_list_by_type('specials', (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
+    if(App::$app->request_is_ajax()) exit($list);
+    $this->template->vars('list', $list);
+    $this->main->view('shop');
+  }
+
+  /**
+   * @export
+   * @throws \Exception
+   */
+  public function popular(){
+    $this->template->vars('cart_enable', '_');
+    $this->page_title = 'Popular Textiles';
+    $list = $this->get_list_by_type('popular', 360);
+    if(App::$app->request_is_ajax()) exit($list);
+    $this->template->vars('list', $list);
+    $this->main->view('shop');
+  }
+
+  /**
+   * @export
+   * @throws \Exception
+   */
+  public function last(){
+    $this->template->vars('cart_enable', '_');
+    $this->page_title = "What's New";
+    $list = $this->get_list_by_type('last', 50);
+    if(App::$app->request_is_ajax()) exit($list);
+    $this->template->vars('list', $list);
+    $this->main->view('shop');
+  }
+
+  /**
+   * @export
+   * @throws \Exception
+   */
+  public function best(){
+    $this->template->vars('cart_enable', '_');
+    $this->page_title = 'Best Textiles';
+    $list = $this->get_list_by_type('best', 360);
+    if(App::$app->request_is_ajax()) exit($list);
+    $this->template->vars('list', $list);
+    $this->main->view('shop');
+  }
+
+  /**
+   * @export
+   * @throws \Exception
+   */
+  public function bestsellers(){
+    $this->template->vars('cart_enable', '_');
+    $this->page_title = 'Best Sellers';
+    $list = $this->get_list_by_type('bestsellers', (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ?
+      App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT)
+    );
+    if(App::$app->request_is_ajax()) exit($list);
+    $this->template->vars('list', $list);
+    $this->main->view('shop');
+  }
+
+  /**
+   * @export
+   * @throws \Exception
+   * @throws \Exception
+   */
+  public function under(){
+    $this->template->vars('cart_enable', '_');
+    $this->page_title = 'Under $100';
+    $list = $this->get_list_by_type('under', (!is_null(App::$app->keyStorage()->shop_under_amount) ?
+      App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT)
+    );
+    if(App::$app->request_is_ajax()) exit($list);
+    $this->template->vars('list', $list);
+    $this->main->view('shop');
+  }
+
 //
 //    /**
 //     * @export

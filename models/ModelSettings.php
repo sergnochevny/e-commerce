@@ -28,6 +28,7 @@ class ModelSettings extends ModelBase{
       'paypal_url' => (!is_null(App::$app->keyStorage()->paypal_url) ? App::$app->keyStorage()->paypal_url : ''),
       'system_csv_fields' => (!is_null(App::$app->keyStorage()->system_csv_fields) ? App::$app->keyStorage()->system_csv_fields : CSV_FIELDS),
       'system_info_email' => (!is_null(App::$app->keyStorage()->system_info_email) ? App::$app->keyStorage()->system_info_email : ''),
+      'system_send_from_email' => (!is_null(App::$app->keyStorage()->system_send_from_email) ? App::$app->keyStorage()->system_send_from_email : ''),
       'system_csv_fields_dlm' => (!is_null(App::$app->keyStorage()->system_csv_fields_dlm) ? App::$app->keyStorage()->system_csv_fields_dlm : ','),
 
       'shop_bestsellers_amount' => (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ? App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT),
@@ -59,6 +60,16 @@ class ModelSettings extends ModelBase{
       'shop_samples_price_additional' => (!is_null(App::$app->keyStorage()->shop_samples_price_additional) ? App::$app->keyStorage()->shop_samples_price_additional : SAMPLES_PRICE_ADDITIONAL),
       'shop_samples_price_with_products' => (!is_null(App::$app->keyStorage()->shop_samples_price_with_products) ? App::$app->keyStorage()->shop_samples_price_with_products : SAMPLES_PRICE_WITH_PRODUCTS),
       'shop_yrds_for_multiplier' => (!is_null(App::$app->keyStorage()->shop_yrds_for_multiplier) ? App::$app->keyStorage()->shop_yrds_for_multiplier : YRDS_FOR_MULTIPLIER),
+
+      'system_emails_debug' => !is_null(App::$app->keyStorage()->system_emails_debug) ? App::$app->keyStorage()->system_emails_debug : 1,
+      'system_emails_host' => !is_null(App::$app->keyStorage()->system_emails_host) ? App::$app->keyStorage()->system_emails_host : '',
+      'system_emails_port' => !is_null(App::$app->keyStorage()->system_emails_port) ? App::$app->keyStorage()->system_emails_port : '',
+      'system_emails_user_name' => !is_null(App::$app->keyStorage()->system_emails_user_name) ? App::$app->keyStorage()->system_emails_user_name : '',
+      'system_emails_password' => !is_null(App::$app->keyStorage()->system_emails_password) ? App::$app->keyStorage()->system_emails_password : '',
+      'system_emails_encryption' => !is_null(App::$app->keyStorage()->system_emails_encryption) ? App::$app->keyStorage()->system_emails_encryption : '',
+      'system_emails_admins' => (!is_null(App::$app->keyStorage()->system_emails_admins) ? App::$app->keyStorage()->system_emails_admins : ''),
+      'system_emails_sellers' => (!is_null(App::$app->keyStorage()->system_emails_sellers) ? App::$app->keyStorage()->system_emails_sellers : '')
+
     ];
 
     return $data;
@@ -81,6 +92,7 @@ class ModelSettings extends ModelBase{
     App::$app->keyStorage()->paypal_url = $paypal_url;
     App::$app->keyStorage()->system_csv_fields = $system_csv_fields;
     App::$app->keyStorage()->system_info_email = $system_info_email;
+    App::$app->keyStorage()->system_send_from_email = $system_send_from_email;
     App::$app->keyStorage()->system_csv_fields_dlm = $system_csv_fields_dlm;
 
     App::$app->keyStorage()->shop_bestsellerss_amount = $shop_bestsellers_amount;
@@ -112,6 +124,15 @@ class ModelSettings extends ModelBase{
     App::$app->keyStorage()->shop_samples_price_additional = $shop_samples_price_additional;
     App::$app->keyStorage()->shop_samples_price_with_products = $shop_samples_price_with_products;
     App::$app->keyStorage()->shop_yrds_for_multiplier = $shop_yrds_for_multiplier;
+
+    App::$app->keyStorage()->system_emails_debug = $system_emails_debug;
+    App::$app->keyStorage()->system_emails_host = $system_emails_host;
+    App::$app->keyStorage()->system_emails_port = $system_emails_port;
+    App::$app->keyStorage()->system_emails_user_name = $system_emails_user_name;
+    App::$app->keyStorage()->system_emails_password = $system_emails_password;
+    App::$app->keyStorage()->system_emails_encryption = $system_emails_encryption;
+    App::$app->keyStorage()->system_emails_admins = $system_emails_admins;
+    App::$app->keyStorage()->system_emails_sellers = $system_emails_sellers;
 
     return null;
   }

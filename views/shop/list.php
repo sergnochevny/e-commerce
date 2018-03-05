@@ -44,15 +44,16 @@ use app\core\App;
     </div>
   </div>
 
-  <div class="row">
-    <nav class="paging-navigation" role="navigation">
-      <h4 class="sr-only">Navigation</h4>
-      <ul class="pagination">
-        <?= isset($paginator) ? $paginator : ''; ?>
-      </ul>
-    </nav>
-  </div>
-
+  <?php if(isset($paginator)): ?>
+    <div class="row">
+      <nav class="paging-navigation" role="navigation">
+        <h4 class="sr-only">Navigation</h4>
+        <ul class="pagination">
+          <?= isset($paginator) ? $paginator : ''; ?>
+        </ul>
+      </nav>
+    </div>
+  <?php endif; ?>
 </div>
 
 <script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

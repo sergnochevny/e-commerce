@@ -28,8 +28,13 @@ class ControllerContact extends ControllerSimple{
       $mailer = App::$app->getMailer();
       $emails = [$email];
       if($demo == 1) {
-        $emails[] = "sergnochevny@studionovi.co";
+        $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
       }
+      array_walk($emails, function(&$item){
+        $item = trim($item);
+      });
+      $emails = array_unique($emails);
+
       foreach($emails as $email) {
         $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
           ->setSubject($subject)

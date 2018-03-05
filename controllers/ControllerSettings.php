@@ -44,6 +44,7 @@ class ControllerSettings extends ControllerFormSimple{
         'paypal_url' => ModelSettings::sanitize(App::$app->post('paypal_url')),
         'system_csv_fields' => ModelSettings::sanitize(App::$app->post('system_csv_fields')),
         'system_info_email' => ModelSettings::sanitize(App::$app->post('system_info_email')),
+        'system_send_from_email' => ModelSettings::sanitize(App::$app->post('system_send_from_email')),
         'system_csv_fields_dlm' => ModelSettings::sanitize(App::$app->post('system_csv_fields_dlm')),
 
         'shop_bestsellers_amount' => ModelSettings::sanitize(App::$app->post('shop_bestsellers_amount')),
@@ -75,6 +76,15 @@ class ControllerSettings extends ControllerFormSimple{
         'shop_samples_price_additional' => ModelSettings::sanitize(App::$app->post('shop_samples_price_additional')),
         'shop_samples_price_with_products' => ModelSettings::sanitize(App::$app->post('shop_samples_price_with_products')),
         'shop_yrds_for_multiplier' => ModelSettings::sanitize(App::$app->post('shop_yrds_for_multiplier')),
+
+        'system_emails_debug' => ModelSettings::sanitize(App::$app->post('system_emails_debug')),
+        'system_emails_host' => ModelSettings::sanitize(App::$app->post('system_emails_host')),
+        'system_emails_port' => ModelSettings::sanitize(App::$app->post('system_emails_port')),
+        'system_emails_user_name' => ModelSettings::sanitize(App::$app->post('system_emails_user_name')),
+        'system_emails_password' => ModelSettings::sanitize(App::$app->post('system_emails_password')),
+        'system_emails_encryption' => ModelSettings::sanitize(App::$app->post('system_emails_encryption')),
+        'system_emails_admins' => ModelSettings::sanitize(App::$app->post('system_emails_admins')),
+        'system_emails_sellers' => ModelSettings::sanitize(App::$app->post('system_emails_sellers')),
       ];
       if(!is_null(App::$app->post('current_tab'))) $data['current_tab'] = App::$app->post('current_tab');
       $data['system_csv_fields'] = implode((!empty($data['system_csv_fields_dlm']) ? $data['system_csv_fields_dlm'] : ','), $data['system_csv_fields']);
@@ -129,20 +139,51 @@ class ControllerSettings extends ControllerFormSimple{
     $data['shop_samples_price_with_products'] = !empty((float)$data['shop_samples_price_with_products']) ? $data['shop_samples_price_with_products'] : SAMPLES_PRICE_WITH_PRODUCTS;
     $data['shop_yrds_for_multiplier'] = !empty((float)$data['shop_yrds_for_multiplier']) ? $data['shop_yrds_for_multiplier'] : YRDS_FOR_MULTIPLIER;
 
-    if(empty($data['paypal_business']) || empty($data['paypal_url']) || empty($data['system_info_email']) || empty($data['system_site_name']) || ($data['shop_rate_handling'] <= 0) || ($data['shop_rate_roll'] <= 0) || ($data['shop_rate_express_light'] <= 0) || ($data['shop_rate_express_light_multiplier'] <= 0) || ($data['shop_rate_express_medium'] <= 0) || ($data['shop_rate_express_medium_multiplier'] <= 0) || ($data['shop_rate_express_heavy'] <= 0) || ($data['shop_rate_express_heavy_multiplier'] <= 0) || ($data['shop_rate_ground_light'] <= 0) || ($data['shop_rate_ground_light_multiplier'] <= 0) || ($data['shop_rate_ground_medium'] <= 0) || ($data['shop_rate_ground_medium_multiplier'] <= 0) || ($data['shop_rate_ground_heavy'] <= 0) || ($data['shop_rate_ground_heavy_multiplier'] <= 0) || ($data['shop_samples_price_express_shipping'] <= 0) || ($data['shop_samples_qty_multiple_min'] <= 0) || ($data['shop_samples_qty_multiple_max'] <= 0) || ($data['shop_samples_price_single'] <= 0) || ($data['shop_samples_price_multiple'] <= 0) || ($data['shop_samples_price_additional'] <= 0) || ($data['shop_samples_price_with_products'] <= 0) || ($data['shop_yrds_for_multiplier'] <= 0)
+    $data['system_emails_debug'] = !empty($data['system_emails_debug']) ? $data['system_emails_debug'] : 0;
+    $data['system_emails_host'] = !empty($data['system_emails_host']) ? $data['system_emails_host'] : '';
+    $data['system_emails_port'] = !empty($data['system_emails_port']) ? $data['system_emails_port'] : '';
+    $data['system_emails_user_name'] = !empty($data['system_emails_user_name']) ? $data['system_emails_user_name'] : '';
+    $data['system_emails_password'] = !empty($data['system_emails_password']) ? $data['system_emails_password'] : '';
+    $data['system_emails_encryption'] = !empty($data['system_emails_encryption']) ? $data['system_emails_encryption'] : '';
+    $data['system_emails_amdins'] = !empty($data['system_emails_admins']) ? $data['system_emails_admins'] : '';
+    $data['system_emails_sellers'] = !empty($data['system_emails_sellers']) ? $data['system_emails_sellers'] : '';
+    $data['system_send_from_email'] = !empty($data['system_send_from_email']) ? $data['system_send_from_email'] : '';
 
+    if(empty($data['paypal_business']) ||
+      empty($data['paypal_url']) ||
+      empty($data['system_info_email']) ||
+      empty($data['system_site_name']) ||
+      ($data['shop_rate_handling'] <= 0) ||
+      ($data['shop_rate_roll'] <= 0) ||
+      ($data['shop_rate_express_light'] <= 0) ||
+      ($data['shop_rate_express_light_multiplier'] <= 0) ||
+      ($data['shop_rate_express_medium'] <= 0) ||
+      ($data['shop_rate_express_medium_multiplier'] <= 0) || ($data['shop_rate_express_heavy'] <= 0) ||
+      ($data['shop_rate_express_heavy_multiplier'] <= 0) || ($data['shop_rate_ground_light'] <= 0) ||
+      ($data['shop_rate_ground_light_multiplier'] <= 0) || ($data['shop_rate_ground_medium'] <= 0) ||
+      ($data['shop_rate_ground_medium_multiplier'] <= 0) || ($data['shop_rate_ground_heavy'] <= 0) ||
+      ($data['shop_rate_ground_heavy_multiplier'] <= 0) || ($data['shop_samples_price_express_shipping'] <= 0) ||
+      ($data['shop_samples_qty_multiple_min'] <= 0) || ($data['shop_samples_qty_multiple_max'] <= 0) ||
+      ($data['shop_samples_price_single'] <= 0) ||
+      ($data['shop_samples_price_multiple'] <= 0) ||
+      ($data['shop_samples_price_additional'] <= 0) ||
+      ($data['shop_samples_price_with_products'] <= 0) ||
+      ($data['shop_yrds_for_multiplier'] <= 0) ||
+      (empty($data['system_emails_debug']) && (
+          empty($data['system_emails_host']) || empty($data['system_emails_port']) ||
+          empty($data['system_emails_user_name']) || empty($data['system_emails_password'])
+        )
+      )
     ) {
 
       $error = ['Please fill in all required fields (marked with * )'];
       $error1 = [];
       $error2 = [];
+      $error3 = [];
+      $error4 = [];
 
       $error_ = '';
       if(empty($data['system_site_name'])) $error_ .= '<br>&#9;Identify <b>Site Name</b> field!';
-      if(empty($data['system_info_email'])) {
-        if(!empty($error_)) $error_ .= '<br>';
-        $error_ .= '<br>&#9;Identify <b>System Information Email</b> field!';
-      }
       if(!empty($error_)) {
         $error1[] = 'PANEL SYSTEM:<br>' . $error_;
       }
@@ -155,91 +196,91 @@ class ControllerSettings extends ControllerFormSimple{
       }
 
       if($data['shop_rate_handling'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Handling</b> value must be greater than zero';
       }
       if($data['shop_rate_roll'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Roll</b> value must be greater than zero';
       }
       if($data['shop_rate_express_light'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Express Light</b> value must be greater than zero';
       }
       if($data['shop_rate_express_light_multiplier'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Express Light Multiplier</b> value must be greater than zero';
       }
       if($data['shop_rate_express_medium'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Express Medium</b> value must be greater than zero';
       }
       if($data['shop_rate_express_medium_multiplier'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Express Medium Multiplier</b> value must be greater than zero';
       }
       if($data['shop_rate_express_heavy'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Express Heavy</b> value must be greater than zero';
       }
       if($data['shop_rate_express_heavy_multiplier'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Express Heavy Multiplier</b> value must be greater than zero';
       }
       if($data['shop_rate_ground_light'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Ground Light</b> value must be greater than zero';
       }
       if($data['shop_rate_ground_light_multiplier'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Ground Light Multiplier</b> value must be greater than zero';
       }
       if($data['shop_rate_ground_medium'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Ground Medium</b> value must be greater than zero';
       }
       if($data['shop_rate_ground_medium_multiplier'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Ground Medium Multiplier</b> value must be greater than zero';
       }
       if($data['shop_rate_ground_heavy'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Ground Heavy</b> value must be greater than zero';
       }
       if($data['shop_rate_ground_heavy_multiplier'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Rate Ground Heavy Multiplier</b> value must be greater than zero';
       }
       if($data['shop_samples_price_express_shipping'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Samples Price Express Shipping</b> value must be greater than zero';
       }
       if($data['shop_samples_qty_multiple_min'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Samples Qty Multiple Min</b> value must be greater than zero';
       }
       if($data['shop_samples_qty_multiple_max'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Samples Qty Multiple Max</b> value must be greater than zero';
       }
       if($data['shop_samples_price_single'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Samples Price Single</b> value must be greater than zero';
       }
       if($data['shop_samples_price_multiple'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Samples Price Multiple</b> value must be greater than zero';
       }
       if($data['shop_samples_price_additional'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Samples Price Additional</b> value must be greater than zero';
       }
       if($data['shop_samples_price_with_products'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Samples Price With Products</b> value must be greater than zero';
       }
       if($data['shop_yrds_for_multiplier'] <= 0) {
-        if(!$error_) $error_ .= '<br>';
+        if(!empty($error_)) $error_ .= '<br>';
         $error_ .= '&#9;The field <b>Shop Yrds For Multiplier</b> value must be greater than zero';
       }
 
@@ -247,6 +288,56 @@ class ControllerSettings extends ControllerFormSimple{
         $error2[] = 'TAB SHOP:<br>' . $error_;
       }
       $error = array_merge($error, $error2);
+
+      $error_ = '';
+      if(empty($data['system_emails_debug'])) {
+
+        if(empty($data['system_emails_host'])) $error_ .= '<br>&#9;Identify <b>Host</b> field!';
+        if(empty($data['system_emails_port'])) {
+          if(!empty($error_)) $error_ .= '<br>';
+          $error_ .=  '&#9;Identify <b>Port</b> field!';
+        }
+        if(empty($data['system_emails_user_name'])) {
+          if(!empty($error_)) $error_ .= '<br>';
+          $error_ .= '&#9;Identify <b>User Name</b> field!';
+        }
+        if(empty($data['system_emails_password'])) {
+          if(!empty($error_)) $error_ .= '<br>';
+          $error_ .= '&#9;Identify <b>Password</b> field!';
+        }
+        if(empty($data['system_info_email'])) {
+          if(!empty($error_)) $error_ .= '<br>';
+          $error_ .= '<br>&#9;Identify <b>System Information Email</b> field!';
+        }
+        if(empty($data['system_emails_admins'])) {
+          if(!empty($error_)) $error_ .= '<br>';
+          $error_ .= '<br>&#9;Identify <b>Admins\' Email Addresses</b> field!';
+        }
+        if(empty($data['system_emails_sellers'])) {
+          if(!empty($error_)) $error_ .= '<br>';
+          $error_ .= '<br>&#9;Identify <b>Sellers\' Email Addresses</b> field!';
+        }
+
+        if(empty($data['system_send_from_email'])) {
+          if(!empty($error_)) $error_ .= '<br>';
+          $error_ .= '<br>&#9;Identify <b>Send From Email Addresses</b> field!';
+        }
+
+        if(!empty($error_)) {
+          $error4[] = 'PANEL EMAILS:<br>' . $error_;
+//          [
+//            App::$app->keyStorage()->system_info_email,
+//            "lanny1952@gmail.com",
+//            "iluvfabrixsales@gmail.com"
+//          ];
+//          if($demo == 1) {
+//            $emails = ["sergnochevny@studionovi.co"];
+//          }
+
+        }
+        $error = array_merge($error, $error4);
+
+      }
     } else return true;
 
     return false;

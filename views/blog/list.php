@@ -34,17 +34,17 @@ use app\core\App;
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
-
-    <nav class="paging-navigation" role="navigation">
-      <h4 class="sr-only">Navigation</h4>
-      <ul class="pagination">
-        <?= isset($paginator) ? $paginator : ''; ?>
-      </ul>
-    </nav>
-
+<?php if(isset($paginator)): ?>
+  <div class="row">
+    <div class="col-xs-12">
+      <nav class="paging-navigation" role="navigation">
+        <h4 class="sr-only">Navigation</h4>
+        <ul class="pagination">
+          <?= isset($paginator) ? $paginator : ''; ?>
+        </ul>
+      </nav>
+    </div>
   </div>
-</div>
+<?php endif; ?>
 
 <script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>

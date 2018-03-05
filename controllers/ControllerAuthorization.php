@@ -67,14 +67,18 @@ class ControllerAuthorization extends ControllerController{
     $subject = "ILuvFabrix. Change Password.";
     $this->template->vars('remind_url', $remind_url);
     $body = $this->template->view_layout_return('remind/message');
-    $headers = ["MIME-Version: 1.0'"=>"Content-Type: text/html; charset=UTF-8 \r\n"];
     $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
 
     $mailer = App::$app->getMailer();
     $emails = [$email];
     if($demo == 1) {
-      $emails[] = "sergnochevny@studionovi.co";
+      $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
     }
+    array_walk($emails, function(&$item){
+      $item = trim($item);
+    });
+    $emails = array_unique($emails);
+
     foreach($emails as $email) {
       $messages[] = $mailer->compose(['html' => 'mail-text'], ['body' => $body])
         ->setSubject($subject)

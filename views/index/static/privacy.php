@@ -6,9 +6,18 @@ use app\core\App;
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 
   <div id="content" class="container inner-offset-top half-outer-offset-bottom">
-    <div class="col-xs-12">
-      <div class="row">
-        <div class="col-xs-12 text-center">
+    <div class="col-xs-12 box">
+      <?php $back_url = App::$app->router()->UrlTo('shop'); ?>
+
+      <div class="col-xs-12 col-sm-2 back_button_container">
+        <div class="row">
+          <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            To Shop
+          </a>
+        </div>
+      </div>
+        <div class="col-xs-12 col-sm-8 text-center">
           <div class="row">
             <h2 class="page-title">Privacy Policy</h2>
           </div>
@@ -81,6 +90,5 @@ use app\core\App;
         </div>
 
       </div>
-    </div>
   </div>
   <script src='<?= App::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>
