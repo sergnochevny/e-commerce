@@ -5,11 +5,18 @@ use app\core\App;
 ?>
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $key => $row): ?>
-    <?php $prms = ['prc' => $key]; ?>
-    <div class="col-xs-6 col-sm-3 list-item">
+    <?php
+    $prm = 'a.priceyard';
+    $data_filter_item_active = false;
+    if(!empty($filter[$prm])) {
+      $data_filter_item_active = in_array($row['id'], array_keys($filter[$prm]));
+    }
+    ?>
+    <div class="col-xs-6 col-sm-3 list-item" <?= $data_filter_item_active ? 'data-filter-item-active' : ''; ?>>
       <div class="list-inner">
-        <a data-filter data-filter_from_to
-           href="<?= App::$app->router()->UrlTo('shop/filter', $prms); ?>"
+        <a data-filter data-filter-from_to data-filter-prm="<?= $prm; ?>" data-filter-val=<?= $row['id']; ?>
+        <?= $data_filter_item_active ? 'data-filter-item-active' : ''; ?>
+        href="<?= App::$app->router()->UrlTo('shop/filter'); ?>"
            data-from="<?= isset($row['min_price']) ? $row['min_price'] : ''; ?>"
            data-to="<?= isset($row['max_price']) ? $row['max_price'] : ''; ?>">
           <div class="item-name">
@@ -19,4 +26,8 @@ use app\core\App;
       </div>
     </div>
   <?php endforeach; ?>
+<?php else: ?>
+  <div class="col-xs-12 text-center inner-offset-vertical">
+    <span class="h3">No results found</span>
+  </div>
 <?php endif; ?>

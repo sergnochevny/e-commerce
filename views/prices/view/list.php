@@ -8,6 +8,7 @@ use app\core\App;
     <h3 class="page-title sb">Price</h3>
   </div>
 </div>
+<?= isset($search_form) ? $search_form : '' ?>
 <div class="col-xs-12 search-result-header search-result-container text-right">
   <div class="row">
     <span class="search-result">Showing <?= $count_rows; ?> results</span>

@@ -78,7 +78,7 @@ use app\core\App;
           <i class="fa fa-filter"></i>
         </a>
       </li>
-      <?php $prm = "--"; ?>
+      <?php $prm = "a.priceyard"; ?>
       <li class="shop__sidebar-item" data-filter-prm="<?= $prm; ?>">
         <a data-waitloader data-index="4" title="Filter by Price"
            href="<?= App::$app->router()->UrlTo('prices/view', null, 'price') ?>"

@@ -154,6 +154,12 @@ class ModelShop extends ModelBase{
         }
         $prms['eid'] = $filter["e.id"];
       }
+      if(isset($filter["a.priceyard"])) {
+        if(is_array($filter["a.priceyard"])) {
+          $result[] = static::build_from_to_sql_prm("a.priceyard", $filter["a.priceyard"], "apriceyard");
+        }
+        $prms['apriceyard'] = $filter["a.priceyard"];
+      }
       if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) {
         $result[] = "a.priceyard > :apriceyard_from";
         $prms['apriceyard_from'] = $filter["a.priceyard"]['from'];

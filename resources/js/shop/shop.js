@@ -33,7 +33,10 @@
       event.preventDefault();
       var filter = JSON.parse($('[data-filter-storage]').attr('data-filter-storage')) || {},
         data_filter_prm = $(this).attr('data-filter-prm'),
-        data_filter_val = $(this).attr('data-filter-val'),
+        data_filter_val = parseInt($(this).attr('data-filter-val')),
+        data_filter_from_to = $(this).is('[data-filter-from_to]'),
+        data_filter_from = data_filter_from_to ? $(this).attr('data-from') : null,
+        data_filter_to = data_filter_from_to ? $(this).attr('data-to') : null,
         url = this.href,
         data,
         el = $(this);
@@ -44,9 +47,24 @@
       }
       if (!el.is('[data-filter-item-active]')) {
         if (filter.hasOwnProperty(data_filter_prm) && Array.isArray(filter[data_filter_prm])) {
-          filter[data_filter_prm].push(data_filter_val);
+          if (data_filter_from_to) {
+            filter[data_filter_prm][data_filter_val] = {
+              from: data_filter_from,
+              to: data_filter_to
+            }
+          } else {
+            filter[data_filter_prm].push(data_filter_val);
+          }
         } else {
-          filter[data_filter_prm] = [data_filter_val];
+          if (data_filter_from_to) {
+            filter[data_filter_prm] = [];
+            filter[data_filter_prm][data_filter_val] = {
+              from: data_filter_from,
+              to: data_filter_to
+            }
+          } else {
+            filter[data_filter_prm] = [data_filter_val];
+          }
         }
       } else {
         if (filter.hasOwnProperty(data_filter_prm) && Array.isArray(filter[data_filter_prm])) {
@@ -61,7 +79,13 @@
       Object.keys(filter).forEach(function (key) {
         if (Array.isArray(filter[key])) {
           filter[key].forEach(function (item) {
-            data.append('search[' + key + '][]', item);
+            if (typeof item === 'object') {
+              Object.keys(item).forEach(function (i_key) {
+                data.append('search[' + key + '][' + data_filter_val + '][' + i_key + ']', item[i_key]);
+              });
+            } else {
+              data.append('search[' + key + '][]', item);
+            }
           });
         } else {
           data.append('search[' + key + ']', filter[key]);

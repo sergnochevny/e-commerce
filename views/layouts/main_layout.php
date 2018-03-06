@@ -2,6 +2,9 @@
 
 use app\core\App;
 
+/**
+ * @var \app\core\Template $this
+ */
 ?>
 
 <!DOCTYPE html>
@@ -30,57 +33,44 @@ use app\core\App;
     .loader i {position: relative; left: 50vw; color: #000; top: 50vh; margin-left: -28px; margin-top: -28px;}
   </style>
 
-  <link rel='stylesheet' type="text/css"
-        href='<?= App::$app->router()->UrlTo('css/woocommerce-smallscreen.min.css'); ?>'
-        media='only screen and (max-width: 768px)'/>
+  <?php
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/woocommerce-smallscreen.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/font-face.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/offsets.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/bootstrap.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/font-awesome.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/simple-line-icons.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/webfont.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/jquery.smartmenus.bootstrap.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/style-theme.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/style-woocommerce.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/style-shortcodes.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/prettyPhoto.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/jquery-ui.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/owlcarousel/owl.carousel.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/owlcarousel/owl.theme.default.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/tooltipster.bundle.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/style.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/multiselect.min.css'));
 
-  <link rel='stylesheet' type="text/css" href='<?= App::$app->router()->UrlTo('css/font-face.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= App::$app->router()->UrlTo('css/offsets.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= App::$app->router()->UrlTo('css/bootstrap.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= App::$app->router()->UrlTo('css/font-awesome.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css"
-        href='<?= App::$app->router()->UrlTo('css/simple-line-icons.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= App::$app->router()->UrlTo('css/webfont.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css"
-        href='<?= App::$app->router()->UrlTo('css/jquery.smartmenus.bootstrap.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= App::$app->router()->UrlTo('css/style-theme.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css"
-        href='<?= App::$app->router()->UrlTo('css/style-woocommerce.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css"
-        href='<?= App::$app->router()->UrlTo('css/style-shortcodes.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= App::$app->router()->UrlTo('css/prettyPhoto.min.css'); ?>'/>
-  <link rel='stylesheet' type="text/css" href='<?= App::$app->router()->UrlTo('css/jquery-ui.min.css'); ?>'
-        media='all'/>
-  <link rel="stylesheet" href="<?= App::$app->router()->UrlTo('css/owlcarousel/owl.carousel.min.css'); ?>">
-  <link rel="stylesheet" href="<?= App::$app->router()->UrlTo('css/owlcarousel/owl.theme.default.min.css'); ?>">
-  <link rel="stylesheet" type="text/css"
-        href="<?= App::$app->router()->UrlTo('css/tooltipster.bundle.min.css'); ?>"/>
-  <link rel='stylesheet' id='just-style-css' href='<?= App::$app->router()->UrlTo('css/style.min.css'); ?>'/>
-  <link href="<?= App::$app->router()->UrlTo('css/multiselect.min.css'); ?>" rel="stylesheet"/>
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery3/jquery-3.1.1.min.js'), 0);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery3/jquery-migrate-3.0.0.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/bootstrap.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery-ui.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery.smartmenus.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery.smartmenus.bootstrap.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery.prettyPhoto.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/inputmask/jquery.inputmask.bundle.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/owlcarousel/owl.carousel.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/tooltipster.bundle.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jqmobile/jquery.mobile.custom.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/multiselect.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/search/search.min.js'));
+  $this->registerJSFile(App::$app->router()->UrlTo('js/script.min.js'));
 
-  <script type='text/javascript'
-          src='<?= App::$app->router()->UrlTo('js/jquery3/jquery-3.1.1.min.js'); ?>'></script>
-  <script type='text/javascript'
-          src='<?= App::$app->router()->UrlTo('js/jquery3/jquery-migrate-3.0.0.min.js'); ?>'></script>
-  <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/bootstrap.min.js'); ?>'></script>
-  <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/jquery-ui.min.js'); ?>'></script>
-  <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/jquery.smartmenus.min.js'); ?>'></script>
-  <script type='text/javascript'
-          src='<?= App::$app->router()->UrlTo('js/jquery.smartmenus.bootstrap.min.js'); ?>'></script>
-  <script type='text/javascript'
-          src='<?= App::$app->router()->UrlTo('js/jquery.prettyPhoto.min.js'); ?>'></script>
-  <script src='<?= App::$app->router()->UrlTo('js/inputmask/jquery.inputmask.bundle.min.js'); ?>'
-          type="text/javascript"></script>
-  <script type='text/javascript'
-          src='<?= App::$app->router()->UrlTo('js/owlcarousel/owl.carousel.min.js'); ?>'></script>
-  <script type="text/javascript"
-          src="<?= App::$app->router()->UrlTo('js/tooltipster.bundle.min.js'); ?>"></script>
-  <script type='text/javascript'
-          src="<?= App::$app->router()->UrlTo('js/jqmobile/jquery.mobile.custom.min.js'); ?>"></script>
-  <script src="<?= App::$app->router()->UrlTo('js/multiselect.min.js'); ?>"></script>
-  <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/search/search.min.js'); ?>'></script>
-  <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/script.min.js'); ?>'></script>
+  ?>
 </head>
+
 <body class="woocommerce woocommerce-page">
 <input type="hidden" id="base_url" value="<?= App::$app->router()->UrlTo('/'); ?>">
 
@@ -98,7 +88,7 @@ use app\core\App;
     <?php include(APP_PATH . '/views/footer.php') ?>
     <?php include(APP_PATH . '/views/copyright.php') ?>
   </footer>
-  <?php if(isset($cart_enable)) { ?>
+  <?php if(isset($cart_enable)) : ?>
     <a data-waitloader href="<?= App::$app->router()->UrlTo('cart'); ?>" id="cart" rel="nofollow" class="cart-subtotal">
       <i class="simple-icon-handbag"></i>
       <span class="topnav-label">
@@ -107,12 +97,17 @@ use app\core\App;
         </span>
       </span>
     </a>
-    <script type="text/javascript">
-      (function ($) {
-        $('span#cart_amount').load('<?= App::$app->router()->UrlTo('cart/amount');?>');
-      })(window.jQuery || window.$);
-    </script>
-  <?php } ?>
+    <?php
+    $this->registerJS(
+      "(function ($) {
+          $('span#cart_amount').load('" . App::$app->router()->UrlTo('cart/amount') . "');
+       })(window.jQuery || window.$);
+       ");
+    ?>
+  <?php endif; ?>
 </div>
+
+<?= $this->renderLinks(); ?>
+
 </body>
 </html>

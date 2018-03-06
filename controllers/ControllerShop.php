@@ -36,7 +36,7 @@ class ControllerShop extends ControllerController{
   protected $reset = [
     'reset' => ['a.pname'],
     'reset_filter' => [
-      'b.cid', 'c.id', 'd.id', 'e.id',
+      'b.cid', 'c.id', 'd.id', 'e.id', 'a.priceyard'
     ]
   ];
 
@@ -61,14 +61,6 @@ class ControllerShop extends ControllerController{
   protected function build_search_filter(&$filter, $view = false){
 
     $type = isset($filter['type']) ? $filter['type'] : null;
-    if(!is_null(App::$app->get('prc'))) {
-      $prc_id = App::$app->get('prc');
-      if($prc = ModelPrices::get_by_id($prc_id)) {
-        $search['a.priceyard'][]['from'] = (isset($prc['min_price']) ? $prc['min_price'] : null);
-        $search['a.priceyard'][]['to'] = (isset($prc['max_price']) ? $prc['max_price'] : null);
-      };
-    }
-
     $res = parent::build_search_filter($filter, $view);
     App::$app->setSession('sidebar_idx', 0);
     $filter['hidden']['a.pnumber'] = 'null';
