@@ -54,19 +54,22 @@ use app\core\App;
   $this->registerCSSFile(App::$app->router()->UrlTo('css/multiselect.min.css'));
 
   $this->registerJSFile(App::$app->router()->UrlTo('js/jquery3/jquery-3.1.1.min.js'), 0);
-  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery3/jquery-migrate-3.0.0.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/bootstrap.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery-ui.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery.smartmenus.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery.smartmenus.bootstrap.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery.prettyPhoto.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/inputmask/jquery.inputmask.bundle.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/owlcarousel/owl.carousel.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/tooltipster.bundle.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/jqmobile/jquery.mobile.custom.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/multiselect.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/search/search.min.js'));
-  $this->registerJSFile(App::$app->router()->UrlTo('js/script.min.js'));
+
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery3/jquery-migrate-3.0.0.min.js'),1);
+
+  $this->registerJSFile(App::$app->router()->UrlTo('js/bootstrap.min.js'), 2);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery-ui.min.js'), 2);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery.smartmenus.min.js'), 2);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery.smartmenus.bootstrap.min.js'), 2);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jquery.prettyPhoto.min.js'), 2);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/inputmask/jquery.inputmask.bundle.min.js'), 2);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/owlcarousel/owl.carousel.min.js'), 2);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/tooltipster.bundle.min.js'), 2);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/jqmobile/jquery.mobile.custom.min.js'), 2);
+
+  $this->registerJSFile(App::$app->router()->UrlTo('js/multiselect.min.js'), 3);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/search/search.min.js'), 3);
+  $this->registerJSFile(App::$app->router()->UrlTo('js/script.min.js'), 3);
 
   ?>
 </head>
