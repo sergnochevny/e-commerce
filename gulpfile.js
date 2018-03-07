@@ -204,6 +204,6 @@ gulp.task('watch', ['clean', 'fonts', 'css', 'css_required', 'scripts', 'scripts
   gulp.watch('resources/js/**/*.js', ['scripts', 'scripts_required']);
 });
 
-gulp.task('build', ['clean', 'fonts', 'css', 'scripts', 'images']);
+gulp.task('build', ['clean', 'fonts', 'css', 'css_required', 'scripts', 'scripts_required', 'images']);
 
 gulp.task('default', ['watch']);
