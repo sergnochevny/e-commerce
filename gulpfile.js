@@ -45,10 +45,11 @@ gulp.task('css_required', function () {
       'resources/css/required/tooltipster.bundle.css',
       'resources/css/required/style.css',
       'resources/css/required/multiselect.css'
-    ])
+    ], {base: 'resources/css/required/'})
     .pipe(cleanCSS({level: 2}))
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-    .pipe(concat("required.min.css"))
+    .pipe(rename({suffix: '.min'}))
+    // .pipe(concat("required.min.css"))
     .pipe(gulp.dest('web/css'));
 });
 

@@ -34,7 +34,24 @@ use app\core\App;
   </style>
 
   <?php
-  $this->registerCSSFile(App::$app->router()->UrlTo('css/required.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/woocommerce-smallscreen.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/font-face.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/offsets.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/bootstrap.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/font-awesome.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/simple-line-icons.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/webfont.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/jquery.smartmenus.bootstrap.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/style-theme.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/style-woocommerce.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/style-shortcodes.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/prettyPhoto.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/jquery-ui.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/owlcarousel/owl.carousel.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/owlcarousel/owl.theme.default.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/tooltipster.bundle.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/style.min.css'));
+  $this->registerCSSFile(App::$app->router()->UrlTo('css/multiselect.min.css'));
   $this->registerJSFile(App::$app->router()->UrlTo('js/required.min.js'), 0);
   ?>
 
