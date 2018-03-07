@@ -100,12 +100,14 @@ class ControllerAuthorization extends ControllerController{
       $url = !is_null(App::$app->get('url')) ?
         base64_decode(urldecode(App::$app->get('url'))) :
         App::$app->router()->UrlTo('product');
+      if($this->scenario() == 'short') exit();
       $this->redirect($url);
     }
     if($this->is_user_logged()) {
       $url = !is_null(App::$app->get('url')) ?
         base64_decode(urldecode(App::$app->get('url'))) :
         App::$app->router()->UrlTo('shop');
+//        if($this->scenario() == 'short') exit();
       $this->redirect($url);
     }
     if($this->is_set_admin_remember()) {
@@ -116,6 +118,7 @@ class ControllerAuthorization extends ControllerController{
         $url = !is_null(App::$app->get('url')) ?
           base64_decode(urldecode(App::$app->get('url'))) :
           App::$app->router()->UrlTo('product');
+//        if($this->scenario() == 'short') exit();
         $this->redirect($url);
       }
     }
@@ -128,6 +131,7 @@ class ControllerAuthorization extends ControllerController{
         $url = !is_null(App::$app->get('url')) ?
           base64_decode(urldecode(App::$app->get('url'))) :
           App::$app->router()->UrlTo('shop');
+//        if($this->scenario() == 'short') exit();
         $this->redirect($url);
       }
     }
@@ -295,7 +299,7 @@ class ControllerAuthorization extends ControllerController{
                       ModelUser::clean_remind($user_id);
                       $message = 'Your Password has been changed succesfully!<br>';
                       $message .= 'Now you can go to the <a href="' . App::$app->router()
-                                                                               ->UrlTo('authorization') . '">login form</a> and use it.';
+                          ->UrlTo('authorization') . '">login form</a> and use it.';
                       $this->main->template->vars('message', $message);
                       $this->main->render_layout('msg_span');
                       exit();

@@ -57,6 +57,13 @@ class ControllerIndex extends ControllerController{
    * @throws \Exception
    */
   public function index($required_access = true){
+    if(ControllerAdmin::is_logged()) {
+      $url = !is_null(App::$app->get('url')) ?
+        base64_decode(urldecode(App::$app->get('url'))) :
+        App::$app->router()->UrlTo('product');
+      if($url == '/') $url = App::$app->router()->UrlTo('product');
+      $this->redirect($url);
+    }
     $this->main->render_view('index');
   }
 
