@@ -1,7 +1,7 @@
 (function ($) {
   'use strict';
 
-  $.widget('gregpopov.charCounter', {
+  $.widget('ait.charCounter', {
     options: {
       charsLimit: null,
       charsLimitOutputBlock: null,

@@ -476,7 +476,7 @@ abstract class ControllerController extends ControllerBase{
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
     if(ControllerAdmin::is_logged()) $this->main-> render_view_admin($this->controller);
-    else  $this->main->render((!empty($this->scenario()) ? $this->scenario() . DS : '') . $this->controller);
+    else  $this->main->render_view((!empty($this->scenario()) ? $this->scenario() . DS : '') . $this->controller);
   }
 
   /**
@@ -492,7 +492,8 @@ abstract class ControllerController extends ControllerBase{
     $this->template->vars('list', $list);
     if($partial) $this->main->render_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
     elseif($required_access) $this->main-> render_view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
-    else $this->main->render('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+    else $this->main->render_view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS .
+      $this->controller);
   }
 
   /**

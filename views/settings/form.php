@@ -805,6 +805,6 @@ use app\core\App;
   </div>
   <input type="hidden" name="current_tab" value="<?= (isset($data['current_tab']) ? $data['current_tab'] : 1) ?>">
 </form>
-<script src="<?= App::$app->router()->UrlTo('js/char-counter.jquery.min.js'); ?>"></script>
-<script src="<?= App::$app->router()->UrlTo('js/settings/form.min.js'); ?>"></script>
-<script src="<?= App::$app->router()->UrlTo('js/formsimple/form.min.js'); ?>"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/char-counter.jquery.min.js'), 5);?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/settings/form.min.js'), 5, true);?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/form.min.js'), 5, true);?>

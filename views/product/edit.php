@@ -3,10 +3,6 @@
 use app\core\App;
 
 ?>
-<link rel="stylesheet" type="text/css" href="<?= App::$app->router()->UrlTo('css/upload.min.css'); ?>">
-<script src='<?= App::$app->router()->UrlTo('js/product/images.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= App::$app->router()->UrlTo('js/product/related.min.js'); ?>' type="text/javascript"></script>
-
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 box">
     <div class="row">
@@ -41,4 +37,8 @@ use app\core\App;
       </div>
     </div>
   </div>
-  <script src='<?= App::$app->router()->UrlTo('js/product/edit.min.js'); ?>' type="text/javascript"></script>
+</div>
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/upload.min.css')); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/product/images.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/product/related.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/product/edit.min.js'), 5); ?>

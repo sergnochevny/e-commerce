@@ -37,5 +37,5 @@ use app\core\App;
     </div>
   </div>
 </form>
-<script src='<?= App::$app->router()->UrlTo('js/simple/form.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= App::$app->router()->UrlTo('js/orders/form.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/simple/form.min.js'), 5, true); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/orders/form.min.js'), 6, true); ?>

@@ -24,4 +24,4 @@ use app\core\App;
   </div>
 </div>
 <input type="hidden" id="base_url" value="<?= App::$app->router()->UrlTo('/'); ?>">
-<script src='<?= App::$app->router()->UrlTo('js/cart/cart.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/cart.min.js'), 4); ?>

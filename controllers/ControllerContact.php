@@ -79,7 +79,7 @@ class ControllerContact extends ControllerSimple{
     if($this->validate($data, $error)) {
       try {
         $this->sendMessage($data);
-        $warning = ['Your Message sent successfully!'];
+        $warning = ['Your Message has been sent successfully!'];
         $data = [];
       } catch(Exception $e) {
         $error[] = $e->getMessage();

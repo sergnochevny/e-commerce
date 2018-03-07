@@ -3,7 +3,6 @@
 use app\core\App;
 
 ?>
-<script src='<?= App::$app->router()->UrlTo('js/settings/edit.min.js'); ?>' type="text/javascript"></script>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="box col-xs-12">
     <div class="row">
@@ -302,5 +301,6 @@ use app\core\App;
   <h2 class="text-center">Disable sale countdown</h2>
   <p>Checking this will not include it in the sale countdown on the product list, and product details page.</p>
 </div>
-<script src="<?= App::$app->router()->UrlTo('js/hints.min.js'); ?>"></script>
-<script src="<?= App::$app->router()->UrlTo('js/formsimple/edit.min.js'); ?>"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/hints.min.js'), 5); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/edit.min.js'), 5); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/settings/edit.min.js'), 4); ?>

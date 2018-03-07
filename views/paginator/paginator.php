@@ -52,5 +52,4 @@ use app\core\App;
 <?php if(isset($cat_id)) { ?>
   <input type="hidden" id="current_cat" value="<?= $cat_id; ?>">
 <?php } ?>
-<script src='<?= App::$app->router()->UrlTo('js/pagination.min.js'); ?>' type="text/javascript"></script>
-
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/pagination.min.js'), 4); ?>

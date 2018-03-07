@@ -51,5 +51,4 @@ use app\core\App;
 <?php endif; ?>
 
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4);?>
-
-<script src='<?= App::$app->router()->UrlTo('js/users/province.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/users/province.min.js'), 5); ?>

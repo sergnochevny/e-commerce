@@ -33,5 +33,5 @@ use app\core\App;
   </div>
 </div>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/edit.min.js'), 4); ?>
-<script src='<?= App::$app->router()->UrlTo('js/users/users.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= App::$app->router()->UrlTo('js/users/province.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/users/users.min.js'), 5); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/users/province.min.js'), 5); ?>

@@ -89,8 +89,7 @@ use controllers\ControllerUser;
       </div>
     </div>
 
-  <?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/load.min.js'), 4); ?>
-    <script src='<?= App::$app->router()->UrlTo('js/authorization/short_authorization.min.js'); ?>'
-            type="text/javascript"></script>
+    <?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/load.min.js'), 4); ?>
+    <?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/short_authorization.min.js'), 4); ?>
   <?php endif; ?>
 </li>

@@ -26,8 +26,5 @@ use app\core\App;
   </div>
 </div>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/load.min.js'), 4); ?>
-<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/captcha/captcha.min.js'); ?>'></script>
-<script type='text/javascript'
-        src='<?= App::$app->router()->UrlTo('js/authorization/registration/script.min.js'); ?>'></script>
-
-
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/captcha/captcha.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/registration/script.min.js'), 4); ?>

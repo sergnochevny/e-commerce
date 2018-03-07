@@ -181,4 +181,4 @@ use app\core\App;
 <div data-load-cart="<?= App::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>"></div>
 
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/load.min.js'), 4); ?>
-<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/cart/checkout.min.js'); ?>'></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/checkout.min.js'), 5); ?>

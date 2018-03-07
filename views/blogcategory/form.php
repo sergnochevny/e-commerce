@@ -9,4 +9,4 @@ use app\core\App;
         <input type="text" class="input-text" name="name" value="<?=$data['name'];?>">
     </div>
 </form>
-<script src='<?= App::$app->router()->UrlTo('js/simple/form.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/simple/form.min.js'), 5, true); ?>

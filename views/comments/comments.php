@@ -43,6 +43,5 @@ use app\core\App;
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-<script src='<?= App::$app->router()->UrlTo('js/comments/comments.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/comments/comments.min.js'), 5); ?>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/simple/edit.min.js'), 4); ?>

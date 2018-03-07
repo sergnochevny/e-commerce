@@ -29,6 +29,6 @@ use app\core\App;
   </div>
   <input type="hidden" data-filemanager="<?= App::$app->router()->UrlTo('filemanager/') ?>">
 </div>
-<script src="<?= App::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
-<script src='<?= App::$app->router()->UrlTo('js/blog/edit.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= App::$app->router()->UrlTo('js/blog/image.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('tinymce/tinymce.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/blog/edit.min.js'), 5); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/blog/image.min.js'), 5); ?>

@@ -50,5 +50,5 @@ use app\core\App;
 </div>
 
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/static/static.min.js'), 4); ?>
-<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/captcha/captcha.min.js'); ?>'></script>
-<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/formsimple/edit.min.js'); ?>'></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/captcha/captcha.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/edit.min.js'), 5); ?>

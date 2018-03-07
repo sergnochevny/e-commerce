@@ -43,5 +43,6 @@ use app\core\App;
   </div>
 
 </article>
-<script src='<?= App::$app->router()->UrlTo('js/authorization/lost_password_form.min.js'); ?>'
-        type="text/javascript"></script>
+
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/lost_password_form.min.js'), 5, true); ?>
+

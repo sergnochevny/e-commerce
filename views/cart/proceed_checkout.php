@@ -126,4 +126,4 @@ use app\core\App;
 </div>
 
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/load.min.js'), 4); ?>
-<script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/cart/checkout.min.js'); ?>'></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/checkout.min.js'), 5); ?>

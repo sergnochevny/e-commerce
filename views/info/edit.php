@@ -4,8 +4,6 @@ use app\core\App;
 
 ?>
 
-<script src="<?= App::$app->router()->UrlTo('tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
-<script src='<?= App::$app->router()->UrlTo('js/info/edit.min.js'); ?>' type="text/javascript"></script>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="box col-xs-12">
     <div class="col-xs-12 text-center">
@@ -20,3 +18,5 @@ use app\core\App;
   </div>
 </div>
 
+<?php $this->registerJSFile(App::$app->router()->UrlTo('tinymce/tinymce.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/info/edit.min.js'), 5); ?>

@@ -55,5 +55,4 @@ use app\core\App;
     </div>
   </div>
 </form>
-<script type='text/javascript'
-        src='<?= App::$app->router()->UrlTo('js/authorization/registration/form.min.js'); ?>'></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/registration/form.min.js'), 5);?>

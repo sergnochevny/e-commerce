@@ -59,7 +59,7 @@ class ControllerMain extends ControllerBase{
       $this->template->vars('data', $data);
     }
 
-    $this->template->vars('menu', $this->template->render_layout_return('admin', 'menu'));
+    $this->template->vars('menu', $this->template->render_layout_return('admin', false,'menu'));
     if(ControllerAdminBase::is_logged()) {
       $this->template->vars('my_account_admin_menu', $this->template->render_layout_return('admin_account', false,'menu'));
     }
@@ -84,7 +84,7 @@ class ControllerMain extends ControllerBase{
    * @return mixed
    * @throws \Exception
    */
-  public function view_layout($page, $data = null){
+  public function render_layout($page, $data = null){
     if(isset($data)) {
       $this->template->vars('data', $data);
     }

@@ -342,5 +342,5 @@ use app\core\App;
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </form>
-<script src="<?= App::$app->router()->UrlTo('js/char-counter.jquery.min.js'); ?>"></script>
-<script src="<?= App::$app->router()->UrlTo('js/discount/form.min.js'); ?>"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/char-counter.jquery.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/discount/form.min.js'), 5, true); ?>

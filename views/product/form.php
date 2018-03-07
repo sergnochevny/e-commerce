@@ -305,5 +305,4 @@ use app\core\App;
     <div id="content" data-edit_related class="row products"></div>
   </div>
 </div>
-
-<script src='<?= App::$app->router()->UrlTo('js/product/form.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/product/form.min.js'), 6, true); ?>
