@@ -55,5 +55,4 @@ use app\core\App;
     </div>
   <?php endif; ?>
 </div>
-
-<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4);?>

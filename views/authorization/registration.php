@@ -17,9 +17,7 @@ use app\core\App;
             <h4>Register with iluvfabrix:</h4>
           </div>
           <div class="col-xs-12" data-role="form_content">
-            <div data-load="<?= App::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
-              <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
-            </div>
+            <div data-load="<?= App::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>"></div>
           </div>
         </div>
       </div>
@@ -27,6 +25,7 @@ use app\core\App;
 
   </div>
 </div>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/load.min.js'), 4); ?>
 <script type='text/javascript' src='<?= App::$app->router()->UrlTo('js/captcha/captcha.min.js'); ?>'></script>
 <script type='text/javascript'
         src='<?= App::$app->router()->UrlTo('js/authorization/registration/script.min.js'); ?>'></script>

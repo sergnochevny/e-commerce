@@ -50,8 +50,8 @@ class ControllerProduct extends ControllerFormSimple{
     $this->template->vars('filter_data_start', isset($start) ? $start : 0);
     $this->template->vars('selected', $selected);
     $this->template->vars('filter', $filter);
-    if($return) return $this->template->view_layout_return('filter/select');
-    return $this->template->view_layout('filter/select');
+    if($return) return $this->template->render_layout_return('filter/select');
+    return $this->template->render_layout('filter/select');
   }
 
   /**
@@ -74,8 +74,8 @@ class ControllerProduct extends ControllerFormSimple{
       App::$app->router()->UrlTo('images/products/b_' . $data['image5']);
     $this->template->vars('not_image', $not_image);
     $this->template->vars('data', $data);
-    if($return) return $this->template->view_layout_return('images');
-    $this->template->view_layout('images');
+    if($return) return $this->template->render_layout_return('images');
+    $this->template->render_layout('images');
   }
 
   /**
@@ -167,8 +167,8 @@ class ControllerProduct extends ControllerFormSimple{
     $this->template->vars('filter_type', $type);
     $this->template->vars('destination', $type);
     $this->template->vars('title', 'Select ' . ucfirst($type));
-    if($return) return $this->template->view_layout_return('filter/filter');
-    return $this->template->view_layout('filter/filter');
+    if($return) return $this->template->render_layout_return('filter/filter');
+    return $this->template->render_layout('filter/filter');
   }
 
   /**
@@ -181,8 +181,8 @@ class ControllerProduct extends ControllerFormSimple{
   private function generate_select($data, $selected, $return = false){
     $this->template->vars('selected', is_array($selected) ? $selected : [$selected]);
     $this->template->vars('data', is_array($data) ? $data : [$data]);
-    if($return) return $this->template->view_layout_return('select');
-    return $this->template->view_layout('select');
+    if($return) return $this->template->render_layout_return('select');
+    return $this->template->render_layout('select');
   }
 
   /**
@@ -202,9 +202,9 @@ class ControllerProduct extends ControllerFormSimple{
       $rows = ModelRelated::get_list(0, 0, $res_count_rows, $filter);
     }
     $this->template->vars('rows', $rows);
-    $this->template->vars('list', $this->template->view_layout_return('related/rows'));
-    if($return) return $this->main->view_layout_return('related/list');
-    return $this->main->view_layout('related/list');
+    $this->template->vars('list', $this->template->render_layout_return('related/rows'));
+    if($return) return $this->main->render_layout_return('related/list');
+    return $this->main->render_layout('related/list');
   }
 
   /**

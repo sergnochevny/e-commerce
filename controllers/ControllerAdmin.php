@@ -131,7 +131,7 @@ class ControllerAdmin extends ControllerAdminBase{
         $this->template->vars('redirect', $redirect);
         $menu = new ControllerMenu($this);
         $menu->show_menu();
-        $this->main->view('admin');
+        $this->main->render_view('admin');
       }
     } else {
       $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) :

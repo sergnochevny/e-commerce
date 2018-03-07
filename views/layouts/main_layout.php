@@ -70,8 +70,8 @@ use app\core\App;
   $this->registerJSFile(App::$app->router()->UrlTo('js/multiselect.min.js'), 3);
   $this->registerJSFile(App::$app->router()->UrlTo('js/search/search.min.js'), 3);
   $this->registerJSFile(App::$app->router()->UrlTo('js/script.min.js'), 3);
-
   ?>
+  
 </head>
 
 <body class="woocommerce woocommerce-page">

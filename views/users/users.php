@@ -5,9 +5,7 @@ use app\core\App;
 ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div id="content" class="col-xs-12 main-content-inner box" role="main">
-
     <?= $list; ?>
-
   </div>
 </div>
 <div id="confirm_dialog" class="overlay"></div>
@@ -21,6 +19,7 @@ use app\core\App;
     <div class="text-center" style="width: 100%">
       <input id="confirm_action" type="button" value="Yes confirm" class="button"/>
       <input id="confirm_no" type="button" value="No" class="button"/>
+    </div>
   </div>
 </div>
-  <script src='<?= App::$app->router()->UrlTo('js/formsimple/edit.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/edit.min.js'), 4); ?>

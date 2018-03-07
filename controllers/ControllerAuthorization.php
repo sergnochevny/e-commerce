@@ -54,7 +54,7 @@ class ControllerAuthorization extends ControllerController{
    * @throws \Exception
    */
   private function lost_password_form(){
-    $this->main->view_layout('lost_password_form');
+    $this->main->render_layout('lost_password_form');
   }
 
   /**
@@ -66,7 +66,7 @@ class ControllerAuthorization extends ControllerController{
   private function send_remind($email, $remind_url){
     $subject = "ILuvFabrix. Change Password.";
     $this->template->vars('remind_url', $remind_url);
-    $body = $this->template->view_layout_return('remind/message');
+    $body = $this->template->render_layout_return('remind/message');
     $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
 
     $mailer = App::$app->getMailer();
@@ -167,9 +167,9 @@ class ControllerAuthorization extends ControllerController{
       $this->main->template->vars('lostpassword_url', $lostpassword_url);
       $this->main->template->vars('redirect', $redirect);
       if($this->scenario() != 'short') {
-        $this->main->view('authorization');
+        $this->main->render_view('authorization');
       } else {
-        $this->main->view_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'authorization');
+        $this->main->render_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'authorization');
       }
     }
   }
@@ -223,7 +223,7 @@ class ControllerAuthorization extends ControllerController{
       $prms['url'] = App::$app->get('url');
     }
     $this->main->template->vars('redirect', $redirect);
-    $this->main->view('registration');
+    $this->main->render_view('registration');
   }
 
   /**
@@ -269,7 +269,7 @@ class ControllerAuthorization extends ControllerController{
 
             $message = 'A link to change your password has been sent to your e-mail. This link will be valid for 1 hour!';
             $this->main->template->vars('message', $message);
-            $this->main->view_layout('msg_span');
+            $this->main->render_layout('msg_span');
           }
         }
       } else {
@@ -297,7 +297,7 @@ class ControllerAuthorization extends ControllerController{
                       $message .= 'Now you can go to the <a href="' . App::$app->router()
                                                                                ->UrlTo('authorization') . '">login form</a> and use it.';
                       $this->main->template->vars('message', $message);
-                      $this->main->view_layout('msg_span');
+                      $this->main->render_layout('msg_span');
                       exit();
                     } else {
                       $error = ['Password and Confirm Password must be identical!'];
@@ -311,20 +311,20 @@ class ControllerAuthorization extends ControllerController{
                   $this->main->template->vars('action', $action);
                   $this->main->template->vars('remind', $remind);
                   $this->main->template->vars('user_id', $user_id);
-                  $this->main->view_layout('remind/change_password_form');
+                  $this->main->render_layout('remind/change_password_form');
                 } else {
                   $back_url = App::$app->router()->UrlTo('/');
                   $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
                   $this->main->template->vars('message', $message);
                   $this->main->template->vars('back_url', $back_url);
-                  $this->main->view_layout('msg_span');
+                  $this->main->render_layout('msg_span');
                 }
               } else {
                 $back_url = App::$app->router()->UrlTo('/');
                 $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
                 $this->template->vars('message', $message);
                 $this->template->vars('back_url', $back_url);
-                $this->main->view_layout('msg_span');
+                $this->main->render_layout('msg_span');
               }
             } else {
               $url = App::$app->router()->UrlTo('error404');
@@ -359,12 +359,12 @@ class ControllerAuthorization extends ControllerController{
                 $this->template->vars('action', $action);
                 $this->template->vars('remind', $remind);
                 $this->template->vars('user_id', $user_id);
-                $this->main->view('remind/change_password');
+                $this->main->render_view('remind/change_password');
               } else {
                 $result = true;
                 $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
                 $this->main->template->vars('message', $message);
-                $this->main->view('message');
+                $this->main->render_view('message');
               }
             }
           }
@@ -378,7 +378,7 @@ class ControllerAuthorization extends ControllerController{
           $back_url = App::$app->router()->UrlTo('authorization', $prms);
           $this->main->template->vars('action', $action);
           $this->main->template->vars('back_url', $back_url);
-          $this->main->view('lost_password');
+          $this->main->render_view('lost_password');
         }
       }
       if(!$result) {

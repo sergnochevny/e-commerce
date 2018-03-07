@@ -57,7 +57,7 @@ class ControllerIndex extends ControllerController{
    * @throws \Exception
    */
   public function index($required_access = true){
-    $this->main->view('index');
+    $this->main->render_view('index');
   }
 
   /**
@@ -69,7 +69,7 @@ class ControllerIndex extends ControllerController{
     if($controller == 'shop' && $action == 'product') {
       $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
     }
-    $this->main->view('static/service');
+    $this->main->render_view('static/service');
   }
 
   /**
@@ -81,7 +81,7 @@ class ControllerIndex extends ControllerController{
     if($controller == 'shop' && $action == 'product') {
       $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
     }
-    $this->main->view('static/estimate');
+    $this->main->render_view('static/estimate');
   }
 
   /**
@@ -93,7 +93,7 @@ class ControllerIndex extends ControllerController{
     if($controller == 'shop' && $action == 'product') {
       $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
     }
-    $this->main->view('static/newsletter');
+    $this->main->render_view('static/newsletter');
   }
 
   /**
@@ -101,7 +101,7 @@ class ControllerIndex extends ControllerController{
    * @throws \Exception
    */
   public function privacy(){
-    $this->main->view('static/privacy');
+    $this->main->render_view('static/privacy');
   }
 
   /**
@@ -109,7 +109,7 @@ class ControllerIndex extends ControllerController{
    * @throws \Exception
    */
   public function about(){
-    $this->main->view('static/about');
+    $this->main->render_view('static/about');
   }
 
   /**

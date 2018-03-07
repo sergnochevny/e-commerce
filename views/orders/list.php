@@ -58,5 +58,4 @@ include(APP_PATH . '/views/messages/alert-boxes.php');
     </nav>
   </div>
 <?php endif; ?>
-
-<script src='<?= App::$app->router()->UrlTo('js/simple/list.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/simple/list.min.js'), 4);?>

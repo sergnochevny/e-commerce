@@ -25,7 +25,7 @@ abstract class ControllerFormSimple extends ControllerSimple{
     }
     $this->set_back_url();
     $this->template->vars('form', $this->form($url, null, true));
-    $this->main->view_admin('edit');
+    $this->main-> render_view_admin('edit');
   }
 
 }

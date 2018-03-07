@@ -52,6 +52,4 @@ use app\core\App;
     <span class="h3">No results found</span>
   </div>
 <?php endif; ?>
-
-<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
-
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4);?>

@@ -235,4 +235,4 @@ use app\core\App;
     </div>
   </div>
 </form>
-<script src="<?= App::$app->router()->UrlTo('js/search.min.js'); ?>"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/search.min.js'), 4);?>

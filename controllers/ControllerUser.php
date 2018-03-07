@@ -75,7 +75,7 @@ class ControllerUser extends ControllerUserBase{
         $this->main->template->vars('registration_url', $registration_url);
         $this->main->template->vars('lostpassword_url', $lostpassword_url);
         $this->main->template->vars('redirect', $redirect);
-        $this->main->view('user');
+        $this->main->render_view('user');
       }
     } else {
       $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
@@ -132,7 +132,7 @@ class ControllerUser extends ControllerUserBase{
       $back_url = App::$app->router()->UrlTo('authorization', $prms);
       (new ControllerUsers())->user_handling($data, $action, $back_url, $title, true, true);
       self::sendWelcomeEmail($data['email']);
-      $this->template->view_layout('thanx');
+      $this->template->render_layout('thanx');
     }
   }
 

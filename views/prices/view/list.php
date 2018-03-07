@@ -33,5 +33,4 @@ use app\core\App;
     </nav>
   </div>
 <?php endif; ?>
-
-<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4);?>

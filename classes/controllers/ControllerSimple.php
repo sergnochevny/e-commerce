@@ -101,8 +101,8 @@ abstract class ControllerSimple extends ControllerController{
     $this->template->vars('data', $data);
     $this->template->vars('scenario', $this->scenario());
     $this->template->vars('action', $action);
-    if($return) return $this->main->view_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
-    return $this->main->view_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
+    if($return) return $this->main->render_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
+    return $this->main->render_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
   }
 
   /**
@@ -173,9 +173,9 @@ abstract class ControllerSimple extends ControllerController{
       $this->set_back_url();
       $this->template->vars('scenario', $this->scenario());
       $this->template->vars('data', $data);
-      if($partial) $this->main->view_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
-      elseif($required_access) $this->main->view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
-      else $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
+      if($partial) $this->main->render_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
+      elseif($required_access) $this->main-> render_view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
+      else $this->main->render('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
     } else parent::view($partial);
   }
 

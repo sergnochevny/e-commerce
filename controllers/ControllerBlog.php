@@ -236,9 +236,9 @@ class ControllerBlog extends ControllerFormSimple{
     $this->template->vars('filter_data_start', isset($start) ? $start : 0);
     $this->template->vars('selected', $selected);
     $this->template->vars('filter', $filter);
-    if($return) return $this->template->view_layout_return('filter/select');
+    if($return) return $this->template->render_layout_return('filter/select');
 
-    return $this->template->view_layout('filter/select');
+    return $this->template->render_layout('filter/select');
   }
 
   /**
@@ -271,9 +271,9 @@ class ControllerBlog extends ControllerFormSimple{
       }
     }
     $this->template->vars('data', $data);
-    if($return) return $this->template->view_layout_return('image');
+    if($return) return $this->template->render_layout_return('image');
 
-    return $this->template->view_layout('image');
+    return $this->template->render_layout('image');
   }
 
   /**
@@ -346,9 +346,9 @@ class ControllerBlog extends ControllerFormSimple{
     $this->template->vars('filter_type', 'categories');
     $this->template->vars('destination', 'categories');
     $this->template->vars('title', 'Select Types');
-    if($return) return $this->template->view_layout_return('filter/filter');
+    if($return) return $this->template->render_layout_return('filter/filter');
 
-    return $this->template->view_layout('filter/filter');
+    return $this->template->render_layout('filter/filter');
   }
 
   /**

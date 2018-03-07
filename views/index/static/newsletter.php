@@ -45,8 +45,6 @@ use controllers\ControllerUser;
                 <div class="row">
                   <div class="col-xs-12" data-role="form_content">
                     <div data-load="<?= App::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
-                      <script type='text/javascript'
-                              src='<?= App::$app->router()->UrlTo('js/load.min.js'); ?>'></script>
                     </div>
                   </div>
                 </div>
@@ -58,5 +56,5 @@ use controllers\ControllerUser;
     <?php endif; ?>
   </div>
 </div>
-<script src='<?= App::$app->router()->UrlTo('js/static/static.min.js'); ?>' type="text/javascript"></script>
-
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/static/static.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/load.min.js'), 4); ?>

@@ -183,12 +183,12 @@ class ControllerShop extends ControllerController{
     $this->search_form($search_form);
     $this->template->vars('rows', $rows);
     $this->template->vars('sort', $sort);
-    $this->template->vars('list', $this->template->view_layout_return($type));
+    $this->template->vars('list', $this->template->render_layout_return($type));
     $this->template->vars('count_rows', $res_count_rows);
     (new Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, null, $per_page);
     $this->before_list_layout();
 
-    return $this->main->view_layout_return('list');
+    return $this->main->render_layout_return('list');
   }
 
   /**
@@ -205,7 +205,7 @@ class ControllerShop extends ControllerController{
     }
     $rows = ModelShop::get_widget_list_by_type($type, $start, $limit, $row_count);
     $this->template->vars('rows', $rows);
-    $this->template->view_layout('widget/' . $layout);
+    $this->template->render_layout('widget/' . $layout);
   }
 
   /**
@@ -221,7 +221,7 @@ class ControllerShop extends ControllerController{
       $start = rand($start, $row_count - $limit);
     }
     $this->template->vars('rows', ModelShop::get_widget_list_by_type($type, $start, $limit, $row_count));
-    $this->template->vars('list_' . $type, $this->template->view_layout_return('widget/' . $layout));
+    $this->template->vars('list_' . $type, $this->template->render_layout_return('widget/' . $layout));
   }
 
   /**
@@ -233,7 +233,7 @@ class ControllerShop extends ControllerController{
     $this->widget_products_under_type('under_20', 0, 5);
     $this->widget_products_under_type('under_40', 0, 5);
     $this->widget_products_under_type('under_60', 0, 5);
-    $this->template->view_layout('widget/' . $layout);
+    $this->template->render_layout('widget/' . $layout);
   }
 
   /**
@@ -364,7 +364,7 @@ class ControllerShop extends ControllerController{
       $field_value = sprintf("%s<br><strong>%s</strong>", $data['sPriceDiscount'], $data['srDiscountPrice']);
       $this->template->vars('field_name', $field_name);
       $this->template->vars('field_value', $field_value);
-      $this->template->view_layout('product/discount');
+      $this->template->render_layout('product/discount');
     }
 
     if($data['bDiscount']) {
@@ -380,7 +380,7 @@ class ControllerShop extends ControllerController{
       }
       $this->template->vars('field_name', $field_name);
       $this->template->vars('field_value', $field_value);
-      $this->template->view_layout('product/discount');
+      $this->template->render_layout('product/discount');
     }
 
     if(strlen($data['sSystemDiscount']) > 0) {
@@ -388,7 +388,7 @@ class ControllerShop extends ControllerController{
       $field_value = $data['sSystemDiscount'];
       $this->template->vars('field_name', $field_name);
       $this->template->vars('field_value', $field_value);
-      $this->template->view_layout('product/discount');
+      $this->template->render_layout('product/discount');
     }
 
     if(isset($data['next_change']) && $data['next_change']) {
@@ -396,7 +396,7 @@ class ControllerShop extends ControllerController{
       $field_value = $data['time_rem'];
       $this->template->vars('field_name', $field_name);
       $this->template->vars('field_value', $field_value);
-      $this->template->view_layout('product/discount');
+      $this->template->render_layout('product/discount');
     }
     $discount_info = ob_get_contents();
     ob_end_clean();
@@ -411,7 +411,7 @@ class ControllerShop extends ControllerController{
     $allowed_samples = ModelSamples::allowedSamples($pid);
     $this->template->vars('allowed_samples', $allowed_samples);
     $this->template->vars('cart_enable', '_');
-    $this->main->view('product/view');
+    $this->main->render_view('product/view');
   }
 
   /**
@@ -469,7 +469,7 @@ class ControllerShop extends ControllerController{
     $list = $this->get_list_by_type('specials', (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    $this->main->view('shop');
+    $this->main->render_view('shop');
   }
 
   /**
@@ -482,7 +482,7 @@ class ControllerShop extends ControllerController{
     $list = $this->get_list_by_type('popular', 360);
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    $this->main->view('shop');
+    $this->main->render_view('shop');
   }
 
   /**
@@ -495,7 +495,7 @@ class ControllerShop extends ControllerController{
     $list = $this->get_list_by_type('last', 50);
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    $this->main->view('shop');
+    $this->main->render_view('shop');
   }
 
   /**
@@ -508,7 +508,7 @@ class ControllerShop extends ControllerController{
     $list = $this->get_list_by_type('best', 360);
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    $this->main->view('shop');
+    $this->main->render_view('shop');
   }
 
   /**
@@ -523,7 +523,7 @@ class ControllerShop extends ControllerController{
     );
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    $this->main->view('shop');
+    $this->main->render_view('shop');
   }
 
   /**
@@ -539,7 +539,7 @@ class ControllerShop extends ControllerController{
     );
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    $this->main->view('shop');
+    $this->main->render_view('shop');
   }
 
 //

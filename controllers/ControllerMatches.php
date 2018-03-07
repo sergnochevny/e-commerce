@@ -56,7 +56,7 @@ class ControllerMatches extends ControllerFormSimple{
   protected function before_form_layout(&$data = null){
     $this->template->vars('message', $data['message']);
     $added = $data['res'];
-    exit(json_encode(['data' => $this->template->view_layout_return('msg_add'), 'added' => $added]));
+    exit(json_encode(['data' => $this->template->render_layout_return('msg_add'), 'added' => $added]));
   }
 
   /**
@@ -241,6 +241,6 @@ class ControllerMatches extends ControllerFormSimple{
       $message = 'Empty Matches Area. Nothing added to the Cart.';
 
     $this->template->vars('message', $message);
-    $this->main->view_layout('msg_add_to_cart');
+    $this->main->render_layout('msg_add_to_cart');
   }
 }

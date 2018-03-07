@@ -88,7 +88,7 @@ class ControllerCart extends ControllerController{
     $this->template->vars('item', $item);
     $this->template->vars('pid', $pid);
     $this->template->vars('t_pr', $t_pr);
-    $this->template->view_layout($template);
+    $this->template->render_layout($template);
   }
 
   /**
@@ -125,7 +125,7 @@ class ControllerCart extends ControllerController{
     $this->template->vars('img_url', $img_url);
     $this->template->vars('item', $item);
     $this->template->vars('pid', $pid);
-    $this->template->view_layout($template);
+    $this->template->render_layout($template);
   }
 
   /**
@@ -160,7 +160,7 @@ class ControllerCart extends ControllerController{
       $this->template->vars('bill_province', trim(ModelAddress::get_province_by_id($bill_province)));
       $this->template->vars('ship_country', trim(ModelAddress::get_country_by_id($ship_country)));
       $this->template->vars('ship_province', trim(ModelAddress::get_province_by_id($ship_province)));
-      $this->template->view_layout('bill_ship_info');
+      $this->template->render_layout('bill_ship_info');
     }
   }
 
@@ -617,7 +617,7 @@ class ControllerCart extends ControllerController{
       $this->template->vars('express_samples_cost', $express_samples_cost);
       $this->template->vars('total', $total);
       $this->template->vars('shipcost', $shipcost);
-      $this->template->view_layout('ship_in_proceed');
+      $this->template->render_layout('ship_in_proceed');
     }
   }
 
@@ -698,7 +698,7 @@ class ControllerCart extends ControllerController{
     $this->template->vars('taxes', $taxes);
     $this->template->vars('total', $total);
     $this->template->vars('discount', $discount);
-    $this->template->view_layout('total_in_proceed');
+    $this->template->render_layout('total_in_proceed');
   }
 
   /**
@@ -787,17 +787,17 @@ class ControllerCart extends ControllerController{
     $this->main->is_user_authorized(true);
     if(!is_null(App::$app->get('proceed'))) {
       $this->proceed_checkout_prepare();
-      $this->main->template->vars('content', $this->template->view_layout_return('proceed_checkout'));
+      $this->main->template->vars('content', $this->template->render_layout_return('proceed_checkout'));
     } elseif(!is_null(App::$app->get('pay_ok'))) {
       $this->pay_ok();
-      $this->main->template->vars('content', $this->template->view_layout_return('pay_ok'));
+      $this->main->template->vars('content', $this->template->render_layout_return('pay_ok'));
     } elseif(!is_null(App::$app->get('pay_error'))) {
-      $this->main->template->vars('content', $this->template->view_layout_return('pay_error'));
+      $this->main->template->vars('content', $this->template->render_layout_return('pay_error'));
     } else {
       $this->prepare();
-      $this->main->template->vars('content', $this->template->view_layout_return('cart'));
+      $this->main->template->vars('content', $this->template->render_layout_return('cart'));
     }
-    $this->main->view('container');
+    $this->main->render_view('container');
   }
 
   /**
@@ -842,7 +842,7 @@ class ControllerCart extends ControllerController{
     if(isset(App::$app->session('cart')['items']) && (count(App::$app->session('cart')['items']) > 0)) {
       $this->template->vars('cart_items', '_');
     }
-    $this->template->view_layout('samples_legend');
+    $this->template->render_layout('samples_legend');
   }
 
   /**
@@ -966,10 +966,10 @@ class ControllerCart extends ControllerController{
     $this->template->vars('shipDiscount', $shipDiscount);
     $this->template->vars('shipcost', $shipcost);
     if(count($cart_items) > 0) {
-      $this->template->view_layout('shipping');
+      $this->template->render_layout('shipping');
     } else {
       if(count($cart_samples_items) > 0) {
-        $this->template->view_layout('shipping_samples');
+        $this->template->render_layout('shipping_samples');
       }
     }
   }
@@ -996,7 +996,7 @@ class ControllerCart extends ControllerController{
       $this->template->vars('total', $total);
       $this->template->vars('coupon_code', $coupon_code);
       $this->template->vars('uid', $uid);
-      $this->template->view_layout('coupon_total');
+      $this->template->render_layout('coupon_total');
     }
   }
 
@@ -1063,7 +1063,7 @@ class ControllerCart extends ControllerController{
    */
   public function proceed_checkout(){
     $this->proceed_checkout_prepare();
-    $this->main->view_layout('proceed_checkout');
+    $this->main->render_layout('proceed_checkout');
   }
 
   /**
@@ -1140,7 +1140,7 @@ class ControllerCart extends ControllerController{
         $paypal['bn'] = "toolkit-php";
 
         $this->main->template->vars('paypal', $paypal);
-        $this->main->view_layout('proceed_agreem');
+        $this->main->render_layout('proceed_agreem');
       } else {
         $this->template->vars('error', ['Fill in the Billing and Shipping Information!']);
         $this->proceed_checkout();
@@ -1246,8 +1246,8 @@ class ControllerCart extends ControllerController{
         $message = 'This Fabric has been added to your Cart.<br>Click the Cart to view your Order.';
         $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
         $this->template->vars('message', $message);
-        $msg = $this->template->view_layout_return('msg_add');
-        $button = $this->template->view_layout_return('basket');
+        $msg = $this->template->render_layout_return('msg_add');
+        $button = $this->template->render_layout_return('basket');
         exit(json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]));
       } else {
 
@@ -1261,7 +1261,7 @@ class ControllerCart extends ControllerController{
         $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
         $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
         $this->template->vars('message', $message);
-        $msg = $this->template->view_layout_return('msg_add');
+        $msg = $this->template->render_layout_return('msg_add');
         exit(json_encode(['msg' => $msg, 'sum' => $cart_sum]));
       }
     }
@@ -1309,8 +1309,8 @@ class ControllerCart extends ControllerController{
         $message = 'This Samples has been added to your Cart.<br>Click the Cart to view your Order.';
         $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
         $this->template->vars('message', $message);
-        $msg = $this->template->view_layout_return('msg_add');
-        $button = $this->template->view_layout_return('basket');
+        $msg = $this->template->render_layout_return('msg_add');
+        $button = $this->template->render_layout_return('basket');
         $res = json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]);
         echo $res;
       } else {
@@ -1325,7 +1325,7 @@ class ControllerCart extends ControllerController{
         $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
         $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
         $this->template->vars('message', $message);
-        $msg = $this->template->view_layout_return('masg_add');
+        $msg = $this->template->render_layout_return('masg_add');
         $res = json_encode(['msg' => $msg, 'sum' => $cart_sum]);
         echo $res;
       }
@@ -1372,7 +1372,7 @@ class ControllerCart extends ControllerController{
           }
           $message = 'The quantity for ' . $product['pname'] . ' must be a whole number. The order was adjusted.<br>';
           $this->template->vars('message', $message);
-          $response['msg'] = $this->template->view_layout_return('msg_change');
+          $response['msg'] = $this->template->render_layout_return('msg_change');
         }
 
         if($piece == 0) {
@@ -1382,14 +1382,14 @@ class ControllerCart extends ControllerController{
             $cart_items[$pid]['quantity'] = $inventory;
             $message = 'The available inventory for ' . $cart_items[$pid]['pname'] . ' is ' . $inventory . '. The order was adjusted.<br>';
             $this->template->vars('message', $message);
-            $response['msg'] = $this->template->view_layout_return('msg_change');
+            $response['msg'] = $this->template->render_layout_return('msg_change');
           }
         }
       }
     } else {
       $message = 'The quantity must be a positive number. The order was adjusted.<br>';
       $this->template->vars('message', $message);
-      $response['msg'] = $this->template->view_layout_return('msg_change');
+      $response['msg'] = $this->template->render_layout_return('msg_change');
     }
 
     $item = $cart_items[$pid];

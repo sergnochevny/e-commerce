@@ -102,4 +102,4 @@ use controllers\ControllerUser;
     </div>
   </div>
 </form>
-<script src='<?= App::$app->router()->UrlTo('js/search.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/search.min.js'), 4);?>

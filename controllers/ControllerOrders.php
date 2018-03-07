@@ -159,7 +159,7 @@ class ControllerOrders extends ControllerSimple{
         $this->template->vars('sale_price', $sale_price);
         $this->template->vars('quantity', $quantity);
         $this->main->template->vars('item_price', $item_price);
-        $this->template->view_layout('detail_info');
+        $this->template->render_layout('detail_info');
       }
       $end_date = $end_date ? date('/m/d/Y', strtotime($end_date)) : '';
       $total_discount = strlen(trim($total_discount)) > 0 ? '$' . number_format((double)$total_discount, 2) : '';
@@ -190,7 +190,7 @@ class ControllerOrders extends ControllerSimple{
     $this->main->template->vars('status_code', $status_code);
     $this->main->template->vars('total_discount', $total_discount);
 
-    if(ControllerAdmin::is_logged()) $this->main->view_admin('view'); else  $this->main->view('view');
+    if(ControllerAdmin::is_logged()) $this->main-> render_view_admin('view'); else  $this->main->render_view('view');
   }
 
   /**

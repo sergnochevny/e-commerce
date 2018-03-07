@@ -1,8 +1,4 @@
-var currentScript = document.currentScript || (function () {
-  var scripts = document.getElementsByTagName('script');
-  return scripts[scripts.length - 1];
-})();
-(function ($, me) {
+(function ($) {
   'use strict';
   var wait_loader = '<div class="col-xs-12 text-center">' +
     '<i class="fa fa-spinner fa-pulse fa-4x"></i><br/>' +
@@ -22,15 +18,15 @@ var currentScript = document.currentScript || (function () {
     }, timeout);
   }
 
-  $.each($(me).closest('div:not([data-load])').find('[data-load]'),
+  $.each($('[data-load-cart]'),
     function () {
       $(this).append(wait_loader);
     }
   );
 
-  $.each($(me).closest('div:not([data-load])').find('[data-load]'),
+  $.each($('[data-load-cart]'),
     function () {
-      $(this).parent().load($(this).attr('data-load'),
+      $(this).parent().load($(this).attr('data-load-cart'),
         function () {
           InitTimeout();
         }
@@ -38,4 +34,4 @@ var currentScript = document.currentScript || (function () {
     }
   );
 
-})(jQuery, currentScript);
+})(window.jQuery);

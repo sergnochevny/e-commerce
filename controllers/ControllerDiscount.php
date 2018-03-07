@@ -46,9 +46,9 @@ class ControllerDiscount extends ControllerFormSimple{
     $this->template->vars('filter_type', $data['filter_type']);
     $this->template->vars('destination', 'filter_products');
     $this->template->vars('title', $title);
-    if($return) return $this->template->view_layout_return('filter/filter');
+    if($return) return $this->template->render_layout_return('filter/filter');
 
-    return $this->template->view_layout('filter/filter');
+    return $this->template->render_layout('filter/filter');
   }
 
   /**
@@ -64,9 +64,9 @@ class ControllerDiscount extends ControllerFormSimple{
     $this->template->vars('filter_data_start', 0);
     $this->template->vars('destination', 'users');
     $this->template->vars('title', 'Select Users');
-    if($return) return $this->template->view_layout_return('filter/filter');
+    if($return) return $this->template->render_layout_return('filter/filter');
 
-    return $this->template->view_layout('filter/filter');
+    return $this->template->render_layout('filter/filter');
   }
 
   /**
@@ -89,9 +89,9 @@ class ControllerDiscount extends ControllerFormSimple{
     $this->template->vars('filter_data_start', isset($start) ? $start : 0);
     $this->template->vars('selected', $selected);
     $this->template->vars('filter', $filter);
-    if($return) return $this->template->view_layout_return('filter/select');
+    if($return) return $this->template->render_layout_return('filter/select');
 
-    return $this->template->view_layout('filter/select');
+    return $this->template->render_layout('filter/select');
   }
 
   /**
@@ -323,7 +323,7 @@ class ControllerDiscount extends ControllerFormSimple{
     $this->set_back_url();
     $this->template->vars('discount', $discount);
     $this->template->vars('orders', $orders);
-    $this->main->view_admin('view' . DS . $this->controller);
+    $this->main-> render_view_admin('view' . DS . $this->controller);
   }
 
 }

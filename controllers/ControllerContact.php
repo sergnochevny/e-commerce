@@ -122,7 +122,7 @@ class ControllerContact extends ControllerSimple{
       exit($this->form($url, $data));
     }
     $this->template->vars('form', $this->form($url, [], true));
-    $this->main->view($this->controller);
+    $this->main->render_view($this->controller);
   }
 
   /**

@@ -34,7 +34,7 @@ use app\core\App;
             <?php if(isset($search['categories'])):
               foreach($search['categories'] as $key => $val): ?>
                 <option
-                    value="<?= $key ?>" <?= (isset($search['b.cid']) && ($key == $search['b.cid'])) ? 'selected' : '' ?>>
+                  value="<?= $key ?>" <?= (isset($search['b.cid']) && ($key == $search['b.cid'])) ? 'selected' : '' ?>>
                   <?= $val ?>
                 </option>
               <?php endforeach; ?>
@@ -58,7 +58,7 @@ use app\core\App;
             <?php if(isset($search['manufacturers'])):
               foreach($search['manufacturers'] as $key => $val):?>
                 <option
-                    value="<?= $key ?>" <?= (isset($search['e.id']) && ($key == $search['e.id'])) ? 'selected' : '' ?>>
+                  value="<?= $key ?>" <?= (isset($search['e.id']) && ($key == $search['e.id'])) ? 'selected' : '' ?>>
                   <?= $val ?>
                 </option>
               <?php endforeach; ?>
@@ -146,7 +146,7 @@ use app\core\App;
             <?php if(isset($search['prices'])):
               foreach($search['prices'] as $key => $val):?>
                 <option
-                    value="<?= $key ?>" <?= (isset($search['a.priceyard']) && ($key == $search['a.priceyard'])) ? 'selected' : '' ?>>
+                  value="<?= $key ?>" <?= (isset($search['a.priceyard']) && ($key == $search['a.priceyard'])) ? 'selected' : '' ?>>
                   <?= $val ?>
                 </option>
               <?php endforeach; ?>
@@ -164,21 +164,23 @@ use app\core\App;
     </div>
   </div>
   <?php
-    if(isset($search['hidden'])):
-      foreach($search['hidden'] as $field_name => $field_value):?>
-        <?php if(is_array($field_value)): ?>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>][from]" value="<?= $field_value['from'] ?>"/>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>][to]" value="<?= $field_value['to'] ?>"/>
-        <?php else: ?>
-          <input type="hidden" name="search[hidden][<?= $field_name ?>]" value="<?= $field_value ?>"/>
-        <?php endif; ?>
-        <?php
-      endforeach;
-    endif;
-    if(isset($search['firstpage'])):?>
-      <input type="hidden" name="search[firstpage]" value="<?= $search['firstpage'] ?>"/>
-    <?php endif; ?>
+  if(isset($search['hidden'])):
+    foreach($search['hidden'] as $field_name => $field_value):?>
+      <?php if(is_array($field_value)): ?>
+        <input type="hidden" name="search[hidden][<?= $field_name ?>][from]" value="<?= $field_value['from'] ?>"/>
+        <input type="hidden" name="search[hidden][<?= $field_name ?>][to]" value="<?= $field_value['to'] ?>"/>
+      <?php else: ?>
+        <input type="hidden" name="search[hidden][<?= $field_name ?>]" value="<?= $field_value ?>"/>
+      <?php endif; ?>
+    <?php
+    endforeach;
+  endif;
+  if(isset($search['firstpage'])):?>
+    <input type="hidden" name="search[firstpage]" value="<?= $search['firstpage'] ?>"/>
+  <?php endif; ?>
 </form>
 
-<script src='<?= App::$app->router()->UrlTo('js/formsimple/list.min.js'); ?>' type="text/javascript"></script>
-<script src='<?= App::$app->router()->UrlTo('js/select.ui.min.js'); ?>' type="text/javascript"></script>
+<?php
+$this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4);
+$this->registerJSFile(App::$app->router()->UrlTo('js/select.ui.min.js'), 4);
+?>

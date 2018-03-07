@@ -88,7 +88,7 @@ abstract class ControllerController extends ControllerBase{
     $this->template->vars('search', $search_form);
     $search_form = null;
     try {
-      $search_form = $this->main->view_layout_return($template);
+      $search_form = $this->main->render_layout_return($template);
     } catch(Exception $e) {
     }
     $this->template->vars('search_form', $search_form);
@@ -364,14 +364,14 @@ abstract class ControllerController extends ControllerBase{
     $this->search_form($search_form, $view);
     $this->template->vars('rows', $rows);
     $this->template->vars('sort', $sort);
-    $this->template->vars('list', $this->template->view_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows'));
+    $this->template->vars('list', $this->template->render_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows'));
     $this->template->vars('count_rows', $res_count_rows);
     $prms = !empty($this->scenario()) ? ['method' => $this->scenario()] : null;
     (new Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $prms, $per_page);
     $this->set_back_url();
     $this->before_list_layout($view);
-    if($return) return $this->main->view_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
-    $this->main->view_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
+    if($return) return $this->main->render_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
+    $this->main->render_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
   }
 
   /**
@@ -475,8 +475,8 @@ abstract class ControllerController extends ControllerBase{
     $list = $this->get_list(false, true);
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    if(ControllerAdmin::is_logged()) $this->main->view_admin($this->controller);
-    else  $this->main->view((!empty($this->scenario()) ? $this->scenario() . DS : '') . $this->controller);
+    if(ControllerAdmin::is_logged()) $this->main-> render_view_admin($this->controller);
+    else  $this->main->render((!empty($this->scenario()) ? $this->scenario() . DS : '') . $this->controller);
   }
 
   /**
@@ -490,9 +490,9 @@ abstract class ControllerController extends ControllerBase{
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('scenario', $this->scenario());
     $this->template->vars('list', $list);
-    if($partial) $this->main->view_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
-    elseif($required_access) $this->main->view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
-    else $this->main->view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+    if($partial) $this->main->render_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+    elseif($required_access) $this->main-> render_view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+    else $this->main->render('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
   }
 
   /**

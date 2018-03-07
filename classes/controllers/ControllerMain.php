@@ -54,18 +54,18 @@ class ControllerMain extends ControllerBase{
    * @param null $data
    * @throws \Exception
    */
-  public function view_admin($page, $data = null){
+  public function  render_view_admin($page, $data = null){
     if(isset($data)) {
       $this->template->vars('data', $data);
     }
 
-    $this->template->vars('menu', $this->template->view_layout_return('admin', 'menu'));
+    $this->template->vars('menu', $this->template->render_layout_return('admin', 'menu'));
     if(ControllerAdminBase::is_logged()) {
-      $this->template->vars('my_account_admin_menu', $this->template->view_layout_return('admin_account', 'menu'));
+      $this->template->vars('my_account_admin_menu', $this->template->render_layout_return('admin_account', false,'menu'));
     }
 
     $this->meta_page();
-    $this->template->view($page);
+    $this->template->render($page);
   }
 
   /**
@@ -88,7 +88,7 @@ class ControllerMain extends ControllerBase{
     if(isset($data)) {
       $this->template->vars('data', $data);
     }
-    return $this->template->view_layout($page);
+    return $this->template->render_layout($page);
   }
 
   /**
@@ -97,12 +97,12 @@ class ControllerMain extends ControllerBase{
    * @return string
    * @throws \Exception
    */
-  public function view_layout_return($page, $data = null){
+  public function render_layout_return($page, $data = null){
     if(isset($data)) {
       $this->template->vars('data', $data);
     }
 
-    return $this->template->view_layout_return($page);
+    return $this->template->render_layout_return($page);
   }
 
   /**
@@ -184,8 +184,8 @@ class ControllerMain extends ControllerBase{
       }
       $this->template->vars('message', $message);
       $this->template->vars('back_url', $back_url);
-      if(ControllerAdminBase::is_logged()) $this->view_admin('message');
-      else $this->view('message');
+      if(ControllerAdminBase::is_logged()) $this-> render_view_admin('message');
+      else $this->render_view('message');
     }
   }
 
@@ -194,7 +194,7 @@ class ControllerMain extends ControllerBase{
    * @param null $data
    * @throws \Exception
    */
-  public function view($page, $data = null){
+  public function render_view($page, $data = null){
     $this->build_canonical_url();
     if(isset($data)) {
       $this->template->vars('data', $data);
@@ -204,12 +204,12 @@ class ControllerMain extends ControllerBase{
 
     $user_logged = ControllerUser::is_logged();
     $this->template->vars('user_logged', $user_logged);
-    $this->template->vars('my_account_user_menu', $this->template->view_layout_return('user_account', 'menu'));
+    $this->template->vars('my_account_user_menu', $this->template->render_layout_return('user_account', false,'menu'));
 
     $menu = new ControllerMenu(isset($this->main) ? $this->main : $this);
     $menu->show_menu();
     $this->meta_page();
-    $this->template->view($page);
+    $this->template->render($page);
   }
 
   /**
@@ -222,7 +222,7 @@ class ControllerMain extends ControllerBase{
     header("Status: 404 Not Found");
     $this->template->controller = 'main';
     $this->template->vars('message', $msg);
-    if(ControllerAdminBase::is_logged()) $this->view_admin('404/error');
-    else $this->view('404/error');
+    if(ControllerAdminBase::is_logged()) $this-> render_view_admin('404/error');
+    else $this->render_view('404/error');
   }
 }

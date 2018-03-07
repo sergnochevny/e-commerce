@@ -42,7 +42,7 @@ class ControllerUsers extends ControllerFormSimple{
     $this->template->vars('items', $countries);
     $this->template->vars('select', $select);
 
-    return $this->template->view_layout_return('address/select_countries_options');
+    return $this->template->render_layout_return('address/select_countries_options');
   }
 
   /**
@@ -57,7 +57,7 @@ class ControllerUsers extends ControllerFormSimple{
       $provincies = ModelAddress::get_country_state($country);
       $this->template->vars('items', $provincies);
       $this->template->vars('select', $select);
-      $list = $this->template->view_layout_return('address/select_countries_options');
+      $list = $this->template->render_layout_return('address/select_countries_options');
     }
 
     return $list;
@@ -409,7 +409,7 @@ class ControllerUsers extends ControllerFormSimple{
       if($outer_control && $result) {
         if($this->scenario() !== 'short') return $result; else {
           ControllerUser::sendWelcomeEmail($data['email']);
-          $thanx = $this->template->view_layout_return('short/thanx');
+          $thanx = $this->template->render_layout_return('short/thanx');
           $this->template->vars('warning', [$thanx]);
           exit($this->form($url, []));
         }
@@ -420,7 +420,7 @@ class ControllerUsers extends ControllerFormSimple{
     if($this->scenario() == 'short') exit($form);
     $this->set_back_url($back_url);
     $this->template->vars('form', $form);
-    if($is_user) exit($this->main->view('edit')); else exit($this->main->view_admin('edit'));
+    if($is_user) exit($this->main->render_view('edit')); else exit($this->main-> render_view_admin('edit'));
   }
 
   /**

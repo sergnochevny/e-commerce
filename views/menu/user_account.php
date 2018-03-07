@@ -84,12 +84,12 @@ use controllers\ControllerUser;
   <?php else: ?>
     <div class="dropdown-menu topnav-login-dropdown">
       <div class="col-xs-12" data-role="form_content">
-        <div data-load="<?= App::$app->router()->UrlTo('authorization', ['method' => 'short']) ?>">
-          <script type='text/javascript'
-                  src='<?= App::$app->router()->UrlTo('js/authorization/load.min.js'); ?>'></script>
+        <div data-load-authorization="<?= App::$app->router()->UrlTo('authorization', ['method' => 'short']) ?>">
         </div>
       </div>
     </div>
+
+  <?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/load.min.js'), 4); ?>
     <script src='<?= App::$app->router()->UrlTo('js/authorization/short_authorization.min.js'); ?>'
             type="text/javascript"></script>
   <?php endif; ?>

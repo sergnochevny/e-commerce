@@ -161,12 +161,12 @@ class ControllerRelated extends ControllerFormSimple{
     $this->search_form($search_form, $view);
     $this->template->vars('rows', $rows);
     $this->template->vars('sort', $sort);
-    $this->template->vars('list', $this->template->view_layout_return('rows'));
+    $this->template->vars('list', $this->template->render_layout_return('rows'));
     $this->template->vars('count_rows', $res_count_rows);
     (new Paginator($this->main))->paginator($total, $page, $this->controller, null, $per_page);
     $this->before_list_layout($view);
-    if($return) return $this->main->view_layout_return('list');
-    return $this->main->view_layout('list');
+    if($return) return $this->main->render_layout_return('list');
+    return $this->main->render_layout('list');
   }
 
   /**

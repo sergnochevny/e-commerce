@@ -44,10 +44,10 @@ class Paginator extends ControllerController{
       $this->template->vars('prev_page', $prev_page);
       $this->template->vars('next_page', $next_page);
 
-      $this->main->template->vars('paginator', $this->template->view_layout_return('paginator'));
+      $this->main->template->vars('paginator', $this->template->render_layout_return('paginator'));
     }
 
-    $this->main->template->vars('show_by', $this->template->view_layout_return('show_by'));
+    $this->main->template->vars('show_by', $this->template->render_layout_return('show_by'));
   }
 
 }

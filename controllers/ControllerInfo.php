@@ -116,9 +116,9 @@ class ControllerInfo extends ControllerFormSimple{
     $this->template->vars('scenario', $this->scenario());
     $this->template->vars('data', $data);
     $this->template->vars('action', $action);
-    if($return) return $this->main->view_layout_return('form');
+    if($return) return $this->main->render_layout_return('form');
 
-    return $this->main->view_layout('form');
+    return $this->main->render_layout('form');
   }
 
   /**
@@ -188,7 +188,7 @@ class ControllerInfo extends ControllerFormSimple{
         $data = forward_static_call([App::$modelsNS . '\Model' . ucfirst($this->controller), 'get_by_f1'], $filter);
         $this->after_get_data_item_view($data);
         $this->template->vars('data', $data);
-        $this->main->view_layout('view/' . $this->scenario());
+        $this->main->render_layout('view/' . $this->scenario());
       } else ControllerController::view($partial, $required_access);
     } else parent::view($partial, $required_access);
   }

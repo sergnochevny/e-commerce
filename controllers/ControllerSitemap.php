@@ -41,7 +41,7 @@ class ControllerSitemap extends ControllerBase{
           }
         }
         $this_->template->vars('rows', $rows);
-        $this_->template->view_layout('list');
+        $this_->template->render_layout('list');
       }
     };
 
@@ -80,6 +80,6 @@ class ControllerSitemap extends ControllerBase{
 
     $this->template->vars('list', $list);
     header("Content-type: text/xml");
-    $this->template->view_layout('sitemap');
+    $this->template->render_layout('sitemap');
   }
 }

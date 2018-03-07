@@ -43,4 +43,4 @@ use app\core\App;
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script src='<?= App::$app->router()->UrlTo('js/simple/edit.min.js'); ?>' type="text/javascript"></script>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/simple/edit.min.js'), 4); ?>
