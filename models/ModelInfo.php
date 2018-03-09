@@ -80,7 +80,7 @@ class ModelInfo extends ModelBase{
    */
   public static function get_total_count($filter = null){
     $res = 0;
-    $q = "SELECT COUNT(a.id) FROM " . static::$table;
+    $q = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table;
     $q .= self::build_where($filter);
     $result = static::query($q);
     if($result) {

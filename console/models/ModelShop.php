@@ -135,7 +135,7 @@ class ModelShop extends ModelConsole{
   public static function get_total_count($filter = null){
     $response = 0;
     if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
-      $query = "SELECT COUNT(n.pid) FROM (";
+      $query = "SELECT COUNT(DISTINCT n.pid) FROM (";
       $query .= "SELECT a.pid, SUM(k.quantity) AS s FROM " . static::$table . " a";
       $query .= " LEFT JOIN shop_order_details k ON a.pid = k.product_id";
     } else {
