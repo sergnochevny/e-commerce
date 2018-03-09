@@ -621,6 +621,46 @@ use app\core\App;
                       value="<?= number_format($data['shop_under_amount'], 0, ".", ""); ?>"/>
                   </div>
                 </div>
+                <div class="col-xs-6 col-sm-6">
+                  <div class="form-row">
+                    <label class="required_field">
+                      Best Textiles amount items
+                    </label>
+                    <i class="fa fa-question-circle" data-promotion="" href="#shop_best_amount"></i>
+                    <input
+                      data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                      type="text"
+                      name="shop_best_amount" class="input-text"
+                      value="<?= number_format($data['shop_best_amount'], 0, ".", ""); ?>"/>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6">
+                  <div class="form-row">
+                    <label class="required_field">
+                      New Textiles amount items
+                    </label>
+                    <i class="fa fa-question-circle" data-promotion="" href="#shop_last_amount"></i>
+                    <input
+                      data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                      type="text"
+                      name="shop_last_amount" class="input-text"
+                      value="<?= number_format($data['shop_last_amount'], 0, ".", ""); ?>"/>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6">
+                  <div class="form-row">
+                    <label class="required_field">
+                      Popular Textiles amount items
+                    </label>
+                    <i class="fa fa-question-circle" data-promotion="" href="#shop_popular_amount"></i>
+                    <input
+                      data-inputmask="'alias': 'numeric', 'groupSeparator': '', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                      type="text"
+                      name="shop_popular_amount" class="input-text"
+                      value="<?= number_format($data['shop_popular_amount'], 0, ".", ""); ?>"/>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>

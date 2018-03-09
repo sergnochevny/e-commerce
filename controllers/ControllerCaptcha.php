@@ -4,9 +4,7 @@ namespace controllers;
 
 use app\core\App;
 use classes\controllers\ControllerController;
-use app\core\controller\ControllerBase;
 use classes\helpers\CaptchaHelper;
-use models\ModelAuth;
 
 /**
  * Class ControllerCaptcha

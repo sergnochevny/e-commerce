@@ -50,6 +50,9 @@ class ControllerSettings extends ControllerFormSimple{
         'shop_bestsellers_amount' => ModelSettings::sanitize(App::$app->post('shop_bestsellers_amount')),
         'shop_specials_amount' => ModelSettings::sanitize(App::$app->post('shop_specials_amount')),
         'shop_under_amount' => ModelSettings::sanitize(App::$app->post('shop_under_amount')),
+        'shop_last_amount' => ModelSettings::sanitize(App::$app->post('shop_last_amount')),
+        'shop_best_amount' => ModelSettings::sanitize(App::$app->post('shop_best_amount')),
+        'shop_popular_amount' => ModelSettings::sanitize(App::$app->post('shop_popular_amount')),
 
         'shop_price_groups_count' => ModelSettings::sanitize(App::$app->post('shop_price_groups_count')),
         'shop_rate_handling' => ModelSettings::sanitize(App::$app->post('shop_rate_handling')),
@@ -112,6 +115,9 @@ class ControllerSettings extends ControllerFormSimple{
     $data['shop_bestsellers_amount'] = !empty($data['shop_bestsellers_amount']) ? $data['shop_bestsellers_amount'] : SHOP_BSELLS_AMOUNT;
     $data['shop_specials_amount'] = !empty($data['shop_specials_amount']) ? $data['shop_specials_amount'] : SHOP_SPECIALS_AMOUNT;
     $data['shop_under_amount'] = !empty($data['shop_under_amount']) ? $data['shop_under_amount'] : SHOP_UNDER_AMOUNT;
+    $data['shop_last_amount'] = !empty($data['shop_last_amount']) ? $data['shop_last_amount'] : SHOP_LAST_AMOUNT;
+    $data['shop_best_amount'] = !empty($data['shop_best_amount']) ? $data['shop_best_amount'] : SHOP_BEST_AMOUNT;
+    $data['shop_popular_amount'] = !empty($data['shop_popular_amount']) ? $data['shop_popular_amount'] : SHOP_POPULAR_AMOUNT;
 
     $data['shop_price_groups_count'] = !empty((int)$data['shop_price_groups_count']) ? $data['shop_price_groups_count'] : PRICE_GROUPS_COUNT;
     $data['shop_rate_handling'] = !empty((float)$data['shop_rate_handling']) ? $data['shop_rate_handling'] : RATE_HANDLING;
@@ -295,7 +301,7 @@ class ControllerSettings extends ControllerFormSimple{
         if(empty($data['system_emails_host'])) $error_ .= '<br>&#9;Identify <b>Host</b> field!';
         if(empty($data['system_emails_port'])) {
           if(!empty($error_)) $error_ .= '<br>';
-          $error_ .=  '&#9;Identify <b>Port</b> field!';
+          $error_ .= '&#9;Identify <b>Port</b> field!';
         }
         if(empty($data['system_emails_user_name'])) {
           if(!empty($error_)) $error_ .= '<br>';
@@ -336,7 +342,6 @@ class ControllerSettings extends ControllerFormSimple{
 
         }
         $error = array_merge($error, $error4);
-
       }
     } else return true;
 

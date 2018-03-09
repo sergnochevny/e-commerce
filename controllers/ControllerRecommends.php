@@ -53,7 +53,7 @@ class ControllerRecommends extends ControllerController{
     $hidden['a.pvisible'] = '1';
     $hidden['a.image1'] = 'null';
     $filter['hidden'] = $hidden;
-    $totalrows = forward_static_call([$this->model_name, 'get_total_count'], $filter);
+    $totalrows = forward_static_call([$this->model, 'get_total_count'], $filter);
     $filter['totalrows'] = $totalrows;
     $res = parent::build_search_filter($filter, $view);
     $filter['hidden'] = $hidden;
@@ -205,12 +205,12 @@ class ControllerRecommends extends ControllerController{
       $per_page = !empty($per_pages[$this->controller][$idx]) ? $per_pages[$this->controller][$idx] : $this->per_page;
       $sort = $this->load_sort($filter, $view);
       $filter['scenario'] = $this->scenario();
-      $total = forward_static_call([$this->model_name, 'get_total_count'], $filter);
+      $total = forward_static_call([$this->model, 'get_total_count'], $filter);
       if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
       if($page <= 0) $page = 1;
       $start = (($page - 1) * $per_page);
       $res_count_rows = 0;
-      $rows = forward_static_call_array([$this->model_name, 'get_list'], [
+      $rows = forward_static_call_array([$this->model, 'get_list'], [
         $start, $per_page, &$res_count_rows, &$filter, &$sort
       ]);
       $this->after_get_list($rows, $view, $filter, $search_form);
@@ -225,7 +225,7 @@ class ControllerRecommends extends ControllerController{
       (new Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $prms, $per_page);
       $this->set_back_url(empty($filter['totalrows']) ? 'recommends' : null);
       $this->before_list_layout($view);
-      if($return) return $this->main->render_layout_return($view ? 'view' . DS . 'list' : 'list');
+      if($return) return $this->main->render_layout_return($view ? 'view' . DS . 'list' : 'list', $return && App::$app->request_is_ajax());
       $this->main->render_layout($view ? 'view' . DS . 'list' : 'list');
     } else {
       $this->scenario('empty');

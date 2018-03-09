@@ -50,4 +50,4 @@ use app\core\App;
     </nav>
   </div>
 <?php endif; ?>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4);?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4, true);?>

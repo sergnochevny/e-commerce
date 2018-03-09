@@ -47,4 +47,4 @@ use app\core\App;
     </nav>
   </div>
 <?php endif; ?>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/simple/list.min.js'), 5);?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/simple/list.min.js'), 5, true);?>

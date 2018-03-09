@@ -59,4 +59,4 @@ use app\core\App;
     </div>
   </div>
 <?php endif; ?>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/simple/list.min.js'), 4);?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/simple/list.min.js'), 4, true);?>

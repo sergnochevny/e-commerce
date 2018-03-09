@@ -275,7 +275,7 @@ abstract class ControllerController extends ControllerBase{
         'string' => ['like', 'like']
       ];
       $fields_pattern = '#\b[\S]*(int|string|text|char|float|double|decimal|timestamp)[\S]*\b#';
-      $fields = forward_static_call([$this->model_name, 'get_fields']);
+      $fields = forward_static_call([$this->model, 'get_fields']);
       if(isset($fields)) {
         $h_search = isset($search['hidden']) ? $search['hidden'] : null;
         if(isset($search)) {
@@ -342,22 +342,8 @@ abstract class ControllerController extends ControllerBase{
    */
   protected function get_list($view = false, $return = false){
     $this->main->template->vars('page_title', $this->page_title);
-    $search_form = $this->build_search_filter($filter, $view);
-    $idx = $this->load_search_filter_get_idx($filter, $view);
-    $pages = App::$app->session('pages');
-    $per_pages = App::$app->session('per_pages');
-    $sort = $this->load_sort($filter, $view);
-    $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
-    $per_page = !empty($per_pages[$this->controller][$idx]) ? $per_pages[$this->controller][$idx] : $this->per_page;
-    $filter['scenario'] = $this->scenario();
-    $total = forward_static_call([$this->model_name, 'get_total_count'], $filter);
-    if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
-    if($page <= 0) $page = 1;
-    $start = (($page - 1) * $per_page);
-    $res_count_rows = 0;
-    $rows = forward_static_call_array([$this->model_name, 'get_list'], [
-      $start, $per_page, &$res_count_rows, &$filter, &$sort
-    ]);
+    list($filter, $search_form, $sort, $page, $per_page, $total, $res_count_rows, $rows) = $this->get_data_for_list($view, $filter);
+
     $this->after_get_list($rows, $view, $filter, $search_form);
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
     $this->template->vars('scenario', $this->scenario());
@@ -370,7 +356,9 @@ abstract class ControllerController extends ControllerBase{
     (new Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $prms, $per_page);
     $this->set_back_url();
     $this->before_list_layout($view);
-    if($return) return $this->main->render_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
+    if($return) return $this->main->render_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ?
+        $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list',
+      $return && App::$app->request_is_ajax());
     $this->main->render_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
   }
 
@@ -388,7 +376,7 @@ abstract class ControllerController extends ControllerBase{
     if($page <= 0) $page = 1;
     $start = (($page - 1) * $per_page);
     $res_count_rows = 0;
-    $rows = forward_static_call_array([$this->model_name, 'get_list'], [
+    $rows = forward_static_call_array([$this->model, 'get_list'], [
       $start, $per_page, &$res_count_rows, &$filter, &$sort
     ]);
 
@@ -448,6 +436,33 @@ abstract class ControllerController extends ControllerBase{
   }
 
   /**
+   * @param $view
+   * @param $filter
+   * @return array
+   * @throws \InvalidArgumentException
+   */
+  protected function get_data_for_list($view, &$filter): array{
+    $search_form = $this->build_search_filter($filter, $view);
+    $idx = $this->load_search_filter_get_idx($filter, $view);
+    $pages = App::$app->session('pages');
+    $per_pages = App::$app->session('per_pages');
+    $sort = $this->load_sort($filter, $view);
+    $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
+    $per_page = !empty($per_pages[$this->controller][$idx]) ? $per_pages[$this->controller][$idx] : $this->per_page;
+    $filter['scenario'] = $this->scenario();
+    $total = forward_static_call([$this->model, 'get_total_count'], $filter);
+    if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
+    if($page <= 0) $page = 1;
+    $start = (($page - 1) * $per_page);
+    $res_count_rows = 0;
+    $rows = forward_static_call_array([$this->model, 'get_list'], [
+      $start, $per_page, &$res_count_rows, &$filter, &$sort
+    ]);
+
+    return [$filter, $search_form, $sort, $page, $per_page, $total, $res_count_rows, $rows];
+  }
+
+  /**
    * @return null
    */
   public static function urlto_sef_ignore_prms(){
@@ -475,7 +490,7 @@ abstract class ControllerController extends ControllerBase{
     $list = $this->get_list(false, true);
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    if(AdminHelper::is_logged()) $this->main-> render_view_admin($this->controller);
+    if(AdminHelper::is_logged()) $this->main->render_view_admin($this->controller);
     else  $this->main->render_view((!empty($this->scenario()) ? $this->scenario() . DS : '') . $this->controller);
   }
 
@@ -491,7 +506,7 @@ abstract class ControllerController extends ControllerBase{
     $this->template->vars('scenario', $this->scenario());
     $this->template->vars('list', $list);
     if($partial) $this->main->render_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
-    elseif($required_access) $this->main-> render_view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+    elseif($required_access) $this->main->render_view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
     else $this->main->render_view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS .
       $this->controller);
   }

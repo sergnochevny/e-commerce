@@ -172,14 +172,26 @@ span#b_in_product {
     padding-left: 25px;
 }
 
+.prev_button {
+    padding-left: 20px;
+}
+
+.next_button {
+    padding-right: 20px;
+}
+
 @media screen and (max-width: 768px) {
     h1.page-title {
         margin-top: 0;
     }
 
-    .back_button {
+    .back_button{
         font-size: 18px;
         width: 100%;
+    }
+    .prev_button, .next_button {
+        font-size: 18px;
+        width: 50%;
     }
 }
 
@@ -188,7 +200,7 @@ span#b_in_product {
         margin-top: 0;
     }
 
-    .back_button {
+    .back_button, .prev_button, .next_button {
         margin-top: 0;
     }
 }
@@ -199,6 +211,22 @@ span#b_in_product {
     left: 10px;
     position: absolute;
     top: 9px;
+}
+
+.prev_button .fa, .next_button .fa {
+    font-size: 1.4em;
+    font-weight: bold;
+    position: absolute;
+}
+
+.prev_button .fa {
+    top: 9px;
+    left: 10px;
+}
+
+.next_button .fa {
+    top: 9px;
+    right: 10px;
 }
 
 #apply_coupon {
@@ -299,6 +327,14 @@ span#b_in_product {
         font-size: 16px;
         height: 60px;
         padding: 16px 20px;
+    }
+
+    .prev_next_buttons.visible-xs{
+        display: flex!important;
+    }
+
+    .prev_next_buttons.visible-xs a{
+        width: 100%;
     }
 }
 
@@ -2648,7 +2684,7 @@ i[data-promotion] {
     z-index: 99999999;
 }
 
-.block-info h1, .block-info h2, .block-info h3, .block-info h4{
+.block-info h1, .block-info h2, .block-info h3, .block-info h4 {
     text-align: center;
     margin-top: 0px;
     margin-bottom: 20px;

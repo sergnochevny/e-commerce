@@ -181,6 +181,6 @@ use app\core\App;
 </form>
 
 <?php
-$this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4);
-$this->registerJSFile(App::$app->router()->UrlTo('js/select.ui.min.js'), 4);
+$this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4, true);
+$this->registerJSFile(App::$app->router()->UrlTo('js/select.ui.min.js'), 4, true);
 ?>

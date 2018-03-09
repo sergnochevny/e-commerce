@@ -10,7 +10,8 @@ use app\core\App;
 <?php if(isset($search['firstpage'])) : ?>
   <div class="row">
     <div class="col-xs-12 col-sm-2 back_button_container">
-      <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+      <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button
+      back_button">
         <i class="fa fa-angle-left" aria-hidden="true"></i>
         <?= !empty($to_shop) ? 'To Shop' : 'Back' ?>
       </a>
@@ -74,4 +75,4 @@ use app\core\App;
   </div>
 <?php endif; ?>
 
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4);?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/list.min.js'), 4, true);?>

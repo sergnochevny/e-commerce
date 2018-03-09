@@ -94,16 +94,17 @@ class ControllerMain extends ControllerBase{
 
   /**
    * @param $page
+   * @param bool $renderJS
    * @param null $data
    * @return string
    * @throws \Exception
    */
-  public function render_layout_return($page, $data = null){
+  public function render_layout_return($page, $renderJS = false, $data = null){
     if(isset($data)) {
       $this->template->vars('data', $data);
     }
 
-    return $this->template->render_layout_return($page);
+    return $this->template->render_layout_return($page, $renderJS);
   }
 
   /**

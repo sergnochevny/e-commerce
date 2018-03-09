@@ -20,7 +20,6 @@
     var url = $('#specials-products_url').val();
     $('.specials-products-container').html(wait_loader);
     $.get(url, {}, function (data) {
-      debugger;
       $('.specials-products-container').html(data);
       $('.specials-products').owlCarousel({
         responsive: {

@@ -101,7 +101,7 @@ abstract class ControllerSimple extends ControllerController{
     $this->template->vars('data', $data);
     $this->template->vars('scenario', $this->scenario());
     $this->template->vars('action', $action);
-    if($return) return $this->main->render_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
+    if($return) return $this->main->render_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form', $return && App::$app->request_is_ajax());
     return $this->main->render_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
   }
 
@@ -134,7 +134,7 @@ abstract class ControllerSimple extends ControllerController{
       try {
         $data['scenario'] = $this->scenario();
         $this->before_save($data);
-        $id = forward_static_call_array([$this->model_name, 'save'], [&$data]);
+        $id = forward_static_call_array([$this->model, 'save'], [&$data]);
         $this->after_save($id, $data);
         $warning = [$this->save_warning];
         $result = true;

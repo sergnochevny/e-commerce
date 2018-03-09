@@ -203,7 +203,7 @@ class ControllerProduct extends ControllerFormSimple{
     }
     $this->template->vars('rows', $rows);
     $this->template->vars('list', $this->template->render_layout_return('related/rows'));
-    if($return) return $this->main->render_layout_return('related/list');
+    if($return) return $this->main->render_layout_return('related/list', $return && App::$app->request_is_ajax());
     return $this->main->render_layout('related/list');
   }
 

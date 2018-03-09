@@ -34,6 +34,9 @@ class ModelSettings extends ModelBase{
       'shop_bestsellers_amount' => (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ? App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT),
       'shop_specials_amount' => (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT),
       'shop_under_amount' => (!is_null(App::$app->keyStorage()->shop_under_amount) ? App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT),
+      'shop_last_amount' => (!is_null(App::$app->keyStorage()->shop_last_amount) ? App::$app->keyStorage()->shop_last_amount : SHOP_LAST_AMOUNT),
+      'shop_best_amount' => (!is_null(App::$app->keyStorage()->shop_best_amount) ? App::$app->keyStorage()->shop_best_amount : SHOP_BEST_AMOUNT),
+      'shop_popular_amount' => (!is_null(App::$app->keyStorage()->shop_popular_amount) ? App::$app->keyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT),
 
       'shop_price_groups_count' => (!is_null(App::$app->keyStorage()->shop_price_groups_count) ? App::$app->keyStorage()->shop_price_groups_count : PRICE_GROUPS_COUNT),
       'shop_rate_handling' => (!is_null(App::$app->keyStorage()->shop_rate_handling) ? App::$app->keyStorage()->shop_rate_handling : RATE_HANDLING),
@@ -97,7 +100,10 @@ class ModelSettings extends ModelBase{
 
     App::$app->keyStorage()->shop_bestsellerss_amount = $shop_bestsellers_amount;
     App::$app->keyStorage()->shop_specials_amount = $shop_specials_amount;
-    App::$app->keyStorage()->shop_uunder_amount = $shop_under_amount;
+    App::$app->keyStorage()->shop_under_amount = $shop_under_amount;
+    App::$app->keyStorage()->shop_last_amount =$shop_last_amount;
+    App::$app->keyStorage()->shop_best_amount = $shop_best_amount;
+    App::$app->keyStorage()->shop_popular_amount = $shop_popular_amount;
 
     App::$app->keyStorage()->shop_price_groups_count = $shop_price_groups_count;
     App::$app->keyStorage()->shop_rate_handling = $shop_rate_handling;

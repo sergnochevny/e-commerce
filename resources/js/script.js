@@ -100,7 +100,7 @@ var change_text = false;
               }
             }
           );
-          $(this).textinput(options)
+          $(this).textinput(options);
         });
       $(this).find('input[type=textarea]').each(
         function () {
@@ -114,7 +114,7 @@ var change_text = false;
               }
             }
           );
-          $(this).textinput(options)
+          $(this).textinput(options);
         });
       $(this).find('input[type=number]').each(
         function () {
@@ -128,7 +128,7 @@ var change_text = false;
               }
             }
           );
-          $(this).textinput(options)
+          $(this).textinput(options);
         });
       $(this).find('input[type=email]').each(
         function () {
@@ -142,7 +142,7 @@ var change_text = false;
               }
             }
           );
-          $(this).textinput(options)
+          $(this).textinput(options);
         });
       $(this).find('input[type=password]').each(
         function () {
@@ -170,7 +170,7 @@ var change_text = false;
               }
             }
           );
-          $(this).textinput(options)
+          $(this).textinput(options);
         });
 
       $(this).find('textarea').each(
@@ -185,7 +185,7 @@ var change_text = false;
               }
             }
           );
-          $(this).textinput(options)
+          $(this).textinput(options);
         }
       );
       $(this).find('select').each(

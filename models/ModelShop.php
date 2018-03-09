@@ -6,6 +6,7 @@ use app\core\App;
 use app\core\model\ModelBase;
 use classes\helpers\AdminHelper;
 use classes\helpers\MatchesHelper;
+use classes\helpers\UserHelper;
 use Exception;
 
 /**
@@ -648,7 +649,7 @@ class ModelShop extends ModelBase{
     $response = 0;
     if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
       $type = static::$list_conditions[$filter['type']];
-      $query = "SELECT COUNT(a.pid) FROM collection cc";
+      $query = "SELECT COUNT(DISTINCT a.pid) FROM collection cc";
       $query .= " left join shop_products a on cc.pid = a.pid and cc.type = " . $type;
       $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";
       $query .= " LEFT JOIN shop_categories b ON shop_product_categories.cid = b.cid";

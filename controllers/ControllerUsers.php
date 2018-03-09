@@ -82,7 +82,7 @@ class ControllerUsers extends ControllerFormSimple{
     ];
     $page = 1;
     $per_page = 1000;
-    $total_rows = forward_static_call([$this->model_name, 'get_total_count']);
+    $total_rows = forward_static_call([$this->model, 'get_total_count']);
     $last_page = ceil($total_rows / $per_page);
     if($page > $last_page) $page = $last_page;
     if(ob_get_level()) {
@@ -104,7 +104,7 @@ class ControllerUsers extends ControllerFormSimple{
       while($page <= $last_page) {
         $start = (($page - 1) * $per_page);
         $res_count_rows = 0;
-        $rows = forward_static_call_array([$this->model_name, 'get_list'], [
+        $rows = forward_static_call_array([$this->model, 'get_list'], [
           $start, $per_page, &$res_count_rows, &$filter, &$sort
         ]);
         if($res_count_rows > 0):
@@ -140,7 +140,7 @@ class ControllerUsers extends ControllerFormSimple{
       while($page <= $last_page) {
         $start = (($page - 1) * $per_page);
         $res_count_rows = 0;
-        $rows = forward_static_call_array([$this->model_name, 'get_list'], [
+        $rows = forward_static_call_array([$this->model, 'get_list'], [
           $start, $per_page, &$res_count_rows, &$filter, &$sort
         ]);
         if($res_count_rows > 0):

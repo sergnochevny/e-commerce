@@ -102,4 +102,4 @@ use classes\helpers\UserHelper;
     </div>
   </div>
 </form>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/search.min.js'), 4);?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/search.min.js'), 4, true);?>

@@ -8,6 +8,7 @@ use classes\helpers\AdminHelper;
 use classes\helpers\FavoritesHelper;
 use classes\helpers\UserHelper;
 use classes\Paginator;
+use models\ModelFavorites;
 use models\ModelSamples;
 use models\ModelShop;
 
@@ -163,22 +164,7 @@ class ControllerShop extends ControllerController{
    */
   protected function get_list_by_type($type = 'last', $max_count_items = 50){
     $this->template->vars('page_title', $this->page_title);
-    $filter['type'] = $type;
-    $search_form = $this->build_search_filter($filter);
-    $idx = $this->load_search_filter_get_idx($filter);
-    $pages = App::$app->session('pages');
-    $per_pages = App::$app->session('per_pages');
-    $sort = $this->load_sort($filter);
-    $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
-    $per_page = !empty($per_pages[$this->controller][$idx]) ? $per_pages[$this->controller][$idx] : $this->per_page;
-    $total = ModelShop::get_total_count($filter);
-    if(($total > $max_count_items) && ($max_count_items > 0)) $total = $max_count_items;
-    if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
-    if($page <= 0) $page = 1;
-    $start = (($page - 1) * $per_page);
-    $limit = $per_page;
-    if($total < ($start + $per_page)) $limit = $total - $start;
-    $rows = ModelShop::get_list($start, $limit, $res_count_rows, $filter, $sort);
+    list($filter, $search_form, $sort, $page, $per_page, $total, $res_count_rows, $rows) = $this->get_data_for_list_by_type($type, $max_count_items, $filter);
     $this->after_get_list($rows, false, $filter, $search_form, $type);
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
     $this->search_form($search_form);
@@ -189,7 +175,7 @@ class ControllerShop extends ControllerController{
     (new Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, null, $per_page);
     $this->before_list_layout();
 
-    return $this->main->render_layout_return('list');
+    return $this->main->render_layout_return('list', App::$app->request_is_ajax());
   }
 
   /**
@@ -290,6 +276,135 @@ class ControllerShop extends ControllerController{
    */
   protected function build_sitemap_item($row, $view, $changefreq = 'daily', $priority = 0.5){
     return parent::build_sitemap_item($row, $view, $changefreq, $priority);
+  }
+
+  /**
+   * @param $type
+   * @param $max_count_items
+   * @param $filter
+   * @return array
+   * @throws \Exception
+   */
+  protected function get_data_for_list_by_type($type, $max_count_items, &$filter): array{
+    $filter['type'] = $type;
+    $search_form = $this->build_search_filter($filter);
+    $idx = $this->load_search_filter_get_idx($filter);
+    $pages = App::$app->session('pages');
+    $per_pages = App::$app->session('per_pages');
+    $sort = $this->load_sort($filter);
+    $page = !empty($pages[$this->controller][$idx]) ? $pages[$this->controller][$idx] : 1;
+    $per_page = !empty($per_pages[$this->controller][$idx]) ? $per_pages[$this->controller][$idx] : $this->per_page;
+    $total = forward_static_call([$this->model, 'get_total_count'], $filter);
+    if(($total > $max_count_items) && ($max_count_items > 0)) $total = $max_count_items;
+    if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
+    if($page <= 0) $page = 1;
+    $start = (($page - 1) * $per_page);
+    $limit = $per_page;
+    if($total < ($start + $per_page)) $limit = $total - $start;
+    $res_count_rows = 0;
+    $rows = forward_static_call_array([$this->model, 'get_list'], [
+      $start, $limit, &$res_count_rows, &$filter, &$sort
+    ]);
+
+    return [$filter, $search_form, $sort, $page, $per_page, $total, $res_count_rows, $rows];
+  }
+
+  /**
+   * @param $id
+   * @return array
+   * @throws \Exception
+   */
+  protected function get_data_prev_next($id): array{
+    $controller = $this->controller;
+    $max_count_items = null;
+    $model = $this->model;
+    $back = App::$app->get('back');
+    if(!empty($back) && ($this->controller !== $back)) {
+      if(class_exists('Controller' . ucfirst($back))) {
+        $controller = $back;
+        if(class_exists(App::$modelsNS . '\Model' . ucfirst($controller))) {
+          $model = App::$modelsNS . '\Model' . ucfirst($controller);
+        }
+      } else {
+        $filter['type'] = $back;
+        switch($back) {
+          case 'specials':
+            $max_count_items = (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT);
+            break;
+          case 'bestsellers':
+            $max_count_items = (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ? App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT);
+            break;
+          case 'under':
+            $max_count_items = (!is_null(App::$app->keyStorage()->shop_under_amount) ? App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT);
+            break;
+          case 'last':
+            $max_count_items = (!is_null(App::$app->keyStorage()->shop_last_amount) ? App::$app->keyStorage()->shop_last_amount : SHOP_LAST_AMOUNT);
+            break;
+          case 'best':
+            $max_count_items = (!is_null(App::$app->keyStorage()->shop_best_amount) ? App::$app->keyStorage()->shop_best_amount : SHOP_BEST_AMOUNT);
+            break;
+          case 'popular':
+            $max_count_items = (!is_null(App::$app->keyStorage()->shop_popular_amount) ? App::$app->keyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT);
+            break;
+        }
+      }
+    }
+    $this->build_search_filter($filter);
+    $idx = $this->load_search_filter_get_idx($filter);
+    $pages = App::$app->session('pages');
+    $per_pages = App::$app->session('per_pages');
+    $sort = $this->load_sort($filter);
+    $page = !empty($pages[$controller][$idx]) ? $pages[$controller][$idx] : 1;
+    $per_page = !empty($per_pages[$controller][$idx]) ? $per_pages[$controller][$idx] : $this->per_page;
+    $scenario = $this->scenario();
+    $filter['scenario'] = $scenario;
+    $total = forward_static_call([$model, 'get_total_count'], $filter);
+    if(!empty($filter['type']) && !empty($max_count_items) && (($total > $max_count_items) && ($max_count_items > 0))) $total = $max_count_items;
+    if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
+    if($page <= 0) $page = 1;
+    $start = ($page - (($page > 1) ? 2 : 1)) * $per_page;
+    $limit = (($page > 1) ? 3 : 2) * $per_page;
+    if(!empty($filter['type']) && ($total < $limit)) {
+      $limit = $total - $start;
+    }
+    $res_count_rows = 0;
+    $rows = forward_static_call_array([$model, 'get_list'], [
+      $start, $limit, &$res_count_rows, &$filter, &$sort
+    ]);
+    $prev_next = [];
+    array_walk($rows, function($item, $key)
+    use ($id, $rows, $idx, $controller, $page, $back, $scenario, &$prev_next){
+      if($item['pid'] == $id) {
+        if(!empty($rows[$key - 1])) {
+          $url_prms['pid'] = $rows[$key - 1]['pid'];
+          $url_prms['back'] = $back;
+          if(!empty($scenario)) $url_prms['method'] = $scenario;
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key - 1]['pname'], ['method']);
+          $prev_next['prev']['url'] = $href;
+          $prev_next['prev']['title'] = $rows[$key - 1]['pname'];
+        }
+        if(!empty($rows[$key + 1])) {
+          $url_prms['pid'] = $rows[$key + 1]['pid'];
+          $url_prms['back'] = $back;
+          if(!empty($scenario)) $url_prms['method'] = $scenario;
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key + 1]['pname'], ['method']);
+          $prev_next['next']['url'] = $href;
+          $prev_next['next']['title'] = $rows[$key + 1]['pname'];
+        }
+        if(2 * $this->per_page == $key) {
+          $page += 1;
+          $pages[$controller][$idx] = $page;
+          App::$app->setSession('pages', $pages);
+        }
+        if($this->per_page == $key + 1) {
+          $page -= 1;
+          $pages[$controller][$idx] = $page;
+          App::$app->setSession('pages', $pages);
+        }
+      }
+    });
+
+    return $prev_next;
   }
 
   /**
@@ -420,6 +535,8 @@ class ControllerShop extends ControllerController{
       $this->main->template->vars('search_str', App::$app->post('s'));
     }
     $this->set_back_url();
+    $prev_next = $this->get_data_prev_next($pid);
+    $this->template->vars('prev_next', $prev_next);
     $this->template->vars('in_favorites', FavoritesHelper::product_in($pid));
     $this->template->vars('data', $data);
     $allowed_samples = ModelSamples::allowedSamples($pid);
@@ -493,7 +610,9 @@ class ControllerShop extends ControllerController{
   public function popular(){
     $this->template->vars('cart_enable', '_');
     $this->page_title = 'Popular Textiles';
-    $list = $this->get_list_by_type('popular', 360);
+    $list = $this->get_list_by_type('popular', (!is_null(App::$app->keyStorage()->shop_popular_amount) ?
+      App::$app->keyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT)
+    );
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
     $this->main->render_view('shop');
@@ -506,7 +625,9 @@ class ControllerShop extends ControllerController{
   public function last(){
     $this->template->vars('cart_enable', '_');
     $this->page_title = "What's New";
-    $list = $this->get_list_by_type('last', 50);
+    $list = $this->get_list_by_type('last', (!is_null(App::$app->keyStorage()->shop_last_amount) ?
+      App::$app->keyStorage()->shop_last_amount : SHOP_LAST_AMOUNT)
+    );
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
     $this->main->render_view('shop');
@@ -519,7 +640,9 @@ class ControllerShop extends ControllerController{
   public function best(){
     $this->template->vars('cart_enable', '_');
     $this->page_title = 'Best Textiles';
-    $list = $this->get_list_by_type('best', 360);
+    $list = $this->get_list_by_type('best', (!is_null(App::$app->keyStorage()->shop_best_amount) ?
+      App::$app->keyStorage()->shop_best_amount : SHOP_BEST_AMOUNT)
+    );
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
     $this->main->render_view('shop');

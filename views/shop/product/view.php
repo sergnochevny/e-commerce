@@ -15,15 +15,53 @@ $href_related = App::$app->router()->UrlTo('related/view', ['pid' => $pid]);
       <div class="row">
         <div class="col-xs-12 col-sm-2 back_button_container">
           <div class="row">
-            <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+            <a data-waitloader id="back_url" title="Back to Products' List"href="<?= $back_url; ?>" class="button back_button">
               <i class="fa fa-angle-left" aria-hidden="true"></i>
               Back
             </a>
           </div>
+          <div class="row prev_next_buttons visible-xs">
+            <?php if(!empty($prev_next['prev'])):?>
+              <a data-waitloader href="<?= $prev_next['prev']['url']; ?>"
+                 title="<?= $prev_next['prev']['title']; ?>"
+                 class="button prev_button">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                Prev.
+              </a>
+            <?php endif;?>
+            <?php if(!empty($prev_next['next'])):?>
+              <a data-waitloader href="<?= $prev_next['next']['url']; ?>"
+                 title="<?= $prev_next['next']['title']; ?>"
+                 class="button next_button">
+                Next
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </a>
+            <?php endif;?>
+          </div>
         </div>
-        <div class="col-xs-12 col-sm-8 text-center">
+        <div class="col-xs-12 col-sm-7 text-center">
           <h3 style="margin-bottom: 30px"
               class="product_title product_title_style entry-title"><?= $data['pname']; ?></h3>
+        </div>
+        <div class="visible-sm visible-md visible-lg col-sm-3 back_button_container">
+          <div class="row text-right">
+            <?php if(!empty($prev_next['prev'])):?>
+            <a data-waitloader href="<?= $prev_next['prev']['url']; ?>"
+               title="<?= $prev_next['prev']['title']; ?>"
+               class="button prev_button">
+              <i class="fa fa-angle-left" aria-hidden="true"></i>
+              Prev.
+            </a>
+            <?php endif;?>
+            <?php if(!empty($prev_next['next'])):?>
+            <a data-waitloader href="<?= $prev_next['next']['url']; ?>"
+               title="<?= $prev_next['next']['title']; ?>"
+               class="button next_button">
+              Next
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
+            <?php endif;?>
+          </div>
         </div>
       </div>
     </div>

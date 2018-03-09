@@ -68,4 +68,4 @@ use app\core\App;
   <input type="hidden" name="filter_start_<?= $filter_type; ?>" value="<?= $filter_data_start; ?>">
 </div>
 <div class="clearfix"></div>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/select.ui.min.js'), 5); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/select.ui.min.js'), 5, true); ?>

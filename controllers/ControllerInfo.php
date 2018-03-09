@@ -118,7 +118,7 @@ class ControllerInfo extends ControllerFormSimple{
     $this->template->vars('scenario', $this->scenario());
     $this->template->vars('data', $data);
     $this->template->vars('action', $action);
-    if($return) return $this->main->render_layout_return('form');
+    if($return) return $this->main->render_layout_return('form', $return && App::$app->request_is_ajax());
 
     return $this->main->render_layout('form');
   }

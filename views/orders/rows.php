@@ -2,6 +2,7 @@
 
 use app\core\App;
 use classes\helpers\AdminHelper;
+use classes\helpers\UserHelper;
 
 ?>
 <?php if(isset($rows) && count($rows) > 0): ?>
