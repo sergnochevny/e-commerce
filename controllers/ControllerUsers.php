@@ -4,6 +4,8 @@ namespace controllers;
 
 use app\core\App;
 use classes\controllers\ControllerFormSimple;
+use classes\helpers\CaptchaHelper;
+use classes\helpers\UserHelper;
 use models\ModelAddress;
 use models\ModelAuth;
 use models\ModelUser;
@@ -310,7 +312,7 @@ class ControllerUsers extends ControllerFormSimple{
             }
           }
         } else {
-          $verify = ControllerCaptcha::check_captcha(isset($data['captcha']) ? $data['captcha'] : '', $error2);
+          $verify = CaptchaHelper::check_captcha(isset($data['captcha']) ? $data['captcha'] : '', $error2);
           if(($this->scenario() == 'short') && (((!isset($data['aid'])) && (empty($data['create_password']) || empty($data['confirm_password']))) || empty($data['bill_firstname']) || empty($data['bill_lastname']) || empty($data['captcha']) || !$verify)) {
             $error = ['Please fill in all required fields:'];
             $error1 = [];
@@ -408,7 +410,7 @@ class ControllerUsers extends ControllerFormSimple{
       $result = $this->save($data);
       if($outer_control && $result) {
         if($this->scenario() !== 'short') return $result; else {
-          ControllerUser::sendWelcomeEmail($data['email']);
+          UserHelper::sendWelcomeEmail($data['email']);
           $thanx = $this->template->render_layout_return('short/thanx');
           $this->template->vars('warning', [$thanx]);
           exit($this->form($url, []));

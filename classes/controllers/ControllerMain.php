@@ -7,9 +7,10 @@ namespace classes\controllers;
 
 use app\core\App;
 use app\core\controller\ControllerBase;
+use classes\helpers\AdminHelper;
+use classes\helpers\UserHelper;
 use controllers\ControllerCart;
 use controllers\ControllerMenu;
-use controllers\ControllerUser;
 use models\ModelTools;
 
 /**
@@ -60,7 +61,7 @@ class ControllerMain extends ControllerBase{
     }
 
     $this->template->vars('menu', $this->template->render_layout_return('admin', false,'menu'));
-    if(ControllerAdminBase::is_logged()) {
+    if(AdminHelper::is_logged()) {
       $this->template->vars('my_account_admin_menu', $this->template->render_layout_return('admin_account', false,'menu'));
     }
 
@@ -110,8 +111,7 @@ class ControllerMain extends ControllerBase{
    * @throws \Exception
    */
   public function is_user_authorized($redirect_to_url = false){
-    $user = new ControllerUserBase($this->main);
-    if(!$user->is_authorized()) {
+    if(!UserHelper::is_authorized()) {
       if($redirect_to_url) {
         $redirect = strtolower(explode('/', App::$app->server('SERVER_PROTOCOL'))[0]) . "://";
         $redirect .= App::$app->server('SERVER_NAME');
@@ -132,8 +132,7 @@ class ControllerMain extends ControllerBase{
    * @throws \Exception
    */
   public function is_admin_authorized($redirect_to_url = true){
-    $admin = new ControllerAdminBase($this->main);
-    if(!$admin->is_authorized()) {
+    if(!AdminHelper::is_authorized()) {
       if($redirect_to_url) {
         $redirect = strtolower(explode('/', App::$app->server('SERVER_PROTOCOL'))[0]) . "://";
         $redirect .= App::$app->server('SERVER_NAME');
@@ -155,12 +154,12 @@ class ControllerMain extends ControllerBase{
    * @throws \Exception
    */
   public function is_any_authorized($redirect = null){
-    if(!ControllerAdminBase::is_logged() && !ControllerUserBase::is_logged()) {
+    if(!AdminHelper::is_logged() && !UserHelper::is_logged()) {
       $prms = isset($redirect) ? ['url' => urlencode(base64_encode(App::$app->router()->UrlTo($redirect)))] : null;
       $this->redirect(App::$app->router()->UrlTo('authorization', $prms));
     } else {
-      if(ControllerAdminBase::is_logged()) return 'admin';
-      if(ControllerUserBase::is_logged()) return 'user';
+      if(AdminHelper::is_logged()) return 'admin';
+      if(UserHelper::is_logged()) return 'user';
     }
 
     return null;
@@ -184,7 +183,7 @@ class ControllerMain extends ControllerBase{
       }
       $this->template->vars('message', $message);
       $this->template->vars('back_url', $back_url);
-      if(ControllerAdminBase::is_logged()) $this-> render_view_admin('message');
+      if(AdminHelper::is_logged()) $this-> render_view_admin('message');
       else $this->render_view('message');
     }
   }
@@ -202,7 +201,7 @@ class ControllerMain extends ControllerBase{
     $cart = new ControllerCart(isset($this->main) ? $this->main : $this);
     $cart->get();
 
-    $user_logged = ControllerUser::is_logged();
+    $user_logged = UserHelper::is_logged();
     $this->template->vars('user_logged', $user_logged);
     $this->template->vars('my_account_user_menu', $this->template->render_layout_return('user_account', false,'menu'));
 
@@ -222,7 +221,7 @@ class ControllerMain extends ControllerBase{
     header("Status: 404 Not Found");
     $this->template->controller = 'main';
     $this->template->vars('message', $msg);
-    if(ControllerAdminBase::is_logged()) $this-> render_view_admin('404/error');
+    if(AdminHelper::is_logged()) $this-> render_view_admin('404/error');
     else $this->render_view('404/error');
   }
 }

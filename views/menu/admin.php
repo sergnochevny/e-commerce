@@ -1,10 +1,10 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 
 ?>
-<?php if(ControllerAdmin::is_logged()): ?>
+<?php if(AdminHelper::is_logged()): ?>
   <button type="button" class="navbar-toggle toggle-menu" data-toggle="collapse"
           data-target=".site-navigation .navbar-collapse" id="menu-button">
     <div class="hamburger">

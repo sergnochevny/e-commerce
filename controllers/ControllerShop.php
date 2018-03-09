@@ -3,10 +3,11 @@
 namespace controllers;
 
 use app\core\App;
-use classes\controllers\ControllerAdminBase;
 use classes\controllers\ControllerController;
+use classes\helpers\AdminHelper;
+use classes\helpers\FavoritesHelper;
+use classes\helpers\UserHelper;
 use classes\Paginator;
-use models\ModelPrices;
 use models\ModelSamples;
 use models\ModelShop;
 
@@ -263,7 +264,7 @@ class ControllerShop extends ControllerController{
    * @return int|string
    */
   protected function load_search_filter_get_idx($filter, $view = false){
-    $idx = ControllerAdminBase::is_logged() . '_' . $view;
+    $idx = AdminHelper::is_logged() . '_' . $view;
     $idx .= (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
     $idx = !empty($idx) ? $idx : 0;
 
@@ -297,7 +298,7 @@ class ControllerShop extends ControllerController{
    */
   public function shop(){
     $this->template->vars('cart_enable', '_');
-    if(ControllerUser::is_logged()) {
+    if(UserHelper::is_logged()) {
       $user = App::$app->session('user');
       $firstname = ucfirst($user['bill_firstname']);
       $lastname = ucfirst($user['bill_lastname']);
@@ -354,9 +355,22 @@ class ControllerShop extends ControllerController{
     $pid = App::$app->get('pid');
     $data = ModelShop::get_product($pid);
 
-    if(!empty($data['metadescription'])) $this->template->setMeta('description', $data['metadescription']);
-    if(!empty($data['metakeywords'])) $this->template->setMeta('keywords', $data['metakeywords']);
-    if(!empty($data['metatitle'])) $this->template->setMeta('title', $data['metatitle']); elseif(!empty($data['pname'])) $this->template->setMeta('title', $data['pname']);
+    if(!empty($data['metadescription'])) {
+      $this->template->setMeta('description', $data['metadescription']);
+    } elseif(!empty($data['sdesc'])) {
+      $this->template->setMeta('description', $data['sdesc']);
+    }
+    if(!empty($data['metakeywords'])) {
+      $this->template->setMeta('keywords', $data['metakeywords']);
+    } elseif(!empty($data['pname'])) {
+      $meta_keywords = array_filter(explode(' ', strtolower($data['pname'])));
+      $this->template->setMeta('keywords', explode(' ', implode(',', $meta_keywords)));
+    }
+    if(!empty($data['metatitle'])) {
+      $this->template->setMeta('title', $data['metatitle']);
+    } elseif(!empty($data['pname'])) {
+      $this->template->setMeta('title', $data['pname']);
+    }
 
     ob_start();
     if($data['rSystemDiscount'] > 0) {
@@ -406,7 +420,7 @@ class ControllerShop extends ControllerController{
       $this->main->template->vars('search_str', App::$app->post('s'));
     }
     $this->set_back_url();
-    $this->template->vars('in_favorites', ControllerFavorites::product_in($pid));
+    $this->template->vars('in_favorites', FavoritesHelper::product_in($pid));
     $this->template->vars('data', $data);
     $allowed_samples = ModelSamples::allowedSamples($pid);
     $this->template->vars('allowed_samples', $allowed_samples);

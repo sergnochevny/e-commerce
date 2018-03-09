@@ -1,23 +1,15 @@
 <?php
+/**
+ * Date: 09.03.2018
+ * Time: 11:58
+ */
 
-namespace classes\controllers;
+namespace classes\helpers;
 
 use app\core\App;
 use models\ModelAuth;
 
-/**
- * Class ControllerAdminBase
- * @package controllers\base
- */
-class ControllerAdminBase extends ControllerFormSimple{
-
-  /**
-   * @param $data
-   * @param $error
-   */
-  protected function validate(&$data, &$error){
-  }
-
+class AdminHelper{
   /**
    * @return mixed
    */
@@ -29,7 +21,7 @@ class ControllerAdminBase extends ControllerFormSimple{
    * @return bool
    * @throws \Exception
    */
-  public function is_authorized(){
+  public static function is_authorized(){
     if(self::is_logged())
       return true;
     if(self::is_set_remember()) {

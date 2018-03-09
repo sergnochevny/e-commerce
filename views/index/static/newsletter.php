@@ -1,7 +1,7 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerUser;
+use classes\helpers\UserHelper;
 
 ?>
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
@@ -28,7 +28,7 @@ use controllers\ControllerUser;
       </h2>
     </div>
 
-    <?php if(!ControllerUser::is_logged()): ?>
+    <?php if(!UserHelper::is_logged()): ?>
       <div class="col-xs-12">
         <div class="row">
           <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">

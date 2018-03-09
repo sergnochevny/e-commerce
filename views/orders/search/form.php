@@ -1,7 +1,7 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerUser;
+use classes\helpers\UserHelper;
 
 ?>
 <form action="<?= $action ?>" method="post" data-search class="col-xs-12">
@@ -50,10 +50,10 @@ use controllers\ControllerUser;
                      value="<?= isset($search['a.trid']) ? $search['a.trid'] : '' ?>">
             </div>
           </div>
-          <div class="col-sm-6" <?= ControllerUser::is_logged()?'disabled':''?>>
+          <div class="col-sm-6" <?= UserHelper::is_logged()?'disabled':''?>>
             <div class="form-row">
               <label>Customer:</label>
-              <input type="text" class="input-text" <?= ControllerUser::is_logged()?'disabled':''?> placeholder="Like ..." name="search[username]"
+              <input type="text" class="input-text" <?= UserHelper::is_logged()?'disabled':''?> placeholder="Like ..." name="search[username]"
                      value="<?= isset($search['username']) ? $search['username'] : '' ?>">
             </div>
           </div>

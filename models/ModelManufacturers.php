@@ -3,7 +3,7 @@
 namespace models;
 
 use app\core\model\ModelBase;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 use Exception;
 
 /**
@@ -28,7 +28,7 @@ class ModelManufacturers extends ModelBase{
       $result = "";
       if(!empty($filter["a.manufacturer"])) {
         if(!empty($filter["a.manufacturer"])) {
-          if(ControllerAdmin::is_logged()) {
+          if(AdminHelper::is_logged()) {
             foreach(array_filter(explode(' ', $filter["a.manufacturer"])) as $idx => $item) {
               if(!empty($item)) {
                 $result[] = "a.manufacturer LIKE :a_manufacturer" . $idx . "";

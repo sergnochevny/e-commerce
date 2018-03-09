@@ -4,10 +4,9 @@ namespace controllers;
 
 use app\core\App;
 use classes\controllers\ControllerSimple;
-use Exception;
+use classes\helpers\UserHelper;
 use models\ModelCategories;
 use models\ModelColors;
-use models\ModelFavorites;
 use models\ModelManufacturers;
 use models\ModelPatterns;
 use models\ModelProduct;
@@ -57,17 +56,18 @@ class ControllerFavorites extends ControllerSimple{
    */
   protected function load(&$data){
     $data['pid'] = App::$app->post('pid');
-    $data['aid'] = ControllerUser::get_from_session()['aid'];
+    $data['aid'] = UserHelper::get_from_session()['aid'];
   }
 
   /**
    * @param $filter
    * @param bool $view
    * @return array|null
+   * @throws \InvalidArgumentException
    */
   protected function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
-    $filter['hidden']['z.aid'] = ControllerUser::get_from_session()['aid'];
+    $filter['hidden']['z.aid'] = UserHelper::get_from_session()['aid'];
 
     return $res;
   }
@@ -194,24 +194,6 @@ class ControllerFavorites extends ControllerSimple{
    * @param bool $required_access
    */
   public function edit($required_access = true){
-  }
-
-  /**
-   * @param $pid
-   * @return bool
-   */
-  public static function product_in($pid){
-    $res = false;
-    $aid = !empty(ControllerUser::get_from_session()['aid']) ? ControllerUser::get_from_session()['aid'] : null;
-    if(!empty($aid)) {
-      try {
-        $res = ModelFavorites::get_by_id($pid, $aid);
-        $res = (isset($res) && is_array($res) && (count($res) > 0));
-      } catch(Exception $e) {
-      };
-    }
-
-    return $res;
   }
 
 }

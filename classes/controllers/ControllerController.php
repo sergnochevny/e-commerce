@@ -5,9 +5,9 @@ namespace classes\controllers;
 use app\core\App;
 use app\core\controller\ControllerBase;
 use app\core\model\ModelBase;
+use classes\helpers\AdminHelper;
 use classes\Paginator;
 use Closure;
-use controllers\ControllerAdmin;
 use Exception;
 
 /**
@@ -142,7 +142,7 @@ abstract class ControllerController extends ControllerBase{
    * @return int|string
    */
   protected function load_search_filter_get_idx($filter, $view = false){
-    $idx = ControllerAdminBase::is_logged() . '_' . $view;
+    $idx = AdminHelper::is_logged() . '_' . $view;
     $idx .= (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
     $idx = !empty($idx) ? $idx : 0;
 
@@ -475,7 +475,7 @@ abstract class ControllerController extends ControllerBase{
     $list = $this->get_list(false, true);
     if(App::$app->request_is_ajax()) exit($list);
     $this->template->vars('list', $list);
-    if(ControllerAdmin::is_logged()) $this->main-> render_view_admin($this->controller);
+    if(AdminHelper::is_logged()) $this->main-> render_view_admin($this->controller);
     else  $this->main->render_view((!empty($this->scenario()) ? $this->scenario() . DS : '') . $this->controller);
   }
 

@@ -4,7 +4,7 @@ namespace models;
 
 use app\core\App;
 use app\core\model\ModelBase;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 use Exception;
 
 /**
@@ -27,7 +27,7 @@ class ModelBlog extends ModelBase{
   public static function build_where(&$filter, &$prms = null){
     $result = "";
     $prms = [];
-    if(ControllerAdmin::is_logged()) {
+    if(AdminHelper::is_logged()) {
       if(!empty($filter["a.post_title"])) {
         foreach(array_filter(explode(' ', $filter["a.post_title"])) as $idx => $item) {
           if(!empty($item)) {

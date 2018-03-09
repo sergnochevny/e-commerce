@@ -2,9 +2,8 @@
 
 namespace models;
 
-use app\core\App;
 use app\core\model\ModelBase;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 use Exception;
 
 /**
@@ -29,7 +28,7 @@ class ModelPatterns extends ModelBase{
       $result = "";
       $prms = [];
       if(!empty($filter["a.pattern"])) {
-        if(ControllerAdmin::is_logged()) {
+        if(AdminHelper::is_logged()) {
           foreach(array_filter(explode(' ', $filter["a.pattern"])) as $idx => $item) {
             if(!empty($item)) {
               $result[] = "a.pattern LIKE :a_pattern" . $idx . "";
@@ -79,9 +78,10 @@ class ModelPatterns extends ModelBase{
       if($result) $response = static::fetch_assoc($result);
     }
 
-    if ($response === false){
+    if($response === false) {
       throw new Exception('Data set is empty!');
     }
+
     return $response;
   }
 

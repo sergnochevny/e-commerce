@@ -3,10 +3,9 @@
 namespace models;
 
 use app\core\App;
-use controllers\ControllerAdmin;
 use app\core\model\ModelBase;
-use controllers\ControllerMatches;
-use controllers\ControllerUser;
+use classes\helpers\AdminHelper;
+use classes\helpers\MatchesHelper;
 use Exception;
 
 /**
@@ -29,7 +28,7 @@ class ModelShop extends ModelBase{
     $result_where = "";
     $prms = [];
 
-    if(ControllerAdmin::is_logged()) {
+    if(AdminHelper::is_logged()) {
       if(!empty($filter["a.pname"])) {
         foreach(array_filter(explode(' ', $filter["a.pname"])) as $idx => $item) {
           if(!empty($item)) {
@@ -280,7 +279,7 @@ class ModelShop extends ModelBase{
    * @throws \Exception
    */
   public static function prepare_layout_product_detail($data, $cart, $sys_hide_price){
-    if(ControllerMatches::product_in($data['pid'])) $data['in_matches'] = true;
+    if(MatchesHelper::product_in($data['pid'])) $data['in_matches'] = true;
     $priceyard = $data['priceyard'];
     $aPrds = [];
     $aPrds[] = $data['pid'];    #add product id
@@ -305,7 +304,7 @@ class ModelShop extends ModelBase{
 
     $shipcost = 0;
     $uid = 0;
-    if(ControllerUser::is_logged()) $uid = (int)ControllerUser::get_from_session()['aid'];
+    if(UserHelper::is_logged()) $uid = (int)UserHelper::get_from_session()['aid'];
     $bTemp = false;
 
     $bSystemDiscount = false;

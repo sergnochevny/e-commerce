@@ -4,6 +4,8 @@ namespace controllers;
 
 use app\core\App;
 use classes\controllers\ControllerController;
+use classes\helpers\AdminHelper;
+use classes\helpers\UserHelper;
 use models\ModelAuth;
 use models\ModelUser;
 use models\ModelUsers;
@@ -16,28 +18,28 @@ class ControllerAuthorization extends ControllerController{
    * @return bool
    */
   private function is_admin_logged(){
-    return ControllerAdmin::is_logged();
+    return AdminHelper::is_logged();
   }
 
   /**
    * @return bool
    */
   private function is_user_logged(){
-    return ControllerUser::is_logged();
+    return UserHelper::is_logged();
   }
 
   /**
    * @return bool
    */
   private function is_set_admin_remember(){
-    return ControllerAdmin::is_set_remember();
+    return AdminHelper::is_set_remember();
   }
 
   /**
    * @return bool
    */
   private function is_set_user_remember(){
-    return ControllerUser::is_set_remember();
+    return UserHelper::is_set_remember();
   }
 
   /**
@@ -47,7 +49,7 @@ class ControllerAuthorization extends ControllerController{
    * @throws \Exception
    */
   private function admin_authorize($login, $password){
-    return ControllerAdmin::authorize($login, $password);
+    return AdminHelper::authorize($login, $password);
   }
 
   /**
@@ -237,7 +239,7 @@ class ControllerAuthorization extends ControllerController{
    * @throws \Exception
    */
   public function user_authorize($mail, $password){
-    return ControllerUser::authorize($mail, $password);
+    return UserHelper::authorize($mail, $password);
   }
 
   /**

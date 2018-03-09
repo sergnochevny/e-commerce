@@ -1,8 +1,8 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerAdmin;
-use controllers\ControllerUser;
+use classes\helpers\AdminHelper;
+use classes\helpers\UserHelper;
 
 ?>
 <?php if(isset($rows) && count($rows) > 0): ?>
@@ -11,15 +11,15 @@ use controllers\ControllerUser;
       <div class="row">
         <div class="col-sm-3 col">
           <?php
-            if(isset($sort['a.trid'])) {
-              $order['sort'] = 'a.trid';
-              $order['order'] = ($sort['a.trid'] == 'desc' ? 'asc' : 'desc');
-            } else {
-              $order['sort'] = 'trid';
-              $order['order'] = 'desc';
-            }
-            $order['sid'] = App::$app->get('sid');
-            $sort_url = App::$app->router()->UrlTo('discount/view', $order);
+          if(isset($sort['a.trid'])) {
+            $order['sort'] = 'a.trid';
+            $order['order'] = ($sort['a.trid'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'trid';
+            $order['order'] = 'desc';
+          }
+          $order['sid'] = App::$app->get('sid');
+          $sort_url = App::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Order
@@ -30,7 +30,7 @@ use controllers\ControllerUser;
             <?php endif; ?>
           </a>
         </div>
-        <?php if(ControllerAdmin::is_logged()): ?>
+        <?php if(AdminHelper::is_logged()): ?>
           <?php
           if(isset($sort['username'])) {
             $order['sort'] = 'username';
@@ -55,36 +55,37 @@ use controllers\ControllerUser;
         <?php endif; ?>
         <div class="col-sm-2 col">
           <?php
-            if(isset($sort['a.order_date'])) {
-              $order['sort'] = 'a.order_date';
-              $order['order'] = ($sort['a.order_date'] == 'desc' ? 'asc' : 'desc');
-            } else {
-              $order['sort'] = 'a.order_date';
-              $order['order'] = 'desc';
-            }
-            $order['sid'] = App::$app->get('sid');
-            $sort_url = App::$app->router()->UrlTo('discount/view', $order);
+          if(isset($sort['a.order_date'])) {
+            $order['sort'] = 'a.order_date';
+            $order['order'] = ($sort['a.order_date'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'a.order_date';
+            $order['order'] = 'desc';
+          }
+          $order['sid'] = App::$app->get('sid');
+          $sort_url = App::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Date
             <?php if(isset($sort['a.order_date'])) : ?>
               <small>
-                <i class="fa <?= ($sort['a.order_date'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
+                <i
+                  class="fa <?= ($sort['a.order_date'] == 'desc') ? 'fa-sort-amount-desc' : 'fa-sort-amount-asc' ?>"></i>
               </small>
             <?php endif; ?>
           </a>
         </div>
         <div class="col-sm-2 col">
           <?php
-            if(isset($sort['a.status'])) {
-              $order['sort'] = 'a.status';
-              $order['order'] = ($sort['a.status'] == 'desc' ? 'asc' : 'desc');
-            } else {
-              $order['sort'] = 'a.status';
-              $order['order'] = 'desc';
-            }
-            $order['sid'] = App::$app->get('sid');
-            $sort_url = App::$app->router()->UrlTo('discount/view', $order);
+          if(isset($sort['a.status'])) {
+            $order['sort'] = 'a.status';
+            $order['order'] = ($sort['a.status'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'a.status';
+            $order['order'] = 'desc';
+          }
+          $order['sid'] = App::$app->get('sid');
+          $sort_url = App::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Status
@@ -97,15 +98,15 @@ use controllers\ControllerUser;
         </div>
         <div class="col-sm-2 col">
           <?php
-            if(isset($sort['a.total'])) {
-              $order['sort'] = 'a.total';
-              $order['order'] = ($sort['a.total'] == 'desc' ? 'asc' : 'desc');
-            } else {
-              $order['sort'] = 'a.total';
-              $order['order'] = 'desc';
-            }
-            $order['sid'] = App::$app->get('sid');
-            $sort_url = App::$app->router()->UrlTo('discount/view', $order);
+          if(isset($sort['a.total'])) {
+            $order['sort'] = 'a.total';
+            $order['order'] = ($sort['a.total'] == 'desc' ? 'asc' : 'desc');
+          } else {
+            $order['sort'] = 'a.total';
+            $order['order'] = 'desc';
+          }
+          $order['sid'] = App::$app->get('sid');
+          $sort_url = App::$app->router()->UrlTo('discount/view', $order);
           ?>
           <a data-sort title="Click to sort by this column" href="<?= $sort_url ?>">
             Total
@@ -141,7 +142,7 @@ use controllers\ControllerUser;
               <div class="row cut-text-in-one-line"><?= $row['trid'] ?></div>
             </div>
           </div>
-          <?php if(!isset($user_id) && !ControllerUser::is_logged()): ?>
+          <?php if(!isset($user_id) && !UserHelper::is_logged()): ?>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
               <div class="col-xs-4 visible-xs">
                 <div class="row">Customer</div>
@@ -180,7 +181,8 @@ use controllers\ControllerUser;
           </div>
 
           <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 text-center action-buttons">
-            <a class="no-float" data-waitloader title="View Order Details" href="<?= $view_url ?>"><i class="fa fa-2x fa-file-text"></i></a>
+            <a class="no-float" data-waitloader title="View Order Details" href="<?= $view_url ?>"><i
+                class="fa fa-2x fa-file-text"></i></a>
           </div>
         </div>
       </div>

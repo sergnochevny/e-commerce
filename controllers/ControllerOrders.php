@@ -4,6 +4,8 @@ namespace controllers;
 
 use app\core\App;
 use classes\controllers\ControllerSimple;
+use classes\helpers\AdminHelper;
+use classes\helpers\UserHelper;
 use models\ModelOrders;
 use models\ModelSamples;
 
@@ -48,12 +50,13 @@ class ControllerOrders extends ControllerSimple{
    * @param $filter
    * @param bool $view
    * @return array|null
+   * @throws \InvalidArgumentException
    */
   protected function build_search_filter(&$filter, $view = false){
     $search_form = parent::build_search_filter($filter, $view);
-    if(ControllerUser::is_logged()) {
-      $filter['hidden']['a.aid'] = ControllerUser::get_from_session()['aid'];
-    } elseif(ControllerAdmin::is_logged()) {
+    if(UserHelper::is_logged()) {
+      $filter['hidden']['a.aid'] = UserHelper::get_from_session()['aid'];
+    } elseif(AdminHelper::is_logged()) {
       if(!is_null(App::$app->get('aid'))) {
         $filter['hidden']['a.aid'] = App::$app->get('aid');
       }
@@ -190,7 +193,7 @@ class ControllerOrders extends ControllerSimple{
     $this->main->template->vars('status_code', $status_code);
     $this->main->template->vars('total_discount', $total_discount);
 
-    if(ControllerAdmin::is_logged()) $this->main-> render_view_admin('view'); else  $this->main->render_view('view');
+    if(AdminHelper::is_logged()) $this->main-> render_view_admin('view'); else  $this->main->render_view('view');
   }
 
   /**

@@ -3,7 +3,7 @@
 namespace models;
 
 use app\core\model\ModelBase;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 use Exception;
 
 /**
@@ -27,7 +27,7 @@ class ModelColors extends ModelBase{
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $result = "";
       if(!empty($filter["a.color"])) {
-        if(ControllerAdmin::is_logged()) {
+        if(AdminHelper::is_logged()) {
           foreach(array_filter(explode(' ', $filter["a.color"])) as $idx => $item) {
             if(!empty($item)) {
               $result[] = "a.color LIKE :a_color" . $idx . "";

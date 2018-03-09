@@ -3,7 +3,8 @@
 namespace controllers;
 
 use app\core\App;
-use classes\controllers\ControllerAdminBase;
+use classes\controllers\ControllerFormSimple;
+use classes\helpers\AdminHelper;
 use models\ModelAdmin;
 use models\ModelAuth;
 
@@ -11,14 +12,14 @@ use models\ModelAuth;
  * Class ControllerAdmin
  * @package controllers
  */
-class ControllerAdmin extends ControllerAdminBase{
+class ControllerAdmin extends ControllerFormSimple{
 
   /**
    * @param $data
    */
   protected function load(&$data){
     $data = [
-      'id' => self::get_from_session(),
+      'id' => AdminHelper::get_from_session(),
       'login' => ModelAdmin::sanitize(!is_null(App::$app->post('login')) ? App::$app->post('login') : ''),
       'create_password' => ModelAdmin::sanitize(!is_null(App::$app->post('create_password')) ? App::$app->post('create_password') : ''),
       'confirm_password' => ModelAdmin::sanitize(!is_null(App::$app->post('confirm_password')) ? App::$app->post('confirm_password') : ''),
@@ -28,7 +29,7 @@ class ControllerAdmin extends ControllerAdminBase{
   /**
    * @param $data
    * @param $error
-   * @return bool|void
+   * @return bool
    * @throws \ErrorException
    * @throws \Exception
    */
@@ -66,8 +67,9 @@ class ControllerAdmin extends ControllerAdminBase{
    * @throws \Exception
    */
   protected function form($url, $data = null, $return = false){
-    App::$app->get($this->id_field, self::get_from_session());
+    App::$app->get($this->id_field, AdminHelper::get_from_session());
     parent::form($url, $data, $return);
+    
   }
 
   /**
@@ -114,14 +116,14 @@ class ControllerAdmin extends ControllerAdminBase{
    * @throws \Exception
    */
   public function admin(){
-    if(!$this->is_authorized()) {
+    if(!AdminHelper::is_authorized()) {
       if((App::$app->request_is_post()) &&
         !is_null(App::$app->post('login')) &&
         !is_null(App::$app->post('pass'))) {
         if(empty(App::$app->post('login')) && empty(App::$app->post('pass'))) exit('Empty Login or Password field');
         $login = App::$app->post('login');
         $password = App::$app->post('pass');
-        if(!self::authorize($login, $password)) exit('Wrong Login or Password');
+        if(!AdminHelper::authorize($login, $password)) exit('Wrong Login or Password');
         $url = base64_decode(urldecode(App::$app->post('redirect')));
         $url = (strlen($url) > 0) ? $url : App::$app->router()->UrlTo('product');
         $this->redirect($url);

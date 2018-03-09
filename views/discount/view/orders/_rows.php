@@ -1,7 +1,7 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 
 ?>
 <?php if(isset($rows) && (count($rows) > 0)): ?>
@@ -9,7 +9,7 @@ use controllers\ControllerAdmin;
     <div class="col-xs-12 table-list-header hidden-xs">
       <div class="row">
         <div class="col-sm-4 col">Order</div>
-        <?php if(ControllerAdmin::is_logged()): ?>
+        <?php if(AdminHelper::is_logged()): ?>
           <div class="col-sm-2 col">Customer</div>
         <?php endif; ?>
         <div class="col-sm-2 col">Date</div>

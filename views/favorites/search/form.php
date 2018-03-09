@@ -1,11 +1,11 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 
 ?>
 <form action="<?= $action ?>" method="post" data-search class="col-xs-12">
-  <?php if(ControllerAdmin::is_logged()): ?>
+  <?php if(AdminHelper::is_logged()): ?>
     <div class="row">
       <div class="col-xs-12 panel panel-default search-panel">
         <div class="panel-heading">

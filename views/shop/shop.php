@@ -1,10 +1,10 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 
 ?>
-<?php $is_admin = ControllerAdmin::is_logged(); ?>
+<?php $is_admin = AdminHelper::is_logged(); ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <?php if(!$is_admin): ?>
     <div class="col-xs-12 col-md-20-prc">

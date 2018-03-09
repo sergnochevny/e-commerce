@@ -1,8 +1,7 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerAdmin;
-use controllers\ControllerUser;
+use classes\helpers\AdminHelper;
 
 ?>
 <?php if(isset($rows) && count($rows) > 0): ?>
@@ -29,7 +28,7 @@ use controllers\ControllerUser;
             <?php endif; ?>
           </a>
         </div>
-        <?php if(ControllerAdmin::is_logged()): ?>
+        <?php if(AdminHelper::is_logged()): ?>
           <?php
           if(isset($sort['username'])) {
             $order['sort'] = 'username';
@@ -143,7 +142,7 @@ use controllers\ControllerUser;
               <div class="row cut-text-in-one-line"><?= $row['trid'] ?></div>
             </div>
           </div>
-          <?php if(!isset($user_id) && !ControllerUser::is_logged()): ?>
+          <?php if(!isset($user_id) && !UserHelper::is_logged()): ?>
             <div class="col-xs-12 col-sm-2 table-list-row-item">
               <div class="col-xs-4 visible-xs">
                 <div class="row">Customer</div>
@@ -182,10 +181,10 @@ use controllers\ControllerUser;
           </div>
 
           <div class="col-xs-12 col-sm-1 text-right action-buttons">
-            <?php if(ControllerAdmin::is_logged() && $edit): ?>
+            <?php if(AdminHelper::is_logged() && $edit): ?>
               <a title="Edit Order Parameters" class="update" data-modify href="<?= $edit_url ?>"><i class="fa fa-2x fa-pencil"></i></a>
             <?php endif; ?>
-            <a class="<?= (!(ControllerAdmin::is_logged() && $edit)) ? 'no-float' : ''; ?>" data-waitloader
+            <a class="<?= (!(AdminHelper::is_logged() && $edit)) ? 'no-float' : ''; ?>" data-waitloader
                title="View Order Details" href="<?= $view_url ?>"><i class="fa fa-2x fa-file-text"></i></a>
           </div>
         </div>

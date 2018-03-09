@@ -3,7 +3,7 @@
 namespace models;
 
 use app\core\model\ModelBase;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 use Exception;
 
 /**
@@ -28,7 +28,7 @@ class ModelCategories extends ModelBase{
       $result = "";
       $prms = [];
       if(!empty($filter["a.cname"])) {
-        if(ControllerAdmin::is_logged()) {
+        if(AdminHelper::is_logged()) {
           foreach(array_filter(explode(' ', $filter["a.cname"])) as $idx => $item) {
             if(!empty($item)) {
               $result[] = "a.cname LIKE :a_cname" . $idx . "";

@@ -4,6 +4,7 @@ namespace controllers;
 
 use app\core\App;
 use classes\controllers\ControllerController;
+use classes\helpers\UserHelper;
 use classes\Paginator;
 use Exception;
 use models\ModelCategories;
@@ -43,9 +44,10 @@ class ControllerRecommends extends ControllerController{
    * @param $filter
    * @param bool $view
    * @return array|null
+   * @throws \InvalidArgumentException
    */
   protected function build_search_filter(&$filter, $view = false){
-    $hidden["shop_orders.aid"] = ControllerUser::get_from_session()['aid'];
+    $hidden["shop_orders.aid"] = UserHelper::get_from_session()['aid'];
     $hidden['a.pnumber'] = 'null';
     if(!isset($filter['hidden']['a.priceyard'])) $hidden['a.priceyard'] = '0.00';
     $hidden['a.pvisible'] = '1';

@@ -4,6 +4,7 @@ namespace controllers;
 
 use app\core\App;
 use classes\controllers\ControllerController;
+use classes\helpers\AdminHelper;
 
 /**
  * class ControllerIndex
@@ -57,7 +58,7 @@ class ControllerIndex extends ControllerController{
    * @throws \Exception
    */
   public function index($required_access = true){
-    if(ControllerAdmin::is_logged()) {
+    if(AdminHelper::is_logged()) {
       $url = !is_null(App::$app->get('url')) ?
         base64_decode(urldecode(App::$app->get('url'))) :
         App::$app->router()->UrlTo('product');

@@ -4,7 +4,7 @@ namespace models;
 
 use app\core\App;
 use app\core\model\ModelBase;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 use Exception;
 
 /**
@@ -27,7 +27,7 @@ class ModelFavorites extends ModelBase{
   public static function build_where(&$filter, &$prms = null){
     $result = "";
     if(isset($filter["a.pname"])) {
-      if(ControllerAdmin::is_logged()) {
+      if(AdminHelper::is_logged()) {
         foreach(array_filter(explode(' ', $filter["a.pname"])) as $idx => $item) {
           if(!empty($item)) {
             $result[] = "a.pname LIKE :a_pname" . $idx . "";

@@ -4,6 +4,7 @@ namespace controllers;
 
 use app\core\App;
 use classes\controllers\ControllerSimple;
+use classes\helpers\CaptchaHelper;
 use Exception;
 
 /**
@@ -52,7 +53,7 @@ class ControllerContact extends ControllerSimple{
    * @return bool|mixed
    */
   protected function validate(&$data, &$error){
-    $verify = ControllerCaptcha::check_captcha(isset($data['captcha']) ? $data['captcha'] : '', $error2);
+    $verify = CaptchaHelper::check_captcha(isset($data['captcha']) ? $data['captcha'] : '', $error2);
     if(empty($data['name']) || empty($data['email']) || empty($data['captcha']) || !$verify) {
       $error = ['Please fill in all required fields:'];
       $error1 = [];

@@ -1,11 +1,11 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerUser;
+use classes\helpers\UserHelper;
 
 ?>
 <div class="row menu-wrap">
-  <div class="pull-right text-right button-ask top-menu <?= ControllerUser::is_logged() ? '' : 'login'; ?>">
+  <div class="pull-right text-right button-ask top-menu <?= UserHelper::is_logged() ? '' : 'login'; ?>">
     <a class="button" title="Ask a Question"
        href="mailto:<?= App::$app->keyStorage()->system_info_email . '?subject=' . rawurlencode('RE: Inquiry for Iluvfabrix'); ?>">
       <span>Ask a Question</span>

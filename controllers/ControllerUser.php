@@ -3,63 +3,27 @@
 namespace controllers;
 
 use app\core\App;
-use classes\controllers\ControllerUserBase;
+use classes\controllers\ControllerController;
+use classes\helpers\UserHelper;
 
 /**
  * Class ControllerUser
  * @package controllers
  */
-class ControllerUser extends ControllerUserBase{
-
-  /**
-   * @param $email
-   * @throws \Exception
-   */
-  public static function sendWelcomeEmail($email){
-    $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
-
-    $subject = "Thank you for registering with iluvfabrix.com";
-    $body = "Thank you for registering with iluvfabrix.com.\n";
-    $body .= "\n";
-    $body .= "As a new user, you will get 20% off your first purchase (which you may use any time in the first year) unless we have a sale going on for a discount greater than 20%, in which case you get the greater of the two discounts.\n";
-    $body .= "\n";
-    $body .= "We will, from time to time, inform you by email of various time limited specials on the iluvfabrix site.  If you wish not to receive these emails, please respond to this email with the word Unsubscribe in the subject line.\n";
-    $body .= "\n";
-    $body .= "Once again, thank you, and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
-
-    $mailer = App::$app->getMailer();
-    $emails = [$email];
-    if($demo == 1) {
-      $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
-    }
-    array_walk($emails, function(&$item){
-      $item = trim($item);
-    });
-    $emails = array_unique($emails);
-
-    foreach($emails as $email) {
-      $messages[] = $mailer->compose(['text' => 'welcome_mail-text'], ['body' => $body])
-        ->setSubject($subject)
-        ->setTo([$email])
-        ->setReplyTo([App::$app->keyStorage()->system_info_email])
-        ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
-    }
-
-    if(!empty($messages)) $mailer->sendMultiple($messages);
-  }
+class ControllerUser extends ControllerController{
 
   /**
    * @export
    * @throws \Exception
    */
   public function user(){
-    if(!$this->is_authorized()) {
+    if(!UserHelper::is_authorized()) {
       if((App::$app->request_is_post()) && !is_null(App::$app->post('login')) &&
         !is_null(App::$app->post('pass'))) {
         if(empty(App::$app->post('login')) && empty(App::$app->post('pass'))) exit('Empty Email or Password field');
         $email = App::$app->post('login');
         $password = App::$app->post('pass');
-        if(!self::authorize($email, $password)) exit('Wrong Email or Password');
+        if(!UserHelper::authorize($email, $password)) exit('Wrong Email or Password');
         $url = base64_decode(urldecode(App::$app->post('redirect')));
         $url = (strlen($url) > 0) ? $url : App::$app->router()->UrlTo('shop');
         $this->redirect($url);
@@ -79,7 +43,7 @@ class ControllerUser extends ControllerUserBase{
       }
     } else {
       $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-                                                                                                          ->UrlTo('shop');
+        ->UrlTo('shop');
       $this->redirect($url);
     }
   }
@@ -89,7 +53,7 @@ class ControllerUser extends ControllerUserBase{
    * @throws \Exception
    */
   public function log_out(){
-    if(self::is_logged()) {
+    if(UserHelper::is_logged()) {
       App::$app->setSession('_', null);
       App::$app->setSession('user', null);
       App::$app->setCookie('_r', null);
@@ -103,7 +67,7 @@ class ControllerUser extends ControllerUserBase{
    */
   public function change(){
     $this->main->is_user_authorized(true);
-    $user = self::get_from_session();
+    $user = UserHelper::get_from_session();
     App::$app->get('aid', $user['aid']);
     $action = 'user/change';
     $title = 'CHANGE REGISTRATION DATA';
@@ -120,7 +84,7 @@ class ControllerUser extends ControllerUserBase{
    * @throws \Exception
    */
   public function registration(){
-    if(self::is_logged()) {
+    if(UserHelper::is_logged()) {
       $this->redirect(App::$app->router()->UrlTo('/'));
     } else {
       $action = 'user/registration';
@@ -131,7 +95,7 @@ class ControllerUser extends ControllerUserBase{
       }
       $back_url = App::$app->router()->UrlTo('authorization', $prms);
       (new ControllerUsers())->user_handling($data, $action, $back_url, $title, true, true);
-      self::sendWelcomeEmail($data['email']);
+      UserHelper::sendWelcomeEmail($data['email']);
       $this->template->render_layout('thanx');
     }
   }

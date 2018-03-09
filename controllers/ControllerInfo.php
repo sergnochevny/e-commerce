@@ -5,6 +5,8 @@ namespace controllers;
 use app\core\App;
 use classes\controllers\ControllerController;
 use classes\controllers\ControllerFormSimple;
+use classes\helpers\AdminHelper;
+use classes\helpers\BlogHelper;
 use models\ModelProduct;
 
 /**
@@ -126,9 +128,9 @@ class ControllerInfo extends ControllerFormSimple{
    * @throws \Exception
    */
   protected function before_save(&$data){
-    if(!isset($data[$this->id_field])) $data['post_author'] = ControllerAdmin::get_from_session();
+    if(!isset($data[$this->id_field])) $data['post_author'] = AdminHelper::get_from_session();
     $data['title'] = addslashes(trim(html_entity_decode(($data['title']))));
-    $data['message'] = addslashes(html_entity_decode(ControllerBlog::convertation(($data['message']))));
+    $data['message'] = addslashes(html_entity_decode(BlogHelper::convertation(($data['message']))));
   }
 
   /**

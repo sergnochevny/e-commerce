@@ -1,10 +1,10 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerAdmin;
+use classes\helpers\AdminHelper;
 
 $user_id = App::$app->get('aid');
-$is_admin = ControllerAdmin::is_logged();
+$is_admin = AdminHelper::is_logged();
 include(APP_PATH . '/views/messages/alert-boxes.php');
 
 ?>
