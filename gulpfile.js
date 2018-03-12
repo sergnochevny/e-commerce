@@ -10,7 +10,7 @@ var gulp = require('gulp'),
   imageResize = require('gulp-image-resize'),
   autoprefixer = require('gulp-autoprefixer'),
   debug = require('gulp-debug'),
-  uncss = require('gulp-uncss'),
+  purify = require('gulp-purify-css'),
   concat = require('gulp-concat');
 
 gulp.task('css', function () {
@@ -53,6 +53,7 @@ gulp.task('css_required', function () {
     // .pipe(uncss({
     //   html: ['views/**/*.*']
     // }))
+    .pipe(purify(['./views/**/*.php', './resources/js/**/*.js']))
     .pipe(cleanCSS({level: 2}))
     .pipe(gulp.dest('web/css'));
 });
