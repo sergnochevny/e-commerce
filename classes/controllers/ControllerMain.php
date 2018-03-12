@@ -209,8 +209,6 @@ class ControllerMain extends ControllerBase{
     $cart = new ControllerCart(isset($this->main) ? $this->main : $this);
     $cart->get();
 
-    $user_logged = UserHelper::is_logged();
-    $this->template->vars('user_logged', $user_logged);
     $this->template->vars('my_account_user_menu', $this->template->render_layout_return('user_account', false,'menu'));
 
     $menu = new ControllerMenu(isset($this->main) ? $this->main : $this);

@@ -2,9 +2,9 @@
 
 use app\core\App;
 use classes\helpers\UserHelper;
-
+$user_logged = UserHelper::is_logged();
 ?>
-<?php if(!UserHelper::is_logged()) : ?>
+<?php if(!$user_logged) : ?>
   <li class="dropdown">
     <a class="dropdown-toggle" data-waitloader data-link title="Newsletter"
        href="<?= App::$app->router()->UrlTo('newsletter') ?>">

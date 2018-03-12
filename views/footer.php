@@ -23,10 +23,6 @@ use app\core\App;
                     policy</a>.
                 </p>
               </div>
-              <!--<h4 class="widget-title">Security Information</h4>
-              <div class="textwidget">
-                <p>All purchase transactions made on our site are fully and completely secured.</p>
-              </div>-->
             </aside>
           </div>
           <div class="col-xs-6">
