@@ -220,7 +220,7 @@ class ControllerShop extends ControllerController{
     $this->widget_products_under_type('under_20', 0, 5);
     $this->widget_products_under_type('under_40', 0, 5);
     $this->widget_products_under_type('under_60', 0, 5);
-    $this->render_layout('widget/' . $layout);
+    $this->render_layout('widget/' . $layout, false);
   }
 
   /**
