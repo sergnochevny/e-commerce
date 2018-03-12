@@ -130,7 +130,7 @@ class ControllerRelated extends ControllerFormSimple{
       $_rows = ModelRelated::get_list(0, 0, $res_count_rows, $filter);
       if(isset($_rows)) foreach($_rows as $row) $related_selected[] = $row['pid'];
     }
-    $this->template->vars('related_selected', $related_selected);
+    $this->main->template->vars('related_selected', $related_selected);
   }
 
   /**
@@ -159,14 +159,14 @@ class ControllerRelated extends ControllerFormSimple{
     $c_product->after_get_list($rows, $view);
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
     $this->search_form($search_form, $view);
-    $this->template->vars('rows', $rows);
-    $this->template->vars('sort', $sort);
-    $this->template->vars('list', $this->template->render_layout_return('rows'));
-    $this->template->vars('count_rows', $res_count_rows);
+    $this->main->template->vars('rows', $rows);
+    $this->main->template->vars('sort', $sort);
+    $this->main->template->vars('list', $this->render_layout_return('rows'));
+    $this->main->template->vars('count_rows', $res_count_rows);
     (new Paginator($this->main))->paginator($total, $page, $this->controller, null, $per_page);
     $this->before_list_layout($view);
-    if($return) return $this->main->render_layout_return('list', $return && App::$app->request_is_ajax());
-    return $this->main->render_layout('list');
+    if($return) return $this->render_layout_return('list', $return && App::$app->request_is_ajax());
+    return $this->render_layout('list');
   }
 
   /**

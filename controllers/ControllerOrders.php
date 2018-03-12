@@ -157,12 +157,12 @@ class ControllerOrders extends ControllerSimple{
           $sample_cost = strlen(trim($sample_cost)) > 0 ? '$' . number_format((double)$sample_cost, 2) : '';
         }
 
-        $this->template->vars('is_sample', $is_sample);
-        $this->template->vars('product_name', $product_name);
-        $this->template->vars('sale_price', $sale_price);
-        $this->template->vars('quantity', $quantity);
+        $this->main->template->vars('is_sample', $is_sample);
+        $this->main->template->vars('product_name', $product_name);
+        $this->main->template->vars('sale_price', $sale_price);
+        $this->main->template->vars('quantity', $quantity);
         $this->main->template->vars('item_price', $item_price);
-        $this->template->render_layout('detail_info');
+        $this->render_layout('detail_info');
       }
       $end_date = $end_date ? date('/m/d/Y', strtotime($end_date)) : '';
       $total_discount = strlen(trim($total_discount)) > 0 ? '$' . number_format((double)$total_discount, 2) : '';
@@ -193,7 +193,7 @@ class ControllerOrders extends ControllerSimple{
     $this->main->template->vars('status_code', $status_code);
     $this->main->template->vars('total_discount', $total_discount);
 
-    if(AdminHelper::is_logged()) $this->main-> render_view_admin('view'); else  $this->main->render_view('view');
+    if(AdminHelper::is_logged()) $this->main-> render_view_admin('view'); else  $this->render_view('view');
   }
 
   /**

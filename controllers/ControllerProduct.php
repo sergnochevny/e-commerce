@@ -42,16 +42,16 @@ class ControllerProduct extends ControllerFormSimple{
   private function select_filter($method, $filters, $start = null, $search = null, $return = false){
     $selected = isset($filters) ? $filters : [];
     $filter = ModelProduct::get_filter_data($method, $count, $start, $search);
-    $this->template->vars('destination', $method);
-    $this->template->vars('total', $count);
-    $this->template->vars('search', $search);
-    $this->template->vars('type', $method . '_select');
-    $this->template->vars('filter_type', $method);
-    $this->template->vars('filter_data_start', isset($start) ? $start : 0);
-    $this->template->vars('selected', $selected);
-    $this->template->vars('filter', $filter);
-    if($return) return $this->template->render_layout_return('filter/select');
-    return $this->template->render_layout('filter/select');
+    $this->main->template->vars('destination', $method);
+    $this->main->template->vars('total', $count);
+    $this->main->template->vars('search', $search);
+    $this->main->template->vars('type', $method . '_select');
+    $this->main->template->vars('filter_type', $method);
+    $this->main->template->vars('filter_data_start', isset($start) ? $start : 0);
+    $this->main->template->vars('selected', $selected);
+    $this->main->template->vars('filter', $filter);
+    if($return) return $this->render_layout_return('filter/select');
+    return $this->render_layout('filter/select');
   }
 
   /**
@@ -72,10 +72,10 @@ class ControllerProduct extends ControllerFormSimple{
       App::$app->router()->UrlTo('images/products/b_' . $data['image4']);
     $data['u_image5'] = empty($data['image5']) || !is_file(APP_PATH.'/web/images/products/' . $data['image5']) ? '' :
       App::$app->router()->UrlTo('images/products/b_' . $data['image5']);
-    $this->template->vars('not_image', $not_image);
-    $this->template->vars('data', $data);
-    if($return) return $this->template->render_layout_return('images');
-    $this->template->render_layout('images');
+    $this->main->template->vars('not_image', $not_image);
+    $this->main->template->vars('data', $data);
+    if($return) return $this->render_layout_return('images');
+    $this->render_layout('images');
   }
 
   /**
@@ -99,14 +99,14 @@ class ControllerProduct extends ControllerFormSimple{
       $filetypes = ['.jpg', '.gif', '.bmp', '.png', '.jpeg'];
 
       if(!in_array($ext, $filetypes)) {
-        $this->template->vars('img_error', 'Error format');
+        $this->main->template->vars('img_error', 'Error format');
       } else {
         if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploaddir . $file)) {
           if(substr($data['image' . $idx], 0, 1) == 't') ModelProduct::delete_img($data['image' . $idx]);
           $data['image' . $idx] = $file;
           ModelProduct::convert_image($uploaddir, $file);
         } else {
-          $this->template->vars('img_error', 'Upload error');
+          $this->main->template->vars('img_error', 'Upload error');
         }
       }
     } elseif($method == 'images.delete') {
@@ -163,12 +163,12 @@ class ControllerProduct extends ControllerFormSimple{
    */
   private function generate_filter($data, $type, $return = false){
     $filters = $data[$type];
-    $this->template->vars('filters', $filters);
-    $this->template->vars('filter_type', $type);
-    $this->template->vars('destination', $type);
-    $this->template->vars('title', 'Select ' . ucfirst($type));
-    if($return) return $this->template->render_layout_return('filter/filter');
-    return $this->template->render_layout('filter/filter');
+    $this->main->template->vars('filters', $filters);
+    $this->main->template->vars('filter_type', $type);
+    $this->main->template->vars('destination', $type);
+    $this->main->template->vars('title', 'Select ' . ucfirst($type));
+    if($return) return $this->render_layout_return('filter/filter');
+    return $this->render_layout('filter/filter');
   }
 
   /**
@@ -179,10 +179,10 @@ class ControllerProduct extends ControllerFormSimple{
    * @throws \Exception
    */
   private function generate_select($data, $selected, $return = false){
-    $this->template->vars('selected', is_array($selected) ? $selected : [$selected]);
-    $this->template->vars('data', is_array($data) ? $data : [$data]);
-    if($return) return $this->template->render_layout_return('select');
-    return $this->template->render_layout('select');
+    $this->main->template->vars('selected', is_array($selected) ? $selected : [$selected]);
+    $this->main->template->vars('data', is_array($data) ? $data : [$data]);
+    if($return) return $this->render_layout_return('select');
+    return $this->render_layout('select');
   }
 
   /**
@@ -201,10 +201,10 @@ class ControllerProduct extends ControllerFormSimple{
       $res_count_rows = 0;
       $rows = ModelRelated::get_list(0, 0, $res_count_rows, $filter);
     }
-    $this->template->vars('rows', $rows);
-    $this->template->vars('list', $this->template->render_layout_return('related/rows'));
-    if($return) return $this->main->render_layout_return('related/list', $return && App::$app->request_is_ajax());
-    return $this->main->render_layout('related/list');
+    $this->main->template->vars('rows', $rows);
+    $this->main->template->vars('list', $this->render_layout_return('related/rows'));
+    if($return) return $this->render_layout_return('related/list', $return && App::$app->request_is_ajax());
+    return $this->render_layout('related/list');
   }
 
   /**
@@ -284,7 +284,7 @@ class ControllerProduct extends ControllerFormSimple{
       if(empty($data['pname'])) $error[] = 'Identify Product Name field !';
       if(empty($data['priceyard'])) $error[] = 'Identify Price field !';
       if((!empty($data['priceyard']) && empty((float)$data['priceyard'])) || (!empty($data['priceyard']) && ((float)$data['priceyard'] < 0))) $error[] = "The field 'Price' value must be greater than zero!";
-      $this->template->vars('error', $error);
+      $this->main->template->vars('error', $error);
 
       return false;
     }
@@ -331,8 +331,8 @@ class ControllerProduct extends ControllerFormSimple{
       $data[$type] = $this->generate_filter($data, $type, true);
     }
     $data['manufacturers'] = $this->generate_select($data['manufacturers'], $data['manufacturerId'], true);
-    $this->template->vars('related', $this->generate_related($data, true));
-    $this->template->vars('images', $this->images($data, true));
+    $this->main->template->vars('related', $this->generate_related($data, true));
+    $this->main->template->vars('images', $this->images($data, true));
   }
 
   /**

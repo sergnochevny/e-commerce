@@ -54,9 +54,9 @@ class ControllerMatches extends ControllerFormSimple{
    * @throws \Exception
    */
   protected function before_form_layout(&$data = null){
-    $this->template->vars('message', $data['message']);
+    $this->main->template->vars('message', $data['message']);
     $added = $data['res'];
-    exit(json_encode(['data' => $this->template->render_layout_return('msg_add'), 'added' => $added]));
+    exit(json_encode(['data' => $this->render_layout_return('msg_add'), 'added' => $added]));
   }
 
   /**
@@ -79,8 +79,8 @@ class ControllerMatches extends ControllerFormSimple{
   public function matches(){
     $this->main->is_user_authorized(true);
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
-    if($controller == 'shop' && $action == 'product') $this->template->vars('back_url', App::$app->server('HTTP_REFERER'));
-    $this->template->vars('cart_not_empty', !empty(App::$app->session('cart')['items']));
+    if($controller == 'shop' && $action == 'product') $this->main->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+    $this->main->template->vars('cart_not_empty', !empty(App::$app->session('cart')['items']));
     parent::index(false);
   }
 
@@ -114,7 +114,7 @@ class ControllerMatches extends ControllerFormSimple{
         $this->after_delete($id);
       } catch(Exception $e) {
         $error[] = $e->getMessage();
-        $this->template->vars('error', $error);
+        $this->main->template->vars('error', $error);
       }
     }
   }
@@ -130,7 +130,7 @@ class ControllerMatches extends ControllerFormSimple{
         forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'clear']);
       } catch(Exception $e) {
         $error[] = $e->getMessage();
-        $this->template->vars('error', $error);
+        $this->main->template->vars('error', $error);
       }
     }
   }
@@ -218,7 +218,7 @@ class ControllerMatches extends ControllerFormSimple{
     } else
       $message = 'Empty Matches Area. Nothing added to the Cart.';
 
-    $this->template->vars('message', $message);
-    $this->main->render_layout('msg_add_to_cart');
+    $this->main->template->vars('message', $message);
+    $this->render_layout('msg_add_to_cart');
   }
 }

@@ -1,7 +1,10 @@
 <?php
 
 use app\core\App;
+use controllers\ControllerUser;
 
+$controller_user = new ControllerUser($this->controller->get_main());
+App::$app->get('method', 'short');
 ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
@@ -17,7 +20,9 @@ use app\core\App;
             <h4>Register with iluvfabrix:</h4>
           </div>
           <div class="col-xs-12" data-role="form_content">
-            <div data-load="<?= App::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>"></div>
+            <div>
+              <?= $controller_user->registration()?>
+            </div>
           </div>
         </div>
       </div>

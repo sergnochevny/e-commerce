@@ -1,12 +1,16 @@
 <?php
 
 use app\core\App;
+use controllers\ControllerInfo;
 
 $pid = $data['pid'];
 $ahref = 'mailto:' . App::$app->keyStorage()->system_info_email . '?subject=' .
   rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
 $mhref = App::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
 $href_related = App::$app->router()->UrlTo('related/view', ['pid' => $pid]);
+
+$controller_info = new ControllerInfo();
+$controller_info->scenario('product');
 ?>
 
 <div id="content" class="container product_view inner-offset-top half-outer-offset-bottom">
@@ -283,7 +287,8 @@ $href_related = App::$app->router()->UrlTo('related/view', ['pid' => $pid]);
 
     <div class="col-xs-12">
       <div class="row">
-        <div data-load="<?= App::$app->router()->UrlTo('info/view', ['method' => 'product']) ?>">
+        <div>
+          <?= $controller_info->view(false, false, true)?>
         </div>
       </div>
     </div>

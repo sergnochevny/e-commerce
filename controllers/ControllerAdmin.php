@@ -130,10 +130,10 @@ class ControllerAdmin extends ControllerFormSimple{
       } else {
         $redirect = !is_null(App::$app->get('url')) ? App::$app->get('url') :
           urlencode(base64_encode(App::$app->router()->UrlTo('product')));
-        $this->template->vars('redirect', $redirect);
+        $this->main->template->vars('redirect', $redirect);
         $menu = new ControllerMenu($this);
         $menu->show_menu();
-        $this->main->render_view('admin');
+        $this->render_view('admin');
       }
     } else {
       $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) :

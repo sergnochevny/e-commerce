@@ -12,6 +12,8 @@ use classes\helpers\UserHelper;
  */
 class ControllerUser extends ControllerController{
 
+  protected $resolved_scenario = ['', 'short'];
+
   /**
    * @export
    * @throws \Exception
@@ -39,11 +41,11 @@ class ControllerUser extends ControllerController{
         $this->main->template->vars('registration_url', $registration_url);
         $this->main->template->vars('lostpassword_url', $lostpassword_url);
         $this->main->template->vars('redirect', $redirect);
-        $this->main->render_view('user');
+        $this->render_view('user');
       }
     } else {
-      $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) : App::$app->router()
-        ->UrlTo('shop');
+      $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) :
+        App::$app->router()->UrlTo('shop');
       $this->redirect($url);
     }
   }
@@ -76,7 +78,8 @@ class ControllerUser extends ControllerController{
       $url = base64_decode(urldecode(App::$app->get('url')));
     }
     $back_url = (strlen($url) > 0) ? $url : 'shop';
-    (new ControllerUsers())->user_handling($data, $action, $back_url, $title, true);
+
+    return (new ControllerUsers())->user_handling($data, $action, $back_url, $title, true);
   }
 
   /**
@@ -94,9 +97,14 @@ class ControllerUser extends ControllerController{
         $prms['url'] = App::$app->get('url');
       }
       $back_url = App::$app->router()->UrlTo('authorization', $prms);
-      (new ControllerUsers())->user_handling($data, $action, $back_url, $title, true, true);
-      UserHelper::sendWelcomeEmail($data['email']);
-      $this->template->render_layout('thanx');
+      $scenario = !empty($this->scenario()) ? $this->scenario() : null;
+      $result = (new ControllerUsers($this->main))->user_handling($data, $action, $back_url, $title, true, true, $scenario);
+      if(($this->scenario() !== 'short') && ($result === true)) {
+        UserHelper::sendWelcomeEmail($data['email']);
+        $this->render_layout('thanx');
+      } else {
+        return $result;
+      }
     }
   }
 

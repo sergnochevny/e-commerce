@@ -16,7 +16,7 @@ abstract class ControllerFormSimple extends ControllerSimple{
    * @throws \Exception
    */
   protected function edit_add_handling($url, $title){
-    $this->template->vars('form_title', $title);
+    $this->main->template->vars('form_title', $title);
     $data = null;
     $this->load($data);
     if(App::$app->request_is_post() && $this->form_handling($data)) {
@@ -24,8 +24,8 @@ abstract class ControllerFormSimple extends ControllerSimple{
       exit($this->form($url, $data));
     }
     $this->set_back_url();
-    $this->template->vars('form', $this->form($url, null, true));
-    $this->main-> render_view_admin('edit');
+    $this->main->template->vars('form', $this->form($url, null, true));
+    $this->render_view_admin('edit');
   }
 
 }

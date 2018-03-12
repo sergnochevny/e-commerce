@@ -167,7 +167,7 @@ class ControllerClearance extends ControllerFormSimple{
     } else {
       $url_prms['back'] = 'clearance';
     }
-    $this->template->vars('url_prms', $url_prms);
+    $this->main->template->vars('url_prms', $url_prms);
   }
 
   /**
@@ -183,7 +183,7 @@ class ControllerClearance extends ControllerFormSimple{
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){
-    $this->template->vars('cart_enable', '_');
+    $this->main->template->vars('cart_enable', '_');
     App::$app->setSession('sidebar_idx', 7);
     parent::view($partial, $required_access);
   }

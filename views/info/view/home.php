@@ -1,4 +1,6 @@
-<?php if(!empty($data)): ?>
+<?php
+
+if(!empty($data)): ?>
   <div class="col-xs-12">
     <div class="row text-center">
       <h4 class="section-title"><?= $data['title']; ?></h4>

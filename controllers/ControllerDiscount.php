@@ -42,13 +42,13 @@ class ControllerDiscount extends ControllerFormSimple{
     $title = "Select Products";
     if($product_type == 3) $title = "Select Types";
     if($product_type == 4) $title = "Select Manufacturers";
-    $this->template->vars('filters', $filter_products);
-    $this->template->vars('filter_type', $data['filter_type']);
-    $this->template->vars('destination', 'filter_products');
-    $this->template->vars('title', $title);
-    if($return) return $this->template->render_layout_return('filter/filter');
+    $this->main->template->vars('filters', $filter_products);
+    $this->main->template->vars('filter_type', $data['filter_type']);
+    $this->main->template->vars('destination', 'filter_products');
+    $this->main->template->vars('title', $title);
+    if($return) return $this->render_layout_return('filter/filter',$return);
 
-    return $this->template->render_layout('filter/filter');
+    return $this->render_layout('filter/filter');
   }
 
   /**
@@ -59,14 +59,14 @@ class ControllerDiscount extends ControllerFormSimple{
    */
   private function generate_users_filter($data, $return = true){
     $users = $data['users'];
-    $this->template->vars('filters', $users);
-    $this->template->vars('filter_type', 'users');
-    $this->template->vars('filter_data_start', 0);
-    $this->template->vars('destination', 'users');
-    $this->template->vars('title', 'Select Users');
-    if($return) return $this->template->render_layout_return('filter/filter');
+    $this->main->template->vars('filters', $users);
+    $this->main->template->vars('filter_type', 'users');
+    $this->main->template->vars('filter_data_start', 0);
+    $this->main->template->vars('destination', 'users');
+    $this->main->template->vars('title', 'Select Users');
+    if($return) return $this->render_layout_return('filter/filter' $return);
 
-    return $this->template->render_layout('filter/filter');
+    return $this->render_layout('filter/filter');
   }
 
   /**
@@ -81,17 +81,17 @@ class ControllerDiscount extends ControllerFormSimple{
   private function select_filter($method, $filters, $start = null, $search = null, $return = false){
     $selected = isset($filters) ? array_values($filters) : [];
     $filter = ModelDiscount::get_filter_data($method, $count, $start, $search);
-    $this->template->vars('destination', App::$app->post('type'));
-    $this->template->vars('total', $count);
-    $this->template->vars('search', $search);
-    $this->template->vars('type', $method . '_select');
-    $this->template->vars('filter_type', $method);
-    $this->template->vars('filter_data_start', isset($start) ? $start : 0);
-    $this->template->vars('selected', $selected);
-    $this->template->vars('filter', $filter);
-    if($return) return $this->template->render_layout_return('filter/select');
+    $this->main->template->vars('destination', App::$app->post('type'));
+    $this->main->template->vars('total', $count);
+    $this->main->template->vars('search', $search);
+    $this->main->template->vars('type', $method . '_select');
+    $this->main->template->vars('filter_type', $method);
+    $this->main->template->vars('filter_data_start', isset($start) ? $start : 0);
+    $this->main->template->vars('selected', $selected);
+    $this->main->template->vars('filter', $filter);
+    if($return) return $this->render_layout_return('filter/select', $return);
 
-    return $this->template->render_layout('filter/select');
+    return $this->render_layout('filter/select');
   }
 
   /**
@@ -321,8 +321,8 @@ class ControllerDiscount extends ControllerFormSimple{
     $orders = ob_get_contents();
     ob_end_clean();
     $this->set_back_url();
-    $this->template->vars('discount', $discount);
-    $this->template->vars('orders', $orders);
+    $this->main->template->vars('discount', $discount);
+    $this->main->template->vars('orders', $orders);
     $this->main-> render_view_admin('view' . DS . $this->controller);
   }
 

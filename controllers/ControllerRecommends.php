@@ -132,7 +132,7 @@ class ControllerRecommends extends ControllerController{
   protected function after_get_list(&$rows, $view = false, &$filter = null, &$search_form = null, $type = null){
     $url_prms = null;
     if(isset($type)) $url_prms['back'] = 'recommends';
-    $this->template->vars('url_prms', $url_prms);
+    $this->main->template->vars('url_prms', $url_prms);
   }
 
   /**
@@ -175,15 +175,15 @@ class ControllerRecommends extends ControllerController{
     $template = ($view ? 'view' . DS : '') . (empty($search_form['firstpage']) ? 'search/form' : 'empty/search/form');
     $prms = null;
     if(!empty($this->scenario())) $prms['method'] = $this->scenario();
-    $this->template->vars('action', App::$app->router()->UrlTo($this->controller . ($view ? '/view' : ''), $prms));
+    $this->main->template->vars('action', App::$app->router()->UrlTo($this->controller . ($view ? '/view' : ''), $prms));
     $this->before_search_form_layout($search_form, $view);
-    $this->template->vars('search', $search_form);
+    $this->main->template->vars('search', $search_form);
     try {
-      $search_form = $this->main->render_layout_return($template);
+      $search_form = $this->render_layout_return($template);
     } catch(Exception $e) {
       $search_form = null;
     }
-    $this->template->vars('search_form', $search_form);
+    $this->main->template->vars('search_form', $search_form);
 
     return $search_form;
   }
@@ -215,21 +215,21 @@ class ControllerRecommends extends ControllerController{
       ]);
       $this->after_get_list($rows, $view, $filter, $search_form);
       if(isset($filter['active'])) $search_form['active'] = $filter['active'];
-      $this->template->vars('scenario', $this->scenario());
+      $this->main->template->vars('scenario', $this->scenario());
       $this->search_form($search_form, $view);
-      $this->template->vars('rows', $rows);
-      $this->template->vars('sort', $sort);
-      $this->template->vars('list', $this->template->render_layout_return($view ? 'view' . DS . 'rows' : 'rows'));
-      $this->template->vars('count_rows', $res_count_rows);
+      $this->main->template->vars('rows', $rows);
+      $this->main->template->vars('sort', $sort);
+      $this->main->template->vars('list', $this->render_layout_return($view ? 'view' . DS . 'rows' : 'rows'));
+      $this->main->template->vars('count_rows', $res_count_rows);
       $prms = !empty($this->scenario()) ? ['method' => $this->scenario()] : null;
       (new Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $prms, $per_page);
       $this->set_back_url(empty($filter['totalrows']) ? 'recommends' : null);
       $this->before_list_layout($view);
-      if($return) return $this->main->render_layout_return($view ? 'view' . DS . 'list' : 'list', $return && App::$app->request_is_ajax());
-      $this->main->render_layout($view ? 'view' . DS . 'list' : 'list');
+      if($return) return $this->render_layout_return($view ? 'view' . DS . 'list' : 'list', $return && App::$app->request_is_ajax());
+      $this->render_layout($view ? 'view' . DS . 'list' : 'list');
     } else {
       $this->scenario('empty');
-      $this->template->vars('scenario', $this->scenario());
+      $this->main->template->vars('scenario', $this->scenario());
       $layout = $this->search_form($search_form, $view);
       if($return) return $layout;
       exit($layout);
@@ -242,7 +242,7 @@ class ControllerRecommends extends ControllerController{
    */
   public function recommends(){
     $this->main->is_user_authorized(true);
-    $this->template->vars('cart_enable', '_');
+    $this->main->template->vars('cart_enable', '_');
     App::$app->setSession('sidebar_idx', 7);
     parent::index(false);
   }

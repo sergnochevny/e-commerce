@@ -5,7 +5,7 @@ use app\core\App;
 ?>
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
-  <div class="col-xs-12 box">
+  <div class="col-xs-12 static box">
     <?php $back_url = App::$app->router()->UrlTo('shop'); ?>
 
     <div class="col-xs-12 col-sm-2 back_button_container">

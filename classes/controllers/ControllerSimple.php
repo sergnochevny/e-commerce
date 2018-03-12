@@ -97,12 +97,12 @@ abstract class ControllerSimple extends ControllerController{
     if(isset($id)) $prms[$this->id_field] = $id;
     if(!empty($this->scenario())) $prms['method'] = $this->scenario();
     $action = App::$app->router()->UrlTo($url, $prms);
-    $this->template->vars($this->id_field, $id);
-    $this->template->vars('data', $data);
-    $this->template->vars('scenario', $this->scenario());
-    $this->template->vars('action', $action);
-    if($return) return $this->main->render_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form', $return && App::$app->request_is_ajax());
-    return $this->main->render_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
+    $this->main->template->vars($this->id_field, $id);
+    $this->main->template->vars('data', $data);
+    $this->main->template->vars('scenario', $this->scenario());
+    $this->main->template->vars('action', $action);
+    if($return) return $this->render_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form', $return && App::$app->request_is_ajax());
+    return $this->render_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
   }
 
   /**
@@ -118,7 +118,7 @@ abstract class ControllerSimple extends ControllerController{
       $this->save($data);
       $this->get_list();
     } else {
-      $this->template->vars('form_title', $title);
+      $this->main->template->vars('form_title', $title);
       $this->form($url);
     }
   }
@@ -142,8 +142,8 @@ abstract class ControllerSimple extends ControllerController{
         $error[] = $e->getMessage();
       }
     }
-    if(isset($warning)) $this->template->vars('warning', $warning);
-    if(isset($error)) $this->template->vars('error', $error);
+    if(isset($warning)) $this->main->template->vars('warning', $warning);
+    if(isset($error)) $this->main->template->vars('error', $error);
 
     return $result;
   }
@@ -171,11 +171,11 @@ abstract class ControllerSimple extends ControllerController{
       $data = forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'get_by_id'], $id);
       $this->after_get_data_item_view($data);
       $this->set_back_url();
-      $this->template->vars('scenario', $this->scenario());
-      $this->template->vars('data', $data);
-      if($partial) $this->main->render_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
+      $this->main->template->vars('scenario', $this->scenario());
+      $this->main->template->vars('data', $data);
+      if($partial) $this->render_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
       elseif($required_access) $this->main-> render_view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
-      else $this->main->render_view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
+      else $this->render_view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
     } else parent::view($partial);
   }
 
@@ -202,7 +202,7 @@ abstract class ControllerSimple extends ControllerController{
         $this->after_delete($id);
       } catch(Exception $e) {
         $error[] = $e->getMessage();
-        $this->template->vars('error', $error);
+        $this->main->template->vars('error', $error);
       }
       exit($this->get_list());
     }

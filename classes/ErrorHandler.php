@@ -36,7 +36,7 @@ class ErrorHandler implements ErrorHandlerInterface{
   public function handle(){
 
     if(!empty($this->exception) && !empty($message = $this->exception->getMessage())) {
-      return (new ControllerMain(App::$app->router()->controllerObj))->error404();
+      return (new ControllerMain(App::$app->router()->get_controller()))->error404();
     }
 
     return (new ControllerMain())->error404();

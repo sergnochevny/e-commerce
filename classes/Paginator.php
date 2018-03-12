@@ -21,8 +21,8 @@ class Paginator extends ControllerController{
    * @throws \Exception
    */
   public function paginator($total_rows, $page, $url, $prms = null, $per_page = 12, $showbypage = 10){
-    $this->template->vars('per_page', $per_page);
-    $this->template->vars('per_page_items', App::$app->config('per_page_items'));
+    $this->main->template->vars('per_page', $per_page);
+    $this->main->template->vars('per_page_items', App::$app->config('per_page_items'));
 
     if($total_rows > $per_page) {
       $num_pages = ceil($total_rows / $per_page);
@@ -33,21 +33,21 @@ class Paginator extends ControllerController{
       $prev_page = $page - 1;
       $next_page = $page + 1;
 
-      $this->template->vars('url', $url);
-      $this->template->vars('page', $page);
-      $this->template->vars('total_rows', $total_rows);
-      $this->template->vars('showbypage', $showbypage);
-      $this->template->vars('num_pages', $num_pages);
-      $this->template->vars('last_page', $last_page);
-      $this->template->vars('nav_start', $nav_start);
-      $this->template->vars('nav_end', $nav_end);
-      $this->template->vars('prev_page', $prev_page);
-      $this->template->vars('next_page', $next_page);
+      $this->main->template->vars('url', $url);
+      $this->main->template->vars('page', $page);
+      $this->main->template->vars('total_rows', $total_rows);
+      $this->main->template->vars('showbypage', $showbypage);
+      $this->main->template->vars('num_pages', $num_pages);
+      $this->main->template->vars('last_page', $last_page);
+      $this->main->template->vars('nav_start', $nav_start);
+      $this->main->template->vars('nav_end', $nav_end);
+      $this->main->template->vars('prev_page', $prev_page);
+      $this->main->template->vars('next_page', $next_page);
 
-      $this->main->template->vars('paginator', $this->template->render_layout_return('paginator'));
+      $this->main->template->vars('paginator', $this->render_layout_return('paginator'));
     }
 
-    $this->main->template->vars('show_by', $this->template->render_layout_return('show_by'));
+    $this->main->template->vars('show_by', $this->render_layout_return('show_by'));
   }
 
 }

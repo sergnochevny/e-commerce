@@ -1117,6 +1117,8 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 
 .price .amount {
     font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .product_view .price .amount {
@@ -2385,7 +2387,7 @@ ul.product_list_widget li dl dd p {
 }
 
 .products.product_list_widget .product-price-box .price {
-    margin: 5px 0 0 5px;
+    margin: 5px 0 5px 0;
     float: left;
 }
 

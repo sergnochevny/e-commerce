@@ -41,10 +41,10 @@ class ControllerUsers extends ControllerFormSimple{
    */
   private function list_countries($select = null){
     $countries = ModelAddress::get_countries_all();
-    $this->template->vars('items', $countries);
-    $this->template->vars('select', $select);
+    $this->main->template->vars('items', $countries);
+    $this->main->template->vars('select', $select);
 
-    return $this->template->render_layout_return('address/select_countries_options');
+    return $this->render_layout_return('address/select_countries_options');
   }
 
   /**
@@ -57,9 +57,9 @@ class ControllerUsers extends ControllerFormSimple{
     $list = '';
     if(isset($country) && !empty($country)) {
       $provincies = ModelAddress::get_country_state($country);
-      $this->template->vars('items', $provincies);
-      $this->template->vars('select', $select);
-      $list = $this->template->render_layout_return('address/select_countries_options');
+      $this->main->template->vars('items', $provincies);
+      $this->main->template->vars('select', $select);
+      $list = $this->render_layout_return('address/select_countries_options');
     }
 
     return $list;
@@ -354,7 +354,8 @@ class ControllerUsers extends ControllerFormSimple{
    * @throws \Exception
    */
   protected function form_handling(&$data = null){
-    if(App::$app->request_is_post() && (App::$app->post('method') == 'get_province_list')) exit($this->list_province(App::$app->post('country')));
+    if(App::$app->request_is_post() && (App::$app->post('method') == 'get_province_list'))
+      exit($this->list_province(App::$app->post('country')));
     if(!empty($this->scenario())) {
       if($this->scenario() == 'csv') exit($this->get_csv());
     }
@@ -399,30 +400,35 @@ class ControllerUsers extends ControllerFormSimple{
    * @param $title
    * @param bool $is_user
    * @param bool $outer_control
+   * @param null $scenario
    * @return bool
    * @throws \Exception
    */
-  public function user_handling(&$data, $url, $back_url, $title, $is_user = false, $outer_control = false){
-    $this->scenario(App::$app->get('method'));
-    $this->template->vars('form_title', $title);
+  public function user_handling(&$data, $url, $back_url, $title, $is_user = false, $outer_control = false, $scenario = null){
+    $this->scenario(!empty($scenario) ? $scenario : App::$app->get('method'));
+    $this->main->template->vars('form_title', $title);
     $this->load($data);
     if(App::$app->request_is_post() && $this->form_handling($data)) {
+      $email = $data['email'];
       $result = $this->save($data);
       if($outer_control && $result) {
         if($this->scenario() !== 'short') return $result; else {
-          UserHelper::sendWelcomeEmail($data['email']);
-          $thanx = $this->template->render_layout_return('short/thanx');
-          $this->template->vars('warning', [$thanx]);
-          exit($this->form($url, []));
+          UserHelper::sendWelcomeEmail($email);
+          $thanx = $this->render_layout_return('short/thanx');
+          $this->main->template->vars('warning', [$thanx]);
+
+          return ($this->form($url, []));
         }
       }
-      exit($this->form($url, $data));
+
+      return ($this->form($url, $data));
     }
     $form = $this->form($url, null, true);
-    if($this->scenario() == 'short') exit($form);
+    if($this->scenario() == 'short') return($form);
     $this->set_back_url($back_url);
-    $this->template->vars('form', $form);
-    if($is_user) exit($this->main->render_view('edit')); else exit($this->main-> render_view_admin('edit'));
+    $this->main->template->vars('form', $form);
+    if($is_user) return ($this->render_view('edit'));
+    else return ($this->render_view_admin('edit'));
   }
 
   /**

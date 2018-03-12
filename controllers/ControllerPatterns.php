@@ -92,12 +92,12 @@ class ControllerPatterns extends ControllerSimple{
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){
-    $this->template->vars('cart_enable', '_');
+    $this->main->template->vars('cart_enable', '_');
     $main_filter = $this->load_search_filter_by_controller('shop');
     if(!empty($main_filter) && is_array($main_filter)) {
       $main_filter['active_filter'] = !empty(array_filter($main_filter));
     }
-    $this->template->vars('filter', $main_filter);
+    $this->main->template->vars('filter', $main_filter);
     App::$app->setSession('sidebar_idx', 3);
     parent::view($partial, $required_access);
   }

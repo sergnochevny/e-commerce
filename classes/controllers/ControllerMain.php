@@ -26,7 +26,8 @@ class ControllerMain extends ControllerBase{
 
   /**
    * ControllerMain constructor.
-   * @param null $main
+   * @param \app\core\controller\ControllerBase $main
+   * @throws \ReflectionException
    */
   public function __construct($main = null){
     if(isset($main) && (strpos(get_class($main),'Controller') !== false)) {
@@ -52,10 +53,11 @@ class ControllerMain extends ControllerBase{
 
   /**
    * @param $page
+   * @param null $controller
    * @param null $data
    * @throws \Exception
    */
-  public function  render_view_admin($page, $data = null){
+  public function  render_view_admin($page, $controller = null, $data = null){
     if(isset($data)) {
       $this->template->vars('data', $data);
     }
@@ -66,7 +68,7 @@ class ControllerMain extends ControllerBase{
     }
 
     $this->meta_page();
-    $this->template->render($page);
+    $this->template->render($page, $controller);
   }
 
   /**
@@ -81,30 +83,33 @@ class ControllerMain extends ControllerBase{
 
   /**
    * @param $page
+   * @param bool $renderJS
+   * @param null $controller
    * @param null $data
    * @return mixed
    * @throws \Exception
    */
-  public function render_layout($page, $data = null){
+  public function render_layout($page, $renderJS = true, $controller = null, $data = null){
     if(isset($data)) {
       $this->template->vars('data', $data);
     }
-    return $this->template->render_layout($page);
+    return $this->template->render_layout($page, $renderJS, $controller);
   }
 
   /**
    * @param $page
    * @param bool $renderJS
+   * @param null $controller
    * @param null $data
    * @return string
    * @throws \Exception
    */
-  public function render_layout_return($page, $renderJS = false, $data = null){
+  public function render_layout_return($page, $renderJS = false, $controller = null, $data = null){
     if(isset($data)) {
       $this->template->vars('data', $data);
     }
 
-    return $this->template->render_layout_return($page, $renderJS);
+    return $this->template->render_layout_return($page, $renderJS, $controller);
   }
 
   /**
@@ -191,10 +196,12 @@ class ControllerMain extends ControllerBase{
 
   /**
    * @param $page
+   * @param null $controller
    * @param null $data
+   * @throws \ReflectionException
    * @throws \Exception
    */
-  public function render_view($page, $data = null){
+  public function render_view($page, $controller = null, $data = null){
     $this->build_canonical_url();
     if(isset($data)) {
       $this->template->vars('data', $data);
@@ -209,7 +216,7 @@ class ControllerMain extends ControllerBase{
     $menu = new ControllerMenu(isset($this->main) ? $this->main : $this);
     $menu->show_menu();
     $this->meta_page();
-    $this->template->render($page);
+    $this->template->render($page, $controller);
   }
 
   /**
@@ -220,7 +227,7 @@ class ControllerMain extends ControllerBase{
     header("HTTP/1.0 404 Not Found");
     header("HTTP/1.1 404 Not Found");
     header("Status: 404 Not Found");
-    $this->template->controller = 'main';
+    $this->template->controller->controller = 'main';
     $this->template->vars('message', $msg);
     if(AdminHelper::is_logged()) $this-> render_view_admin('404/error');
     else $this->render_view('404/error');

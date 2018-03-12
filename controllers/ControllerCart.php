@@ -84,11 +84,11 @@ class ControllerCart extends ControllerController{
 
     App::$app->setSession('cart', $cart);
 
-    $this->template->vars('img_url', $img_url);
-    $this->template->vars('item', $item);
-    $this->template->vars('pid', $pid);
-    $this->template->vars('t_pr', $t_pr);
-    $this->template->render_layout($template);
+    $this->main->template->vars('img_url', $img_url);
+    $this->main->template->vars('item', $item);
+    $this->main->template->vars('pid', $pid);
+    $this->main->template->vars('t_pr', $t_pr);
+    $this->render_layout($template);
   }
 
   /**
@@ -122,10 +122,10 @@ class ControllerCart extends ControllerController{
     }
     $img_url = App::$app->router()
       ->UrlTo($filename);
-    $this->template->vars('img_url', $img_url);
-    $this->template->vars('item', $item);
-    $this->template->vars('pid', $pid);
-    $this->template->render_layout($template);
+    $this->main->template->vars('img_url', $img_url);
+    $this->main->template->vars('item', $item);
+    $this->main->template->vars('pid', $pid);
+    $this->render_layout($template);
   }
 
   /**
@@ -135,32 +135,32 @@ class ControllerCart extends ControllerController{
   private function proceed_bill_ship(){
     if(!is_null(App::$app->session('user'))) {
       $user = App::$app->session('user');
-      $this->template->vars('bill_firstname', trim($user['bill_firstname']));
-      $this->template->vars('bill_lastname', trim($user['bill_lastname']));
-      $this->template->vars('bill_organization', trim($user['bill_organization']));
-      $this->template->vars('bill_address1', trim($user['bill_address1']));
-      $this->template->vars('bill_address2', trim($user['bill_address2']));
-      $this->template->vars('bill_city', trim($user['bill_city']));
-      $this->template->vars('bill_postal', trim($user['bill_postal']));
-      $this->template->vars('bill_phone', trim($user['bill_phone']));
-      $this->template->vars('ship_firstname', trim($user['ship_firstname']));
-      $this->template->vars('ship_lastname', trim($user['ship_lastname']));
-      $this->template->vars('ship_organization', trim($user['ship_organization']));
-      $this->template->vars('ship_address1', trim($user['ship_address1']));
-      $this->template->vars('ship_address2', trim($user['ship_address2']));
-      $this->template->vars('ship_city', trim($user['ship_city']));
-      $this->template->vars('ship_postal', trim($user['ship_postal']));
-      $this->template->vars('ship_phone', trim($user['ship_phone']));
+      $this->main->template->vars('bill_firstname', trim($user['bill_firstname']));
+      $this->main->template->vars('bill_lastname', trim($user['bill_lastname']));
+      $this->main->template->vars('bill_organization', trim($user['bill_organization']));
+      $this->main->template->vars('bill_address1', trim($user['bill_address1']));
+      $this->main->template->vars('bill_address2', trim($user['bill_address2']));
+      $this->main->template->vars('bill_city', trim($user['bill_city']));
+      $this->main->template->vars('bill_postal', trim($user['bill_postal']));
+      $this->main->template->vars('bill_phone', trim($user['bill_phone']));
+      $this->main->template->vars('ship_firstname', trim($user['ship_firstname']));
+      $this->main->template->vars('ship_lastname', trim($user['ship_lastname']));
+      $this->main->template->vars('ship_organization', trim($user['ship_organization']));
+      $this->main->template->vars('ship_address1', trim($user['ship_address1']));
+      $this->main->template->vars('ship_address2', trim($user['ship_address2']));
+      $this->main->template->vars('ship_city', trim($user['ship_city']));
+      $this->main->template->vars('ship_postal', trim($user['ship_postal']));
+      $this->main->template->vars('ship_phone', trim($user['ship_phone']));
       $ship_country = trim($user['ship_country']);
       $bill_province = trim($user['bill_province']);
       $bill_country = trim($user['bill_country']);
       $ship_province = trim($user['ship_province']);
 
-      $this->template->vars('bill_country', trim(ModelAddress::get_country_by_id($bill_country)));
-      $this->template->vars('bill_province', trim(ModelAddress::get_province_by_id($bill_province)));
-      $this->template->vars('ship_country', trim(ModelAddress::get_country_by_id($ship_country)));
-      $this->template->vars('ship_province', trim(ModelAddress::get_province_by_id($ship_province)));
-      $this->template->render_layout('bill_ship_info');
+      $this->main->template->vars('bill_country', trim(ModelAddress::get_country_by_id($bill_country)));
+      $this->main->template->vars('bill_province', trim(ModelAddress::get_province_by_id($bill_province)));
+      $this->main->template->vars('ship_country', trim(ModelAddress::get_country_by_id($ship_country)));
+      $this->main->template->vars('ship_province', trim(ModelAddress::get_province_by_id($ship_province)));
+      $this->render_layout('bill_ship_info');
     }
   }
 
@@ -608,16 +608,16 @@ class ControllerCart extends ControllerController{
     App::$app->setSession('cart', $cart);
 
     if((count($cart_items) > 0) || (count($cart_samples_items) > 0)) {
-      $this->template->vars('shipping', $shipping);
-      $this->template->vars('bShipRoll', $bShipRoll);
-      $this->template->vars('rollcost', $rollcost);
-      $this->template->vars('cart_samples_items', $cart_samples_items);
-      $this->template->vars('cart_items', $cart_items);
-      $this->template->vars('bExpressSamples', $bExpressSamples);
-      $this->template->vars('express_samples_cost', $express_samples_cost);
-      $this->template->vars('total', $total);
-      $this->template->vars('shipcost', $shipcost);
-      $this->template->render_layout('ship_in_proceed');
+      $this->main->template->vars('shipping', $shipping);
+      $this->main->template->vars('bShipRoll', $bShipRoll);
+      $this->main->template->vars('rollcost', $rollcost);
+      $this->main->template->vars('cart_samples_items', $cart_samples_items);
+      $this->main->template->vars('cart_items', $cart_items);
+      $this->main->template->vars('bExpressSamples', $bExpressSamples);
+      $this->main->template->vars('express_samples_cost', $express_samples_cost);
+      $this->main->template->vars('total', $total);
+      $this->main->template->vars('shipcost', $shipcost);
+      $this->render_layout('ship_in_proceed');
     }
   }
 
@@ -690,15 +690,15 @@ class ControllerCart extends ControllerController{
     App::$app->setSession('cart', $cart);
     $taxes = App::$app->session('cart')['taxes'];
 
-    $this->template->vars('cart_items', $cart_items);
-    $this->template->vars('cart_samples_items', $cart_samples_items);
-    $this->template->vars('handlingcost', $handlingcost);
-    $this->template->vars('shipDiscount', $shipDiscount);
-    $this->template->vars('couponDiscount', $couponDiscount);
-    $this->template->vars('taxes', $taxes);
-    $this->template->vars('total', $total);
-    $this->template->vars('discount', $discount);
-    $this->template->render_layout('total_in_proceed');
+    $this->main->template->vars('cart_items', $cart_items);
+    $this->main->template->vars('cart_samples_items', $cart_samples_items);
+    $this->main->template->vars('handlingcost', $handlingcost);
+    $this->main->template->vars('shipDiscount', $shipDiscount);
+    $this->main->template->vars('couponDiscount', $couponDiscount);
+    $this->main->template->vars('taxes', $taxes);
+    $this->main->template->vars('total', $total);
+    $this->main->template->vars('discount', $discount);
+    $this->render_layout('total_in_proceed');
   }
 
   /**
@@ -787,17 +787,17 @@ class ControllerCart extends ControllerController{
     $this->main->is_user_authorized(true);
     if(!is_null(App::$app->get('proceed'))) {
       $this->proceed_checkout_prepare();
-      $this->main->template->vars('content', $this->template->render_layout_return('proceed_checkout'));
+      $this->main->template->vars('content', $this->render_layout_return('proceed_checkout'));
     } elseif(!is_null(App::$app->get('pay_ok'))) {
       $this->pay_ok();
-      $this->main->template->vars('content', $this->template->render_layout_return('pay_ok'));
+      $this->main->template->vars('content', $this->render_layout_return('pay_ok'));
     } elseif(!is_null(App::$app->get('pay_error'))) {
-      $this->main->template->vars('content', $this->template->render_layout_return('pay_error'));
+      $this->main->template->vars('content', $this->render_layout_return('pay_error'));
     } else {
       $this->prepare();
-      $this->main->template->vars('content', $this->template->render_layout_return('cart'));
+      $this->main->template->vars('content', $this->render_layout_return('cart'));
     }
-    $this->main->render_view('container');
+    $this->render_view('container');
   }
 
   /**
@@ -840,9 +840,9 @@ class ControllerCart extends ControllerController{
    */
   function samples_legend(){
     if(isset(App::$app->session('cart')['items']) && (count(App::$app->session('cart')['items']) > 0)) {
-      $this->template->vars('cart_items', '_');
+      $this->main->template->vars('cart_items', '_');
     }
-    $this->template->render_layout('samples_legend');
+    $this->render_layout('samples_legend');
   }
 
   /**
@@ -912,7 +912,7 @@ class ControllerCart extends ControllerController{
     $total += $total_samples_items;
 
     $cart_sum = "$" . number_format($total, 2);
-    $this->template->vars('sum_all_items', $cart_sum);
+    $this->main->template->vars('sum_all_items', $cart_sum);
 
     if(count($cart_items) > 0) {
       foreach($cart_items as $key => $item) {
@@ -939,7 +939,7 @@ class ControllerCart extends ControllerController{
     $total = $total + $shipcost;
     if($shipDiscount > 0) $total = round($total - $shipDiscount, 2);
     $cart['subtotal_ship'] = $total;
-    $this->template->vars('subtotal_ship', $total);
+    $this->main->template->vars('subtotal_ship', $total);
     if($couponDiscount > 0) $total = $total - $couponDiscount;
     $taxes = 0;
     if($uid > 0) {
@@ -952,24 +952,24 @@ class ControllerCart extends ControllerController{
     $cart['total'] = $total;
     App::$app->setSession('cart', $cart);
 
-    $this->template->vars('taxes', $taxes);
-    $this->template->vars('total', $total);
-    $this->template->vars('coupon_discount', $couponDiscount);
-    $this->template->vars('shipping', $shipping);
-    $this->template->vars('bShipRoll', $bShipRoll);
-    $this->template->vars('cart_samples_items', $cart_samples_items);
-    $this->template->vars('cart_items', $cart_items);
-    $this->template->vars('bExpressSamples', $bExpressSamples);
-    $this->template->vars('total', $total);
-    $this->template->vars('systemAllowExpressSamples', $systemAllowExpressSamples);
-    $this->template->vars('bAcceptExpress', $bAcceptExpress);
-    $this->template->vars('shipDiscount', $shipDiscount);
-    $this->template->vars('shipcost', $shipcost);
+    $this->main->template->vars('taxes', $taxes);
+    $this->main->template->vars('total', $total);
+    $this->main->template->vars('coupon_discount', $couponDiscount);
+    $this->main->template->vars('shipping', $shipping);
+    $this->main->template->vars('bShipRoll', $bShipRoll);
+    $this->main->template->vars('cart_samples_items', $cart_samples_items);
+    $this->main->template->vars('cart_items', $cart_items);
+    $this->main->template->vars('bExpressSamples', $bExpressSamples);
+    $this->main->template->vars('total', $total);
+    $this->main->template->vars('systemAllowExpressSamples', $systemAllowExpressSamples);
+    $this->main->template->vars('bAcceptExpress', $bAcceptExpress);
+    $this->main->template->vars('shipDiscount', $shipDiscount);
+    $this->main->template->vars('shipcost', $shipcost);
     if(count($cart_items) > 0) {
-      $this->template->render_layout('shipping');
+      $this->render_layout('shipping');
     } else {
       if(count($cart_samples_items) > 0) {
-        $this->template->render_layout('shipping_samples');
+        $this->render_layout('shipping_samples');
       }
     }
   }
@@ -988,15 +988,15 @@ class ControllerCart extends ControllerController{
     $uid = (!is_null(App::$app->session('user'))) ? (int)App::$app->session('user')['aid'] : 0;
 
     if((count($cart_items) > 0) || (count($cart_samples_items) > 0)) {
-      $this->template->vars('taxes', $taxes);
-      $this->template->vars('total', $total);
-      $this->template->vars('coupon_discount', $coupon_discount);
-      $this->template->vars('cart_samples_items', $cart_samples_items);
-      $this->template->vars('cart_items', $cart_items);
-      $this->template->vars('total', $total);
-      $this->template->vars('coupon_code', $coupon_code);
-      $this->template->vars('uid', $uid);
-      $this->template->render_layout('coupon_total');
+      $this->main->template->vars('taxes', $taxes);
+      $this->main->template->vars('total', $total);
+      $this->main->template->vars('coupon_discount', $coupon_discount);
+      $this->main->template->vars('cart_samples_items', $cart_samples_items);
+      $this->main->template->vars('cart_items', $cart_items);
+      $this->main->template->vars('total', $total);
+      $this->main->template->vars('coupon_code', $coupon_code);
+      $this->main->template->vars('uid', $uid);
+      $this->render_layout('coupon_total');
     }
   }
 
@@ -1063,7 +1063,7 @@ class ControllerCart extends ControllerController{
    */
   public function proceed_checkout(){
     $this->proceed_checkout_prepare();
-    $this->main->render_layout('proceed_checkout');
+    $this->render_layout('proceed_checkout');
   }
 
   /**
@@ -1077,9 +1077,9 @@ class ControllerCart extends ControllerController{
       $prms = null;
       $back_url = App::$app->router()
         ->UrlTo('cart', ['proceed' => true]);
-      $this->template->vars('back_url', $back_url);
+      $this->main->template->vars('back_url', $back_url);
       $total = App::$app->session('cart')['total'];
-      $this->template->vars('total', $total);
+      $this->main->template->vars('total', $total);
 
       $user = App::$app->session('user');
       $email = trim($user['email']);
@@ -1095,19 +1095,19 @@ class ControllerCart extends ControllerController{
       $bill_phone = trim($user['bill_phone']);
 
       if(!empty($bill_postal)) {
-        $this->template->vars('email', $email);
-        $this->template->vars('bill_firstname', $bill_firstname);
-        $this->template->vars('bill_lastname', $bill_lastname);
-        $this->template->vars('bill_organization', $bill_organization);
-        $this->template->vars('bill_address1', $bill_address1);
-        $this->template->vars('bill_address2', $bill_address2);
-        $this->template->vars('bill_city', $bill_city);
-        $this->template->vars('bill_postal', $bill_postal);
-        $this->template->vars('bill_phone', $bill_phone);
+        $this->main->template->vars('email', $email);
+        $this->main->template->vars('bill_firstname', $bill_firstname);
+        $this->main->template->vars('bill_lastname', $bill_lastname);
+        $this->main->template->vars('bill_organization', $bill_organization);
+        $this->main->template->vars('bill_address1', $bill_address1);
+        $this->main->template->vars('bill_address2', $bill_address2);
+        $this->main->template->vars('bill_city', $bill_city);
+        $this->main->template->vars('bill_postal', $bill_postal);
+        $this->main->template->vars('bill_phone', $bill_phone);
         $bill_country = trim(ModelAddress::get_country_by_id($bill_country));
-        $this->template->vars('bill_country', $bill_country);
+        $this->main->template->vars('bill_country', $bill_country);
         $bill_province = trim(ModelAddress::get_province_by_id($bill_province));
-        $this->template->vars('bill_province', $bill_province);
+        $this->main->template->vars('bill_province', $bill_province);
 
         $trid = uniqid();
         $cart = App::$app->session('cart');
@@ -1140,13 +1140,13 @@ class ControllerCart extends ControllerController{
         $paypal['bn'] = "toolkit-php";
 
         $this->main->template->vars('paypal', $paypal);
-        $this->main->render_layout('proceed_agreem');
+        $this->render_layout('proceed_agreem');
       } else {
-        $this->template->vars('error', ['Fill in the Billing and Shipping Information!']);
+        $this->main->template->vars('error', ['Fill in the Billing and Shipping Information!']);
         $this->proceed_checkout();
       }
     } else {
-      $this->template->vars('error', ['Please contact the administrator - must fill in the paypal account information!']);
+      $this->main->template->vars('error', ['Please contact the administrator - must fill in the paypal account information!']);
       $this->proceed_checkout();
     }
   }
@@ -1172,7 +1172,7 @@ class ControllerCart extends ControllerController{
     $SUM += $this->calc_samples_amount();
 
     $cart_sum = "$" . number_format($SUM, 2);
-    $this->template->vars('sum_all_items', $cart_sum);
+    $this->main->template->vars('sum_all_items', $cart_sum);
 
     echo $cart_sum;
   }
@@ -1241,13 +1241,13 @@ class ControllerCart extends ControllerController{
         $SUM += $this->calc_samples_amount();
 
         $cart_sum = "$" . number_format($SUM, 2);
-        $this->template->vars('SUM', $cart_sum);
+        $this->main->template->vars('SUM', $cart_sum);
 
         $message = 'This Fabric has been added to your Cart.<br>Click the Cart to view your Order.';
         $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
-        $this->template->vars('message', $message);
-        $msg = $this->template->render_layout_return('msg_add');
-        $button = $this->template->render_layout_return('basket');
+        $this->main->template->vars('message', $message);
+        $msg = $this->render_layout_return('msg_add');
+        $button = $this->render_layout_return('basket');
         exit(json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]));
       } else {
 
@@ -1256,12 +1256,12 @@ class ControllerCart extends ControllerController{
         $SUM += $this->calc_samples_amount();
 
         $cart_sum = "$" . number_format($SUM, 2);
-        $this->template->vars('SUM', $cart_sum);
+        $this->main->template->vars('SUM', $cart_sum);
 
         $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
         $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
-        $this->template->vars('message', $message);
-        $msg = $this->template->render_layout_return('msg_add');
+        $this->main->template->vars('message', $message);
+        $msg = $this->render_layout_return('msg_add');
         exit(json_encode(['msg' => $msg, 'sum' => $cart_sum]));
       }
     }
@@ -1304,13 +1304,13 @@ class ControllerCart extends ControllerController{
         $SUM += $this->calc_samples_amount();
 
         $cart_sum = "$" . number_format($SUM, 2);
-        $this->template->vars('SUM', $cart_sum);
+        $this->main->template->vars('SUM', $cart_sum);
 
         $message = 'This Samples has been added to your Cart.<br>Click the Cart to view your Order.';
         $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
-        $this->template->vars('message', $message);
-        $msg = $this->template->render_layout_return('msg_add');
-        $button = $this->template->render_layout_return('basket');
+        $this->main->template->vars('message', $message);
+        $msg = $this->render_layout_return('msg_add');
+        $button = $this->render_layout_return('basket');
         $res = json_encode(['msg' => $msg, 'button' => $button, 'sum' => $cart_sum]);
         echo $res;
       } else {
@@ -1320,12 +1320,12 @@ class ControllerCart extends ControllerController{
         $SUM += $this->calc_samples_amount();
 
         $cart_sum = "$" . number_format($SUM, 2);
-        $this->template->vars('SUM', $cart_sum);
+        $this->main->template->vars('SUM', $cart_sum);
 
         $message = 'The product ' . $product['pname'] . ' is unavailable. The product was not added.<br>';
         $message .= '<br>Subtotal sum of cart is ' . $cart_sum;
-        $this->template->vars('message', $message);
-        $msg = $this->template->render_layout_return('masg_add');
+        $this->main->template->vars('message', $message);
+        $msg = $this->render_layout_return('masg_add');
         $res = json_encode(['msg' => $msg, 'sum' => $cart_sum]);
         echo $res;
       }
@@ -1342,8 +1342,8 @@ class ControllerCart extends ControllerController{
     $SUM += $this->calc_samples_amount();
 
     $SUM = "$" . number_format($SUM, 2);
-    $this->template->vars('SUM', $SUM);
-    $this->template->vars('cart_items', $cart_items);
+    $this->main->template->vars('SUM', $SUM);
+    $this->main->template->vars('cart_items', $cart_items);
   }
 
   /**
@@ -1371,8 +1371,8 @@ class ControllerCart extends ControllerController{
             $quantity = floor($quantity);
           }
           $message = 'The quantity for ' . $product['pname'] . ' must be a whole number. The order was adjusted.<br>';
-          $this->template->vars('message', $message);
-          $response['msg'] = $this->template->render_layout_return('msg_change');
+          $this->main->template->vars('message', $message);
+          $response['msg'] = $this->render_layout_return('msg_change');
         }
 
         if($piece == 0) {
@@ -1381,15 +1381,15 @@ class ControllerCart extends ControllerController{
           } else {
             $cart_items[$pid]['quantity'] = $inventory;
             $message = 'The available inventory for ' . $cart_items[$pid]['pname'] . ' is ' . $inventory . '. The order was adjusted.<br>';
-            $this->template->vars('message', $message);
-            $response['msg'] = $this->template->render_layout_return('msg_change');
+            $this->main->template->vars('message', $message);
+            $response['msg'] = $this->render_layout_return('msg_change');
           }
         }
       }
     } else {
       $message = 'The quantity must be a positive number. The order was adjusted.<br>';
-      $this->template->vars('message', $message);
-      $response['msg'] = $this->template->render_layout_return('msg_change');
+      $this->main->template->vars('message', $message);
+      $response['msg'] = $this->render_layout_return('msg_change');
     }
 
     $item = $cart_items[$pid];

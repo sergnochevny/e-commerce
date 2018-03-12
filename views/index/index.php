@@ -1,26 +1,33 @@
 <?php
 
 use app\core\App;
+use controllers\ControllerInfo;
+use controllers\ControllerShop;
 
+/**
+ * @var \app\core\Template $this
+ * @var \controllers\ControllerShop $this ->controller
+ */
+$controller_info = new ControllerInfo($this->controller->get_main());
+$controller_shop = new ControllerShop($this->controller->get_main());
 ?>
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
 
   <div class="col-xs-12 box outer-offset-bottom half-inner-offset-vertical">
     <div class="block-info">
-      <div data-load="<?= App::$app->router()->UrlTo('info/view', ['method' => 'home']) ?>"></div>
+      <?= $controller_info->view(false, false, true); ?>
     </div>
   </div>
 
   <div class="col-xs-12 box inner-offset-top half-outer-offset-bottom">
     <div>
-      <div data-load="<?= App::$app->router()->UrlTo('shop/widget', ['type' => 'under']) ?>"></div>
+      <?= $controller_shop->widget('under'); ?>
     </div>
   </div>
 
   <div class="col-xs-12 box outer-offset-bottom half-inner-offset-vertical specials-products-container">
-    <input type="hidden" id="specials-products_url"
-           value="<?= App::$app->router()->UrlTo('shop/widget', ['type' => 'carousel_specials']); ?>">
+    <?= $controller_shop->widget('carousel_specials'); ?>
   </div>
 
 </div>

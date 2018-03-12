@@ -457,7 +457,6 @@ p.discount {
 }
 
 .site-container {
-    overflow: hidden;
     margin-bottom: 5px;
 }
 
@@ -3224,4 +3223,14 @@ button.close-container {
     .col-md-20-prc, .col-md-80-prc {
         float: left;
     }
+}
+
+.lost_password_container {
+    padding-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+div.static.box{
+    padding-bottom: 50px;
 }

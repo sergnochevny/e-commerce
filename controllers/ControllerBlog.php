@@ -47,17 +47,17 @@ class ControllerBlog extends ControllerFormSimple{
   private function select_filter($filters, $start = null, $search = null, $return = false){
     $selected = isset($filters) ? $filters : [];
     $filter = ModelBlog::get_filter_data($count, $start, $search);
-    $this->template->vars('destination', 'categories');
-    $this->template->vars('total', $count);
-    $this->template->vars('search', $search);
-    $this->template->vars('type', 'categories_select');
-    $this->template->vars('filter_type', 'categories');
-    $this->template->vars('filter_data_start', isset($start) ? $start : 0);
-    $this->template->vars('selected', $selected);
-    $this->template->vars('filter', $filter);
-    if($return) return $this->template->render_layout_return('filter/select');
+    $this->main->template->vars('destination', 'categories');
+    $this->main->template->vars('total', $count);
+    $this->main->template->vars('search', $search);
+    $this->main->template->vars('type', 'categories_select');
+    $this->main->template->vars('filter_type', 'categories');
+    $this->main->template->vars('filter_data_start', isset($start) ? $start : 0);
+    $this->main->template->vars('selected', $selected);
+    $this->main->template->vars('filter', $filter);
+    if($return) return $this->render_layout_return('filter/select', $return);
 
-    return $this->template->render_layout('filter/select');
+    return $this->render_layout('filter/select');
   }
 
   /**
@@ -89,10 +89,10 @@ class ControllerBlog extends ControllerFormSimple{
         $data['file_img'] = '';
       }
     }
-    $this->template->vars('data', $data);
-    if($return) return $this->template->render_layout_return('image');
+    $this->main->template->vars('data', $data);
+    if($return) return $this->render_layout_return('image', $return);
 
-    return $this->template->render_layout('image');
+    return $this->render_layout('image');
   }
 
   /**
@@ -161,13 +161,13 @@ class ControllerBlog extends ControllerFormSimple{
    * @throws \Exception
    */
   private function generate_filter($data, $return = false){
-    $this->template->vars('filters', $data['categories']);
-    $this->template->vars('filter_type', 'categories');
-    $this->template->vars('destination', 'categories');
-    $this->template->vars('title', 'Select Types');
-    if($return) return $this->template->render_layout_return('filter/filter');
+    $this->main->template->vars('filters', $data['categories']);
+    $this->main->template->vars('filter_type', 'categories');
+    $this->main->template->vars('destination', 'categories');
+    $this->main->template->vars('title', 'Select Types');
+    if($return) return $this->render_layout_return('filter/filter', $return);
 
-    return $this->template->render_layout('filter/filter');
+    return $this->render_layout('filter/filter');
   }
 
   /**
@@ -268,7 +268,7 @@ class ControllerBlog extends ControllerFormSimple{
     $data['post_date'] = date('F jS, Y', strtotime($data['post_date']));
     ModelBlog::get_filter_selected($data);
     $data['categories'] = $this->generate_filter($data, true);
-    $this->template->vars('image', $this->image($data, true));
+    $this->main->template->vars('image', $this->image($data, true));
   }
 
   /**

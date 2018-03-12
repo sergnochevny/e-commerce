@@ -24,7 +24,10 @@ use app\core\App;
     </div>
     <div class="col-xs-12">
       <div class="row">
-        <input type="email" name="email" value="<?= isset($data['email']) ? $data['email'] : ''; ?>" class="input-text"
+        <input type="email" name="email"
+               data-inputmask="'alias': 'email'"
+               value="<?= isset($data['email']) ? $data['email'] : ''; ?>"
+               class="input-text"
                placeholder="Enter Email">
       </div>
     </div>
@@ -55,4 +58,4 @@ use app\core\App;
     </div>
   </div>
 </form>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/registration/form.min.js'), 5);?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/registration/form.min.js'), 5, true);?>

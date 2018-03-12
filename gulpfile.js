@@ -10,7 +10,9 @@ var gulp = require('gulp'),
   imageResize = require('gulp-image-resize'),
   autoprefixer = require('gulp-autoprefixer'),
   debug = require('gulp-debug'),
+  uncss = require('gulp-uncss'),
   purify = require('gulp-purify-css'),
+  purge = require('gulp-css-purge'),
   concat = require('gulp-concat');
 
 gulp.task('css', function () {
@@ -51,7 +53,7 @@ gulp.task('css_required', function () {
     // .pipe(rename({suffix: '.min'}))
     .pipe(concat("required.min.css"))
     // .pipe(uncss({
-    //   html: ['views/**/*.*']
+    //   html: ['./views/**/*.php', './resources/js/**/*.js']
     // }))
     .pipe(purify(['./views/**/*.php', './resources/js/**/*.js']))
     .pipe(cleanCSS({level: 2}))
@@ -149,15 +151,15 @@ gulp.task('scripts', function () {
     '!resources/js/search/search.js',
     '!resources/js/script.js'
   ])
-    .pipe(minify({
-      ext: {
-        min: '.min.js'
-      },
-      noSource: true
-    }))
-    // .pipe(rename({
-    //   suffix: ".min"
+    // .pipe(minify({
+    //   ext: {
+    //     min: '.min.js'
+    //   },
+    //   noSource: true
     // }))
+    .pipe(rename({
+      suffix: ".min"
+    }))
     .pipe(gulp.dest('web/js'));
 });
 

@@ -86,8 +86,8 @@ class ControllerContact extends ControllerSimple{
         $error[] = $e->getMessage();
       }
     }
-    if(isset($warning)) $this->template->vars('warning', $warning);
-    if(isset($error)) $this->template->vars('error', $error);
+    if(isset($warning)) $this->main->template->vars('warning', $warning);
+    if(isset($error)) $this->main->template->vars('error', $error);
 
     return parent::form_handling($data);
   }
@@ -122,8 +122,8 @@ class ControllerContact extends ControllerSimple{
     if(App::$app->request_is_post() && $this->form_handling($data)) {
       exit($this->form($url, $data));
     }
-    $this->template->vars('form', $this->form($url, [], true));
-    $this->main->render_view($this->controller);
+    $this->main->template->vars('form', $this->form($url, [], true));
+    $this->render_view($this->controller);
   }
 
   /**

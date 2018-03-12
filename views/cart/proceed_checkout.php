@@ -1,7 +1,10 @@
 <?php
 
 use app\core\App;
+use controllers\ControllerInfo;
 
+$controller_info = new ControllerInfo();
+$controller_info->scenario('cart');
 ?>
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
 <div class="col-xs-12">
@@ -121,7 +124,8 @@ use app\core\App;
   </div>
 </div>
 <div>
-  <div data-load-cart="<?= App::$app->router()->UrlTo('info/view', ['method' => 'cart']) ?>">
+  <div>
+    <?= $controller_info->view(false, false, true)?>
   </div>
 </div>
 

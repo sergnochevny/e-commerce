@@ -5,7 +5,7 @@ use app\core\App;
 ?>
 <link rel="stylesheet" type="text/css" href="<?= App::$app->router()->UrlTo('css/blog.min.css'); ?>">
 <div class="container inner-offset-top half-outer-offset-bottom">
-  <div class="box col-xs-12">
+  <div class="col-xs-12 static box">
 
     <div class="row">
       <div class="col-xs-12">

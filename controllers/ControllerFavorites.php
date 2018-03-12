@@ -80,7 +80,7 @@ class ControllerFavorites extends ControllerSimple{
   protected function validate(&$data, &$error){
     if(empty($data['pid'])) {
       $error[] = 'Select Product to append to Favorites!';
-      $this->template->vars('error', $error);
+      $this->main->template->vars('error', $error);
 
       return false;
     }
@@ -116,7 +116,7 @@ class ControllerFavorites extends ControllerSimple{
     $search_data['patterns'] = $patterns;
     $search_data['colors'] = $colors;
     $search_data['manufacturers'] = $manufacturers;
-    if(isset($type)) $this->template->vars('action', App::$app->router()->UrlTo($this->controller));
+    if(isset($type)) $this->main->template->vars('action', App::$app->router()->UrlTo($this->controller));
   }
 
   /**
@@ -135,7 +135,7 @@ class ControllerFavorites extends ControllerSimple{
    * @throws \Exception
    */
   protected function edit_add_handling($url, $title){
-    $this->template->vars('form_title', $title);
+    $this->main->template->vars('form_title', $title);
     $data = null;
     $this->load($data);
     if($this->form_handling($data) && App::$app->request_is_post() && App::$app->request_is_ajax()) {
@@ -151,7 +151,7 @@ class ControllerFavorites extends ControllerSimple{
    * @throws \Exception
    */
   protected function before_form_layout(&$data = null){
-    $this->template->vars('back_url', App::$app->router()->UrlTo('shop'));
+    $this->main->template->vars('back_url', App::$app->router()->UrlTo('shop'));
   }
 
   /**
@@ -160,7 +160,7 @@ class ControllerFavorites extends ControllerSimple{
    */
   public function favorites(){
     $this->main->is_user_authorized(true);
-    $this->template->vars('cart_enable', '_');
+    $this->main->template->vars('cart_enable', '_');
     $this->index(false);
   }
 

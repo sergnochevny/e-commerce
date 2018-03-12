@@ -2,7 +2,10 @@
 
 use app\core\App;
 use classes\helpers\UserHelper;
+use controllers\ControllerUser;
 
+$controller_user = new ControllerUser($this->controller->get_main());
+$controller_user->scenario('short');
 ?>
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
@@ -44,7 +47,8 @@ use classes\helpers\UserHelper;
               <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                 <div class="row">
                   <div class="col-xs-12" data-role="form_content">
-                    <div data-load="<?= App::$app->router()->UrlTo('user/registration', ['method' => 'short']) ?>">
+                    <div>
+                      <?= $controller_user->registration()?>
                     </div>
                   </div>
                 </div>
@@ -58,3 +62,6 @@ use classes\helpers\UserHelper;
 </div>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/static/static.min.js'), 4); ?>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/load.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/captcha/captcha.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/registration/script.min.js'), 4); ?>
+

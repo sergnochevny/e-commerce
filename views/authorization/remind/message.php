@@ -95,8 +95,7 @@ use app\core\App;
             <div class="just-post col-xs-12">
               <div class="just-post-detail">
                 <p>
-                  To change the password , click the link charset="UTF-8" below. The link charset="UTF-8" is valid for
-                  24 hours.
+                  To change the password , click the link below. The link is valid for 24 hours.
                   If you did not request to change the password , just ignore this message.
                 </p>
                 <p>
