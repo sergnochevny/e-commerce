@@ -10,6 +10,7 @@ var gulp = require('gulp'),
   imageResize = require('gulp-image-resize'),
   autoprefixer = require('gulp-autoprefixer'),
   debug = require('gulp-debug'),
+  uncss = require('gulp-uncss'),
   concat = require('gulp-concat');
 
 gulp.task('css', function () {
@@ -46,10 +47,13 @@ gulp.task('css_required', function () {
       'resources/css/required/style.css',
       'resources/css/required/multiselect.css'
     ], {base: 'resources/css/required/'})
-    .pipe(cleanCSS({level: 2}))
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-    .pipe(rename({suffix: '.min'}))
-    // .pipe(concat("required.min.css"))
+    // .pipe(rename({suffix: '.min'}))
+    .pipe(concat("required.min.css"))
+    // .pipe(uncss({
+    //   html: ['views/**/*.*']
+    // }))
+    .pipe(cleanCSS({level: 2}))
     .pipe(gulp.dest('web/css'));
 });
 
