@@ -30,6 +30,4 @@ cd /
 /bin/chown -R www-data:www-data /app
 /bin/chmod -R 775 /app/web/images
 
-cp -rf /app/copy /app/web/images
-
 exec "$@"
