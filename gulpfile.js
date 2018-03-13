@@ -207,7 +207,6 @@ gulp.task('clear', function (callback) {
   return cache.clearAll();
 });
 
-
 gulp.task('watch', ['clean', 'fonts', 'css', 'css_required', 'scripts', 'scripts_required', 'images'], function () {
   gulp.watch('resources/sass/**/*.sass', ['sass']);
   gulp.watch('resources/sass/**/*.scss', ['sass']);
