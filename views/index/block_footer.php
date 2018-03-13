@@ -1,7 +1,8 @@
 <?php
 
-use app\core\App;
+use controllers\ControllerShop;
 
+$controller_shop = new ControllerShop($this->controller->get_main());
 ?>
 <div class="footer-widgets-top outer-offset-top">
   <div class="container inner-offset-top half-outer-offset-bottom">
@@ -11,7 +12,9 @@ use app\core\App;
           <h4 class="section-title">Best Sellers Products</h4>
           <aside id="woocommerce_products-5" class="widget woocommerce widget_products">
             <div id="bsells_products" class="products product_list_widget">
-              <div data-load="<?= App::$app->router()->UrlTo('shop/widget', ['type' => 'bestsellers']) ?>"></div>
+              <div>
+                <?= $controller_shop->widget('bestsellers'); ?>
+              </div>
             </div>
           </aside>
         </div>
@@ -21,7 +24,9 @@ use app\core\App;
           <h4 class="section-title">Popular Textiles</h4>
           <aside id="woocommerce_products-2" class="widget woocommerce widget_products">
             <div id="popular_products" class="products product_list_widget">
-              <div data-load="<?= App::$app->router()->UrlTo('shop/widget', ['type' => 'popular']) ?>"></div>
+              <div>
+                <?= $controller_shop->widget('popular'); ?>
+              </div>
             </div>
           </aside>
         </div>
@@ -31,7 +36,9 @@ use app\core\App;
           <h4 class="section-title">New Products</h4>
           <aside id="woocommerce_products-3" class="widget woocommerce widget_products">
             <div id="new_products" class="products product_list_widget">
-              <div data-load="<?= App::$app->router()->UrlTo('shop/widget', ['type' => 'new']) ?>"></div>
+              <div>
+                <?= $controller_shop->widget('new'); ?>
+              </div>
             </div>
           </aside>
         </div>

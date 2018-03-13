@@ -64,7 +64,7 @@ class ControllerDiscount extends ControllerFormSimple{
     $this->main->template->vars('filter_data_start', 0);
     $this->main->template->vars('destination', 'users');
     $this->main->template->vars('title', 'Select Users');
-    if($return) return $this->render_layout_return('filter/filter' $return);
+    if($return) return $this->render_layout_return('filter/filter', $return);
 
     return $this->render_layout('filter/filter');
   }

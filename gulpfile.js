@@ -55,6 +55,9 @@ gulp.task('css_required', function () {
     // .pipe(uncss({
     //   html: ['./views/**/*.php', './resources/js/**/*.js']
     // }))
+    // .pipe(purge({
+    //   content: ['./views/**/*.php', './resources/js/**/*.js']
+    // }))
     .pipe(purify(['./views/**/*.php', './resources/js/**/*.js']))
     .pipe(cleanCSS({level: 2}))
     .pipe(gulp.dest('web/css'));
@@ -151,15 +154,15 @@ gulp.task('scripts', function () {
     '!resources/js/search/search.js',
     '!resources/js/script.js'
   ])
-    // .pipe(minify({
-    //   ext: {
-    //     min: '.min.js'
-    //   },
-    //   noSource: true
-    // }))
-    .pipe(rename({
-      suffix: ".min"
+    .pipe(minify({
+      ext: {
+        min: '.min.js'
+      },
+      noSource: true
     }))
+    // .pipe(rename({
+    //   suffix: ".min"
+    // }))
     .pipe(gulp.dest('web/js'));
 });
 
