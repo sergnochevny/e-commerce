@@ -78,8 +78,8 @@ class ControllerSitemap extends ControllerBase{
     $list = ob_get_contents();
     ob_end_clean();
 
-    $this->main->template->vars('list', $list);
+    $this->template->vars('list', $list);
     header("Content-type: text/xml");
-    $this->render_layout('sitemap');
+    $this->template->render_layout('sitemap');
   }
 }
