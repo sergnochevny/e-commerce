@@ -33,8 +33,8 @@ use app\core\App;
     .loader i {position: relative; left: 50vw; color: #000; top: 50vh; margin-left: -28px; margin-top: -28px;}
   </style>
 
+  <link rel="stylesheet" type="text/css" href="<?= App::$app->router()->UrlTo('css/required.min.css');?>">
   <?php
-  $this->registerCSSFile(App::$app->router()->UrlTo('css/required.min.css'));
   $this->registerJSFile(App::$app->router()->UrlTo('js/required.min.js'), 0);
   ?>
 
