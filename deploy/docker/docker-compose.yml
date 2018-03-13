@@ -15,7 +15,7 @@ services:
         - ./data/images:/app/web/images
         - ./data/filemanager:/app/web/filemanager
         - ./data/tinymce:/app/web/tinymce
-        - /deploy/uploads/${NAME}:/app/web/images
+        - /deploy/uploads/${NAME}:/app/copy
         - ./.ssh:/root/.ssh:rw
       ports:
         - 127.0.0.1:8987:80
