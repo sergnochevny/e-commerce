@@ -243,7 +243,7 @@ class ModelShop extends ModelBase{
     $row['ldesc'] = substr($row['ldesc'], 0, 100);
     $filename = 'images/products/' . $image_suffix . $row['image1'];
     if(!(file_exists(APP_PATH . '/web/' . $filename) && is_file(APP_PATH . '/web/' . $filename))) {
-      $filename = 'images/products/not_image.jpg';
+      $filename = 'images/not_image.jpg';
     }
     $row['filename'] = App::$app->router()->UrlTo($filename);
 
@@ -374,7 +374,7 @@ class ModelShop extends ModelBase{
     if(!(file_exists(APP_PATH . '/web/' . $data['filename']) &&
       is_file(APP_PATH . '/web/' . $data['filename']) &&
       is_readable(APP_PATH . '/web/' . $data['filename']))) {
-      $data['filename'] = "images/products/not_image.jpg";
+      $data['filename'] = "images/not_image.jpg";
       $data['filename1'] = null;
       $data['img1_exists'] = false;
     }
@@ -387,7 +387,7 @@ class ModelShop extends ModelBase{
         if(!(file_exists(APP_PATH . '/web/' . $data['img' . $i . '_filename']) &&
           is_file(APP_PATH . '/web/' . $data['img' . $i . '_filename']) &&
           is_readable(APP_PATH . '/web/' . $data['img' . $i . '_filename']))) {
-          $data['img' . $i . '_filename'] = "images/products/not_image.jpg";
+          $data['img' . $i . '_filename'] = "images/not_image.jpg";
           $data['img' . $i . '_filename1'] = null;
         }
         $data['img' . $i . '_filename'] = App::$app->router()->UrlTo($data['img' . $i . '_filename']);

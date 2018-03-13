@@ -75,7 +75,7 @@ class ControllerBlog extends ControllerFormSimple{
         $data['img'] = App::$app->router()->UrlTo('images/blog/' . $file_img);
         $data['file_img'] = $file_img;
       } else {
-        $data['img'] = App::$app->router()->UrlTo('images/products/not_image.jpg');
+        $data['img'] = App::$app->router()->UrlTo('images/not_image.jpg');
         $data['file_img'] = '';
       }
     } else {
@@ -85,7 +85,7 @@ class ControllerBlog extends ControllerFormSimple{
         $data['img'] = App::$app->router()->UrlTo($file_img);
         $data['file_img'] = $file_img;
       } else {
-        $data['img'] = App::$app->router()->UrlTo('images/products/not_image.jpg');
+        $data['img'] = App::$app->router()->UrlTo('images/not_image.jpg');
         $data['file_img'] = '';
       }
     }
@@ -180,12 +180,12 @@ class ControllerBlog extends ControllerFormSimple{
       if(file_exists(APP_PATH . '/web/images/blog/' . $img) &&
         is_file(APP_PATH . '/web/images/blog/' . $img) &&
         is_readable(APP_PATH . '/web/images/blog/' . $img)) $img = 'images/blog/' . $img;
-      else $img = 'images/products/not_image.jpg';
+      else $img = 'images/not_image.jpg';
     } else {
       if(!(file_exists(APP_PATH . '/web/' . $img) &&
         is_file(APP_PATH . '/web/' . $img) &&
         is_readable(APP_PATH . '/web/' . $img))) {
-        $img = 'images/products/not_image.jpg';
+        $img = 'images/not_image.jpg';
       }
     }
 

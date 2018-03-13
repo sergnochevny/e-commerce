@@ -46,7 +46,7 @@ class ControllerCart extends ControllerController{
     $product = ModelProduct::get_by_id($pid);
     $filename = 'images/products/' . $item['image1'];
     if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
-      $filename = "images/products/not_image.jpg";
+      $filename = "images/not_image.jpg";
     }
     $img_url = App::$app->router()
       ->UrlTo($filename);
@@ -118,7 +118,7 @@ class ControllerCart extends ControllerController{
     $item = ModelShop::get_product_params($pid);
     $filename = 'images/products/' . $item['image1'];
     if(!file_exists($filename) || !is_file($filename) || !is_readable($filename)) {
-      $filename = "images/products/not_image.jpg";
+      $filename = "images/not_image.jpg";
     }
     $img_url = App::$app->router()
       ->UrlTo($filename);

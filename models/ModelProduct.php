@@ -420,7 +420,7 @@ class ModelProduct extends ModelBase{
       while($row = static::fetch_array($result)) {
         $filename = 'images/products/b_' . $row['image1'];
         if(!(file_exists(APP_PATH . '/web/' . $filename) && is_file(APP_PATH . '/web/' . $filename))) {
-          $filename = 'images/products/not_image.jpg';
+          $filename = 'images/not_image.jpg';
         }
         $row['filename'] = App::$app->router()->UrlTo($filename);
 

@@ -25,7 +25,7 @@ use app\core\App;
           </div>
 
         </div>
-        <?php if(isset($data['img']) && !$data['img'] == App::$app->router()->UrlTo('images/products/not_image.jpg')) { ?>
+        <?php if(isset($data['img']) && !$data['img'] == App::$app->router()->UrlTo('images/not_image.jpg')) { ?>
             <div class="row">
               <div class="just-post-image" style="background-image: url('<?= $data['img']; ?>'); height: 220px"></div>
             </div>

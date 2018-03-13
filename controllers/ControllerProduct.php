@@ -61,7 +61,7 @@ class ControllerProduct extends ControllerFormSimple{
    * @throws \Exception
    */
   private function images($data, $return = false){
-    $not_image = App::$app->router()->UrlTo('images/products/not_image.jpg');
+    $not_image = App::$app->router()->UrlTo('images/not_image.jpg');
     $data['u_image1'] = empty($data['image1']) || !is_file(APP_PATH.'/web/images/products/' . $data['image1']) ? '' :
       App::$app->router()->UrlTo('images/products/v_' . $data['image1']);
     $data['u_image2'] = empty($data['image2']) || !is_file(APP_PATH.'/web/images/products/' . $data['image2']) ? '' :
