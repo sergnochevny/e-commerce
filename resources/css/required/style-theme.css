@@ -458,7 +458,7 @@ a img.aligncenter {
 .social-connect [class*="deviantart"] {
     color: #536551;
 }
-
+/* uncss:ignore start */
 /* 2.0 HEADER
 -------------------------------------------------------------- */
 /* top navigation */
@@ -840,7 +840,7 @@ a img.aligncenter {
     margin-top: 8px;
     line-height: inherit;
 }
-
+/* uncss:ignore end*/
 /* 3.0 CONTENT
 -------------------------------------------------------------- */
 .main-content {

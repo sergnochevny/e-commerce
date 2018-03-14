@@ -9,25 +9,30 @@ use controllers\ControllerShop;
  * @var \controllers\ControllerShop $this ->controller
  */
 $controller_info = new ControllerInfo($this->controller->get_main());
+$info_view = $controller_info->view(false, false, true);
 $controller_shop = new ControllerShop($this->controller->get_main());
+$shop_widget_under = $controller_shop->widget('under');
+$shop_widget_carousel_specials = $controller_shop->widget('carousel_specials');
 ?>
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/index_common.min.css')); ?>
+
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
 
   <div class="col-xs-12 box outer-offset-bottom half-inner-offset-vertical">
     <div class="block-info">
-      <?= $controller_info->view(false, false, true); ?>
+      <?= $info_view; ?>
     </div>
   </div>
 
   <div class="col-xs-12 box inner-offset-top half-outer-offset-bottom">
     <div>
-      <?= $controller_shop->widget('under'); ?>
+      <?= $shop_widget_under;?>
     </div>
   </div>
 
   <div class="col-xs-12 box outer-offset-bottom half-inner-offset-vertical specials-products-container">
-    <?= $controller_shop->widget('carousel_specials'); ?>
+    <?= $shop_widget_carousel_specials; ?>
   </div>
 
 </div>

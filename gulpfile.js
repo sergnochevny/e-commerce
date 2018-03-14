@@ -10,12 +10,40 @@ var gulp = require('gulp'),
   imageResize = require('gulp-image-resize'),
   autoprefixer = require('gulp-autoprefixer'),
   debug = require('gulp-debug'),
-  uncss = require('gulp-uncss'),
+  postcss_uncss = require('uncss').postcssPlugin,
+  postcss = require('gulp-postcss'),
   purify = require('gulp-purify-css'),
   purge = require('gulp-css-purge'),
+  sequence = require('gulp-sequence'),
   concat = require('gulp-concat');
 
-gulp.task('css', function () {
+
+var css_common_src = [
+    'resources/css/required/woocommerce-smallscreen.css',
+    'resources/css/required/font-face.css',
+    'resources/css/required/offsets.css',
+    'resources/css/required/bootstrap.css',
+    'resources/css/required/font-awesome.css',
+    'resources/css/required/simple-line-icons.css',
+    'resources/css/required/webfont.css',
+    'resources/css/required/jquery.smartmenus.bootstrap.css',
+    'resources/css/required/style-theme.css',
+    'resources/css/required/style-woocommerce.css',
+    'resources/css/required/style-shortcodes.css',
+    'resources/css/required/prettyPhoto.css',
+    'resources/css/required/jquery-ui.css',
+    'resources/css/required/owlcarousel/owl.carousel.css',
+    'resources/css/required/owlcarousel/owl.theme.default.css',
+    'resources/css/required/tooltipster.bundle.css',
+    'resources/css/required/style.css',
+    'resources/css/required/multiselect.css'
+  ],
+  ignore_css = [
+    '\.ui-input-text', '\.fade', '\.in', '\.open', '\.fa.*', 'fa-chevron-left', 'fa-chevron-right', 'menu-open'
+  ];
+
+
+gulp.task('css_partials', function () {
   return gulp
     .src([
       'resources/css/**/*.css',
@@ -27,38 +55,125 @@ gulp.task('css', function () {
     .pipe(gulp.dest('web/css'));
 });
 
-gulp.task('css_required', function () {
+gulp.task('css_all', function () {
   return gulp
-    .src([
-      'resources/css/required/woocommerce-smallscreen.css',
-      'resources/css/required/font-face.css',
-      'resources/css/required/offsets.css',
-      'resources/css/required/bootstrap.css',
-      'resources/css/required/font-awesome.css',
-      'resources/css/required/simple-line-icons.css',
-      'resources/css/required/webfont.css',
-      'resources/css/required/jquery.smartmenus.bootstrap.css',
-      'resources/css/required/style-theme.css',
-      'resources/css/required/style-woocommerce.css',
-      'resources/css/required/style-shortcodes.css',
-      'resources/css/required/prettyPhoto.css',
-      'resources/css/required/jquery-ui.css',
-      'resources/css/required/owlcarousel/owl.carousel.css',
-      'resources/css/required/owlcarousel/owl.theme.default.css',
-      'resources/css/required/tooltipster.bundle.css',
-      'resources/css/required/style.css',
-      'resources/css/required/multiselect.css'
-    ], {base: 'resources/css/required/'})
+    .src(css_common_src, {base: 'resources/css/required/'})
+    .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
+    .pipe(concat("all_common.min.css"))
+    .pipe(cleanCSS({level: 2}))
+    .pipe(gulp.dest('web/css'));
+});
+
+gulp.task('css_index', function () {
+  return gulp
+    .src(css_common_src, {base: 'resources/css/required/'})
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
     // .pipe(rename({suffix: '.min'}))
-    .pipe(concat("required.min.css"))
-    // .pipe(uncss({
-    //   html: ['./views/**/*.php', './resources/js/**/*.js']
-    // }))
-    // .pipe(purge({
-    //   content: ['./views/**/*.php', './resources/js/**/*.js']
-    // }))
-    .pipe(purify(['./views/**/*.php', './resources/js/**/*.js']))
+    .pipe(concat("index_common.min.css"))
+    .pipe(postcss([postcss_uncss({
+      html: [
+        'http://iluvfabrix/',
+        'http://iluvfabrix/authorization'
+      ],
+      ignore: ignore_css
+    })]))
+    .pipe(cleanCSS({level: 2}))
+    .pipe(gulp.dest('web/css'));
+});
+
+gulp.task('css_shop', function () {
+  return gulp
+    .src(css_common_src, {base: 'resources/css/required/'})
+    .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
+    // .pipe(rename({suffix: '.min'}))
+    .pipe(concat("shop_common.min.css"))
+    .pipe(postcss([postcss_uncss({
+      html: [
+        'http://iluvfabrix/shop',
+        'http://iluvfabrix/specials',
+        'http://iluvfabrix/clearance',
+        'http://iluvfabrix/shop/product?pid=14462',
+        'http://iluvfabrix/categories/view',
+        'http://iluvfabrix/manufacturers/view',
+        'http://iluvfabrix/patterns/view',
+        'http://iluvfabrix/colors/view',
+        'http://iluvfabrix/prices/view',
+        'http://iluvfabrix/authorization'
+      ],
+      ignore: ignore_css
+    })]))
+    .pipe(cleanCSS({level: 2}))
+    .pipe(gulp.dest('web/css'));
+});
+
+gulp.task('css_error', function () {
+  return gulp
+    .src(css_common_src, {base: 'resources/css/required/'})
+    .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
+    // .pipe(rename({suffix: '.min'}))
+    .pipe(concat("error_common.min.css"))
+    .pipe(postcss([postcss_uncss({
+      html: [
+        'http://iluvfabrix/error'
+      ]
+    })]))
+    .pipe(cleanCSS({level: 2}))
+    .pipe(gulp.dest('web/css'));
+});
+
+gulp.task('css_static', function () {
+  return gulp
+    .src(css_common_src, {base: 'resources/css/required/'})
+    .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
+    // .pipe(rename({suffix: '.min'}))
+    .pipe(concat("static_common.min.css"))
+    .pipe(postcss([postcss_uncss({
+      html: [
+        'http://iluvfabrix/service',
+        'http://iluvfabrix/estimator',
+        'http://iluvfabrix/newsletter',
+        'http://iluvfabrix/privacy',
+        'http://iluvfabrix/about',
+        'http://iluvfabrix/contact',
+        'http://iluvfabrix/authorization'
+      ],
+      ignore: ignore_css
+    })]))
+    .pipe(cleanCSS({level: 2}))
+    .pipe(gulp.dest('web/css'));
+});
+
+gulp.task('css_blog', function () {
+  return gulp
+    .src(css_common_src, {base: 'resources/css/required/'})
+    .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
+    // .pipe(rename({suffix: '.min'}))
+    .pipe(concat("blog_common.min.css"))
+    .pipe(postcss([postcss_uncss({
+      html: [
+        'http://iluvfabrix/blog/view',
+        'http://iluvfabrix/blog/view?id=238',
+        'http://iluvfabrix/authorization'
+      ],
+      ignore: ignore_css
+    })]))
+    .pipe(cleanCSS({level: 2}))
+    .pipe(gulp.dest('web/css'));
+});
+
+gulp.task('css_matches', function () {
+  return gulp
+    .src(css_common_src, {base: 'resources/css/required/'})
+    .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
+    // .pipe(rename({suffix: '.min'}))
+    .pipe(concat("matches_common.min.css"))
+    .pipe(postcss([postcss_uncss({
+      html: [
+        'http://iluvfabrix/matches',
+        'http://iluvfabrix/authorization'
+      ],
+      ignore: ignore_css
+    })]))
     .pipe(cleanCSS({level: 2}))
     .pipe(gulp.dest('web/css'));
 });
@@ -132,11 +247,7 @@ gulp.task('refactor_controllers', function () {
     })).pipe(gulp.dest('controllers'));
 });
 
-gulp.task('shop_images', ['shop_images_minify', 'shop_images_resize_b', 'shop_images_resize_p']);
-
-gulp.task('images', ['other-images', 'css-images', 'css-jqm-images', 'owl-images']);
-
-gulp.task('scripts', function () {
+gulp.task('js_partials', function () {
   return gulp.src([
     'resources/js/**/*.js',
     '!resources/js/jquery3/jquery-3.1.1.js',
@@ -154,19 +265,19 @@ gulp.task('scripts', function () {
     '!resources/js/search/search.js',
     '!resources/js/script.js'
   ])
-    .pipe(minify({
-      ext: {
-        min: '.min.js'
-      },
-      noSource: true
+  // .pipe(minify({
+  //   ext: {
+  //     min: '.min.js'
+  //   },
+  //   noSource: true
+  // }))
+    .pipe(rename({
+      suffix: ".min"
     }))
-    // .pipe(rename({
-    //   suffix: ".min"
-    // }))
     .pipe(gulp.dest('web/js'));
 });
 
-gulp.task('scripts_required', function () {
+gulp.task('js_all', function () {
   return gulp.src([
     'resources/js/jquery3/jquery-3.1.1.js',
     'resources/js/jquery3/jquery-migrate-3.0.0.js',
@@ -175,7 +286,8 @@ gulp.task('scripts_required', function () {
     'resources/js/jquery.smartmenus.js',
     'resources/js/jquery.smartmenus.bootstrap.js',
     'resources/js/jquery.prettyPhoto.js',
-    'resources/js/inputmask/jquery.inputmask.bundle.js',
+    'resources/js/jquery.inputmask.bundle.js',
+    'resources/js/inputmask/phone-codes/phone.js',
     'resources/js/owlcarousel/owl.carousel.js',
     'resources/js/tooltipster.bundle.js',
     'resources/js/jqmobile/jquery.mobile.custom.js',
@@ -183,12 +295,11 @@ gulp.task('scripts_required', function () {
     'resources/js/search/search.js',
     'resources/js/script.js'
   ])
-    .pipe(minify({
-      noSource: true
-    }))
-    .pipe(concat("required.min.js"))
+  // .pipe(minify({
+  //   noSource: true
+  // }))
+    .pipe(concat("all.min.js"))
     .pipe(gulp.dest('web/js'));
-
 });
 
 gulp.task('fonts', function () {
@@ -197,23 +308,37 @@ gulp.task('fonts', function () {
   ]).pipe(gulp.dest('web/fonts'));
 });
 
-gulp.task('clean', function () {
-  return del.sync([
-    'web/js', 'web/css', 'web/fonts'
-  ]);
+gulp.task('clear_destination_js', function () {
+  return del.sync(['web/js']);
 });
 
-gulp.task('clear', function (callback) {
+gulp.task('clear_destination_css', function () {
+  return del.sync(['web/css']);
+});
+
+gulp.task('clear_destination_fonts', function () {
+  return del.sync(['web/fonts']);
+});
+
+gulp.task('clear_cache', function () {
   return cache.clearAll();
 });
 
-gulp.task('watch', ['clean', 'fonts', 'css', 'css_required', 'scripts', 'scripts_required', 'images'], function () {
+gulp.task('clear_destination', ['clear_destination_css', 'clear_destination_js', 'clear_destination_fonts']);
+gulp.task('css', ['css_all', 'css_partials', 'css_index', 'css_static', 'css_shop', 'css_blog', 'css_matches', 'css_error']);
+gulp.task('js', ['js_partials', 'js_all']);
+gulp.task('js_css', sequence('js', 'css'));
+gulp.task('clear', ['clear_cache', 'clear_destination']);
+gulp.task('shop_images', ['shop_images_minify', 'shop_images_resize_b', 'shop_images_resize_p']);
+gulp.task('images', ['other-images', 'css-images', 'css-jqm-images', 'owl-images']);
+
+gulp.task('watch', ['clear_destination', 'fonts', 'js_css', 'images'], function () {
   gulp.watch('resources/sass/**/*.sass', ['sass']);
   gulp.watch('resources/sass/**/*.scss', ['sass']);
-  gulp.watch('resources/css/**/*.css', ['css', 'css_required']);
-  gulp.watch('resources/js/**/*.js', ['scripts', 'scripts_required']);
+  gulp.watch('resources/css/**/*.css', ['css']);
+  gulp.watch('resources/js/**/*.js', ['js']);
 });
 
-gulp.task('build', ['clean', 'fonts', 'css', 'css_required', 'scripts', 'scripts_required', 'images']);
+gulp.task('build', ['clear', 'fonts', 'js_css', 'images']);
 
 gulp.task('default', ['watch']);

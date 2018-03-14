@@ -3,7 +3,7 @@
 use app\core\App;
 use controllers\ControllerInfo;
 
-$controller_info = new ControllerInfo();
+$controller_info = new ControllerInfo($this->controller->get_main());
 $controller_info->scenario('cart');
 ?>
   <div class="row">

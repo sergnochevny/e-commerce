@@ -16,6 +16,6 @@
   });
 
   $('[data-restrict]').restrict();
-  $("input").inputmask();
+  $("input[data-inputmask]").inputmask();
 
 })(window.jQuery || window.$);

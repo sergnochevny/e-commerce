@@ -507,36 +507,36 @@ class ControllerCart extends ControllerController{
    */
   private function prepare(){
     ob_start();
+    ob_implicit_flush(false);
     $cart = App::$app->session('cart');
     unset($cart['discountIds']);
     App::$app->setSession('cart', $cart);
     $this->products_in();
-    $cart_items = ob_get_contents();
-    ob_end_clean();
+    $cart_items= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->items_amount();
-    $sum_items = ob_get_contents();
-    ob_end_clean();
+    $sum_items= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->samples_amount();
-    $sum_samples = ob_get_contents();
-    ob_end_clean();
+    $sum_samples= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->samples_legend();
-    $cart_samples_legend = ob_get_contents();
-    ob_end_clean();
+    $cart_samples_legend= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->samples_in();
-    $cart_samples_items = ob_get_contents();
-    ob_end_clean();
+    $cart_samples_items= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->shipping_calc();
-    $shipping = ob_get_contents();
-    ob_end_clean();
+    $shipping= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->coupon_total_calc();
-    $coupon_total = ob_get_contents();
-    ob_end_clean();
+    $coupon_total= ob_get_clean();
     $this->main->template->vars('cart_items', $cart_items);
     $this->main->template->vars('sum_items', $sum_items);
     $this->main->template->vars('sum_samples', $sum_samples);
@@ -740,35 +740,32 @@ class ControllerCart extends ControllerController{
       ->UrlTo('cart');
     $this->main->template->vars('back_url', $back_url);
     ob_start();
+    ob_implicit_flush(false);
     $this->products_in('product_in_proceed');
-    $cart_items = ob_get_contents();
-    ob_end_clean();
+    $cart_items= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->samples_in('sample_in_proceed');
-    $cart_samples_items = ob_get_contents();
-    ob_end_clean();
+    $cart_samples_items= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->samples_amount();
-    $sum_samples = ob_get_contents();
-    ob_end_clean();
+    $sum_samples= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->shipping_proceed_calc();
-    $shipping = ob_get_contents();
-    ob_end_clean();
+    $shipping= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->total_proceed_calc();
-    $total_proceed = ob_get_contents();
-    ob_end_clean();
+    $total_proceed= ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->proceed_bill_ship();
-    $bill_ship_info = ob_get_contents();
-    ob_end_clean();
-    $back_url = App::$app->router()
-      ->UrlTo('cart', ['proceed' => 1]);
-
+    $bill_ship_info= ob_get_clean();
+    $back_url = App::$app->router()->UrlTo('cart', ['proceed' => 1]);
     $prms['url'] = urlencode(base64_encode($back_url));
-    $change_user_url = App::$app->router()
-      ->UrlTo('user/change', $prms);
+    $change_user_url = App::$app->router()->UrlTo('user/change', $prms);
 
     $this->main->template->vars('cart_items', $cart_items);
     $this->main->template->vars('cart_samples_items', $cart_samples_items);
@@ -1035,7 +1032,7 @@ class ControllerCart extends ControllerController{
         $mailer = App::$app->getMailer();
 
         $emails = explode(',', App::$app->keyStorage()->system_emails_sellers);
-        $emails = array_merge([ App::$app->keyStorage()->system_info_email ], $emails);
+        $emails = array_merge([App::$app->keyStorage()->system_info_email], $emails);
         if($demo == 1) {
           $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
         }
@@ -1394,9 +1391,10 @@ class ControllerCart extends ControllerController{
 
     $item = $cart_items[$pid];
     ob_start();
+    ob_implicit_flush(false);
     $this->product_in($pid, $item);
-    $response['product'] = ob_get_contents();
-    ob_end_clean();
+    $response['product']= ob_get_clean();
+    ob_get_clean();
     $cart_items[$pid] = $item;
     $_cart = App::$app->session('cart');
     $_cart['items'] = $cart_items;

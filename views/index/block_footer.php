@@ -3,6 +3,9 @@
 use controllers\ControllerShop;
 
 $controller_shop = new ControllerShop($this->controller->get_main());
+$shop_widget_bestsellers = $controller_shop->widget('bestsellers');
+$shop_widget_popular = $controller_shop->widget('popular');
+$shop_widget_new = $controller_shop->widget('new');
 ?>
 <div class="footer-widgets-top outer-offset-top">
   <div class="container inner-offset-top half-outer-offset-bottom">
@@ -13,7 +16,7 @@ $controller_shop = new ControllerShop($this->controller->get_main());
           <aside id="woocommerce_products-5" class="widget woocommerce widget_products">
             <div id="bsells_products" class="products product_list_widget">
               <div>
-                <?= $controller_shop->widget('bestsellers'); ?>
+                <?= $shop_widget_bestsellers;?>
               </div>
             </div>
           </aside>
@@ -25,7 +28,7 @@ $controller_shop = new ControllerShop($this->controller->get_main());
           <aside id="woocommerce_products-2" class="widget woocommerce widget_products">
             <div id="popular_products" class="products product_list_widget">
               <div>
-                <?= $controller_shop->widget('popular'); ?>
+                <?= $shop_widget_popular; ?>
               </div>
             </div>
           </aside>
@@ -37,7 +40,7 @@ $controller_shop = new ControllerShop($this->controller->get_main());
           <aside id="woocommerce_products-3" class="widget woocommerce widget_products">
             <div id="new_products" class="products product_list_widget">
               <div>
-                <?= $controller_shop->widget('new'); ?>
+                <?= $shop_widget_new; ?>
               </div>
             </div>
           </aside>

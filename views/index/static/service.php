@@ -3,6 +3,8 @@
 use app\core\App;
 
 ?>
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/static_common.min.css')); ?>
+
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 static box">

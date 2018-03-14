@@ -181,6 +181,7 @@ class ControllerInfo extends ControllerFormSimple{
    * @param bool $partial
    * @param bool $required_access
    * @param bool $as_widget
+   * @return string
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false, $as_widget = false){
@@ -191,6 +192,7 @@ class ControllerInfo extends ControllerFormSimple{
         $data = forward_static_call([App::$modelsNS . '\Model' . ucfirst($this->controller), 'get_by_f1'], $filter);
         $this->after_get_data_item_view($data);
         $this->main->template->vars('data', $data);
+        if($as_widget) return $this->render_layout_return('view/' . $this->scenario());
         $this->render_layout('view/' . $this->scenario(), !$as_widget);
       } else ControllerController::view($partial, $required_access);
     } else parent::view($partial, $required_access);

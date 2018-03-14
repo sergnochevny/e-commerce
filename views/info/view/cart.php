@@ -6,11 +6,13 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
-          <h4 id="modal-title" class="modal-title text-center"><?= $data['title']; ?></h4>
+          <h4 id="modal-title" class="modal-title text-center">
+            <?= !empty($data['title']) ? $data['title'] : ''; ?>
+          </h4>
         </div>
         <div class="modal-body clearfix">
           <div id="modal_content">
-            <?= $data['message']; ?>
+            <?= !empty($data['message']) ? $data['message'] : ''; ?>
           </div>
         </div>
         <div class="modal-footer">

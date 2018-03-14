@@ -6,7 +6,11 @@ use controllers\ControllerUser;
 
 $controller_user = new ControllerUser($this->controller->get_main());
 $controller_user->scenario('short');
+$user_registration = $controller_user->registration();
+
 ?>
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/static_common.min.css')); ?>
+
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 box">
@@ -48,7 +52,7 @@ $controller_user->scenario('short');
                 <div class="row">
                   <div class="col-xs-12" data-role="form_content">
                     <div>
-                      <?= $controller_user->registration()?>
+                      <?= $user_registration;?>
                     </div>
                   </div>
                 </div>

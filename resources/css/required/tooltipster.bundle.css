@@ -1,3 +1,4 @@
+/* uncss:ignore start */
 .tooltipster-fall, .tooltipster-grow.tooltipster-show {
     -webkit-transition-timing-function: cubic-bezier(.175, .885, .32, 1);
     -moz-transition-timing-function: cubic-bezier(.175, .885, .32, 1.15);
@@ -322,3 +323,4 @@
 .tooltipster-sidetip.tooltipster-right .tooltipster-arrow-uncropped {
     left: -10px
 }
+/* uncss:ignore end*/

@@ -33,10 +33,9 @@ use app\core\App;
     .loader i {position: relative; left: 50vw; color: #000; top: 50vh; margin-left: -28px; margin-top: -28px;}
   </style>
 
-  <link rel="stylesheet" type="text/css" href="<?= App::$app->router()->UrlTo('css/required.min.css');?>">
-  <?php
-  $this->registerJSFile(App::$app->router()->UrlTo('js/required.min.js'), 0);
-  ?>
+  <?= $this->renderCssLinks(); ?>
+
+  <?php  $this->registerJSFile(App::$app->router()->UrlTo('js/all.min.js')); ?>
 
 </head>
 
@@ -76,7 +75,7 @@ use app\core\App;
   <?php endif; ?>
 </div>
 
-<?= $this->renderLinks(); ?>
+<?= $this->renderJsLinks(); ?>
 
 </body>
 </html>

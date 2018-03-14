@@ -1,7 +1,7 @@
 (function ($) {
   'use strict';
 
-  $("input").inputmask();
+  $("input[data-inputmask]").inputmask();
 
   $("form#edit_form").init_input();
 

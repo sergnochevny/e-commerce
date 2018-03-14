@@ -1,7 +1,7 @@
 (function ($) {
   'use strict';
 
-  $("input").inputmask();
+  $("input[data-inputmask]").inputmask();
 
   $('#short_authorization').init_input();
 

@@ -1,4 +1,4 @@
-<?php if(!empty($list)): ?>
+<?php if(!empty(trim($list))): ?>
   <div class="col-xs-12 box outer-offset-bottom half-inner-offset-vertical">
     <h3 class="section-title">Related Fabrics</h3>
     <div class="col-xs-12">
@@ -10,4 +10,3 @@
     </div>
   </div>
 <?php endif; ?>
-

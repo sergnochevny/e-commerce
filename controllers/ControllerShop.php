@@ -8,7 +8,6 @@ use classes\helpers\AdminHelper;
 use classes\helpers\FavoritesHelper;
 use classes\helpers\UserHelper;
 use classes\Paginator;
-use models\ModelFavorites;
 use models\ModelSamples;
 use models\ModelShop;
 
@@ -129,7 +128,8 @@ class ControllerShop extends ControllerController{
   protected function before_search_form_layout(&$search_data, $view = false){
     $type = isset($search_data['type']) ? $search_data['type'] : null;
     if(isset($type)) $this->main->template->vars('action', App::$app->router()->UrlTo($this->controller . DS . $type));
-    if(isset($url_prms)) $this->main->template->vars('action', App::$app->router()->UrlTo($this->controller, $url_prms));
+    if(isset($url_prms)) $this->main->template->vars('action', App::$app->router()
+      ->UrlTo($this->controller, $url_prms));
   }
 
   /**
@@ -183,6 +183,7 @@ class ControllerShop extends ControllerController{
    * @param $start
    * @param $limit
    * @param string $layout
+   * @return mixed
    * @throws \Exception
    */
   protected function widget_products($type, $start, $limit, $layout = 'list'){
@@ -192,7 +193,8 @@ class ControllerShop extends ControllerController{
     }
     $rows = ModelShop::get_widget_list_by_type($type, $start, $limit, $row_count);
     $this->main->template->vars('rows', $rows);
-    $this->render_layout('widget/' . $layout, App::$app->request_is_ajax());
+
+    return $this->render_layout_return('widget/' . $layout);
   }
 
   /**
@@ -214,13 +216,14 @@ class ControllerShop extends ControllerController{
   /**
    * @param $limit
    * @param string $layout
+   * @return string
    * @throws \Exception
    */
   protected function widget_products_under($limit, $layout = 'list_under'){
     $this->widget_products_under_type('under_20', 0, 5);
     $this->widget_products_under_type('under_40', 0, 5);
     $this->widget_products_under_type('under_60', 0, 5);
-    $this->render_layout('widget/' . $layout, false);
+    return $this->render_layout_return('widget/' . $layout);
   }
 
   /**
@@ -432,36 +435,40 @@ class ControllerShop extends ControllerController{
   /**
    * @export
    * @param null $type
+   * @return mixed|string
    * @throws \Exception
    */
   public function widget($type = null){
+    $result = '';
     $type = empty($type) ? App::$app->get('type') : $type;
     switch($type) {
       case 'popular':
-        $this->widget_products('popular', 0, 5);
+        $result = $this->widget_products('popular', 0, 5);
         break;
       case 'new':
-        $this->widget_products('new', 0, 5);
+        $result = $this->widget_products('new', 0, 5);
         break;
       case 'best':
-        $this->widget_products('best', 0, 5);
+        $result = $this->widget_products('best', 0, 5);
         break;
       case 'bestsellers':
-        $this->widget_products('bestsellers', 6, 5);
+        $result = $this->widget_products('bestsellers', 6, 5);
         break;
       case 'carousel_new':
-        $this->widget_products('carousel', 0, 30, 'widget_new_products_carousel');
+        $result = $this->widget_products('carousel', 0, 30, 'widget_new_products_carousel');
         break;
       case 'carousel_specials':
-        $this->widget_products('carousel', 0, 30, 'widget_specials_products_carousel');
+        $result = $this->widget_products('carousel', 0, 30, 'widget_specials_products_carousel');
         break;
       case 'bsells_horiz':
-        $this->widget_products('bestsellers', 0, 6, 'widget_bsells_products_horiz');
+        $result = $this->widget_products('bestsellers', 0, 6, 'widget_bsells_products_horiz');
         break;
       case 'under':
-        $this->widget_products_under(5, 'list_under');
+        $result = $this->widget_products_under(5, 'list_under');
         break;
     }
+
+    return $result;
   }
 
   /**
@@ -490,6 +497,7 @@ class ControllerShop extends ControllerController{
     }
 
     ob_start();
+    ob_implicit_flush(false);
     if($data['rSystemDiscount'] > 0) {
       $field_name = "Sale price:";
       $field_value = sprintf("%s<br><strong>%s</strong>", $data['sPriceDiscount'], $data['srDiscountPrice']);
@@ -529,8 +537,7 @@ class ControllerShop extends ControllerController{
       $this->main->template->vars('field_value', $field_value);
       $this->render_layout('product/discount');
     }
-    $discount_info = ob_get_contents();
-    ob_end_clean();
+    $discount_info = ob_get_clean();
     $this->main->template->vars('discount_info', $discount_info);
     if(!is_null(App::$app->post('s')) && (!empty(App::$app->post('s')))) {
       $search = strtolower(htmlspecialchars(trim(App::$app->post('s'))));

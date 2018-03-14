@@ -3,12 +3,14 @@
 if(!empty($data)): ?>
   <div class="col-xs-12">
     <div class="row text-center">
-      <h4 class="section-title"><?= $data['title']; ?></h4>
+      <h4 class="section-title">
+        <?= !empty($data['title']) ? $data['title'] : ''; ?>
+      </h4>
     </div>
   </div>
   <div class="col-xs-12">
     <div class="row text-justify">
-      <?= $data['message']; ?>
+      <?= !empty($data['message']) ? $data['message'] : ''; ?>
     </div>
   </div>
 <?php endif; ?>

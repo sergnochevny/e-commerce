@@ -1,7 +1,7 @@
 (function ($) {
   'use strict';
 
-  $("input").inputmask();
+  $("input[data-inputmask]").inputmask();
 
   $('#modal-title').html($('#edit_form').attr('data-title'));
   $('#modal').modal('show');

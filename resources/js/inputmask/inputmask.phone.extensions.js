@@ -1,8 +1,54 @@
 /*!
-* inputmask.phone.extensions.min.js
-* https://github.com/RobinHerbots/jquery.inputmask
-* Copyright (c) 2010 - 2016 Robin Herbots
+* inputmask.phone.extensions.js
+* https://github.com/RobinHerbots/Inputmask
+* Copyright (c) 2010 - 2018 Robin Herbots
 * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
-* Version: 3.3.4-101
+* Version: 4.0.0-beta.32
 */
-!function(a){"function"==typeof define&&define.amd?define(["inputmask.dependencyLib","inputmask"],a):"object"==typeof exports?module.exports=a(require("./inputmask.dependencyLib"),require("./inputmask")):a(window.dependencyLib||jQuery,window.Inputmask)}(function(a,b){function c(a,b){var c=(a.mask||a).replace(/#/g,"9").replace(/\)/,"9").replace(/[+()#-]/g,""),d=(b.mask||b).replace(/#/g,"9").replace(/\)/,"9").replace(/[+()#-]/g,""),e=(a.mask||a).split("#")[0],f=(b.mask||b).split("#")[0];return 0===f.indexOf(e)?-1:0===e.indexOf(f)?1:c.localeCompare(d)}var d=b.analyseMask;return b.analyseMask=function(b,c){function e(a,c,d){c=c||"",d=d||g,""!==c&&(d[c]={});for(var f="",h=d[c]||d,i=a.length-1;i>=0;i--)b=a[i].mask||a[i],f=b.substr(0,1),h[f]=h[f]||[],h[f].unshift(b.substr(1)),a.splice(i,1);for(var j in h)h[j].length>1e3&&e(h[j].slice(),j,h)}function f(b){var d="",e=[];for(var g in b)a.isArray(b[g])?1===b[g].length?e.push(g+b[g]):e.push(g+c.groupmarker.start+b[g].join(c.groupmarker.end+c.alternatormarker+c.groupmarker.start)+c.groupmarker.end):e.push(g+f(b[g]));return d+=1===e.length?e[0]:c.groupmarker.start+e.join(c.groupmarker.end+c.alternatormarker+c.groupmarker.start)+c.groupmarker.end}var g={};c.phoneCodes&&c.phoneCodes.length>2e3&&(b=b.substr(1,b.length-2),e(b.split(c.groupmarker.end+c.alternatormarker+c.groupmarker.start)),b=f(g));var h=d.call(this,b,c);return h},b.extendAliases({abstractphone:{groupmarker:{start:"<",end:">"},countrycode:"",phoneCodes:[],mask:function(a){return a.definitions={"#":a.definitions[9]},a.phoneCodes.sort(c)},keepStatic:!0,onBeforeMask:function(a,b){var c=a.replace(/^0{1,2}/,"").replace(/[\s]/g,"");return(c.indexOf(b.countrycode)>1||c.indexOf(b.countrycode)===-1)&&(c="+"+b.countrycode+c),c},onUnMask:function(a,b,c){return b},inputmode:"tel"}}),b});
+
+!function(factory) {
+    "function" == typeof define && define.amd ? define([ "./dependencyLibs/inputmask.dependencyLib", "./inputmask" ], factory) : "object" == typeof exports ? module.exports = factory(require("./dependencyLibs/inputmask.dependencyLib"), require("./inputmask")) : factory(window.dependencyLib || jQuery, window.Inputmask);
+}(function($, Inputmask) {
+    function maskSort(a, b) {
+        var maska = (a.mask || a).replace(/#/g, "0").replace(/\)/, "0").replace(/[+()#-]/g, ""), maskb = (b.mask || b).replace(/#/g, "0").replace(/\)/, "0").replace(/[+()#-]/g, "");
+        return maska.localeCompare(maskb);
+    }
+    var analyseMaskBase = Inputmask.prototype.analyseMask;
+    return Inputmask.prototype.analyseMask = function(mask, regexMask, opts) {
+        var maskGroups = {};
+        return opts.phoneCodes && (opts.phoneCodes && opts.phoneCodes.length > 1e3 && (function reduceVariations(masks, previousVariation, previousmaskGroup) {
+            previousVariation = previousVariation || "", previousmaskGroup = previousmaskGroup || maskGroups, 
+            "" !== previousVariation && (previousmaskGroup[previousVariation] = {});
+            for (var variation = "", maskGroup = previousmaskGroup[previousVariation] || previousmaskGroup, i = masks.length - 1; i >= 0; i--) maskGroup[variation = (mask = masks[i].mask || masks[i]).substr(0, 1)] = maskGroup[variation] || [], 
+            maskGroup[variation].unshift(mask.substr(1)), masks.splice(i, 1);
+            for (var ndx in maskGroup) maskGroup[ndx].length > 500 && reduceVariations(maskGroup[ndx].slice(), ndx, maskGroup);
+        }((mask = mask.substr(1, mask.length - 2)).split(opts.groupmarker[1] + opts.alternatormarker + opts.groupmarker[0])), 
+        mask = function rebuild(maskGroup) {
+            var mask = "", submasks = [];
+            for (var ndx in maskGroup) $.isArray(maskGroup[ndx]) ? 1 === maskGroup[ndx].length ? submasks.push(ndx + maskGroup[ndx]) : submasks.push(ndx + opts.groupmarker[0] + maskGroup[ndx].join(opts.groupmarker[1] + opts.alternatormarker + opts.groupmarker[0]) + opts.groupmarker[1]) : submasks.push(ndx + rebuild(maskGroup[ndx]));
+            return 1 === submasks.length ? mask += submasks[0] : mask += opts.groupmarker[0] + submasks.join(opts.groupmarker[1] + opts.alternatormarker + opts.groupmarker[0]) + opts.groupmarker[1], 
+            mask;
+        }(maskGroups)), mask = mask.replace(/9/g, "\\9")), analyseMaskBase.call(this, mask, regexMask, opts);
+    }, Inputmask.extendAliases({
+        abstractphone: {
+            groupmarker: [ "<", ">" ],
+            countrycode: "",
+            phoneCodes: [],
+            keepStatic: "auto",
+            mask: function(opts) {
+                return opts.definitions = {
+                    "#": Inputmask.prototype.definitions[9]
+                }, opts.phoneCodes.sort(maskSort);
+            },
+            onBeforeMask: function(value, opts) {
+                var processedValue = value.replace(/^0{1,2}/, "").replace(/[\s]/g, "");
+                return (processedValue.indexOf(opts.countrycode) > 1 || -1 === processedValue.indexOf(opts.countrycode)) && (processedValue = "+" + opts.countrycode + processedValue), 
+                processedValue;
+            },
+            onUnMask: function(maskedValue, unmaskedValue, opts) {
+                return maskedValue.replace(/[()#-]/g, "");
+            },
+            inputmode: "tel"
+        }
+    }), Inputmask;
+});

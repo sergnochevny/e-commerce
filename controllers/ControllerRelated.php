@@ -166,6 +166,7 @@ class ControllerRelated extends ControllerFormSimple{
     (new Paginator($this->main))->paginator($total, $page, $this->controller, null, $per_page);
     $this->before_list_layout($view);
     if($return) return $this->render_layout_return('list', $return && App::$app->request_is_ajax());
+
     return $this->render_layout('list');
   }
 
@@ -173,11 +174,16 @@ class ControllerRelated extends ControllerFormSimple{
    * @export
    * @param bool $partial
    * @param bool $required_access
+   * @param null $pid
+   * @return mixed
    * @throws \Exception
    */
-  public function view($partial = false, $required_access = false){
-    if(App::$app->request_is_ajax()) ControllerController::get_list(true);
-    else throw new Exception('No Related Products');
+  public function view($partial = false, $required_access = false, $pid = null){
+    if(!empty($pid)) {
+      App::$app->get('pid', $pid);
+    }
+
+    return ControllerController::get_list(true, true);
   }
 
   /**

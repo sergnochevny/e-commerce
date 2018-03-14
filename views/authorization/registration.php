@@ -5,6 +5,7 @@ use controllers\ControllerUser;
 
 $controller_user = new ControllerUser($this->controller->get_main());
 App::$app->get('method', 'short');
+$user_registration = $controller_user->registration();
 ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
@@ -21,7 +22,7 @@ App::$app->get('method', 'short');
           </div>
           <div class="col-xs-12" data-role="form_content">
             <div>
-              <?= $controller_user->registration()?>
+              <?= $user_registration;?>
             </div>
           </div>
         </div>

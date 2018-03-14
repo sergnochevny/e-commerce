@@ -159,7 +159,7 @@ class ControllerFavorites extends ControllerSimple{
    * @throws \Exception
    */
   public function favorites(){
-    $this->main->is_user_authorized(true);
+   // $this->main->is_user_authorized(true);
     $this->main->template->vars('cart_enable', '_');
     $this->index(false);
   }

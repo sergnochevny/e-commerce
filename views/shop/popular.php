@@ -3,6 +3,9 @@
 use app\core\App;
 
 ?>
+
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/shop_common.min.css')); ?>
+
 <?php if(count($rows) > 0): ?>
   <?php foreach($rows as $row): ?>
     <div class="col-xs-12 col-sm-6 col-md-4 product-item">

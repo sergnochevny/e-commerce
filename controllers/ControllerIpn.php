@@ -67,6 +67,7 @@ class ControllerIpn extends ControllerController{
 
         if($demo) {
           ob_start();
+          ob_implicit_flush(false);
           print_r($_SESSION);
           print_r($_COOKIE);
           print_r($_GET);
@@ -74,7 +75,6 @@ class ControllerIpn extends ControllerController{
           print_r($_SERVER);
 
           $body = ob_get_clean();
-          ob_end_clean();
           file_put_contents('notify.log', $body, FILE_APPEND);
 
           $subject = 'PayPall Payment';

@@ -4,6 +4,8 @@ use app\core\App;
 use classes\helpers\AdminHelper;
 
 ?>
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/shop_common.min.css')); ?>
+
 <?php $is_admin = AdminHelper::is_logged(); ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <?php if(!$is_admin): ?>

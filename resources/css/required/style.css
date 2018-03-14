@@ -1,3 +1,4 @@
+/* uncss:ignore start */
 body {
     cursor: default;
     -webkit-transition: opacity 1.25s ease-in;
@@ -3234,3 +3235,4 @@ button.close-container {
 div.static.box{
     padding-bottom: 50px;
 }
+/* uncss:ignore end */

@@ -1,8 +1,62 @@
 /*!
-* jquery.inputmask.min.js
-* https://github.com/RobinHerbots/jquery.inputmask
-* Copyright (c) 2010 - 2016 Robin Herbots
+* jquery.inputmask.js
+* https://github.com/RobinHerbots/Inputmask
+* Copyright (c) 2010 - 2018 Robin Herbots
 * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
-* Version: 3.3.4-101
+* Version: 4.0.0-beta.32
 */
-!function(a){"function"==typeof define&&define.amd?define(["jquery","inputmask"],a):"object"==typeof exports?module.exports=a(require("jquery"),require("./inputmask")):a(jQuery,window.Inputmask)}(function(a,b){return void 0===a.fn.inputmask&&(a.fn.inputmask=function(c,d){var e,f=this[0];if(void 0===d&&(d={}),"string"==typeof c)switch(c){case"unmaskedvalue":return f&&f.inputmask?f.inputmask.unmaskedvalue():a(f).val();case"remove":return this.each(function(){this.inputmask&&this.inputmask.remove()});case"getemptymask":return f&&f.inputmask?f.inputmask.getemptymask():"";case"hasMaskedValue":return!(!f||!f.inputmask)&&f.inputmask.hasMaskedValue();case"isComplete":return!f||!f.inputmask||f.inputmask.isComplete();case"getmetadata":return f&&f.inputmask?f.inputmask.getmetadata():void 0;case"setvalue":a(f).val(d),f&&void 0===f.inputmask&&a(f).triggerHandler("setvalue");break;case"option":if("string"!=typeof d)return this.each(function(){if(void 0!==this.inputmask)return this.inputmask.option(d)});if(f&&void 0!==f.inputmask)return f.inputmask.option(d);break;default:return d.alias=c,e=new b(d),this.each(function(){e.mask(this)})}else{if("object"==typeof c)return e=new b(c),void 0===c.mask&&void 0===c.alias?this.each(function(){return void 0!==this.inputmask?this.inputmask.option(c):void e.mask(this)}):this.each(function(){e.mask(this)});if(void 0===c)return this.each(function(){e=new b(d),e.mask(this)})}}),a.fn.inputmask});
+
+!function(factory) {
+    "function" == typeof define && define.amd ? define([ "jquery", "./inputmask" ], factory) : "object" == typeof exports ? module.exports = factory(require("jquery"), require("./inputmask")) : factory(jQuery, window.Inputmask);
+}(function($, Inputmask) {
+    return void 0 === $.fn.inputmask && ($.fn.inputmask = function(fn, options) {
+        var nptmask, input = this[0];
+        if (void 0 === options && (options = {}), "string" == typeof fn) switch (fn) {
+          case "unmaskedvalue":
+            return input && input.inputmask ? input.inputmask.unmaskedvalue() : $(input).val();
+
+          case "remove":
+            return this.each(function() {
+                this.inputmask && this.inputmask.remove();
+            });
+
+          case "getemptymask":
+            return input && input.inputmask ? input.inputmask.getemptymask() : "";
+
+          case "hasMaskedValue":
+            return !(!input || !input.inputmask) && input.inputmask.hasMaskedValue();
+
+          case "isComplete":
+            return !input || !input.inputmask || input.inputmask.isComplete();
+
+          case "getmetadata":
+            return input && input.inputmask ? input.inputmask.getmetadata() : void 0;
+
+          case "setvalue":
+            Inputmask.setValue(input, options);
+            break;
+
+          case "option":
+            if ("string" != typeof options) return this.each(function() {
+                if (void 0 !== this.inputmask) return this.inputmask.option(options);
+            });
+            if (input && void 0 !== input.inputmask) return input.inputmask.option(options);
+            break;
+
+          default:
+            return options.alias = fn, nptmask = new Inputmask(options), this.each(function() {
+                nptmask.mask(this);
+            });
+        } else {
+            if ("object" == typeof fn) return nptmask = new Inputmask(fn), void 0 === fn.mask && void 0 === fn.alias ? this.each(function() {
+                if (void 0 !== this.inputmask) return this.inputmask.option(fn);
+                nptmask.mask(this);
+            }) : this.each(function() {
+                nptmask.mask(this);
+            });
+            if (void 0 === fn) return this.each(function() {
+                (nptmask = new Inputmask(options)).mask(this);
+            });
+        }
+    }), $.fn.inputmask;
+});

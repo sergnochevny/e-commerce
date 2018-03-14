@@ -1,6 +1,6 @@
 (function ($) {
 
-  $("input").inputmask();
+  $("input[data-inputmask]").inputmask();
 
   $.danger_remove(8000);
 

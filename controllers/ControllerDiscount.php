@@ -312,14 +312,14 @@ class ControllerDiscount extends ControllerFormSimple{
    */
   public function view($partial = true, $required_access = true){
     ob_start();
+    ob_implicit_flush(false);
     parent::view($partial, $required_access);
-    $discount = ob_get_contents();
-    ob_end_clean();
+    $discount = ob_get_clean();
     ob_start();
+    ob_implicit_flush(false);
     $this->scenario('orders');
     ControllerController::view($partial, $required_access);
-    $orders = ob_get_contents();
-    ob_end_clean();
+    $orders = ob_get_clean();
     $this->set_back_url();
     $this->main->template->vars('discount', $discount);
     $this->main->template->vars('orders', $orders);

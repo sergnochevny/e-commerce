@@ -1,8 +1,334 @@
 /*!
-* inputmask.numeric.extensions.min.js
-* https://github.com/RobinHerbots/jquery.inputmask
-* Copyright (c) 2010 - 2016 Robin Herbots
+* inputmask.numeric.extensions.js
+* https://github.com/RobinHerbots/Inputmask
+* Copyright (c) 2010 - 2018 Robin Herbots
 * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
-* Version: 3.3.4-101
+* Version: 4.0.0-beta.32
 */
-!function(a){"function"==typeof define&&define.amd?define(["inputmask.dependencyLib","inputmask"],a):"object"==typeof exports?module.exports=a(require("./inputmask.dependencyLib"),require("./inputmask")):a(window.dependencyLib||jQuery,window.Inputmask)}(function(a,b){return b.extendAliases({numeric:{mask:function(a){function c(b){for(var c="",d=0;d<b.length;d++)c+=a.definitions[b.charAt(d)]||a.optionalmarker.start===b.charAt(d)||a.optionalmarker.end===b.charAt(d)||a.quantifiermarker.start===b.charAt(d)||a.quantifiermarker.end===b.charAt(d)||a.groupmarker.start===b.charAt(d)||a.groupmarker.end===b.charAt(d)||a.alternatormarker===b.charAt(d)?"\\"+b.charAt(d):b.charAt(d);return c}if(0!==a.repeat&&isNaN(a.integerDigits)&&(a.integerDigits=a.repeat),a.repeat=0,a.groupSeparator===a.radixPoint&&("."===a.radixPoint?a.groupSeparator=",":","===a.radixPoint?a.groupSeparator=".":a.groupSeparator="")," "===a.groupSeparator&&(a.skipOptionalPartCharacter=void 0),a.autoGroup=a.autoGroup&&""!==a.groupSeparator,a.autoGroup&&("string"==typeof a.groupSize&&isFinite(a.groupSize)&&(a.groupSize=parseInt(a.groupSize)),isFinite(a.integerDigits))){var d=Math.floor(a.integerDigits/a.groupSize),e=a.integerDigits%a.groupSize;a.integerDigits=parseInt(a.integerDigits)+(0===e?d-1:d),a.integerDigits<1&&(a.integerDigits="*")}a.placeholder.length>1&&(a.placeholder=a.placeholder.charAt(0)),"radixFocus"===a.positionCaretOnClick&&""===a.placeholder&&a.integerOptional===!1&&(a.positionCaretOnClick="lvp"),a.definitions[";"]=a.definitions["~"],a.definitions[";"].definitionSymbol="~",a.numericInput===!0&&(a.positionCaretOnClick="radixFocus"===a.positionCaretOnClick?"lvp":a.positionCaretOnClick,a.digitsOptional=!1,isNaN(a.digits)&&(a.digits=2),a.decimalProtect=!1);var f="[+]";if(f+=c(a.prefix),f+=a.integerOptional===!0?"~{1,"+a.integerDigits+"}":"~{"+a.integerDigits+"}",void 0!==a.digits){a.decimalProtect&&(a.radixPointDefinitionSymbol=":");var g=a.digits.toString().split(",");isFinite(g[0]&&g[1]&&isFinite(g[1]))?f+=(a.decimalProtect?":":a.radixPoint)+";{"+a.digits+"}":(isNaN(a.digits)||parseInt(a.digits)>0)&&(f+=a.digitsOptional?"["+(a.decimalProtect?":":a.radixPoint)+";{1,"+a.digits+"}]":(a.decimalProtect?":":a.radixPoint)+";{"+a.digits+"}")}return f+=c(a.suffix),f+="[-]",a.greedy=!1,null!==a.min&&(a.min=a.min.toString().replace(new RegExp(b.escapeRegex(a.groupSeparator),"g"),""),","===a.radixPoint&&(a.min=a.min.replace(a.radixPoint,"."))),null!==a.max&&(a.max=a.max.toString().replace(new RegExp(b.escapeRegex(a.groupSeparator),"g"),""),","===a.radixPoint&&(a.max=a.max.replace(a.radixPoint,"."))),f},placeholder:"",greedy:!1,digits:"*",digitsOptional:!0,radixPoint:".",positionCaretOnClick:"radixFocus",groupSize:3,groupSeparator:"",autoGroup:!1,allowPlus:!0,allowMinus:!0,negationSymbol:{front:"-",back:""},integerDigits:"+",integerOptional:!0,prefix:"",suffix:"",rightAlign:!0,decimalProtect:!0,min:null,max:null,step:1,insertMode:!0,autoUnmask:!1,unmaskAsNumber:!1,inputmode:"numeric",postFormat:function(c,d,e){e.numericInput===!0&&(c=c.reverse(),isFinite(d)&&(d=c.join("").length-d-1));var f,g;d=d>=c.length?c.length-1:d<0?0:d;var h=c[d],i=c.slice();h===e.groupSeparator&&(i.splice(d--,1),h=i[d]);var j=i.join("").match(new RegExp("^"+b.escapeRegex(e.negationSymbol.front)));j=null!==j&&1===j.length,d>(j?e.negationSymbol.front.length:0)+e.prefix.length&&d<i.length-e.suffix.length&&(i[d]="!");var k=i.join(""),l=i.join();if(j&&(k=k.replace(new RegExp("^"+b.escapeRegex(e.negationSymbol.front)),""),k=k.replace(new RegExp(b.escapeRegex(e.negationSymbol.back)+"$"),"")),k=k.replace(new RegExp(b.escapeRegex(e.suffix)+"$"),""),k=k.replace(new RegExp("^"+b.escapeRegex(e.prefix)),""),k.length>0&&e.autoGroup||k.indexOf(e.groupSeparator)!==-1){var m=b.escapeRegex(e.groupSeparator);k=k.replace(new RegExp(m,"g"),"");var n=k.split(h===e.radixPoint?"!":e.radixPoint);if(k=""===e.radixPoint?k:n[0],h!==e.negationSymbol.front&&(k=k.replace("!","?")),k.length>e.groupSize)for(var o=new RegExp("([-+]?[\\d?]+)([\\d?]{"+e.groupSize+"})");o.test(k)&&""!==e.groupSeparator;)k=k.replace(o,"$1"+e.groupSeparator+"$2"),k=k.replace(e.groupSeparator+e.groupSeparator,e.groupSeparator);k=k.replace("?","!"),""!==e.radixPoint&&n.length>1&&(k+=(h===e.radixPoint?"!":e.radixPoint)+n[1])}k=e.prefix+k+e.suffix,j&&(k=e.negationSymbol.front+k+e.negationSymbol.back);var p=l!==k.split("").join(),q=a.inArray("!",k);if(q===-1&&(q=d),p){for(c.length=k.length,f=0,g=k.length;f<g;f++)c[f]=k.charAt(f);c[q]=h}return q=e.numericInput&&isFinite(d)?c.join("").length-q-1:q,e.numericInput&&(c=c.reverse(),a.inArray(e.radixPoint,c)<q&&c.join("").length-e.suffix.length!==q&&(q-=1)),{pos:q,refreshFromBuffer:p,buffer:c,isNegative:j}},onBeforeWrite:function(c,d,e,f){var g;if(c&&("blur"===c.type||"checkval"===c.type||"keydown"===c.type)){var h=f.numericInput?d.slice().reverse().join(""):d.join(""),i=h.replace(f.prefix,"");i=i.replace(f.suffix,""),i=i.replace(new RegExp(b.escapeRegex(f.groupSeparator),"g"),""),","===f.radixPoint&&(i=i.replace(f.radixPoint,"."));var j=i.match(new RegExp("[-"+b.escapeRegex(f.negationSymbol.front)+"]","g"));if(j=null!==j&&1===j.length,i=i.replace(new RegExp("[-"+b.escapeRegex(f.negationSymbol.front)+"]","g"),""),i=i.replace(new RegExp(b.escapeRegex(f.negationSymbol.back)+"$"),""),isNaN(f.placeholder)&&(i=i.replace(new RegExp(b.escapeRegex(f.placeholder),"g"),"")),i=i===f.negationSymbol.front?i+"0":i,""!==i&&isFinite(i)){var k=parseFloat(i),l=j?k*-1:k;if(null!==f.min&&isFinite(f.min)&&l<parseFloat(f.min)?(k=Math.abs(f.min),j=f.min<0,h=void 0):null!==f.max&&isFinite(f.max)&&l>parseFloat(f.max)&&(k=Math.abs(f.max),j=f.max<0,h=void 0),i=k.toString().replace(".",f.radixPoint).split(""),isFinite(f.digits)){var m=a.inArray(f.radixPoint,i),n=a.inArray(f.radixPoint,h);m===-1&&(i.push(f.radixPoint),m=i.length-1);for(var o=1;o<=f.digits;o++)f.digitsOptional||void 0!==i[m+o]&&i[m+o]!==f.placeholder.charAt(0)?n!==-1&&void 0!==h[n+o]&&(i[m+o]=i[m+o]||h[n+o]):i[m+o]="0";i[i.length-1]===f.radixPoint&&delete i[i.length-1]}if(k.toString()!==i&&k.toString()+"."!==i||j)return i=(f.prefix+i.join("")).split(""),!j||0===k&&"blur"===c.type||(i.unshift(f.negationSymbol.front),i.push(f.negationSymbol.back)),f.numericInput&&(i=i.reverse()),g=f.postFormat(i,f.numericInput?e:e-1,f),g.buffer&&(g.refreshFromBuffer=g.buffer.join("")!==d.join("")),g}}if(f.autoGroup)return g=f.postFormat(d,f.numericInput?e:e-1,f),g.caret=e<(g.isNegative?f.negationSymbol.front.length:0)+f.prefix.length||e>g.buffer.length-(g.isNegative?f.negationSymbol.back.length:0)?g.pos:g.pos+1,g},regex:{integerPart:function(a){return new RegExp("["+b.escapeRegex(a.negationSymbol.front)+"+]?\\d+")},integerNPart:function(a){return new RegExp("[\\d"+b.escapeRegex(a.groupSeparator)+b.escapeRegex(a.placeholder.charAt(0))+"]+")}},signHandler:function(a,b,c,d,e){if(!d&&e.allowMinus&&"-"===a||e.allowPlus&&"+"===a){var f=b.buffer.join("").match(e.regex.integerPart(e));if(f&&f[0].length>0)return b.buffer[f.index]===("-"===a?"+":e.negationSymbol.front)?"-"===a?""!==e.negationSymbol.back?{pos:0,c:e.negationSymbol.front,remove:0,caret:c,insert:{pos:b.buffer.length-1,c:e.negationSymbol.back}}:{pos:0,c:e.negationSymbol.front,remove:0,caret:c}:""!==e.negationSymbol.back?{pos:0,c:"+",remove:[0,b.buffer.length-1],caret:c}:{pos:0,c:"+",remove:0,caret:c}:b.buffer[0]===("-"===a?e.negationSymbol.front:"+")?"-"===a&&""!==e.negationSymbol.back?{remove:[0,b.buffer.length-1],caret:c-1}:{remove:0,caret:c-1}:"-"===a?""!==e.negationSymbol.back?{pos:0,c:e.negationSymbol.front,caret:c+1,insert:{pos:b.buffer.length,c:e.negationSymbol.back}}:{pos:0,c:e.negationSymbol.front,caret:c+1}:{pos:0,c:a,caret:c+1}}return!1},radixHandler:function(b,c,d,e,f){if(!e&&f.numericInput!==!0&&b===f.radixPoint&&void 0!==f.digits&&(isNaN(f.digits)||parseInt(f.digits)>0)){var g=a.inArray(f.radixPoint,c.buffer),h=c.buffer.join("").match(f.regex.integerPart(f));if(g!==-1&&c.validPositions[g])return c.validPositions[g-1]?{caret:g+1}:{pos:h.index,c:h[0],caret:g+1};if(!h||"0"===h[0]&&h.index+1!==d)return c.buffer[h?h.index:d]="0",{pos:(h?h.index:d)+1,c:f.radixPoint}}return!1},leadingZeroHandler:function(b,c,d,e,f,g){if(!e){var h=c.buffer.slice("");if(h.splice(0,f.prefix.length),h.splice(h.length-f.suffix.length,f.suffix.length),f.numericInput===!0){var h=h.reverse(),i=h[0];if("0"===i&&void 0===c.validPositions[d-1])return{pos:d,remove:h.length-1}}else{d-=f.prefix.length;var j=a.inArray(f.radixPoint,h),k=h.slice(0,j!==-1?j:void 0).join("").match(f.regex.integerNPart(f));if(k&&(j===-1||d<=j)){var l=j===-1?0:parseInt(h.slice(j+1).join(""));if(0===k[0].indexOf(""!==f.placeholder?f.placeholder.charAt(0):"0")&&(k.index+1===d||g!==!0&&0===l))return c.buffer.splice(k.index+f.prefix.length,1),{pos:k.index+f.prefix.length,remove:k.index+f.prefix.length};if("0"===b&&d<=k.index&&k[0]!==f.groupSeparator)return!1}}}return!0},definitions:{"~":{validator:function(c,d,e,f,g,h){var i=g.signHandler(c,d,e,f,g);if(!i&&(i=g.radixHandler(c,d,e,f,g),!i&&(i=f?new RegExp("[0-9"+b.escapeRegex(g.groupSeparator)+"]").test(c):new RegExp("[0-9]").test(c),i===!0&&(i=g.leadingZeroHandler(c,d,e,f,g,h),i===!0)))){var j=a.inArray(g.radixPoint,d.buffer);i=j!==-1&&(g.digitsOptional===!1||d.validPositions[e])&&g.numericInput!==!0&&e>j&&!f?{pos:e,remove:e}:{pos:e}}return i},cardinality:1},"+":{validator:function(a,b,c,d,e){var f=e.signHandler(a,b,c,d,e);return!f&&(d&&e.allowMinus&&a===e.negationSymbol.front||e.allowMinus&&"-"===a||e.allowPlus&&"+"===a)&&(f=!(!d&&"-"===a)||(""!==e.negationSymbol.back?{pos:c,c:"-"===a?e.negationSymbol.front:"+",caret:c+1,insert:{pos:b.buffer.length,c:e.negationSymbol.back}}:{pos:c,c:"-"===a?e.negationSymbol.front:"+",caret:c+1})),f},cardinality:1,placeholder:""},"-":{validator:function(a,b,c,d,e){var f=e.signHandler(a,b,c,d,e);return!f&&d&&e.allowMinus&&a===e.negationSymbol.back&&(f=!0),f},cardinality:1,placeholder:""},":":{validator:function(a,c,d,e,f){var g=f.signHandler(a,c,d,e,f);if(!g){var h="["+b.escapeRegex(f.radixPoint)+"]";g=new RegExp(h).test(a),g&&c.validPositions[d]&&c.validPositions[d].match.placeholder===f.radixPoint&&(g={caret:d+1})}return g},cardinality:1,placeholder:function(a){return a.radixPoint}}},onUnMask:function(a,c,d){if(""===c&&d.nullable===!0)return c;var e=a.replace(d.prefix,"");return e=e.replace(d.suffix,""),e=e.replace(new RegExp(b.escapeRegex(d.groupSeparator),"g"),""),d.unmaskAsNumber?(""!==d.radixPoint&&e.indexOf(d.radixPoint)!==-1&&(e=e.replace(b.escapeRegex.call(this,d.radixPoint),".")),Number(e)):e},isComplete:function(a,c){var d=a.join(""),e=a.slice();if(c.postFormat(e,0,c),e.join("")!==d)return!1;var f=d.replace(c.prefix,"");return f=f.replace(c.suffix,""),f=f.replace(new RegExp(b.escapeRegex(c.groupSeparator),"g"),""),","===c.radixPoint&&(f=f.replace(b.escapeRegex(c.radixPoint),".")),isFinite(f)},onBeforeMask:function(a,c){if(c.numericInput===!0&&(a=a.split("").reverse().join("")),""!==c.radixPoint&&isFinite(a)){var d=a.split("."),e=""!==c.groupSeparator?parseInt(c.groupSize):0;2===d.length&&(d[0].length>e||d[1].length>e)&&(a=a.toString().replace(".",c.radixPoint))}var f=a.match(/,/g),g=a.match(/\./g);if(g&&f?g.length>f.length?(a=a.replace(/\./g,""),a=a.replace(",",c.radixPoint)):f.length>g.length?(a=a.replace(/,/g,""),a=a.replace(".",c.radixPoint)):a=a.indexOf(".")<a.indexOf(",")?a.replace(/\./g,""):a=a.replace(/,/g,""):a=a.replace(new RegExp(b.escapeRegex(c.groupSeparator),"g"),""),0===c.digits&&(a.indexOf(".")!==-1?a=a.substring(0,a.indexOf(".")):a.indexOf(",")!==-1&&(a=a.substring(0,a.indexOf(",")))),""!==c.radixPoint&&isFinite(c.digits)&&a.indexOf(c.radixPoint)!==-1){var h=a.split(c.radixPoint),i=h[1].match(new RegExp("\\d*"))[0];if(parseInt(c.digits)<i.toString().length){var j=Math.pow(10,parseInt(c.digits));a=a.replace(b.escapeRegex(c.radixPoint),"."),a=Math.round(parseFloat(a)*j)/j,a=a.toString().replace(".",c.radixPoint)}}return c.numericInput===!0&&(a=a.split("").reverse().join("")),a.toString()},canClearPosition:function(a,b,c,d,e){var f=a.validPositions[b].input,g=f!==e.radixPoint||null!==a.validPositions[b].match.fn&&e.decimalProtect===!1||isFinite(f)||b===c||f===e.groupSeparator||f===e.negationSymbol.front||f===e.negationSymbol.back;return g},onKeyDown:function(c,d,e,f){var g=a(this);if(c.ctrlKey)switch(c.keyCode){case b.keyCode.UP:g.val(parseFloat(this.inputmask.unmaskedvalue())+parseInt(f.step)),g.trigger("setvalue");break;case b.keyCode.DOWN:g.val(parseFloat(this.inputmask.unmaskedvalue())-parseInt(f.step)),g.trigger("setvalue")}}},currency:{prefix:"$ ",groupSeparator:",",alias:"numeric",placeholder:"0",autoGroup:!0,digits:2,digitsOptional:!1,clearMaskOnLostFocus:!1},decimal:{alias:"numeric"},integer:{alias:"numeric",digits:0,radixPoint:""},percentage:{alias:"numeric",digits:2,radixPoint:".",placeholder:"0",autoGroup:!1,min:0,max:100,suffix:" %",allowPlus:!1,allowMinus:!1}}),b});
+
+!function(factory) {
+    "function" == typeof define && define.amd ? define([ "./dependencyLibs/inputmask.dependencyLib", "./inputmask" ], factory) : "object" == typeof exports ? module.exports = factory(require("./dependencyLibs/inputmask.dependencyLib"), require("./inputmask")) : factory(window.dependencyLib || jQuery, window.Inputmask);
+}(function($, Inputmask, undefined) {
+    function autoEscape(txt, opts) {
+        for (var escapedTxt = "", i = 0; i < txt.length; i++) Inputmask.prototype.definitions[txt.charAt(i)] || opts.definitions[txt.charAt(i)] || opts.optionalmarker.start === txt.charAt(i) || opts.optionalmarker.end === txt.charAt(i) || opts.quantifiermarker.start === txt.charAt(i) || opts.quantifiermarker.end === txt.charAt(i) || opts.groupmarker.start === txt.charAt(i) || opts.groupmarker.end === txt.charAt(i) || opts.alternatormarker === txt.charAt(i) ? escapedTxt += "\\" + txt.charAt(i) : escapedTxt += txt.charAt(i);
+        return escapedTxt;
+    }
+    return Inputmask.extendAliases({
+        numeric: {
+            mask: function(opts) {
+                if (0 !== opts.repeat && isNaN(opts.integerDigits) && (opts.integerDigits = opts.repeat), 
+                opts.repeat = 0, opts.groupSeparator === opts.radixPoint && opts.digits && "0" !== opts.digits && ("." === opts.radixPoint ? opts.groupSeparator = "," : "," === opts.radixPoint ? opts.groupSeparator = "." : opts.groupSeparator = ""), 
+                " " === opts.groupSeparator && (opts.skipOptionalPartCharacter = undefined), opts.autoGroup = opts.autoGroup && "" !== opts.groupSeparator, 
+                opts.autoGroup && ("string" == typeof opts.groupSize && isFinite(opts.groupSize) && (opts.groupSize = parseInt(opts.groupSize)), 
+                isFinite(opts.integerDigits))) {
+                    var seps = Math.floor(opts.integerDigits / opts.groupSize), mod = opts.integerDigits % opts.groupSize;
+                    opts.integerDigits = parseInt(opts.integerDigits) + (0 === mod ? seps - 1 : seps), 
+                    opts.integerDigits < 1 && (opts.integerDigits = "*");
+                }
+                opts.placeholder.length > 1 && (opts.placeholder = opts.placeholder.charAt(0)), 
+                "radixFocus" === opts.positionCaretOnClick && "" === opts.placeholder && !1 === opts.integerOptional && (opts.positionCaretOnClick = "lvp"), 
+                opts.definitions[";"] = opts.definitions["~"], opts.definitions[";"].definitionSymbol = "~", 
+                !0 === opts.numericInput && (opts.positionCaretOnClick = "radixFocus" === opts.positionCaretOnClick ? "lvp" : opts.positionCaretOnClick, 
+                opts.digitsOptional = !1, isNaN(opts.digits) && (opts.digits = 2), opts.decimalProtect = !1);
+                var mask = "[+]";
+                if (mask += autoEscape(opts.prefix, opts), !0 === opts.integerOptional ? mask += "~{1," + opts.integerDigits + "}" : mask += "~{" + opts.integerDigits + "}", 
+                opts.digits !== undefined) {
+                    var radixDef = opts.decimalProtect ? ":" : opts.radixPoint, dq = opts.digits.toString().split(",");
+                    isFinite(dq[0]) && dq[1] && isFinite(dq[1]) ? mask += radixDef + ";{" + opts.digits + "}" : (isNaN(opts.digits) || parseInt(opts.digits) > 0) && (opts.digitsOptional ? mask += "[" + radixDef + ";{1," + opts.digits + "}]" : mask += radixDef + ";{" + opts.digits + "}");
+                }
+                return mask += autoEscape(opts.suffix, opts), mask += "[-]", opts.greedy = !1, mask;
+            },
+            placeholder: "",
+            greedy: !1,
+            digits: "*",
+            digitsOptional: !0,
+            enforceDigitsOnBlur: !1,
+            radixPoint: ".",
+            positionCaretOnClick: "radixFocus",
+            groupSize: 3,
+            groupSeparator: "",
+            autoGroup: !1,
+            allowMinus: !0,
+            negationSymbol: {
+                front: "-",
+                back: ""
+            },
+            integerDigits: "+",
+            integerOptional: !0,
+            prefix: "",
+            suffix: "",
+            rightAlign: !0,
+            decimalProtect: !0,
+            min: null,
+            max: null,
+            step: 1,
+            insertMode: !0,
+            autoUnmask: !1,
+            unmaskAsNumber: !1,
+            inputmode: "numeric",
+            preValidation: function(buffer, pos, c, isSelection, opts, maskset) {
+                if ("-" === c || c === opts.negationSymbol.front) return !0 === opts.allowMinus && (opts.isNegative = opts.isNegative === undefined || !opts.isNegative, 
+                "" === buffer.join("") || {
+                    caret: pos,
+                    dopost: !0
+                });
+                if (!1 === isSelection && c === opts.radixPoint && opts.digits !== undefined && (isNaN(opts.digits) || parseInt(opts.digits) > 0)) {
+                    var radixPos = $.inArray(opts.radixPoint, buffer);
+                    if (-1 !== radixPos && maskset.validPositions[radixPos] !== undefined) return !0 === opts.numericInput ? pos === radixPos : {
+                        caret: radixPos + 1
+                    };
+                }
+                return !0;
+            },
+            postValidation: function(buffer, currentResult, opts) {
+                var suffix = opts.suffix.split(""), prefix = opts.prefix.split("");
+                if (currentResult.pos === undefined && currentResult.caret !== undefined && !0 !== currentResult.dopost) return currentResult;
+                var caretPos = currentResult.caret !== undefined ? currentResult.caret : currentResult.pos, maskedValue = buffer.slice();
+                opts.numericInput && (caretPos = maskedValue.length - caretPos - 1, maskedValue = maskedValue.reverse());
+                var charAtPos = maskedValue[caretPos];
+                if (charAtPos === opts.groupSeparator && (charAtPos = maskedValue[caretPos += 1]), 
+                caretPos === maskedValue.length - opts.suffix.length - 1 && charAtPos === opts.radixPoint) return currentResult;
+                charAtPos !== undefined && charAtPos !== opts.radixPoint && charAtPos !== opts.negationSymbol.front && charAtPos !== opts.negationSymbol.back && (maskedValue[caretPos] = "?", 
+                opts.prefix.length > 0 && caretPos >= (!1 === opts.isNegative ? 1 : 0) && caretPos < opts.prefix.length - 1 + (!1 === opts.isNegative ? 1 : 0) ? prefix[caretPos - (!1 === opts.isNegative ? 1 : 0)] = "?" : opts.suffix.length > 0 && caretPos >= maskedValue.length - opts.suffix.length - (!1 === opts.isNegative ? 1 : 0) && (suffix[caretPos - (maskedValue.length - opts.suffix.length - (!1 === opts.isNegative ? 1 : 0))] = "?")), 
+                prefix = prefix.join(""), suffix = suffix.join("");
+                var processValue = maskedValue.join("").replace(prefix, "");
+                if (processValue = (processValue = (processValue = (processValue = processValue.replace(suffix, "")).replace(new RegExp(Inputmask.escapeRegex(opts.groupSeparator), "g"), "")).replace(new RegExp("[-" + Inputmask.escapeRegex(opts.negationSymbol.front) + "]", "g"), "")).replace(new RegExp(Inputmask.escapeRegex(opts.negationSymbol.back) + "$"), ""), 
+                isNaN(opts.placeholder) && (processValue = processValue.replace(new RegExp(Inputmask.escapeRegex(opts.placeholder), "g"), "")), 
+                processValue.length > 1 && 1 !== processValue.indexOf(opts.radixPoint) && ("0" === charAtPos && (processValue = processValue.replace(/^\?/g, "")), 
+                processValue = processValue.replace(/^0/g, "")), processValue.charAt(0) === opts.radixPoint && "" !== opts.radixPoint && !0 !== opts.numericInput && (processValue = "0" + processValue), 
+                "" !== processValue) {
+                    if (processValue = processValue.split(""), (!opts.digitsOptional || opts.enforceDigitsOnBlur && "blur" === currentResult.event) && isFinite(opts.digits)) {
+                        var radixPosition = $.inArray(opts.radixPoint, processValue), rpb = $.inArray(opts.radixPoint, maskedValue);
+                        -1 === radixPosition && (processValue.push(opts.radixPoint), radixPosition = processValue.length - 1);
+                        for (var i = 1; i <= opts.digits; i++) opts.digitsOptional && (!opts.enforceDigitsOnBlur || "blur" !== currentResult.event) || processValue[radixPosition + i] !== undefined && processValue[radixPosition + i] !== opts.placeholder.charAt(0) ? -1 !== rpb && maskedValue[rpb + i] !== undefined && (processValue[radixPosition + i] = processValue[radixPosition + i] || maskedValue[rpb + i]) : processValue[radixPosition + i] = currentResult.placeholder || opts.placeholder.charAt(0);
+                    }
+                    if (!0 !== opts.autoGroup || "" === opts.groupSeparator || charAtPos === opts.radixPoint && currentResult.pos === undefined && !currentResult.dopost) processValue = processValue.join(""); else {
+                        var addRadix = processValue[processValue.length - 1] === opts.radixPoint && currentResult.c === opts.radixPoint;
+                        processValue = Inputmask(function(buffer, opts) {
+                            var postMask = "";
+                            if (postMask += "(" + opts.groupSeparator + "*{" + opts.groupSize + "}){*}", "" !== opts.radixPoint) {
+                                var radixSplit = buffer.join("").split(opts.radixPoint);
+                                radixSplit[1] && (postMask += opts.radixPoint + "*{" + radixSplit[1].match(/^\d*\??\d*/)[0].length + "}");
+                            }
+                            return postMask;
+                        }(processValue, opts), {
+                            numericInput: !0,
+                            jitMasking: !0,
+                            definitions: {
+                                "*": {
+                                    validator: "[0-9?]",
+                                    cardinality: 1
+                                }
+                            }
+                        }).format(processValue.join("")), addRadix && (processValue += opts.radixPoint), 
+                        processValue.charAt(0) === opts.groupSeparator && processValue.substr(1);
+                    }
+                }
+                if (opts.isNegative && "blur" === currentResult.event && (opts.isNegative = "0" !== processValue), 
+                processValue = prefix + processValue, processValue += suffix, opts.isNegative && (processValue = opts.negationSymbol.front + processValue, 
+                processValue += opts.negationSymbol.back), processValue = processValue.split(""), 
+                charAtPos !== undefined) if (charAtPos !== opts.radixPoint && charAtPos !== opts.negationSymbol.front && charAtPos !== opts.negationSymbol.back) (caretPos = $.inArray("?", processValue)) > -1 ? processValue[caretPos] = charAtPos : caretPos = currentResult.caret || 0; else if (charAtPos === opts.radixPoint || charAtPos === opts.negationSymbol.front || charAtPos === opts.negationSymbol.back) {
+                    var newCaretPos = $.inArray(charAtPos, processValue);
+                    -1 !== newCaretPos && (caretPos = newCaretPos);
+                }
+                opts.numericInput && (caretPos = processValue.length - caretPos - 1, processValue = processValue.reverse());
+                var rslt = {
+                    caret: charAtPos === undefined || currentResult.pos !== undefined ? caretPos + (opts.numericInput ? -1 : 1) : caretPos,
+                    buffer: processValue,
+                    refreshFromBuffer: currentResult.dopost || buffer.join("") !== processValue.join("")
+                };
+                return rslt.refreshFromBuffer ? rslt : currentResult;
+            },
+            onBeforeWrite: function(e, buffer, caretPos, opts) {
+                if (e) switch (e.type) {
+                  case "keydown":
+                    return opts.postValidation(buffer, {
+                        caret: caretPos,
+                        dopost: !0
+                    }, opts);
+
+                  case "blur":
+                  case "checkval":
+                    var unmasked;
+                    if (function(opts) {
+                        opts.parseMinMaxOptions === undefined && (null !== opts.min && (opts.min = opts.min.toString().replace(new RegExp(Inputmask.escapeRegex(opts.groupSeparator), "g"), ""), 
+                        "," === opts.radixPoint && (opts.min = opts.min.replace(opts.radixPoint, ".")), 
+                        opts.min = isFinite(opts.min) ? parseFloat(opts.min) : NaN, isNaN(opts.min) && (opts.min = Number.MIN_VALUE)), 
+                        null !== opts.max && (opts.max = opts.max.toString().replace(new RegExp(Inputmask.escapeRegex(opts.groupSeparator), "g"), ""), 
+                        "," === opts.radixPoint && (opts.max = opts.max.replace(opts.radixPoint, ".")), 
+                        opts.max = isFinite(opts.max) ? parseFloat(opts.max) : NaN, isNaN(opts.max) && (opts.max = Number.MAX_VALUE)), 
+                        opts.parseMinMaxOptions = "done");
+                    }(opts), null !== opts.min || null !== opts.max) {
+                        if (unmasked = opts.onUnMask(buffer.join(""), undefined, $.extend({}, opts, {
+                            unmaskAsNumber: !0
+                        })), null !== opts.min && unmasked < opts.min) return opts.isNegative = opts.min < 0, 
+                        opts.postValidation(opts.min.toString().replace(".", opts.radixPoint).split(""), {
+                            caret: caretPos,
+                            dopost: !0,
+                            placeholder: "0"
+                        }, opts);
+                        if (null !== opts.max && unmasked > opts.max) return opts.isNegative = opts.max < 0, 
+                        opts.postValidation(opts.max.toString().replace(".", opts.radixPoint).split(""), {
+                            caret: caretPos,
+                            dopost: !0,
+                            placeholder: "0"
+                        }, opts);
+                    }
+                    return opts.postValidation(buffer, {
+                        caret: caretPos,
+                        placeholder: "0",
+                        event: "blur"
+                    }, opts);
+
+                  case "_checkval":
+                    return {
+                        caret: caretPos
+                    };
+                }
+            },
+            regex: {
+                integerPart: function(opts, emptyCheck) {
+                    return emptyCheck ? new RegExp("[" + Inputmask.escapeRegex(opts.negationSymbol.front) + "+]?") : new RegExp("[" + Inputmask.escapeRegex(opts.negationSymbol.front) + "+]?\\d+");
+                },
+                integerNPart: function(opts) {
+                    return new RegExp("[\\d" + Inputmask.escapeRegex(opts.groupSeparator) + Inputmask.escapeRegex(opts.placeholder.charAt(0)) + "]+");
+                }
+            },
+            definitions: {
+                "~": {
+                    validator: function(chrs, maskset, pos, strict, opts, isSelection) {
+                        var isValid = strict ? new RegExp("[0-9" + Inputmask.escapeRegex(opts.groupSeparator) + "]").test(chrs) : new RegExp("[0-9]").test(chrs);
+                        if (!0 === isValid) {
+                            if (!0 !== opts.numericInput && maskset.validPositions[pos] !== undefined && "~" === maskset.validPositions[pos].match.def && !isSelection) {
+                                var processValue = maskset.buffer.join(""), pvRadixSplit = (processValue = (processValue = processValue.replace(new RegExp("[-" + Inputmask.escapeRegex(opts.negationSymbol.front) + "]", "g"), "")).replace(new RegExp(Inputmask.escapeRegex(opts.negationSymbol.back) + "$"), "")).split(opts.radixPoint);
+                                pvRadixSplit.length > 1 && (pvRadixSplit[1] = pvRadixSplit[1].replace(/0/g, opts.placeholder.charAt(0))), 
+                                "0" === pvRadixSplit[0] && (pvRadixSplit[0] = pvRadixSplit[0].replace(/0/g, opts.placeholder.charAt(0))), 
+                                processValue = pvRadixSplit[0] + opts.radixPoint + pvRadixSplit[1] || "";
+                                var bufferTemplate = maskset._buffer.join("");
+                                for (processValue === opts.radixPoint && (processValue = bufferTemplate); null === processValue.match(Inputmask.escapeRegex(bufferTemplate) + "$"); ) bufferTemplate = bufferTemplate.slice(1);
+                                isValid = (processValue = (processValue = processValue.replace(bufferTemplate, "")).split(""))[pos] === undefined ? {
+                                    pos: pos,
+                                    remove: pos
+                                } : {
+                                    pos: pos
+                                };
+                            }
+                        } else strict || chrs !== opts.radixPoint || maskset.validPositions[pos - 1] !== undefined || (isValid = {
+                            insert: {
+                                pos: pos,
+                                c: 0
+                            },
+                            pos: pos + 1
+                        });
+                        return isValid;
+                    },
+                    cardinality: 1
+                },
+                "+": {
+                    validator: function(chrs, maskset, pos, strict, opts) {
+                        return opts.allowMinus && ("-" === chrs || chrs === opts.negationSymbol.front);
+                    },
+                    cardinality: 1,
+                    placeholder: ""
+                },
+                "-": {
+                    validator: function(chrs, maskset, pos, strict, opts) {
+                        return opts.allowMinus && chrs === opts.negationSymbol.back;
+                    },
+                    cardinality: 1,
+                    placeholder: ""
+                },
+                ":": {
+                    validator: function(chrs, maskset, pos, strict, opts) {
+                        var radix = "[" + Inputmask.escapeRegex(opts.radixPoint) + "]", isValid = new RegExp(radix).test(chrs);
+                        return isValid && maskset.validPositions[pos] && maskset.validPositions[pos].match.placeholder === opts.radixPoint && (isValid = {
+                            caret: pos + 1
+                        }), isValid;
+                    },
+                    cardinality: 1,
+                    placeholder: function(opts) {
+                        return opts.radixPoint;
+                    }
+                }
+            },
+            onUnMask: function(maskedValue, unmaskedValue, opts) {
+                if ("" === unmaskedValue && !0 === opts.nullable) return unmaskedValue;
+                var processValue = maskedValue.replace(opts.prefix, "");
+                return processValue = (processValue = processValue.replace(opts.suffix, "")).replace(new RegExp(Inputmask.escapeRegex(opts.groupSeparator), "g"), ""), 
+                "" !== opts.placeholder.charAt(0) && (processValue = processValue.replace(new RegExp(opts.placeholder.charAt(0), "g"), "0")), 
+                opts.unmaskAsNumber ? ("" !== opts.radixPoint && -1 !== processValue.indexOf(opts.radixPoint) && (processValue = processValue.replace(Inputmask.escapeRegex.call(this, opts.radixPoint), ".")), 
+                processValue = (processValue = processValue.replace(new RegExp("^" + Inputmask.escapeRegex(opts.negationSymbol.front)), "-")).replace(new RegExp(Inputmask.escapeRegex(opts.negationSymbol.back) + "$"), ""), 
+                Number(processValue)) : processValue;
+            },
+            isComplete: function(buffer, opts) {
+                var maskedValue = buffer.join("");
+                if (buffer.slice().join("") !== maskedValue) return !1;
+                var processValue = maskedValue.replace(opts.prefix, "");
+                return processValue = (processValue = processValue.replace(opts.suffix, "")).replace(new RegExp(Inputmask.escapeRegex(opts.groupSeparator) + "([0-9]{3})", "g"), "$1"), 
+                "," === opts.radixPoint && (processValue = processValue.replace(Inputmask.escapeRegex(opts.radixPoint), ".")), 
+                isFinite(processValue);
+            },
+            onBeforeMask: function(initialValue, opts) {
+                if (opts.isNegative = undefined, "number" == typeof initialValue && "" !== opts.radixPoint && (initialValue = initialValue.toString().replace(".", opts.radixPoint)), 
+                initialValue = initialValue.toString().charAt(initialValue.length - 1) === opts.radixPoint ? initialValue.toString().substr(0, initialValue.length - 1) : initialValue.toString(), 
+                "" !== opts.radixPoint && isFinite(initialValue)) {
+                    var vs = initialValue.split("."), groupSize = "" !== opts.groupSeparator ? parseInt(opts.groupSize) : 0;
+                    2 === vs.length && (vs[0].length > groupSize || vs[1].length > groupSize || vs[0].length <= groupSize && vs[1].length < groupSize) && (initialValue = initialValue.replace(".", opts.radixPoint));
+                }
+                var kommaMatches = initialValue.match(/,/g), dotMatches = initialValue.match(/\./g);
+                if (initialValue = dotMatches && kommaMatches ? dotMatches.length > kommaMatches.length ? (initialValue = initialValue.replace(/\./g, "")).replace(",", opts.radixPoint) : kommaMatches.length > dotMatches.length ? (initialValue = initialValue.replace(/,/g, "")).replace(".", opts.radixPoint) : initialValue.indexOf(".") < initialValue.indexOf(",") ? initialValue.replace(/\./g, "") : initialValue.replace(/,/g, "") : initialValue.replace(new RegExp(Inputmask.escapeRegex(opts.groupSeparator), "g"), ""), 
+                0 === opts.digits && (-1 !== initialValue.indexOf(".") ? initialValue = initialValue.substring(0, initialValue.indexOf(".")) : -1 !== initialValue.indexOf(",") && (initialValue = initialValue.substring(0, initialValue.indexOf(",")))), 
+                "" !== opts.radixPoint && isFinite(opts.digits) && -1 !== initialValue.indexOf(opts.radixPoint)) {
+                    var decPart = initialValue.split(opts.radixPoint)[1].match(new RegExp("\\d*"))[0];
+                    if (parseInt(opts.digits) < decPart.toString().length) {
+                        var digitsFactor = Math.pow(10, parseInt(opts.digits));
+                        initialValue = initialValue.replace(Inputmask.escapeRegex(opts.radixPoint), "."), 
+                        initialValue = (initialValue = Math.round(parseFloat(initialValue) * digitsFactor) / digitsFactor).toString().replace(".", opts.radixPoint);
+                    }
+                }
+                return initialValue;
+            },
+            onKeyDown: function(e, buffer, caretPos, opts) {
+                var $input = $(this);
+                if (e.ctrlKey) switch (e.keyCode) {
+                  case Inputmask.keyCode.UP:
+                    $input.val(parseFloat(this.inputmask.unmaskedvalue()) + parseInt(opts.step)), $input.trigger("setvalue");
+                    break;
+
+                  case Inputmask.keyCode.DOWN:
+                    $input.val(parseFloat(this.inputmask.unmaskedvalue()) - parseInt(opts.step)), $input.trigger("setvalue");
+                }
+            }
+        },
+        currency: {
+            prefix: "$ ",
+            groupSeparator: ",",
+            alias: "numeric",
+            placeholder: "0",
+            autoGroup: !0,
+            digits: 2,
+            digitsOptional: !1,
+            clearMaskOnLostFocus: !1
+        },
+        decimal: {
+            alias: "numeric"
+        },
+        integer: {
+            alias: "numeric",
+            digits: 0,
+            radixPoint: ""
+        },
+        percentage: {
+            alias: "numeric",
+            digits: 2,
+            digitsOptional: !0,
+            radixPoint: ".",
+            placeholder: "0",
+            autoGroup: !1,
+            min: 0,
+            max: 100,
+            suffix: " %",
+            allowMinus: !1
+        }
+    }), Inputmask;
+});

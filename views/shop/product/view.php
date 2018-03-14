@@ -2,16 +2,20 @@
 
 use app\core\App;
 use controllers\ControllerInfo;
+use controllers\ControllerRelated;
 
 $pid = $data['pid'];
-$ahref = 'mailto:' . App::$app->keyStorage()->system_info_email . '?subject=' .
-  rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
+$ahref = 'mailto:' . App::$app->keyStorage()->system_info_email . '?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
 $mhref = App::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
-$href_related = App::$app->router()->UrlTo('related/view', ['pid' => $pid]);
 
-$controller_info = new ControllerInfo();
+$controller_related = new ControllerRelated($this->controller->get_main());
+$related_view = $controller_related->view(false, false, $pid);
+$controller_info = new ControllerInfo($this->controller->get_main());
 $controller_info->scenario('product');
+$info_view = $controller_info->view(false, false, true);
 ?>
+
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/shop_common.min.css')); ?>
 
 <div id="content" class="container product_view inner-offset-top half-outer-offset-bottom">
   <div class="box col-xs-12">
@@ -19,28 +23,29 @@ $controller_info->scenario('product');
       <div class="row">
         <div class="col-xs-12 col-sm-2 back_button_container">
           <div class="row">
-            <a data-waitloader id="back_url" title="Back to Products' List"href="<?= $back_url; ?>" class="button back_button">
+            <a data-waitloader id="back_url" title="Back to Products' List" href="<?= $back_url; ?>"
+               class="button back_button">
               <i class="fa fa-angle-left" aria-hidden="true"></i>
               Back
             </a>
           </div>
           <div class="row prev_next_buttons visible-xs">
-            <?php if(!empty($prev_next['prev'])):?>
+            <?php if(!empty($prev_next['prev'])): ?>
               <a data-waitloader href="<?= $prev_next['prev']['url']; ?>"
                  title="<?= $prev_next['prev']['title']; ?>"
                  class="button prev_button">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
                 Prev.
               </a>
-            <?php endif;?>
-            <?php if(!empty($prev_next['next'])):?>
+            <?php endif; ?>
+            <?php if(!empty($prev_next['next'])): ?>
               <a data-waitloader href="<?= $prev_next['next']['url']; ?>"
                  title="<?= $prev_next['next']['title']; ?>"
                  class="button next_button">
                 Next
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
               </a>
-            <?php endif;?>
+            <?php endif; ?>
           </div>
         </div>
         <div class="col-xs-12 col-sm-7 text-center">
@@ -49,22 +54,22 @@ $controller_info->scenario('product');
         </div>
         <div class="visible-sm visible-md visible-lg col-sm-3 back_button_container">
           <div class="row text-right">
-            <?php if(!empty($prev_next['prev'])):?>
-            <a data-waitloader href="<?= $prev_next['prev']['url']; ?>"
-               title="<?= $prev_next['prev']['title']; ?>"
-               class="button prev_button">
-              <i class="fa fa-angle-left" aria-hidden="true"></i>
-              Prev.
-            </a>
-            <?php endif;?>
-            <?php if(!empty($prev_next['next'])):?>
-            <a data-waitloader href="<?= $prev_next['next']['url']; ?>"
-               title="<?= $prev_next['next']['title']; ?>"
-               class="button next_button">
-              Next
-              <i class="fa fa-angle-right" aria-hidden="true"></i>
-            </a>
-            <?php endif;?>
+            <?php if(!empty($prev_next['prev'])): ?>
+              <a data-waitloader href="<?= $prev_next['prev']['url']; ?>"
+                 title="<?= $prev_next['prev']['title']; ?>"
+                 class="button prev_button">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                Prev.
+              </a>
+            <?php endif; ?>
+            <?php if(!empty($prev_next['next'])): ?>
+              <a data-waitloader href="<?= $prev_next['next']['url']; ?>"
+                 title="<?= $prev_next['next']['title']; ?>"
+                 class="button next_button">
+                Next
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </a>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -279,19 +284,23 @@ $controller_info->scenario('product');
       </div>
     </div>
 
-    <div class="col-xs-12">
-      <div class="row related" data-related>
-        <input data-href_related type="hidden" value="<?= $href_related; ?>"/>
-      </div>
-    </div>
-
-    <div class="col-xs-12">
-      <div class="row">
-        <div>
-          <?= $controller_info->view(false, false, true)?>
+    <?php if(!empty($related_view)): ?>
+      <div class="col-xs-12">
+        <div class="row related" data-related>
+          <?= $related_view; ?>
         </div>
       </div>
-    </div>
+    <?php endif; ?>
+
+    <?php if(!empty($info_view)): ?>
+      <div class="col-xs-12">
+        <div class="row">
+          <div>
+            <?= $info_view; ?>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
 
   </div>
 </div>

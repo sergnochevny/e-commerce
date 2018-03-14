@@ -3,7 +3,8 @@
 use app\core\App;
 
 ?>
-<link rel="stylesheet" type="text/css" href="<?= App::$app->router()->UrlTo('css/upload.min.css'); ?>">
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/upload.min.css'), 1); ?>
+
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">
     <div class="col-xs-12">

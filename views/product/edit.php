@@ -3,6 +3,8 @@
 use app\core\App;
 
 ?>
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/upload.min.css'), 1); ?>
+
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 box">
     <div class="row">
@@ -38,7 +40,6 @@ use app\core\App;
     </div>
   </div>
 </div>
-<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/upload.min.css')); ?>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/product/images.min.js'), 4); ?>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/product/related.min.js'), 4); ?>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/product/edit.min.js'), 5); ?>

@@ -135,6 +135,7 @@ class ControllerOrders extends ControllerSimple{
     $customer_order = ModelOrders::getOrderDetailInfo($config);
     if(!empty($customer_order) && $customer_order > 0) {
       ob_start();
+      ob_implicit_flush(false);
       $sub_price_count = (integer)0;
       foreach($customer_order as $order) {
         extract($order);
@@ -169,8 +170,7 @@ class ControllerOrders extends ControllerSimple{
 
       $sub_price_count = $sub_price_count + $order['shipping_cost'];
       $sub_price = strlen(trim($sub_price_count)) > 0 ? '$' . number_format((double)$sub_price_count, 2) : '';
-      $detail_info = ob_get_contents();
-      ob_end_clean();
+      $detail_info = ob_get_clean();
     }
 
     $this->main->template->vars('back_url', $back_url);

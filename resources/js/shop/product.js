@@ -3,29 +3,19 @@
 
   var base_url = $('#base_url').val();
   var back_url = $('#back_url').attr('href');
-  var related = $('[data-related]');
-  var related_href = $('[data-href_related]');
-  if (related_href.length) {
-    $('body').waitloader('show');
-    var url = related_href.val();
-    related.load(url,
-      function () {
-        $('[data-carousel]').owlCarousel({
-          responsive: {0: {items: 1}, 461: {items: 2}, 992: {items: 3}},
-          margin: 15,
-          nav: true,
-          navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
-          autoplay: true,
-          loop: false,
-          rewind: true,
-          autoplayHoverPause: true,
-          autoplayTimeout: 2000,
-          dots: true
-        });
-        $('body').waitloader('remove');
-      }
-    );
-  }
+
+  $('[data-carousel]').owlCarousel({
+    responsive: {0: {items: 1}, 461: {items: 2}, 992: {items: 3}},
+    margin: 15,
+    nav: true,
+    navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
+    autoplay: true,
+    loop: false,
+    rewind: true,
+    autoplayHoverPause: true,
+    autoplayTimeout: 2000,
+    dots: true
+  });
 
   $(document).on('click.confirm_action', ".popup a.close", function (event) {
     $("#confirm_dialog").removeClass('overlay_display');

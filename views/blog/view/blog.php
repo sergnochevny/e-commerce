@@ -3,7 +3,9 @@
 use app\core\App;
 
 ?>
-<link rel="stylesheet" type="text/css" href="<?= App::$app->router()->UrlTo('css/blog.min.css'); ?>">
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/blog_common.min.css')); ?>
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/blog.min.css'), 1); ?>
+
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div id="blog" class="col-xs-12 main-content-inner box" role="main">

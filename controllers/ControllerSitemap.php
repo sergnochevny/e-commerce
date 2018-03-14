@@ -47,6 +47,7 @@ class ControllerSitemap extends ControllerBase{
 
     set_time_limit(0);
     ob_start();
+    ob_implicit_flush(false);
     try {
       $path = APP_PATH . '/controllers/Controller*.php';
       $controllers = [];
@@ -75,9 +76,7 @@ class ControllerSitemap extends ControllerBase{
       }
     } catch(Exception $e) {
     }
-    $list = ob_get_contents();
-    ob_end_clean();
-
+    $list = ob_get_clean();
     $this->template->vars('list', $list);
     header("Content-type: text/xml");
     $this->template->render_layout('sitemap');

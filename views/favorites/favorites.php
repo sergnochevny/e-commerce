@@ -3,6 +3,9 @@
 use app\core\App;
 
 ?>
+
+<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/shop_common.min.css')); ?>
+
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="col-xs-12 col-md-20-prc">
     <div class="row w_search">
