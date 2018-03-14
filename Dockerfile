@@ -1,4 +1,4 @@
-FROM php:7.0-apache
+FROM php:7.0-apache AS build
 MAINTAINER "Andriy Shendrikov" <ashendrikov@engineering.ait.com>
 ENV LC_ALL="C.UTF-8" DEBIAN_FRONTEND="noninteractive"
 
