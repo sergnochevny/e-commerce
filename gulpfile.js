@@ -265,12 +265,12 @@ gulp.task('js_partials', function () {
     '!resources/js/search/search.js',
     '!resources/js/script.js'
   ])
-  // .pipe(minify({
-  //   ext: {
-  //     min: '.min.js'
-  //   },
-  //   noSource: true
-  // }))
+    .pipe(minify({
+      ext: {
+        min: '.min.js'
+      },
+      noSource: true
+    }))
     .pipe(rename({
       suffix: ".min"
     }))
