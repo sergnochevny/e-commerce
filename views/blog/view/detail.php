@@ -3,7 +3,7 @@
 use app\core\App;
 
 ?>
-<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/blog_common.min.css'), 0); ?>
+<?php //$this->registerCSSFile(App::$app->router()->UrlTo('css/blog_common.min.css'), 0); ?>
 <?php $this->registerCSSFile(App::$app->router()->UrlTo('css/blog.min.css'), 1); ?>
 
 <div class="container inner-offset-top half-outer-offset-bottom">

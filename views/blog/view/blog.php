@@ -3,7 +3,7 @@
 use app\core\App;
 
 ?>
-<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/blog_common.min.css')); ?>
+<?php //$this->registerCSSFile(App::$app->router()->UrlTo('css/blog_common.min.css')); ?>
 <?php $this->registerCSSFile(App::$app->router()->UrlTo('css/blog.min.css'), 1); ?>
 
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>

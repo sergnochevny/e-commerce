@@ -15,7 +15,7 @@ $controller_info->scenario('product');
 $info_view = $controller_info->view(false, false, true);
 ?>
 
-<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/shop_common.min.css')); ?>
+<?php //$this->registerCSSFile(App::$app->router()->UrlTo('css/shop_common.min.css')); ?>
 
 <div id="content" class="container product_view inner-offset-top half-outer-offset-bottom">
   <div class="box col-xs-12">

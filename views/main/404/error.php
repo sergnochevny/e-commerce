@@ -3,7 +3,7 @@
 use app\core\App;
 
 ?>
-<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/error_common.min.css')); ?>
+<?php //$this->registerCSSFile(App::$app->router()->UrlTo('css/error_common.min.css')); ?>
 
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div id="content" class="col-xs-12 main-content-inner box" role="main">

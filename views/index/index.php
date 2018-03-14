@@ -14,7 +14,7 @@ $controller_shop = new ControllerShop($this->controller->get_main());
 $shop_widget_under = $controller_shop->widget('under');
 $shop_widget_carousel_specials = $controller_shop->widget('carousel_specials');
 ?>
-<?php $this->registerCSSFile(App::$app->router()->UrlTo('css/index_common.min.css')); ?>
+<?php //$this->registerCSSFile(App::$app->router()->UrlTo('css/index_common.min.css')); ?>
 
 <?php include(APP_PATH . '/views/index/main_gallery.php'); ?>
 <div id="content" class="container inner-offset-top half-outer-offset-bottom">
