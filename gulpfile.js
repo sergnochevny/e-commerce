@@ -295,9 +295,9 @@ gulp.task('js_all', function () {
     'resources/js/search/search.js',
     'resources/js/script.js'
   ])
-  // .pipe(minify({
-  //   noSource: true
-  // }))
+    .pipe(minify({
+      noSource: true
+    }))
     .pipe(concat("all.min.js"))
     .pipe(gulp.dest('web/js'));
 });
