@@ -68,7 +68,6 @@ gulp.task('css_index', function () {
   return gulp
     .src(css_common_src, {base: 'resources/css/required/'})
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-    // .pipe(rename({suffix: '.min'}))
     .pipe(concat("index_common.min.css"))
     .pipe(postcss([postcss_uncss({
       html: [
@@ -85,7 +84,6 @@ gulp.task('css_shop', function () {
   return gulp
     .src(css_common_src, {base: 'resources/css/required/'})
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-    // .pipe(rename({suffix: '.min'}))
     .pipe(concat("shop_common.min.css"))
     .pipe(postcss([postcss_uncss({
       html: [
@@ -110,7 +108,6 @@ gulp.task('css_error', function () {
   return gulp
     .src(css_common_src, {base: 'resources/css/required/'})
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-    // .pipe(rename({suffix: '.min'}))
     .pipe(concat("error_common.min.css"))
     .pipe(postcss([postcss_uncss({
       html: [
@@ -125,7 +122,6 @@ gulp.task('css_static', function () {
   return gulp
     .src(css_common_src, {base: 'resources/css/required/'})
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-    // .pipe(rename({suffix: '.min'}))
     .pipe(concat("static_common.min.css"))
     .pipe(postcss([postcss_uncss({
       html: [
@@ -147,7 +143,6 @@ gulp.task('css_blog', function () {
   return gulp
     .src(css_common_src, {base: 'resources/css/required/'})
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-    // .pipe(rename({suffix: '.min'}))
     .pipe(concat("blog_common.min.css"))
     .pipe(postcss([postcss_uncss({
       html: [
@@ -165,7 +160,6 @@ gulp.task('css_matches', function () {
   return gulp
     .src(css_common_src, {base: 'resources/css/required/'})
     .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-    // .pipe(rename({suffix: '.min'}))
     .pipe(concat("matches_common.min.css"))
     .pipe(postcss([postcss_uncss({
       html: [
@@ -265,15 +259,15 @@ gulp.task('js_partials', function () {
     '!resources/js/search/search.js',
     '!resources/js/script.js'
   ])
-    // .pipe(minify({
-    //   ext: {
-    //     min: '.min.js'
-    //   },
-    //   noSource: true
-    // }))
-    .pipe(rename({
-      suffix: ".min"
+    .pipe(minify({
+      ext: {
+        min: '.min.js'
+      },
+      noSource: true
     }))
+    // .pipe(rename({
+    //   suffix: ".min"
+    // }))
     .pipe(gulp.dest('web/js'));
 });
 
