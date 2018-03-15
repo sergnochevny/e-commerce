@@ -77,7 +77,7 @@ class ControllerMatches extends ControllerFormSimple{
    * @throws \Exception
    */
   public function matches(){
-   // $this->main->is_user_authorized(true);
+    $this->main->is_user_authorized(true);
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
     if($controller == 'shop' && $action == 'product') $this->main->template->vars('back_url', App::$app->server('HTTP_REFERER'));
     $this->main->template->vars('cart_not_empty', !empty(App::$app->session('cart')['items']));

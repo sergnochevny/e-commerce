@@ -325,7 +325,8 @@ gulp.task('clear_cache', function () {
 });
 
 gulp.task('clear_destination', ['clear_destination_css', 'clear_destination_js', 'clear_destination_fonts']);
-gulp.task('css', ['css_all', 'css_partials', 'css_index', 'css_static', 'css_shop', 'css_blog', 'css_matches', 'css_error']);
+// gulp.task('css', ['css_all', 'css_partials', 'css_index', 'css_static', 'css_shop', 'css_blog', 'css_matches', 'css_error']);
+gulp.task('css', ['css_all', 'css_partials']);
 gulp.task('js', ['js_partials', 'js_all']);
 gulp.task('js_css', sequence('js', 'css'));
 gulp.task('clear', ['clear_cache', 'clear_destination']);

@@ -241,7 +241,7 @@ class ControllerRecommends extends ControllerController{
    * @throws \Exception
    */
   public function recommends(){
-    //$this->main->is_user_authorized(true);
+    $this->main->is_user_authorized(true);
     $this->main->template->vars('cart_enable', '_');
     App::$app->setSession('sidebar_idx', 7);
     parent::index(false);
