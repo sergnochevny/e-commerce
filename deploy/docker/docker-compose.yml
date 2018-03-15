@@ -33,18 +33,6 @@ services:
       networks:
         - back
 
-    postfix:
-      image: catatnight/postfix
-      container_name: ${NAME}_postfix
-      restart: always
-      expose:
-        - 25
-      environment:
-        - maildomain=${NAME}.ait.com
-        - smtp_user=postfix:postfix
-      networks:
-        - back
-
 networks:
   front:
   back:

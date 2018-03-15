@@ -32,7 +32,7 @@ use app\core\App;
     .loader {background: #fff; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000000000000;}
     .loader i {position: relative; left: 50vw; color: #000; top: 50vh; margin-left: -28px; margin-top: -28px;}
   </style>
-  <?php $this->registerCSSFile(App::$app->router()->UrlTo('css/all_common.min.css')); ?>
+  <?php //$this->registerCSSFile(App::$app->router()->UrlTo('css/all_common.min.css')); ?>
   <?= $this->renderCssLinks(); ?>
 
   <?php  $this->registerJSFile(App::$app->router()->UrlTo('js/all.min.js')); ?>

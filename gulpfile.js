@@ -327,7 +327,7 @@ gulp.task('clear_cache', function () {
 gulp.task('clear_destination', ['clear_destination_css', 'clear_destination_js', 'clear_destination_fonts']);
 gulp.task('css', ['css_all', 'css_partials', 'css_index', 'css_static', 'css_shop', 'css_blog', 'css_matches', 'css_error']);
 gulp.task('js', ['js_partials', 'js_all']);
-gulp.task('js_css', sequence('js', 'css_all'));
+gulp.task('js_css', sequence('js', 'css'));
 gulp.task('clear', ['clear_cache', 'clear_destination']);
 gulp.task('shop_images', ['shop_images_minify', 'shop_images_resize_b', 'shop_images_resize_p']);
 gulp.task('images', ['other-images', 'css-images', 'css-jqm-images', 'owl-images']);
