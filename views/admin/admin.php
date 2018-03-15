@@ -53,4 +53,4 @@ use app\core\App;
   </div>
 </div>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/authorization.min.js'), 4); ?>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/authorization_form.min.js'), 5); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/authorization/authorization_form.min.js'), 5, true); ?>

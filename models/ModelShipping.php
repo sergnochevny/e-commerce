@@ -85,7 +85,7 @@ class ModelShipping extends ModelBase{
             break;
           case MEDIUM_FABRIC:
           default:
-            $iTtl = (!is_null(App::$app->keyStorage()->shop_rate_express_medium) ? App::$app->keyStorage()->shop_shop_rate_express_medium : RATE_EXPRESS_MEDIUM);
+            $iTtl = (!is_null(App::$app->keyStorage()->shop_rate_express_medium) ? App::$app->keyStorage()->shop_rate_express_medium : RATE_EXPRESS_MEDIUM);
             break;
         }
         if($iQty > 2.0) {

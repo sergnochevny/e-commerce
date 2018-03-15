@@ -45,4 +45,4 @@ use app\core\App;
     </div>
   </div>
 </form>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/info/form.min.js'), 5); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/info/form.min.js'), 5, true); ?>

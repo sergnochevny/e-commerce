@@ -25,6 +25,7 @@
   }).on('dblclick', "img.product_img_holder", function (event) {
     $('body').waitloader('show');
     window.location = $(this).attr('data-detail_url');
+    $('body').waitloader('remove');
   });
 
   $('.deleteDragImg').droppable({
@@ -72,12 +73,10 @@
 
       $.postdata(this, url, data, function (data) {
         $.when(
-          $('body').waitloader('show'),
           $(data).appendTo('#content'),
-          $('span#cart_amount').load(load_url).done(function(){
-            $('body').waitloader('remove');
-          })
+          $('span#cart_amount').load(load_url)
         ).done(function () {
+          $('body').waitloader('remove');
           $($this).removeClass('simple-icon-basket').addClass('simple-icon-basket-loaded');
           $('#modal').modal('show').on('hidden.bs.modal', function () {
             $(this).remove();
@@ -120,10 +119,9 @@
       $('body').waitloader('show');
       $.when(
         $(data).appendTo('#content'),
-        $('span#cart_amount').load(load_url).done(function(){
-          $('body').waitloader('remove');
-        })
+        $('span#cart_amount').load(load_url)
       ).done(function () {
+        $('body').waitloader('remove');
         $('#clear_matches').trigger('click');
         $('#modal').modal('show').on('hidden.bs.modal', function () {
           $(this).remove();

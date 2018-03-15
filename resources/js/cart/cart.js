@@ -4,14 +4,13 @@
 
   $(document).on('change', 'input[data-role=quantity]', function (event) {
     event.preventDefault();
-    var v = $(this).val();
-    var input = this;
-    var url = base_url + 'cart/change_product';
-    var pid = $(this).parents('[data-block=cart_item]').attr('data-pid');
-    var parent = $(this).parents('[data-block=cart_item]');
+    var input = this,
+      v = $(input).val(),
+      url = base_url + 'cart/change_product',
+      pid = $(input).parents('[data-block=cart_item]').attr('data-pid'),
+      parent = $(input).parents('[data-block=cart_item]');
 
     $('body').waitloader('show');
-
     $.get(url, {pid: pid, qnt: v}, function (answer) {
       try {
         var data = JSON.parse(answer);
@@ -20,10 +19,10 @@
 
           $.when($(parent).replaceWith(data.product)).done(function () {
             $(document).trigger('init_spinner');
-            $('body').waitloader('remove');
             $('[data-block=subtotal_items]').load(base_url + 'cart/items_amount');
             $('[data-block=subtotal]').load(base_url + 'cart/amount');
             $(document).trigger('calc_shipping_total');
+            $('body').waitloader('remove');
           });
         }
         if (data.msg) {
@@ -31,15 +30,16 @@
             $(data.msg).appendTo('.main-content')
           ).done(
             function () {
-              $('#modal').modal('show');
               $('#modal').on('hidden.bs.modal', function () {
                 $(this).remove();
               });
+              $('#modal').modal('show');
             }
           );
         }
       } catch (e) {
-        $('.main-content').html(data);
+        $('.main-content').html(answer);
+        $('body').waitloader('remove');
       }
     });
   }).on('click.confirm_action', ".popup a.close", function (event) {
@@ -60,40 +60,37 @@
       $("#confirm_action").on('click.confirm_action',
         function (event) {
           event.preventDefault();
-          $.get(url,
-            {pid: pid},
-            function (data) {
-              $.when($(document).trigger('destroy_spinner')).done(
-                function () {
-                  $.when($(parent).remove()).done(
-                    function () {
-                      if ($('[data-row=items]').length > 0) {
-                        $(document).trigger('init_spinner');
-                        $('[data-block=subtotal_items]').load(base_url + 'cart/items_amount');
-                      } else {
-                        $('[data-block=row_subtotal]').remove();
-                        $('[data-block=row_subtotal_items]').remove();
-                        $('[data-block=coupon_section]').remove();
-                        $('[data-block=products-cart-list]').remove();
-                        if ($('[data-row=samples]').length > 0) {
-                          $('[data-block=subtotal_samples_items]').load(base_url + 'cart/samples_amount');
-                          $('[data-block=samples_legend]').load(base_url + 'cart/samples_legend');
-                        }
+          $.get(url, {pid: pid}, function (data) {
+            $.when($(document).trigger('destroy_spinner')).done(
+              function () {
+                $.when($(parent).remove()).done(
+                  function () {
+                    if ($('[data-row=items]').length > 0) {
+                      $(document).trigger('init_spinner');
+                      $('[data-block=subtotal_items]').load(base_url + 'cart/items_amount');
+                    } else {
+                      $('[data-block=row_subtotal]').remove();
+                      $('[data-block=row_subtotal_items]').remove();
+                      $('[data-block=coupon_section]').remove();
+                      $('[data-block=products-cart-list]').remove();
+                      if ($('[data-row=samples]').length > 0) {
+                        $('[data-block=subtotal_samples_items]').load(base_url + 'cart/samples_amount');
+                        $('[data-block=samples_legend]').load(base_url + 'cart/samples_legend');
                       }
-                      if (($('[data-row=items]').length > 0) || ($('[data-row=samples]').length > 0)) {
-                        $('[data-block=subtotal]').load(base_url + 'cart/amount');
-                      } else {
-                        $(document).trigger('remove_inputs');
-                      }
-                      $(document).trigger('calc_shipping_total');
-                      $("#confirm_dialog").removeClass('overlay_display');
-                      $("#confirm_action").off('click.confirm_action');
                     }
-                  );
-                }
-              );
-            }
-          );
+                    if (($('[data-row=items]').length > 0) || ($('[data-row=samples]').length > 0)) {
+                      $('[data-block=subtotal]').load(base_url + 'cart/amount');
+                    } else {
+                      $(document).trigger('remove_inputs');
+                    }
+                    $(document).trigger('calc_shipping_total');
+                    $("#confirm_dialog").removeClass('overlay_display');
+                    $("#confirm_action").off('click.confirm_action');
+                  }
+                );
+              }
+            );
+          });
         }
       );
 
@@ -246,7 +243,9 @@
     event.preventDefault();
     var url = base_url + 'cart/pay_mail';
     $('body').waitloader('show');
-    $.get(url);
+    $.get(url,{},function(data){
+      $('body').waitloader('remove');
+    });
   }).ready(function (event) {
     $(this).trigger('init_spinner');
   });

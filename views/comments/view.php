@@ -26,4 +26,4 @@ use app\core\App;
     </div>
   </div>
 </div>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/comments/view.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/comments/view.min.js'), 4, true); ?>

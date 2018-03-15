@@ -96,4 +96,4 @@ use app\core\App;
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </form>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/blog/form.min.js'), 6); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/blog/form.min.js'), 6, true); ?>

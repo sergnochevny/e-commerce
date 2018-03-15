@@ -130,5 +130,5 @@ $info_view = $controller_info->view(false, false, true);
     </div>
   </div>
 
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/load.min.js'), 4); ?>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/checkout.min.js'), 5); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/load.min.js'), 4, true); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/checkout.min.js'), 5, true); ?>

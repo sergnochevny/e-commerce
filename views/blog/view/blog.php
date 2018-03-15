@@ -30,4 +30,4 @@ use app\core\App;
     </article>
   </div>
 </div>
-<?php $this->registerJSFile(App::$app->router()->UrlTo('js/blog/view.min.js'), 4); ?>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/blog/view.min.js'), 4, true); ?>

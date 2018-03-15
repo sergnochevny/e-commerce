@@ -171,8 +171,11 @@ use app\core\App;
           <?php endif; ?>
         </a>
         <?php if((isset($cart_items) && strlen($cart_items) > 0) || (isset($cart_samples_items) && strlen($cart_samples_items) > 0)): ?>
-          <a data-block="proceed_button" class="checkout-button button alt wc-forward"
-             href="<?= App::$app->router()->UrlTo('cart/proceed_checkout') ?>">Proceed to Checkout</a>
+          <a data-block="proceed_button"
+             class="checkout-button button alt wc-forward"
+             href="<?= App::$app->router()->UrlTo('cart/proceed_checkout') ?>">
+            Proceed to Checkout
+          </a>
         <?php endif; ?>
       </div>
     </div>
