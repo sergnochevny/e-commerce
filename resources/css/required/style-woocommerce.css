@@ -1047,7 +1047,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     font-weight: bold;
     background-color: rgba(245, 245, 245, 0.8);
     border-radius: 4px;
-    text-align: center;
+    /*text-align: center;*/
     font-size: 16px;
     box-shadow: 0 0 10px #666;
     right: 0;
@@ -1075,7 +1075,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 
 .price sup{
-    color: #222;
+    color: #666;
 }
 
 .product_view .price {
@@ -1093,31 +1093,22 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 }
 
 .sold_out_1 hr {
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .sold_out_2 hr {
-    -webkit-transform: rotate(135deg);
-    -moz-transform: rotate(135deg);
-    -ms-transform: rotate(135deg);
-    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
 }
 
 .product-price-box hr {
-    -webkit-transform: rotate(20deg);
-    -moz-transform: rotate(20deg);
-    -ms-transform: rotate(20deg);
-    -o-transform: rotate(20deg);
+    transform: rotate(10deg);
     padding: 0;
     margin: 0;
     border: 2px solid rgba(255, 0, 0, 0.5);
     position: absolute;
-    width: 70%;
-    top: 35%;
-    left: 15%
+    width: 85%;
+    top: 40%;
+    left: 5%
 }
 
 .price .amount {
@@ -1128,6 +1119,11 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
 
 .product_view .price .amount {
     font-size: 28px;
+}
+
+.product_view .related .price .amount,
+.product_view .products.owl-carousel .price .amount {
+    font-size: 16px;
 }
 
 .product-price-box ins .amount {
@@ -2385,7 +2381,7 @@ ul.product_list_widget li dl dd p {
     font-weight: bold;
     background-color: rgba(245, 245, 245, 0.8);
     border-radius: 4px;
-    text-align: center;
+    /*text-align: center;*/
     font-size: 14px;
     box-shadow: 0 0 5px #999;
     bottom: 15px;
@@ -2409,22 +2405,20 @@ ul.product_list_widget li dl dd p {
 }
 
 .products.product_list_widget .product-price-box hr {
-    -webkit-transform: rotate(10deg);
-    -moz-transform: rotate(20deg);
-    -ms-transform: rotate(20deg);
-    -o-transform: rotate(20deg);
+    transform: rotate(10deg);
     padding: 0;
     margin: 0;
     border: 2px solid rgba(255, 0, 0, 0.5);
     position: absolute;
-    width: 41%;
+    width: 40%;
     top: 35px;
-    left: 1%;
+    left: 2%;
 }
 
 .products.product_list_widget .product-price-box .sale-price:before {
     content: "sale";
     color: rgba(255, 0, 0, 0.49);
+    display: inline-block;
 }
 
 .products.product_list_widget .product-price-box .sale-price:after {

@@ -24,12 +24,27 @@ class ModelRelated extends ModelBase{
    */
   public static function build_where(&$filter, &$prms = null){
     $result = "";
+    if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) {
+      $result[] = "a.priceyard > :hapriceyard";
+      $prms['hapriceyard'] = $filter['hidden']["a.priceyard"];
+    }
     if(isset($filter['hidden']['a.pvisible'])) {
       $result[] = "a.pvisible = :hapvisible";
       $prms['hapvisible'] = $filter['hidden']["a.pvisible"];
     }
     if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
     if(isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";
+
+    if(isset($filter['hidden']['b.priceyard']) && !is_array($filter['hidden']['b.priceyard'])) {
+      $result[] = "b.priceyard > :hbpriceyard";
+      $prms['hbpriceyard'] = $filter['hidden']["b.priceyard"];
+    }
+    if(isset($filter['hidden']['b.pvisible'])) {
+      $result[] = "b.pvisible = :hbpvisible";
+      $prms['hbpvisible'] = $filter['hidden']["b.pvisible"];
+    }
+    if(isset($filter['hidden']["b.pnumber"])) $result[] = "b.pnumber is not null";
+    if(isset($filter['hidden']["b.image1"])) $result[] = "b.image1 is not null";
 
     if(isset($filter['hidden']["a.pid"])) {
       $result[] = "a.pid = :ha_pid";
@@ -38,7 +53,7 @@ class ModelRelated extends ModelBase{
     if(!empty($result) && (count($result) > 0)) {
       $result = implode(" AND ", $result);
     }
-    $result = " WHERE b.priceyard > 0 and b.pnumber is not null and b.pvisible = '1'  and b.image1 is not null" . (!empty($result) ? ' AND ' . $result : '');
+    $result = !empty($result) ? " WHERE " . $result : '';
 
     return $result;
   }
@@ -58,9 +73,10 @@ class ModelRelated extends ModelBase{
       if($result) $response = static::fetch_assoc($result);
     }
 
-    if ($response === false){
+    if($response === false) {
       throw new Exception('Data set is empty!');
     }
+
     return $response;
   }
 
@@ -128,7 +144,7 @@ class ModelRelated extends ModelBase{
        * @var integer $r_id
        */
       $query = "REPLACE INTO " . static::$table . "(pid, r_pid) VALUE (:pid, :r_pid)";
-      $res = static::query($query, ['pid' => $pid, 'r_id' => $r_id ]);
+      $res = static::query($query, ['pid' => $pid, 'r_id' => $r_id]);
       if(!$res) throw new Exception(static::error());
       $id = static::last_id();
       static::commit();

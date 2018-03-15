@@ -48,6 +48,7 @@ class ControllerManufacturers extends ControllerSimple{
    * @param $filter
    * @param bool $view
    * @return array|null
+   * @throws \InvalidArgumentException
    */
   protected function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);

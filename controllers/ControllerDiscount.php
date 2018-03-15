@@ -118,7 +118,7 @@ class ControllerDiscount extends ControllerFormSimple{
    * @throws \Exception
    */
   private function selected_filter($data, $return = false){
-    if($return || (App::$app->post('type') === 'users')) {
+    if(App::$app->post('type') === 'users') {
       return $this->generate_users_filter($data, $return);
     }
 
@@ -141,6 +141,7 @@ class ControllerDiscount extends ControllerFormSimple{
    * @param $filter
    * @param bool $view
    * @return array|null
+   * @throws \InvalidArgumentException
    */
   protected function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
@@ -271,7 +272,7 @@ class ControllerDiscount extends ControllerFormSimple{
       if($method !== 'filter') {
         if(in_array($method, ['users', 'prod', 'cat', 'mnf', 'prc'])) {
           $filters = ($method == 'users') ? $data['users'] : $data['filter_products'];
-          exit($this->select_filter($method, $filters));
+          exit($this->select_filter($method, $filters, null, null, true));
         }
       } else {
         if(!is_null(App::$app->post('filter-type'))) {
@@ -280,7 +281,7 @@ class ControllerDiscount extends ControllerFormSimple{
 
           $data = $this->selected_filter_data($data);
 
-          $resporse[0] = $this->selected_filter($data);
+          $resporse[0] = $this->selected_filter($data, true);
 
           $resporse[1] = null;
           $search = App::$app->post('filter_select_search_' . $method);
@@ -296,7 +297,7 @@ class ControllerDiscount extends ControllerFormSimple{
           exit(json_encode($resporse));
         } else {
           $data = $this->selected_filter_data($data);
-          exit($this->selected_filter($data));
+          exit($this->selected_filter($data, true));
         }
       }
     }

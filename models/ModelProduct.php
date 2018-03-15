@@ -717,8 +717,8 @@ class ModelProduct extends ModelBase{
         if($res) $res = $res && static::query('DELETE FROM shop_product_related WHERE  pid=:pid', ['pid' => $pid]);
         if($res && (count($related) > 0)) {
           foreach($related as $r_pid) {
-            $res = $res && static::query('REPLACE INTO shop_product_related SET pid=:pid, r_pid=r_id',
-                ['pid' => $pid, 'r_id' => $r_pid]
+            $res = $res && static::query('REPLACE INTO shop_product_related SET pid = :pid, r_pid = :r_pid',
+                ['pid' => $pid, 'r_pid' => $r_pid]
               );
             if(!$res) break;
           }

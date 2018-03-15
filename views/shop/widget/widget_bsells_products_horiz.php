@@ -20,7 +20,7 @@ use app\core\App;
           </div>
           <?php if(!empty($row['saleprice']) && ($row['price'] != $row['saleprice'])) : ?>
             <div class="price sale-price">
-              <span class="amount_wd"><?= $row['format_sale_price']; ?></span>
+              <span class="amount amount_wd"><?= $row['format_sale_price']; ?></span>
             </div>
           <?php endif; ?>
         </div>

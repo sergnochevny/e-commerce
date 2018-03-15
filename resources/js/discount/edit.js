@@ -43,7 +43,7 @@
           $(destination).html(data[0]);
           $('#modal_content').html(data[1])
         } catch (e) {
-          $(destination).html(data);
+          $(destination).html(response);
         }
       }
     );

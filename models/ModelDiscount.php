@@ -413,7 +413,7 @@ class ModelDiscount extends ModelBase{
         }
         $q .= " order by manufacturer";
         $q .= " limit $start, $filter_limit";
-        $results = static::query($q, $prms);
+        $results = static::query($q);
         while($row = static::fetch_array($results)) {
           $filter[] = [$row[0], $row[1]];
         }

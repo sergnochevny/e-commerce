@@ -6,7 +6,7 @@
           <li class="selected_item">
             <div class="<?= (!is_array($value)) ? 'col-sm-11 col-xs-11' : 'col-sm-8 col-xs-8' ?>">
               <div class="row">
-                <span class="sel_item_lab"><?= is_array($value) ? $value[0] : $value; ?></span>
+                <div class="sel_item_lab"><?= is_array($value) ? $value[0] : $value; ?></div>
               </div>
               <?php if(!is_array($value)): ?>
                 <input name="<?= $filter_type ?>[<?= $key; ?>]"

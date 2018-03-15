@@ -48,6 +48,7 @@ class ControllerRelated extends ControllerFormSimple{
     $filter['hidden']['b.image1'] = 'null';
     if($view) {
       $filter['hidden']['b.pnumber'] = 'null';
+      if(!isset($filter['hidden']['b.priceyard'])) $filter['hidden']['b.priceyard'] = '0.00';
       $filter['hidden']['b.pvisible'] = '1';
     }
 

@@ -1807,9 +1807,11 @@ table.table-bordered center a {
     margin-bottom: 5px;
 }
 
-.sale-price:after {
+.sale-price:before {
     content: "sale";
     color: rgba(255, 0, 0, 0.49);
+    display: block;
+    text-align: center;
 }
 
 .sale-price sup {
@@ -2233,8 +2235,8 @@ body.archive .main-content {
 }
 
 sup {
-    color: #666 !important;
-    font-weight: normal !important;
+    color: #666;
+    font-weight: normal;
     margin-top: 15px;
     text-align: center;
 }
@@ -2244,9 +2246,9 @@ sup {
 }
 
 .product-price-box sup {
-    display: block;
-    color: #666 !important;
-    font-weight: normal !important;
+    display: inline-block;
+    color: #666;
+    font-weight: normal;
     margin-top: 15px;
     text-align: center;
 }

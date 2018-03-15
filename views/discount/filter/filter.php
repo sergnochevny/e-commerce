@@ -6,7 +6,9 @@
           <?php foreach($filters as $key => $name): ?>
             <li class="selected_item">
               <div class="col-sm-11 col-xs-11">
-                <div class="row"><span class="sel_item_lab"><?= $name; ?></span></div>
+                <div class="row">
+                  <div class="sel_item_lab"><?= $name; ?></div>
+                </div>
                 <input name="<?= ($filter_type !== 'users') ? 'filter_products' : 'users' ?>[]"
                        type="hidden" value="<?= $key; ?>">
               </div>
