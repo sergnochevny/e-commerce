@@ -271,9 +271,9 @@ gulp.task('js_partials', function () {
       },
       noSource: true
     }))
-    .pipe(rename({
-      suffix: ".min"
-    }))
+    // .pipe(rename({
+    //   suffix: ".min"
+    // }))
     .pipe(gulp.dest('web/js'));
 });
 
