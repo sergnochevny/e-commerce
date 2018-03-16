@@ -19,8 +19,8 @@ var change_text = false;
       if (danger.length) {
         danger.stop().show();
         setTimeout(function () {
-          danger.remove();
-          alert_container.remove();
+          danger.fadeOut();
+          alert_container.fadeOut();
         }, timeout);
       }
     },

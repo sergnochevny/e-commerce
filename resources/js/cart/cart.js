@@ -246,8 +246,14 @@
     $.get(url,{},function(data){
       $('body').waitloader('remove');
     });
-  }).ready(function (event) {
-    $(this).trigger('init_spinner');
+  }).on('click', "a#back_url", function (event) {
+    event.preventDefault();
+    var url = $(this).attr('href');
+    $.get(url, {}, function (data) {
+      $.when($('#content').html(data)).done(function () {
+        $('html, body').stop().animate({scrollTop: 0}, 1000);
+      });
+    });
   });
 
 })(window.jQuery || window.$);

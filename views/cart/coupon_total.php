@@ -76,7 +76,7 @@ use app\core\App;
     </div>
     <div class="col-md-9 col-sm-9 col-xs-6 inner-offset-top">
       <div data-block="cart_total" class="row">
-        <b>$<?= number_format($total, 2); ?> USD</b>
+        <b style="color: rgba(222,50,42,.8);">$<?= number_format($total, 2); ?> USD</b>
       </div>
     </div>
   </div>

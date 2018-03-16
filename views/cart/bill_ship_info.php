@@ -15,19 +15,20 @@
             <b>Bill To:</b>
           </div>
           <div class="col-xs-12">
-            <div
-              class="row"><?= (!empty($bill_firstname) ? $bill_firstname : '') . (!empty($bill_lastname) ? ' ' . $bill_lastname : '') ?></div>
+            <div class="row">
+              <?= (!empty($bill_firstname) ? $bill_firstname : '') . (!empty($bill_lastname) ? ' ' . $bill_lastname : '') ?>
+            </div>
           </div>
           <div class="col-xs-12">
             <div class="row"><?= $bill_organization ?></div>
           </div>
-          <div class="col-xs-6">
-            <div
-              class="row"><?= (!empty($bill_address1) ? $bill_address1 : '') . (!empty($bill_address2) ? ' ' . $bill_address2 : '') ?></div>
-          </div>
-          <div class="col-xs-6">
-            <div
-              class="row"><?= (!empty($bill_city) ? $bill_city : '') . (!empty($bill_province) ? ', ' . $bill_province : '') . (!empty($bill_postal) ? ' ' . $bill_postal : '') . (!empty($bill_city) ? ' ' . $bill_city : '') ?></div>
+          <div class="col-xs-12">
+            <div class="row">
+              <?= (!empty($bill_address1) ? $bill_address1 : '') . (!empty($bill_address2) ? ' ' . $bill_address2 : '') ?>
+              <?= (!empty($bill_address1) || !empty($bill_address2)) ? '<br>' : '' ?>
+              <?= (!empty($bill_city) ? $bill_city : '') . (!empty($bill_province) ? ', ' .
+                $bill_province : '') . (!empty($bill_postal) ? ' ' . $bill_postal : '') . (!empty($bill_city) ? ' ' . $bill_city : '') ?>
+            </div>
           </div>
           <div class="col-xs-12">
             <div class="row"><?= $bill_country ?></div>
@@ -51,13 +52,12 @@
           <div class="col-xs-12">
             <div class="row"><?= $ship_organization ?></div>
           </div>
-          <div class="col-xs-6">
-            <div
-              class="row"><?= (!empty($ship_address1) ? $ship_address1 : '') . (!empty($ship_address2) ? ' ' . $ship_address2 : '') ?></div>
-          </div>
-          <div class="col-xs-6">
-            <div
-              class="row"><?= (!empty($ship_city) ? $ship_city : '') . (!empty($ship_province) ? ' ' . $ship_province : '') . (!empty($ship_postal) ? ' ' . $ship_postal : '') . (!empty($ship_city) ? ' ' . $ship_city : '') ?></div>
+          <div class="col-xs-12">
+            <div class="row">
+              <?= (!empty($ship_address1) ? $ship_address1 : '') . (!empty($ship_address2) ? ' ' . $ship_address2 : '') ?>
+              <?= (!empty($ship_address1) || !empty($ship_address2)) ? '<br>' : '' ?>
+              <?= (!empty($ship_city) ? $ship_city : '') . (!empty($ship_province) ? ' ' . $ship_province : '') . (!empty($ship_postal) ? ' ' . $ship_postal : '') . (!empty($ship_city) ? ' ' . $ship_city : '') ?>
+            </div>
           </div>
           <div class="col-xs-12">
             <div class="row"><?= $ship_country ?></div>

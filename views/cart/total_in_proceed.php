@@ -59,7 +59,7 @@
           </div>
           <div class="col-xs-6 col-sm-2">
             <div class="row">
-              <b>$<?= number_format($total, 2); ?></b>
+              <b style="color: rgba(222,50,42,.8);">$<?= number_format($total, 2); ?></b>
             </div>
           </div>
         </div>
@@ -68,11 +68,11 @@
       <?php if(isset($discount) && ($discount > 0)) { ?>
         <div class="col-xs-12  table-list-row">
           <div class="col-xs-6 col-sm-10 text-right table-list-row-item">
-            <b style="color: red;">You Saved:</b>
+            <b>You Saved:</b>
           </div>
           <div class="col-xs-6 col-sm-2">
             <div class="row">
-              <b style="color: red;">$<?= number_format($discount, 2); ?></b>
+              <b>$<?= number_format($discount, 2); ?></b>
             </div>
           </div>
         </div>

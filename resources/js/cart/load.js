@@ -1,6 +1,5 @@
 (function ($) {
   'use strict';
-
   function InitTimeout() {
     var timeout = $('[data-timeout]').attr('data-timeout') * 1000 * 60;
     setTimeout(function () {

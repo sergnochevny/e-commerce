@@ -68,3 +68,4 @@ use app\core\App;
     </a>
   </div>
 </div>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/init_spinner.min.js'), 5, true); ?>

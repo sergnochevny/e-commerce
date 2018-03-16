@@ -37,7 +37,7 @@ $mhref = App::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
         </div>
       <?php endif; ?>
       <div class="col-xs-12 col-sm-2 back_button_container">
-        <a data-waitloader id="back_url" title="Back to Products' List" href="<?= $back_url; ?>"
+        <a data-waitloader id="back_url" href="<?= $back_url; ?>"
            class="button back_button">
           <i class="fa fa-angle-left" aria-hidden="true"></i>
           Back
