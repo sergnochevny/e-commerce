@@ -54,47 +54,6 @@ class ControllerShop extends ControllerController{
   }
 
   /**
-   * @param $filter
-   * @param bool $view
-   * @return array|null
-   * @throws \Exception
-   */
-  protected function build_search_filter(&$filter, $view = false){
-
-    $type = isset($filter['type']) ? $filter['type'] : null;
-    $res = parent::build_search_filter($filter, $view);
-    App::$app->setSession('sidebar_idx', 0);
-    $filter['hidden']['a.pnumber'] = 'null';
-    if(!isset($filter['hidden']['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
-    $filter['hidden']['a.pvisible'] = '1';
-    $filter['hidden']['a.image1'] = 'null';
-
-    if(!isset($res['pname']) && !is_null(App::$app->post('s')) && (!empty(App::$app->post('s')))) {
-      $search = strtolower(htmlspecialchars(trim(App::$app->post('s'))));
-      $this->main->template->vars('search_str', App::$app->post('s'));
-      $res['a.pname'] = App::$app->post('s');
-      $filter['a.pname'] = $search;
-    }
-    if(isset($type)) {
-      $filter['type'] = $type;
-      $res['type'] = $type;
-      switch($type) {
-        case 'best':
-          unset($filter['a.best']);
-          unset($res['a.best']);
-          $filter['hidden']['a.best'] = '1';
-          $res['hidden']['a.best'] = '1';
-          break;
-        case 'specials':
-          App::$app->setSession('sidebar_idx', 6);
-          break;
-      }
-    }
-
-    return $res;
-  }
-
-  /**
    * @param $sort
    * @param bool $view
    * @param null $filter
@@ -223,6 +182,7 @@ class ControllerShop extends ControllerController{
     $this->widget_products_under_type('under_20', 0, 5);
     $this->widget_products_under_type('under_40', 0, 5);
     $this->widget_products_under_type('under_60', 0, 5);
+
     return $this->render_layout_return('widget/' . $layout);
   }
 
@@ -248,16 +208,76 @@ class ControllerShop extends ControllerController{
   }
 
   /**
-   * @param $filter
-   * @param bool $view
-   * @return int|string
+   * @param $data
+   * @return string
+   * @throws \Exception
    */
-  protected function load_search_filter_get_idx($filter, $view = false){
-    $idx = AdminHelper::is_logged() . '_' . $view;
-    $idx .= (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
-    $idx = !empty($idx) ? $idx : 0;
+  protected function build_discount_info(&$data){
+    $discount_info = '';
+    if($data['rSystemDiscount'] > 0) {
+      $field_name = "Sale price:";
+      $field_value = sprintf("%s<br><strong>%s</strong>", $data['sPriceDiscount'], $data['srDiscountPrice']);
+      $this->main->template->vars('field_name', $field_name);
+      $this->main->template->vars('field_value', $field_value);
+      $discount_info .= $this->render_layout_return('product/discount');
+    }
 
-    return $idx;
+    if($data['bDiscount']) {
+      if($data['bSystemDiscount']) {
+        $field_name = "Extra disc. price:";
+      } else {
+        $field_name = "Sale price:";
+      }
+      if($data['bSystemDiscount']) {
+        $field_value = sprintf("Reduced further by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
+      } else {
+        $field_value = sprintf("Reduced by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
+      }
+      $this->main->template->vars('field_name', $field_name);
+      $this->main->template->vars('field_value', $field_value);
+      $discount_info .= $this->render_layout_return('product/discount');
+    }
+
+    if(strlen($data['sSystemDiscount']) > 0) {
+      $field_name = 'Shipping discount:';
+      $field_value = $data['sSystemDiscount'];
+      $this->main->template->vars('field_name', $field_name);
+      $this->main->template->vars('field_value', $field_value);
+      $discount_info .= $this->render_layout_return('product/discount');
+    }
+
+    if(isset($data['next_change']) && $data['next_change']) {
+      $field_name = 'Sale ends in:';
+      $field_value = $data['time_rem'];
+      $this->main->template->vars('field_name', $field_name);
+      $this->main->template->vars('field_value', $field_value);
+      $discount_info .= $this->render_layout_return('product/discount');
+    }
+
+    return $discount_info;
+  }
+
+  /**
+   * @param $data
+   * @return mixed
+   */
+  protected function set_product_meta(&$data){
+    if(!empty($data['metadescription'])) {
+      $this->main->template->setMeta('description', $data['metadescription']);
+    } elseif(!empty($data['sdesc'])) {
+      $this->main->template->setMeta('description', $data['sdesc']);
+    }
+    if(!empty($data['metakeywords'])) {
+      $this->main->template->setMeta('keywords', $data['metakeywords']);
+    } elseif(!empty($data['pname'])) {
+      $meta_keywords = array_filter(explode(' ', strtolower($data['pname'])));
+      $this->main->template->setMeta('keywords', explode(' ', implode(',', $meta_keywords)));
+    }
+    if(!empty($data['metatitle'])) {
+      $this->main->template->setMeta('title', $data['metatitle']);
+    } elseif(!empty($data['pname'])) {
+      $this->main->template->setMeta('title', $data['pname']);
+    }
   }
 
   /**
@@ -322,9 +342,12 @@ class ControllerShop extends ControllerController{
     $max_count_items = null;
     $model = $this->model;
     $back = App::$app->get('back');
-    if(!empty($back) && ($this->controller !== $back)) {
-      if(class_exists('Controller' . ucfirst($back))) {
+    $controllerInstance = $this;
+    if(!empty($back) && ($controller !== $back)) {
+      if(class_exists(App::$controllersNS . '\Controller' . ucfirst($back))) {
         $controller = $back;
+        $controllerInstance = App::$controllersNS . '\Controller' . ucfirst($controller);
+        $controllerInstance = new $controllerInstance($this->main);
         if(class_exists(App::$modelsNS . '\Model' . ucfirst($controller))) {
           $model = App::$modelsNS . '\Model' . ucfirst($controller);
         }
@@ -349,17 +372,24 @@ class ControllerShop extends ControllerController{
           case 'popular':
             $max_count_items = (!is_null(App::$app->keyStorage()->shop_popular_amount) ? App::$app->keyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT);
             break;
+          default:
+            $controller = 'related';
+            $controllerInstance = App::$controllersNS . '\Controller' . ucfirst($controller);
+            $controllerInstance = new $controllerInstance($this->main);
+            if(class_exists(App::$modelsNS . '\Model' . ucfirst($controller))) {
+              $model = App::$modelsNS . '\Model' . ucfirst($controller);
+            }
         }
       }
     }
-    $this->build_search_filter($filter);
-    $idx = $this->load_search_filter_get_idx($filter);
+    $controllerInstance->build_search_filter($filter);
+    $idx = $controllerInstance->load_search_filter_get_idx($filter);
     $pages = App::$app->session('pages');
     $per_pages = App::$app->session('per_pages');
-    $sort = $this->load_sort($filter);
+    $sort = $controllerInstance->load_sort($filter);
     $page = !empty($pages[$controller][$idx]) ? $pages[$controller][$idx] : 1;
-    $per_page = !empty($per_pages[$controller][$idx]) ? $per_pages[$controller][$idx] : $this->per_page;
-    $scenario = $this->scenario();
+    $per_page = !empty($per_pages[$controller][$idx]) ? $per_pages[$controller][$idx] : $controllerInstance->per_page;
+    $scenario = $controllerInstance->scenario();
     $filter['scenario'] = $scenario;
     $total = forward_static_call([$model, 'get_total_count'], $filter);
     if(!empty($filter['type']) && !empty($max_count_items) && (($total > $max_count_items) && ($max_count_items > 0))) $total = $max_count_items;
@@ -376,30 +406,32 @@ class ControllerShop extends ControllerController{
     ]);
     $prev_next = [];
     array_walk($rows, function($item, $key)
-    use ($id, $rows, $idx, $controller, $page, $back, $scenario, &$prev_next){
+    use ($id, $rows, $idx, $controller, $page, $back, $scenario, &$prev_next, $controllerInstance){
       if($item['pid'] == $id) {
         if(!empty($rows[$key - 1])) {
           $url_prms['pid'] = $rows[$key - 1]['pid'];
           $url_prms['back'] = $back;
+          if(!empty(App::$app->get('parent'))) $url_prms['parent'] = App::$app->get('parent');
           if(!empty($scenario)) $url_prms['method'] = $scenario;
-          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key - 1]['pname'], ['method']);
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key - 1]['pname'], ['method', 'parent']);
           $prev_next['prev']['url'] = $href;
           $prev_next['prev']['title'] = $rows[$key - 1]['pname'];
         }
         if(!empty($rows[$key + 1])) {
           $url_prms['pid'] = $rows[$key + 1]['pid'];
           $url_prms['back'] = $back;
+          if(!empty(App::$app->get('parent'))) $url_prms['parent'] = App::$app->get('parent');
           if(!empty($scenario)) $url_prms['method'] = $scenario;
-          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key + 1]['pname'], ['method']);
+          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key + 1]['pname'], ['method', 'parent']);
           $prev_next['next']['url'] = $href;
           $prev_next['next']['title'] = $rows[$key + 1]['pname'];
         }
-        if(2 * $this->per_page == $key) {
+        if(2 * $controllerInstance->per_page == $key) {
           $page += 1;
           $pages[$controller][$idx] = $page;
           App::$app->setSession('pages', $pages);
         }
-        if($this->per_page == $key + 1) {
+        if($controllerInstance->per_page == $key + 1) {
           $page -= 1;
           $pages[$controller][$idx] = $page;
           App::$app->setSession('pages', $pages);
@@ -408,6 +440,60 @@ class ControllerShop extends ControllerController{
     });
 
     return $prev_next;
+  }
+
+  /**
+   * @param $filter
+   * @param bool $view
+   * @return int|string
+   */
+  public function load_search_filter_get_idx($filter, $view = false){
+    $idx = AdminHelper::is_logged() . '_' . $view;
+    $idx .= (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
+    $idx = !empty($idx) ? $idx : 0;
+
+    return $idx;
+  }
+
+  /**
+   * @param $filter
+   * @param bool $view
+   * @return array|null
+   * @throws \Exception
+   */
+  public function build_search_filter(&$filter, $view = false){
+
+    $type = isset($filter['type']) ? $filter['type'] : null;
+    $res = parent::build_search_filter($filter, $view);
+    App::$app->setSession('sidebar_idx', 0);
+    $filter['hidden']['a.pnumber'] = 'null';
+    if(!isset($filter['hidden']['a.priceyard'])) $filter['hidden']['a.priceyard'] = '0.00';
+    $filter['hidden']['a.pvisible'] = '1';
+    $filter['hidden']['a.image1'] = 'null';
+
+    if(!isset($res['pname']) && !is_null(App::$app->post('s')) && (!empty(App::$app->post('s')))) {
+      $search = strtolower(htmlspecialchars(trim(App::$app->post('s'))));
+      $this->main->template->vars('search_str', App::$app->post('s'));
+      $res['a.pname'] = App::$app->post('s');
+      $filter['a.pname'] = $search;
+    }
+    if(isset($type)) {
+      $filter['type'] = $type;
+      $res['type'] = $type;
+      switch($type) {
+        case 'best':
+          unset($filter['a.best']);
+          unset($res['a.best']);
+          $filter['hidden']['a.best'] = '1';
+          $res['hidden']['a.best'] = '1';
+          break;
+        case 'specials':
+          App::$app->setSession('sidebar_idx', 6);
+          break;
+      }
+    }
+
+    return $res;
   }
 
   /**
@@ -477,79 +563,25 @@ class ControllerShop extends ControllerController{
    */
   public function product(){
     $pid = App::$app->get('pid');
+
+    $controller_related = new ControllerRelated($this->main);
+    $this->main->template->vars('related_view', $controller_related->view(false, false, $pid));
+    $controller_info = new ControllerInfo($this->main);
+    $controller_info->scenario('product');
+    $this->main->template->vars('info_view', $controller_info->view(false, false, true));
+
     $data = ModelShop::get_product($pid);
-
-    if(!empty($data['metadescription'])) {
-      $this->template->setMeta('description', $data['metadescription']);
-    } elseif(!empty($data['sdesc'])) {
-      $this->template->setMeta('description', $data['sdesc']);
-    }
-    if(!empty($data['metakeywords'])) {
-      $this->template->setMeta('keywords', $data['metakeywords']);
-    } elseif(!empty($data['pname'])) {
-      $meta_keywords = array_filter(explode(' ', strtolower($data['pname'])));
-      $this->template->setMeta('keywords', explode(' ', implode(',', $meta_keywords)));
-    }
-    if(!empty($data['metatitle'])) {
-      $this->template->setMeta('title', $data['metatitle']);
-    } elseif(!empty($data['pname'])) {
-      $this->template->setMeta('title', $data['pname']);
-    }
-
-    ob_start();
-    ob_implicit_flush(false);
-    if($data['rSystemDiscount'] > 0) {
-      $field_name = "Sale price:";
-      $field_value = sprintf("%s<br><strong>%s</strong>", $data['sPriceDiscount'], $data['srDiscountPrice']);
-      $this->main->template->vars('field_name', $field_name);
-      $this->main->template->vars('field_value', $field_value);
-      $this->render_layout('product/discount');
-    }
-
-    if($data['bDiscount']) {
-      if($data['bSystemDiscount']) {
-        $field_name = "Extra disc. price:";
-      } else {
-        $field_name = "Sale price:";
-      }
-      if($data['bSystemDiscount']) {
-        $field_value = sprintf("Reduced further by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
-      } else {
-        $field_value = sprintf("Reduced by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
-      }
-      $this->main->template->vars('field_name', $field_name);
-      $this->main->template->vars('field_value', $field_value);
-      $this->render_layout('product/discount');
-    }
-
-    if(strlen($data['sSystemDiscount']) > 0) {
-      $field_name = 'Shipping discount:';
-      $field_value = $data['sSystemDiscount'];
-      $this->main->template->vars('field_name', $field_name);
-      $this->main->template->vars('field_value', $field_value);
-      $this->render_layout('product/discount');
-    }
-
-    if(isset($data['next_change']) && $data['next_change']) {
-      $field_name = 'Sale ends in:';
-      $field_value = $data['time_rem'];
-      $this->main->template->vars('field_name', $field_name);
-      $this->main->template->vars('field_value', $field_value);
-      $this->render_layout('product/discount');
-    }
-    $discount_info = ob_get_clean();
-    $this->main->template->vars('discount_info', $discount_info);
+    $this->set_back_url();
+    $this->set_product_meta($data);
+    $this->main->template->vars('discount_info', $this->build_discount_info($data));
     if(!is_null(App::$app->post('s')) && (!empty(App::$app->post('s')))) {
       $search = strtolower(htmlspecialchars(trim(App::$app->post('s'))));
       $this->main->template->vars('search_str', App::$app->post('s'));
     }
-    $this->set_back_url();
-    $prev_next = $this->get_data_prev_next($pid);
-    $this->main->template->vars('prev_next', $prev_next);
+    $this->main->template->vars('prev_next', $this->get_data_prev_next($pid));
     $this->main->template->vars('in_favorites', FavoritesHelper::product_in($pid));
     $this->main->template->vars('data', $data);
-    $allowed_samples = ModelSamples::allowedSamples($pid);
-    $this->main->template->vars('allowed_samples', $allowed_samples);
+    $this->main->template->vars('allowed_samples', ModelSamples::allowedSamples($pid));
     $this->main->template->vars('cart_enable', '_');
     $this->render_view('product/view');
   }

@@ -52,7 +52,7 @@ class ControllerOrders extends ControllerSimple{
    * @return array|null
    * @throws \InvalidArgumentException
    */
-  protected function build_search_filter(&$filter, $view = false){
+  public function build_search_filter(&$filter, $view = false){
     $search_form = parent::build_search_filter($filter, $view);
     if(UserHelper::is_logged()) {
       $filter['hidden']['a.aid'] = UserHelper::get_from_session()['aid'];

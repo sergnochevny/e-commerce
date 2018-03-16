@@ -23,7 +23,7 @@
   }
 
   function evRemoveFilterRow() {
-    $(this).parents('li.selected_item').remove();
+    $(this).parents('[data-filter_row]').remove();
   }
 
   function evFilterSearch() {

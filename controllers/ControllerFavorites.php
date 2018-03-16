@@ -65,7 +65,7 @@ class ControllerFavorites extends ControllerSimple{
    * @return array|null
    * @throws \InvalidArgumentException
    */
-  protected function build_search_filter(&$filter, $view = false){
+  public function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
     $filter['hidden']['z.aid'] = UserHelper::get_from_session()['aid'];
 

@@ -132,6 +132,7 @@ abstract class ControllerController extends ControllerBase{
   protected function set_back_url($back_url = null, $prms = null){
     if(!isset($back_url)) $this->build_back_url($back_url, $prms);
     if(isset($back_url)) {
+      $this->main->template->vars('back', $back_url);
       $back_url = App::$app->router()->UrlTo($back_url, $prms, null, null, false, true);
       $this->main->template->vars('back_url', $back_url);
     }
@@ -142,7 +143,7 @@ abstract class ControllerController extends ControllerBase{
    * @param bool $view
    * @return int|string
    */
-  protected function load_search_filter_get_idx($filter, $view = false){
+  public function load_search_filter_get_idx($filter, $view = false){
     $idx = AdminHelper::is_logged() . '_' . $view;
     $idx .= (isset($filter['type']) ? $filter['type'] : '') . (!empty($this->scenario()) ? $this->scenario() : '');
     $idx = !empty($idx) ? $idx : 0;
@@ -237,7 +238,7 @@ abstract class ControllerController extends ControllerBase{
    * @return array|null
    * @throws \InvalidArgumentException
    */
-  protected function build_search_filter(&$filter, $view = false){
+  public function build_search_filter(&$filter, $view = false){
     $search_form = null;
     $fields = $this->search_fields($view);
     $search = $this->load_search_filter($filter, $view);
@@ -320,7 +321,7 @@ abstract class ControllerController extends ControllerBase{
    * @param bool $view
    * @return null
    */
-  protected function load_sort($filter, $view = false){
+  public function load_sort($filter, $view = false){
     $idx = $this->load_search_filter_get_idx($filter, $view);
     $sorts = App::$app->session('sorts');
     $sort = null;
@@ -349,13 +350,13 @@ abstract class ControllerController extends ControllerBase{
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
     $this->main->template->vars('scenario', $this->scenario());
     $this->search_form($search_form, $view);
+    $this->set_back_url();
     $this->main->template->vars('rows', $rows);
     $this->main->template->vars('sort', $sort);
     $this->main->template->vars('list', $this->render_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows'));
     $this->main->template->vars('count_rows', $res_count_rows);
     $prms = !empty($this->scenario()) ? ['method' => $this->scenario()] : null;
     (new Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $prms, $per_page);
-    $this->set_back_url();
     $this->before_list_layout($view);
     if($return) return $this->render_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ?
         $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list',

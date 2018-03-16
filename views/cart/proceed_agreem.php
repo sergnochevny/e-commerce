@@ -1,26 +1,18 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerInfo;
 
-$controller_info = new ControllerInfo($this->controller->get_main());
-$controller_info->scenario('cart');
-$info_vew = $controller_info->view(false, false, true);
 ?>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-sm-2 back_button_container">
+      <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Back
+      </a>
+    </div>
+    <div class="col-xs-12 col-sm-8 text-center">
       <div class="row">
-        <div class="col-xs-12 col-sm-2 back_button_container">
-          <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
-            <i class="fa fa-angle-left" aria-hidden="true"></i>
-            Back
-          </a>
-        </div>
-        <div class="col-xs-12 col-sm-8 text-center">
-          <div class="row">
-            <h1 class="page-title">Agreement terms</h1>
-          </div>
-        </div>
+        <h1 class="page-title">Agreement terms</h1>
       </div>
     </div>
   </div>
@@ -183,7 +175,7 @@ $info_vew = $controller_info->view(false, false, true);
     </div>
   </div>
   <div>
-    <?= $info_view;?>
+    <?= $info_view; ?>
   </div>
 
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/load.min.js'), 4, true); ?>

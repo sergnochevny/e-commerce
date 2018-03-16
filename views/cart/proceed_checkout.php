@@ -1,20 +1,18 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerInfo;
 
-$controller_info = new ControllerInfo($this->controller->get_main());
-$controller_info->scenario('cart');
-$info_view = $controller_info->view(false, false, true);
 ?>
 <?php include(APP_PATH . '/views/messages/alert-boxes.php'); ?>
   <div class="col-xs-12">
     <div class="row">
       <div class="col-xs-12 col-sm-2 back_button_container">
-        <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
-          <i class="fa fa-angle-left" aria-hidden="true"></i>
-          Back
-        </a>
+        <div class="row">
+          <a data-waitloader id="back_url" href="<?= $back_url; ?>" class="button back_button">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            Back
+          </a>
+        </div>
       </div>
       <div class="col-xs-12 col-sm-8 text-center">
         <div class="row">

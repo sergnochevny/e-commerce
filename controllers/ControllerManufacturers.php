@@ -50,7 +50,7 @@ class ControllerManufacturers extends ControllerSimple{
    * @return array|null
    * @throws \InvalidArgumentException
    */
-  protected function build_search_filter(&$filter, $view = false){
+  public function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
     if($view) {
       $this->per_page = 24;

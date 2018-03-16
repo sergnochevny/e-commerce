@@ -46,7 +46,7 @@ class ControllerRecommends extends ControllerController{
    * @return array|null
    * @throws \InvalidArgumentException
    */
-  protected function build_search_filter(&$filter, $view = false){
+  public function build_search_filter(&$filter, $view = false){
     $hidden["shop_orders.aid"] = UserHelper::get_from_session()['aid'];
     $hidden['a.pnumber'] = 'null';
     if(!isset($filter['hidden']['a.priceyard'])) $hidden['a.priceyard'] = '0.00';
@@ -155,7 +155,7 @@ class ControllerRecommends extends ControllerController{
    * @param bool $view
    * @return null
    */
-  protected function load_sort($filter, $view = false){
+  public function load_sort($filter, $view = false){
     if(!empty($filter['totalrows'])) {
       $sort = parent::load_sort($filter, $view);
     } else {

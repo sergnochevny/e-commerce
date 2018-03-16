@@ -11,18 +11,14 @@
       return (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';
     }
 
-    function InitResizeImageContainer() {
-      $(window).on('resize', function () {
-        var main_img = $('.b_modify_images_main_pic'),
-          secondary_img = $('.b_modify_images_pic');
+    $(window).on('resize', function () {
+      var main_img = $('[data-img_main]'),
+        secondary_img = $('[data-img]');
 
-        main_img.height((main_img.width() - 160) + 'px');
-        secondary_img.height((secondary_img.width() - 180) + 'px');
+      main_img.height((main_img.width() - 160) + 'px');
+      secondary_img.height((secondary_img.width() - 180) + 'px');
 
-      }).trigger('resize');
-    }
-
-    InitResizeImageContainer();
+    }).trigger('resize');
 
     function postdata(this_, url, data, context, callback) {
       $('body').waitloader('show');
@@ -53,7 +49,7 @@
       });
     }
 
-    $(document).on('click', '.b_modify_images_pic_main_icon',
+    $(document).on('click', '[data-img_set_main]',
       function (event) {
         event.preventDefault();
         var data = new FormData($('form#edit_form')[0]);
@@ -62,7 +58,7 @@
         data.append('idx', $(this).attr('data-img_idx'));
         postdata(this, url, data, $('#images'),
           function () {
-            InitResizeImageContainer();
+            $(window).trigger('resize');
           }
         );
       }
@@ -77,7 +73,7 @@
         event.preventDefault();
         $(".popup a.close").trigger('click');
       }
-    ).on('click', 'a.pic_del_images',
+    ).on('click', 'a[data-img_del]',
       function (event) {
         event.preventDefault();
         if (!$(this).is('.disabled')) {
@@ -93,7 +89,7 @@
               data.append('idx', idx);
               postdata(this, url, data, $('#images'),
                 function () {
-                  InitResizeImageContainer();
+                  $(window).trigger('resize');
                 }
               );
               $("#confirm_action").off('click.confirm_action');
@@ -103,12 +99,12 @@
           $("#confirm_dialog").addClass('overlay_display');
         }
       }
-    ).on('click', '#upload',
+    ).on('click', '[data-img_upload]',
       function (event) {
         event.preventDefault();
-        $('#uploadfile').trigger('click');
+        $('[data-img_uploadfile]').trigger('click');
       }
-    ).on('change', '#uploadfile',
+    ).on('change', '[data-img_uploadfile]',
       function (event) {
         event.preventDefault();
 
@@ -124,7 +120,7 @@
           data.append('idx', (!$('input[name=images]:checked').val()) ? 1 : $('input[name=images]:checked').val());
           postdata(this, url, data, $('#images'),
             function () {
-              InitResizeImageContainer();
+              $(window).trigger('resize');
             }
           );
         }

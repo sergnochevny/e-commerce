@@ -722,25 +722,20 @@ class ControllerCart extends ControllerController{
    */
   protected function proceed_checkout_prepare(){
     $prms = null;
-    $back_url = App::$app->router()->UrlTo('cart');
-    $this->main->template->vars('back_url', $back_url);
-    $cart_items = $this->products_in('product_in_proceed');
-    $cart_samples_items = $this->samples_in('sample_in_proceed');
-    $sum_samples = $this->samples_amount();
-    $shipping = $this->shipping_proceed_calc();
-    $total_proceed = $this->total_proceed_calc();
-    $bill_ship_info = $this->proceed_bill_ship();
+    $controller_info = new ControllerInfo($this->main);
+    $controller_info->scenario('cart');
+    $this->main->template->vars('info_view',$controller_info->view(false, false, true));
+
+    $this->main->template->vars('back_url', App::$app->router()->UrlTo('cart'));
+    $this->main->template->vars('cart_items', $this->products_in('product_in_proceed'));
+    $this->main->template->vars('cart_samples_items', $this->samples_in('sample_in_proceed'));
+    $this->main->template->vars('sum_samples', $this->samples_amount());
+    $this->main->template->vars('shipping', $this->shipping_proceed_calc());
+    $this->main->template->vars('total_proceed', $this->total_proceed_calc());
+    $this->main->template->vars('bill_ship_info', $this->proceed_bill_ship());
     $back_url = App::$app->router()->UrlTo('cart', ['proceed' => 1]);
     $prms['url'] = urlencode(base64_encode($back_url));
-    $change_user_url = App::$app->router()->UrlTo('user/change', $prms);
-
-    $this->main->template->vars('cart_items', $cart_items);
-    $this->main->template->vars('cart_samples_items', $cart_samples_items);
-    $this->main->template->vars('sum_samples', $sum_samples);
-    $this->main->template->vars('shipping', $shipping);
-    $this->main->template->vars('total_proceed', $total_proceed);
-    $this->main->template->vars('bill_ship_info', $bill_ship_info);
-    $this->main->template->vars('change_user_url', $change_user_url);
+    $this->main->template->vars('change_user_url', App::$app->router()->UrlTo('user/change', $prms));
   }
 
   /**
@@ -1049,40 +1044,27 @@ class ControllerCart extends ControllerController{
     $paypal_business = App::$app->keyStorage()->paypal_business;
     $paypal_url = App::$app->keyStorage()->paypal_url;
     if(!empty($paypal_business) && !empty($paypal_url)) {
-      $prms = null;
-      $back_url = App::$app->router()
-        ->UrlTo('cart', ['proceed' => true]);
-      $this->main->template->vars('back_url', $back_url);
-      $total = App::$app->session('cart')['total'];
-      $this->main->template->vars('total', $total);
+      $controller_info = new ControllerInfo($this->main);
+      $controller_info->scenario('cart');
+      $this->main->template->vars('info_vew', $controller_info->view(false, false, true));
 
+      $prms = null;
+      $this->main->template->vars('back_url', App::$app->router()->UrlTo('cart', ['proceed' => true]));
+      $this->main->template->vars('total', App::$app->session('cart')['total']);
       $user = App::$app->session('user');
-      $email = trim($user['email']);
-      $bill_firstname = trim($user['bill_firstname']);
-      $bill_lastname = trim($user['bill_lastname']);
-      $bill_organization = trim($user['bill_organization']);
-      $bill_address1 = trim($user['bill_address1']);
-      $bill_address2 = trim($user['bill_address2']);
-      $bill_province = trim($user['bill_province']);
-      $bill_city = trim($user['bill_city']);
-      $bill_country = trim($user['bill_country']);
-      $bill_postal = trim($user['bill_postal']);
-      $bill_phone = trim($user['bill_phone']);
 
       if(!empty($bill_postal)) {
-        $this->main->template->vars('email', $email);
-        $this->main->template->vars('bill_firstname', $bill_firstname);
-        $this->main->template->vars('bill_lastname', $bill_lastname);
-        $this->main->template->vars('bill_organization', $bill_organization);
-        $this->main->template->vars('bill_address1', $bill_address1);
-        $this->main->template->vars('bill_address2', $bill_address2);
-        $this->main->template->vars('bill_city', $bill_city);
-        $this->main->template->vars('bill_postal', $bill_postal);
-        $this->main->template->vars('bill_phone', $bill_phone);
-        $bill_country = trim(ModelAddress::get_country_by_id($bill_country));
-        $this->main->template->vars('bill_country', $bill_country);
-        $bill_province = trim(ModelAddress::get_province_by_id($bill_province));
-        $this->main->template->vars('bill_province', $bill_province);
+        $this->main->template->vars('email', trim($user['email']));
+        $this->main->template->vars('bill_firstname', trim($user['bill_firstname']));
+        $this->main->template->vars('bill_lastname', trim($user['bill_lastname']));
+        $this->main->template->vars('bill_organization', trim($user['bill_organization']));
+        $this->main->template->vars('bill_address1', trim($user['bill_address1']));
+        $this->main->template->vars('bill_address2', trim($user['bill_address2']));
+        $this->main->template->vars('bill_city', trim($user['bill_city']));
+        $this->main->template->vars('bill_postal', trim($user['bill_postal']));
+        $this->main->template->vars('bill_phone', trim($user['bill_phone']));
+        $this->main->template->vars('bill_country',  trim(ModelAddress::get_country_by_id(trim($user['bill_country']))));
+        $this->main->template->vars('bill_province', trim(ModelAddress::get_province_by_id(trim($user['bill_province']))));
 
         $trid = uniqid();
         $cart = App::$app->session('cart');
@@ -1101,14 +1083,10 @@ class ControllerCart extends ControllerController{
         $paypal['url'] = $paypal_url;
 
         $paypal['cmd'] = "_xclick";
-        $paypal['image_url'] = App::$app->router()
-          ->UrlTo('/');
-        $paypal['return'] = App::$app->router()
-          ->UrlTo('cart', ['pay_ok' => true, 'trid' => $trid]);
-        $paypal['cancel_return'] = App::$app->router()
-          ->UrlTo("cart", ['pay_error' => true]);
-        $paypal['notify_url'] = App::$app->router()
-          ->UrlTo("ipn", ['pay_notify' => session_id()]);
+        $paypal['image_url'] = App::$app->router()->UrlTo('/');
+        $paypal['return'] = App::$app->router()->UrlTo('cart', ['pay_ok' => true, 'trid' => $trid]);
+        $paypal['cancel_return'] = App::$app->router()->UrlTo("cart", ['pay_error' => true]);
+        $paypal['notify_url'] = App::$app->router()->UrlTo("ipn", ['pay_notify' => session_id()]);
         $paypal['rm'] = "1";
         $paypal['currency_code'] = "USD";
         $paypal['lc'] = "US";
@@ -1152,7 +1130,7 @@ class ControllerCart extends ControllerController{
     $cart_sum = "$" . number_format($SUM, 2);
     $this->main->template->vars('sum_all_items', $cart_sum);
 
-    return $cart_sum;
+    exit($cart_sum);
   }
 
   /**
@@ -1179,7 +1157,6 @@ class ControllerCart extends ControllerController{
 
         if(!$item_added) {
 
-          $pid = $pid;
           $price = $product['price'];
           $inventory = $product['inventory'];
           $piece = $product['piece'];

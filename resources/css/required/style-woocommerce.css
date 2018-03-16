@@ -283,14 +283,12 @@ span#b_in_product {
 
 .ui-input-text {
     background-color: #fff;
-    /*border: 1px solid #DDD;*/
     border: 1px solid #b0b0b0;
     border-radius: 2px !important;
     -webkit-border-radius: 2px !important;
     -moz-border-radius: 2px !important;
-    /*box-shadow: 0 0 0 #DDD !important;*/
     box-shadow: 0 0 3px 1px #dbdbdb inset;
-    font-size: 12px;
+    font-size: 14px;
     height: 42px;
     padding: 0;
     width: 100%;
@@ -298,7 +296,6 @@ span#b_in_product {
     -moz-transition: all .15s ease-in;
     -o-transition: all .15s ease-in;
     transition: all .15s ease-in;
-    margin-bottom: 10px;
 }
 
 .ui-input-text input {
@@ -307,7 +304,7 @@ span#b_in_product {
     -webkit-border-radius: 2px !important;
     -moz-border-radius: 2px !important;
     box-shadow: none;
-    font-size: 12px;
+    font-size: 14px;
     height: 40px;
     padding: 0 10px;
     width: 100%;
@@ -317,6 +314,10 @@ span#b_in_product {
     transition: all .15s ease-in;
     border: none;
     margin: 0;
+}
+
+.selected_item .ui-input-text input {
+    padding: 0 0 0 10px;
 }
 
 @media (max-width: 768px) {
@@ -378,7 +379,7 @@ select:focus {
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    font-size: 12px;
+    font-size: 14px;
     height: 42px;
     padding: 0 10px;
     width: 100%;
@@ -445,7 +446,7 @@ input[type='color']:focus {
 .form-row .select2-container .select2-choice {
     border: 1px solid #222222;
     line-height: 32px;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 0;
 }
 
@@ -494,7 +495,7 @@ table.shop_table input {
     height: 36px;
     border-radius: 0;
     padding: 0 10px !important;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 table.shop_table .quantity input {
@@ -527,7 +528,7 @@ table.shop_table tr td.actions .coupon input.input-text {
     height: 36px;
     border-radius: 0;
     padding: 0 10px;
-    font-size: 12px;
+    font-size: 14px;
     min-width: 120px;
 }
 
@@ -601,7 +602,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     height: 36px;
     border-radius: 0 !important;
     padding: 0 10px;
-    font-size: 12px;
+    font-size: 14px;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -1263,7 +1264,7 @@ label {
     height: 36px;
     border-radius: 0 !important;
     padding: 0 10px;
-    font-size: 12px;
+    font-size: 14px;
     width: 100%;
 }
 
@@ -1474,7 +1475,7 @@ input[type=reset], button[type=reset] {
     height: 36px;
     border-radius: 0;
     padding: 0 10px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 #reviews #review_form #respond #commentform textarea {
@@ -1484,7 +1485,7 @@ input[type=reset], button[type=reset] {
     min-height: 100px;
     border-radius: 0;
     padding: 10px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 #reviews #review_form #respond #commentform input#submit {
@@ -1492,7 +1493,7 @@ input[type=reset], button[type=reset] {
     padding: 0 20px;
     text-transform: uppercase;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     height: 36px;
     line-height: 32px;
     border-radius: 0;
@@ -1606,7 +1607,7 @@ input[type=reset], button[type=reset] {
     height: 36px;
     border-radius: 0 !important;
     padding: 0 10px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .cart-collaterals .cart_totals tr.shipping td .woocommerce-shipping-calculator .shipping-calculator-form input {
@@ -1614,7 +1615,7 @@ input[type=reset], button[type=reset] {
     height: 36px;
     border-radius: 0;
     padding: 0 10px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .cart-collaterals .wc-proceed-to-checkout .button {
@@ -1654,7 +1655,7 @@ input[type=reset], button[type=reset] {
     padding: 0 20px;
     text-transform: uppercase;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     height: 36px;
     line-height: 32px;
     border-radius: 0;
@@ -1847,7 +1848,7 @@ ul.product_list_widget li dl dd p {
     height: 36px;
     border-radius: 0;
     padding: 0 10px;
-    font-size: 12px;
+    font-size: 14px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -1857,7 +1858,7 @@ ul.product_list_widget li dl dd p {
     padding: 0 20px;
     text-transform: uppercase;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     height: 36px;
     line-height: 32px;
     border-radius: 0;
@@ -2143,7 +2144,7 @@ ul.product_list_widget li dl dd p {
     overflow: hidden;
     color: #667700;
     display: block;
-    font-size: 1em;
+    font-size: 18px;
     padding-top: 4px;
     font-weight: bold;
     line-height: 18px;
@@ -2357,7 +2358,7 @@ ul.product_list_widget li dl dd p {
     margin: 10px 0 5px 0;
     height: 4em;
     overflow: hidden;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .products.product_list_widget .product-item .product-title a {

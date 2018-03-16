@@ -1,11 +1,7 @@
 <?php
 
 use app\core\App;
-use controllers\ControllerUser;
 
-$controller_user = new ControllerUser($this->controller->get_main());
-App::$app->get('method', 'short');
-$user_registration = $controller_user->registration();
 ?>
 <div class="container inner-offset-top half-outer-offset-bottom">
   <div class="row">

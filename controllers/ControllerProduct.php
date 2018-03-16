@@ -50,7 +50,8 @@ class ControllerProduct extends ControllerFormSimple{
     $this->main->template->vars('filter_data_start', isset($start) ? $start : 0);
     $this->main->template->vars('selected', $selected);
     $this->main->template->vars('filter', $filter);
-    if($return) return $this->render_layout_return('filter/select');
+    if($return) return $this->render_layout_return('filter/select', $return && App::$app->request_is_ajax());
+
     return $this->render_layout('filter/select');
   }
 
@@ -62,19 +63,19 @@ class ControllerProduct extends ControllerFormSimple{
    */
   private function images($data, $return = false){
     $not_image = App::$app->router()->UrlTo('images/not_image.jpg');
-    $data['u_image1'] = empty($data['image1']) || !is_file(APP_PATH.'/web/images/products/' . $data['image1']) ? '' :
+    $data['u_image1'] = empty($data['image1']) || !is_file(APP_PATH . '/web/images/products/' . $data['image1']) ? '' :
       App::$app->router()->UrlTo('images/products/v_' . $data['image1']);
-    $data['u_image2'] = empty($data['image2']) || !is_file(APP_PATH.'/web/images/products/' . $data['image2']) ? '' :
+    $data['u_image2'] = empty($data['image2']) || !is_file(APP_PATH . '/web/images/products/' . $data['image2']) ? '' :
       App::$app->router()->UrlTo('images/products/b_' . $data['image2']);
-    $data['u_image3'] = empty($data['image3']) || !is_file(APP_PATH.'/web/images/products/' . $data['image3']) ? '' :
+    $data['u_image3'] = empty($data['image3']) || !is_file(APP_PATH . '/web/images/products/' . $data['image3']) ? '' :
       App::$app->router()->UrlTo('images/products/b_' . $data['image3']);
-    $data['u_image4'] = empty($data['image4']) || !is_file(APP_PATH.'/web/images/products/' . $data['image4']) ? '' :
+    $data['u_image4'] = empty($data['image4']) || !is_file(APP_PATH . '/web/images/products/' . $data['image4']) ? '' :
       App::$app->router()->UrlTo('images/products/b_' . $data['image4']);
-    $data['u_image5'] = empty($data['image5']) || !is_file(APP_PATH.'/web/images/products/' . $data['image5']) ? '' :
+    $data['u_image5'] = empty($data['image5']) || !is_file(APP_PATH . '/web/images/products/' . $data['image5']) ? '' :
       App::$app->router()->UrlTo('images/products/b_' . $data['image5']);
     $this->main->template->vars('not_image', $not_image);
     $this->main->template->vars('data', $data);
-    if($return) return $this->render_layout_return('images');
+    if($return) return $this->render_layout_return('images', $return && App::$app->request_is_ajax());
     $this->render_layout('images');
   }
 
@@ -167,7 +168,8 @@ class ControllerProduct extends ControllerFormSimple{
     $this->main->template->vars('filter_type', $type);
     $this->main->template->vars('destination', $type);
     $this->main->template->vars('title', 'Select ' . ucfirst($type));
-    if($return) return $this->render_layout_return('filter/filter');
+    if($return) return $this->render_layout_return('filter/filter', $return && App::$app->request_is_ajax());
+
     return $this->render_layout('filter/filter');
   }
 
@@ -181,7 +183,8 @@ class ControllerProduct extends ControllerFormSimple{
   private function generate_select($data, $selected, $return = false){
     $this->main->template->vars('selected', is_array($selected) ? $selected : [$selected]);
     $this->main->template->vars('data', is_array($data) ? $data : [$data]);
-    if($return) return $this->render_layout_return('select');
+    if($return) return $this->render_layout_return('select', $return && App::$app->request_is_ajax());
+
     return $this->render_layout('select');
   }
 
@@ -204,6 +207,7 @@ class ControllerProduct extends ControllerFormSimple{
     $this->main->template->vars('rows', $rows);
     $this->main->template->vars('list', $this->render_layout_return('related/rows'));
     if($return) return $this->render_layout_return('related/list', $return && App::$app->request_is_ajax());
+
     return $this->render_layout('related/list');
   }
 

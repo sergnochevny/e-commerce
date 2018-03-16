@@ -8,11 +8,14 @@ use app\core\App;
     <div class="product-item">
       <div class="product-inner">
         <?php
+        $prms = ['pid' => $row['cpid']];
+        if(!empty($back)) $prms['back'] = $back;
         $url_prms['pid'] = $row['pid'];
+        $url_prms['parent'] = $row['cpid'];
         $url_prms['back'] = urlencode(base64_encode(
-          App::$app->router()->UrlTo('shop/product', ['pid' => $row['cpid']], $row['cpname'])
+          App::$app->router()->UrlTo('shop/product', $prms, $row['cpname'])
         ));
-        $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname']);
+        $href = App::$app->router()->UrlTo('shop/product', $url_prms, $row['pname'], ['parent']);
         ?>
         <div class="product-price-box clearfix">
           <div class="price-header">Price</div>

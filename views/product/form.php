@@ -186,7 +186,7 @@ use app\core\App;
 
         <div class="col-xs-12 text-center" style="margin-top: 15px">
           <div class="row">
-            <a id="upload" href="upload" class="button alt" style="cursor: pointer;">Upload file</a>
+            <a data-img_upload id="upload" href="upload" class="button alt" style="cursor: pointer;">Upload file</a>
           </div>
         </div>
 

@@ -4,7 +4,7 @@
       <div class="panel-body">
         <ul class="sel_item">
           <?php foreach($filters as $key => $name): ?>
-            <li class="selected_item">
+            <li data-filter_row class="selected_item">
               <div class="col-sm-11 col-xs-11">
                 <div class="row">
                   <div class="sel_item_lab"><?= $name; ?></div>
@@ -13,7 +13,9 @@
                        type="hidden" value="<?= $key; ?>">
               </div>
               <div class="col-sm-1 col-xs-1 text-right">
-                <div class="row"><span data-rem_row data-index="<?= $key ?>" class="rem_row">×</span></div>
+                <div class="row">
+                  <span data-rem_row data-index="<?= $key ?>" class="rem_row">×</span>
+                </div>
               </div>
             </li>
           <?php endforeach; ?>

@@ -36,26 +36,6 @@ class ControllerRelated extends ControllerFormSimple{
   }
 
   /**
-   * @param $filter
-   * @param bool $view
-   * @return array|null
-   * @throws \Exception
-   */
-  protected function build_search_filter(&$filter, $view = false){
-    $res = parent::build_search_filter($filter, $view);
-    $filter['hidden']['a.pid'] = App::$app->get('pid');
-    if(!isset($filter['hidden']['a.pid'])) throw new Exception('No Related Products');
-    $filter['hidden']['b.image1'] = 'null';
-    if($view) {
-      $filter['hidden']['b.pnumber'] = 'null';
-      if(!isset($filter['hidden']['b.priceyard'])) $filter['hidden']['b.priceyard'] = '0.00';
-      $filter['hidden']['b.pvisible'] = '1';
-    }
-
-    return $res;
-  }
-
-  /**
    * @param $data
    */
   protected function load(&$data){
@@ -160,6 +140,7 @@ class ControllerRelated extends ControllerFormSimple{
     $c_product->after_get_list($rows, $view);
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
     $this->search_form($search_form, $view);
+    $this->set_back_url();
     $this->main->template->vars('rows', $rows);
     $this->main->template->vars('sort', $sort);
     $this->main->template->vars('list', $this->render_layout_return('rows'));
@@ -169,6 +150,30 @@ class ControllerRelated extends ControllerFormSimple{
     if($return) return $this->render_layout_return('list', $return && App::$app->request_is_ajax());
 
     return $this->render_layout('list');
+  }
+
+  protected function build_back_url(&$back_url = null, &$prms = null){
+    if(!empty(App::$app->get('back'))) $back_url = App::$app->get('back');
+  }
+
+  /**
+   * @param $filter
+   * @param bool $view
+   * @return array|null
+   * @throws \Exception
+   */
+  public function build_search_filter(&$filter, $view = false){
+    $res = parent::build_search_filter($filter, $view);
+    $filter['hidden']['a.pid'] = !empty(App::$app->get('parent')) ? App::$app->get('parent') : App::$app->get('pid');
+    if(!isset($filter['hidden']['a.pid'])) throw new Exception('No Related Products');
+    $filter['hidden']['b.image1'] = 'null';
+    if($view) {
+      $filter['hidden']['b.pnumber'] = 'null';
+      if(!isset($filter['hidden']['b.priceyard'])) $filter['hidden']['b.priceyard'] = '0.00';
+      $filter['hidden']['b.pvisible'] = '1';
+    }
+
+    return $res;
   }
 
   /**

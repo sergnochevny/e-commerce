@@ -8,7 +8,9 @@
         <div class="product-description">
           <div class="product-name"><?= $row['pname']; ?></div>
         </div>
-        <a data-related_delete href="jscript:void(0);" class="remove-related-product"><i class="fa fa-times" aria-hidden="true"></i></a>
+        <a data-related_delete href="jscript:void(0);" title="Remove related product"class="remove-related-product">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </a>
       </div>
     </div>
   <?php endforeach; ?>

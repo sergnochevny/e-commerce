@@ -223,6 +223,9 @@ class ControllerAuthorization extends ControllerController{
         $this->redirect($url);
       }
     }
+    $controller_user = new ControllerUser($this->main);
+    App::$app->get('method', 'short');
+    $this->main->template->vars('user_registration', $controller_user->registration());
 
     $redirect = !is_null(App::$app->get('url')) ? App::$app->get('url') : '';
     $prms = null;

@@ -55,7 +55,7 @@ class ControllerBlog extends ControllerFormSimple{
     $this->main->template->vars('filter_data_start', isset($start) ? $start : 0);
     $this->main->template->vars('selected', $selected);
     $this->main->template->vars('filter', $filter);
-    if($return) return $this->render_layout_return('filter/select', $return);
+    if($return) return $this->render_layout_return('filter/select', $return && App::$app->request_is_ajax());
 
     return $this->render_layout('filter/select');
   }
@@ -90,7 +90,7 @@ class ControllerBlog extends ControllerFormSimple{
       }
     }
     $this->main->template->vars('data', $data);
-    if($return) return $this->render_layout_return('image', $return);
+    if($return) return $this->render_layout_return('image', $return && App::$app->request_is_ajax());
 
     return $this->render_layout('image');
   }
@@ -165,7 +165,7 @@ class ControllerBlog extends ControllerFormSimple{
     $this->main->template->vars('filter_type', 'categories');
     $this->main->template->vars('destination', 'categories');
     $this->main->template->vars('title', 'Select Types');
-    if($return) return $this->render_layout_return('filter/filter', $return);
+    if($return) return $this->render_layout_return('filter/filter', $return && App::$app->request_is_ajax());
 
     return $this->render_layout('filter/filter');
   }
@@ -277,7 +277,7 @@ class ControllerBlog extends ControllerFormSimple{
    * @return array|null
    * @throws \InvalidArgumentException
    */
-  protected function build_search_filter(&$filter, $view = false){
+  public function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
     if($view) {
       $filter['hidden']['a.post_status'] = 'publish';

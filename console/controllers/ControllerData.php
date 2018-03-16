@@ -19,7 +19,7 @@ class ControllerData extends ControllerBase{
     ];
   }
 
-  protected function build_search_filter(&$filter, $view = false){
+  public function build_search_filter(&$filter, $view = false){
     $search = null;
     $type = isset($filter['type']) ? $filter['type'] : null;
     $res = parent::build_search_filter($filter, $view);

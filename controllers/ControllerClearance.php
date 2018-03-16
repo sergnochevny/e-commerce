@@ -78,7 +78,7 @@ class ControllerClearance extends ControllerFormSimple{
    * @param bool $view
    * @return array|null
    */
-  protected function build_search_filter(&$filter, $view = false){
+  public function build_search_filter(&$filter, $view = false){
     $res = parent::build_search_filter($filter, $view);
     if($view) {
       $filter['hidden']['a.pnumber'] = 'null';

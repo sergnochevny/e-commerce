@@ -1,6 +1,12 @@
 .inner-offset-top{
     padding-top: 20px;
 }
+.inner-offset-right{
+    padding-right: 15px;
+}
+.inner-offset-left{
+    padding-left: 15px;
+}
 .inner-offset-bottom{
     padding-bottom: 20px;
 }

@@ -51,7 +51,7 @@
         element += '      <div class="product-description">';
         element += '        <div class="product-name">' + product_name + '</div>';
         element += '      </div>';
-        element += '      <a data-related_delete  href="jscript:void(0);" class="remove-related-product">×</a>';
+        element += '      <a data-related_delete title="Remove related product" href="jscript:void(0);" class="remove-related-product">×</a>';
         element += '    </div>';
         element += '  </div>';
 
