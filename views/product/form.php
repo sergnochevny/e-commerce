@@ -82,24 +82,24 @@ use app\core\App;
         </div>
         <div class="row" style="margin-bottom: 10px">
           <div class="col-xs-12">
+            <label><b>Types:</b></label>
             <div class="form-row">
-              <label><b>Types:</b></label>
               <?= $data['categories']; ?>
             </div>
           </div>
         </div>
         <div class="row" style="margin-bottom: 10px">
           <div class="col-xs-12">
+            <label><b>Colors: </b></label>
             <div class="form-row">
-              <label><b>Colors: </b></label>
               <?= $data['colors']; ?>
             </div>
           </div>
         </div>
         <div class="row" style="margin-bottom: 10px;">
           <div class="col-xs-12">
+            <label><b>Patterns:</b></label>
             <div class="form-row">
-              <label><b>Patterns:</b></label>
               <?= $data['patterns']; ?>
             </div>
           </div>
