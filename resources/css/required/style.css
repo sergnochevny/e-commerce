@@ -3232,4 +3232,8 @@ input.img-uploadfile {
     left: 380px;
 }
 
+.index__form-wrap .ui-input-text{
+    margin-bottom: 20px;
+}
 /* uncss:ignore end */
+
