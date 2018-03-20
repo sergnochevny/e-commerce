@@ -47,8 +47,8 @@ RUN set -x \
   && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archives/*.deb
 
 RUN set -x \
-  && /usr/local/bin/docker-php-ext-install zip pdo pdo_mysql opcache curl intl iconv bz2 xml xsl xmlrpc readline
-  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+  && /usr/local/bin/docker-php-ext-install zip pdo pdo_mysql opcache curl intl iconv bz2 xml xsl xmlrpc readline \
+  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install gd
 
 USER root
