@@ -17,8 +17,8 @@ RUN set -x \
   iputils-ping \
   git \
   npm \
-#  libfreetype6-dev \
-  libfreetype-dev \
+  libfreetype6-dev \
+#  libfreetype-dev \
   libpng-dev \
   libjpeg-dev \
   zlib1g-dev \
