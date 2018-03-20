@@ -23,6 +23,9 @@ RUN set -x \
   libssl-dev \
   libxslt-dev \
   libedit-dev \
+  imagemagick \
+#  graphicsmagick \
+  wget \
   wget \
   && /usr/bin/curl -sS https://getcomposer.org/installer |php \
   && /bin/mv composer.phar /usr/local/bin/composer \
@@ -44,10 +47,6 @@ RUN docker-php-ext-enable xdebug
 RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini
 RUN echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/php.ini
 RUN echo "xdebug.remote_log=/app/xdebug.log" >> /usr/local/etc/php/php.ini
-
-RUN docker-php-ext-install mysqli
-RUN docker-php-ext-enable mysqli
-RUN docker-php-ext-install pdo pdo_mysql
 
 ADD deploy/app.conf /etc/apache2/sites-enabled/000-app.conf
 ADD deploy/docker-entrypoint.sh /docker-entrypoint.sh

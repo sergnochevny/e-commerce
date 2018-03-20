@@ -25,7 +25,7 @@ RUN set -x \
   libedit-dev \
   mysql-client \
   imagemagick \
-  graphicsmagick \
+#  graphicsmagick \
   wget \
   && /usr/bin/curl -sS https://getcomposer.org/installer |php \
   && /bin/mv composer.phar /usr/local/bin/composer \
@@ -43,7 +43,7 @@ RUN set -x \
   && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archives/*.deb
 
 RUN set -x \
-  && /usr/local/bin/docker-php-ext-install zip pdo pdo_mysql opcache curl gd intl bz2 xml xsl xmlrpc readline imagick
+  && /usr/local/bin/docker-php-ext-install zip pdo pdo_mysql opcache curl gd intl bz2 xml xsl xmlrpc readline
 
 USER root
 ADD deploy/docker/app.conf /etc/apache2/sites-enabled/000-app.conf
