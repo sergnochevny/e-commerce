@@ -42,7 +42,7 @@ class ModelAdmin extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $prms = [];
     $query = "SELECT * ";
     $query .= " FROM " . static::$table;

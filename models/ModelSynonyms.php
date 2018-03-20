@@ -131,7 +131,7 @@ class ModelSynonyms extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT * FROM " . self::$table;
     $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);

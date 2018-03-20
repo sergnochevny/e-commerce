@@ -106,7 +106,7 @@ class ModelConsole extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($prepare, $start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT * FROM " . static::$table;
     $query .= static::build_where($filter, $prms);
     $query .= static::build_order($sort);

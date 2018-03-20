@@ -47,7 +47,7 @@ class ModelShop extends ModelConsole{
    * @throws \Exception
    */
   public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows){
-    $response = null;
+    $response = [];
     $prms = [];
     $q = "";
     switch($type) {
@@ -175,7 +175,7 @@ class ModelShop extends ModelConsole{
    * @throws \Exception
    */
   public static function get_list($prepare, $start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
       $query = "SELECT n.pid, n.priceyard, n.inventory, n.piece FROM (";
       $query .= "SELECT a.pid, SUM(k.quantity) AS s FROM " . static::$table . " a";

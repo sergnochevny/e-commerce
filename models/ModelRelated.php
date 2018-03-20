@@ -109,7 +109,7 @@ class ModelRelated extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT DISTINCT c.pid AS cpid, c.pname AS cpname, b.* FROM " . static::$table . " a";
     $query .= " LEFT JOIN shop_products b ON b.pid = a.r_pid";
     $query .= " LEFT JOIN shop_products c ON c.pid = a.pid";

@@ -171,7 +171,7 @@ class ModelFavorites extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT DISTINCT z.id, a.* FROM " . static::$table . " z";
     $query .= " LEFT JOIN shop_products a ON a.pid = z.pid";
     $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";

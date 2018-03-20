@@ -372,6 +372,8 @@ class ControllerShop extends ControllerController{
           case 'popular':
             $max_count_items = (!is_null(App::$app->keyStorage()->shop_popular_amount) ? App::$app->keyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT);
             break;
+          case 'home':
+            break;
           default:
             $controller = 'related';
             $controllerInstance = App::$controllersNS . '\Controller' . ucfirst($controller);
@@ -406,7 +408,7 @@ class ControllerShop extends ControllerController{
     ]);
     $prev_next = [];
     array_walk($rows, function($item, $key)
-    use ($id, $rows, $idx, $controller, $page, $back, $scenario, &$prev_next, $controllerInstance){
+    use ($id, $rows, $idx, $controller, $start, $page, $back, $scenario, &$prev_next, $controllerInstance){
       if($item['pid'] == $id) {
         if(!empty($rows[$key - 1])) {
           $url_prms['pid'] = $rows[$key - 1]['pid'];
@@ -426,14 +428,12 @@ class ControllerShop extends ControllerController{
           $prev_next['next']['url'] = $href;
           $prev_next['next']['title'] = $rows[$key + 1]['pname'];
         }
-        if(2 * $controllerInstance->per_page == $key) {
-          $page += 1;
-          $pages[$controller][$idx] = $page;
+        if(min($page, 2) * $controllerInstance->per_page == $key) {
+          $pages[$controller][$idx] = $page + 1;
           App::$app->setSession('pages', $pages);
         }
-        if($controllerInstance->per_page == $key + 1) {
-          $page -= 1;
-          $pages[$controller][$idx] = $page;
+        if(($page > 1) && ($controllerInstance->per_page == $key + 1 )) {
+          $pages[$controller][$idx] = $page - 1;
           App::$app->setSession('pages', $pages);
         }
       }

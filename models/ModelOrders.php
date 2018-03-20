@@ -187,7 +187,7 @@ class ModelOrders extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "select";
     $query .= " DISTINCT a.*, CONCAT(b.bill_firstname,' ',b.bill_lastname) as username";
     $query .= " from shop_orders a";

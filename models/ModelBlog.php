@@ -218,7 +218,7 @@ class ModelBlog extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT DISTINCT a.* ";
     $query .= " FROM " . static::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";

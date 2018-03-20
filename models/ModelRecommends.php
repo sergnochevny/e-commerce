@@ -171,7 +171,7 @@ class ModelRecommends extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     if(!isset($filter['totalrows']) || (!empty($filter['totalrows']))) {
       $query = "SELECT DISTINCT a.* ";
       $query .= " FROM shop_product_related ";

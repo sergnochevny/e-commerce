@@ -116,7 +116,7 @@ class ModelPatterns extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT a.id, a.pattern, count(b.prodId) AS amount";
     $query .= " FROM " . static::$table . " a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
@@ -125,7 +125,7 @@ class ModelPatterns extends ModelBase{
       " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
     $query .= static::build_where($filter, $prms);
     $query .= " GROUP BY a.id, a.pattern";
-    $query .= static::build_order($sort, $prms);
+    $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
     if($result = static::query($query, $prms)) {

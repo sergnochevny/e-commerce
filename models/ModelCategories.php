@@ -93,7 +93,7 @@ class ModelCategories extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT DISTINCT a.*, count(b.pid) AS amount";
     $query .= " FROM shop_categories a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
@@ -102,7 +102,7 @@ class ModelCategories extends ModelBase{
       " INNER JOIN shop_products c ON c.pid = b.pid" : '';
     $query .= static::build_where($filter, $prms);
     $query .= " GROUP BY a.cid, a.cname";
-    $query .= static::build_order($sort, $prms);
+    $query .= static::build_order($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
     if($result = static::query($query, $prms)) {

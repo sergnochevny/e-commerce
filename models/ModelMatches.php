@@ -42,7 +42,7 @@ class ModelMatches extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     if(isset(App::$app->session('matches')['items'])) {
       $matches_items = App::$app->session('matches')['items'];
       if($res_count_rows = count($matches_items) > 0) {

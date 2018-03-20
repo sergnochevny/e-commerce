@@ -108,7 +108,7 @@ class ModelComments extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT a.*, b.email ";
     $query .= " FROM " . static::$table . " a";
     $query .= " LEFT JOIN accounts b ON b.aid = a.userid";

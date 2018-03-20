@@ -79,7 +79,7 @@ class ModelPrices extends ModelBase{
    * @return array|null
    */
   public static function get_by_id($id){
-    $response = null;
+    $response = [];
     if(isset(static::$price_parceling[$id])) {
       $response = array_filter(static::$price_parceling[$id]);
       $response['id'] = $id;
@@ -112,7 +112,7 @@ class ModelPrices extends ModelBase{
   }
 
 //    public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null) {
-//      $response = null;
+//      $response = [];
 //      $query = "SELECT COUNT(a.pid) as count";
 //      $query .= " FROM " . static::$table . " a";
 //      $query .= static::build_where($filter, $prms);

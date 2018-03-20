@@ -401,7 +401,7 @@ class ModelProduct extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT DISTINCT a.* ";
     $query .= " FROM " . static::$table . " a";
     $query .= " LEFT JOIN shop_product_categories ON a.pid = shop_product_categories.pid";

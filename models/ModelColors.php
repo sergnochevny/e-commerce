@@ -113,7 +113,7 @@ class ModelColors extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT a.id, a.color, count(b.prodId) AS amount";
     $query .= " FROM " . static::$table . " a";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";

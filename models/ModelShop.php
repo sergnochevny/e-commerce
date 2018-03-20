@@ -464,7 +464,7 @@ class ModelShop extends ModelBase{
    * @throws \Exception
    */
   public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows){
-    $response = null;
+    $response = [];
     $q = "";
     $image_suffix = '';
     switch($type) {
@@ -533,7 +533,7 @@ class ModelShop extends ModelBase{
    * @throws \Exception
    */
   public static function get_widget_list_by_type_count($type){
-    $response = null;
+    $response = [];
     $q = "";
     switch($type) {
       case 'new':
@@ -687,7 +687,7 @@ class ModelShop extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
       $type = static::$list_conditions[$filter['type']];
       $query = "SELECT DISTINCT a.* FROM collection cc";

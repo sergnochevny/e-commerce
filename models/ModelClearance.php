@@ -69,7 +69,7 @@ class ModelClearance extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT DISTINCT z.id, a.* ";
     if(isset($filter['scenario']) && ($filter['scenario'] == 'add')) {
       $query .= " FROM shop_products a";

@@ -78,7 +78,7 @@ class ModelUsers extends ModelBase{
    * @throws \Exception
    */
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
-    $response = null;
+    $response = [];
     $query = "SELECT * , CONCAT(bill_firstname, ' ', bill_lastname) as full_name";
     $query .= " FROM " . static::$table;
     $query .= static::build_where($filter, $prms);
