@@ -37,7 +37,7 @@ fabric.properties
 discount.txt
 fabrix_comments.sql
 leack.php
-phpinfo.php
+#phpinfo.php
 /upload/
 /config/web.php
 
