@@ -24,8 +24,7 @@ RUN set -x \
   libxslt-dev \
   libedit-dev \
   imagemagick \
-#  graphicsmagick \
-  wget \
+  graphicsmagick \
   wget \
   && /usr/bin/curl -sS https://getcomposer.org/installer |php \
   && /bin/mv composer.phar /usr/local/bin/composer \
