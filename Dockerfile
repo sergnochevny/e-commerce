@@ -16,8 +16,9 @@ RUN set -x \
   libicu-dev \
   iputils-ping \
   git \
-  libpng-dev \
   npm \
+  libfreetype6-dev\
+  libpng-dev \
   libbz2-dev \
   libxml2-dev \
   libssl-dev \
