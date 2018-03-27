@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:other/app-core.git",
-                "reference": "0844e1cecb14974a52c81b6c7c1f4252a36b4fed"
+                "reference": "efab943cd1349a816874f00316ddc180bf470b41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/0844e1cecb14974a52c81b6c7c1f4252a36b4fed.zip",
-                "reference": "0844e1cecb14974a52c81b6c7c1f4252a36b4fed",
+                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/efab943cd1349a816874f00316ddc180bf470b41.zip",
+                "reference": "efab943cd1349a816874f00316ddc180bf470b41",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "App Core",
-            "time": "2018-03-14T18:57:44+00:00"
+            "time": "2018-03-27T07:45:02+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -212,12 +212,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "e94cfd320d132ce116dc9d7d013529f7bdc9c745"
+                "reference": "c63b07e0968134b9bc522c16c521d38be0fabbb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/e94cfd320d132ce116dc9d7d013529f7bdc9c745",
-                "reference": "e94cfd320d132ce116dc9d7d013529f7bdc9c745",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/c63b07e0968134b9bc522c16c521d38be0fabbb3",
+                "reference": "c63b07e0968134b9bc522c16c521d38be0fabbb3",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -269,7 +269,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-02-28T16:17:17+00:00"
+            "time": "2018-03-17T22:18:35+00:00"
         }
     ],
     "packages-dev": [],
