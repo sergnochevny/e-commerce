@@ -3,6 +3,7 @@
 namespace controllers;
 
 use app\core\App;
+use classes\Auth;
 use classes\controllers\ControllerController;
 use Exception;
 use models\ModelAddress;
@@ -752,7 +753,7 @@ class ControllerCart extends ControllerController{
    * @throws \Exception
    */
   public function cart(){
-    $this->main->is_user_authorized(true);
+    Auth::check_user_authorized(true);
     if(!is_null(App::$app->get('proceed'))) {
       $this->proceed_checkout_prepare();
       $content = $this->render_layout_return('proceed_checkout', App::$app->request_is_ajax());

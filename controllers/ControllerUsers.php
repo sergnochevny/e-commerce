@@ -3,6 +3,7 @@
 namespace controllers;
 
 use app\core\App;
+use classes\Auth;
 use classes\controllers\ControllerFormSimple;
 use classes\helpers\CaptchaHelper;
 use classes\helpers\UserHelper;
@@ -69,7 +70,7 @@ class ControllerUsers extends ControllerFormSimple{
    * @throws \Exception
    */
   protected function get_csv(){
-    $this->main->is_admin_authorized();
+    Auth::check_admin_authorized();
     $this->build_order($sort);
     $filter = null;
     $csv_fields_dlm = !is_null(App::$app->keyStorage()->system_csv_fields_dlm) ?

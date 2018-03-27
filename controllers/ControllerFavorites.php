@@ -3,6 +3,7 @@
 namespace controllers;
 
 use app\core\App;
+use classes\Auth;
 use classes\controllers\ControllerSimple;
 use classes\helpers\UserHelper;
 use models\ModelCategories;
@@ -159,7 +160,7 @@ class ControllerFavorites extends ControllerSimple{
    * @throws \Exception
    */
   public function favorites(){
-    $this->main->is_user_authorized(true);
+    Auth::check_user_authorized(true);
     $this->main->template->vars('cart_enable', '_');
     $this->index(false);
   }
@@ -170,7 +171,7 @@ class ControllerFavorites extends ControllerSimple{
    * @throws \Exception
    */
   public function add($required_access = false){
-    $this->main->is_user_authorized();
+    Auth::check_user_authorized();
     parent::add($required_access);
   }
 

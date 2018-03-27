@@ -3,6 +3,7 @@
 namespace controllers;
 
 use app\core\App;
+use classes\Auth;
 use classes\controllers\ControllerController;
 use classes\controllers\ControllerFormSimple;
 use classes\Paginator;
@@ -198,7 +199,7 @@ class ControllerRelated extends ControllerFormSimple{
    * @throws \Exception
    */
   public function index($required_access = true){
-    if($required_access) $this->main->is_admin_authorized();
+    if($required_access) Auth::check_admin_authorized();
     $list = $this->get_list(false, true);
     if(App::$app->request_is_ajax()) exit($list); else {
       throw new Exception('Error 404');

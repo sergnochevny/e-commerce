@@ -4,6 +4,7 @@ namespace classes\controllers;
 
 use app\core\App;
 use app\core\model\ModelBase;
+use classes\Auth;
 use Exception;
 
 /**
@@ -154,7 +155,7 @@ abstract class ControllerSimple extends ControllerController{
    * @throws \Exception
    */
   public function add($required_access = true){
-    if($required_access) $this->main->is_admin_authorized();
+    if($required_access) Auth::check_admin_authorized();
     $this->edit_add_handling($this->controller . '/add', $this->form_title_add);
   }
 
@@ -165,7 +166,7 @@ abstract class ControllerSimple extends ControllerController{
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){
-    if($required_access) $this->main->is_admin_authorized();
+    if($required_access) Auth::check_admin_authorized();
     if(!is_null(App::$app->get($this->id_field))) {
       $id = App::$app->get($this->id_field);
       $data = forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'get_by_id'], $id);
@@ -185,7 +186,7 @@ abstract class ControllerSimple extends ControllerController{
    * @throws \Exception
    */
   public function edit($required_access = true){
-    if($required_access) $this->main->is_admin_authorized();
+    if($required_access) Auth::check_admin_authorized();
     $this->edit_add_handling($this->controller . '/edit', $this->form_title_edit);
   }
 
@@ -195,7 +196,7 @@ abstract class ControllerSimple extends ControllerController{
    * @throws \Exception
    */
   public function delete($required_access = true){
-    if($required_access) $this->main->is_admin_authorized();
+    if($required_access) Auth::check_admin_authorized();
     if(App::$app->request_is_post() && App::$app->request_is_ajax() && ($id = App::$app->get($this->id_field))) {
       try {
         forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'delete'], $id);

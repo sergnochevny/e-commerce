@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:other/app-core.git",
-                "reference": "efab943cd1349a816874f00316ddc180bf470b41"
+                "reference": "12198e0a75b471f7b7c343aeafd718ad73b93714"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/efab943cd1349a816874f00316ddc180bf470b41.zip",
-                "reference": "efab943cd1349a816874f00316ddc180bf470b41",
+                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/12198e0a75b471f7b7c343aeafd718ad73b93714.zip",
+                "reference": "12198e0a75b471f7b7c343aeafd718ad73b93714",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "App Core",
-            "time": "2018-03-27T07:45:02+00:00"
+            "time": "2018-03-27T08:02:26+00:00"
         },
         {
             "name": "doctrine/lexer",

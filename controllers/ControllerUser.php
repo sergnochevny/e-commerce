@@ -3,6 +3,7 @@
 namespace controllers;
 
 use app\core\App;
+use classes\Auth;
 use classes\controllers\ControllerController;
 use classes\helpers\UserHelper;
 
@@ -68,7 +69,7 @@ class ControllerUser extends ControllerController{
    * @throws \Exception
    */
   public function change(){
-    $this->main->is_user_authorized(true);
+    Auth::check_user_authorized(true);
     $user = UserHelper::get_from_session();
     App::$app->get('aid', $user['aid']);
     $action = 'user/change';

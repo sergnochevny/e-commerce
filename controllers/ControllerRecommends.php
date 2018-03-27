@@ -3,6 +3,7 @@
 namespace controllers;
 
 use app\core\App;
+use classes\Auth;
 use classes\controllers\ControllerController;
 use classes\helpers\UserHelper;
 use classes\Paginator;
@@ -241,7 +242,7 @@ class ControllerRecommends extends ControllerController{
    * @throws \Exception
    */
   public function recommends(){
-    $this->main->is_user_authorized(true);
+    Auth::check_user_authorized(true);
     $this->main->template->vars('cart_enable', '_');
     App::$app->setSession('sidebar_idx', 7);
     parent::index(false);

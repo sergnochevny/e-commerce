@@ -5,6 +5,7 @@ namespace classes\controllers;
 use app\core\App;
 use app\core\controller\ControllerBase;
 use app\core\model\ModelBase;
+use classes\Auth;
 use classes\helpers\AdminHelper;
 use classes\Paginator;
 use Closure;
@@ -492,7 +493,7 @@ abstract class ControllerController extends ControllerBase{
    * @throws \Exception
    */
   public function index($required_access = true){
-    if($required_access) $this->main->is_admin_authorized();
+    if($required_access) Auth::check_admin_authorized();
     $list = $this->get_list(false, true);
     if(App::$app->request_is_ajax()) exit($list);
     $this->main->template->vars('list', $list);
@@ -507,7 +508,7 @@ abstract class ControllerController extends ControllerBase{
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){
-    if($required_access) $this->main->is_admin_authorized();
+    if($required_access) Auth::check_admin_authorized();
     $this->main->template->vars('view_title', $this->view_title);
     $list = $this->get_list(true, true);
     if(App::$app->request_is_ajax()) exit($list);

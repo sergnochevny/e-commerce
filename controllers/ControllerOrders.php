@@ -3,6 +3,7 @@
 namespace controllers;
 
 use app\core\App;
+use classes\Auth;
 use classes\controllers\ControllerSimple;
 use classes\helpers\AdminHelper;
 use classes\helpers\UserHelper;
@@ -112,7 +113,7 @@ class ControllerOrders extends ControllerSimple{
 
   public function view($partial = false, $required_access = false){
 
-    $this->main->is_any_authorized('orders');
+    Auth::check_any_authorized('orders');
 
     $oid = !is_null(App::$app->get('oid')) ? App::$app->get('oid') : null;
     if(!is_null(App::$app->get('orders_search_query'))) $prms['orders_search_query'] = App::$app->get('orders_search_query');
@@ -201,7 +202,7 @@ class ControllerOrders extends ControllerSimple{
    * @throws \Exception
    */
   public function orders(){
-    $this->main->is_any_authorized('orders');
+    Auth::check_any_authorized('orders');
     parent::index(false);
   }
 }

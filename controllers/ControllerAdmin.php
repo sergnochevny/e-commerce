@@ -3,6 +3,7 @@
 namespace controllers;
 
 use app\core\App;
+use classes\Auth;
 use classes\controllers\ControllerFormSimple;
 use classes\helpers\AdminHelper;
 use models\ModelAdmin;
@@ -105,7 +106,7 @@ class ControllerAdmin extends ControllerFormSimple{
    * @throws \Exception
    */
   public function change(){
-    $this->main->is_admin_authorized();
+    Auth::check_admin_authorized();
     $action = 'admin/change';
     $title = 'CHANGE DATA';
     $this->edit_add_handling($action, $title);

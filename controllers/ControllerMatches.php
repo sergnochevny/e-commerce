@@ -3,6 +3,7 @@
 namespace controllers;
 
 use app\core\App;
+use classes\Auth;
 use classes\controllers\ControllerFormSimple;
 use Exception;
 use models\ModelPrice;
@@ -77,7 +78,7 @@ class ControllerMatches extends ControllerFormSimple{
    * @throws \Exception
    */
   public function matches(){
-    $this->main->is_user_authorized(true);
+    Auth::check_user_authorized(true);
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
     if($controller == 'shop' && $action == 'product') $this->main->template->vars('back_url', App::$app->server('HTTP_REFERER'));
     $this->main->template->vars('cart_not_empty', !empty(App::$app->session('cart')['items']));
@@ -107,7 +108,7 @@ class ControllerMatches extends ControllerFormSimple{
    * @throws \Exception
    */
   public function delete($required_access = true){
-    $this->main->is_user_authorized();
+    Auth::check_user_authorized();
     if(App::$app->request_is_post() && App::$app->request_is_ajax() && ($id = App::$app->get($this->id_field))) {
       try {
         forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'delete'], $id);
@@ -124,7 +125,7 @@ class ControllerMatches extends ControllerFormSimple{
    * @throws \Exception
    */
   public function clear(){
-    $this->main->is_user_authorized();
+    Auth::check_user_authorized();
     if(App::$app->request_is_ajax()) {
       try {
         forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'clear']);
@@ -141,7 +142,7 @@ class ControllerMatches extends ControllerFormSimple{
    */
   public function add_to_cart(){
     $added = 0;
-    $this->main->is_user_authorized();
+    Auth::check_user_authorized();
     if(!is_null(App::$app->post('data')) && !empty(App::$app->post('data'))) {
       try {
         $products = json_decode(App::$app->post('data'));
