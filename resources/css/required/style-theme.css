@@ -2179,8 +2179,16 @@ table.table-bordered center a {
     font-size: 1.5em;
     font-weight: 600;
 }
+
 .cart-subtotal i {
     font-weight: 600;
+}
+
+
+@media (max-width: 768px) {
+    .cart-subtotal {
+        height: 45px;
+    }
 }
 
 .add-to-basket {
