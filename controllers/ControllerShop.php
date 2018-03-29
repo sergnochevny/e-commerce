@@ -216,7 +216,9 @@ class ControllerShop extends ControllerController{
     $discount_info = '';
     if($data['rSystemDiscount'] > 0) {
       $field_name = "Sale price:";
-      $field_value = sprintf("%s<br><strong>%s</strong>", $data['sPriceDiscount'], $data['srDiscountPrice']);
+      $pattern = "%s<br><strong " . (!empty($data['bDiscount']) ? "class='reduced'" : "") . ">%s" .
+        (!empty($data['bDiscount']) ? "<hr>" : "") . "</strong>";
+      $field_value = sprintf($pattern, $data['sPriceDiscount'], $data['srDiscountPrice']);
       $this->main->template->vars('field_name', $field_name);
       $this->main->template->vars('field_value', $field_value);
       $discount_info .= $this->render_layout_return('product/discount');
@@ -432,7 +434,7 @@ class ControllerShop extends ControllerController{
           $pages[$controller][$idx] = $page + 1;
           App::$app->setSession('pages', $pages);
         }
-        if(($page > 1) && ($controllerInstance->per_page == $key + 1 )) {
+        if(($page > 1) && ($controllerInstance->per_page == $key + 1)) {
           $pages[$controller][$idx] = $page - 1;
           App::$app->setSession('pages', $pages);
         }

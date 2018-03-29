@@ -1931,11 +1931,6 @@ span[role=combobox] {
 }
 
 @media ( max-width: 768px) {
-    span[role=combobox] {
-        font-size: 16px;
-        padding: 16px 20px;
-    }
-
     .page-limit-selector {
         width: 80px;
     }
@@ -3232,8 +3227,28 @@ input.img-uploadfile {
     left: 380px;
 }
 
-.index__form-wrap .ui-input-text{
+.index__form-wrap .ui-input-text {
     margin-bottom: 20px;
 }
+
 /* uncss:ignore end */
 
+@media (max-width: 768px) {
+    .main-content .ui-input-text,
+    .main-content .ui-selectmenu-button {
+        height: 62px;
+    }
+
+    .main-content .ui-input-text input {
+        font-size: 16px;
+        height: 60px;
+        padding: 16px 20px;
+    }
+
+    .main-content span[role=combobox] {
+        font-size: 16px;
+        height: 62px;
+        padding: 20px;
+    }
+
+}

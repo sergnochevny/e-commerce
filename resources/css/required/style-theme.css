@@ -2171,16 +2171,16 @@ table.table-bordered center a {
     bottom: -2px;
     box-shadow: 0 0 2px 0 #000;
     display: block;
-    height: 30px;
-    padding: 0 10px;
+    height: 35px;
+    padding: 5px 10px 0;
     position: fixed;
     right: 25px;
     z-index: 99;
-    /*box-shadow: 0 0 2px 0 #000;
-    -ms-transform: rotate(-90deg);
-    -webkit-transform: rotate(-90deg);
-    transform: rotate(-90deg);*/
-
+    font-size: 1.5em;
+    font-weight: 600;
+}
+.cart-subtotal i {
+    font-weight: 600;
 }
 
 .add-to-basket {

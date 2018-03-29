@@ -48,10 +48,6 @@ span#b_in_product {
     color: #fff;
 }
 
-.cart-subtotal {
-    padding-top: 5px !important;
-}
-
 .textile, .best-textile, .popular-textile {
     background-position: right center;
     background-repeat: no-repeat;
@@ -186,10 +182,11 @@ span#b_in_product {
         margin-top: 0;
     }
 
-    .back_button{
+    .back_button {
         font-size: 18px;
         width: 100%;
     }
+
     .prev_button, .next_button {
         font-size: 18px;
         width: 50%;
@@ -321,21 +318,11 @@ span#b_in_product {
 }
 
 @media (max-width: 768px) {
-    .ui-input-text {
-        height: 62px;
+    .prev_next_buttons.visible-xs {
+        display: flex !important;
     }
 
-    .ui-input-text input {
-        font-size: 16px;
-        height: 60px;
-        padding: 16px 20px;
-    }
-
-    .prev_next_buttons.visible-xs{
-        display: flex!important;
-    }
-
-    .prev_next_buttons.visible-xs a{
+    .prev_next_buttons.visible-xs a {
         width: 100%;
     }
 }
@@ -1075,7 +1062,7 @@ td.product-name dl.variation dt p, td.product-name dl.variation dd p {
     color: rgba(222, 50, 42, 0.8);
 }
 
-.price sup{
+.price sup {
     color: #666;
 }
 
@@ -2706,4 +2693,58 @@ i[data-promotion] {
     margin-right: -7px;
     padding-right: 7px;
 }
+
+.row_saleprice strong {
+    text-shadow: 1px 1px 1px #666;
+}
+
+.regular-price .row_saleprice strong {
+    color: #670;
+}
+
+.regular-price .row_saleprice strong.red {
+    color: red;
+}
+
+.product_details_discount .row_saleprice strong,
+.regular-price .amount {
+    position: relative;
+}
+
+.product_details_discount hr,
+.regular-price hr {
+    -webkit-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    transform: rotate(10deg);
+    padding: 0;
+    margin: 0;
+    border: 2px solid rgba(255, 0, 0, .5);
+    position: absolute;
+    width: 100%;
+    top: 40%;
+    left: 0;
+}
+
+.regular-price .row_saleprice strong.reduced {
+    color: #a5ab85;
+}
+
+.reduced {
+    color: #e08d8d;
+}
+
+/*.product_details_discount hr {*/
+/*-webkit-transform: rotate(10deg);*/
+/*-ms-transform: rotate(10deg);*/
+/*transform: rotate(10deg);*/
+/*padding: 0;*/
+/*margin: 0;*/
+/*border: 2px solid rgba(255, 0, 0, .5);*/
+/*position: absolute;*/
+/*width: 85%;*/
+/*top: 40%;*/
+/*left: 5%;*/
+/*}*/
+
 /* uncss:ignore end */
+

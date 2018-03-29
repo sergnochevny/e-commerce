@@ -160,6 +160,27 @@ $mhref = App::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
             </tbody>
           </table>
         </div>
+        <?php if(($data['sys_hide_price'] == 0 && $data['hideprice'] == 0) || empty($discount_info)): ?>
+          <div class="col-xs-12 regular-price">
+            <div class="row">
+              <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                  <td class="row_title"><b>Regular price:</b></td>
+                  <td class="row_saleprice">
+                    <strong class="amount <?= empty($discount_info) ? 'red' : 'reduced'; ?>">
+                      <?= $data['format_price']; ?>
+                      <?php if(!empty($discount_info)): ?>
+                        <hr>
+                      <?php endif; ?>
+                    </strong>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <?php endif; ?>
 
         <?php if(!empty($discount_info)): ?>
           <div class="col-xs-12 product_details_discount">
@@ -169,7 +190,6 @@ $mhref = App::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
                 <?= $discount_info; ?>
                 </tbody>
               </table>
-              <div class="quantity"></div>
             </div>
           </div>
         <?php endif; ?>
@@ -247,22 +267,6 @@ $mhref = App::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
                   <p class="text-justify"><?= $data['ldesc']; ?></p>
                 </div>
               </div>
-              <div class="col-xs-12">
-                <div class="row">
-                  <hr>
-                </div>
-              </div>
-              <?php if(($data['sys_hide_price'] == 0 && $data['hideprice'] == 0) || empty($discount_info)): ?>
-                <div class="col-xs-12">
-                  <div class="row">
-                    <p class="price">Price:
-                      <ins>
-                        <span class="amount"> <?= $data['format_price']; ?></span>
-                      </ins>
-                    </p>
-                  </div>
-                </div>
-              <?php endif; ?>
             </div>
           </div>
         </div>

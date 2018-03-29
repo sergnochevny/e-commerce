@@ -21,13 +21,13 @@ use app\core\App;
 
       <div class="row">
         <div class="col-xs-12 text-center" style="margin-bottom: 15px">
-          <small style="color: black; font-size: 12px;">
+          <small style="color: #666; font-size: 14px;">
             Use this form to add/update discounts to the system. <br/>
           </small>
           <div class="row">
             <hr>
           </div>
-          <small style="color: black; font-size: 12px;">
+          <small style="color: #666; font-size: 14px;">
             Clicking on the section title will open a help file explaining that section.
           </small>
         </div>
