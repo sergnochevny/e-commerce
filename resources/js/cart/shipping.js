@@ -1,8 +1,4 @@
 (function ($) {
   'use strict';
-
-  $('#content').init_input();
-
-  $.danger_remove(8000);
-
+  $('[data-block=shipping]').init_input();
 })(window.jQuery || window.$);

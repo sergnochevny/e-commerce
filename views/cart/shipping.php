@@ -91,3 +91,4 @@ use app\core\App;
 
   </div>
 </div>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/cart/shipping.min.js'), 4, true); ?>
