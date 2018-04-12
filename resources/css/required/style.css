@@ -3308,15 +3308,17 @@ input.img-uploadfile {
 .ui-flipswitch .ui-btn.ui-flipswitch-on,
 .ui-flipswitch .ui-flipswitch-off {
     float: left;
-    height: 1.75em;
+    height: 1.95em;
     margin: .0625em;
-    line-height: 1.65em;
+    line-height: 1.95em;
 }
 .ui-flipswitch .ui-btn.ui-flipswitch-on {
     width: 1.75em;
+    height: 1.95em;
     padding: 0;
     text-indent: -2.6em; /* Override this to center text if you use a label other than "on" */
     text-align: left;
+    line-height: 1.65em;
     border-width: 1px;
     border-style: solid;
     -webkit-box-sizing: border-box;
