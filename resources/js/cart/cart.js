@@ -238,7 +238,12 @@
     });
   }).on('change', '[data-block=agreeterm]', function (event) {
     event.preventDefault();
-    $('[data-block=container_proceed_pay]').toggle(this.checked);
+    // $('[data-block=container_proceed_pay]').toggle(this.checked);
+    if(this.checked){
+      $('[data-block=container_proceed_pay]').fadeIn();
+    } else {
+      $('[data-block=container_proceed_pay]').fadeOut();
+    }
   }).on('submit', '[data-block=paypal_form]', function (event) {
     event.preventDefault();
     var url = base_url + 'cart/pay_mail';
