@@ -20,15 +20,15 @@ class ModelDiscount extends ModelBase{
   /**
    * @param $filter
    * @param null $prms
-   * @return array|string
+   * @return string
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = "";
+    $return = "";
     if(isset($filter["scenario"]) && ($filter["scenario"] == 'orders')) {
       if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::prepare_for_sql($filter['hidden']["c.sid"]) . "'";
       if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        $result = (!empty($result) ? " WHERE " . $result : '');
+        $return = implode(" AND ", $result);
+        $return = (!empty($return) ? " WHERE " . $return : '');
       }
     } else {
       if(isset($filter["sid"])) $result[] = "sid = '" . static::prepare_for_sql($filter["sid"]) . "'";
@@ -40,15 +40,15 @@ class ModelDiscount extends ModelBase{
       if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(static::prepare_for_sql($filter['date_start'])) . "'" : "");
       if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(static::prepare_for_sql($filter['date_end'])) . "'" : "");
       if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        if(strlen(trim($result)) > 0) {
-          $result = " WHERE " . $result;
+        $return = implode(" AND ", $result);
+        if(strlen(trim($return)) > 0) {
+          $return = " WHERE " . $return;
           $filter['active'] = true;
         }
       }
     }
 
-    return $result;
+    return $return;
   }
 
   /**

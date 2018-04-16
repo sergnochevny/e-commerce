@@ -21,11 +21,11 @@ class ModelFavorites extends ModelBase{
   /**
    * @param $filter
    * @param null $prms
-   * @return array|string
+   * @return string
    * @throws \Exception
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = "";
+    $return = "";
     if(isset($filter["a.pname"])) {
       if(AdminHelper::is_logged()) {
         foreach(array_filter(explode(' ', $filter["a.pname"])) as $idx => $item) {
@@ -105,11 +105,11 @@ class ModelFavorites extends ModelBase{
     }
 
     if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
+      $return = implode(" AND ", $result);
     }
-    $result = " WHERE a.pnumber is not null " . (!empty($result) ? ' AND ' . $result : '');
+    $return = " WHERE a.pnumber is not null " . (!empty($return) ? ' AND ' . $return : '');
 
-    return $result;
+    return $return;
   }
 
   /**

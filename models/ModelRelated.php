@@ -20,10 +20,10 @@ class ModelRelated extends ModelBase{
   /**
    * @param $filter
    * @param null $prms
-   * @return array|string
+   * @return string
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = "";
+    $return = "";
     if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) {
       $result[] = "a.priceyard > :hapriceyard";
       $prms['hapriceyard'] = $filter['hidden']["a.priceyard"];
@@ -51,11 +51,11 @@ class ModelRelated extends ModelBase{
       $prms['ha_pid'] = $filter['hidden']["a.pid"];
     }
     if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
+      $return = implode(" AND ", $result);
     }
-    $result = !empty($result) ? " WHERE " . $result : '';
+    $return = !empty($return) ? " WHERE " . $return : '';
 
-    return $result;
+    return $return;
   }
 
   /**

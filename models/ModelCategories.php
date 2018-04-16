@@ -20,12 +20,12 @@ class ModelCategories extends ModelBase{
   /**
    * @param $filter
    * @param null $prms
-   * @return array|string
+   * @return string
    * @throws \Exception
    */
   public static function build_where(&$filter, &$prms = null){
+    $return = "";
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
-      $result = "";
       $prms = [];
       if(!empty($filter["a.cname"])) {
         if(AdminHelper::is_logged()) {
@@ -53,14 +53,14 @@ class ModelCategories extends ModelBase{
         $prms['hc_pvisible'] = $filter['hidden']["c.pvisible"];
       }
       if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        $result = (!empty($result) ? " WHERE " . $result : '');
+        $return = implode(" AND ", $result);
+        $return = (!empty($return) ? " WHERE " . $return : '');
       }
     } else {
-      $result = parent::build_where($filter, $prms);
+      $return = parent::build_where($filter, $prms);
     }
 
-    return $result;
+    return $return;
   }
 
   /**

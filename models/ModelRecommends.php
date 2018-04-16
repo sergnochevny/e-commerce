@@ -23,7 +23,7 @@ class ModelRecommends extends ModelBase{
    * @throws \Exception
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = "";
+    $return = "";
     if(isset($filter["a.pname"])) {
       list($result[], $prms) = ModelSynonyms::build_synonyms_like_p("a.pname", $filter["a.pname"]);
     }
@@ -96,7 +96,7 @@ class ModelRecommends extends ModelBase{
 
     if(isset($filter['hidden']["shop_orders.aid"])) {
       $result[] = "shop_orders.aid = :hshop_orders_aid";
-      $prms['hshop_orders_aid'] =$filter['hidden']["shop_orders.aid"];
+      $prms['hshop_orders_aid'] = $filter['hidden']["shop_orders.aid"];
     }
 
     if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) {
@@ -110,14 +110,12 @@ class ModelRecommends extends ModelBase{
     if(isset($filter['hidden']["a.pnumber"])) $result[] = "a.pnumber is not null";
     if(isset($filter['hidden']["a.image1"])) $result[] = "a.image1 is not null";
 
-    if(!empty($result)) {
-      if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        $result = (!empty($result) ? " WHERE " . $result : '');
-      }
+    if(!empty($result) && (count($result) > 0)) {
+      $return = implode(" AND ", $result);
+      $return = (!empty($return) ? " WHERE " . $return : '');
     }
 
-    return $result;
+    return $return;
   }
 
   /**

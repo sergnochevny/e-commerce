@@ -22,7 +22,7 @@ class ModelComments extends ModelBase{
    * @return array|string
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = '';
+    $return = '';
     if(isset($filter['a.title'])) {
       $result[] = "a.post_title LIKE :a_post_title";
       $prms['a_post_title'] = "%" . implode('%', array_filter(explode(' ', $filter['a.post_title']))) . "%";
@@ -48,14 +48,14 @@ class ModelComments extends ModelBase{
       $prms['a_moderated'] = $filter['a.moderated'];
     }
     if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
+      $return = implode(" AND ", $result);
       if(strlen(trim($result)) > 0) {
-        $result = " WHERE " . $result;
+        $return = " WHERE " . $return;
         $filter['active'] = true;
       }
     }
 
-    return $result;
+    return $return;
   }
 
   /**

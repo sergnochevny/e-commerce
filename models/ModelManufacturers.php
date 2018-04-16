@@ -24,8 +24,8 @@ class ModelManufacturers extends ModelBase{
    * @throws \Exception
    */
   public static function build_where(&$filter, &$prms = null){
+    $return = "";
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
-      $result = "";
       if(!empty($filter["a.manufacturer"])) {
         if(!empty($filter["a.manufacturer"])) {
           if(AdminHelper::is_logged()) {
@@ -54,14 +54,14 @@ class ModelManufacturers extends ModelBase{
         $prms['hc_pvisible'] = $filter['hidden']["c.pvisible"];
       }
       if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        $result = (!empty($result) ? " WHERE " . $result : '');
+        $return = implode(" AND ", $result);
+        $return = (!empty($return) ? " WHERE " . $return : '');
       }
     } else {
-      $result = parent::build_where($filter, $prms);
+      $return = parent::build_where($filter, $prms);
     }
 
-    return $result;
+    return $return;
   }
 
   /**

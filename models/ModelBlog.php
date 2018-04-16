@@ -25,7 +25,7 @@ class ModelBlog extends ModelBase{
    * @throws \Exception
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = "";
+    $return = "";
     $prms = [];
     if(AdminHelper::is_logged()) {
       if(!empty($filter["a.post_title"])) {
@@ -80,11 +80,11 @@ class ModelBlog extends ModelBase{
       $prms['ha_post_status'] = $filter['hidden']["a.post_status"];
     }
     if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
-      $result = (!empty($result) ? " WHERE " . $result : '');
+      $return = implode(" AND ", $result);
+      $return = (!empty($return) ? " WHERE " . $return : '');
     }
 
-    return $result;
+    return $return;
   }
 
   /**

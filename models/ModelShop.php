@@ -26,7 +26,7 @@ class ModelShop extends ModelBase{
    * @throws \Exception
    */
   public static function build_where(&$filter, &$prms = null){
-    $result_where = "";
+    $return = "";
     $prms = [];
 
     if(AdminHelper::is_logged()) {
@@ -219,15 +219,15 @@ class ModelShop extends ModelBase{
     }
 
     if(!empty($result) && (count($result) > 0)) {
-      $result_where = implode(" AND ", $result);
+      $return = implode(" AND ", $result);
       if(!empty($filter['type']) && in_array($filter['type'], array_keys(static::$list_conditions))) {
         $type = static::$list_conditions[$filter['type']];
-        $result_where = (!empty($result_where) ? "cc.type = " . $type . ' AND ' . $result_where : "cc.type = " . $type);
+        $return = (!empty($return) ? "cc.type = " . $type . ' AND ' . $return : "cc.type = " . $type);
       }
-      $result_where = (!empty($result_where) ? " WHERE " . $result_where : '');
+      $return = (!empty($return) ? " WHERE " . $return : '');
     }
 
-    return $result_where;
+    return $return;
   }
 
   /**

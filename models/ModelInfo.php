@@ -19,20 +19,20 @@ class ModelInfo extends ModelBase{
   /**
    * @param $filter
    * @param null $prms
-   * @return array|string
+   * @return array
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = "";
+    $return = '';
     if(isset($filter['hidden']['id']) && !is_array($filter['hidden']['priceyard'])) $result[] = "a.id = '" . static::prepare_for_sql($filter['hidden']["id"]) . "'";
     if(isset($filter['hidden']['visible'])) $result[] = "visible = '" . static::prepare_for_sql($filter['hidden']["visible"]) . "'";
     if(isset($filter['hidden']["f1"])) $result[] = "f1 = '" . static::prepare_for_sql($filter['hidden']["f1"]) . "'";
     if(isset($filter['hidden']["f2"])) $result[] = "f2 = '" . static::prepare_for_sql($filter['hidden']["f2"]) . "'";
     if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
-      $result = (!empty($result) ? " WHERE " . $result : '');
+      $return = implode(" AND ", $result);
+      $return = (!empty($return) ? " WHERE " . $return : '');
     }
 
-    return $result;
+    return $return;
   }
 
   /**

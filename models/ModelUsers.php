@@ -19,7 +19,7 @@ class ModelUsers extends ModelBase{
    * @return array|string
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = "";
+    $return = "";
     if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter["email"])))) . "%'";
     if(!empty($filter["full_name"]))
       foreach(array_filter(explode(' ', $filter["full_name"])) as $item)
@@ -41,14 +41,14 @@ class ModelUsers extends ModelBase{
     if(isset($filter["country"])) $result[] = "bill_country = '" . static::prepare_for_sql($filter["country"]) . "'";
     if(isset($filter["province"])) $result[] = "bill_province = '" . static::prepare_for_sql($filter["province"]) . "'";
     if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
-      if(strlen(trim($result)) > 0) {
-        $result = " WHERE " . $result;
+      $return = implode(" AND ", $result);
+      if(strlen(trim($return)) > 0) {
+        $return = " WHERE " . $return;
         $filter['active'] = true;
       }
     }
 
-    return $result;
+    return $return;
   }
 
   /**

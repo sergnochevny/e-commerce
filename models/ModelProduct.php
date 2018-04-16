@@ -23,7 +23,7 @@ class ModelProduct extends ModelBase{
    * @return array|string
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = "";
+    $return = "";
     if(isset($filter["a.pname"])) {
       foreach(array_filter(explode(' ', $filter["a.pname"])) as $idx => $item) {
         if(!empty($item)) {
@@ -92,14 +92,14 @@ class ModelProduct extends ModelBase{
     }
 
     if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
-      if(strlen(trim($result)) > 0) {
-        $result = " WHERE " . $result;
+      $return = implode(" AND ", $result);
+      if(strlen(trim($return)) > 0) {
+        $return = " WHERE " . $return;
         $filter['active'] = true;
       }
     }
 
-    return $result;
+    return $return;
   }
 
   /**

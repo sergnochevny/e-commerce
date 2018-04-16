@@ -42,8 +42,8 @@ class ModelPrices extends ModelBase{
    * @return array|string
    */
   public static function build_where(&$filter, &$prms = null){
+    $return = "";
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
-      $result = "";
       $prms = [];
       if(isset($filter['hidden']['a.priceyard'])) {
         $result[] = "a.priceyard > :ha_priceyard";
@@ -54,14 +54,14 @@ class ModelPrices extends ModelBase{
         $prms['hc_pvisible'] = $filter['hidden']["a.pvisible"];
       }
       if(!empty($result) && (count($result) > 0)) {
-        $result = implode(" AND ", $result);
-        $result = (!empty($result) ? " WHERE " . $result : '');
+        $return = implode(" AND ", $result);
+        $return = (!empty($return) ? " WHERE " . $return : '');
       }
     } else {
-      $result = parent::build_where($filter, $prms);
+      $return = parent::build_where($filter, $prms);
     }
 
-    return $result;
+    return $return;
   }
 
   /**

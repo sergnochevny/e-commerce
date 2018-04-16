@@ -23,7 +23,7 @@ class ModelOrders extends ModelBase{
    * @return array|string
    */
   public static function build_where(&$filter, &$prms = null){
-    $result = "";
+    $return = "";
     if(isset($filter["a.aid"])) $result[] = "a.aid = '" . static::prepare_for_sql($filter['a.aid']) . "'";
     if(!empty($filter['username'])) foreach(array_filter(explode(' ', $filter['username'])) as $item) if(!empty($item)) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . static::prepare_for_sql($item) . "%'";
     if(isset($filter["a.status"])) $result[] = "a.status = '" . static::prepare_for_sql($filter["a.status"]) . "'";
@@ -43,13 +43,13 @@ class ModelOrders extends ModelBase{
     if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::prepare_for_sql($filter['hidden']["c.sid"]) . "'";
 
     if(!empty($result) && (count($result) > 0)) {
-      $result = implode(" AND ", $result);
-      if(strlen(trim($result)) > 0) {
-        $result = " WHERE " . $result;
+      $return = implode(" AND ", $result);
+      if(strlen(trim($return)) > 0) {
+        $return = " WHERE " . $return;
       }
     }
 
-    return $result;
+    return $return;
   }
 
   /**
