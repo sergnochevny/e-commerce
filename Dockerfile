@@ -32,7 +32,6 @@ RUN set -x \
   wget \
   && /usr/bin/curl -sS https://getcomposer.org/installer |php \
   && /bin/mv composer.phar /usr/local/bin/composer \
-  && npm install bower gulp yarn -g \
   && /usr/sbin/a2enmod rewrite expires setenvif \
   && /usr/sbin/a2dissite '*' \
   && ln -sfT /dev/stderr "/var/log/apache2/error.log" \
@@ -42,6 +41,7 @@ RUN set -x \
   && apt install -y nodejs \
   && apt install -y npm \
   && npm install npm@latest -g \
+  && npm install bower gulp yarn -g \
   && apt-get clean \
   && apt-get autoremove -y \
   && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archives/*.deb
