@@ -37,8 +37,8 @@ RUN set -x \
   && ln -sfT /dev/stderr "/var/log/apache2/error.log" \
   && ln -sfT /dev/stdout "/var/log/apache2/access.log" \
   && ln -sfT /dev/stdout "/var/log/apache2/other_vhosts_access.log" \
-  && apt install -y nodejs \
-  && apt install -y npm \
+  && apt-get install -y nodejs \
+  && apt-get install -y npm \
   && npm install npm@latest -g \
   && npm install bower gulp yarn -g \
   && apt-get clean \
