@@ -30,6 +30,7 @@ RUN set -x \
   imagemagick \
   graphicsmagick \
   wget \
+  gnupg2 \
   && /usr/bin/curl -sS https://getcomposer.org/installer |php \
   && /bin/mv composer.phar /usr/local/bin/composer \
   && /usr/sbin/a2enmod rewrite expires setenvif \
