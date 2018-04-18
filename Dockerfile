@@ -16,7 +16,6 @@ RUN set -x \
   libicu-dev \
   iputils-ping \
   git \
-  npm \
   libfreetype6-dev \
   libpng-dev \
   libjpeg-dev \
@@ -41,6 +40,7 @@ RUN set -x \
   && ln -sfT /dev/stdout "/var/log/apache2/other_vhosts_access.log" \
   && curl -sL https://deb.nodesource.com/setup_8.x | bash -\
   && apt install -y nodejs \
+  && apt install -y npm \
   && npm install npm@latest -g \
   && apt-get clean \
   && apt-get autoremove -y \
