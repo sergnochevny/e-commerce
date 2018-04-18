@@ -37,6 +37,7 @@ RUN set -x \
   && ln -sfT /dev/stderr "/var/log/apache2/error.log" \
   && ln -sfT /dev/stdout "/var/log/apache2/access.log" \
   && ln -sfT /dev/stdout "/var/log/apache2/other_vhosts_access.log" \
+  && curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
   && curl -sL https://deb.nodesource.com/setup_9.x | bash - \
   && apt-get install -y nodejs \
   && apt-get install -y build-essential \
