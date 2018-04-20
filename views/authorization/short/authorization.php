@@ -23,10 +23,10 @@ use app\core\App;
       </div>
 
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-4">
           <input data-link id="short_login" type="submit" class="button" value="Login"/>
         </div>
-        <div class="col-xs-6 text-right">
+        <div class="col-xs-8 text-right">
           <label for="rememberme" class="inline">
             Remember me
             <input class="rememberme" name="rememberme" value="1" type="checkbox" id="short_rememberme"/>

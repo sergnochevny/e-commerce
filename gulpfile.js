@@ -254,7 +254,7 @@ gulp.task('js_partials', function () {
     '!resources/js/inputmask/jquery.inputmask.bundle.js',
     '!resources/js/owlcarousel/owl.carousel.js',
     '!resources/js/tooltipster.bundle.js',
-    '!resources/js/jqmobile/jquery.mobile.custom.js',
+    '!resources/js/jqmobile/~jquery.mobile.custom.js',
     '!resources/js/jqmobile/jquery.mobile.js',
     '!resources/js/multiselect.js',
     '!resources/js/search/search.js',
@@ -285,7 +285,7 @@ gulp.task('js_all', function () {
     'resources/js/inputmask/phone-codes/phone.js',
     'resources/js/owlcarousel/owl.carousel.js',
     'resources/js/tooltipster.bundle.js',
-    'resources/js/jqmobile/jquery.mobile.custom.js',
+    'resources/js/jqmobile/~jquery.mobile.custom.js',
     'resources/js/multiselect.js',
     'resources/js/search/search.js',
     'resources/js/script.js'
