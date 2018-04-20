@@ -87,21 +87,23 @@ var change_text = false;
   });
 
   $.fn.extend({
+    init_checkbox: function(){
+      $(this).find('input[type=checkbox]').each(
+        function () {
+          var options = {};
+          $.each($(this).data('events'),
+            function (name, event) {
+              options[name] = function (ev, ui) {
+                $.each(event, function (key, item) {
+                  item.handler.call(ev.target, ev);
+                });
+              }
+            }
+          );
+          $(this).flipswitch(options);
+        });
+    },
     init_input: function () {
-      // $(this).find('input[type=checkbox]').each(
-      //   function () {
-      //     var options = {};
-      //     $.each($(this).data('events'),
-      //       function (name, event) {
-      //         options[name] = function (ev, ui) {
-      //           $.each(event, function (key, item) {
-      //             item.handler.call(ev.target, ev);
-      //           });
-      //         }
-      //       }
-      //     );
-      //     $(this).flipswitch(options);
-      //   });
       $(this).find('input[type=text]').each(
         function () {
           var options = {};

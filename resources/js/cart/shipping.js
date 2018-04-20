@@ -1,4 +1,4 @@
 (function ($) {
   'use strict';
-  $('[data-block=shipping]').init_input();
+  $('[data-block=shipping]').init_checkbox();
 })(window.jQuery || window.$);
