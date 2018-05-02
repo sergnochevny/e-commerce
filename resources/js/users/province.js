@@ -1,8 +1,9 @@
 (function ($) {
   'use strict';
-
-  $(document).on('change', "[data-change-province]",
+  debugger;
+  $("[data-change-province]").on('change',
     function (event) {
+      debugger;
       event.preventDefault();
       var url = $(this).parents('form').attr('action');
       var destination = $(this).attr('data-destination');

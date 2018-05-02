@@ -91,7 +91,7 @@ var change_text = false;
       $(this).find('input[type=checkbox]').each(
         function () {
           var options = {};
-          $.each($(this).data('events'),
+          $.each($._data( this, 'events' ),
             function (name, event) {
               options[name] = function (ev, ui) {
                 $.each(event, function (key, item) {
@@ -101,13 +101,16 @@ var change_text = false;
             }
           );
           $(this).flipswitch(options);
+          $('a.ui-flipswitch-on').on('click', function (event) {
+            event.preventDefault();
+          });
         });
     },
     init_input: function () {
       $(this).find('input[type=text]').each(
         function () {
           var options = {};
-          $.each($(this).data('events'),
+          $.each($._data( this, 'events' ),
             function (name, event) {
               options[name] = function (ev, ui) {
                 $.each(event, function (key, item) {
@@ -121,7 +124,7 @@ var change_text = false;
       $(this).find('input[type=textarea]').each(
         function () {
           var options = {};
-          $.each($(this).data('events'),
+          $.each($._data( this, 'events' ),
             function (name, event) {
               options[name] = function (ev, ui) {
                 $.each(event, function (key, item) {
@@ -135,7 +138,7 @@ var change_text = false;
       $(this).find('input[type=number]').each(
         function () {
           var options = {};
-          $.each($(this).data('events'),
+          $.each($._data( this, 'events' ),
             function (name, event) {
               options[name] = function (ev, ui) {
                 $.each(event, function (key, item) {
@@ -149,7 +152,7 @@ var change_text = false;
       $(this).find('input[type=email]').each(
         function () {
           var options = {};
-          $.each($(this).data('events'),
+          $.each($._data( this, 'events' ),
             function (name, event) {
               options[name] = function (ev, ui) {
                 $.each(event, function (key, item) {
@@ -163,7 +166,7 @@ var change_text = false;
       $(this).find('input[type=password]').each(
         function () {
           var options = {};
-          $.each($(this).data('events'),
+          $.each($._data( this, 'events' ),
             function (name, event) {
               options[name] = function (ev, ui) {
                 $.each(event, function (key, item) {
@@ -177,7 +180,7 @@ var change_text = false;
       $(this).find('input[type=url]').each(
         function () {
           var options = {};
-          $.each($(this).data('events'),
+          $.each($._data( this, 'events' ),
             function (name, event) {
               options[name] = function (ev, ui) {
                 $.each(event, function (key, item) {
@@ -192,7 +195,7 @@ var change_text = false;
       $(this).find('textarea').each(
         function () {
           var options = {};
-          $.each($(this).data('events'),
+          $.each($._data( this, 'events' ),
             function (name, event) {
               options[name] = function (ev, ui) {
                 $.each(event, function (key, item) {
@@ -206,11 +209,15 @@ var change_text = false;
       );
       $(this).find('select').each(
         function () {
+          debugger;
           var options = {appendTo: $(this).parent()};
-          $.each($(this).data('events'),
+          $.each($._data( this, 'events' ),
             function (name, event) {
+              debugger;
               options[name] = function (ev, ui) {
+                debugger;
                 $.each(event, function (key, item) {
+                  debugger;
                   item.handler.call(ev.target, ev);
                 });
               }

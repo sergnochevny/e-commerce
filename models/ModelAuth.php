@@ -90,7 +90,7 @@ class ModelAuth extends ModelBase{
         if($remember == self::hash_($hash, $salt, self::$cost)) {
           return true;
         } else {
-          setcookie('_r', '');
+          setcookie('_r', '', 0, '', App::$app->server('SERVER_NAME'));
         }
       }
     }
@@ -134,7 +134,7 @@ class ModelAuth extends ModelBase{
             $hash = self::hash_($hash, $salt, self::$cost);
             $q = "UPDATE accounts SET remember = :remember WHERE aid = :aid";
             if(static::query($q, ['remember' => $hash, 'aid' => self::$user['aid']])) {
-              setcookie('_r', $hash, time() + 60 * 60 * 24 * 30);
+              setcookie('_r', $hash, 0, '', App::$app->server('SERVER_NAME'));
             }
           }
 
@@ -167,7 +167,7 @@ class ModelAuth extends ModelBase{
         if($remember == self::hash_($hash, $salt, self::$cost)) {
           return true;
         } else {
-          setcookie('_ar', '');
+          setcookie('_ar', '', 0, '', App::$app->server('SERVER_NAME'));
         }
       }
       static::free_result($res);
@@ -212,7 +212,7 @@ class ModelAuth extends ModelBase{
             $hash = self::hash_($hash, $salt, self::$cost);
             $q = "UPDATE admins SET rememberme = :remember WHERE id = :id";
             if(static::query($q, ['remember' => $hash, 'id' => self::$admin['id']])) {
-              setcookie('_ar', $hash, time() + 60 * 60 * 24 * 30);
+              setcookie('_ar', $hash, 0, '', App::$app->server('SERVER_NAME'));
             }
           }
           static::free_result($res);

@@ -89,6 +89,7 @@ class ControllerAuthorization extends ControllerController{
     }
 
     if(!empty($messages)) return $mailer->sendMultiple($messages);
+
     return false;
   }
 
@@ -119,7 +120,7 @@ class ControllerAuthorization extends ControllerController{
         $admin = ModelAuth::get_admin_data();
         App::$app->setSession('_a', $admin['id']);
         $url = !is_null(App::$app->get('url')) ?
-          base64_decode(urldecode(App::$app->get('url'))) :
+          App::$app->router()->UrlTo(base64_decode(urldecode(App::$app->get('url')))) :
           App::$app->router()->UrlTo('product');
 //        if($this->scenario() == 'short') exit();
         $this->redirect($url);
@@ -132,7 +133,7 @@ class ControllerAuthorization extends ControllerController{
         App::$app->setSession('_', $user['aid']);
         App::$app->setSession('user', $user);
         $url = !is_null(App::$app->get('url')) ?
-          base64_decode(urldecode(App::$app->get('url'))) :
+          App::$app->router()->UrlTo(base64_decode(urldecode(App::$app->get('url')))) :
           App::$app->router()->UrlTo('shop');
 //        if($this->scenario() == 'short') exit();
         $this->redirect($url);
@@ -149,24 +150,24 @@ class ControllerAuthorization extends ControllerController{
 
       if(ModelAuth::is_admin($login)) {
         if($this->admin_authorize($login, $password)) {
-          $url = base64_decode(urldecode(App::$app->post('redirect')));
+          $url = App::$app->router()->UrlTo(base64_decode(urldecode(App::$app->post('redirect'))));
           $url = (strlen($url) > 0) ? $url : App::$app->router()->UrlTo('product');
           $this->redirect($url);
         }
       }
       if(ModelAuth::is_user($login)) {
         if($this->user_authorize($login, $password)) {
-          $url = base64_decode(urldecode(App::$app->post('redirect')));
+          $url = App::$app->router()->UrlTo(base64_decode(urldecode(App::$app->post('redirect'))));
           $url = (strlen($url) > 0) ? $url : App::$app->router()->UrlTo('shop');
           $this->redirect($url);
         }
       }
       exit('Wrong Email/Username or Password');
     } else {
-      $redirect = !is_null(App::$app->get('url')) ? App::$app->get('url') : '';
+      $redirect = App::$app->router()->UrlTo(!is_null(App::$app->get('url')) ? App::$app->get('url') : '');
       $prms = null;
       if(!is_null(App::$app->get('url'))) {
-        $prms['url'] = App::$app->get('url');
+        $prms['url'] = App::$app->router()->UrlTo(App::$app->get('url'));
       }
       $registration_url = App::$app->router()->UrlTo('authorization/registration', $prms);
       $lostpassword_url = App::$app->router()->UrlTo('authorization/lost_password', $prms);
@@ -190,13 +191,13 @@ class ControllerAuthorization extends ControllerController{
 
     if($this->is_admin_logged()) {
       $url = !is_null(App::$app->get('url')) ?
-        base64_decode(urldecode(App::$app->get('url'))) :
+        App::$app->router()->UrlTo(base64_decode(urldecode(App::$app->get('url')))) :
         App::$app->router()->UrlTo('product');
       $this->redirect($url);
     }
     if($this->is_user_logged()) {
       $url = !is_null(App::$app->get('url')) ?
-        base64_decode(urldecode(App::$app->get('url'))) :
+        App::$app->router()->UrlTo(base64_decode(urldecode(App::$app->get('url')))) :
         App::$app->router()->UrlTo('shop');
       $this->redirect($url);
     }
@@ -206,7 +207,7 @@ class ControllerAuthorization extends ControllerController{
         $admin = ModelAuth::get_admin_data();
         App::$app->setSession('_a', $admin['id']);
         $url = !is_null(App::$app->get('url')) ?
-          base64_decode(urldecode(App::$app->get('url'))) :
+          App::$app->router()->UrlTo(base64_decode(urldecode(App::$app->get('url')))) :
           App::$app->router()->UrlTo('product');
         $this->redirect($url);
       }
@@ -218,7 +219,7 @@ class ControllerAuthorization extends ControllerController{
         App::$app->setSession('_', $user['aid']);
         App::$app->setSession('user', $user);
         $url = !is_null(App::$app->get('url')) ?
-          base64_decode(urldecode(App::$app->get('url'))) :
+          App::$app->router()->UrlTo(base64_decode(urldecode(App::$app->get('url')))) :
           App::$app->router()->UrlTo('shop');
         $this->redirect($url);
       }

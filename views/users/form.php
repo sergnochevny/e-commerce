@@ -271,4 +271,5 @@ use app\core\App;
     </div>
   </div>
 </form>
+<?php $this->registerJSFile(App::$app->router()->UrlTo('js/users/province.min.js'), 6); ?>
 <?php $this->registerJSFile(App::$app->router()->UrlTo('js/formsimple/form.min.js'), 6, true); ?>

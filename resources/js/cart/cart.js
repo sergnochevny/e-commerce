@@ -239,10 +239,7 @@
   }).on('change', '[data-block=agreeterm]', function (event) {
     event.preventDefault();
     $('[data-block=container_proceed_pay]').toggle(this.checked);
-  }).on('click', 'a.ui-flipswitch-on', function (event) {
-    event.preventDefault();
   }).on('submit', '[data-block=paypal_form]', function (event) {
-    event.preventDefault();
     var url = base_url + 'cart/pay_mail';
     $('body').waitloader('show');
     $.get(url,{},function(data){
