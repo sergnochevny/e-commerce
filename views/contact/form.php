@@ -53,9 +53,9 @@ use app\core\App;
     <div class="row">
         <div class="form-row">
             <div class="col-xs-6 col-sm-6">
-                <img height="45" id="captcha_img" src="<?= App::$app->router()->UrlTo('captcha') ?>">
+                <img height="45" id="captcha_img" src="<?= $captcha; ?>">
                 <a class="pull-right half-inner-offset-top" tabindex="-1" title="Refresh" id="captcha_refresh"
-                   href="javascript:void(0);">
+                   href="<?= App::$app->router()->UrlTo('captcha') ?>">
                     <i class="fa fa-2x fa-refresh" aria-hidden="true"></i>
                 </a>
             </div>

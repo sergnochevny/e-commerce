@@ -65,9 +65,12 @@ class CaptchaHelper{
   /**
    *
    */
-  public static function gen_captcha(&$key){
+  public static function gen_captcha(){
     $use_symbols_len = strlen(static::$use_symbols);
-    for($i = 0; $i < static::$length; $i++) $key .= static::$use_symbols{mt_rand(0, $use_symbols_len - 1)};
+    $key = '';
+    for($i = 0; $i < static::$length; $i++) {
+      $key .= static::$use_symbols{mt_rand(0, $use_symbols_len - 1)};
+    }
     $im = imagecreatefrompng(APP_PATH . "/web/images/captcha/back.png");
     $width = imagesx($im);
     $height = imagesy($im);
@@ -94,16 +97,29 @@ class CaptchaHelper{
     $rand = mt_rand(0, 1);
     if($rand) $rand = -1; else $rand = 1;
     static::wave_region($im, 0, 0, $width, $height, $rand * mt_rand(static::$amplitude_min, static::$amplitude_max), mt_rand(30, 40));
+    $image_type = '';
+    ob_start();
+    ob_implicit_flush(false);
     if(function_exists("imagepng")) {
-      header("Content-Type: image/x-png");
       imagepng($im);
+      $image_type = 'data:image/x-png;base64,';
     } else if(function_exists("imagejpeg")) {
-      header("Content-Type: image/jpeg");
       imagejpeg($im, null, static::$jpeg_quality);
+      $image_type = 'data:image/jpeg;base64,';
     } else if(function_exists("imagegif")) {
-      header("Content-Type: image/gif");
       imagegif($im);
+      $image_type = 'data:image/gif;base64,';
     }
+    $image = ob_get_clean();
+
+    App::$app->setSession('captcha', $key);
+    App::$app->setSession('captcha_time', time());
+
+    if(!empty($image)) {
+      $image = $image_type . base64_encode($image);
+    }
+
+    return $image;
   }
 
   /**

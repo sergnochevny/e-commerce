@@ -260,15 +260,15 @@ gulp.task('js_partials', function () {
     '!resources/js/search/search.js',
     '!resources/js/script.js'
   ])
-    .pipe(minify({
-      ext: {
-        min: '.min.js'
-      },
-      noSource: true
-    }))
-    // .pipe(rename({
-    //   suffix: ".min"
+    // .pipe(minify({
+    //   ext: {
+    //     min: '.min.js'
+    //   },
+    //   noSource: true
     // }))
+    .pipe(rename({
+      suffix: ".min"
+    }))
     .pipe(gulp.dest('web/js'));
 });
 
@@ -290,9 +290,9 @@ gulp.task('js_all', function () {
     'resources/js/search/search.js',
     'resources/js/script.js'
   ])
-    .pipe(minify({
-      noSource: true
-    }))
+    // .pipe(minify({
+    //   noSource: true
+    // }))
     .pipe(concat("all.min.js"))
     .pipe(gulp.dest('web/js'));
 });

@@ -12,15 +12,11 @@ use classes\helpers\CaptchaHelper;
  */
 class ControllerCaptcha extends ControllerController{
 
-  public $key = '';
-
   /**
    * @export
    */
   public function captcha(){
-    CaptchaHelper::gen_captcha($this->key);
-    App::$app->setSession('captcha', $this->key);
-    App::$app->setSession('captcha_time', time());
+    exit(CaptchaHelper::gen_captcha());
   }
 
 }

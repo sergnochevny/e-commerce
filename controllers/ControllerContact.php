@@ -120,7 +120,13 @@ class ControllerContact extends ControllerSimple{
     $url = App::$app->router()->UrlTo($this->controller);
     $this->load($data);
     if(App::$app->request_is_post() && $this->form_handling($data)) {
+      $captcha = CaptchaHelper::gen_captcha();
+      $this->main->template->vars('captcha', $captcha);
       exit($this->form($url, $data));
+    }
+    if(empty($captcha)) {
+      $captcha = CaptchaHelper::gen_captcha();
+      $this->main->template->vars('captcha', $captcha);
     }
     $this->main->template->vars('form', $this->form($url, [], true));
     $this->render_view($this->controller);
