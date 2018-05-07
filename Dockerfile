@@ -16,6 +16,7 @@ RUN set -x \
   libicu-dev \
   iputils-ping \
   git \
+  vim \
   libfreetype6-dev \
   libpng-dev \
   libjpeg-dev \
@@ -52,6 +53,8 @@ RUN set -x \
   && /usr/local/bin/docker-php-ext-install zip pdo pdo_mysql opcache curl intl iconv bz2 xml xsl xmlrpc readline exif \
   && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install gd
+
+RUN echo "log_errors = On \nerror_log = /var/log/php-error.log" > /usr/local/etc/php/conf.d/log.ini
 
 USER root
 ADD deploy/docker/app.conf /etc/apache2/sites-enabled/000-app.conf
