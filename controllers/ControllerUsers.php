@@ -425,7 +425,10 @@ class ControllerUsers extends ControllerFormSimple{
       return ($this->form($url, $data));
     }
     $form = $this->form($url, null, true);
-    if($this->scenario() == 'short') return($form);
+    if($this->scenario() == 'short') {
+
+      return ($form);
+    }
     $this->set_back_url($back_url);
     $this->main->template->vars('form', $form);
     if($is_user) return ($this->render_view('edit'));

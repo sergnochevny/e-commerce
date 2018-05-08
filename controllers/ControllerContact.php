@@ -43,6 +43,17 @@ class ControllerContact extends ControllerSimple{
           ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
       }
 
+      $body = 'Your Message has been sent successfully!';
+      $subject = $data['subject'];
+      $email = $data['email'];
+      $reply = App::$app->keyStorage()->system_info_email;
+
+      $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
+        ->setSubject($subject)
+        ->setTo([$email])
+        ->setReplyTo($reply)
+        ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+
       return !empty($messages) && $mailer->sendMultiple($messages);
     }
   }

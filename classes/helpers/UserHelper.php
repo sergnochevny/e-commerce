@@ -98,7 +98,7 @@ class UserHelper {
     $emails = array_unique($emails);
 
     foreach($emails as $email) {
-      $messages[] = $mailer->compose(['text' => 'welcome_mail-text'], ['body' => $body])
+      $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
         ->setSubject($subject)
         ->setTo([$email])
         ->setReplyTo([App::$app->keyStorage()->system_info_email])

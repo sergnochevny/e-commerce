@@ -326,7 +326,7 @@ class ControllerCart extends ControllerController{
 
         $mailer = App::$app->getMailer();
         if(!empty($email)) {
-          $messages[] = $mailer->compose(['text' => 'thanx_mail-text'], ['body' => $body])
+          $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
             ->setSubject($subject)
             ->setTo([$email])
             ->setReplyTo([App::$app->keyStorage()->system_info_email])
@@ -341,7 +341,7 @@ class ControllerCart extends ControllerController{
         $emails = array_unique($emails);
 
         foreach($emails as $email) {
-          $messages[] = $mailer->compose(['text' => 'thanx_mail-text'], ['body' => $body])
+          $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
             ->setSubject($subject)
             ->setTo([$email])
             ->setReplyTo([App::$app->keyStorage()->system_info_email])
@@ -1040,7 +1040,7 @@ class ControllerCart extends ControllerController{
         $emails = array_unique($emails);
 
         foreach($emails as $email) {
-          $messages[] = $mailer->compose(['text' => 'thanx_mail-text'], ['body' => $body])
+          $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
             ->setSubject($subject)
             ->setTo([$email])
             ->setReplyTo([App::$app->keyStorage()->system_info_email])

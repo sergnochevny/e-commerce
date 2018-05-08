@@ -5,6 +5,7 @@ namespace classes\controllers;
 use app\core\App;
 use app\core\model\ModelBase;
 use classes\Auth;
+use classes\helpers\CaptchaHelper;
 use Exception;
 
 /**
@@ -102,6 +103,10 @@ abstract class ControllerSimple extends ControllerController{
     $this->main->template->vars('data', $data);
     $this->main->template->vars('scenario', $this->scenario());
     $this->main->template->vars('action', $action);
+    if($this->scenario() == 'short') {
+      $captcha = CaptchaHelper::gen_captcha();
+      $this->main->template->vars('captcha', $captcha);
+    }
     if($return) return $this->render_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form', $return && App::$app->request_is_ajax());
     return $this->render_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
   }
