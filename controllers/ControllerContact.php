@@ -23,7 +23,6 @@ class ControllerContact extends ControllerSimple{
       $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
 
       $subject = $data['subject'];
-      $body = $data['comments'];
       $email = App::$app->keyStorage()->system_info_email;
 
       $mailer = App::$app->getMailer();
@@ -37,18 +36,19 @@ class ControllerContact extends ControllerSimple{
       $emails = array_unique($emails);
 
       foreach($emails as $email) {
-        $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
+        $messages[] = $mailer->compose(['text' => 'contact-admin-mail-text'],
+          ['data' => $data, 'site_name' => App::$app->keyStorage()->system_site_name])
           ->setSubject($subject)
           ->setTo([$email])
           ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
       }
 
-      $body = 'Your Message has been sent successfully!';
       $subject = $data['subject'];
       $email = $data['email'];
       $reply = App::$app->keyStorage()->system_info_email;
 
-      $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
+      $messages[] = $mailer->compose(['text' => 'contact-user-mail-text'],
+        ['data' => $data, 'site_name' => App::$app->keyStorage()->system_site_name])
         ->setSubject($subject)
         ->setTo([$email])
         ->setReplyTo($reply)

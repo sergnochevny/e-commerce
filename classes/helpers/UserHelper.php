@@ -79,13 +79,6 @@ class UserHelper {
     $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
 
     $subject = "Thank you for registering with iluvfabrix.com";
-    $body = "Thank you for registering with iluvfabrix.com.\n";
-    $body .= "\n";
-    $body .= "As a new user, you will get 20% off your first purchase (which you may use any time in the first year) unless we have a sale going on for a discount greater than 20%, in which case you get the greater of the two discounts.\n";
-    $body .= "\n";
-    $body .= "We will, from time to time, inform you by email of various time limited specials on the iluvfabrix site.  If you wish not to receive these emails, please respond to this email with the word Unsubscribe in the subject line.\n";
-    $body .= "\n";
-    $body .= "Once again, thank you, and enjoy shopping for World Class Designer Fabrics & Trims on iluvfabrix.com.\n";
 
     $mailer = App::$app->getMailer();
     $emails = [$email];
@@ -98,7 +91,7 @@ class UserHelper {
     $emails = array_unique($emails);
 
     foreach($emails as $email) {
-      $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
+      $messages[] = $mailer->compose(['text' => 'welcome-mail-text'])
         ->setSubject($subject)
         ->setTo([$email])
         ->setReplyTo([App::$app->keyStorage()->system_info_email])
