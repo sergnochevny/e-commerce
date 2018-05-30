@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "8887e863132b4a4f8f6a38bcbcfa223d",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:other/app-core.git",
-                "reference": "c7238d63fac3f15be619f2e19cd817c807436a2d"
+                "reference": "c50d2a8d8c3a72088916aad58751bdafa01eca64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/c7238d63fac3f15be619f2e19cd817c807436a2d.zip",
-                "reference": "c7238d63fac3f15be619f2e19cd817c807436a2d",
+                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/c50d2a8d8c3a72088916aad58751bdafa01eca64.zip",
+                "reference": "c50d2a8d8c3a72088916aad58751bdafa01eca64",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "App Core",
-            "time": "2018-05-30T21:34:34+00:00"
+            "time": "2018-05-30T22:26:26+00:00"
         },
         {
             "name": "doctrine/lexer",

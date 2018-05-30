@@ -32,7 +32,7 @@ use app\core\App;
       <div class="col-sm-10 col-sm-offset-2 inner-offset-bottom">
         &nbsp;
         <span color="#663300">
-          $<?= number_format((!is_null(App::$app->keyStorage()->shop_samples_price_express_shipping) ? App::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), 2); ?>
+          $<?= number_format((!is_null(App::$app->KeyStorage()->shop_samples_price_express_shipping) ? App::$app->KeyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), 2); ?>
           USD surcharge
         </span>
       </div>

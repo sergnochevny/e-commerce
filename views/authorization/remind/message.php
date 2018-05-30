@@ -7,9 +7,9 @@ use app\core\App;
       class="js_active">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title><?= App::$app->keyStorage()->system_site_name; ?></title>
-  <meta name="KeyWords" content="<?= App::$app->keyStorage()->system_site_name; ?>">
-  <meta name="Description" content="<?= App::$app->keyStorage()->system_site_name; ?>">
+  <title><?= App::$app->KeyStorage()->system_site_name; ?></title>
+  <meta name="KeyWords" content="<?= App::$app->KeyStorage()->system_site_name; ?>">
+  <meta name="Description" content="<?= App::$app->KeyStorage()->system_site_name; ?>">
   <link charset="UTF-8" rel="icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png') ?>">
   <link charset="UTF-8" rel="shortcut icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png') ?>">
   <link charset="UTF-8" rel="apple-touch-icon" href="<?= App::$app->router()->UrlTo('images/lf-logo.png') ?>">

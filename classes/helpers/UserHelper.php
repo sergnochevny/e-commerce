@@ -77,14 +77,14 @@ class UserHelper{
    * @throws \Exception
    */
   public static function sendWelcomeEmail($email){
-    $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
+    $demo = (!is_null(App::$app->KeyStorage()->system_demo) ? App::$app->KeyStorage()->system_demo : DEMO);
 
     $subject = "Thank you for registering with iluvfabrix.com";
 
     $mailer = App::$app->getMailer();
     $emails = [$email];
     if($demo == 1) {
-      $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
+      $emails = array_merge($emails, explode(',', App::$app->KeyStorage()->system_emails_admins));
     }
     array_walk($emails, function(&$item){
       $item = trim($item);
@@ -92,11 +92,11 @@ class UserHelper{
     $emails = array_unique($emails);
 
     foreach($emails as $email) {
-      $messages[] = $mailer->compose(['text' => 'welcome-mail-text'], ['site_name' => App::$app->keyStorage()->system_site_name])
+      $messages[] = $mailer->compose(['text' => 'welcome-mail-text'], ['site_name' => App::$app->KeyStorage()->system_site_name])
         ->setSubject($subject)
         ->setTo([$email])
-        ->setReplyTo([App::$app->keyStorage()->system_info_email])
-        ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+        ->setReplyTo([App::$app->KeyStorage()->system_info_email])
+        ->setFrom([App::$app->KeyStorage()->system_send_from_email => App::$app->KeyStorage()->system_site_name . ' robot']);
     }
 
     if(!empty($messages)) $mailer->sendMultiple($messages);

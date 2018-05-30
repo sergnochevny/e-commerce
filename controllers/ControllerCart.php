@@ -187,9 +187,9 @@ class ControllerCart extends ControllerController{
     $handlingcost = 0;
     $express_samples_cost = 0;
     $total = 0;
-    $rate_handling = (!is_null(App::$app->keyStorage()->shop_rate_handling) ? App::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
-    $samples_price_express_shipping = (!is_null(App::$app->keyStorage()->shop_samples_price_express_shipping) ? App::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
-    $rate_roll = (!is_null(App::$app->keyStorage()->shop_rate_roll) ? App::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
+    $rate_handling = (!is_null(App::$app->KeyStorage()->shop_rate_handling) ? App::$app->KeyStorage()->shop_rate_handling : RATE_HANDLING);
+    $samples_price_express_shipping = (!is_null(App::$app->KeyStorage()->shop_samples_price_express_shipping) ? App::$app->KeyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+    $rate_roll = (!is_null(App::$app->KeyStorage()->shop_rate_roll) ? App::$app->KeyStorage()->shop_rate_roll : RATE_ROLL);
 
     if(!is_null(App::$app->session('cart')) && isset(App::$app->session('cart')['trid']) && !is_null(App::$app->session('user')) && isset(App::$app->session('cart')['payment']) && (App::$app->session('cart')['payment'] == 1)) {
       if((!is_null(App::$app->get('trid')) && (App::$app->get('trid') == App::$app->session('cart')['trid'])) || (!is_null(App::$app->post('trid')) && (App::$app->session('trid') == App::$app->session('cart')['trid']))) {
@@ -305,7 +305,7 @@ class ControllerCart extends ControllerController{
       $ship_firstname = trim($user['ship_firstname']);
       $ship_lastname = trim($user['ship_lastname']);
 
-      $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
+      $demo = (!is_null(App::$app->KeyStorage()->system_demo) ? App::$app->KeyStorage()->system_demo : DEMO);
       if($demo == 1) {
         $body = "                !!!THIS IS A TEST!!!                  \n\n";
         $body .= "Hi, $ship_firstname $ship_lastname ($email) \n\n";
@@ -329,12 +329,12 @@ class ControllerCart extends ControllerController{
           $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
             ->setSubject($subject)
             ->setTo([$email])
-            ->setReplyTo([App::$app->keyStorage()->system_info_email])
-            ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+            ->setReplyTo([App::$app->KeyStorage()->system_info_email])
+            ->setFrom([App::$app->KeyStorage()->system_send_from_email => App::$app->KeyStorage()->system_site_name . ' robot']);
         }
 
-        $emails = [App::$app->keyStorage()->system_info_email];
-        $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
+        $emails = [App::$app->KeyStorage()->system_info_email];
+        $emails = array_merge($emails, explode(',', App::$app->KeyStorage()->system_emails_admins));
         array_walk($emails, function(&$item){
           $item = trim($item);
         });
@@ -344,8 +344,8 @@ class ControllerCart extends ControllerController{
           $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
             ->setSubject($subject)
             ->setTo([$email])
-            ->setReplyTo([App::$app->keyStorage()->system_info_email])
-            ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+            ->setReplyTo([App::$app->KeyStorage()->system_info_email])
+            ->setFrom([App::$app->KeyStorage()->system_send_from_email => App::$app->KeyStorage()->system_site_name . ' robot']);
         }
 
         if(!empty($messages)) $mailer->sendMultiple($messages);
@@ -366,9 +366,9 @@ class ControllerCart extends ControllerController{
     $subject = $ma['subject'];
     $body = $ma['body'];
 
-    $rate_handling = (!is_null(App::$app->keyStorage()->shop_rate_handling) ? App::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
-    $rate_roll = (!is_null(App::$app->keyStorage()->shop_rate_roll) ? App::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
-    $samples_price_express_shipping = (!is_null(App::$app->keyStorage()->shop_samples_price_express_shipping) ? App::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+    $rate_handling = (!is_null(App::$app->KeyStorage()->shop_rate_handling) ? App::$app->KeyStorage()->shop_rate_handling : RATE_HANDLING);
+    $rate_roll = (!is_null(App::$app->KeyStorage()->shop_rate_roll) ? App::$app->KeyStorage()->shop_rate_roll : RATE_ROLL);
+    $samples_price_express_shipping = (!is_null(App::$app->KeyStorage()->shop_samples_price_express_shipping) ? App::$app->KeyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
 
     if(!is_null(App::$app->session('cart')) && !is_null(App::$app->session('user'))) {
 
@@ -545,8 +545,8 @@ class ControllerCart extends ControllerController{
     $total = 0;
     $aPrds = [];
 
-    $rate_roll = (!is_null(App::$app->keyStorage()->shop_rate_roll) ? App::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
-    $samples_price_express_shipping = (!is_null(App::$app->keyStorage()->shop_samples_price_express_shipping) ? App::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+    $rate_roll = (!is_null(App::$app->KeyStorage()->shop_rate_roll) ? App::$app->KeyStorage()->shop_rate_roll : RATE_ROLL);
+    $samples_price_express_shipping = (!is_null(App::$app->KeyStorage()->shop_samples_price_express_shipping) ? App::$app->KeyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
 
     $cart = App::$app->session('cart');
     $cart_items = isset($cart['items']) ? $cart['items'] : [];
@@ -639,9 +639,9 @@ class ControllerCart extends ControllerController{
     $couponDiscount = 0;
     $aPrds = [];
 
-    $rate_handling = (!is_null(App::$app->keyStorage()->shop_rate_handling) ? App::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
-    $rate_roll = (!is_null(App::$app->keyStorage()->shop_rate_roll) ? App::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
-    $samples_price_express_shipping = (!is_null(App::$app->keyStorage()->shop_samples_price_express_shipping) ? App::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+    $rate_handling = (!is_null(App::$app->KeyStorage()->shop_rate_handling) ? App::$app->KeyStorage()->shop_rate_handling : RATE_HANDLING);
+    $rate_roll = (!is_null(App::$app->KeyStorage()->shop_rate_roll) ? App::$app->KeyStorage()->shop_rate_roll : RATE_ROLL);
+    $samples_price_express_shipping = (!is_null(App::$app->KeyStorage()->shop_samples_price_express_shipping) ? App::$app->KeyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
 
     $cart = App::$app->session('cart');
     $cart_items = isset($cart['items']) ? $cart['items'] : [];
@@ -843,9 +843,9 @@ class ControllerCart extends ControllerController{
     $couponDiscount = 0;
     $aPrds = [];
 
-    $rate_handling = (!is_null(App::$app->keyStorage()->shop_rate_handling) ? App::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
-    $rate_roll = (!is_null(App::$app->keyStorage()->shop_rate_roll) ? App::$app->keyStorage()->shop_rate_roll : RATE_ROLL);
-    $samples_price_express_shipping = (!is_null(App::$app->keyStorage()->shop_samples_price_express_shipping) ? App::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
+    $rate_handling = (!is_null(App::$app->KeyStorage()->shop_rate_handling) ? App::$app->KeyStorage()->shop_rate_handling : RATE_HANDLING);
+    $rate_roll = (!is_null(App::$app->KeyStorage()->shop_rate_roll) ? App::$app->KeyStorage()->shop_rate_roll : RATE_ROLL);
+    $samples_price_express_shipping = (!is_null(App::$app->KeyStorage()->shop_samples_price_express_shipping) ? App::$app->KeyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING);
 
     $cart = App::$app->session('cart');
     $cart_samples_items = isset($cart['samples_items']) ? $cart['samples_items'] : [];
@@ -1002,7 +1002,7 @@ class ControllerCart extends ControllerController{
   public function pay_mail(){
     if(!is_null(App::$app->session('cart')) && !is_null(App::$app->session('user'))) {
 
-      $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
+      $demo = (!is_null(App::$app->KeyStorage()->system_demo) ? App::$app->KeyStorage()->system_demo : DEMO);
 
       $user = App::$app->session('user');
       $email = trim($user['email']);
@@ -1029,10 +1029,10 @@ class ControllerCart extends ControllerController{
 
         $mailer = App::$app->getMailer();
 
-        $emails = explode(',', App::$app->keyStorage()->system_emails_sellers);
-        $emails = array_merge([App::$app->keyStorage()->system_info_email], $emails);
+        $emails = explode(',', App::$app->KeyStorage()->system_emails_sellers);
+        $emails = array_merge([App::$app->KeyStorage()->system_info_email], $emails);
         if($demo == 1) {
-          $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
+          $emails = array_merge($emails, explode(',', App::$app->KeyStorage()->system_emails_admins));
         }
         array_walk($emails, function(&$item){
           $item = trim($item);
@@ -1043,8 +1043,8 @@ class ControllerCart extends ControllerController{
           $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
             ->setSubject($subject)
             ->setTo([$email])
-            ->setReplyTo([App::$app->keyStorage()->system_info_email])
-            ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+            ->setReplyTo([App::$app->KeyStorage()->system_info_email])
+            ->setFrom([App::$app->KeyStorage()->system_send_from_email => App::$app->KeyStorage()->system_site_name . ' robot']);
         }
 
         if(!empty($messages)) $mailer->sendMultiple($messages);
@@ -1066,8 +1066,8 @@ class ControllerCart extends ControllerController{
    * @throws \Exception
    */
   public function proceed_agreem(){
-    $paypal_business = App::$app->keyStorage()->paypal_business;
-    $paypal_url = App::$app->keyStorage()->paypal_url;
+    $paypal_business = App::$app->KeyStorage()->paypal_business;
+    $paypal_url = App::$app->KeyStorage()->paypal_url;
     $controller_info = new ControllerInfo($this->main);
     $controller_info->scenario('cart');
     $this->main->view->setVars('info_view', $controller_info->view(false, false, true));

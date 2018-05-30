@@ -5,7 +5,7 @@ use controllers\ControllerInfo;
 use controllers\ControllerRelated;
 
 $pid = $data['pid'];
-$ahref = 'mailto:' . App::$app->keyStorage()->system_info_email . '?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
+$ahref = 'mailto:' . App::$app->KeyStorage()->system_info_email . '?subject=' . rawurlencode($data['sdesc'] . ' ' . $data['pnumber']);
 $mhref = App::$app->router()->UrlTo('matches/add', ['pid' => $pid]);
 
 ?>

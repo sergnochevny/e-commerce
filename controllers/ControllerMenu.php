@@ -15,7 +15,7 @@ class ControllerMenu extends ControllerController{
    * @throws \Exception
    */
   public function show_menu(){
-    $this->view->merge_vars($this->main->view->get_vars());
+    $this->view->MergeVars($this->main->view->getVars());
     $this->view->setVars('idx', !is_null(App::$app->session('sidebar_idx')) ?
       App::$app->session('sidebar_idx') : 0
     );

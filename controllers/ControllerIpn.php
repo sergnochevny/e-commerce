@@ -27,7 +27,7 @@ class ControllerIpn extends ControllerController{
   public function index($required_access = true){
     if(!is_null(App::$app->get('pay_notify'))) {
 
-      $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
+      $demo = (!is_null(App::$app->KeyStorage()->system_demo) ? App::$app->KeyStorage()->system_demo : DEMO);
 
       header('HTTP/1.1 200 OK');
       $req = 'cmd=_notify-validate';
@@ -40,7 +40,7 @@ class ControllerIpn extends ControllerController{
         $req .= "&$key=$value";
       }
 
-      $ch = curl_init(App::$app->keyStorage()->paypal_url);
+      $ch = curl_init(App::$app->KeyStorage()->paypal_url);
       if($ch == false) return false;
       curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
       curl_setopt($ch, CURLOPT_POST, 1);
@@ -79,7 +79,7 @@ class ControllerIpn extends ControllerController{
 
           $subject = 'PayPall Payment';
 
-          $emails = explode(',', App::$app->keyStorage()->system_emails_admins);
+          $emails = explode(',', App::$app->KeyStorage()->system_emails_admins);
           array_walk($emails, function(&$item){
             $item = trim($item);
           });
@@ -90,7 +90,7 @@ class ControllerIpn extends ControllerController{
             $messages[] = $mailer->compose(['text' => 'mail-text'], ['body' => $body])
               ->setSubject($subject)
               ->setTo([$email])
-              ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+              ->setFrom([App::$app->KeyStorage()->system_send_from_email => App::$app->KeyStorage()->system_site_name . ' robot']);
           }
 
           if(!empty($messages)) $mailer->sendMultiple($messages);

@@ -44,7 +44,7 @@ use app\core\App;
             <p>
               Phone at: <a href="tel:9155870200">(915) 587-0200</a><br>
               Email: <a
-                href="mailto:<?= App::$app->keyStorage()->system_info_email; ?>"><?= App::$app->keyStorage()->system_info_email; ?></a><br>
+                href="mailto:<?= App::$app->KeyStorage()->system_info_email; ?>"><?= App::$app->KeyStorage()->system_info_email; ?></a><br>
               Address: <a href="<?= App::$app->router()->base_url; ?>"><?= App::$app->router->host; ?></a> (Division
               of Fabric Love LLC)<br>
               211 Teramar Way<br>

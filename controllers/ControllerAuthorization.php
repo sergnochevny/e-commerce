@@ -69,12 +69,12 @@ class ControllerAuthorization extends ControllerController{
     $subject = "ILuvFabrix. Change Password.";
     $this->main->view->setVars('remind_url', $remind_url);
     $body = $this->RenderLayoutReturn('remind/message');
-    $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
+    $demo = (!is_null(App::$app->KeyStorage()->system_demo) ? App::$app->KeyStorage()->system_demo : DEMO);
 
     $mailer = App::$app->getMailer();
     $emails = [$email];
     if($demo == 1) {
-      $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
+      $emails = array_merge($emails, explode(',', App::$app->KeyStorage()->system_emails_admins));
     }
     array_walk($emails, function(&$item){
       $item = trim($item);
@@ -85,7 +85,7 @@ class ControllerAuthorization extends ControllerController{
       $messages[] = $mailer->compose(['html' => 'mail-text'], ['body' => $body])
         ->setSubject($subject)
         ->setTo([$email])
-        ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+        ->setFrom([App::$app->KeyStorage()->system_send_from_email => App::$app->KeyStorage()->system_site_name . ' robot']);
     }
 
     if(!empty($messages)) return $mailer->sendMultiple($messages);

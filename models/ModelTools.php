@@ -88,11 +88,11 @@ class ModelTools extends ModelBase{
       }
     }
 
-    if(empty($title)) $title = App::$app->keyStorage()->system_site_name;
-    if(empty($description)) $description = App::$app->keyStorage()->system_site_name;
+    if(empty($title)) $title = App::$app->KeyStorage()->system_site_name;
+    if(empty($description)) $description = App::$app->KeyStorage()->system_site_name;
     if(empty($keywords)) {
-      $keywords = array_filter(explode(' ', strtolower(App::$app->keyStorage()->system_site_name)));
-      array_unshift($keywords, strtolower(App::$app->keyStorage()->system_site_name));
+      $keywords = array_filter(explode(' ', strtolower(App::$app->KeyStorage()->system_site_name)));
+      array_unshift($keywords, strtolower(App::$app->KeyStorage()->system_site_name));
       $keywords = implode(',', $keywords);
     }
 

@@ -357,22 +357,22 @@ class ControllerShop extends ControllerController{
         $filter['type'] = $back;
         switch($back) {
           case 'specials':
-            $max_count_items = (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT);
+            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_specials_amount) ? App::$app->KeyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT);
             break;
           case 'bestsellers':
-            $max_count_items = (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ? App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT);
+            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_bestsellers_amount) ? App::$app->KeyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT);
             break;
           case 'under':
-            $max_count_items = (!is_null(App::$app->keyStorage()->shop_under_amount) ? App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT);
+            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_under_amount) ? App::$app->KeyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT);
             break;
           case 'last':
-            $max_count_items = (!is_null(App::$app->keyStorage()->shop_last_amount) ? App::$app->keyStorage()->shop_last_amount : SHOP_LAST_AMOUNT);
+            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_last_amount) ? App::$app->KeyStorage()->shop_last_amount : SHOP_LAST_AMOUNT);
             break;
           case 'best':
-            $max_count_items = (!is_null(App::$app->keyStorage()->shop_best_amount) ? App::$app->keyStorage()->shop_best_amount : SHOP_BEST_AMOUNT);
+            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_best_amount) ? App::$app->KeyStorage()->shop_best_amount : SHOP_BEST_AMOUNT);
             break;
           case 'popular':
-            $max_count_items = (!is_null(App::$app->keyStorage()->shop_popular_amount) ? App::$app->keyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT);
+            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_popular_amount) ? App::$app->KeyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT);
             break;
           case 'home':
             break;
@@ -640,7 +640,7 @@ class ControllerShop extends ControllerController{
     $this->page_title = "Discount Decorator and Designer Fabrics";
     $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates. All items available on a FIRST COME, FIRST SERVED basis only.';
     $this->main->view->setVars('annotation', $annotation);
-    $list = $this->get_list_by_type('specials', (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
+    $list = $this->get_list_by_type('specials', (!is_null(App::$app->KeyStorage()->shop_specials_amount) ? App::$app->KeyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
     if(App::$app->RequestIsAjax()) exit($list);
     $this->main->view->setVars('list', $list);
     $this->render_view('shop');
@@ -653,8 +653,8 @@ class ControllerShop extends ControllerController{
   public function popular(){
     $this->main->view->setVars('cart_enable', '_');
     $this->page_title = 'Popular Textiles';
-    $list = $this->get_list_by_type('popular', (!is_null(App::$app->keyStorage()->shop_popular_amount) ?
-      App::$app->keyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT)
+    $list = $this->get_list_by_type('popular', (!is_null(App::$app->KeyStorage()->shop_popular_amount) ?
+      App::$app->KeyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT)
     );
     if(App::$app->RequestIsAjax()) exit($list);
     $this->main->view->setVars('list', $list);
@@ -668,8 +668,8 @@ class ControllerShop extends ControllerController{
   public function last(){
     $this->main->view->setVars('cart_enable', '_');
     $this->page_title = "What's New";
-    $list = $this->get_list_by_type('last', (!is_null(App::$app->keyStorage()->shop_last_amount) ?
-      App::$app->keyStorage()->shop_last_amount : SHOP_LAST_AMOUNT)
+    $list = $this->get_list_by_type('last', (!is_null(App::$app->KeyStorage()->shop_last_amount) ?
+      App::$app->KeyStorage()->shop_last_amount : SHOP_LAST_AMOUNT)
     );
     if(App::$app->RequestIsAjax()) exit($list);
     $this->main->view->setVars('list', $list);
@@ -683,8 +683,8 @@ class ControllerShop extends ControllerController{
   public function best(){
     $this->main->view->setVars('cart_enable', '_');
     $this->page_title = 'Best Textiles';
-    $list = $this->get_list_by_type('best', (!is_null(App::$app->keyStorage()->shop_best_amount) ?
-      App::$app->keyStorage()->shop_best_amount : SHOP_BEST_AMOUNT)
+    $list = $this->get_list_by_type('best', (!is_null(App::$app->KeyStorage()->shop_best_amount) ?
+      App::$app->KeyStorage()->shop_best_amount : SHOP_BEST_AMOUNT)
     );
     if(App::$app->RequestIsAjax()) exit($list);
     $this->main->view->setVars('list', $list);
@@ -698,8 +698,8 @@ class ControllerShop extends ControllerController{
   public function bestsellers(){
     $this->main->view->setVars('cart_enable', '_');
     $this->page_title = 'Best Sellers';
-    $list = $this->get_list_by_type('bestsellers', (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ?
-      App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT)
+    $list = $this->get_list_by_type('bestsellers', (!is_null(App::$app->KeyStorage()->shop_bestsellers_amount) ?
+      App::$app->KeyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT)
     );
     if(App::$app->RequestIsAjax()) exit($list);
     $this->main->view->setVars('list', $list);
@@ -714,8 +714,8 @@ class ControllerShop extends ControllerController{
   public function under(){
     $this->main->view->setVars('cart_enable', '_');
     $this->page_title = 'Under $100';
-    $list = $this->get_list_by_type('under', (!is_null(App::$app->keyStorage()->shop_under_amount) ?
-      App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT)
+    $list = $this->get_list_by_type('under', (!is_null(App::$app->KeyStorage()->shop_under_amount) ?
+      App::$app->KeyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT)
     );
     if(App::$app->RequestIsAjax()) exit($list);
     $this->main->view->setVars('list', $list);

@@ -73,7 +73,7 @@ use app\core\App;
           </ol>
           <p>For questions or comments regarding
             this policy please contact us by <a
-              href="mailto:<?= App::$app->keyStorage()->system_info_email; ?>"><?= App::$app->keyStorage()->system_info_email; ?></a>.
+              href="mailto:<?= App::$app->KeyStorage()->system_info_email; ?>"><?= App::$app->KeyStorage()->system_info_email; ?></a>.
           </p>
 
           <p>Additional information about <a target="_blank" href="https://www.priv.gc.ca">Canada's

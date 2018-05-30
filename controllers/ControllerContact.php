@@ -20,15 +20,15 @@ class ControllerContact extends ControllerSimple{
    */
   private function sendMessage($data = null){
     if(isset($data) && is_array($data)) {
-      $demo = (!is_null(App::$app->keyStorage()->system_demo) ? App::$app->keyStorage()->system_demo : DEMO);
+      $demo = (!is_null(App::$app->KeyStorage()->system_demo) ? App::$app->KeyStorage()->system_demo : DEMO);
 
       $subject = $data['subject'];
-      $email = App::$app->keyStorage()->system_info_email;
+      $email = App::$app->KeyStorage()->system_info_email;
 
       $mailer = App::$app->getMailer();
       $emails = [$email];
       if($demo == 1) {
-        $emails = array_merge($emails, explode(',', App::$app->keyStorage()->system_emails_admins));
+        $emails = array_merge($emails, explode(',', App::$app->KeyStorage()->system_emails_admins));
       }
       array_walk($emails, function(&$item){
         $item = trim($item);
@@ -37,22 +37,22 @@ class ControllerContact extends ControllerSimple{
 
       foreach($emails as $email) {
         $messages[] = $mailer->compose(['text' => 'contact-admin-mail-text'],
-          ['data' => $data, 'site_name' => App::$app->keyStorage()->system_site_name])
+          ['data' => $data, 'site_name' => App::$app->KeyStorage()->system_site_name])
           ->setSubject($subject)
           ->setTo([$email])
-          ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+          ->setFrom([App::$app->KeyStorage()->system_send_from_email => App::$app->KeyStorage()->system_site_name . ' robot']);
       }
 
       $subject = $data['subject'];
       $email = $data['email'];
-      $reply = App::$app->keyStorage()->system_info_email;
+      $reply = App::$app->KeyStorage()->system_info_email;
 
       $messages[] = $mailer->compose(['text' => 'contact-user-mail-text'],
-        ['data' => $data, 'site_name' => App::$app->keyStorage()->system_site_name])
+        ['data' => $data, 'site_name' => App::$app->KeyStorage()->system_site_name])
         ->setSubject($subject)
         ->setTo([$email])
         ->setReplyTo($reply)
-        ->setFrom([App::$app->keyStorage()->system_send_from_email => App::$app->keyStorage()->system_site_name . ' robot']);
+        ->setFrom([App::$app->KeyStorage()->system_send_from_email => App::$app->KeyStorage()->system_site_name . ' robot']);
 
       return !empty($messages) && $mailer->sendMultiple($messages);
     }

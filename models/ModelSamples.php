@@ -33,15 +33,15 @@ class ModelSamples extends ModelBase{
 
     #check if the number of samples is larger then the multiple minimum
     if($numberSamples < !empty($data['shop_samples_qty_multiple_min']) ? $data['shop_samples_qty_multiple_min'] : SAMPLES_QTY_MULTIPLE_MIN) {
-      return (!is_null(App::$app->keyStorage()->shop_samples_price_single) ? App::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE);
+      return (!is_null(App::$app->KeyStorage()->shop_samples_price_single) ? App::$app->KeyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE);
     }
 
     if(($numberSamples >= !empty($data['shop_samples_qty_multiple_min']) ? $data['shop_samples_qty_multiple_min'] : SAMPLES_QTY_MULTIPLE_MIN) && ($numberSamples <= !empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX)) {
-      return (!is_null(App::$app->keyStorage()->shop_samples_price_multiple) ? App::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE);
+      return (!is_null(App::$app->KeyStorage()->shop_samples_price_multiple) ? App::$app->KeyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE);
     }
 
     if($numberSamples > !empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX) {
-      return ((!is_null(App::$app->keyStorage()->shop_samples_price_multiple) ? App::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE)) + (($numberSamples - (!empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX)) * (!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL));
+      return ((!is_null(App::$app->KeyStorage()->shop_samples_price_multiple) ? App::$app->KeyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE)) + (($numberSamples - (!empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX)) * (!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL));
     }
 
     return null;
@@ -69,7 +69,7 @@ class ModelSamples extends ModelBase{
    * @return bool
    */
   public static function systemAllowSamplesExpressShipping(){
-    $result = (!is_null(App::$app->keyStorage()->system_allow_sample_express_shipping) ? App::$app->keyStorage()->system_allow_sample_express_shipping : SAMPLE_EXPRESS_SHIPPING);
+    $result = (!is_null(App::$app->KeyStorage()->system_allow_sample_express_shipping) ? App::$app->KeyStorage()->system_allow_sample_express_shipping : SAMPLE_EXPRESS_SHIPPING);
     if(!isset($result)) $result = false;
 
     return $result;

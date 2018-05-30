@@ -7,7 +7,7 @@ use classes\helpers\UserHelper;
 <div class="row menu-wrap">
   <div class="pull-right text-right button-ask top-menu <?= UserHelper::is_logged() ? '' : 'login'; ?>">
     <a class="button" title="Ask a Question"
-       href="mailto:<?= App::$app->keyStorage()->system_info_email . '?subject=' . rawurlencode('RE: Inquiry for Iluvfabrix'); ?>">
+       href="mailto:<?= App::$app->KeyStorage()->system_info_email . '?subject=' . rawurlencode('RE: Inquiry for Iluvfabrix'); ?>">
       <span>Ask a Question</span>
       <i class="fa fa-question" aria-hidden="true"></i>
     </a>

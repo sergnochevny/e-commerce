@@ -275,7 +275,7 @@ class ModelPrice extends ModelBase{
     //discount_type = 2 - shipping
     //discount_type = 3 - total w/ shipping
 
-    $rate_handling = (!is_null(App::$app->keyStorage()->shop_rate_handling) ? App::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+    $rate_handling = (!is_null(App::$app->KeyStorage()->shop_rate_handling) ? App::$app->KeyStorage()->shop_rate_handling : RATE_HANDLING);
 
     if($iDisType == 2) {
       $rRet = self::doDiscount($rShip, $rDis, $iDisAmntType);

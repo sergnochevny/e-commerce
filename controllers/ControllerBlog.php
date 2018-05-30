@@ -141,7 +141,7 @@ class ControllerBlog extends ControllerFormSimple{
 
         $search = App::$app->post('filter_select_search_categories');
         $start = App::$app->post('filter_start_categories');
-        $filter_limit = (!is_null(App::$app->keyStorage()->system_filter_amount) ? App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT);
+        $filter_limit = (!is_null(App::$app->KeyStorage()->system_filter_amount) ? App::$app->KeyStorage()->system_filter_amount : FILTER_LIMIT);
         if(!is_null(App::$app->post('down'))) $start = $filter_limit + (isset($start) ? $start : 0);
         if(!is_null(App::$app->post('up'))) $start = (isset($start) ? $start : 0) - $filter_limit;
         if(($start < 0) || (is_null(App::$app->post('down')) && is_null(App::$app->post('up')))) $start = 0;

@@ -15,8 +15,8 @@ class ModelPrice extends ModelBase{
    * @return bool
    */
   public static function sysHideAllRegularPrices(){
-    $hideAllRegularPrices = (bool)(!is_null(App::$app->keyStorage()->system_hide_all_regular_prices) ?
-      App::$app->keyStorage()->system_hide_all_regular_prices : HIDE_REGULAR_PRICE
+    $hideAllRegularPrices = (bool)(!is_null(App::$app->KeyStorage()->system_hide_all_regular_prices) ?
+      App::$app->KeyStorage()->system_hide_all_regular_prices : HIDE_REGULAR_PRICE
     );
     if(!isset($hideAllRegularPrices)) $hideAllRegularPrices = false;
 
@@ -559,7 +559,7 @@ class ModelPrice extends ModelBase{
     //discount_type = 2 - shipping
     //discount_type = 3 - total w/ shipping
 
-    $rate_handling = (!is_null(App::$app->keyStorage()->shop_rate_handling) ? App::$app->keyStorage()->shop_rate_handling : RATE_HANDLING);
+    $rate_handling = (!is_null(App::$app->KeyStorage()->shop_rate_handling) ? App::$app->KeyStorage()->shop_rate_handling : RATE_HANDLING);
 
     if($iDisType == 2) {
       $rRet = self::doDiscount($rShip, $rDis, $iDisAmntType);

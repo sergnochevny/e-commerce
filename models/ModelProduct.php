@@ -282,8 +282,8 @@ class ModelProduct extends ModelBase{
    */
   public static function get_filter_data($type, &$count, $start = 0, $search = null){
     $filter = null;
-    $filter_limit = !is_null(App::$app->keyStorage()->system_filter_amount) ?
-      App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT;
+    $filter_limit = !is_null(App::$app->KeyStorage()->system_filter_amount) ?
+      App::$app->KeyStorage()->system_filter_amount : FILTER_LIMIT;
     $start = isset($start) ? $start : 0;
     $search = static::sanitize($search);
     switch($type) {
