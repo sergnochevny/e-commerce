@@ -58,8 +58,8 @@ class ControllerRelated extends ControllerFormSimple{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
-    parent::build_order($sort, $view, $filter);
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
+    parent::BuildOrder($sort, $view, $filter);
     if($view) {
       $sort['a.id'] = 'desc';
     }
@@ -112,7 +112,7 @@ class ControllerRelated extends ControllerFormSimple{
       $_rows = ModelRelated::get_list(0, 0, $res_count_rows, $filter);
       if(isset($_rows)) foreach($_rows as $row) $related_selected[] = $row['pid'];
     }
-    $this->main->template->vars('related_selected', $related_selected);
+    $this->main->view->setVars('related_selected', $related_selected);
   }
 
   /**
@@ -142,15 +142,15 @@ class ControllerRelated extends ControllerFormSimple{
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
     $this->search_form($search_form, $view);
     $this->set_back_url();
-    $this->main->template->vars('rows', $rows);
-    $this->main->template->vars('sort', $sort);
-    $this->main->template->vars('list', $this->render_layout_return('rows'));
-    $this->main->template->vars('count_rows', $res_count_rows);
-    (new Paginator($this->main))->paginator($total, $page, $this->controller, null, $per_page);
+    $this->main->view->setVars('rows', $rows);
+    $this->main->view->setVars('sort', $sort);
+    $this->main->view->setVars('list', $this->RenderLayoutReturn('rows'));
+    $this->main->view->setVars('count_rows', $res_count_rows);
+    (new Paginator($this->main))->getPaginator($total, $page, $this->controller, null, $per_page);
     $this->before_list_layout($view);
-    if($return) return $this->render_layout_return('list', $return && App::$app->request_is_ajax());
+    if($return) return $this->RenderLayoutReturn('list', $return && App::$app->RequestIsAjax());
 
-    return $this->render_layout('list');
+    return $this->RenderLayout('list');
   }
 
   protected function build_back_url(&$back_url = null, &$prms = null){
@@ -201,7 +201,7 @@ class ControllerRelated extends ControllerFormSimple{
   public function index($required_access = true){
     if($required_access) Auth::check_admin_authorized();
     $list = $this->get_list(false, true);
-    if(App::$app->request_is_ajax()) exit($list); else {
+    if(App::$app->RequestIsAjax()) exit($list); else {
       throw new Exception('Error 404');
     }
   }

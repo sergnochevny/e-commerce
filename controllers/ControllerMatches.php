@@ -55,9 +55,9 @@ class ControllerMatches extends ControllerFormSimple{
    * @throws \Exception
    */
   protected function before_form_layout(&$data = null){
-    $this->main->template->vars('message', $data['message']);
+    $this->main->view->setVars('message', $data['message']);
     $added = $data['res'];
-    exit(json_encode(['data' => $this->render_layout_return('msg_add'), 'added' => $added]));
+    exit(json_encode(['data' => $this->RenderLayoutReturn('msg_add'), 'added' => $added]));
   }
 
   /**
@@ -80,8 +80,8 @@ class ControllerMatches extends ControllerFormSimple{
   public function matches(){
     Auth::check_user_authorized(true);
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
-    if($controller == 'shop' && $action == 'product') $this->main->template->vars('back_url', App::$app->server('HTTP_REFERER'));
-    $this->main->template->vars('cart_not_empty', !empty(App::$app->session('cart')['items']));
+    if($controller == 'shop' && $action == 'product') $this->main->view->setVars('back_url', App::$app->server('HTTP_REFERER'));
+    $this->main->view->setVars('cart_not_empty', !empty(App::$app->session('cart')['items']));
     parent::index(false);
   }
 
@@ -97,7 +97,7 @@ class ControllerMatches extends ControllerFormSimple{
    * @throws \Exception
    */
   public function add($required_access = true){
-    if($this->form_handling($data) && App::$app->request_is_post()) {
+    if($this->form_handling($data) && App::$app->RequestIsPost()) {
       parent::add(false);
     } else throw new Exception('404');
   }
@@ -109,13 +109,13 @@ class ControllerMatches extends ControllerFormSimple{
    */
   public function delete($required_access = true){
     Auth::check_user_authorized();
-    if(App::$app->request_is_post() && App::$app->request_is_ajax() && ($id = App::$app->get($this->id_field))) {
+    if(App::$app->RequestIsPost() && App::$app->RequestIsAjax() && ($id = App::$app->get($this->id_field))) {
       try {
-        forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'delete'], $id);
+        forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'Delete'], $id);
         $this->after_delete($id);
       } catch(Exception $e) {
         $error[] = $e->getMessage();
-        $this->main->template->vars('error', $error);
+        $this->main->view->setVars('error', $error);
       }
     }
   }
@@ -126,12 +126,12 @@ class ControllerMatches extends ControllerFormSimple{
    */
   public function clear(){
     Auth::check_user_authorized();
-    if(App::$app->request_is_ajax()) {
+    if(App::$app->RequestIsAjax()) {
       try {
         forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'clear']);
       } catch(Exception $e) {
         $error[] = $e->getMessage();
-        $this->main->template->vars('error', $error);
+        $this->main->view->setVars('error', $error);
       }
     }
   }
@@ -219,7 +219,7 @@ class ControllerMatches extends ControllerFormSimple{
     } else
       $message = 'Empty Matches Area. Nothing added to the Cart.';
 
-    $this->main->template->vars('message', $message);
-    $this->render_layout('msg_add_to_cart');
+    $this->main->view->setVars('message', $message);
+    $this->RenderLayout('msg_add_to_cart');
   }
 }

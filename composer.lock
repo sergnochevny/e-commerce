@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:other/app-core.git",
-                "reference": "e1059030cf255c1b646c7bc8957dde424e703ecd"
+                "reference": "c7238d63fac3f15be619f2e19cd817c807436a2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/e1059030cf255c1b646c7bc8957dde424e703ecd.zip",
-                "reference": "e1059030cf255c1b646c7bc8957dde424e703ecd",
+                "url": "https://tp.ait.com/repo/private/dists/app/core/9999999-dev/c7238d63fac3f15be619f2e19cd817c807436a2d.zip",
+                "reference": "c7238d63fac3f15be619f2e19cd817c807436a2d",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "App Core",
-            "time": "2018-05-07T11:16:20+00:00"
+            "time": "2018-05-30T21:34:34+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -51,12 +51,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "b4f2b2fe5d5726e08a7d46fe3149b577e738463a"
+                "reference": "c0970c7889bfd33504c4fa54f35451c27897381d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/b4f2b2fe5d5726e08a7d46fe3149b577e738463a",
-                "reference": "b4f2b2fe5d5726e08a7d46fe3149b577e738463a",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/c0970c7889bfd33504c4fa54f35451c27897381d",
+                "reference": "c0970c7889bfd33504c4fa54f35451c27897381d",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -106,7 +106,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2018-04-24T03:37:48+00:00"
+            "time": "2018-05-14T15:49:16+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -215,12 +215,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "3a8402439f8cff66a83ed42bc562d2385b83c471"
+                "reference": "5adaf8247f6fc219378fa2df1e6d9e4eee2d221d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/3a8402439f8cff66a83ed42bc562d2385b83c471",
-                "reference": "3a8402439f8cff66a83ed42bc562d2385b83c471",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/5adaf8247f6fc219378fa2df1e6d9e4eee2d221d",
+                "reference": "5adaf8247f6fc219378fa2df1e6d9e4eee2d221d",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -272,7 +272,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-04-20T06:13:15+00:00"
+            "time": "2018-05-25T07:45:58+00:00"
         }
     ],
     "packages-dev": [],

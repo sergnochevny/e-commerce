@@ -21,10 +21,10 @@ abstract class ControllerSimple extends ControllerController{
   protected $save_warning = "All Data saved successfully!";
 
   protected function load(&$data){
-    if(App::$app->request_is_post()) {
+    if(App::$app->RequestIsPost()) {
       $post = App::$app->post();
       foreach($post as $key => $value) {
-        $data[$key] = ModelBase::sanitize($value);
+        $data[$key] = ModelBase::Sanitize($value);
       }
     }
   }
@@ -99,16 +99,16 @@ abstract class ControllerSimple extends ControllerController{
     if(isset($id)) $prms[$this->id_field] = $id;
     if(!empty($this->scenario())) $prms['method'] = $this->scenario();
     $action = App::$app->router()->UrlTo($url, $prms);
-    $this->main->template->vars($this->id_field, $id);
-    $this->main->template->vars('data', $data);
-    $this->main->template->vars('scenario', $this->scenario());
-    $this->main->template->vars('action', $action);
+    $this->main->view->setVars($this->id_field, $id);
+    $this->main->view->setVars('data', $data);
+    $this->main->view->setVars('scenario', $this->scenario());
+    $this->main->view->setVars('action', $action);
     if($this->scenario() == 'short') {
       $captcha = CaptchaHelper::gen_captcha();
-      $this->main->template->vars('captcha', $captcha);
+      $this->main->view->setVars('captcha', $captcha);
     }
-    if($return) return $this->render_layout_return((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form', $return && App::$app->request_is_ajax());
-    return $this->render_layout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
+    if($return) return $this->RenderLayoutReturn((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form', $return && App::$app->RequestIsAjax());
+    return $this->RenderLayout((!empty($this->scenario()) ? $this->scenario() . DS : '') . 'form');
   }
 
   /**
@@ -120,11 +120,11 @@ abstract class ControllerSimple extends ControllerController{
     $data = null;
     $this->load($data);
     $this->set_back_url();
-    if(App::$app->request_is_post() && $this->form_handling($data)) {
-      $this->save($data);
+    if(App::$app->RequestIsPost() && $this->form_handling($data)) {
+      $this->Save($data);
       $this->get_list();
     } else {
-      $this->main->template->vars('form_title', $title);
+      $this->main->view->setVars('form_title', $title);
       $this->form($url);
     }
   }
@@ -133,14 +133,14 @@ abstract class ControllerSimple extends ControllerController{
    * @param $data
    * @return bool
    */
-  protected function save(&$data){
+  protected function Save(&$data){
     $result = false;
     $error = null;
     if($this->validate($data, $error)) {
       try {
         $data['scenario'] = $this->scenario();
         $this->before_save($data);
-        $id = forward_static_call_array([$this->model, 'save'], [&$data]);
+        $id = forward_static_call_array([$this->model, 'Save'], [&$data]);
         $this->after_save($id, $data);
         $warning = [$this->save_warning];
         $result = true;
@@ -148,8 +148,8 @@ abstract class ControllerSimple extends ControllerController{
         $error[] = $e->getMessage();
       }
     }
-    if(isset($warning)) $this->main->template->vars('warning', $warning);
-    if(isset($error)) $this->main->template->vars('error', $error);
+    if(isset($warning)) $this->main->view->setVars('warning', $warning);
+    if(isset($error)) $this->main->view->setVars('error', $error);
 
     return $result;
   }
@@ -177,9 +177,9 @@ abstract class ControllerSimple extends ControllerController{
       $data = forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'get_by_id'], $id);
       $this->after_get_data_item_view($data);
       $this->set_back_url();
-      $this->main->template->vars('scenario', $this->scenario());
-      $this->main->template->vars('data', $data);
-      if($partial) $this->render_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
+      $this->main->view->setVars('scenario', $this->scenario());
+      $this->main->view->setVars('data', $data);
+      if($partial) $this->RenderLayout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
       elseif($required_access) $this->main-> render_view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
       else $this->render_view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . 'detail');
     } else parent::view($partial);
@@ -202,13 +202,13 @@ abstract class ControllerSimple extends ControllerController{
    */
   public function delete($required_access = true){
     if($required_access) Auth::check_admin_authorized();
-    if(App::$app->request_is_post() && App::$app->request_is_ajax() && ($id = App::$app->get($this->id_field))) {
+    if(App::$app->RequestIsPost() && App::$app->RequestIsAjax() && ($id = App::$app->get($this->id_field))) {
       try {
         forward_static_call([ App::$modelsNS . '\Model' . ucfirst($this->controller), 'delete'], $id);
         $this->after_delete($id);
       } catch(Exception $e) {
         $error[] = $e->getMessage();
-        $this->main->template->vars('error', $error);
+        $this->main->view->setVars('error', $error);
       }
       exit($this->get_list());
     }

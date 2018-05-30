@@ -68,7 +68,7 @@ class ModelMatches extends ModelBase{
    * @return bool
    * @throws \Exception
    */
-  public static function save(&$data){
+  public static function Save(&$data){
     extract($data);
     $added = false;
     if(!empty($pid)) {
@@ -107,7 +107,7 @@ class ModelMatches extends ModelBase{
   /**
    * @param $id
    */
-  public static function delete($id){
+  public static function Delete($id){
     if(!empty($id)) {
       $matches_items = isset(App::$app->session('matches')['items']) ?
         App::$app->session('matches')['items'] : [];

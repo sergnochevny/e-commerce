@@ -96,7 +96,7 @@ class ControllerClearance extends ControllerFormSimple{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
     if($view) {
       $sort['b.displayorder'] = 'asc';
       $sort['shop_product_categories.display_order'] = 'asc';
@@ -167,7 +167,7 @@ class ControllerClearance extends ControllerFormSimple{
     } else {
       $url_prms['back'] = 'clearance';
     }
-    $this->main->template->vars('url_prms', $url_prms);
+    $this->main->view->setVars('url_prms', $url_prms);
   }
 
   /**
@@ -183,7 +183,7 @@ class ControllerClearance extends ControllerFormSimple{
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     App::$app->setSession('sidebar_idx', 7);
     parent::view($partial, $required_access);
   }

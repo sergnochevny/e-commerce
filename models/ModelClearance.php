@@ -24,8 +24,8 @@ class ModelClearance extends ModelBase{
    * @return array|string
    * @throws \Exception
    */
-  public static function build_where(&$filter, &$prms = null){
-    return ModelShop::build_where($filter, $prms);
+  public static function BuildWhere(&$filter, &$prms = null){
+    return ModelShop::BuildWhere($filter, $prms);
   }
 
   /**
@@ -50,10 +50,10 @@ class ModelClearance extends ModelBase{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -85,22 +85,22 @@ class ModelClearance extends ModelBase{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter, $prms);
-    $query .= static::build_order($sort);
+    $query .= static::BuildWhere($filter, $prms);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
 
       if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
         $sys_hide_price = ModelPrice::sysHideAllRegularPrices();
         $cart_items = isset(App::$app->session('cart')['items']) ? App::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
-        while($row = static::fetch_array($result)) {
+        while($row = static::FetchArray($result)) {
           $response[] = ModelShop::prepare_layout_product($row, $cart, $sys_hide_price);
         }
       } else {
-        while($row = static::fetch_array($result)) {
+        while($row = static::FetchArray($result)) {
           $filename = 'images/products/b_' . $row['image1'];
           if(!(file_exists($filename) && is_file($filename))) {
             $filename = 'images/not_image.jpg';
@@ -143,9 +143,9 @@ class ModelClearance extends ModelBase{
       $q = "SELECT z.id, a.* FROM " . static::$table . " z";
       $q .= " left join shop_products a on z.pid = a.pid";
       $q .= " where z.id = :id";
-      $result = static::query($q, ['id' => $id]);
+      $result = static::Query($q, ['id' => $id]);
       if($result) {
-        $data = static::fetch_assoc($result);
+        $data = static::FetchAssoc($result);
       }
     }
 
@@ -161,24 +161,24 @@ class ModelClearance extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     try {
       extract($data);
       if(isset($pid) && isset($id)) {
         $sql = "update " . static::$table . " set";
         $sql .= " pid= :pid";
         $sql .= " where id = :id";
-        $result = static::query($sql, ['id' => $id, 'pid' => $pid]);
+        $result = static::Query($sql, ['id' => $id, 'pid' => $pid]);
       } elseif(isset($pid)) {
         $sql = "INSERT INTO " . static::$table . " SET pid= :pid";
-        $result = static::query($sql, ['pid' => $pid]);
-        if($result) $id = static::last_id();
+        $result = static::Query($sql, ['pid' => $pid]);
+        if($result) $id = static::LastId();
       }
-      if(!$result) throw new Exception(static::error());
-      static::commit();
+      if(!$result) throw new Exception(static::Error());
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -189,17 +189,17 @@ class ModelClearance extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
       if(isset($id)) {
         $query = "DELETE FROM " . static::$table . " WHERE id = :id";
-        $res = static::query($query, ['id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['id' => $id]);
+        if(!$res) throw new Exception(static::Error());
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }

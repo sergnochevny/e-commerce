@@ -2,6 +2,7 @@
 
 namespace console\models;
 
+use app\core\console\model\ModelConsole;
 use Exception;
 
 /**
@@ -20,7 +21,7 @@ class ModelShop extends ModelConsole{
    * @return mixed
    * @throws \Exception
    */
-  public static function prepare_layout_product($row){
+  public static function PrepareLayoutProduct($row){
     $pid = $row['pid'];
     $price = $row['priceyard'];
     $inventory = $row['inventory'];
@@ -46,7 +47,7 @@ class ModelShop extends ModelConsole{
    * @return array|null
    * @throws \Exception
    */
-  public static function get_widget_list_by_type($type, $start, $limit, &$res_count_rows){
+  public static function getWidgetListByType($type, $start, $limit, &$res_count_rows){
     $response = [];
     $prms = [];
     $q = "";
@@ -115,13 +116,13 @@ class ModelShop extends ModelConsole{
         $q .= "ORDER BY a.pid DESC LIMIT " . $start . "," . $limit;
         break;
     }
-    if($result = static::query($q, $prms)) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_assoc($result)) {
-        $response[] = self::prepare_layout_product($row);
+    if($result = static::Query($q, $prms)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchAssoc($result)) {
+        $response[] = self::PrepareLayoutProduct($row);
       }
     } else {
-      throw new Exception(static::error());
+      throw new Exception(static::Error());
     }
 
     return $response;
@@ -132,8 +133,7 @@ class ModelShop extends ModelConsole{
    * @return int|null
    * @throws \Exception
    */
-  public static function get_total_count($filter = null){
-    $response = 0;
+  public static function getTotalCount($filter = null){
     if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
       $query = "SELECT COUNT(DISTINCT n.pid) FROM (";
       $query .= "SELECT a.pid, SUM(k.quantity) AS s FROM " . static::$table . " a";
@@ -148,17 +148,17 @@ class ModelShop extends ModelConsole{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter, $prms);
+    $query .= static::BuildWhere($filter, $prms);
     if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
       $query .= " GROUP BY a.pid";
       $query .= " ORDER BY s DESC) m";
       $query .= " LEFT JOIN shop_products n ON m.pid = n.pid";
     }
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     } else {
-      throw new Exception(static::error());
+      throw new Exception(static::Error());
     }
 
     return $response;
@@ -174,7 +174,7 @@ class ModelShop extends ModelConsole{
    * @return array|null
    * @throws \Exception
    */
-  public static function get_list($prepare, $start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
+  public static function getList($prepare, $start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
     $response = [];
     if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
       $query = "SELECT n.pid, n.priceyard, n.inventory, n.piece FROM (";
@@ -190,27 +190,27 @@ class ModelShop extends ModelConsole{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter, $prms);
+    $query .= static::BuildWhere($filter, $prms);
     if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
       $query .= " GROUP BY a.pid";
     }
-    $query .= static::build_order($sort);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
     if(isset($filter['type']) && ($filter['type'] == 'bestsellers')) {
       $query .= ") m";
       $query .= " LEFT JOIN shop_products n ON m.pid = n.pid";
     }
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_assoc($result)) {
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchAssoc($result)) {
         if($prepare) {
-          $response[$row['pid']] = self::prepare_layout_product($row);
+          $response[$row['pid']] = self::PrepareLayoutProduct($row);
         } else {
           $response[$row['pid']] = $row['pid'];
         }
       }
     } else {
-      throw new Exception(static::error());
+      throw new Exception(static::Error());
     }
 
     return $response;

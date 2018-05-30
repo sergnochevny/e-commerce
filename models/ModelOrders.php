@@ -22,25 +22,25 @@ class ModelOrders extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
-    if(isset($filter["a.aid"])) $result[] = "a.aid = '" . static::prepare_for_sql($filter['a.aid']) . "'";
-    if(!empty($filter['username'])) foreach(array_filter(explode(' ', $filter['username'])) as $item) if(!empty($item)) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . static::prepare_for_sql($item) . "%'";
-    if(isset($filter["a.status"])) $result[] = "a.status = '" . static::prepare_for_sql($filter["a.status"]) . "'";
+    if(isset($filter["a.aid"])) $result[] = "a.aid = '" . static::PrepareForSql($filter['a.aid']) . "'";
+    if(!empty($filter['username'])) foreach(array_filter(explode(' ', $filter['username'])) as $item) if(!empty($item)) $result[] = "CONCAT(b.bill_firstname,' ',b.bill_lastname) LIKE '%" . static::PrepareForSql($item) . "%'";
+    if(isset($filter["a.status"])) $result[] = "a.status = '" . static::PrepareForSql($filter["a.status"]) . "'";
     if(isset($filter["a.order_date"])) {
-      $where = (!empty($filter["a.order_date"]['from']) ? "a.order_date >= '" . strtotime(static::prepare_for_sql($filter["a.order_date"]["from"])) . "'" : "") . (!empty($filter["a.order_date"]['to']) ? " AND a.order_date <= '" . strtotime(static::prepare_for_sql($filter["a.order_date"]["to"])) . "'" : "");
+      $where = (!empty($filter["a.order_date"]['from']) ? "a.order_date >= '" . strtotime(static::PrepareForSql($filter["a.order_date"]["from"])) . "'" : "") . (!empty($filter["a.order_date"]['to']) ? " AND a.order_date <= '" . strtotime(static::PrepareForSql($filter["a.order_date"]["to"])) . "'" : "");
       if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
     }
-    if(isset($filter["a.trid"])) $result[] = "a.trid LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter["a.trid"])))) . "%'";
-    if(isset($filter["c.sid"])) $result[] = "c.sid = '" . static::prepare_for_sql($filter["c.sid"]) . "'";
+    if(isset($filter["a.trid"])) $result[] = "a.trid LIKE '%" . implode('%', array_filter(explode(' ', static::PrepareForSql($filter["a.trid"])))) . "%'";
+    if(isset($filter["c.sid"])) $result[] = "c.sid = '" . static::PrepareForSql($filter["c.sid"]) . "'";
 
     if(!empty($result) && (count($result) > 0)) {
       if(strlen(trim(implode(" AND ", $result))) > 0) {
         $filter['active'] = true;
       }
     }
-    if(isset($filter['hidden']["a.aid"])) $result[] = "a.aid = '" . static::prepare_for_sql($filter['hidden']['a.aid']) . "'";
-    if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::prepare_for_sql($filter['hidden']["c.sid"]) . "'";
+    if(isset($filter['hidden']["a.aid"])) $result[] = "a.aid = '" . static::PrepareForSql($filter['hidden']['a.aid']) . "'";
+    if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::PrepareForSql($filter['hidden']["c.sid"]) . "'";
 
     if(!empty($result) && (count($result) > 0)) {
       $return = implode(" AND ", $result);
@@ -76,9 +76,9 @@ class ModelOrders extends ModelBase{
                     fo.oid = ' . $arr['oid'] . '
             ';
 
-      $res = static::query($query);
+      $res = static::Query($query);
       if($res) {
-        while($row = static::fetch_assoc($res)) {
+        while($row = static::FetchAssoc($res)) {
           $result[] = $row;
         }
       }
@@ -94,18 +94,18 @@ class ModelOrders extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     try {
       extract($data);
       if(isset($oid)) {
         $query = "UPDATE " . static::$table . " SET status = '" . $status . "'," . " track_code = '" . $track_code . "'," . " end_date = STR_TO_DATE('" . $end_date . "', '%m/%d/%Y')" . " WHERE oid = '" . $oid . "'";
-        $res = static::query($query);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query);
+        if(!$res) throw new Exception(static::Error());
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -123,8 +123,8 @@ class ModelOrders extends ModelBase{
     ];
     if(isset($id)) {
       $query = "SELECT * FROM " . static::$table . " WHERE oid='$id'";
-      $result = static::query($query);
-      if($result) $response = static::fetch_assoc($result);
+      $result = static::Query($query);
+      if($result) $response = static::FetchAssoc($result);
     }
 
     if ($response === false){
@@ -144,9 +144,9 @@ class ModelOrders extends ModelBase{
       $query .= "LEFT JOIN shop_orders orders ON spec_usage.oid = orders.oid ";
       $query .= "LEFT JOIN accounts users ON orders.aid = users.aid ";
       $query .= "WHERE spec_usage.sid = '$id'";
-      if($result = static::query($query)) {
+      if($result = static::Query($query)) {
         $rows = [];
-        while($row = static::fetch_array($result)) {
+        while($row = static::FetchArray($result)) {
           $rows[] = $row;
         }
 
@@ -168,10 +168,10 @@ class ModelOrders extends ModelBase{
     $query .= " from shop_orders a";
     $query .= " left join accounts b on a.aid = b.aid";
     $query .= " left join shop_specials_usage c on a.oid = c.oid";
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -193,13 +193,13 @@ class ModelOrders extends ModelBase{
     $query .= " from shop_orders a";
     $query .= " left join accounts b on a.aid = b.aid";
     $query .= " left join shop_specials_usage c on a.oid = c.oid";
-    $query .= static::build_where($filter, $prms);
-    $query .= static::build_order($sort);
+    $query .= static::BuildWhere($filter, $prms);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query)) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_array($result)) {
+    if($result = static::Query($query)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchArray($result)) {
         $response[] = $row;
       }
     }
@@ -231,8 +231,8 @@ class ModelOrders extends ModelBase{
 
     $sSQL = sprintf($q, $aid, $trid, $shipping_type, str_replace(",", "", $shipping_cost), $on_roll, str_replace(",", "", RATE_ROLL), str_replace(",", "", $express_samples), $handling, str_replace(",", "", $rate_handling), str_replace(",", "", $shipping_discount), str_replace(",", "", $coupon_discount), str_replace(",", "", $total_discount), str_replace(",", "", $taxes), str_replace(",", "", $total), time(), (!is_null(App::$app->keyStorage()->shop_samples_price_express_shipping) ? App::$app->keyStorage()->shop_samples_price_express_shipping : SAMPLES_PRICE_EXPRESS_SHIPPING), (!is_null(App::$app->keyStorage()->shop_samples_price_single) ? App::$app->keyStorage()->shop_samples_price_single : SAMPLES_PRICE_SINGLE), (!is_null(App::$app->keyStorage()->shop_samples_price_multiple) ? App::$app->keyStorage()->shop_samples_price_multiple : SAMPLES_PRICE_MULTIPLE), (!empty($data['shop_samples_price_additional']) ? $data['shop_samples_price_additional'] : SAMPLES_PRICE_ADDITIONAL), (!empty($data['shop_samples_price_with_products']) ? $data['shop_samples_price_with_products'] : SAMPLES_PRICE_WITH_PRODUCTS), (!empty($data['shop_samples_qty_multiple_min']) ? $data['shop_samples_qty_multiple_min'] : SAMPLES_QTY_MULTIPLE_MIN), (!empty($data['shop_samples_qty_multiple_max']) ? $data['shop_samples_qty_multiple_max'] : SAMPLES_QTY_MULTIPLE_MAX));
 
-    $res = static::query($sSQL);
-    if($res) return static::last_id();
+    $res = static::Query($sSQL);
+    if($res) return static::LastId();
 
     return null;
   }
@@ -253,7 +253,7 @@ class ModelOrders extends ModelBase{
   public static function insert_order_detail($order_id, $product_id, $product_number, $product_name, $quantity, $price, $discount, $sale_price, $is_sample = 0){
     $q = "INSERT INTO  shop_order_details " . "(order_id, product_id, product_number, product_name, quantity, price, discount, sale_price, is_sample)" . " VALUES (%u, %u,'%s', '%s', '%s','%s', '%s', '%s', %u);";
     $sql = sprintf($q, $order_id, $product_id, $product_number, $product_name, $quantity, $price, $discount, $sale_price, $is_sample);
-    $res = static::query($sql);
+    $res = static::Query($sql);
 
     return $res;
   }
@@ -267,10 +267,10 @@ class ModelOrders extends ModelBase{
     if(isset($discountIds) && is_array($discountIds) && (count($discountIds) > 0)) {
       $discounts = array_unique($discountIds, SORT_NUMERIC);
       $delete = sprintf("DELETE FROM shop_specials_usage WHERE oid = %u", $oid);
-      $res = static::query($delete);
+      $res = static::Query($delete);
       foreach($discounts as $sid) {
         $sSQL = sprintf("INSERT INTO shop_specials_usage (sid, oid) VALUES (%u, %u)", $sid, $oid);
-        static::query($sSQL);
+        static::Query($sSQL);
       }
     }
   }
@@ -281,10 +281,10 @@ class ModelOrders extends ModelBase{
    * @throws \Exception
    */
   public static function get_order_details($oid){
-    $results = static::query("select * from shop_order_details WHERE order_id='$oid'");
+    $results = static::Query("select * from shop_order_details WHERE order_id='$oid'");
     if($results) {
       $rows = [];
-      while($row = static::fetch_array($results)) {
+      while($row = static::FetchArray($results)) {
         $rows[] = $row;
       }
 

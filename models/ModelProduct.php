@@ -22,7 +22,7 @@ class ModelProduct extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
     if(isset($filter["a.pname"])) {
       foreach(array_filter(explode(' ', $filter["a.pname"])) as $idx => $item) {
@@ -135,11 +135,11 @@ class ModelProduct extends ModelBase{
           $select = implode(',', isset($data['colors']) ? array_keys($data['colors']) : []);
         }
         if(strlen($select) > 0) {
-          if($results = static::query("select * from shop_color where id in ($select) order by color")) {
-            while($row = static::fetch_array($results)) {
+          if($results = static::Query("select * from shop_color where id in ($select) order by color")) {
+            while($row = static::FetchArray($results)) {
               $filters[$row['id']] = $row['color'];
             }
-            static::free_result($results);
+            static::FreeResult($results);
           }
         }
         break;
@@ -150,17 +150,17 @@ class ModelProduct extends ModelBase{
           $select = implode(',', isset($data['patterns']) ? array_keys($data['patterns']) : []);
         }
         if(strlen($select) > 0) {
-          if($results = static::query(
+          if($results = static::Query(
             "select * " .
             "from shop_patterns" .
             " where id in ($select)" .
             " order by pattern"
           )) {
-            while($row = static::fetch_array($results)) {
+            while($row = static::FetchArray($results)) {
               $filters[$row['id']] = $row['pattern'];
             }
           }
-          static::free_result($results);
+          static::FreeResult($results);
         }
         break;
       case 'categories':
@@ -177,7 +177,7 @@ class ModelProduct extends ModelBase{
           }
         }
         if(strlen($select) <= 0) $select = '1';
-        if($results = static::query(
+        if($results = static::Query(
           "select a.cid, a.cname, (max(b.display_order)+1) as pos " .
           "from shop_categories a" .
           " left join shop_product_categories b on b.cid = a.cid" .
@@ -185,12 +185,12 @@ class ModelProduct extends ModelBase{
           " group by a.cid, a.cname" .
           " order by a.cname"
         )) {
-          while($row = static::fetch_array($results)) {
+          while($row = static::FetchArray($results)) {
             $filters[$row['cid']] = [
               $row['cname'], isset($categories[$row['cid']]) ? $categories[$row['cid']] : $row['pos']
             ];
           }
-          static::free_result($results);
+          static::FreeResult($results);
         }
         break;
     }
@@ -207,7 +207,7 @@ class ModelProduct extends ModelBase{
     $data = [];
     switch($type) {
       case 'patterns':
-        $results = static::query(
+        $results = static::Query(
           "select a.* " .
           "from shop_product_patterns b" .
           " inner join shop_patterns a on b.patternId=a.id " .
@@ -216,14 +216,14 @@ class ModelProduct extends ModelBase{
           ['id' => $id]
         );
         if($results) {
-          while($row = static::fetch_array($results)) {
+          while($row = static::FetchArray($results)) {
             $data[$row['id']] = $row['pattern'];
           }
-          static::free_result($results);
+          static::FreeResult($results);
         }
         break;
       case 'colors':
-        $results = static::query(
+        $results = static::Query(
           "select a.* " .
           "from shop_product_colors b" .
           " inner join shop_color a on b.colorId=a.id " .
@@ -232,14 +232,14 @@ class ModelProduct extends ModelBase{
           ['id' => $id]
         );
         if($results) {
-          while($row = static::fetch_array($results)) {
+          while($row = static::FetchArray($results)) {
             $data[$row['id']] = $row['color'];
           }
-          static::free_result($results);
+          static::FreeResult($results);
         }
         break;
       case 'categories':
-        $results = static::query(
+        $results = static::Query(
           "select a.cid, a.cname, b.display_order " .
           "from shop_product_categories b" .
           " inner join shop_categories a on b.cid=a.cid " .
@@ -248,23 +248,23 @@ class ModelProduct extends ModelBase{
           ['id' => $id]
         );
         if($results) {
-          while($row = static::fetch_array($results)) {
+          while($row = static::FetchArray($results)) {
             $data[$row['cid']] = [$row['cname'], $row['display_order']];
           }
-          static::free_result($results);
+          static::FreeResult($results);
         }
         break;
       case 'manufacturers':
-        $results = static::query(
+        $results = static::Query(
           "select a.cid, a.manufacturer" .
           " from shop_manufacturers a" .
           " order by a.manufacturer"
         );
         if($results) {
-          while($row = static::fetch_array($results)) {
+          while($row = static::FetchArray($results)) {
             $data[$row['id']] = $row['manufacturer'];
           }
-          static::free_result($results);
+          static::FreeResult($results);
         }
         break;
     }
@@ -292,19 +292,19 @@ class ModelProduct extends ModelBase{
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where color like :search";
         }
-        $results = static::query($q, ['search' => '%' . $search . '%']);
-        $count = static::fetch_value($results);
+        $results = static::Query($q, ['search' => '%' . $search . '%']);
+        $count = static::FetchValue($results);
         $q = "SELECT * FROM shop_color";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where color like :search";
         }
         $q .= " order by color";
         $q .= " limit $start, $filter_limit";
-        if($results = static::query($q, ['search' => '%' . $search . '%'])) {
-          while($row = static::fetch_array($results)) {
+        if($results = static::Query($q, ['search' => '%' . $search . '%'])) {
+          while($row = static::FetchArray($results)) {
             $filter[] = [$row['id'], $row['color']];
           }
-          static::free_result($results);
+          static::FreeResult($results);
         }
         break;
       case 'patterns':
@@ -312,19 +312,19 @@ class ModelProduct extends ModelBase{
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where pattern like :search";
         }
-        $results = static::query($q, ['search' => '%' . $search . '%']);
-        $count = static::fetch_value($results);
+        $results = static::Query($q, ['search' => '%' . $search . '%']);
+        $count = static::FetchValue($results);
         $q = "SELECT * FROM shop_patterns";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where pattern like :search";
         }
         $q .= " order by pattern";
         $q .= " limit $start, $filter_limit";
-        if($results = static::query($q, ['search' => '%' . $search . '%'])) {
-          while($row = static::fetch_array($results)) {
+        if($results = static::Query($q, ['search' => '%' . $search . '%'])) {
+          while($row = static::FetchArray($results)) {
             $filter[] = [$row['id'], $row['pattern']];
           }
-          static::free_result($results);
+          static::FreeResult($results);
         }
         break;
       case 'categories':
@@ -332,19 +332,19 @@ class ModelProduct extends ModelBase{
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where cname like :search";
         }
-        $results = static::query($q, ['search' => '%' . $search . '%']);
-        $count = static::fetch_value($results);
+        $results = static::Query($q, ['search' => '%' . $search . '%']);
+        $count = static::FetchValue($results);
         $q = "SELECT * FROM shop_categories";
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where cname like :search";
         }
         $q .= " order by cname";
         $q .= " limit $start, $filter_limit";
-        if($results = static::query($q, ['search' => '%' . $search . '%'])) {
-          while($row = static::fetch_array($results)) {
+        if($results = static::Query($q, ['search' => '%' . $search . '%'])) {
+          while($row = static::FetchArray($results)) {
             $filter[] = [$row['cid'], $row['cname']];
           }
-          static::free_result($results);
+          static::FreeResult($results);
         }
     }
 
@@ -382,10 +382,10 @@ class ModelProduct extends ModelBase{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -411,13 +411,13 @@ class ModelProduct extends ModelBase{
     $query .= " LEFT JOIN shop_product_patterns ON a.pid = shop_product_patterns.prodId";
     $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
     $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
-    $query .= static::build_where($filter, $prms);
-    $query .= static::build_order($sort);
+    $query .= static::BuildWhere($filter, $prms);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_array($result)) {
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchArray($result)) {
         $filename = 'images/products/b_' . $row['image1'];
         if(!(file_exists(APP_PATH . '/web/' . $filename) && is_file(APP_PATH . '/web/' . $filename))) {
           $filename = 'images/not_image.jpg';
@@ -431,7 +431,7 @@ class ModelProduct extends ModelBase{
         $row['format_price'] = $format_price;
         $response[] = $row;
       }
-      static::free_result($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -452,10 +452,10 @@ class ModelProduct extends ModelBase{
     ];
     if(isset($id)) {
       $q = "SELECT * FROM " . static::$table . " WHERE pid = :pid";
-      $result = static::query($q, ['pid' => $id]);
+      $result = static::Query($q, ['pid' => $id]);
       if($result) {
-        $data = static::fetch_assoc($result);
-        static::free_result($result);
+        $data = static::FetchAssoc($result);
+        static::FreeResult($result);
       }
     }
 
@@ -538,7 +538,7 @@ class ModelProduct extends ModelBase{
       " image1=:image1, image2=:image2, image3=:image3," .
       " image4=:image4, image5=:image5 where pid = :pid";
 
-    return static::query($q, [
+    return static::Query($q, [
       'image1' => $image1, 'image2' => $image2, 'image3' => $image3,
       'image4' => $image4, 'image5' => $image5, 'pid' => $pid
     ]);
@@ -559,8 +559,8 @@ class ModelProduct extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     try {
       extract($data);
       /**
@@ -614,7 +614,7 @@ class ModelProduct extends ModelBase{
         $sql .= " width=:width, pnumber=:pnumber, pvisible=:pvisible, metatitle=:metatitle, metakeywords=:metakeywords,";
         $sql .= " metadescription=:metadescription, ldesc=:ldesc, pname=:pname, sdesc=:sdesc, best=:best,";
         $sql .= " piece=:piece, whole = :whole  WHERE pid =:pid";
-        $result = static::query($sql, $prms);
+        $result = static::Query($sql, $prms);
       } else {
         $sql = "INSERT INTO " . static::$table . " SET";
         if(!empty($manufacturerId) && ($manufacturerId != 0)) {
@@ -630,9 +630,9 @@ class ModelProduct extends ModelBase{
         $sql .= " width=:width, pnumber=:pnumber, pvisible=:pvisible, metatitle=:metatitle, metakeywords=:metakeywords,";
         $sql .= " metadescription=:metadescription, ldesc=:ldesc, pname=:pname, sdesc=:sdesc, best=:best,";
         $sql .= " piece=:piece, whole = :whole  WHERE pid =:pid";
-        $result = static::query($sql, $prms);
+        $result = static::Query($sql, $prms);
         if($result) {
-          $pid = static::last_id();
+          $pid = static::LastId();
           $data['pid'] = $pid;
         }
       }
@@ -640,15 +640,15 @@ class ModelProduct extends ModelBase{
       if($result) {
         $res = true;
         if($res && (count($categories) > 0)) {
-          $res = static::query("SELECT * FROM shop_product_categories  WHERE pid=:pid", ['pid' => $pid]);
+          $res = static::Query("SELECT * FROM shop_product_categories  WHERE pid=:pid", ['pid' => $pid]);
           if($res) {
             $result = $res;
-            while($category = static::fetch_assoc($res)) {
-              $result = $result && static::query(
+            while($category = static::FetchAssoc($res)) {
+              $result = $result && static::Query(
                   "DELETE FROM shop_product_categories WHERE pid = :pid AND cid = :cid",
                   ['pid' => $category['pid'], 'cid' => $category['cid']]
                 );
-              $result = $result && static::query(
+              $result = $result && static::Query(
                   "UPDATE shop_product_categories SET display_order=display_order-1 " .
                   "WHERE display_order > :display_order AND cid=:cid",
                   ['display_order' => $category['display_order'], 'cid' => $category['cid']]
@@ -661,14 +661,14 @@ class ModelProduct extends ModelBase{
           }
         } elseif($res) {
           if(!(isset($categories) && is_array($categories) && count($categories) > 0)) {
-            static::query("DELETE FROM shop_product_categories WHERE pid = :pid", ['pid' => $pid]);
+            static::Query("DELETE FROM shop_product_categories WHERE pid = :pid", ['pid' => $pid]);
             $q = "select a.cid, if(b.display_order is null, 1, (max(b.display_order)+1)) as pos" .
               " from shop_categories a" .
               " left join shop_product_categories b on a.cid = b.cid" .
               " where a.cid = 1";
-            $res = static::query($q);
+            $res = static::Query($q);
             if($res) {
-              $row = static::fetch_array($res, MYSQLI_NUM);
+              $row = static::FetchArray($res, MYSQLI_NUM);
               $categories = [$row['cid'] => $row['pos']];
               $data['categories'] = $categories;
             }
@@ -676,48 +676,48 @@ class ModelProduct extends ModelBase{
         }
         if($res) {
           foreach($categories as $cid => $category) {
-            $res = $res && static::query(
+            $res = $res && static::Query(
                 "UPDATE shop_product_categories SET display_order=display_order+1 " .
                 "WHERE display_order >= :display_order AND cid=:cid",
                 ['display_order' => $category, "cid" => $cid]
               );
-            $res = $res && static::query(
+            $res = $res && static::Query(
                 'REPLACE INTO shop_product_categories SET pid=:pid, cid=:cid, display_order = :display_order',
                 ['pid' => $pid, 'cid' => $cid, 'display_order' => $category]
               );
             if(!$res) break;
           }
         }
-        if($res) $res = $res && static::query(
+        if($res) $res = $res && static::Query(
             'DELETE FROM shop_product_colors WHERE prodID=:pid',
             ['pid' => $pid]
           );
         if($res && (count($colors) > 0)) {
           foreach($colors as $colorId) {
-            $res = $res && static::query(
+            $res = $res && static::Query(
                 'REPLACE INTO shop_product_colors SET prodID=:pid, colorId=:cid',
                 ['pid' => $pid, 'cid' => $colorId]
               );
             if(!$res) break;
           }
         }
-        if($res) $res = $res && static::query(
+        if($res) $res = $res && static::Query(
             'DELETE FROM shop_product_patterns WHERE prodID=:pid',
             ['pid' => $pid]
           );
         if($res && (count($patterns) > 0)) {
           foreach($patterns as $patternId) {
-            $res = $res && static::query(
+            $res = $res && static::Query(
                 'REPLACE INTO shop_product_patterns SET prodID=:pid, patternId=:patternId',
                 ['pid' => $pid, 'patternId' => $patternId]
               );
             if(!$res) break;
           }
         }
-        if($res) $res = $res && static::query('DELETE FROM shop_product_related WHERE  pid=:pid', ['pid' => $pid]);
+        if($res) $res = $res && static::Query('DELETE FROM shop_product_related WHERE  pid=:pid', ['pid' => $pid]);
         if($res && (count($related) > 0)) {
           foreach($related as $r_pid) {
-            $res = $res && static::query('REPLACE INTO shop_product_related SET pid = :pid, r_pid = :r_pid',
+            $res = $res && static::Query('REPLACE INTO shop_product_related SET pid = :pid, r_pid = :r_pid',
                 ['pid' => $pid, 'r_pid' => $r_pid]
               );
             if(!$res) break;
@@ -725,10 +725,10 @@ class ModelProduct extends ModelBase{
         }
         $result = $result && $res;
       }
-      if(!$result) throw new Exception(static::error());
-      static::commit();
+      if(!$result) throw new Exception(static::Error());
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -739,33 +739,33 @@ class ModelProduct extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
       if(isset($id)) {
         $data = static::get_by_id($id);
         $query = "DELETE FROM " . static::$table . " WHERE pid = :id";
-        $res = static::query($query, ['id' => $id]);
+        $res = static::Query($query, ['id' => $id]);
         $query = "DELETE FROM shop_product_related WHERE pid = :id OR r_pid = :r_id";
-        if($res) $res = static::query($query, ['id' => $id, 'r_id' => $id]);
+        if($res) $res = static::Query($query, ['id' => $id, 'r_id' => $id]);
         $query = "DELETE FROM shop_clearance WHERE pid = :id";
-        if($res) $res = static::query($query, ['id' => $id]);
+        if($res) $res = static::Query($query, ['id' => $id]);
         $query = "DELETE FROM shop_product_favorites WHERE pid = :id";
-        if($res) $res = static::query($query, ['id' => $id]);
+        if($res) $res = static::Query($query, ['id' => $id]);
         $query = "DELETE FROM shop_product_categories WHERE pid = :id";
-        if($res) $res = static::query($query, ['id' => $id]);
+        if($res) $res = static::Query($query, ['id' => $id]);
         $query = "DELETE FROM shop_product_colors WHERE prodId = :id";
-        if($res) $res = static::query($query, ['id' => $id]);
+        if($res) $res = static::Query($query, ['id' => $id]);
         $query = "DELETE FROM shop_product_patterns WHERE prodId = :id";
-        if($res) $res = static::query($query, ['id' => $id]);
+        if($res) $res = static::Query($query, ['id' => $id]);
         $query = "DELETE FROM shop_specials_products WHERE pid = :id";
-        if($res) $res = static::query($query, ['id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        if($res) $res = static::Query($query, ['id' => $id]);
+        if(!$res) throw new Exception(static::Error());
         static::delete_images($data);
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }
@@ -775,8 +775,8 @@ class ModelProduct extends ModelBase{
 //      if(!empty(trim($condition))) {
 //        $query = "select * from " . static::$table . " WHERE " . $condition;
 //        $query .= " LIMIT 0, 1";
-//        $results = static::query($query, $prms);
-//        if ($results && !empty($row = static::fetch_assoc($results)))  $res = $row['pid'];
+//        $results = static::Query($query, $prms);
+//        if ($results && !empty($row = static::FetchAssoc($results)))  $res = $row['pid'];
 //      }
 //      return $res;
 //    }

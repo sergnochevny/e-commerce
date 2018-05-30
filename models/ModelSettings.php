@@ -82,7 +82,7 @@ class ModelSettings extends ModelBase{
    * @param $data
    * @return null
    */
-  public static function save(&$data){
+  public static function Save(&$data){
     extract($data);
     App::$app->keyStorage()->system_site_name = $system_site_name;
     App::$app->keyStorage()->system_enable_sef = $system_enable_sef;

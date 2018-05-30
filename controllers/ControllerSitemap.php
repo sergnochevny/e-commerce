@@ -40,8 +40,8 @@ class ControllerSitemap extends ControllerBase{
             $rows[] = $row;
           }
         }
-        $this_->template->vars('rows', $rows);
-        $this_->template->render_layout('list');
+        $this_->view->setVars('rows', $rows);
+        $this_->view->RenderLayout('list');
       }
     };
 
@@ -77,8 +77,8 @@ class ControllerSitemap extends ControllerBase{
     } catch(Exception $e) {
     }
     $list = ob_get_clean();
-    $this->template->vars('list', $list);
+    $this->view->setVars('list', $list);
     header("Content-type: text/xml");
-    $this->template->render_layout('sitemap');
+    $this->view->RenderLayout('sitemap');
   }
 }

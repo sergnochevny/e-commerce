@@ -22,23 +22,23 @@ class ModelDiscount extends ModelBase{
    * @param null $prms
    * @return string
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
     if(isset($filter["scenario"]) && ($filter["scenario"] == 'orders')) {
-      if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::prepare_for_sql($filter['hidden']["c.sid"]) . "'";
+      if(isset($filter['hidden']["c.sid"])) $result[] = "c.sid = '" . static::PrepareForSql($filter['hidden']["c.sid"]) . "'";
       if(!empty($result) && (count($result) > 0)) {
         $return = implode(" AND ", $result);
         $return = (!empty($return) ? " WHERE " . $return : '');
       }
     } else {
-      if(isset($filter["sid"])) $result[] = "sid = '" . static::prepare_for_sql($filter["sid"]) . "'";
-      if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . static::prepare_for_sql($filter["promotion_type"]) . "'";
-      if(isset($filter["user_type"])) $result[] = "user_type = '" . static::prepare_for_sql($filter["user_type"]) . "'";
-      if(isset($filter["discount_type"])) $result[] = "discount_type = '" . static::prepare_for_sql($filter["discount_type"]) . "'";
-      if(isset($filter["product_type"])) $result[] = "product_type = '" . static::prepare_for_sql($filter["product_type"]) . "'";
-      if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter["coupon_code"])))) . "%'";
-      if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(static::prepare_for_sql($filter['date_start'])) . "'" : "");
-      if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(static::prepare_for_sql($filter['date_end'])) . "'" : "");
+      if(isset($filter["sid"])) $result[] = "sid = '" . static::PrepareForSql($filter["sid"]) . "'";
+      if(isset($filter["promotion_type"])) $result[] = "promotion_type = '" . static::PrepareForSql($filter["promotion_type"]) . "'";
+      if(isset($filter["user_type"])) $result[] = "user_type = '" . static::PrepareForSql($filter["user_type"]) . "'";
+      if(isset($filter["discount_type"])) $result[] = "discount_type = '" . static::PrepareForSql($filter["discount_type"]) . "'";
+      if(isset($filter["product_type"])) $result[] = "product_type = '" . static::PrepareForSql($filter["product_type"]) . "'";
+      if(isset($filter["coupon_code"])) $result[] = "coupon_code LIKE '%" . implode('%', array_filter(explode(' ', static::PrepareForSql($filter["coupon_code"])))) . "%'";
+      if(isset($filter["date_start"])) $result[] = (!empty($filter["date_start"]) ? "date_start >= '" . strtotime(static::PrepareForSql($filter['date_start'])) . "'" : "");
+      if(isset($filter["date_end"])) $result[] = (!empty($filter["date_end"]) ? "date_end <= '" . strtotime(static::PrepareForSql($filter['date_end'])) . "'" : "");
       if(!empty($result) && (count($result) > 0)) {
         $return = implode(" AND ", $result);
         if(strlen(trim($return)) > 0) {
@@ -80,15 +80,15 @@ class ModelDiscount extends ModelBase{
     if(!isset($sid)) $sid = 0;
     $iCnt = 0;
     $sSQL = sprintf("SELECT sid FROM " . static::$table . " WHERE coupon_code='%s';", $cde);
-    $result = static::query($sSQL) or die(static::error());
-    $iCnt = static::num_rows($result);
+    $result = static::Query($sSQL) or die(static::Error());
+    $iCnt = static::getNumRows($result);
     if($iCnt == 1) { #verify that it is not this record with the same coupon code
-      $rs = static::fetch_value($result);
+      $rs = static::FetchValue($result);
       if($sid == $rs) {
         $iCnt = 0;
       }
     }
-    static::free_result($result);
+    static::FreeResult($result);
 
     if($iCnt > 0) return true;
 
@@ -113,9 +113,9 @@ class ModelDiscount extends ModelBase{
     ];
     if(isset($id)) {
       $q = "SELECT * FROM " . static::$table . " WHERE sid = '" . $id . "'";
-      $result = static::query($q, $prms);
+      $result = static::Query($q, $prms);
       if($result) {
-        $data = static::fetch_assoc($result);
+        $data = static::FetchAssoc($result);
       }
     }
 
@@ -140,10 +140,10 @@ class ModelDiscount extends ModelBase{
       $q .= " left join accounts b on a.aid = b.aid";
       $q .= " left join shop_specials_usage c on a.oid = c.oid";
     } else $q = "SELECT COUNT(sid) FROM " . static::$table;
-    $q .= self::build_where($filter);
-    $result = static::query($q, $prms);
+    $q .= self::BuildWhere($filter);
+    $result = static::Query($q, $prms);
     if($result) {
-      $row = static::fetch_array($result);
+      $row = static::FetchArray($result);
       $res = $row[0];
     }
 
@@ -169,13 +169,13 @@ class ModelDiscount extends ModelBase{
       $q .= " left join accounts b on a.aid = b.aid";
       $q .= " left join shop_specials_usage c on a.oid = c.oid";
     } else $q = "SELECT * FROM " . static::$table;
-    $q .= self::build_where($filter);
-    $q .= static::build_order($sort);
+    $q .= self::BuildWhere($filter);
+    $q .= static::BuildOrder($sort);
     if($limit != 0) $q .= " LIMIT $start, $limit";
-    $result = static::query($q, $prms);
+    $result = static::Query($q, $prms);
     if($result) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_assoc($result)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchAssoc($result)) {
         $res[] = $row;
       }
     }
@@ -188,42 +188,42 @@ class ModelDiscount extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     $prms = [];
     try {
       extract($data);
       if(isset($sid)) {
         $q = "UPDATE " . static::$table . " SET" . " coupon_code='$coupon_code'," . " discount_amount='$discount_amount'," . " discount_amount_type='$discount_amount_type'," . " discount_type='$discount_type'," . " user_type='$user_type'," . " shipping_type='$shipping_type'," . " product_type='$product_type'," . " promotion_type='$promotion_type'," . " required_amount='$required_amount'," . " required_type='$required_type'," . " allow_multiple='$allow_multiple'," . " enabled='$enabled'," . " countdown='$countdown'," . " discount_comment1='$discount_comment1'," . " discount_comment2='$discount_comment2'," . " discount_comment3='$discount_comment3'," . " date_start='$date_start'," . " date_end='$date_end'" . " WHERE sid ='$sid'";
-        $res = static::query($q, $prms);
+        $res = static::Query($q, $prms);
       } else {
         $q = "INSERT INTO " . static::$table . " SET" . " coupon_code='$coupon_code'," . " discount_amount='$discount_amount'," . " discount_amount_type='$discount_amount_type'," . " discount_type='$discount_type'," . " user_type='$user_type'," . " shipping_type='$shipping_type'," . " product_type='$product_type'," . " promotion_type='$promotion_type'," . " required_amount='$required_amount'," . " required_type='$required_type'," . " allow_multiple='$allow_multiple'," . " enabled='$enabled'," . " countdown='$countdown'," . " discount_comment1='$discount_comment1'," . " discount_comment2='$discount_comment2'," . " discount_comment3='$discount_comment3'," . " date_start='$date_start'," . " date_end='$date_end'";
 
-        $res = static::query($q, $prms);
-        if($res) $sid = static::last_id();
+        $res = static::Query($q, $prms);
+        if($res) $sid = static::LastId();
       }
       if($res) {
-        $res = static::query("DELETE FROM shop_specials_users WHERE sid ='$sid'");
+        $res = static::Query("DELETE FROM shop_specials_users WHERE sid ='$sid'");
         if($res && ($user_type == 4)) {
           foreach($users as $aid) {
-            $res = static::query("INSERT INTO  shop_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
+            $res = static::Query("INSERT INTO  shop_specials_users (sid ,aid)VALUES('$sid',  '$aid')");
             if(!$res) break;
           }
         }
       }
       if($res) {
-        $res = static::query("DELETE FROM shop_specials_products WHERE sid='$sid'");
+        $res = static::Query("DELETE FROM shop_specials_products WHERE sid='$sid'");
         if($res && isset($product_type) && ($product_type > 1)) {
           foreach($filter_products as $pid) {
-            $res = static::query("INSERT INTO  shop_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
+            $res = static::Query("INSERT INTO  shop_specials_products (sid ,pid, stype) VALUES ('$sid',  '$pid', '$product_type')");
             if(!$res) break;
           }
         }
       }
-      if(!$res) throw new Exception(static::error());
-      static::commit();
+      if(!$res) throw new Exception(static::Error());
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -246,8 +246,8 @@ class ModelDiscount extends ModelBase{
       }
       if($user_type == '4') {
         if(strlen($select > 1)) {
-          $results = static::query("select * from accounts" . " where aid in($select)" . " order by email, bill_firstname, bill_lastname");
-          while($row = static::fetch_array($results)) {
+          $results = static::Query("select * from accounts" . " where aid in($select)" . " order by email, bill_firstname, bill_lastname");
+          while($row = static::FetchArray($results)) {
             $users[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
           }
         }
@@ -265,8 +265,8 @@ class ModelDiscount extends ModelBase{
             $select = implode(',', isset($data['prod_select']) ? array_keys($data['prod_select']) : []);
           }
           if(strlen($select) > 0) {
-            $results = static::query("select * from shop_products" . " where pid in ($select)" . " order by pnumber, pname");
-            while($row = static::fetch_array($results)) {
+            $results = static::Query("select * from shop_products" . " where pid in ($select)" . " order by pnumber, pname");
+            while($row = static::FetchArray($results)) {
               $filter_products[$row[0]] = $row[2] . '-' . $row[1];
             }
           }
@@ -278,8 +278,8 @@ class ModelDiscount extends ModelBase{
             $select = implode(',', isset($data['mnf_select']) ? array_keys($data['mnf_select']) : []);
           }
           if(strlen($select) > 0) {
-            $results = static::query("select * from shop_manufacturers" . " where id in ($select)" . " order by manufacturer");
-            while($row = static::fetch_array($results)) {
+            $results = static::Query("select * from shop_manufacturers" . " where id in ($select)" . " order by manufacturer");
+            while($row = static::FetchArray($results)) {
               $filter_products[$row[0]] = $row[1];
             }
           }
@@ -291,8 +291,8 @@ class ModelDiscount extends ModelBase{
             $select = implode(',', isset($data['cat_select']) ? array_keys($data['cat_select']) : []);
           }
           if(strlen($select) > 0) {
-            $results = static::query("select * from shop_categories " . " where cid in ($select)" . " order by cname");
-            while($row = static::fetch_array($results)) {
+            $results = static::Query("select * from shop_categories " . " where cid in ($select)" . " order by cname");
+            while($row = static::FetchArray($results)) {
               $filter_products[$row[0]] = $row[1];
             }
           }
@@ -313,26 +313,26 @@ class ModelDiscount extends ModelBase{
     $data = [];
     switch($type) {
       case 'users':
-        $results = static::query("select a.* from shop_specials_users b" . " inner join accounts a on b.aid=a.aid " . " where sid='$id'" . " order by a.email, a.bill_firstname, a.bill_lastname");
-        if($results) while($row = static::fetch_array($results)) {
+        $results = static::Query("select a.* from shop_specials_users b" . " inner join accounts a on b.aid=a.aid " . " where sid='$id'" . " order by a.email, a.bill_firstname, a.bill_lastname");
+        if($results) while($row = static::FetchArray($results)) {
           $data[$row[0]] = $row[1] . '-' . $row[3] . ' ' . $row[4];
         }
         break;
       case 'prod':
-        $results = static::query("select a.* from shop_specials_products b" . " inner join shop_products a on b.pid=a.pid " . " where b.sid='$id' and b.stype = 2" . " order by a.pnumber, a.pname");
-        if($results) while($row = static::fetch_array($results)) {
+        $results = static::Query("select a.* from shop_specials_products b" . " inner join shop_products a on b.pid=a.pid " . " where b.sid='$id' and b.stype = 2" . " order by a.pnumber, a.pname");
+        if($results) while($row = static::FetchArray($results)) {
           $data[$row[0]] = $row[2] . '-' . $row[1];
         }
         break;
       case 'mnf':
-        $results = static::query("select a.* from shop_specials_products b" . " inner join shop_manufacturers a on b.pid=a.id " . " where b.sid='$id' and b.stype = 4" . " order by a.manufacturer");
-        if($results) while($row = static::fetch_array($results)) {
+        $results = static::Query("select a.* from shop_specials_products b" . " inner join shop_manufacturers a on b.pid=a.id " . " where b.sid='$id' and b.stype = 4" . " order by a.manufacturer");
+        if($results) while($row = static::FetchArray($results)) {
           $data[$row[0]] = $row[1];
         }
         break;
       case 'cat':
-        $results = static::query("select a.* from shop_specials_products b" . " inner join shop_categories a on b.pid=a.cid " . " where b.sid='$id' and b.stype = 3" . " order by a.cname");
-        if($results) while($row = static::fetch_array($results)) {
+        $results = static::Query("select a.* from shop_specials_products b" . " inner join shop_categories a on b.pid=a.cid " . " where b.sid='$id' and b.stype = 3" . " order by a.cname");
+        if($results) while($row = static::FetchArray($results)) {
           $data[$row[0]] = $row[1];
         }
         break;
@@ -362,8 +362,8 @@ class ModelDiscount extends ModelBase{
           $q .= " or bill_lastname like '%$search%'";
           $q .= " or email like '%$search%'";
         }
-        $results = static::query($q);
-        $row = static::fetch_array($results);
+        $results = static::Query($q);
+        $row = static::FetchArray($results);
         $count = $row[0];
         $q = "SELECT * FROM accounts";
         if(isset($search) && (strlen($search) > 0)) {
@@ -373,8 +373,8 @@ class ModelDiscount extends ModelBase{
         }
         $q .= " order by email, bill_firstname, bill_lastname";
         $q .= " limit $start, $filter_limit";
-        $results = static::query($q);
-        while($row = static::fetch_array($results)) {
+        $results = static::Query($q);
+        while($row = static::FetchArray($results)) {
           $filter[] = [$row[0], $row[1] . ' - ' . $row[3] . ' ' . $row[4]];
         }
         break;
@@ -384,8 +384,8 @@ class ModelDiscount extends ModelBase{
           $q .= " where pnumber like '%$search%'";
           $q .= " or pname like '%$search%'";
         }
-        $results = static::query($q);
-        $row = static::fetch_array($results);
+        $results = static::Query($q);
+        $row = static::FetchArray($results);
         $count = $row[0];
         $q = "SELECT * FROM shop_products";
         if(isset($search) && (strlen($search) > 0)) {
@@ -394,8 +394,8 @@ class ModelDiscount extends ModelBase{
         }
         $q .= " order by pnumber, pname";
         $q .= " limit $start, $filter_limit";
-        $results = static::query($q);
-        while($row = static::fetch_array($results)) {
+        $results = static::Query($q);
+        while($row = static::FetchArray($results)) {
           $filter[] = [$row[0], $row[2] . ' - ' . $row[1]];
         }
         break;
@@ -404,8 +404,8 @@ class ModelDiscount extends ModelBase{
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where manufacturer like '%$search%'";
         }
-        $results = static::query($q);
-        $row = static::fetch_array($results);
+        $results = static::Query($q);
+        $row = static::FetchArray($results);
         $count = $row[0];
         $q = "SELECT * FROM shop_manufacturers";
         if(isset($search) && (strlen($search) > 0)) {
@@ -413,8 +413,8 @@ class ModelDiscount extends ModelBase{
         }
         $q .= " order by manufacturer";
         $q .= " limit $start, $filter_limit";
-        $results = static::query($q);
-        while($row = static::fetch_array($results)) {
+        $results = static::Query($q);
+        while($row = static::FetchArray($results)) {
           $filter[] = [$row[0], $row[1]];
         }
         break;
@@ -423,8 +423,8 @@ class ModelDiscount extends ModelBase{
         if(isset($search) && (strlen($search) > 0)) {
           $q .= " where cname like '%$search%'";
         }
-        $results = static::query($q);
-        $row = static::fetch_array($results);
+        $results = static::Query($q);
+        $row = static::FetchArray($results);
         $count = $row[0];
         $q = "SELECT * FROM shop_categories";
         if(isset($search) && (strlen($search) > 0)) {
@@ -432,8 +432,8 @@ class ModelDiscount extends ModelBase{
         }
         $q .= " order by cname";
         $q .= " limit $start, $filter_limit";
-        $results = static::query($q);
-        while($row = static::fetch_array($results)) {
+        $results = static::Query($q);
+        while($row = static::FetchArray($results)) {
           $filter[] = [$row[0], $row[1]];
         }
     }
@@ -445,16 +445,16 @@ class ModelDiscount extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
-      static::query("DELETE FROM shop_specials_products WHERE sid='$id'");
-      static::query("DELETE FROM shop_specials_users WHERE sid='$id'");
-      static::query("DELETE FROM shop_specials_usage WHERE sid='$id'");
-      static::query("DELETE FROM " . static::$table . " WHERE sid = '$id'");
-      static::commit();
+      static::Query("DELETE FROM shop_specials_products WHERE sid='$id'");
+      static::Query("DELETE FROM shop_specials_users WHERE sid='$id'");
+      static::Query("DELETE FROM shop_specials_usage WHERE sid='$id'");
+      static::Query("DELETE FROM " . static::$table . " WHERE sid = '$id'");
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }

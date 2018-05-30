@@ -31,7 +31,7 @@ class ControllerSettings extends ControllerFormSimple{
    */
   protected function load(&$data){
 
-    if(App::$app->request_is_post()) {
+    if(App::$app->RequestIsPost()) {
       $data = [
         'system_site_name' => ModelSettings::sanitize(App::$app->post('system_site_name')),
         'system_enable_sef' => ModelSettings::sanitize(App::$app->post('system_enable_sef')),

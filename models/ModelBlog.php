@@ -24,7 +24,7 @@ class ModelBlog extends ModelBase{
    * @return array|string
    * @throws \Exception
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
     $prms = [];
     if(AdminHelper::is_logged()) {
@@ -109,7 +109,7 @@ class ModelBlog extends ModelBase{
       }
     }
     if(strlen($select) <= 0) $select = '1';
-    $results = static::query(
+    $results = static::Query(
       "select a.id, a.name, (max(b.order)+1) as pos from blog_groups a" .
       " left join blog_group_posts b on b.group_id = a.id" .
       " where a.id in ($select)" .
@@ -117,10 +117,10 @@ class ModelBlog extends ModelBase{
       " order by a.name"
     );
     if($results) {
-      while($row = static::fetch_array($results)) {
+      while($row = static::FetchArray($results)) {
         $filters[$row['id']] = [$row['name'], isset($categories[$row['id']]) ? $categories[$row['id']] : $row['pos']];
       }
-      static::free_result($results);
+      static::FreeResult($results);
     }
     $data['categories'] = $filters;
   }
@@ -132,7 +132,7 @@ class ModelBlog extends ModelBase{
    */
   public static function get_filter_selected_data($id){
     $data = [];
-    $results = static::query(
+    $results = static::Query(
       "SELECT a.id, a.name, b.order FROM blog_group_posts b" .
       " INNER JOIN blog_groups a ON b.group_id=a.id " .
       " WHERE b.post_id=:id" .
@@ -140,10 +140,10 @@ class ModelBlog extends ModelBase{
       ['id' => $id]
     );
     if($results) {
-      while($row = static::fetch_array($results)) {
+      while($row = static::FetchArray($results)) {
         $data[$row['id']] = [$row['name'], $row['order']];
       }
-      static::free_result($results);
+      static::FreeResult($results);
     }
 
     return $data;
@@ -162,14 +162,14 @@ class ModelBlog extends ModelBase{
     $filter_limit = !is_null(App::$app->keyStorage()->system_filter_amount) ?
       App::$app->keyStorage()->system_filter_amount : FILTER_LIMIT;
     $start = isset($start) ? $start : 0;
-    $search = static::prepare_for_sql($search);
+    $search = static::PrepareForSql($search);
     $q = "SELECT count(id) FROM blog_groups";
     if(isset($search) && (strlen($search) > 0)) {
       $q .= " where name like :search";
       $prms['search'] = '%' . $search . '%';
     }
-    $results = static::query($q, $prms);
-    $row = static::fetch_array($results);
+    $results = static::Query($q, $prms);
+    $row = static::FetchArray($results);
     $count = $row[0];
     $q = "SELECT * FROM blog_groups";
     if(isset($search) && (strlen($search) > 0)) {
@@ -178,12 +178,12 @@ class ModelBlog extends ModelBase{
     }
     $q .= " order by name";
     $q .= " limit $start, $filter_limit";
-    $results = static::query($q, $prms);
+    $results = static::Query($q, $prms);
     if($results) {
-      while($row = static::fetch_array($results)) {
+      while($row = static::FetchArray($results)) {
         $filter[] = [$row['id'], $row['name']];
       }
-      static::free_result($results);
+      static::FreeResult($results);
     }
 
     return $filter;
@@ -199,10 +199,10 @@ class ModelBlog extends ModelBase{
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
     $query .= " LEFT JOIN blog_groups c ON b.group_id = c.id ";
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -223,16 +223,16 @@ class ModelBlog extends ModelBase{
     $query .= " FROM " . static::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.post_id ";
     $query .= " LEFT JOIN blog_groups c ON b.group_id = c.id ";
-    $query .= static::build_where($filter, $prms);
-    $query .= static::build_order($sort);
+    $query .= static::BuildWhere($filter, $prms);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_array($result)) {
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchArray($result)) {
         $response[] = $row;
       }
-      static::free_result($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -258,10 +258,10 @@ class ModelBlog extends ModelBase{
     ];
     if(isset($id)) {
       $strSQL = "SELECT * FROM " . static::$table . " WHERE id = :id";
-      $result = static::query($strSQL, ['id' => $id]);
+      $result = static::Query($strSQL, ['id' => $id]);
       if($result) {
-        $data = static::fetch_assoc($result);
-        static::free_result($result);
+        $data = static::FetchAssoc($result);
+        static::FreeResult($result);
       }
     }
 
@@ -292,11 +292,11 @@ class ModelBlog extends ModelBase{
     $filename = null;
     if(isset($id)) {
       $strSQL = "SELECT * FROM blog_post_img WHERE post_id = :id";
-      $result = static::query($strSQL, ['id' => $id]);
+      $result = static::Query($strSQL, ['id' => $id]);
       if($result) {
-        $data = static::fetch_assoc($result);
+        $data = static::FetchAssoc($result);
         $filename = $data['img'];
-        static::free_result($result);
+        static::FreeResult($result);
       }
     }
 
@@ -310,7 +310,7 @@ class ModelBlog extends ModelBase{
    * @throws \Exception
    */
   public static function update_image($id, &$data){
-    static::transaction();
+    static::BeginTransaction();
     try {
       $result = true;
       $img = trim(str_replace('{base_url}', '', static::get_img($id)), '/\\');
@@ -326,18 +326,18 @@ class ModelBlog extends ModelBase{
             );
           }
           $data['img'] = $filename;
-          $result = static::query("DELETE FROM blog_post_img WHERE post_id = :id", ['id' => $id]);
+          $result = static::Query("DELETE FROM blog_post_img WHERE post_id = :id", ['id' => $id]);
           if($result) {
-            $result = static::query(
+            $result = static::Query(
               "INSERT INTO blog_post_img(post_id, img) VALUES(:id, :filename)",
               ['id' => $id, 'filename' => $filename]
             );
           }
         }
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -348,20 +348,20 @@ class ModelBlog extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
       if(isset($id)) {
-        $res = static::query("DELETE FROM " . static::$table . " WHERE id = :id", ['id' => $id]);
-        if($res) $res = static::query("DELETE FROM blog_group_posts WHERE post_id = :id", ['id' => $id]);
-        if($res) $res = static::query("DELETE FROM blog_post_keys_descriptions WHERE post_id = :id", ['id' => $id]);
+        $res = static::Query("DELETE FROM " . static::$table . " WHERE id = :id", ['id' => $id]);
+        if($res) $res = static::Query("DELETE FROM blog_group_posts WHERE post_id = :id", ['id' => $id]);
+        if($res) $res = static::Query("DELETE FROM blog_post_keys_descriptions WHERE post_id = :id", ['id' => $id]);
         if($res) static::delete_img(static::get_img($id));
-        if($res) $res = static::query("DELETE FROM blog_post_img WHERE post_id = :id", ['id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        if($res) $res = static::Query("DELETE FROM blog_post_img WHERE post_id = :id", ['id' => $id]);
+        if(!$res) throw new Exception(static::Error());
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }
@@ -371,7 +371,7 @@ class ModelBlog extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
+  public static function Save(&$data){
     /**
      * @var string $post_author
      * @var string $post_date
@@ -383,7 +383,7 @@ class ModelBlog extends ModelBase{
      * @var string $description
      * @var integer $id
      */
-    static::transaction();
+    static::BeginTransaction();
     try {
       extract($data);
       if(!isset($id)) {
@@ -407,28 +407,28 @@ class ModelBlog extends ModelBase{
           'post_title' => $post_title, 'post_status' => $post_status, 'id' => $id
         ];
       }
-      $result = static::query($q, $prms);
-      if($result && !isset($id)) $id = static::last_id();
-      if($result) $result = static::query("DELETE FROM blog_group_posts WHERE post_id = :id", ['id' => $id]);
+      $result = static::Query($q, $prms);
+      if($result && !isset($id)) $id = static::LastId();
+      if($result) $result = static::Query("DELETE FROM blog_group_posts WHERE post_id = :id", ['id' => $id]);
       if($result) {
         foreach($categories as $group => $order) {
-          if($result) $result = static::query(
+          if($result) $result = static::Query(
             "INSERT INTO blog_group_posts(`post_id`, `group_id`, `order`) VALUES (:id, :group, :order)",
             ['id' => $id, 'group' => $group, 'order' => $order]
           );
           if(!$result) break;
         }
       }
-      if($result) $result = static::query("DELETE FROM blog_post_keys_descriptions WHERE post_id = :id", ['id' => $id]);
-      if($result) $result = static::query(
+      if($result) $result = static::Query("DELETE FROM blog_post_keys_descriptions WHERE post_id = :id", ['id' => $id]);
+      if($result) $result = static::Query(
         "INSERT INTO blog_post_keys_descriptions(post_id, keywords, description) VALUES(:id, :keywords, :description)",
         ['id' => $id, 'keywords' => $keywords, 'description' => $description]
       );
       if($result) $result = static::update_image($id, $data);
-      if(!$result) throw new Exception(static::error());
-      static::commit();
+      if(!$result) throw new Exception(static::Error());
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -442,13 +442,13 @@ class ModelBlog extends ModelBase{
    */
   public static function get_desc_keys($id){
     $data = ['description' => null, 'keywords' => null];
-    $res = static::query(
+    $res = static::Query(
       "SELECT description, keywords FROM blog_post_keys_descriptions WHERE post_id=:id",
       ['id' => $id]
     );
-    if($res && static::num_rows($res) > 0) {
-      $data = static::fetch_assoc($res);
-      static::free_result($res);
+    if($res && static::getNumRows($res) > 0) {
+      $data = static::FetchAssoc($res);
+      static::FreeResult($res);
     }
 
     return $data;

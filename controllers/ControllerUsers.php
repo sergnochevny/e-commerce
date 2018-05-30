@@ -42,10 +42,10 @@ class ControllerUsers extends ControllerFormSimple{
    */
   private function list_countries($select = null){
     $countries = ModelAddress::get_countries_all();
-    $this->main->template->vars('items', $countries);
-    $this->main->template->vars('select', $select);
+    $this->main->view->setVars('items', $countries);
+    $this->main->view->setVars('select', $select);
 
-    return $this->render_layout_return('address/select_countries_options');
+    return $this->RenderLayoutReturn('address/select_countries_options');
   }
 
   /**
@@ -58,9 +58,9 @@ class ControllerUsers extends ControllerFormSimple{
     $list = '';
     if(isset($country) && !empty($country)) {
       $provincies = ModelAddress::get_country_state($country);
-      $this->main->template->vars('items', $provincies);
-      $this->main->template->vars('select', $select);
-      $list = $this->render_layout_return('address/select_countries_options');
+      $this->main->view->setVars('items', $provincies);
+      $this->main->view->setVars('select', $select);
+      $list = $this->RenderLayoutReturn('address/select_countries_options');
     }
 
     return $list;
@@ -71,7 +71,7 @@ class ControllerUsers extends ControllerFormSimple{
    */
   protected function get_csv(){
     Auth::check_admin_authorized();
-    $this->build_order($sort);
+    $this->BuildOrder($sort);
     $filter = null;
     $csv_fields_dlm = !is_null(App::$app->keyStorage()->system_csv_fields_dlm) ?
       App::$app->keyStorage()->system_csv_fields_dlm : ',';
@@ -177,8 +177,8 @@ class ControllerUsers extends ControllerFormSimple{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
-    parent::build_order($sort, $view, $filter);
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
+    parent::BuildOrder($sort, $view, $filter);
     if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
       $sort = ['full_name' => 'ASC'];
     }
@@ -329,8 +329,8 @@ class ControllerUsers extends ControllerFormSimple{
             }
           } else {
             if(!empty($data['create_password'])) {
-              $salt = ModelAuth::generatestr();
-              $password = ModelAuth::hash_($data['create_password'], $salt, 12);
+              $salt = ModelAuth::GenerateStr();
+              $password = ModelAuth::getHash($data['create_password'], $salt, 12);
               $check = ModelAuth::check($data['confirm_password'], $password);
             } else $password = null;
 
@@ -355,7 +355,7 @@ class ControllerUsers extends ControllerFormSimple{
    * @throws \Exception
    */
   protected function form_handling(&$data = null){
-    if(App::$app->request_is_post() && (App::$app->post('method') == 'get_province_list'))
+    if(App::$app->RequestIsPost() && (App::$app->post('method') == 'get_province_list'))
       exit($this->list_province(App::$app->post('country')));
     if(!empty($this->scenario())) {
       if($this->scenario() == 'csv') exit($this->get_csv());
@@ -407,16 +407,16 @@ class ControllerUsers extends ControllerFormSimple{
    */
   public function user_handling(&$data, $url, $back_url, $title, $is_user = false, $outer_control = false, $scenario = null){
     $this->scenario(!empty($scenario) ? $scenario : App::$app->get('method'));
-    $this->main->template->vars('form_title', $title);
+    $this->main->view->setVars('form_title', $title);
     $this->load($data);
-    if(App::$app->request_is_post() && $this->form_handling($data)) {
+    if(App::$app->RequestIsPost() && $this->form_handling($data)) {
       $email = $data['email'];
-      $result = $this->save($data);
+      $result = $this->Save($data);
       if($outer_control && $result) {
         if($this->scenario() !== 'short') return $result; else {
           UserHelper::sendWelcomeEmail($email);
-          $thanx = $this->render_layout_return('short/thanx');
-          $this->main->template->vars('warning', [$thanx]);
+          $thanx = $this->RenderLayoutReturn('short/thanx');
+          $this->main->view->setVars('warning', [$thanx]);
 
           return ($this->form($url, []));
         }
@@ -430,7 +430,7 @@ class ControllerUsers extends ControllerFormSimple{
       return ($form);
     }
     $this->set_back_url($back_url);
-    $this->main->template->vars('form', $form);
+    $this->main->view->setVars('form', $form);
     if($is_user) return ($this->render_view('edit'));
     else return ($this->render_view_admin('edit'));
   }
@@ -475,8 +475,8 @@ class ControllerUsers extends ControllerFormSimple{
 //          $id = $row['aid'];
 //          $current_password = $row['password'];
 //          if(!strpos('$2a$12$', $current_password)) {
-//            $salt = ModelAuth::generatestr();
-//            $password = ModelAuth::hash_($current_password, $salt, 12);
+//            $salt = ModelAuth::GenerateStr();
+//            $password = ModelAuth::getHash($current_password, $salt, 12);
 //            $check = ModelAuth::check($current_password, $password);
 //            if($password == $check) ModelUser::update_password($password, $id);
 //          }
@@ -504,8 +504,8 @@ class ControllerUsers extends ControllerFormSimple{
 //          $id = $row['id'];
 //          $current_password = $row['password'];
 //          if(!strpos('$2a$12$', $current_password)) {
-//            $salt = ModelAuth::generatestr();
-//            $password = ModelAuth::hash_($current_password, $salt, 12);
+//            $salt = ModelAuth::GenerateStr();
+//            $password = ModelAuth::getHash($current_password, $salt, 12);
 //            $check = ModelAuth::check($current_password, $password);
 //            if($password == $check) ModelAdmin::update_password($password, $id);
 //          }

@@ -21,8 +21,8 @@ class ControllerBlogCategory extends ControllerSimple{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
-    parent::build_order($sort, $view, $filter);
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
+    parent::BuildOrder($sort, $view, $filter);
     if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
       $sort = ['a.name' => 'desc'];
     }

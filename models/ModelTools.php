@@ -57,8 +57,8 @@ class ModelTools extends ModelBase{
           " WHERE b.post_status = 'publish'";
         break;
     }
-    $result = static::query($q);
-    while($row = static::fetch_assoc($result)) {
+    $result = static::Query($q);
+    while($row = static::FetchAssoc($result)) {
       $res[] = $row;
     }
 
@@ -79,8 +79,8 @@ class ModelTools extends ModelBase{
       if(!empty(App::$app->router()->action) && (App::$app->router()->controller !== App::$app->router()->action))
         $q .= " AND action = '" . App::$app->router()->action . "'";
       else $q .= " AND action is null";
-      $result = static::query($q);
-      $row = static::fetch_array($result);
+      $result = static::Query($q);
+      $row = static::FetchArray($result);
       if(!empty($row['id'])) {
         $title = $row['title'];
         $description = $row['description'];

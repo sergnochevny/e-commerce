@@ -22,7 +22,7 @@ class ModelRelated extends ModelBase{
    * @param null $prms
    * @return string
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
     if(isset($filter['hidden']['a.priceyard']) && !is_array($filter['hidden']['a.priceyard'])) {
       $result[] = "a.priceyard > :hapriceyard";
@@ -69,8 +69,8 @@ class ModelRelated extends ModelBase{
     ];
     if(isset($id)) {
       $query = "SELECT * FROM " . static::$table . " WHERE id=:id";
-      $result = static::query($query, ['id' => $id]);
-      if($result) $response = static::fetch_assoc($result);
+      $result = static::Query($query, ['id' => $id]);
+      if($result) $response = static::FetchAssoc($result);
     }
 
     if($response === false) {
@@ -90,10 +90,10 @@ class ModelRelated extends ModelBase{
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table . " a";
     $query .= " LEFT JOIN shop_products b ON b.pid = a.r_pid";
     $query .= " LEFT JOIN shop_products c ON c.pid = a.pid";
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -113,16 +113,16 @@ class ModelRelated extends ModelBase{
     $query = "SELECT DISTINCT c.pid AS cpid, c.pname AS cpname, b.* FROM " . static::$table . " a";
     $query .= " LEFT JOIN shop_products b ON b.pid = a.r_pid";
     $query .= " LEFT JOIN shop_products c ON c.pid = a.pid";
-    $query .= static::build_where($filter, $prms);
-    $query .= static::build_order($sort);
+    $query .= static::BuildWhere($filter, $prms);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
       $sys_hide_price = ModelPrice::sysHideAllRegularPrices();
       $cart_items = isset(App::$app->session('cart')['items']) ? App::$app->session('cart')['items'] : [];
       $cart = array_keys($cart_items);
-      while($row = static::fetch_array($result)) {
+      while($row = static::FetchArray($result)) {
         $response[] = ModelShop::prepare_layout_product($row, $cart, $sys_hide_price);
       }
     }
@@ -135,8 +135,8 @@ class ModelRelated extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     try {
       extract($data);
       /**
@@ -144,12 +144,12 @@ class ModelRelated extends ModelBase{
        * @var integer $r_id
        */
       $query = "REPLACE INTO " . static::$table . "(pid, r_pid) VALUE (:pid, :r_pid)";
-      $res = static::query($query, ['pid' => $pid, 'r_id' => $r_id]);
-      if(!$res) throw new Exception(static::error());
-      $id = static::last_id();
-      static::commit();
+      $res = static::Query($query, ['pid' => $pid, 'r_id' => $r_id]);
+      if(!$res) throw new Exception(static::Error());
+      $id = static::LastId();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -160,17 +160,17 @@ class ModelRelated extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
       if(isset($id)) {
         $query = "DELETE FROM  " . static::$table . " WHERE id = :id";
-        $res = static::query($query, ['id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['id' => $id]);
+        if(!$res) throw new Exception(static::Error());
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }

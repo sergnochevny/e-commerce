@@ -18,28 +18,28 @@ class ModelUsers extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
-    if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter["email"])))) . "%'";
+    if(isset($filter["email"])) $result[] = "email LIKE '%" . implode('%', array_filter(explode(' ', static::PrepareForSql($filter["email"])))) . "%'";
     if(!empty($filter["full_name"]))
       foreach(array_filter(explode(' ', $filter["full_name"])) as $item)
-        if(!empty($item)) $result[] = "CONCAT(bill_firstname, ' ', bill_lastname) LIKE '%" . static::prepare_for_sql($item) . "%'";
+        if(!empty($item)) $result[] = "CONCAT(bill_firstname, ' ', bill_lastname) LIKE '%" . static::PrepareForSql($item) . "%'";
     if(!empty($filter["organization"]))
       foreach(array_filter(explode(' ', $filter["organization"])) as $item)
-        if(!empty($item)) $result[] = "bill_organization LIKE '%" . static::prepare_for_sql($item) . "%'";
-    if(isset($filter["postal"])) $result[] = "bill_postal LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter["postal"])))) . "%'";
-    if(isset($filter["phone"])) $result[] = "bill_phone LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter["phone"])))) . "%'";
-    if(isset($filter["city"])) $result[] = "bill_city LIKE '%" . implode('%', array_filter(explode(' ', static::prepare_for_sql($filter["city"])))) . "%'";
+        if(!empty($item)) $result[] = "bill_organization LIKE '%" . static::PrepareForSql($item) . "%'";
+    if(isset($filter["postal"])) $result[] = "bill_postal LIKE '%" . implode('%', array_filter(explode(' ', static::PrepareForSql($filter["postal"])))) . "%'";
+    if(isset($filter["phone"])) $result[] = "bill_phone LIKE '%" . implode('%', array_filter(explode(' ', static::PrepareForSql($filter["phone"])))) . "%'";
+    if(isset($filter["city"])) $result[] = "bill_city LIKE '%" . implode('%', array_filter(explode(' ', static::PrepareForSql($filter["city"])))) . "%'";
     if(isset($filter["address"]))
-      $result[] = "(bill_address1 LIKE '%" . static::prepare_for_sql($filter["address"]) . "%'" .
-        "OR bill_address2 LIKE '%" . static::prepare_for_sql($filter["address"]) . "%')";
+      $result[] = "(bill_address1 LIKE '%" . static::PrepareForSql($filter["address"]) . "%'" .
+        "OR bill_address2 LIKE '%" . static::PrepareForSql($filter["address"]) . "%')";
     if(isset($filter["registered"])) {
-      $where = (!empty($filter["registered"]['from']) ? "date_registered >= STR_TO_DATE('" . static::prepare_for_sql($filter["registered"]["from"]) . "', '%m/%d/%Y')" : "") .
-        (!empty($filter["registered"]['to']) ? " AND date_registered <= STR_TO_DATE('" . static::prepare_for_sql($filter["registered"]["to"]) . "', '%m/%d/%Y')" : "");
+      $where = (!empty($filter["registered"]['from']) ? "date_registered >= STR_TO_DATE('" . static::PrepareForSql($filter["registered"]["from"]) . "', '%m/%d/%Y')" : "") .
+        (!empty($filter["registered"]['to']) ? " AND date_registered <= STR_TO_DATE('" . static::PrepareForSql($filter["registered"]["to"]) . "', '%m/%d/%Y')" : "");
       if(strlen(trim($where)) > 0) $result[] = "(" . $where . ")";
     }
-    if(isset($filter["country"])) $result[] = "bill_country = '" . static::prepare_for_sql($filter["country"]) . "'";
-    if(isset($filter["province"])) $result[] = "bill_province = '" . static::prepare_for_sql($filter["province"]) . "'";
+    if(isset($filter["country"])) $result[] = "bill_country = '" . static::PrepareForSql($filter["country"]) . "'";
+    if(isset($filter["province"])) $result[] = "bill_province = '" . static::PrepareForSql($filter["province"]) . "'";
     if(!empty($result) && (count($result) > 0)) {
       $return = implode(" AND ", $result);
       if(strlen(trim($return)) > 0) {
@@ -59,10 +59,10 @@ class ModelUsers extends ModelBase{
   public static function get_total_count($filter = null){
     $response = 0;
     $query = "SELECT COUNT(*) FROM " . static::$table;
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -81,13 +81,13 @@ class ModelUsers extends ModelBase{
     $response = [];
     $query = "SELECT * , CONCAT(bill_firstname, ' ', bill_lastname) as full_name";
     $query .= " FROM " . static::$table;
-    $query .= static::build_where($filter, $prms);
-    $query .= static::build_order($sort);
+    $query .= static::BuildWhere($filter, $prms);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_array($result)) {
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchArray($result)) {
         $response[] = $row;
       }
     }
@@ -131,9 +131,9 @@ class ModelUsers extends ModelBase{
     ];
     if(isset($id)) {
       $strSQL = "SELECT * FROM " . static::$table . " WHERE aid = :id";
-      $result = static::query($strSQL, ['id' => $id]);
+      $result = static::Query($strSQL, ['id' => $id]);
       if($result) {
-        $data = static::fetch_assoc($result);
+        $data = static::FetchAssoc($result);
       }
     }
 
@@ -148,28 +148,28 @@ class ModelUsers extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
       if(isset($id)) {
         $query = "SELECT count(*) FROM shop_specials_users WHERE aid = :id";
-        $res = static::query($query, ['id' => $id]);
+        $res = static::Query($query, ['id' => $id]);
         if($res) {
-          $amount = static::fetch_value($res);
+          $amount = static::FetchValue($res);
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
 //        $query = "DELETE FROM shop_specials_users WHERE aid = :id";
-//        $res = static::query($query, ['id' => $id]);
-//        if(!$res) throw new Exception(static::error());
+//        $res = static::Query($query, ['id' => $id]);
+//        if(!$res) throw new Exception(static::Error());
         $query = "DELETE FROM " . static::$table . " WHERE aid = :id";
-        $res = static::query($query, ['id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['id' => $id]);
+        if(!$res) throw new Exception(static::Error());
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }
@@ -179,8 +179,8 @@ class ModelUsers extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     try {
       extract($data);
       /**
@@ -312,14 +312,14 @@ class ModelUsers extends ModelBase{
           $prms['aid'] = $aid;
         }
       }
-      $result = static::query($q, $prms);
-      if(!$result) throw new Exception(static::error());
+      $result = static::Query($q, $prms);
+      if(!$result) throw new Exception(static::Error());
       if(!isset($aid)) {
-        $aid = static::last_id();
+        $aid = static::LastId();
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 

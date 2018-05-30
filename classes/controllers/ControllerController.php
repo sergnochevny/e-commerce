@@ -63,7 +63,7 @@ abstract class ControllerController extends ControllerBase{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
     $sort = App::$app->get('sort');
     if(isset($sort)) {
       $order = is_null(App::$app->get('order')) ? 'DESC' : App::$app->get('order');
@@ -85,15 +85,15 @@ abstract class ControllerController extends ControllerBase{
     $template = $view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'search/form' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'search/form';
     $prms = null;
     if(!empty($this->scenario())) $prms['method'] = $this->scenario();
-    $this->main->template->vars('action', App::$app->router()->UrlTo($this->controller . ($view ? '/view' : ''), $prms));
+    $this->main->view->setVars('action', App::$app->router()->UrlTo($this->controller . ($view ? '/view' : ''), $prms));
     $this->before_search_form_layout($search_form, $view);
-    $this->main->template->vars('search', $search_form);
+    $this->main->view->setVars('search', $search_form);
     $search_form = null;
     try {
-      $search_form = $this->render_layout_return($template);
+      $search_form = $this->RenderLayoutReturn($template);
     } catch(Exception $e) {
     }
-    $this->main->template->vars('search_form', $search_form);
+    $this->main->view->setVars('search_form', $search_form);
 
     return $search_form;
   }
@@ -133,9 +133,9 @@ abstract class ControllerController extends ControllerBase{
   protected function set_back_url($back_url = null, $prms = null){
     if(!isset($back_url)) $this->build_back_url($back_url, $prms);
     if(isset($back_url)) {
-      $this->main->template->vars('back', $back_url);
+      $this->main->view->setVars('back', $back_url);
       $back_url = App::$app->router()->UrlTo($back_url, $prms, null, null, false, true);
-      $this->main->template->vars('back_url', $back_url);
+      $this->main->view->setVars('back_url', $back_url);
     }
   }
 
@@ -156,12 +156,11 @@ abstract class ControllerController extends ControllerBase{
    * @param $filter
    * @param $view
    * @return array|null|string
-   * @throws \InvalidArgumentException
    */
   protected function load_search_filter($filter, $view){
-    //  Implementation save the search context
+    //  Implementation Save the search context
     $idx = $this->load_search_filter_get_idx($filter, $view);
-    if(App::$app->request_is_post()) {
+    if(App::$app->RequestIsPost()) {
 
       $per_page = App::$app->post('per_page');
       if(!empty($per_page)) {
@@ -237,7 +236,6 @@ abstract class ControllerController extends ControllerBase{
    * @param $filter
    * @param bool $view
    * @return array|null
-   * @throws \InvalidArgumentException
    */
   public function build_search_filter(&$filter, $view = false){
     $search_form = null;
@@ -328,7 +326,7 @@ abstract class ControllerController extends ControllerBase{
     $sort = null;
     if(is_null(App::$app->get('sort')) && is_null(App::$app->post('sort')))
       $sort = !empty($sorts[$this->controller][$idx]) ? $sorts[$this->controller][$idx] : null;
-    if(empty($sort)) $this->build_order($sort, $view, $filter);
+    if(empty($sort)) $this->BuildOrder($sort, $view, $filter);
     if(!empty($sort)) {
       $sorts[$this->controller][$idx] = $sort;
       App::$app->setSession('sorts', $sorts);
@@ -344,25 +342,25 @@ abstract class ControllerController extends ControllerBase{
    * @throws \Exception
    */
   protected function get_list($view = false, $return = false){
-    $this->main->template->vars('page_title', $this->page_title);
+    $this->main->view->setVars('page_title', $this->page_title);
     list($filter, $search_form, $sort, $page, $per_page, $total, $res_count_rows, $rows) = $this->get_data_for_list($view, $filter);
 
     $this->after_get_list($rows, $view, $filter, $search_form);
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
-    $this->main->template->vars('scenario', $this->scenario());
+    $this->main->view->setVars('scenario', $this->scenario());
     $this->search_form($search_form, $view);
     $this->set_back_url();
-    $this->main->template->vars('rows', $rows);
-    $this->main->template->vars('sort', $sort);
-    $this->main->template->vars('list', $this->render_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows'));
-    $this->main->template->vars('count_rows', $res_count_rows);
+    $this->main->view->setVars('rows', $rows);
+    $this->main->view->setVars('sort', $sort);
+    $this->main->view->setVars('list', $this->RenderLayoutReturn($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'rows'));
+    $this->main->view->setVars('count_rows', $res_count_rows);
     $prms = !empty($this->scenario()) ? ['method' => $this->scenario()] : null;
-    (new Paginator($this->main))->paginator($total, $page, $this->controller . ($view ? '/view' : ''), $prms, $per_page);
+    (new Paginator($this->main))->getPaginator($total, $page, $this->controller . ($view ? '/view' : ''), $prms, $per_page);
     $this->before_list_layout($view);
-    if($return) return $this->render_layout_return($view ? 'view' . DS . (!empty($this->scenario()) ?
+    if($return) return $this->RenderLayoutReturn($view ? 'view' . DS . (!empty($this->scenario()) ?
         $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list',
-      $return && App::$app->request_is_ajax());
-    $this->render_layout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
+      $return && App::$app->RequestIsAjax());
+    $this->RenderLayout($view ? 'view' . DS . (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list' : (!empty($this->scenario()) ? $this->scenario() . DS : '') . 'list');
   }
 
   /**
@@ -370,11 +368,10 @@ abstract class ControllerController extends ControllerBase{
    * @param bool $view
    * @param int $per_page
    * @return mixed|null
-   * @throws \InvalidArgumentException
    */
   protected function sitemap_get_list($page = 0, $view = false, $per_page = 1000){
     $this->build_search_filter($filter, $view);
-    $this->build_order($sort, $view, $filter);
+    $this->BuildOrder($sort, $view, $filter);
     $filter['scenario'] = $this->scenario();
     if($page <= 0) $page = 1;
     $start = (($page - 1) * $per_page);
@@ -423,7 +420,7 @@ abstract class ControllerController extends ControllerBase{
   }
 
   /**
-   * @return [][]|array|string
+   * @return array|string
    */
   protected function search_from_post(){
     $search = App::$app->post('search');
@@ -442,7 +439,6 @@ abstract class ControllerController extends ControllerBase{
    * @param $view
    * @param $filter
    * @return array
-   * @throws \InvalidArgumentException
    */
   protected function get_data_for_list($view, &$filter): array{
     $search_form = $this->build_search_filter($filter, $view);
@@ -490,13 +486,15 @@ abstract class ControllerController extends ControllerBase{
 
   /**
    * @export
+   * @param bool $required_access
+   * @throws \ReflectionException
    * @throws \Exception
    */
   public function index($required_access = true){
     if($required_access) Auth::check_admin_authorized();
     $list = $this->get_list(false, true);
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->main->template->vars('list', $list);
+    if(App::$app->RequestIsAjax()) exit($list);
+    $this->main->view->setVars('list', $list);
     if(AdminHelper::is_logged()) $this->render_view_admin($this->controller);
     else  $this->render_view((!empty($this->scenario()) ? $this->scenario() . DS : '') . $this->controller);
   }
@@ -509,12 +507,12 @@ abstract class ControllerController extends ControllerBase{
    */
   public function view($partial = false, $required_access = false){
     if($required_access) Auth::check_admin_authorized();
-    $this->main->template->vars('view_title', $this->view_title);
+    $this->main->view->setVars('view_title', $this->view_title);
     $list = $this->get_list(true, true);
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->main->template->vars('scenario', $this->scenario());
-    $this->main->template->vars('list', $list);
-    if($partial) $this->render_layout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
+    if(App::$app->RequestIsAjax()) exit($list);
+    $this->main->view->setVars('scenario', $this->scenario());
+    $this->main->view->setVars('list', $list);
+    if($partial) $this->RenderLayout('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
     elseif($required_access) $this->render_view_admin('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS . $this->controller);
     else $this->render_view('view' . (!empty($this->scenario()) ? DS . $this->scenario() : '') . DS .
       $this->controller);
@@ -568,8 +566,8 @@ abstract class ControllerController extends ControllerBase{
    * @return mixed
    * @throws \Exception
    */
-  public function render_layout($page, $renderJS = true, $controller = null, $data = null){
-    return $this->main->render_layout($page, $renderJS, $this->controller, $data);
+  public function RenderLayout($page, $renderJS = true, $controller = null, $data = null){
+    return $this->main->RenderLayout($page, $renderJS, $this->controller, $data);
   }
 
   /**
@@ -580,8 +578,8 @@ abstract class ControllerController extends ControllerBase{
    * @return string
    * @throws \Exception
    */
-  public function render_layout_return($page, $renderJS = false, $controller = null, $data = null){
-    return $this->main->render_layout_return($page, $renderJS, $this->controller, $data);
+  public function RenderLayoutReturn($page, $renderJS = false, $controller = null, $data = null){
+    return $this->main->RenderLayoutReturn($page, $renderJS, $this->controller, $data);
   }
 
   /**

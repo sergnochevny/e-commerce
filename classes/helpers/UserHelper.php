@@ -9,7 +9,8 @@ namespace classes\helpers;
 use app\core\App;
 use models\ModelAuth;
 
-class UserHelper {
+class UserHelper{
+
   /**
    * @return array|string
    */
@@ -91,7 +92,7 @@ class UserHelper {
     $emails = array_unique($emails);
 
     foreach($emails as $email) {
-      $messages[] = $mailer->compose(['text' => 'welcome-mail-text'])
+      $messages[] = $mailer->compose(['text' => 'welcome-mail-text'], ['site_name' => App::$app->keyStorage()->system_site_name])
         ->setSubject($subject)
         ->setTo([$email])
         ->setReplyTo([App::$app->keyStorage()->system_info_email])

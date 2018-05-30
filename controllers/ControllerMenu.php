@@ -15,13 +15,13 @@ class ControllerMenu extends ControllerController{
    * @throws \Exception
    */
   public function show_menu(){
-    $this->template->merge_vars($this->main->template->get_vars());
-    $this->template->vars('idx', !is_null(App::$app->session('sidebar_idx')) ?
+    $this->view->merge_vars($this->main->view->get_vars());
+    $this->view->setVars('idx', !is_null(App::$app->session('sidebar_idx')) ?
       App::$app->session('sidebar_idx') : 0
     );
-    $this->main->template->vars('shop_menu', $this->template->render_layout_return('shop', false, $this->controller));
-    $this->template->vars('base_url', App::$app->router()->UrlTo('/'));
-    $this->main->template->vars('menu', $this->template->render_layout_return('menu', false, $this->controller));
+    $this->main->view->setVars('shop_menu', $this->view->RenderLayoutReturn('shop', false, $this->controller));
+    $this->view->setVars('base_url', App::$app->router()->UrlTo('/'));
+    $this->main->view->setVars('menu', $this->view->RenderLayoutReturn('menu', false, $this->controller));
   }
 
 }

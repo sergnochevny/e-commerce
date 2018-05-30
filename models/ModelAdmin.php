@@ -23,10 +23,10 @@ class ModelAdmin extends ModelBase{
     $response = 0;
     $prms = [];
     $query = "SELECT COUNT(*) FROM " . static::$table;
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -41,19 +41,19 @@ class ModelAdmin extends ModelBase{
    * @return mixed|null
    * @throws \Exception
    */
-  public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
+  public static function getList($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
     $response = [];
     $prms = [];
     $query = "SELECT * ";
     $query .= " FROM " . static::$table;
-    $query .= static::build_where($filter, $prms);
-    $query .= static::build_order($sort);
+    $query .= static::BuildWhere($filter, $prms);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
-      $response = static::fetch_array_all($result);
-      static::free_result($result);
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
+      $response = static::FetchArrayAll($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -63,14 +63,14 @@ class ModelAdmin extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
       $strSQL = "DELETE FROM " . static::$table . " WHERE id = :id";
-      static::exec($strSQL, ['id' => $id]);
-      static::commit();
+      static::Exec($strSQL, ['id' => $id]);
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }
@@ -97,9 +97,9 @@ class ModelAdmin extends ModelBase{
       $q .= " login = :login";
       $prms['login'] = $login;
     }
-    $result = static::query($q, $prms);
+    $result = static::Query($q, $prms);
 
-    return (!$result || static::num_rows($result) > 0);
+    return (!$result || static::getNumRows($result) > 0);
   }
 
   /**
@@ -113,10 +113,10 @@ class ModelAdmin extends ModelBase{
     ];
     if(isset($id)) {
       $strSQL = "SELECT * FROM " . static::$table . " WHERE id = :id";
-      $result = static::query($strSQL, ['id' => $id]);
+      $result = static::Query($strSQL, ['id' => $id]);
       if($result) {
-        $data = static::fetch_assoc($result);
-        static::free_result($result);
+        $data = static::FetchAssoc($result);
+        static::FreeResult($result);
       }
     }
 
@@ -133,14 +133,14 @@ class ModelAdmin extends ModelBase{
    * @throws \Exception
    */
   public static function update_password($password, $id){
-    static::transaction();
+    static::BeginTransaction();
     try {
       $q = "UPDATE " . static::$table . " SET password = :password WHERE  id = :id";
-      $result = static::query($q, ['password' => $password, 'id' => $id]);
-      if(!$result) throw new Exception(static::error());
-      static::commit();
+      $result = static::Query($q, ['password' => $password, 'id' => $id]);
+      if(!$result) throw new Exception(static::Error());
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }
@@ -150,13 +150,13 @@ class ModelAdmin extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
+  public static function Save(&$data){
     /**
      * @var string $login
      * @var string $password
      * @var integer $id
      */
-    static::transaction();
+    static::BeginTransaction();
     try {
       extract($data);
       if(!isset($id)) {
@@ -168,14 +168,14 @@ class ModelAdmin extends ModelBase{
         }
         $q .= "' WHERE  id = :id";
       }
-      $result = static::query($q, $data);
-      if(!$result) throw new Exception(static::error());
+      $result = static::Query($q, $data);
+      if(!$result) throw new Exception(static::Error());
       if(!isset($admin_id)) {
-        $id = static::last_id();
+        $id = static::LastId();
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 

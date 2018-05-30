@@ -40,8 +40,8 @@ class ControllerOrders extends ControllerSimple{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
-    parent::build_order($sort, $view, $filter);
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
+    parent::BuildOrder($sort, $view, $filter);
     if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
       $sort = ['a.order_date' => 'desc'];
     }
@@ -159,12 +159,12 @@ class ControllerOrders extends ControllerSimple{
           $sample_cost = strlen(trim($sample_cost)) > 0 ? '$' . number_format((double)$sample_cost, 2) : '';
         }
 
-        $this->main->template->vars('is_sample', $is_sample);
-        $this->main->template->vars('product_name', $product_name);
-        $this->main->template->vars('sale_price', $sale_price);
-        $this->main->template->vars('quantity', $quantity);
-        $this->main->template->vars('item_price', $item_price);
-        $this->render_layout('detail_info');
+        $this->main->view->setVars('is_sample', $is_sample);
+        $this->main->view->setVars('product_name', $product_name);
+        $this->main->view->setVars('sale_price', $sale_price);
+        $this->main->view->setVars('quantity', $quantity);
+        $this->main->view->setVars('item_price', $item_price);
+        $this->RenderLayout('detail_info');
       }
       $end_date = $end_date ? date('/m/d/Y', strtotime($end_date)) : '';
       $total_discount = strlen(trim($total_discount)) > 0 ? '$' . number_format((double)$total_discount, 2) : '';
@@ -174,25 +174,25 @@ class ControllerOrders extends ControllerSimple{
       $detail_info = ob_get_clean();
     }
 
-    $this->main->template->vars('back_url', $back_url);
-    $this->main->template->vars('detail_info', $detail_info);
-    $this->main->template->vars('handling', $handling);
-    $this->main->template->vars('shipping_cost', $shipping_cost);
-    $this->main->template->vars('shipping_discount', $shipping_discount);
-    $this->main->template->vars('taxes', $taxes);
-    $this->main->template->vars('total', $total);
-    $this->main->template->vars('sub_price', $sub_price);
-    $this->main->template->vars('is_sample', $is_sample);
+    $this->main->view->setVars('back_url', $back_url);
+    $this->main->view->setVars('detail_info', $detail_info);
+    $this->main->view->setVars('handling', $handling);
+    $this->main->view->setVars('shipping_cost', $shipping_cost);
+    $this->main->view->setVars('shipping_discount', $shipping_discount);
+    $this->main->view->setVars('taxes', $taxes);
+    $this->main->view->setVars('total', $total);
+    $this->main->view->setVars('sub_price', $sub_price);
+    $this->main->view->setVars('is_sample', $is_sample);
     if($is_sample == 1) {
-      $this->main->template->vars('sample_cost', $sample_cost);
+      $this->main->view->setVars('sample_cost', $sample_cost);
     }
-    $this->main->template->vars('shipping_type', $shipping_type);
-    $this->main->template->vars('track_code', $track_code);
-    $this->main->template->vars('status', $status);
-    $this->main->template->vars('end_date', $end_date);
-    $this->main->template->vars('order_id', $order_id);
-    $this->main->template->vars('status_code', $status_code);
-    $this->main->template->vars('total_discount', $total_discount);
+    $this->main->view->setVars('shipping_type', $shipping_type);
+    $this->main->view->setVars('track_code', $track_code);
+    $this->main->view->setVars('status', $status);
+    $this->main->view->setVars('end_date', $end_date);
+    $this->main->view->setVars('order_id', $order_id);
+    $this->main->view->setVars('status_code', $status_code);
+    $this->main->view->setVars('total_discount', $total_discount);
 
     if(AdminHelper::is_logged()) $this->main-> render_view_admin('view'); else  $this->render_view('view');
   }

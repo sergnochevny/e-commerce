@@ -2,6 +2,8 @@
 
 namespace console\models;
 
+use app\core\console\model\ModelConsole;
+
 /**
  * Class ModelCollection
  * @package console\models

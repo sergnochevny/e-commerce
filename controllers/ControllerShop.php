@@ -58,7 +58,7 @@ class ControllerShop extends ControllerController{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
     $type = isset($filter['type']) ? $filter['type'] : null;
     if(isset($type)) {
       switch($type) {
@@ -86,8 +86,8 @@ class ControllerShop extends ControllerController{
    */
   protected function before_search_form_layout(&$search_data, $view = false){
     $type = isset($search_data['type']) ? $search_data['type'] : null;
-    if(isset($type)) $this->main->template->vars('action', App::$app->router()->UrlTo($this->controller . DS . $type));
-    if(isset($url_prms)) $this->main->template->vars('action', App::$app->router()
+    if(isset($type)) $this->main->view->setVars('action', App::$app->router()->UrlTo($this->controller . DS . $type));
+    if(isset($url_prms)) $this->main->view->setVars('action', App::$app->router()
       ->UrlTo($this->controller, $url_prms));
   }
 
@@ -110,9 +110,9 @@ class ControllerShop extends ControllerController{
       );
     }
     if(!empty($main_filter)) $main_filter['active_filter'] = !empty($main_filter);
-    $this->main->template->vars('filter', $main_filter);
+    $this->main->view->setVars('filter', $main_filter);
     if(isset($type)) $url_prms['back'] = $type;
-    $this->main->template->vars('url_prms', $url_prms);
+    $this->main->view->setVars('url_prms', $url_prms);
   }
 
   /**
@@ -122,19 +122,19 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   protected function get_list_by_type($type = 'last', $max_count_items = 50){
-    $this->main->template->vars('page_title', $this->page_title);
+    $this->main->view->setVars('page_title', $this->page_title);
     list($filter, $search_form, $sort, $page, $per_page, $total, $res_count_rows, $rows) = $this->get_data_for_list_by_type($type, $max_count_items, $filter);
     $this->after_get_list($rows, false, $filter, $search_form, $type);
     if(isset($filter['active'])) $search_form['active'] = $filter['active'];
     $this->search_form($search_form);
-    $this->main->template->vars('rows', $rows);
-    $this->main->template->vars('sort', $sort);
-    $this->main->template->vars('list', $this->render_layout_return($type));
-    $this->main->template->vars('count_rows', $res_count_rows);
-    (new Paginator($this->main))->paginator($total, $page, 'shop' . DS . $type, null, $per_page);
+    $this->main->view->setVars('rows', $rows);
+    $this->main->view->setVars('sort', $sort);
+    $this->main->view->setVars('list', $this->RenderLayoutReturn($type));
+    $this->main->view->setVars('count_rows', $res_count_rows);
+    (new Paginator($this->main))->getPaginator($total, $page, 'shop' . DS . $type, null, $per_page);
     $this->before_list_layout();
 
-    return $this->render_layout_return('list', App::$app->request_is_ajax());
+    return $this->RenderLayoutReturn('list', App::$app->RequestIsAjax());
   }
 
   /**
@@ -151,9 +151,9 @@ class ControllerShop extends ControllerController{
       $start = rand($start, $row_count - $limit);
     }
     $rows = ModelShop::get_widget_list_by_type($type, $start, $limit, $row_count);
-    $this->main->template->vars('rows', $rows);
+    $this->main->view->setVars('rows', $rows);
 
-    return $this->render_layout_return('widget/' . $layout);
+    return $this->RenderLayoutReturn('widget/' . $layout);
   }
 
   /**
@@ -168,8 +168,8 @@ class ControllerShop extends ControllerController{
     if($row_count > ($limit + $start)) {
       $start = rand($start, $row_count - $limit);
     }
-    $this->main->template->vars('rows', ModelShop::get_widget_list_by_type($type, $start, $limit, $row_count));
-    $this->main->template->vars('list_' . $type, $this->render_layout_return('widget/' . $layout));
+    $this->main->view->setVars('rows', ModelShop::get_widget_list_by_type($type, $start, $limit, $row_count));
+    $this->main->view->setVars('list_' . $type, $this->RenderLayoutReturn('widget/' . $layout));
   }
 
   /**
@@ -183,7 +183,7 @@ class ControllerShop extends ControllerController{
     $this->widget_products_under_type('under_40', 0, 5);
     $this->widget_products_under_type('under_60', 0, 5);
 
-    return $this->render_layout_return('widget/' . $layout);
+    return $this->RenderLayoutReturn('widget/' . $layout);
   }
 
   /**
@@ -219,9 +219,9 @@ class ControllerShop extends ControllerController{
       $pattern = "%s<br><strong " . (!empty($data['bDiscount']) ? "class='reduced'" : "") . ">%s" .
         (!empty($data['bDiscount']) ? "<hr>" : "") . "</strong>";
       $field_value = sprintf($pattern, $data['sPriceDiscount'], $data['srDiscountPrice']);
-      $this->main->template->vars('field_name', $field_name);
-      $this->main->template->vars('field_value', $field_value);
-      $discount_info .= $this->render_layout_return('product/discount');
+      $this->main->view->setVars('field_name', $field_name);
+      $this->main->view->setVars('field_value', $field_value);
+      $discount_info .= $this->RenderLayoutReturn('product/discount');
     }
 
     if($data['bDiscount']) {
@@ -235,25 +235,25 @@ class ControllerShop extends ControllerController{
       } else {
         $field_value = sprintf("Reduced by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
       }
-      $this->main->template->vars('field_name', $field_name);
-      $this->main->template->vars('field_value', $field_value);
-      $discount_info .= $this->render_layout_return('product/discount');
+      $this->main->view->setVars('field_name', $field_name);
+      $this->main->view->setVars('field_value', $field_value);
+      $discount_info .= $this->RenderLayoutReturn('product/discount');
     }
 
     if(strlen($data['sSystemDiscount']) > 0) {
       $field_name = 'Shipping discount:';
       $field_value = $data['sSystemDiscount'];
-      $this->main->template->vars('field_name', $field_name);
-      $this->main->template->vars('field_value', $field_value);
-      $discount_info .= $this->render_layout_return('product/discount');
+      $this->main->view->setVars('field_name', $field_name);
+      $this->main->view->setVars('field_value', $field_value);
+      $discount_info .= $this->RenderLayoutReturn('product/discount');
     }
 
     if(isset($data['next_change']) && $data['next_change']) {
       $field_name = 'Sale ends in:';
       $field_value = $data['time_rem'];
-      $this->main->template->vars('field_name', $field_name);
-      $this->main->template->vars('field_value', $field_value);
-      $discount_info .= $this->render_layout_return('product/discount');
+      $this->main->view->setVars('field_name', $field_name);
+      $this->main->view->setVars('field_value', $field_value);
+      $discount_info .= $this->RenderLayoutReturn('product/discount');
     }
 
     return $discount_info;
@@ -265,20 +265,20 @@ class ControllerShop extends ControllerController{
    */
   protected function set_product_meta(&$data){
     if(!empty($data['metadescription'])) {
-      $this->main->template->setMeta('description', $data['metadescription']);
+      $this->main->view->setMeta('description', $data['metadescription']);
     } elseif(!empty($data['sdesc'])) {
-      $this->main->template->setMeta('description', $data['sdesc']);
+      $this->main->view->setMeta('description', $data['sdesc']);
     }
     if(!empty($data['metakeywords'])) {
-      $this->main->template->setMeta('keywords', $data['metakeywords']);
+      $this->main->view->setMeta('keywords', $data['metakeywords']);
     } elseif(!empty($data['pname'])) {
       $meta_keywords = array_filter(explode(' ', strtolower($data['pname'])));
-      $this->main->template->setMeta('keywords', explode(' ', implode(',', $meta_keywords)));
+      $this->main->view->setMeta('keywords', explode(' ', implode(',', $meta_keywords)));
     }
     if(!empty($data['metatitle'])) {
-      $this->main->template->setMeta('title', $data['metatitle']);
+      $this->main->view->setMeta('title', $data['metatitle']);
     } elseif(!empty($data['pname'])) {
-      $this->main->template->setMeta('title', $data['pname']);
+      $this->main->view->setMeta('title', $data['pname']);
     }
   }
 
@@ -475,7 +475,7 @@ class ControllerShop extends ControllerController{
 
     if(!isset($res['pname']) && !is_null(App::$app->post('s')) && (!empty(App::$app->post('s')))) {
       $search = strtolower(htmlspecialchars(trim(App::$app->post('s'))));
-      $this->main->template->vars('search_str', App::$app->post('s'));
+      $this->main->view->setVars('search_str', App::$app->post('s'));
       $res['a.pname'] = App::$app->post('s');
       $filter['a.pname'] = $search;
     }
@@ -503,7 +503,7 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   public function shop(){
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     if(UserHelper::is_logged()) {
       $user = App::$app->session('user');
       $firstname = ucfirst($user['bill_firstname']);
@@ -515,7 +515,7 @@ class ControllerShop extends ControllerController{
       } else {
         $user_name = $user['email'];
       }
-      $this->main->template->vars('user_name', $user_name);
+      $this->main->view->setVars('user_name', $user_name);
     }
     parent::index(false);
   }
@@ -567,24 +567,24 @@ class ControllerShop extends ControllerController{
     $pid = App::$app->get('pid');
 
     $controller_related = new ControllerRelated($this->main);
-    $this->main->template->vars('related_view', $controller_related->view(false, false, $pid));
+    $this->main->view->setVars('related_view', $controller_related->view(false, false, $pid));
     $controller_info = new ControllerInfo($this->main);
     $controller_info->scenario('product');
-    $this->main->template->vars('info_view', $controller_info->view(false, false, true));
+    $this->main->view->setVars('info_view', $controller_info->view(false, false, true));
 
     $data = ModelShop::get_product($pid);
     $this->set_back_url();
     $this->set_product_meta($data);
-    $this->main->template->vars('discount_info', $this->build_discount_info($data));
+    $this->main->view->setVars('discount_info', $this->build_discount_info($data));
     if(!is_null(App::$app->post('s')) && (!empty(App::$app->post('s')))) {
       $search = strtolower(htmlspecialchars(trim(App::$app->post('s'))));
-      $this->main->template->vars('search_str', App::$app->post('s'));
+      $this->main->view->setVars('search_str', App::$app->post('s'));
     }
-    $this->main->template->vars('prev_next', $this->get_data_prev_next($pid));
-    $this->main->template->vars('in_favorites', FavoritesHelper::product_in($pid));
-    $this->main->template->vars('data', $data);
-    $this->main->template->vars('allowed_samples', ModelSamples::allowedSamples($pid));
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('prev_next', $this->get_data_prev_next($pid));
+    $this->main->view->setVars('in_favorites', FavoritesHelper::product_in($pid));
+    $this->main->view->setVars('data', $data);
+    $this->main->view->setVars('allowed_samples', ModelSamples::allowedSamples($pid));
+    $this->main->view->setVars('cart_enable', '_');
     $this->render_view('product/view');
   }
 
@@ -614,7 +614,7 @@ class ControllerShop extends ControllerController{
    */
   public function filter(){
     $main_filter = $this->build_search_filter($filter);
-    if(App::$app->request_is_ajax()) {
+    if(App::$app->RequestIsAjax()) {
       if(!empty($main_filter) && is_array($main_filter)) {
         $main_filter = array_filter($main_filter,
           function($key){
@@ -636,13 +636,13 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   public function specials(){
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     $this->page_title = "Discount Decorator and Designer Fabrics";
     $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates. All items available on a FIRST COME, FIRST SERVED basis only.';
-    $this->main->template->vars('annotation', $annotation);
+    $this->main->view->setVars('annotation', $annotation);
     $list = $this->get_list_by_type('specials', (!is_null(App::$app->keyStorage()->shop_specials_amount) ? App::$app->keyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->main->template->vars('list', $list);
+    if(App::$app->RequestIsAjax()) exit($list);
+    $this->main->view->setVars('list', $list);
     $this->render_view('shop');
   }
 
@@ -651,13 +651,13 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   public function popular(){
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     $this->page_title = 'Popular Textiles';
     $list = $this->get_list_by_type('popular', (!is_null(App::$app->keyStorage()->shop_popular_amount) ?
       App::$app->keyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT)
     );
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->main->template->vars('list', $list);
+    if(App::$app->RequestIsAjax()) exit($list);
+    $this->main->view->setVars('list', $list);
     $this->render_view('shop');
   }
 
@@ -666,13 +666,13 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   public function last(){
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     $this->page_title = "What's New";
     $list = $this->get_list_by_type('last', (!is_null(App::$app->keyStorage()->shop_last_amount) ?
       App::$app->keyStorage()->shop_last_amount : SHOP_LAST_AMOUNT)
     );
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->main->template->vars('list', $list);
+    if(App::$app->RequestIsAjax()) exit($list);
+    $this->main->view->setVars('list', $list);
     $this->render_view('shop');
   }
 
@@ -681,13 +681,13 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   public function best(){
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     $this->page_title = 'Best Textiles';
     $list = $this->get_list_by_type('best', (!is_null(App::$app->keyStorage()->shop_best_amount) ?
       App::$app->keyStorage()->shop_best_amount : SHOP_BEST_AMOUNT)
     );
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->main->template->vars('list', $list);
+    if(App::$app->RequestIsAjax()) exit($list);
+    $this->main->view->setVars('list', $list);
     $this->render_view('shop');
   }
 
@@ -696,13 +696,13 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   public function bestsellers(){
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     $this->page_title = 'Best Sellers';
     $list = $this->get_list_by_type('bestsellers', (!is_null(App::$app->keyStorage()->shop_bestsellers_amount) ?
       App::$app->keyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT)
     );
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->main->template->vars('list', $list);
+    if(App::$app->RequestIsAjax()) exit($list);
+    $this->main->view->setVars('list', $list);
     $this->render_view('shop');
   }
 
@@ -712,13 +712,13 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   public function under(){
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     $this->page_title = 'Under $100';
     $list = $this->get_list_by_type('under', (!is_null(App::$app->keyStorage()->shop_under_amount) ?
       App::$app->keyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT)
     );
-    if(App::$app->request_is_ajax()) exit($list);
-    $this->main->template->vars('list', $list);
+    if(App::$app->RequestIsAjax()) exit($list);
+    $this->main->view->setVars('list', $list);
     $this->render_view('shop');
   }
 
@@ -742,7 +742,7 @@ class ControllerShop extends ControllerController{
 //            if(!empty(trim($row['rpnumber' . $i]))) {
 //              if(!empty($pid = ModelProduct::get_id_by_condition(" LOWER(pnumber) = '" . strtolower($row['rpnumber' . $i]) . "'"))) {
 //                $data = ['pid' => $row['pid'], 'r_pid' => $pid];
-//                ModelRelated::save($data);
+//                ModelRelated::Save($data);
 //              };
 //            }
 //          }
@@ -776,7 +776,7 @@ class ControllerShop extends ControllerController{
 //            $data['metakeywords'] = strtolower(implode(',', array_filter(array_map('trim', explode(' ', $data['metakeywords'])))));
 //          }
 //          try{
-//            ModelProduct::save($data);
+//            ModelProduct::Save($data);
 //          } finally{
 //
 //          }

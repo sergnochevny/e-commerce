@@ -21,12 +21,12 @@ class ModelInfo extends ModelBase{
    * @param null $prms
    * @return array
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = '';
-    if(isset($filter['hidden']['id']) && !is_array($filter['hidden']['priceyard'])) $result[] = "a.id = '" . static::prepare_for_sql($filter['hidden']["id"]) . "'";
-    if(isset($filter['hidden']['visible'])) $result[] = "visible = '" . static::prepare_for_sql($filter['hidden']["visible"]) . "'";
-    if(isset($filter['hidden']["f1"])) $result[] = "f1 = '" . static::prepare_for_sql($filter['hidden']["f1"]) . "'";
-    if(isset($filter['hidden']["f2"])) $result[] = "f2 = '" . static::prepare_for_sql($filter['hidden']["f2"]) . "'";
+    if(isset($filter['hidden']['id']) && !is_array($filter['hidden']['priceyard'])) $result[] = "a.id = '" . static::PrepareForSql($filter['hidden']["id"]) . "'";
+    if(isset($filter['hidden']['visible'])) $result[] = "visible = '" . static::PrepareForSql($filter['hidden']["visible"]) . "'";
+    if(isset($filter['hidden']["f1"])) $result[] = "f1 = '" . static::PrepareForSql($filter['hidden']["f1"]) . "'";
+    if(isset($filter['hidden']["f2"])) $result[] = "f2 = '" . static::PrepareForSql($filter['hidden']["f2"]) . "'";
     if(!empty($result) && (count($result) > 0)) {
       $return = implode(" AND ", $result);
       $return = (!empty($return) ? " WHERE " . $return : '');
@@ -43,10 +43,10 @@ class ModelInfo extends ModelBase{
   public static function get_by_f1($filter){
     $data = null;
     $q = "SELECT * FROM " . static::$table;
-    $q .= self::build_where($filter);
+    $q .= self::BuildWhere($filter);
     $q .= ' LIMIT 1';
-    $result = static::query($q);
-    if($result) $data = static::fetch_assoc($result);
+    $result = static::Query($q);
+    if($result) $data = static::FetchAssoc($result);
 
     return $data;
   }
@@ -60,9 +60,9 @@ class ModelInfo extends ModelBase{
     $data = null;
     if(isset($id)) {
       $q = "SELECT * FROM " . static::$table . " WHERE id = '" . $id . "'";
-      $result = static::query($q);
+      $result = static::Query($q);
       if($result) {
-        $data = static::fetch_assoc($result);
+        $data = static::FetchAssoc($result);
       }
     }
 
@@ -81,10 +81,10 @@ class ModelInfo extends ModelBase{
   public static function get_total_count($filter = null){
     $res = 0;
     $q = "SELECT COUNT(DISTINCT a.id) FROM " . static::$table;
-    $q .= self::build_where($filter);
-    $result = static::query($q);
+    $q .= self::BuildWhere($filter);
+    $result = static::Query($q);
     if($result) {
-      $row = static::fetch_array($result);
+      $row = static::FetchArray($result);
       $res = $row[0];
     }
 
@@ -103,13 +103,13 @@ class ModelInfo extends ModelBase{
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
     $res = null;
     $q = "SELECT * FROM " . static::$table;
-    $q .= self::build_where($filter);
-    $q .= static::build_order($sort);
+    $q .= self::BuildWhere($filter);
+    $q .= static::BuildOrder($sort);
     if($limit != 0) $q .= " LIMIT $start, $limit";
-    $result = static::query($q);
+    $result = static::Query($q);
     if($result) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_assoc($result)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchAssoc($result)) {
         $res[] = $row;
       }
     }
@@ -122,23 +122,23 @@ class ModelInfo extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     try {
       extract($data);
       if(isset($f1)) {
         $q = "UPDATE " . static::$table . " SET" . " title='$title'," . " message='$message'," . " visible='$visible'," . " f2='$f2'" . " WHERE f1 ='$f1'";
-        $res = static::query($q);
+        $res = static::Query($q);
       } else {
         $q = "INSERT INTO " . static::$table . " SET" . " title='$title'," . " message='$message'," . " visible='$visible'," . " f1='$f1'";
         " f2='$f2'";
 
-        $res = static::query($q);
+        $res = static::Query($q);
       }
-      if(!$res) throw new Exception(static::error());
-      static::commit();
+      if(!$res) throw new Exception(static::Error());
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -149,13 +149,13 @@ class ModelInfo extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
-      static::query("DELETE FROM " . static::$table . " WHERE id = '$id'");
-      static::commit();
+      static::Query("DELETE FROM " . static::$table . " WHERE id = '$id'");
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }
