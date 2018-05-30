@@ -20,7 +20,7 @@ final class Auth{
   public static function check_any_authorized($redirect = null){
     if(!AdminHelper::is_logged() && !UserHelper::is_logged()) {
       $prms = isset($redirect) ? ['url' => urlencode(base64_encode(App::$app->router()->UrlTo($redirect)))] : null;
-      App::$app->router()->redirect(App::$app->router()->UrlTo('authorization', $prms));
+      App::$app->router()->Redirect(App::$app->router()->UrlTo('authorization', $prms));
     } else {
       if(AdminHelper::is_logged()) return 'admin';
       if(UserHelper::is_logged()) return 'user';
@@ -46,7 +46,7 @@ final class Auth{
       } else
         $redirect = App::$app->server('HTTP_REFERER');
       $url = App::$app->router()->UrlTo('admin', ['url' => urlencode(base64_encode($redirect))]);
-      App::$app->router()->redirect($url);
+      App::$app->router()->Redirect($url);
     }
   }
 
@@ -67,7 +67,7 @@ final class Auth{
       } else
         $redirect = App::$app->server('HTTP_REFERER');
       $url = App::$app->router()->UrlTo('user', ['url' => urlencode(base64_encode($redirect))]);
-      App::$app->router()->redirect($url);
+      App::$app->router()->Redirect($url);
     }
   }
 

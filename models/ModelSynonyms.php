@@ -90,13 +90,13 @@ class ModelSynonyms extends ModelBase{
     $result = '';
     if(!empty($value)) foreach(array_filter(explode(' ', $value)) as $item) {
       if(!empty($item)) {
-        $result .= (!empty($result) ? " AND " : "") . $field . " LIKE '%" . static::prepare_for_sql($item) . "%'";
+        $result .= (!empty($result) ? " AND " : "") . $field . " LIKE '%" . static::PrepareForSql($item) . "%'";
       }
     }
 
     if(isset($synonyms)) {
       foreach($synonyms as $synonym) {
-        $result = (!empty($result) ? " OR " : "") . $field . " LIKE '%" . static::prepare_for_sql($synonym) . "%'";
+        $result = (!empty($result) ? " OR " : "") . $field . " LIKE '%" . static::PrepareForSql($synonym) . "%'";
       }
     }
     $result = "(" . $result . ")";
@@ -112,10 +112,10 @@ class ModelSynonyms extends ModelBase{
   public static function get_total_count($filter = null){
     $response = 0;
     $query = "SELECT COUNT(DISTINCT id) FROM " . self::$table;
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -133,13 +133,13 @@ class ModelSynonyms extends ModelBase{
   public static function get_list($start, $limit, &$res_count_rows, &$filter = null, &$sort = null){
     $response = [];
     $query = "SELECT * FROM " . self::$table;
-    $query .= static::build_where($filter, $prms);
-    $query .= static::build_order($sort);
+    $query .= static::BuildWhere($filter, $prms);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_assoc($result)) {
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchAssoc($result)) {
         $response[] = $row;
       }
     }
@@ -157,9 +157,9 @@ class ModelSynonyms extends ModelBase{
       'id' => $id, 'keywords' => '', 'synonyms' => ''
     ];
     if(!empty($id)) {
-      $result = static::query("SELECT * FROM " . self::$table . " WHERE id=:id", ['id' => $id]);
+      $result = static::Query("SELECT * FROM " . self::$table . " WHERE id=:id", ['id' => $id]);
       if($result) {
-        $data = static::fetch_assoc($result);
+        $data = static::FetchAssoc($result);
       }
     }
 
@@ -175,8 +175,8 @@ class ModelSynonyms extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     try {
       extract($data);
       /**
@@ -186,17 +186,17 @@ class ModelSynonyms extends ModelBase{
        */
       if(isset($id)) {
         $query = "UPDATE " . static::$table . " SET keywords = :keywords, synonyms = :synonyms WHERE id = :id";
-        $res = static::query($query, ['keywords' => $keywords, 'synonyms' => $synonyms, 'id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['keywords' => $keywords, 'synonyms' => $synonyms, 'id' => $id]);
+        if(!$res) throw new Exception(static::Error());
       } else {
         $query = "INSERT INTO " . static::$table . " (keywords, synonyms) VALUE (:keywords, :synonyms)";
-        $res = static::query($query, ['keywords' => $keywords, 'synonyms' => $synonyms]);
-        if(!$res) throw new Exception(static::error());
-        $id = static::last_id();
+        $res = static::Query($query, ['keywords' => $keywords, 'synonyms' => $synonyms]);
+        if(!$res) throw new Exception(static::Error());
+        $id = static::LastId();
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -207,17 +207,17 @@ class ModelSynonyms extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
       if(isset($id)) {
         $query = "DELETE FROM " . static::$table . " WHERE id = :id";
-        $res = static::query($query, ['id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['id' => $id]);
+        if(!$res) throw new Exception(static::Error());
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }

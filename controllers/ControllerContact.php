@@ -97,8 +97,8 @@ class ControllerContact extends ControllerSimple{
         $error[] = $e->getMessage();
       }
     }
-    if(isset($warning)) $this->main->template->vars('warning', $warning);
-    if(isset($error)) $this->main->template->vars('error', $error);
+    if(isset($warning)) $this->main->view->setVars('warning', $warning);
+    if(isset($error)) $this->main->view->setVars('error', $error);
 
     return parent::form_handling($data);
   }
@@ -130,16 +130,16 @@ class ControllerContact extends ControllerSimple{
     $data = null;
     $url = App::$app->router()->UrlTo($this->controller);
     $this->load($data);
-    if(App::$app->request_is_post() && $this->form_handling($data)) {
+    if(App::$app->RequestIsPost() && $this->form_handling($data)) {
       $captcha = CaptchaHelper::gen_captcha();
-      $this->main->template->vars('captcha', $captcha);
+      $this->main->view->setVars('captcha', $captcha);
       exit($this->form($url, $data));
     }
     if(empty($captcha)) {
       $captcha = CaptchaHelper::gen_captcha();
-      $this->main->template->vars('captcha', $captcha);
+      $this->main->view->setVars('captcha', $captcha);
     }
-    $this->main->template->vars('form', $this->form($url, [], true));
+    $this->main->view->setVars('form', $this->form($url, [], true));
     $this->render_view($this->controller);
   }
 

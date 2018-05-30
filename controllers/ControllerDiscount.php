@@ -42,13 +42,13 @@ class ControllerDiscount extends ControllerFormSimple{
     $title = "Select Products";
     if($product_type == 3) $title = "Select Types";
     if($product_type == 4) $title = "Select Manufacturers";
-    $this->main->template->vars('filters', $filter_products);
-    $this->main->template->vars('filter_type', $data['filter_type']);
-    $this->main->template->vars('destination', 'filter_products');
-    $this->main->template->vars('title', $title);
-    if($return) return $this->render_layout_return('filter/filter', $return && App::$app->request_is_ajax());
+    $this->main->view->setVars('filters', $filter_products);
+    $this->main->view->setVars('filter_type', $data['filter_type']);
+    $this->main->view->setVars('destination', 'filter_products');
+    $this->main->view->setVars('title', $title);
+    if($return) return $this->RenderLayoutReturn('filter/filter', $return && App::$app->RequestIsAjax());
 
-    return $this->render_layout('filter/filter');
+    return $this->RenderLayout('filter/filter');
   }
 
   /**
@@ -59,14 +59,14 @@ class ControllerDiscount extends ControllerFormSimple{
    */
   private function generate_users_filter($data, $return = true){
     $users = $data['users'];
-    $this->main->template->vars('filters', $users);
-    $this->main->template->vars('filter_type', 'users');
-    $this->main->template->vars('filter_data_start', 0);
-    $this->main->template->vars('destination', 'users');
-    $this->main->template->vars('title', 'Select Users');
-    if($return) return $this->render_layout_return('filter/filter', $return && App::$app->request_is_ajax());
+    $this->main->view->setVars('filters', $users);
+    $this->main->view->setVars('filter_type', 'users');
+    $this->main->view->setVars('filter_data_start', 0);
+    $this->main->view->setVars('destination', 'users');
+    $this->main->view->setVars('title', 'Select Users');
+    if($return) return $this->RenderLayoutReturn('filter/filter', $return && App::$app->RequestIsAjax());
 
-    return $this->render_layout('filter/filter');
+    return $this->RenderLayout('filter/filter');
   }
 
   /**
@@ -81,17 +81,17 @@ class ControllerDiscount extends ControllerFormSimple{
   private function select_filter($method, $filters, $start = null, $search = null, $return = false){
     $selected = isset($filters) ? array_values($filters) : [];
     $filter = ModelDiscount::get_filter_data($method, $count, $start, $search);
-    $this->main->template->vars('destination', App::$app->post('type'));
-    $this->main->template->vars('total', $count);
-    $this->main->template->vars('search', $search);
-    $this->main->template->vars('type', $method . '_select');
-    $this->main->template->vars('filter_type', $method);
-    $this->main->template->vars('filter_data_start', isset($start) ? $start : 0);
-    $this->main->template->vars('selected', $selected);
-    $this->main->template->vars('filter', $filter);
-    if($return) return $this->render_layout_return('filter/select', $return && App::$app->request_is_ajax());
+    $this->main->view->setVars('destination', App::$app->post('type'));
+    $this->main->view->setVars('total', $count);
+    $this->main->view->setVars('search', $search);
+    $this->main->view->setVars('type', $method . '_select');
+    $this->main->view->setVars('filter_type', $method);
+    $this->main->view->setVars('filter_data_start', isset($start) ? $start : 0);
+    $this->main->view->setVars('selected', $selected);
+    $this->main->view->setVars('filter', $filter);
+    if($return) return $this->RenderLayoutReturn('filter/select', $return && App::$app->RequestIsAjax());
 
-    return $this->render_layout('filter/select');
+    return $this->RenderLayout('filter/select');
   }
 
   /**
@@ -158,8 +158,8 @@ class ControllerDiscount extends ControllerFormSimple{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
-    parent::build_order($sort, $view, $filter);
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
+    parent::BuildOrder($sort, $view, $filter);
     if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
       if($view && $this->scenario() == 'orders') {
         $sort = ['a.order_date' => 'desc'];
@@ -322,8 +322,8 @@ class ControllerDiscount extends ControllerFormSimple{
     ControllerController::view($partial, $required_access);
     $orders = ob_get_clean();
     $this->set_back_url();
-    $this->main->template->vars('discount', $discount);
-    $this->main->template->vars('orders', $orders);
+    $this->main->view->setVars('discount', $discount);
+    $this->main->view->setVars('orders', $orders);
     $this->main->render_view_admin('view' . DS . $this->controller);
   }
 

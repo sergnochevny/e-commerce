@@ -21,7 +21,7 @@ class ControllerUser extends ControllerController{
    */
   public function user(){
     if(!UserHelper::is_authorized()) {
-      if((App::$app->request_is_post()) && !is_null(App::$app->post('login')) &&
+      if((App::$app->RequestIsPost()) && !is_null(App::$app->post('login')) &&
         !is_null(App::$app->post('pass'))) {
         if(empty(App::$app->post('login')) && empty(App::$app->post('pass'))) exit('Empty Email or Password field');
         $email = App::$app->post('login');
@@ -29,7 +29,7 @@ class ControllerUser extends ControllerController{
         if(!UserHelper::authorize($email, $password)) exit('Wrong Email or Password');
         $url = base64_decode(urldecode(App::$app->post('redirect')));
         $url = (strlen($url) > 0) ? $url : App::$app->router()->UrlTo('shop');
-        $this->redirect($url);
+        $this->Redirect($url);
       } else {
 
         $redirect = !is_null(App::$app->get('url')) ?
@@ -39,15 +39,15 @@ class ControllerUser extends ControllerController{
         if(!is_null(App::$app->get('url'))) $prms['url'] = App::$app->get('url');
         $registration_url = App::$app->router()->UrlTo('authorization/registration', $prms);
         $lostpassword_url = App::$app->router()->UrlTo('authorization/lost_password', $prms);
-        $this->main->template->vars('registration_url', $registration_url);
-        $this->main->template->vars('lostpassword_url', $lostpassword_url);
-        $this->main->template->vars('redirect', $redirect);
+        $this->main->view->setVars('registration_url', $registration_url);
+        $this->main->view->setVars('lostpassword_url', $lostpassword_url);
+        $this->main->view->setVars('redirect', $redirect);
         $this->render_view('user');
       }
     } else {
       $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) :
         App::$app->router()->UrlTo('shop');
-      $this->redirect($url);
+      $this->Redirect($url);
     }
   }
 
@@ -61,7 +61,7 @@ class ControllerUser extends ControllerController{
       App::$app->setSession('user', null);
       App::$app->setCookie('_r', null);
     }
-    $this->redirect(App::$app->router()->UrlTo('shop'));
+    $this->Redirect(App::$app->router()->UrlTo('shop'));
   }
 
   /**
@@ -89,7 +89,7 @@ class ControllerUser extends ControllerController{
    */
   public function registration(){
     if(UserHelper::is_logged()) {
-      $this->redirect(App::$app->router()->UrlTo('/'));
+      $this->Redirect(App::$app->router()->UrlTo('/'));
     } else {
       $action = 'user/registration';
       $title = 'REGISTRATION USER';
@@ -102,7 +102,7 @@ class ControllerUser extends ControllerController{
       $result = (new ControllerUsers($this->main))->user_handling($data, $action, $back_url, $title, true, true, $scenario);
       if(($this->scenario() !== 'short') && ($result === true)) {
         UserHelper::sendWelcomeEmail($data['email']);
-        $this->render_layout('thanx');
+        $this->RenderLayout('thanx');
       } else {
         return $result;
       }

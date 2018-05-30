@@ -42,8 +42,8 @@ class ControllerFavorites extends ControllerSimple{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
-    parent::build_order($sort, $view, $filter);
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
+    parent::BuildOrder($sort, $view, $filter);
     if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
       $sort = [
         'z.dt' => 'desc',
@@ -81,7 +81,7 @@ class ControllerFavorites extends ControllerSimple{
   protected function validate(&$data, &$error){
     if(empty($data['pid'])) {
       $error[] = 'Select Product to append to Favorites!';
-      $this->main->template->vars('error', $error);
+      $this->main->view->setVars('error', $error);
 
       return false;
     }
@@ -117,7 +117,7 @@ class ControllerFavorites extends ControllerSimple{
     $search_data['patterns'] = $patterns;
     $search_data['colors'] = $colors;
     $search_data['manufacturers'] = $manufacturers;
-    if(isset($type)) $this->main->template->vars('action', App::$app->router()->UrlTo($this->controller));
+    if(isset($type)) $this->main->view->setVars('action', App::$app->router()->UrlTo($this->controller));
   }
 
   /**
@@ -136,14 +136,14 @@ class ControllerFavorites extends ControllerSimple{
    * @throws \Exception
    */
   protected function edit_add_handling($url, $title){
-    $this->main->template->vars('form_title', $title);
+    $this->main->view->setVars('form_title', $title);
     $data = null;
     $this->load($data);
-    if($this->form_handling($data) && App::$app->request_is_post() && App::$app->request_is_ajax()) {
-      $this->save($data);
+    if($this->form_handling($data) && App::$app->RequestIsPost() && App::$app->RequestIsAjax()) {
+      $this->Save($data);
       exit($this->form($url, $data));
     } else {
-      $this->redirect(App::$app->router()->UrlTo('shop'));
+      $this->Redirect(App::$app->router()->UrlTo('shop'));
     }
   }
 
@@ -152,7 +152,7 @@ class ControllerFavorites extends ControllerSimple{
    * @throws \Exception
    */
   protected function before_form_layout(&$data = null){
-    $this->main->template->vars('back_url', App::$app->router()->UrlTo('shop'));
+    $this->main->view->setVars('back_url', App::$app->router()->UrlTo('shop'));
   }
 
   /**
@@ -161,7 +161,7 @@ class ControllerFavorites extends ControllerSimple{
    */
   public function favorites(){
     Auth::check_user_authorized(true);
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     $this->index(false);
   }
 

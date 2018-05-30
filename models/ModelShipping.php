@@ -40,8 +40,8 @@ class ModelShipping extends ModelBase{
       #grab the default cids or the weight_ids from the products
       $query = "SELECT a.weight_id, b.cid " . " FROM shop_products a" . " LEFT join shop_product_categories b on a.pid = b.pid" . " WHERE a.pid IN (%s);";
       $sSQL = sprintf($query, $sPds);
-      $result = static::query($sSQL) or die(static::error());
-      while($rs = static::fetch_assoc($result)) {
+      $result = static::Query($sSQL) or die(static::Error());
+      while($rs = static::FetchAssoc($result)) {
         $iTmpWid = 0;
         if((int)$rs['weight_id'] > 0) {
           $iTmpWid = (int)$rs['weight_id'];
@@ -73,7 +73,7 @@ class ModelShipping extends ModelBase{
           break;
         }
       }
-      static::free_result($result);
+      static::FreeResult($result);
       #ship = 1 is express shipping
       if($ship == "1") {
         switch($iWid) {

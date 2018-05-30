@@ -32,7 +32,7 @@ class ControllerMain extends ControllerBase{
   public function __construct($main = null){
     if(isset($main) && (strpos(get_class($main),'Controller') !== false)) {
       $this->main = $main;
-      $this->template = $main->template;
+      $this->view = $main->view;
     } else {
       $this->layouts = App::$app->config('layouts');
       parent::__construct();
@@ -47,7 +47,7 @@ class ControllerMain extends ControllerBase{
     $prms = App::$app->get();
     $url = array_shift($prms);
     $url = App::$app->router()->UrlTo($url, $prms, null, ['url'], true);
-    $this->template->vars('canonical_url', $url);
+    $this->view->setVars('canonical_url', $url);
   }
 
   /**
@@ -58,16 +58,16 @@ class ControllerMain extends ControllerBase{
    */
   public function  render_view_admin($page, $controller = null, $data = null){
     if(isset($data)) {
-      $this->template->vars('data', $data);
+      $this->view->setVars('data', $data);
     }
 
-    $this->template->vars('menu', $this->template->render_layout_return('admin', false,'menu'));
+    $this->view->setVars('menu', $this->view->RenderLayoutReturn('admin', false,'menu'));
     if(AdminHelper::is_logged()) {
-      $this->template->vars('my_account_admin_menu', $this->template->render_layout_return('admin_account', false,'menu'));
+      $this->view->setVars('my_account_admin_menu', $this->view->RenderLayoutReturn('admin_account', false,'menu'));
     }
 
     $this->meta_page();
-    $this->template->render($page, $controller);
+    $this->view->Render($page, $controller);
   }
 
   /**
@@ -75,9 +75,9 @@ class ControllerMain extends ControllerBase{
    * @throws \Exception
    */
   public function meta_page(){
-    $meta = $this->template->getMeta();
+    $meta = $this->view->getMeta();
     if(empty($meta) || !is_array($meta)) $meta = ModelTools::meta_page();
-    $this->template->vars('meta', $meta);
+    $this->view->setVars('meta', $meta);
   }
 
   /**
@@ -88,11 +88,11 @@ class ControllerMain extends ControllerBase{
    * @return mixed
    * @throws \Exception
    */
-  public function render_layout($page, $renderJS = true, $controller = null, $data = null){
+  public function RenderLayout($page, $renderJS = true, $controller = null, $data = null){
     if(isset($data)) {
-      $this->template->vars('data', $data);
+      $this->view->setVars('data', $data);
     }
-    return $this->template->render_layout($page, $renderJS, $controller);
+    return $this->view->RenderLayout($page, $renderJS, $controller);
   }
 
   /**
@@ -103,12 +103,12 @@ class ControllerMain extends ControllerBase{
    * @return string
    * @throws \Exception
    */
-  public function render_layout_return($page, $renderJS = false, $controller = null, $data = null){
+  public function RenderLayoutReturn($page, $renderJS = false, $controller = null, $data = null){
     if(isset($data)) {
-      $this->template->vars('data', $data);
+      $this->view->setVars('data', $data);
     }
 
-    return $this->template->render_layout_return($page, $renderJS, $controller);
+    return $this->view->RenderLayoutReturn($page, $renderJS, $controller);
   }
 
   /**
@@ -127,8 +127,8 @@ class ControllerMain extends ControllerBase{
         $back_url = App::$app->router()->UrlTo('/');
         $message = 'This link is no longer relevant. You can not change the password . Repeat the password recovery procedure.';
       }
-      $this->template->vars('message', $message);
-      $this->template->vars('back_url', $back_url);
+      $this->view->setVars('message', $message);
+      $this->view->setVars('back_url', $back_url);
       if(AdminHelper::is_logged()) $this-> render_view_admin('message');
       else $this->render_view('message');
     }
@@ -144,17 +144,17 @@ class ControllerMain extends ControllerBase{
   public function render_view($page, $controller = null, $data = null){
     $this->build_canonical_url();
     if(isset($data)) {
-      $this->template->vars('data', $data);
+      $this->view->setVars('data', $data);
     }
     $cart = new ControllerCart(isset($this->main) ? $this->main : $this);
     $cart->get();
 
-    $this->template->vars('my_account_user_menu', $this->template->render_layout_return('user_account', false,'menu'));
+    $this->view->setVars('my_account_user_menu', $this->view->RenderLayoutReturn('user_account', false,'menu'));
 
     $menu = new ControllerMenu(isset($this->main) ? $this->main : $this);
     $menu->show_menu();
     $this->meta_page();
-    $this->template->render($page, $controller);
+    $this->view->Render($page, $controller);
   }
 
   /**
@@ -165,8 +165,8 @@ class ControllerMain extends ControllerBase{
     header("HTTP/1.0 404 Not Found");
     header("HTTP/1.1 404 Not Found");
     header("Status: 404 Not Found");
-    $this->template->controller->controller = 'main';
-    $this->template->vars('message', $msg);
+    $this->view->controller->controller = 'main';
+    $this->view->setVars('message', $msg);
     if(AdminHelper::is_logged()) $this-> render_view_admin('404/error');
     else $this->render_view('404/error');
   }

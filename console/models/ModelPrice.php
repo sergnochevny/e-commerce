@@ -97,9 +97,9 @@ class ModelPrice extends ModelBase{
     $sSQL .= sprintf(" AND (s.enabled=1) AND (s.date_start<=%u) AND (s.date_end>=%u)", $iNow, $iNow);
     $sSQL .= " ORDER BY allow_multiple;";
 
-    $result = static::query($sSQL) or die(static::error());
-    if(static::num_rows($result) > 0) {
-      while($rs = static::fetch_assoc($result)) {
+    $result = static::Query($sSQL) or die(static::Error());
+    if(static::getNumRows($result) > 0) {
+      while($rs = static::FetchAssoc($result)) {
         $bDoDiscount = self::checkDiscountApplies($rs, $rPrice);
         if($bDoDiscount) {
           $tmpDiscount = self::discountIt($rPrice, $rShip, $rs['discount_amount'], $rs['discount_amount_type'], $rs['discount_type']);
@@ -122,7 +122,7 @@ class ModelPrice extends ModelBase{
           }
         }
       }
-      static::free_result($result);
+      static::FreeResult($result);
     }
     #check if we need to return a string here
     $rDiscount = $rDiscount + $rMultDiscount;
@@ -195,9 +195,9 @@ class ModelPrice extends ModelBase{
       " (promotion_type=1)";
 
     $sql = sprintf($q, $id, $id, $id, $iNow, $iNow);
-    $result = static::query($sql) or die(static::error());
-    if(static::num_rows($result) > 0) {
-      while($rs = static::fetch_assoc($result)) {
+    $result = static::Query($sql) or die(static::Error());
+    if(static::getNumRows($result) > 0) {
+      while($rs = static::FetchAssoc($result)) {
         $amt = $rs['discount_amount'];
         if($rs['discount_amount_type'] == 1) {
           $tempPrice = $tempPrice - $amt;
@@ -211,7 +211,7 @@ class ModelPrice extends ModelBase{
           $discountIds[] = $rs['sid'];
         }
       }
-      static::free_result($result);
+      static::FreeResult($result);
     }
 
     return $bol;
@@ -308,9 +308,9 @@ class ModelPrice extends ModelBase{
     #get the list of all the products that this special applies to, narrow down to only those that may be in the cart
     $sql = sprintf("SELECT sp.pid, p.priceyard FROM shop_specials_products sp INNER JOIN shop_products p ON sp.pid = p.pid WHERE sp.sid=%u AND sp.pid IN (%s);", $iSid, $sPds);
 
-    $result = static::query($sql) or die(static::error());
+    $result = static::Query($sql) or die(static::Error());
 
-    while($rs = static::fetch_array($result)) {
+    while($rs = static::FetchArray($result)) {
 
       $iPid = (int)$rs[0];
       $iPrice = (real)$rs[1];
@@ -329,7 +329,7 @@ class ModelPrice extends ModelBase{
       $rTtl += $iPrice * $qty;
     }
 
-    static::free_result($result);
+    static::FreeResult($result);
 
     return $rTtl;
   }

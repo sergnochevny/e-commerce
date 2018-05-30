@@ -132,8 +132,8 @@ class CaptchaHelper{
     if(!is_null(App::$app->session('captcha')) && !empty(App::$app->session('captcha'))) {
       $captcha_relevant = (!is_null(App::$app->keyStorage()->system_captcha_time) ? App::$app->keyStorage()->system_captcha_time : CAPTCHA_RELEVANT);
       if($captcha_relevant > (time() - App::$app->session('captcha_time'))) {
-        $salt = ModelAuth::generatestr();
-        $hash = ModelAuth::hash_(strtolower($captcha), $salt, 12);
+        $salt = ModelAuth::GenerateStr();
+        $hash = ModelAuth::getHash(strtolower($captcha), $salt, 12);
         if($hash == ModelAuth::check(App::$app->session('captcha'), $hash)) {
           $res = true;
         } else {

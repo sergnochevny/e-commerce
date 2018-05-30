@@ -22,7 +22,7 @@ class ModelRecommends extends ModelBase{
    * @return array|string
    * @throws \Exception
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
     if(isset($filter["a.pname"])) {
       list($result[], $prms) = ModelSynonyms::build_synonyms_like_p("a.pname", $filter["a.pname"]);
@@ -71,7 +71,7 @@ class ModelRecommends extends ModelBase{
       if(is_array($filter["d.id"])) {
         $result[] = "d.id in (" . implode(',', $filter["d.id"]) . ")";
       } else {
-        $result[] = "d.id = '" . static::prepare_for_sql($filter["d.id"]) . "'";
+        $result[] = "d.id = '" . static::PrepareForSql($filter["d.id"]) . "'";
       }
     }
     if(isset($filter["e.id"])) {
@@ -149,10 +149,10 @@ class ModelRecommends extends ModelBase{
       $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
     if(!empty($query)) {
-      $query .= static::build_where($filter, $prms);
-      if($result = static::query($query, $prms)) {
-        $response = static::fetch_value($result);
-        static::free_result($result);
+      $query .= static::BuildWhere($filter, $prms);
+      if($result = static::Query($query, $prms)) {
+        $response = static::FetchValue($result);
+        static::FreeResult($result);
       }
     }
 
@@ -194,15 +194,15 @@ class ModelRecommends extends ModelBase{
       $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
     if(!empty($query)) {
-      $query .= static::build_where($filter, $prms);
-      $query .= static::build_order($sort);
+      $query .= static::BuildWhere($filter, $prms);
+      $query .= static::BuildOrder($sort);
       if($limit != 0) $query .= " LIMIT $start, $limit";
-      if($result = static::query($query, $prms)) {
-        $res_count_rows = static::num_rows($result);
+      if($result = static::Query($query, $prms)) {
+        $res_count_rows = static::getNumRows($result);
         $sys_hide_price = ModelPrice::sysHideAllRegularPrices();
         $cart_items = isset(App::$app->session('cart')['items']) ? App::$app->session('cart')['items'] : [];
         $cart = array_keys($cart_items);
-        while($row = static::fetch_array($result)) {
+        while($row = static::FetchArray($result)) {
           $response[] = ModelShop::prepare_layout_product($row, $cart, $sys_hide_price);
         }
       }

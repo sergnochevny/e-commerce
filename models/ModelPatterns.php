@@ -23,7 +23,7 @@ class ModelPatterns extends ModelBase{
    * @return array|string
    * @throws \Exception
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $prms = [];
@@ -57,7 +57,7 @@ class ModelPatterns extends ModelBase{
         $return = (!empty($return) ? " WHERE " . $return : '');
       }
     } else {
-      $return = parent::build_where($filter, $prms);
+      $return = parent::BuildWhere($filter, $prms);
     }
 
     return $return;
@@ -74,8 +74,8 @@ class ModelPatterns extends ModelBase{
     ];
     if(isset($id)) {
       $query = "SELECT * FROM " . static::$table . " WHERE id=:id";
-      $result = static::query($query, ['id' => $id]);
-      if($result) $response = static::fetch_assoc($result);
+      $result = static::Query($query, ['id' => $id]);
+      if($result) $response = static::FetchAssoc($result);
     }
 
     if($response === false) {
@@ -97,10 +97,10 @@ class ModelPatterns extends ModelBase{
     $query .= " JOIN shop_product_patterns b ON b.patternId = a.id";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ?
       " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -123,14 +123,14 @@ class ModelPatterns extends ModelBase{
     $query .= " JOIN shop_product_patterns b ON b.patternId = a.id";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ?
       " INNER JOIN shop_products c ON c.pid = b.prodId" : '';
-    $query .= static::build_where($filter, $prms);
+    $query .= static::BuildWhere($filter, $prms);
     $query .= " GROUP BY a.id, a.pattern";
-    $query .= static::build_order($sort);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_array($result)) {
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchArray($result)) {
         $response[] = $row;
       }
     }
@@ -143,8 +143,8 @@ class ModelPatterns extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     try {
       extract($data);
       /**
@@ -154,17 +154,17 @@ class ModelPatterns extends ModelBase{
        */
       if(isset($id)) {
         $query = "UPDATE " . static::$table . " SET pattern = :pattern WHERE id = :id";
-        $res = static::query($query, ['pattern' => $pattern, 'id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['pattern' => $pattern, 'id' => $id]);
+        if(!$res) throw new Exception(static::Error());
       } else {
         $query = "INSERT INTO " . static::$table . " (pattern) VALUE (:pattern)";
-        $res = static::query($query, ['pattern' => $pattern]);
-        if(!$res) throw new Exception(static::error());
-        $id = static::last_id();
+        $res = static::Query($query, ['pattern' => $pattern]);
+        if(!$res) throw new Exception(static::Error());
+        $id = static::LastId();
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -175,25 +175,25 @@ class ModelPatterns extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
       if(isset($id)) {
         $query = "SELECT count(*) FROM shop_product_patterns WHERE patternId = :id";
-        $res = static::query($query, ['id' => $id]);
+        $res = static::Query($query, ['id' => $id]);
         if($res) {
-          $amount = static::fetch_array($res)[0];
+          $amount = static::FetchArray($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
         $query = "DELETE FROM  " . static::$table . " WHERE id = :id";
-        $res = static::query($query, ['id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['id' => $id]);
+        if(!$res) throw new Exception(static::Error());
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }

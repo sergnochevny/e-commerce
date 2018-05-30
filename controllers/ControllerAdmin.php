@@ -43,8 +43,8 @@ class ControllerAdmin extends ControllerFormSimple{
         $error[] = 'User with this login already exists!';
       } else {
         if(!empty($data['create_password'])) {
-          $salt = ModelAuth::generatestr();
-          $password = ModelAuth::hash_($data['create_password'], $salt, 12);
+          $salt = ModelAuth::GenerateStr();
+          $password = ModelAuth::getHash($data['create_password'], $salt, 12);
           $check = ModelAuth::check($data['confirm_password'], $password);
         } else $password = null;
 
@@ -118,7 +118,7 @@ class ControllerAdmin extends ControllerFormSimple{
    */
   public function admin(){
     if(!AdminHelper::is_authorized()) {
-      if((App::$app->request_is_post()) &&
+      if((App::$app->RequestIsPost()) &&
         !is_null(App::$app->post('login')) &&
         !is_null(App::$app->post('pass'))) {
         if(empty(App::$app->post('login')) && empty(App::$app->post('pass'))) exit('Empty Login or Password field');
@@ -127,11 +127,11 @@ class ControllerAdmin extends ControllerFormSimple{
         if(!AdminHelper::authorize($login, $password)) exit('Wrong Login or Password');
         $url = base64_decode(urldecode(App::$app->post('redirect')));
         $url = (strlen($url) > 0) ? $url : App::$app->router()->UrlTo('product');
-        $this->redirect($url);
+        $this->Redirect($url);
       } else {
         $redirect = !is_null(App::$app->get('url')) ? App::$app->get('url') :
           urlencode(base64_encode(App::$app->router()->UrlTo('product')));
-        $this->main->template->vars('redirect', $redirect);
+        $this->main->view->setVars('redirect', $redirect);
         $menu = new ControllerMenu($this);
         $menu->show_menu();
         $this->render_view('admin');
@@ -139,7 +139,7 @@ class ControllerAdmin extends ControllerFormSimple{
     } else {
       $url = !is_null(App::$app->get('url')) ? base64_decode(urldecode(App::$app->get('url'))) :
         App::$app->router()->UrlTo('product');
-      $this->redirect($url);
+      $this->Redirect($url);
     }
   }
 
@@ -151,7 +151,7 @@ class ControllerAdmin extends ControllerFormSimple{
     App::$app->setSession('_a', null);
     App::$app->setSession('user', null);
     App::$app->setCookie('_ar', null);
-    $this->redirect(App::$app->router()->UrlTo('/'));
+    $this->Redirect(App::$app->router()->UrlTo('/'));
   }
 
 }

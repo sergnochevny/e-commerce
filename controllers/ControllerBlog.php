@@ -47,17 +47,17 @@ class ControllerBlog extends ControllerFormSimple{
   private function select_filter($filters, $start = null, $search = null, $return = false){
     $selected = isset($filters) ? $filters : [];
     $filter = ModelBlog::get_filter_data($count, $start, $search);
-    $this->main->template->vars('destination', 'categories');
-    $this->main->template->vars('total', $count);
-    $this->main->template->vars('search', $search);
-    $this->main->template->vars('type', 'categories_select');
-    $this->main->template->vars('filter_type', 'categories');
-    $this->main->template->vars('filter_data_start', isset($start) ? $start : 0);
-    $this->main->template->vars('selected', $selected);
-    $this->main->template->vars('filter', $filter);
-    if($return) return $this->render_layout_return('filter/select', $return && App::$app->request_is_ajax());
+    $this->main->view->setVars('destination', 'categories');
+    $this->main->view->setVars('total', $count);
+    $this->main->view->setVars('search', $search);
+    $this->main->view->setVars('type', 'categories_select');
+    $this->main->view->setVars('filter_type', 'categories');
+    $this->main->view->setVars('filter_data_start', isset($start) ? $start : 0);
+    $this->main->view->setVars('selected', $selected);
+    $this->main->view->setVars('filter', $filter);
+    if($return) return $this->RenderLayoutReturn('filter/select', $return && App::$app->RequestIsAjax());
 
-    return $this->render_layout('filter/select');
+    return $this->RenderLayout('filter/select');
   }
 
   /**
@@ -89,10 +89,10 @@ class ControllerBlog extends ControllerFormSimple{
         $data['file_img'] = '';
       }
     }
-    $this->main->template->vars('data', $data);
-    if($return) return $this->render_layout_return('image', $return && App::$app->request_is_ajax());
+    $this->main->view->setVars('data', $data);
+    if($return) return $this->RenderLayoutReturn('image', $return && App::$app->RequestIsAjax());
 
-    return $this->render_layout('image');
+    return $this->RenderLayout('image');
   }
 
   /**
@@ -161,13 +161,13 @@ class ControllerBlog extends ControllerFormSimple{
    * @throws \Exception
    */
   private function generate_filter($data, $return = false){
-    $this->main->template->vars('filters', $data['categories']);
-    $this->main->template->vars('filter_type', 'categories');
-    $this->main->template->vars('destination', 'categories');
-    $this->main->template->vars('title', 'Select Types');
-    if($return) return $this->render_layout_return('filter/filter', $return && App::$app->request_is_ajax());
+    $this->main->view->setVars('filters', $data['categories']);
+    $this->main->view->setVars('filter_type', 'categories');
+    $this->main->view->setVars('destination', 'categories');
+    $this->main->view->setVars('title', 'Select Types');
+    if($return) return $this->RenderLayoutReturn('filter/filter', $return && App::$app->RequestIsAjax());
 
-    return $this->render_layout('filter/filter');
+    return $this->RenderLayout('filter/filter');
   }
 
   /**
@@ -197,8 +197,8 @@ class ControllerBlog extends ControllerFormSimple{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
-    parent::build_order($sort, $view, $filter);
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
+    parent::BuildOrder($sort, $view, $filter);
     if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
       $sort = ['post_date' => 'desc'];
     }
@@ -233,7 +233,7 @@ class ControllerBlog extends ControllerFormSimple{
    * @throws \Exception
    */
   protected function form_handling(&$data = null){
-    if(App::$app->request_is_post()) {
+    if(App::$app->RequestIsPost()) {
       if(!is_null(App::$app->post('method'))) {
         if(explode('.', App::$app->post('method'))[0] == 'image') exit($this->image_handling($data));
         exit($this->filters_handling($data));
@@ -268,7 +268,7 @@ class ControllerBlog extends ControllerFormSimple{
     $data['post_date'] = date('F jS, Y', strtotime($data['post_date']));
     ModelBlog::get_filter_selected($data);
     $data['categories'] = $this->generate_filter($data, true);
-    $this->main->template->vars('image', $this->image($data, true));
+    $this->main->view->setVars('image', $this->image($data, true));
   }
 
   /**
@@ -372,12 +372,12 @@ class ControllerBlog extends ControllerFormSimple{
     if(!empty(App::$app->get('cat'))) {
       $category_name = ModelBlogCategory::get_by_id(App::$app->get('cat'))['name'];
       if(!empty($category_name)) {
-        $this->template->setMeta('description', $category_name);
-        $this->template->setMeta('keywords', strtolower($category_name) . ',' . implode(',', array_filter(explode(' ', strtolower($category_name)))));
-        $this->template->setMeta('title', $category_name);
+        $this->view->setMeta('description', $category_name);
+        $this->view->setMeta('keywords', strtolower($category_name) . ',' . implode(',', array_filter(explode(' ', strtolower($category_name)))));
+        $this->view->setMeta('title', $category_name);
       }
     }
-    $this->main->template->vars('category_name', isset($category_name) ? $category_name : null);
+    $this->main->view->setVars('category_name', isset($category_name) ? $category_name : null);
   }
 
   /**
@@ -400,7 +400,7 @@ class ControllerBlog extends ControllerFormSimple{
   protected function after_get_data_item_view(&$data){
     $prms = null;
     if((!empty(App::$app->get('cat')))) $prms['cat'] = App::$app->get('cat');
-    $this->main->template->vars('back_url', App::$app->router()->UrlTo('blog/view', $prms));
+    $this->main->view->setVars('back_url', App::$app->router()->UrlTo('blog/view', $prms));
     if(isset($data)) {
       $data['post_content'] = stripslashes($data['post_content']);
       $data['post_title'] = stripslashes($data['post_title']);
@@ -409,11 +409,11 @@ class ControllerBlog extends ControllerFormSimple{
       $data['post_content'] = preg_replace('#(style="[^>]*")#U', '', $data['post_content']);
       $img = ModelBlog::get_img($data['id']);
       $data['img'] = App::$app->router()->UrlTo($this->path_img($img));
-      if(!empty($data['post_title'])) $this->template->setMeta('title', $data['post_title']);
+      if(!empty($data['post_title'])) $this->view->setMeta('title', $data['post_title']);
       if(isset($data[$this->id_field])) {
         $desckeys = ModelBlog::get_desc_keys($data[$this->id_field]);
-        if(!empty($desckeys['description'])) $this->template->setMeta('description', $desckeys['description']);
-        if(!empty($desckeys['keywords'])) $this->template->setMeta('keywords', $desckeys['keywords']);
+        if(!empty($desckeys['description'])) $this->view->setMeta('description', $desckeys['description']);
+        if(!empty($desckeys['keywords'])) $this->view->setMeta('keywords', $desckeys['keywords']);
       }
     }
   }

@@ -154,13 +154,13 @@ class ModelPrice extends ModelBase{
     $sSQL .= sprintf(" AND (s.enabled=1) AND (s.date_start<=%u) AND (s.date_end>=%u)", $iNow, $iNow);
     $sSQL .= " ORDER BY allow_multiple;";
 
-    $result = static::query($sSQL) or die(static::error());
-    if(static::num_rows($result) > 0) {
+    $result = static::Query($sSQL) or die(static::Error());
+    if(static::getNumRows($result) > 0) {
       $shipFullSumDiscount1 = false;
       $shipFullSumDiscount2 = false;
       $shipFullSumDiscount3 = false;
       $isDiscountApplay = false;
-      while($rs = static::fetch_assoc($result)) {
+      while($rs = static::FetchAssoc($result)) {
 
         $bDoDiscount = self::checkDiscountApplies($rs, $uid, $rPrice);
 
@@ -275,7 +275,7 @@ class ModelPrice extends ModelBase{
         }
       }
     }
-    static::free_result($result);
+    static::FreeResult($result);
     #check if we need to return a string here
     if($bReturnString) {
       $sPriceDiscount = $sSingle;
@@ -382,11 +382,11 @@ class ModelPrice extends ModelBase{
   public static function isNextPurchase($id, $iStart){
     $bNext = false;
     $sSQL = sprintf("SELECT oid FROM shop_orders WHERE aid=%u AND order_date > %u ORDER BY order_date DESC;", $id, $iStart);
-    $result = static::query($sSQL) or die(static::error());
-    if(static::num_rows($result) == 0) {
+    $result = static::Query($sSQL) or die(static::Error());
+    if(static::getNumRows($result) == 0) {
       $bNext = true;
     }
-    static::free_result($result);
+    static::FreeResult($result);
 
     return $bNext;
   }
@@ -422,11 +422,11 @@ class ModelPrice extends ModelBase{
     $q = "SELECT DISTINCT" . " s.discount_type, s.discount_amount, s.discount_amount_type," . " IF(s.product_type = 2, p.priceyard, IF(s.product_type = 3,cp.priceyard, mp.priceyard)) as price," . " s.sid" . " FROM shop_specials s" . " LEFT JOIN shop_specials_users su ON su.sid=s.sid" . " LEFT JOIN shop_specials_products sp ON s.sid = sp.sid AND (s.product_type = sp.stype)" . " LEFT JOIN shop_products p ON sp.pid = p.pid AND (s.product_type = 2)" . " LEFT JOIN shop_product_categories c ON sp.pid = c.cid AND (s.product_type = 3)" . " LEFT JOIN shop_products cp ON c.pid = cp.pid" . " LEFT JOIN shop_products mp ON sp.pid = mp.manufacturerId  AND (s.product_type = 4)" . " WHERE" . " (s.user_type=1) AND" . " (((s.product_type = 2) AND (sp.pid IN (%u))) OR ((s.product_type = 3) AND (cp.pid IN (%u))) OR ((s.product_type = 4) AND (mp.pid IN (%u)))) AND" . " ((s.coupon_code='') OR (s.coupon_code IS NULL)) AND" . " (s.enabled=1) AND" . " (s.date_start<=%u) AND" . " (s.date_end>=%u) AND" . " (required_type = 0) AND" . " (promotion_type=1)";
 
     $sql = sprintf($q, $id, $id, $id, $iNow, $iNow);
-    $result = static::query($sql) or die(static::error());
-    if(static::num_rows($result) > 0) {
+    $result = static::Query($sql) or die(static::Error());
+    if(static::getNumRows($result) > 0) {
       $discount = '';
-//        if($rs = static::fetch_assoc($result)) {
-      while($rs = static::fetch_assoc($result)) {
+//        if($rs = static::FetchAssoc($result)) {
+      while($rs = static::FetchAssoc($result)) {
         $amt = $rs['discount_amount'];
         if($rs['discount_amount_type'] == 1) {
           $type = '$';
@@ -447,7 +447,7 @@ class ModelPrice extends ModelBase{
         }
       }
     }
-    static::free_result($result);
+    static::FreeResult($result);
 
     return $bol;
   }
@@ -512,13 +512,13 @@ class ModelPrice extends ModelBase{
 
       $iNow = time();
       $sSQL .= sprintf("SELECT * FROM shop_specials WHERE enabled=1 AND date_start<=%u AND date_end>=%u AND coupon_code='%s';",$iNow,$iNow,ilter($bCodeValid));
-      $result = static::query( $sSQL) or die(static::error());
-      if(static::num_rows($result)>0){
+      $result = static::Query( $sSQL) or die(static::Error());
+      if(static::getNumRows($result)>0){
           $bRet = true;
       } else {
           $bRet = false;
       }
-      static::free_result($result);
+      static::FreeResult($result);
 
       return $bRet;
 
@@ -607,9 +607,9 @@ class ModelPrice extends ModelBase{
     #get the list of all the products that this special applies to, narrow down to only those that may be in the cart
     $sql = sprintf("SELECT sp.pid, p.priceyard FROM shop_specials_products sp INNER JOIN shop_products p ON sp.pid = p.pid WHERE sp.sid=%u AND sp.pid IN (%s);", $iSid, $sPds);
 
-    $result = static::query($sql) or die(static::error());
+    $result = static::Query($sql) or die(static::Error());
 
-    while($rs = static::fetch_array($result)) {
+    while($rs = static::FetchArray($result)) {
 
       $iPid = (int)$rs[0];
       $iPrice = (real)$rs[1];
@@ -628,7 +628,7 @@ class ModelPrice extends ModelBase{
       $rTtl += $iPrice * $qty;
     }
 
-    static::free_result($result);
+    static::FreeResult($result);
 
     return $rTtl;
   }
@@ -678,11 +678,11 @@ class ModelPrice extends ModelBase{
       $sSQL .= sprintf(" AND order_date<=%u AND order_date>=%u;", $iEndMonth, $iBeginMonth);
     }
 
-    $result = static::query($sSQL) or die(static::error());
-    if(static::num_rows($result)) {
-      $rRet = (real)static::fetch_value($result);
+    $result = static::Query($sSQL) or die(static::Error());
+    if(static::getNumRows($result)) {
+      $rRet = (real)static::FetchValue($result);
     }
-    static::free_result($result);
+    static::FreeResult($result);
 
     return $rRet;
   }
@@ -700,8 +700,8 @@ class ModelPrice extends ModelBase{
     }
 
     if(strlen($query) > 0) {
-      $result = static::query($query) or die(static::error());
-      $rs = static::fetch_assoc($result);
+      $result = static::Query($query) or die(static::Error());
+      $rs = static::FetchAssoc($result);
 
       return $rs['next_date'];
     } else {
@@ -750,17 +750,17 @@ class ModelPrice extends ModelBase{
   public static function user_TaxRate($aid){
 
     $sql = 'SELECT bill_province FROM accounts WHERE aid = :aid';
-    $result = static::query($sql, ['aid' => $aid]);
+    $result = static::Query($sql, ['aid' => $aid]);
 
     if($result) {
-      if($userProvince = static::fetch_value($result)) {
-        static::free_result($result);
+      if($userProvince = static::FetchValue($result)) {
+        static::FreeResult($result);
         if(!(empty($userProvince))) {
           $sql = 'SELECT tax_rate FROM shop_taxrates WHERE province_state_id = :userProvince';
-          $result = static::query($sql, ['userProvince' => $userProvince]);
+          $result = static::Query($sql, ['userProvince' => $userProvince]);
           if($result) {
-            if($tax = static::fetch_value($result)) {
-              static::free_result($result);
+            if($tax = static::FetchValue($result)) {
+              static::FreeResult($result);
               if(!empty($tax)) return $tax;
             }
           }

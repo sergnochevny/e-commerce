@@ -25,7 +25,7 @@ class ModelShop extends ModelBase{
    * @return string
    * @throws \Exception
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
     $prms = [];
 
@@ -410,7 +410,7 @@ class ModelShop extends ModelBase{
     $q .= ($inventory <= 0) ? ", pvisible = 0" : "";
     $q .= " where pid=" . $pid;
 
-    return static::query($q);
+    return static::Query($q);
   }
 
   /**
@@ -452,7 +452,7 @@ class ModelShop extends ModelBase{
    * @throws \Exception
    */
   public static function inc_popular($pid){
-    static::query("UPDATE shop_products SET popular = popular+1 WHERE pid='$pid'");
+    static::Query("UPDATE shop_products SET popular = popular+1 WHERE pid='$pid'");
   }
 
   /**
@@ -513,15 +513,15 @@ class ModelShop extends ModelBase{
         $q .= " limit " . $start . "," . $limit;
         break;
     }
-    if($result = static::query($q)) {
-      $res_count_rows = static::num_rows($result);
+    if($result = static::Query($q)) {
+      $res_count_rows = static::getNumRows($result);
       $sys_hide_price = ModelPrice::sysHideAllRegularPrices();
       $cart_items = isset(App::$app->session('cart')['items']) ? App::$app->session('cart')['items'] : [];
       $cart = array_keys($cart_items);
-      while($row = static::fetch_array($result)) {
+      while($row = static::FetchArray($result)) {
         $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price, $image_suffix);
       }
-      static::free_result($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -578,9 +578,9 @@ class ModelShop extends ModelBase{
         $q .= " where c.type = 3 and c.price > 40 and c.price <= 60 and a.image1 is not null";
         break;
     }
-    if($result = static::query($q)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    if($result = static::Query($q)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -632,8 +632,8 @@ class ModelShop extends ModelBase{
           " WHERE b.post_status = 'publish'";
         break;
     }
-    $result = static::query($q);
-    while($row = static::fetch_assoc($result)) {
+    $result = static::Query($q);
+    while($row = static::FetchAssoc($result)) {
       $res[] = $row;
     }
 
@@ -668,10 +668,10 @@ class ModelShop extends ModelBase{
       $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
       $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -709,18 +709,18 @@ class ModelShop extends ModelBase{
       $query .= " LEFT JOIN shop_patterns d ON d.id = shop_product_patterns.patternId";
       $query .= " LEFT JOIN shop_manufacturers e ON a.manufacturerId = e.id";
     }
-    $query .= static::build_where($filter, $prms);
-    $query .= static::build_order($sort);
+    $query .= static::BuildWhere($filter, $prms);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
       $sys_hide_price = ModelPrice::sysHideAllRegularPrices();
       $cart_items = isset(App::$app->session('cart')['items']) ? App::$app->session('cart')['items'] : [];
       $cart = array_keys($cart_items);
-      while($row = static::fetch_array($result)) {
+      while($row = static::FetchArray($result)) {
         $response[] = self::prepare_layout_product($row, $cart, $sys_hide_price);
       }
-      static::free_result($result);
+      static::FreeResult($result);
     }
 
     return $response;

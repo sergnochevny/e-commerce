@@ -38,8 +38,8 @@ class ControllerPatterns extends ControllerSimple{
    * @param bool $view
    * @param null $filter
    */
-  protected function build_order(&$sort, $view = false, $filter = null){
-    parent::build_order($sort, $view, $filter);
+  protected function BuildOrder(&$sort, $view = false, $filter = null){
+    parent::BuildOrder($sort, $view, $filter);
     if(!isset($sort) || !is_array($sort) || (count($sort) <= 0)) {
       $sort = ['a.pattern' => 'asc'];
     }
@@ -92,12 +92,12 @@ class ControllerPatterns extends ControllerSimple{
    * @throws \Exception
    */
   public function view($partial = false, $required_access = false){
-    $this->main->template->vars('cart_enable', '_');
+    $this->main->view->setVars('cart_enable', '_');
     $main_filter = $this->load_search_filter_by_controller('shop');
     if(!empty($main_filter) && is_array($main_filter)) {
       $main_filter['active_filter'] = !empty(array_filter($main_filter));
     }
-    $this->main->template->vars('filter', $main_filter);
+    $this->main->view->setVars('filter', $main_filter);
     App::$app->setSession('sidebar_idx', 3);
     parent::view($partial, $required_access);
   }

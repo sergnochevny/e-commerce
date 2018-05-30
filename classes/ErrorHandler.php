@@ -33,10 +33,10 @@ class ErrorHandler implements ErrorHandlerInterface{
    * @return mixed
    * @throws \Exception
    */
-  public function handle(){
+  public function Handle(){
 
     if(!empty($this->exception) && !empty($message = $this->exception->getMessage())) {
-      return (new ControllerMain(App::$app->router()->get_controller()))->error404();
+      return (new ControllerMain(App::$app->router()->getController()))->error404();
     }
 
     return (new ControllerMain())->error404();

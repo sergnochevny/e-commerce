@@ -6,7 +6,7 @@ use app\core\model\ModelBase;
 use Exception;
 
 /**
- * Class ModelBlogcategory
+ * Class ModelBlogCategory
  * @package models
  */
 class ModelBlogCategory extends ModelBase{
@@ -27,8 +27,8 @@ class ModelBlogCategory extends ModelBase{
     ];
     if(isset($id)) {
       $query = "SELECT * FROM blog_groups WHERE id = :id";
-      $result = static::query($query, ['id' => $id]);
-      if($result) $response = static::fetch_assoc($result);
+      $result = static::Query($query, ['id' => $id]);
+      if($result) $response = static::FetchAssoc($result);
     }
 
     if ($response === false){
@@ -46,10 +46,10 @@ class ModelBlogCategory extends ModelBase{
     $response = 0;
     $query = "SELECT COUNT(DISTINCT a.id) FROM " . self::$table . " a";
     $query .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -69,14 +69,14 @@ class ModelBlogCategory extends ModelBase{
     $q = "SELECT a.id, a.name, COUNT(b.group_id) AS amount ";
     $q .= " FROM " . self::$table . " a";
     $q .= " LEFT JOIN blog_group_posts b ON a.id = b.group_id";
-    $q .= static::build_where($filter, $prms);
+    $q .= static::BuildWhere($filter, $prms);
     $q .= " GROUP BY a.id, a.name";
-    $q .= static::build_order($sort);
+    $q .= static::BuildOrder($sort);
     if($limit != 0) $q .= " LIMIT $start, $limit";
-    $result = static::query($q, $prms);
+    $result = static::Query($q, $prms);
     if($result) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_array($result)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchArray($result)) {
         $res[] = $row;
       }
     }
@@ -88,25 +88,25 @@ class ModelBlogCategory extends ModelBase{
    * @param $id
    * @throws \Exception
    */
-  public static function delete($id){
-    static::transaction();
+  public static function Delete($id){
+    static::BeginTransaction();
     try {
       if(isset($id)) {
         $query = "SELECT COUNT(*) FROM blog_group_posts WHERE group_id = :id";
-        $res = static::query($query, ['id' => $id]);
+        $res = static::Query($query, ['id' => $id]);
         if($res) {
-          $amount = static::fetch_array($res)[0];
+          $amount = static::FetchArray($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
         $query = "DELETE FROM blog_groups WHERE id = :id";
-        $res = static::query($query, ['id' => $id]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['id' => $id]);
+        if(!$res) throw new Exception(static::Error());
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }
@@ -116,27 +116,27 @@ class ModelBlogCategory extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
+  public static function Save(&$data){
     extract($data);
     /**
      * @var $id
      * @var string $name
      */
-    static::transaction();
+    static::BeginTransaction();
     try {
       if(isset($id)) {
         $query = 'UPDATE blog_groups SET name = :name WHERE id = :id';
-        $res = static::query($query, ['id' => $id, 'name' => $name]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['id' => $id, 'name' => $name]);
+        if(!$res) throw new Exception(static::Error());
       } else {
         $query = 'INSERT INTO blog_groups (name) VALUE (:name)';
-        $res = static::query($query, ['name' => $name]);
-        if(!$res) throw new Exception(static::error());
-        $id = static::last_id();
+        $res = static::Query($query, ['name' => $name]);
+        if(!$res) throw new Exception(static::Error());
+        $id = static::LastId();
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 

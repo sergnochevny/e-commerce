@@ -63,13 +63,13 @@ class ControllerIndex extends ControllerController{
         base64_decode(urldecode(App::$app->get('url'))) :
         App::$app->router()->UrlTo('product');
       if($url == '/') $url = App::$app->router()->UrlTo('product');
-      $this->redirect($url);
+      $this->Redirect($url);
     }
     $controller_info = new ControllerInfo($this->main);
-    $this->main->template->vars('info_view', $controller_info->view(false, false, true));
+    $this->main->view->setVars('info_view', $controller_info->view(false, false, true));
     $controller_shop = new ControllerShop($this->main);
-    $this->main->template->vars('shop_widget_under', $controller_shop->widget('under'));
-    $this->main->template->vars('shop_widget_carousel_specials', $controller_shop->widget('carousel_specials'));
+    $this->main->view->setVars('shop_widget_under', $controller_shop->widget('under'));
+    $this->main->view->setVars('shop_widget_carousel_specials', $controller_shop->widget('carousel_specials'));
 
     $this->render_view('index');
   }
@@ -81,7 +81,7 @@ class ControllerIndex extends ControllerController{
   public function service(){
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
     if($controller == 'shop' && $action == 'product') {
-      $this->main->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+      $this->main->view->setVars('back_url', App::$app->server('HTTP_REFERER'));
     }
     $this->render_view('static/service');
   }
@@ -93,7 +93,7 @@ class ControllerIndex extends ControllerController{
   public function estimator(){
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
     if($controller == 'shop' && $action == 'product') {
-      $this->main->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+      $this->main->view->setVars('back_url', App::$app->server('HTTP_REFERER'));
     }
     $this->render_view('static/estimate');
   }
@@ -106,9 +106,9 @@ class ControllerIndex extends ControllerController{
     App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
     $controller_user = new ControllerUser($this->main);
     $controller_user->scenario('short');
-    $this->main->template->vars('user_registration', $controller_user->registration());
+    $this->main->view->setVars('user_registration', $controller_user->registration());
     if($controller == 'shop' && $action == 'product') {
-      $this->main->template->vars('back_url', App::$app->server('HTTP_REFERER'));
+      $this->main->view->setVars('back_url', App::$app->server('HTTP_REFERER'));
     }
     $this->render_view('static/newsletter');
   }

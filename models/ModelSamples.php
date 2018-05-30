@@ -83,8 +83,8 @@ class ModelSamples extends ModelBase{
   public static function allowedSamples($pid){
 
     $sql = sprintf("SELECT piece FROM shop_products WHERE pid = %u ", $pid);
-    $res = static::query($sql);
-    $piece = static::fetch_assoc($res);
+    $res = static::Query($sql);
+    $piece = static::FetchAssoc($res);
     $piece = $piece['piece'];
 
     if($piece == 1) return false;
@@ -92,12 +92,12 @@ class ModelSamples extends ModelBase{
     #select the product id where the product is in one of the non allowed sample categories
     $sql = sprintf("SELECT pid FROM shop_product_categories WHERE pid = %u AND (cid = %u OR cid = %u OR cid = %u)", $pid, 14, 4, 26);
 
-    #if the query fails, return false to disallow samples
-    if(($res = static::query($sql)) === false) {
+    #if the Query fails, return false to disallow samples
+    if(($res = static::Query($sql)) === false) {
       return false;
     }
 
-    if(static::num_rows($res) > 0) {
+    if(static::getNumRows($res) > 0) {
       return false;
     } else {
       return true;

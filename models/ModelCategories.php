@@ -23,7 +23,7 @@ class ModelCategories extends ModelBase{
    * @return string
    * @throws \Exception
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $prms = [];
@@ -57,7 +57,7 @@ class ModelCategories extends ModelBase{
         $return = (!empty($return) ? " WHERE " . $return : '');
       }
     } else {
-      $return = parent::build_where($filter, $prms);
+      $return = parent::BuildWhere($filter, $prms);
     }
 
     return $return;
@@ -74,10 +74,10 @@ class ModelCategories extends ModelBase{
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER" : " LEFT";
     $query .= " JOIN shop_product_categories b ON b.cid = a.cid";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ? " INNER JOIN shop_products c ON c.pid = b.pid" : '';
-    $query .= static::build_where($filter, $prms);
-    if($result = static::query($query, $prms)) {
-      $response = static::fetch_value($result);
-      static::free_result($result);
+    $query .= static::BuildWhere($filter, $prms);
+    if($result = static::Query($query, $prms)) {
+      $response = static::FetchValue($result);
+      static::FreeResult($result);
     }
 
     return $response;
@@ -100,14 +100,14 @@ class ModelCategories extends ModelBase{
     $query .= " JOIN shop_product_categories b ON b.cid = a.cid";
     $query .= (isset($filter['hidden']['view']) && $filter['hidden']['view']) ?
       " INNER JOIN shop_products c ON c.pid = b.pid" : '';
-    $query .= static::build_where($filter, $prms);
+    $query .= static::BuildWhere($filter, $prms);
     $query .= " GROUP BY a.cid, a.cname";
-    $query .= static::build_order($sort);
+    $query .= static::BuildOrder($sort);
     if($limit != 0) $query .= " LIMIT $start, $limit";
 
-    if($result = static::query($query, $prms)) {
-      $res_count_rows = static::num_rows($result);
-      while($row = static::fetch_array($result)) {
+    if($result = static::Query($query, $prms)) {
+      $res_count_rows = static::getNumRows($result);
+      while($row = static::FetchArray($result)) {
         $response[] = $row;
       }
     }
@@ -125,15 +125,14 @@ class ModelCategories extends ModelBase{
       'cid' => $id, 'cname' => '', 'displayorder' => ''
     ];
     if(!isset($id)) {
-      $result = static::query("SELECT max(displayorder)+1 FROM shop_categories");
+      $result = static::Query("SELECT max(displayorder)+1 FROM shop_categories");
       if($result) {
-        $row = static::fetch_array($result);
-        $data['displayorder'] = $row[0];
+        $data['displayorder'] = static::static::FetchValue($result);
       }
     } else {
-      $result = static::query("SELECT * FROM shop_categories WHERE cid= :cid", ['cid' => $id]);
+      $result = static::Query("SELECT * FROM shop_categories WHERE cid= :cid", ['cid' => $id]);
       if($result) {
-        $data = static::fetch_array($result);
+        $data = static::FetchArray($result);
       }
     }
 
@@ -149,8 +148,8 @@ class ModelCategories extends ModelBase{
    * @return mixed
    * @throws \Exception
    */
-  public static function save(&$data){
-    static::transaction();
+  public static function Save(&$data){
+    static::BeginTransaction();
     try {
       extract($data);
       /**
@@ -159,19 +158,19 @@ class ModelCategories extends ModelBase{
        * @var string $cname
        */
       if(!empty($cid)) {
-        $res = static::query("SELECT * FROM shop_categories WHERE cid=:cid", ['cid' => $cid]);
+        $res = static::Query("SELECT * FROM shop_categories WHERE cid=:cid", ['cid' => $cid]);
         if($res) {
-          $row = static::fetch_array($res);
+          $row = static::FetchArray($res);
           $_displayorder = $row['displayorder'];
           if($_displayorder != $displayorder) {
             if($res) {
-              $res = static::query(
+              $res = static::Query(
                 "UPDATE shop_categories SET displayorder=displayorder-1 WHERE displayorder > :do",
                 ['do' => $_displayorder]
               );
             }
             if($res) {
-              $res = static::query(
+              $res = static::Query(
                 "UPDATE shop_categories SET displayorder=displayorder+1 WHERE displayorder >= :do",
                 ['do' => $displayorder]
               );
@@ -179,27 +178,27 @@ class ModelCategories extends ModelBase{
           }
           if($res) {
 
-            $res = static::query(
+            $res = static::Query(
               "UPDATE shop_categories SET cname=:cname, displayorder=:displayorder WHERE cid=:cid",
               ['cid' => $cid, 'cname' => $cname, 'displayorder' => $displayorder]
             );
           }
         }
       } else {
-        $res = static::query(
+        $res = static::Query(
           "UPDATE shop_categories SET displayorder=displayorder+1 WHERE displayorder >= :do",
           ['do' => $displayorder]
         );
-        if($res) $res = static::query(
+        if($res) $res = static::Query(
           "insert shop_categories set cname=:cname, displayorder=:displayorder",
           ['cname' => $cname, 'displayorder' => $displayorder]
         );
-        if($res) $cid = static::last_id();
+        if($res) $cid = static::LastId();
       }
-      if(!$res) throw new Exception(static::error());
-      static::commit();
+      if(!$res) throw new Exception(static::Error());
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
 
@@ -210,28 +209,28 @@ class ModelCategories extends ModelBase{
    * @param $cid
    * @throws \Exception
    */
-  public static function delete($cid){
-    static::transaction();
+  public static function Delete($cid){
+    static::BeginTransaction();
     try {
       if(isset($cid)) {
         $query = "SELECT count(*) FROM shop_product_categories WHERE cid = :cid";
-        $res = static::query($query, ['cid' => $cid]);
+        $res = static::Query($query, ['cid' => $cid]);
         if($res) {
-          $amount = static::fetch_array($res)[0];
+          $amount = static::FetchArray($res)[0];
           if(isset($amount) && ($amount > 0)) {
             throw new Exception('Can not delete. There are dependent data.');
           }
         }
         $query = "DELETE FROM shop_product_categories WHERE cid = :cid";
-        $res = static::query($query, ['cid' => $cid]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['cid' => $cid]);
+        if(!$res) throw new Exception(static::Error());
         $query = "DELETE FROM shop_categories WHERE cid = :cid";
-        $res = static::query($query, ['cid' => $cid]);
-        if(!$res) throw new Exception(static::error());
+        $res = static::Query($query, ['cid' => $cid]);
+        if(!$res) throw new Exception(static::Error());
       }
-      static::commit();
+      static::Commit();
     } catch(Exception $e) {
-      static::rollback();
+      static::RollBack();
       throw $e;
     }
   }

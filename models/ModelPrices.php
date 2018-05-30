@@ -41,7 +41,7 @@ class ModelPrices extends ModelBase{
    * @param null $prms
    * @return array|string
    */
-  public static function build_where(&$filter, &$prms = null){
+  public static function BuildWhere(&$filter, &$prms = null){
     $return = "";
     if(isset($filter['hidden']['view']) && $filter['hidden']['view']) {
       $prms = [];
@@ -58,7 +58,7 @@ class ModelPrices extends ModelBase{
         $return = (!empty($return) ? " WHERE " . $return : '');
       }
     } else {
-      $return = parent::build_where($filter, $prms);
+      $return = parent::BuildWhere($filter, $prms);
     }
 
     return $return;
@@ -115,13 +115,13 @@ class ModelPrices extends ModelBase{
 //      $response = [];
 //      $query = "SELECT COUNT(a.pid) as count";
 //      $query .= " FROM " . static::$table . " a";
-//      $query .= static::build_where($filter, $prms);
-//      $query .= static::build_order($sort);
+//      $query .= static::BuildWhere($filter, $prms);
+//      $query .= static::BuildOrder($sort);
 //
 //      $res_count_rows = PRICE_GROUPS_COUNT;
 //
-//      if($result = static::query( $query)) {
-//        $row = static::fetch_array($result);
+//      if($result = static::Query( $query)) {
+//        $row = static::FetchArray($result);
 //        $count = $row['count'];
 //        $step = ceil($count / $res_count_rows);
 //        $limit = $limit + $start;
@@ -135,13 +135,13 @@ class ModelPrices extends ModelBase{
 //            $query .= "SELECT MIN(s.priceyard) as min_price, MAX(s.priceyard) as max_price";
 //            $query .= " FROM (";
 //            $query .= "SELECT * FROM " . static::$table . " a";
-//            $query .= static::build_where($filter, $prms);
+//            $query .= static::BuildWhere($filter, $prms);
 //            $query .= " ORDER BY a.priceyard";
 //            $query .= " LIMIT " . $from . "," . $step;
 //            $query .= ") s";
 //          }
-//          if($result = static::query( $query)) {
-//            while($row = static::fetch_array($result)) {
+//          if($result = static::Query( $query)) {
+//            while($row = static::FetchArray($result)) {
 //              $min_price = round($row['min_price']);
 //              $max_price = round($row['max_price']);
 //              $response[] = ['min_price' => $min_price, 'max_price' => $max_price];
@@ -153,12 +153,12 @@ class ModelPrices extends ModelBase{
 //            $query = "SELECT MIN(s.priceyard) as min_price, MAX(s.priceyard) as max_price";
 //            $query .= " FROM (";
 //            $query .= "SELECT * FROM " . static::$table . " a";
-//            $query .= static::build_where($filter, $prms);
+//            $query .= static::BuildWhere($filter, $prms);
 //            $query .= " ORDER BY a.priceyard";
 //            $query .= " LIMIT " . $from . "," . $step;
 //            $query .= ") s";
-//            if($result = static::query( $query)) {
-//              $row = static::fetch_array($result);
+//            if($result = static::Query( $query)) {
+//              $row = static::FetchArray($result);
 //              $response[] = ['min_price' => $row['min_price'], 'max_price' => $row['max_price']];
 //            }
 //          }

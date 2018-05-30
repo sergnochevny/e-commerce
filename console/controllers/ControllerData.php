@@ -1,109 +1,25 @@
 <?php
+
 namespace console\controllers;
 
 use app\core\App;
 use app\core\console\controller\ControllerBase;
+use app\core\console\model\ModelConsole;
 use console\models\ModelCollection;
 use console\models\ModelCollectionTrigger;
-use console\models\ModelConsole;
 use console\models\ModelShop;
 use Exception;
 
 class ControllerData extends ControllerBase{
 
-  protected function search_fields($view = false){
-    return [
-      'a.pname', 'a.pvisible', 'a.dt', 'a.pnumber',
-      'a.piece', 'a.best', 'a.specials', 'b.cid',
-      'c.id', 'd.id', 'e.id', 'a.priceyard'
-    ];
-  }
-
-  public function build_search_filter(&$filter, $view = false){
-    $search = null;
-    $type = isset($filter['type']) ? $filter['type'] : null;
-    $res = parent::build_search_filter($filter, $view);
-    $filter['fields']['a.pnumber'] = ['not' => true, 'condition' => 'is', 'value' => null];
-    if(!isset($filter['fields']['a.priceyard']) && !isset($filter['a.priceyard'])) {
-      $filter['fields']['a.priceyard'] = ['not' => false, 'condition' => '>', 'value' => '0.00'];
-    }
-    $filter['fields']['a.pvisible'] = ['not' => false, 'condition' => '=', 'value' => '1'];
-    $filter['fields']['a.image1'] = ['not' => true, 'condition' => 'is', 'value' => null];
-
-    if(isset($type)) {
-      $filter['type'] = $type;
-      $res['type'] = $type;
-      switch($type) {
-        case 'best':
-          unset($filter['a.best']);
-          unset($res['a.best']);
-          $filter['fields']['a.best'] = ['not' => false, 'condition' => '=', 'value' => '1'];
-          $res['fields']['a.best'] = ['not' => false, 'condition' => '=', 'value' => '1'];
-          break;
-        case 'specials':
-          unset($filter['a.specials']);
-          unset($res['a.specials']);
-          $filter['fields']['a.specials'] = ['not' => false, 'condition' => '=', 'value' => '1'];
-          $res['fields']['a.specials'] = ['not' => false, 'condition' => '=', 'value' => '1'];
-          break;
-        case 'discounted':
-          unset($filter['a.specials']);
-          unset($res['a.specials']);
-          $filter['fields']['a.specials'] = ['not' => false, 'condition' => '=', 'value' => '1'];
-          $res['fields']['a.specials'] = ['not' => false, 'condition' => '=', 'value' => '1'];
-          break;
-      }
-    }
-
-    return $res;
-  }
-
-  protected function build_order(&$sort, $view = false, $filter = null){
-    $type = isset($filter['type']) ? $filter['type'] : null;
-    if(isset($type)) {
-      switch($type) {
-        case 'last':
-          $sort['a.dt'] = 'desc';
-          $sort['a.pid'] = 'desc';
-          break;
-        case 'popular':
-          $sort['a.popular'] = 'desc';
-          break;
-        case 'bestsellers':
-          $sort['s'] = 'desc';
-          break;
-        default:
-          $sort['a.pid'] = 'desc';
-      }
-    } else {
-      $sort['b.displayorder'] = 'asc';
-      $sort['shop_product_categories.display_order'] = 'asc';
-    }
-  }
-
-  /**
-   * @param string $type
-   * @param int $limit
-   * @return array|null
-   * @throws \Exception
-   */
-  protected function get_list_by_type($type = 'last', $limit = 60){
-    $filter['type'] = $type;
-    $this->build_search_filter($filter);
-    $sort = $this->load_sort($filter);
-    $rows = ModelShop::get_list(false, 0, $limit, $res_count_rows, $filter, $sort);
-
-    return $rows;
-  }
-
   /**
    * @throws \Exception
    */
   protected function collect_under(){
-    ModelConsole::transaction();
+    ModelConsole::BeginTransaction();
     try {
       $limit = App::$app->keyStorage()->shop_under_limit;
-      $trigger = ModelCollectionTrigger::get_one([
+      $trigger = ModelCollectionTrigger::getOne([
         'fields' => [
           'type' => [
             'not' => false, 'condition' => '=', 'value' => 3
@@ -111,25 +27,25 @@ class ControllerData extends ControllerBase{
         ]
       ]);
       if(!empty($trigger) && ($trigger['trigger'] == 1)) {
-        ModelCollectionTrigger::save(['type' => 3, 'trigger' => 0]);
+        ModelCollectionTrigger::Save(['type' => 3, 'trigger' => 0]);
         ModelCollection::delete(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 3]]]);
         $start = 0;
         $terminate = false;
         do {
-          $rows = ModelShop::get_widget_list_by_type('under', $start, $limit, $row_count);
+          $rows = ModelShop::getWidgetListByType('under', $start, $limit, $row_count);
           if(!empty($rows) && (count($rows) > 0)) {
             foreach($rows as $row) {
               if($row['saleprice'] <= 100) {
-                ModelCollection::save(['type' => 3, 'pid' => $row['pid'], 'price' => $row['saleprice']]);
+                ModelCollection::Save(['type' => 3, 'pid' => $row['pid'], 'price' => $row['saleprice']]);
               }
             }
             $start += $limit;
           } else $terminate = true;
         } while(!$terminate);
       }
-      ModelConsole::commit();
+      ModelConsole::Commit();
     } catch(Exception $e) {
-      ModelConsole::rollback();
+      ModelConsole::RollBack();
       throw $e;
     }
   }
@@ -138,13 +54,13 @@ class ControllerData extends ControllerBase{
    * @throws \Exception
    */
   protected function collect_specials(){
-    ModelConsole::transaction();
+    ModelConsole::BeginTransaction();
     try {
       $select_type = ['specials_1', 'specials_2'];
       $specials = [];
       $limit = (int)App::$app->keyStorage()->shop_specials_limit;
       $terminate_limit = (int)App::$app->keyStorage()->shop_specials_amount;
-      $trigger = ModelCollectionTrigger::get_one([
+      $trigger = ModelCollectionTrigger::getOne([
         'fields' => [
           'type' => [
             'not' => false, 'condition' => '=', 'value' => 2
@@ -152,14 +68,14 @@ class ControllerData extends ControllerBase{
         ]
       ]);
       if(!empty($trigger) && ($trigger['trigger'] == 1)) {
-        ModelCollectionTrigger::save(['type' => 2, 'trigger' => 0]);
+        ModelCollectionTrigger::Save(['type' => 2, 'trigger' => 0]);
         ModelCollection::delete(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 2]]]);
         foreach($select_type as $type) {
           $start = 0;
           $tmp = [];
           $terminate = false;
           do {
-            $rows = ModelShop::get_widget_list_by_type($type, $start, $limit, $row_count);
+            $rows = ModelShop::getWidgetListByType($type, $start, $limit, $row_count);
             if(!empty($rows) && (count($rows) > 0)) {
               foreach($rows as $row) {
                 if($terminate) break;
@@ -181,14 +97,14 @@ class ControllerData extends ControllerBase{
         if(!empty($specials) && (count($specials) > 0)) {
           shuffle($specials);
           foreach($specials as $row) {
-            ModelCollection::save(['type' => 2, 'pid' => $row['pid'], 'price' => $row['saleprice']]);
+            ModelCollection::Save(['type' => 2, 'pid' => $row['pid'], 'price' => $row['saleprice']]);
             if($terminate_limit-- <= 0) break;
           }
         }
       }
-      ModelConsole::commit();
+      ModelConsole::Commit();
     } catch(Exception $e) {
-      ModelConsole::rollback();
+      ModelConsole::RollBack();
       throw $e;
     }
   }
@@ -197,13 +113,13 @@ class ControllerData extends ControllerBase{
    * @throws \Exception
    */
   protected function collect_bestsellers(){
-    ModelConsole::transaction();
+    ModelConsole::BeginTransaction();
     try {
       $select_type = ['bestsellers_1', 'bestsellers_2'];
       $specials = [];
       $limit = (int)App::$app->keyStorage()->shop_bestsellers_limit;
       $terminate_limit = (int)App::$app->keyStorage()->shop_bestsellers_amount;
-      $trigger = ModelCollectionTrigger::get_one([
+      $trigger = ModelCollectionTrigger::getOne([
         'fields' => [
           'type' => [
             'not' => false, 'condition' => '=', 'value' => 1
@@ -211,14 +127,14 @@ class ControllerData extends ControllerBase{
         ]
       ]);
       if(!empty($trigger) && ($trigger['trigger'] == 1)) {
-        ModelCollectionTrigger::save(['type' => 1, 'trigger' => 0]);
-        ModelCollection::delete(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 1]]]);
+        ModelCollectionTrigger::Save(['type' => 1, 'trigger' => 0]);
+        ModelCollection::Delete(['fields' => ['type' => ['not' => false, 'condition' => '=', 'value' => 1]]]);
         foreach($select_type as $type) {
           $start = 0;
           $tmp = [];
           $terminate = false;
           do {
-            $rows = ModelShop::get_widget_list_by_type($type, $start, $limit, $row_count);
+            $rows = ModelShop::getWidgetListByType($type, $start, $limit, $row_count);
             if(!empty($rows) && (count($rows) > 0)) {
               foreach($rows as $row) {
                 if($terminate) break;
@@ -240,14 +156,14 @@ class ControllerData extends ControllerBase{
         if(!empty($specials) && (count($specials) > 0)) {
           shuffle($specials);
           foreach($specials as $row) {
-            ModelCollection::save(['type' => 1, 'pid' => $row['pid'], 'price' => $row['saleprice']]);
+            ModelCollection::Save(['type' => 1, 'pid' => $row['pid'], 'price' => $row['saleprice']]);
             if($terminate_limit-- <= 0) break;
           }
         }
       }
-      ModelConsole::commit();
+      ModelConsole::Commit();
     } catch(Exception $e) {
-      ModelConsole::rollback();
+      ModelConsole::RollBack();
       throw $e;
     }
   }
