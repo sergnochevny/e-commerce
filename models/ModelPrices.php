@@ -3,6 +3,7 @@
 namespace models;
 
 use app\core\model\ModelBase;
+use Exception;
 
 /**
  * Class ModelPrices
@@ -77,6 +78,7 @@ class ModelPrices extends ModelBase{
   /**
    * @param $id
    * @return array|null
+   * @throws \Exception
    */
   public static function get_by_id($id){
     $response = [];

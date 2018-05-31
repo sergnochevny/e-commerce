@@ -79,7 +79,7 @@ class ControllerIndex extends ControllerController{
    * @throws \Exception
    */
   public function service(){
-    App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+    App::$app->router()->ParseReferrerUrl($route, $controller, $action, $args);
     if($controller == 'shop' && $action == 'product') {
       $this->main->view->setVars('back_url', App::$app->server('HTTP_REFERER'));
     }
@@ -91,7 +91,7 @@ class ControllerIndex extends ControllerController{
    * @throws \Exception
    */
   public function estimator(){
-    App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+    App::$app->router()->ParseReferrerUrl($route, $controller, $action, $args);
     if($controller == 'shop' && $action == 'product') {
       $this->main->view->setVars('back_url', App::$app->server('HTTP_REFERER'));
     }
@@ -103,7 +103,7 @@ class ControllerIndex extends ControllerController{
    * @throws \Exception
    */
   public function newsletter(){
-    App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+    App::$app->router()->ParseReferrerUrl($route, $controller, $action, $args);
     $controller_user = new ControllerUser($this->main);
     $controller_user->scenario('short');
     $this->main->view->setVars('user_registration', $controller_user->registration());

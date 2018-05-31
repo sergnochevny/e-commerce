@@ -79,7 +79,7 @@ class ControllerMatches extends ControllerFormSimple{
    */
   public function matches(){
     Auth::check_user_authorized(true);
-    App::$app->router()->parse_referrer_url($route, $controller, $action, $args);
+    App::$app->router()->ParseReferrerUrl($route, $controller, $action, $args);
     if($controller == 'shop' && $action == 'product') $this->main->view->setVars('back_url', App::$app->server('HTTP_REFERER'));
     $this->main->view->setVars('cart_not_empty', !empty(App::$app->session('cart')['items']));
     parent::index(false);

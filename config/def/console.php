@@ -76,13 +76,14 @@ return [
     'YRDS_FOR_MULTIPLIER' => 2.0,
     #total yardage allowed before a mulitplier is added
   ],
+  'set_time_limit' => 7200,
   'ini_set' => [
     'display_errors' => 'On',
-    'mysql.connect_timeout' => 60,
+    'mysql.connect_timeout' => 7200,
     'error_reporting' => (E_ALL & (~E_DEPRECATED)),
     'always_populate_raw_post_data' => -1,
   ],
-  'date_default_timezone_set' => [['UTC']],
+  'date_default_timezone_set' => 'UTC',
   'setlocale' => [
     [LC_ALL, 'en_US'],
     [LC_TIME, 'UTC']
@@ -98,7 +99,5 @@ return [
         ]
       ]
     ]
-  ],
-  'layouts' => "main_layout",
-  'per_page_items' => ['6', '12', '24'],
+  ]
 ];

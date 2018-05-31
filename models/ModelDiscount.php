@@ -220,7 +220,12 @@ class ModelDiscount extends ModelBase{
           }
         }
       }
-      if(!$res) throw new Exception(static::Error());
+      if(!$res) {
+        throw new Exception(static::Error());
+      }
+
+      ModelCollectionTrigger::setTriggers();
+
       static::Commit();
     } catch(Exception $e) {
       static::RollBack();
@@ -452,6 +457,9 @@ class ModelDiscount extends ModelBase{
       static::Query("DELETE FROM shop_specials_users WHERE sid='$id'");
       static::Query("DELETE FROM shop_specials_usage WHERE sid='$id'");
       static::Query("DELETE FROM " . static::$table . " WHERE sid = '$id'");
+
+      ModelCollectionTrigger::setTriggers();
+
       static::Commit();
     } catch(Exception $e) {
       static::RollBack();

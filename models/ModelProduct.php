@@ -636,7 +636,9 @@ class ModelProduct extends ModelBase{
           $data['pid'] = $pid;
         }
       }
-      if($result) $result = static::update_images($pid, $data);
+      if($result) {
+        $result = static::update_images($pid, $data);
+      }
       if($result) {
         $res = true;
         if($res && (count($categories) > 0)) {
@@ -725,7 +727,10 @@ class ModelProduct extends ModelBase{
         }
         $result = $result && $res;
       }
-      if(!$result) throw new Exception(static::Error());
+      if(!$result) {
+        throw new Exception(static::Error());
+      }
+      ModelCollectionTrigger::setTriggers();
       static::Commit();
     } catch(Exception $e) {
       static::RollBack();
@@ -763,6 +768,7 @@ class ModelProduct extends ModelBase{
         if(!$res) throw new Exception(static::Error());
         static::delete_images($data);
       }
+      ModelCollectionTrigger::setTriggers();
       static::Commit();
     } catch(Exception $e) {
       static::RollBack();

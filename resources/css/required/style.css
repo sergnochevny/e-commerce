@@ -3213,18 +3213,19 @@ div.static.box {
 }
 
 input.img-uploadfile {
-    position: absolute;
-    margin: -5px 0px 0px -175px;
-    padding: 0px;
-    width: 220px;
-    height: 30px;
-    font-size: 14px;
-    opacity: 0;
-    cursor: pointer;
-    display: block;
-    z-index: 2147483583;
-    top: 3165px;
-    left: 380px;
+    display: none;
+    /*position: absolute;*/
+    /*margin: -5px 0px 0px -175px;*/
+    /*padding: 0px;*/
+    /*width: 220px;*/
+    /*height: 30px;*/
+    /*font-size: 14px;*/
+    /*opacity: 0;*/
+    /*cursor: pointer;*/
+    /*display: block;*/
+    /*z-index: 2147483583;*/
+    /*top: 3165px;*/
+    /*left: 380px;*/
 }
 
 .index__form-wrap .ui-input-text {

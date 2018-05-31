@@ -27,7 +27,7 @@ use app\core\App;
   </div>
 </div>
 <div class="clear"></div>
-<div class="shop__sidebar bar_filter" data-filter-storage='<?= json_encode($filter); ?>'>
+<div class="shop__sidebar bar_filter" data-filter-storage='<?= json_encode(!empty($filter) ? $filter : []); ?>'>
   <nav>
     <ul class="shop__sidebar-list shop__sidebar-w-filter">
       <?php $prm = "e.id"; ?>

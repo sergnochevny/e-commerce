@@ -2,7 +2,7 @@
 
 namespace console\controllers;
 
-use app\core\App;
+use app\core\console\Console;
 use app\core\console\controller\ControllerBase;
 use app\core\console\model\ModelConsole;
 use console\models\ModelCollection;
@@ -18,7 +18,7 @@ class ControllerData extends ControllerBase{
   protected function collect_under(){
     ModelConsole::BeginTransaction();
     try {
-      $limit = App::$app->KeyStorage()->shop_under_limit;
+      $limit = Console::$app->KeyStorage()->shop_under_limit;
       $trigger = ModelCollectionTrigger::getOne([
         'fields' => [
           'type' => [
@@ -58,8 +58,8 @@ class ControllerData extends ControllerBase{
     try {
       $select_type = ['specials_1', 'specials_2'];
       $specials = [];
-      $limit = (int)App::$app->KeyStorage()->shop_specials_limit;
-      $terminate_limit = (int)App::$app->KeyStorage()->shop_specials_amount;
+      $limit = (int)Console::$app->KeyStorage()->shop_specials_limit;
+      $terminate_limit = (int)Console::$app->KeyStorage()->shop_specials_amount;
       $trigger = ModelCollectionTrigger::getOne([
         'fields' => [
           'type' => [
@@ -117,8 +117,8 @@ class ControllerData extends ControllerBase{
     try {
       $select_type = ['bestsellers_1', 'bestsellers_2'];
       $specials = [];
-      $limit = (int)App::$app->KeyStorage()->shop_bestsellers_limit;
-      $terminate_limit = (int)App::$app->KeyStorage()->shop_bestsellers_amount;
+      $limit = (int)Console::$app->KeyStorage()->shop_bestsellers_limit;
+      $terminate_limit = (int)Console::$app->KeyStorage()->shop_bestsellers_amount;
       $trigger = ModelCollectionTrigger::getOne([
         'fields' => [
           'type' => [

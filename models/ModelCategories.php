@@ -127,7 +127,7 @@ class ModelCategories extends ModelBase{
     if(!isset($id)) {
       $result = static::Query("SELECT max(displayorder)+1 FROM shop_categories");
       if($result) {
-        $data['displayorder'] = static::static::FetchValue($result);
+        $data['displayorder'] = static::FetchValue($result);
       }
     } else {
       $result = static::Query("SELECT * FROM shop_categories WHERE cid= :cid", ['cid' => $id]);

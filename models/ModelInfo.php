@@ -19,7 +19,7 @@ class ModelInfo extends ModelBase{
   /**
    * @param $filter
    * @param null $prms
-   * @return array
+   * @return string
    */
   public static function BuildWhere(&$filter, &$prms = null){
     $return = '';

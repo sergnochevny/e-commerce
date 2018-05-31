@@ -2,14 +2,14 @@
 
 namespace console\models;
 
-use app\core\App;
-use app\core\model\ModelBase;
+use app\core\console\Console;
+use app\core\console\model\ModelTableBase;
 
 /**
  * Class ModelPrice
  * @package console\models
  */
-class ModelPrice extends ModelBase{
+class ModelPrice extends ModelTableBase{
 
   /**
    * @param $price
@@ -232,7 +232,7 @@ class ModelPrice extends ModelBase{
     $shipping = DEFAULT_SHIPPING;
     $shipcost = 0;
 
-    $rSystemDiscount = self::calculateDiscount(DISCOUNT_CATEGORY_PRODUCT, $price, $shipcost, $shipping, $discountIds);
+    $rSystemDiscount = static::calculateDiscount(DISCOUNT_CATEGORY_PRODUCT, $price, $shipcost, $shipping, $discountIds);
     if($rSystemDiscount > 0) $ret = $price - $rSystemDiscount;
 
     return $ret;
@@ -275,7 +275,8 @@ class ModelPrice extends ModelBase{
     //discount_type = 2 - shipping
     //discount_type = 3 - total w/ shipping
 
-    $rate_handling = (!is_null(App::$app->KeyStorage()->shop_rate_handling) ? App::$app->KeyStorage()->shop_rate_handling : RATE_HANDLING);
+    $rate_handling = (!is_null(Console::$app->KeyStorage()->shop_rate_handling) ?
+      Console::$app->KeyStorage()->shop_rate_handling : RATE_HANDLING);
 
     if($iDisType == 2) {
       $rRet = self::doDiscount($rShip, $rDis, $iDisAmntType);
