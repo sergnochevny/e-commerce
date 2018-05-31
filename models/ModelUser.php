@@ -51,7 +51,7 @@ class ModelUser extends ModelBase{
       throw $e;
     }
 
-    return ($res && static::affected_rows($res));
+    return ($res && static::AffectedRows($res));
   }
 
   /**
@@ -70,7 +70,7 @@ class ModelUser extends ModelBase{
       throw $e;
     }
 
-    return ($res && static::affected_rows($res));
+    return ($res && static::AffectedRows($res));
   }
 
   /**

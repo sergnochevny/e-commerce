@@ -408,17 +408,6 @@ var change_text = false;
     /* Move cross-sell below cart totals on cart page */
     $('.woocommerce .cart-collaterals .cross-sells, .woocommerce-page .cart-collaterals .cross-sells').appendTo('.woocommerce .cart-collaterals, .woocommerce-page .cart-collaterals');
 
-    $("a[data-rel^='prettyPhoto']").prettyPhoto({
-      hook: "data-rel",
-      social_tools: '',
-      theme: "pp_woocommerce",
-      //	horizontal_padding: 20,
-      //	opacity: .8,
-      //	show_title: false,
-      //  allow_resize: false,
-      default_width: 700
-    });
-
     $.change_button_text();
     $('[title]').tooltipster();
 

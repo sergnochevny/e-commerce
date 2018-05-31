@@ -352,7 +352,7 @@ class ControllerAuthorization extends ControllerController{
       }
     } else {
       $result = false;
-      if(App::$app->request_is_get()) {
+      if(App::$app->RequestIsGet()) {
         $remind = App::$app->get('remind');
         if(isset($remind)) {
           $remind = base64_decode(urldecode($remind));

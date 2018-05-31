@@ -32,7 +32,7 @@ class ControllerShop extends ControllerController{
   /**
    * @var string
    */
-  protected $page_title = "Online Fabric Store";
+  protected $page_title = "Fabric Selection";
 
   protected $reset = [
     'reset' => ['a.pname'],
@@ -231,7 +231,7 @@ class ControllerShop extends ControllerController{
         $field_name = "Sale price:";
       }
       if($data['bSystemDiscount']) {
-        $field_value = sprintf("Reduced further by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
+        $field_value = sprintf("Further reduced by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
       } else {
         $field_value = sprintf("Reduced by %s.<br><strong>%s</strong>", $data['sDiscount'], $data['sDiscountPrice']);
       }
@@ -340,107 +340,113 @@ class ControllerShop extends ControllerController{
    * @throws \Exception
    */
   protected function get_data_prev_next($id): array{
+    $ignored_controllers=['cart'];
+    $prev_next = [];
     $controller = $this->controller;
     $max_count_items = null;
     $model = $this->model;
     $back = App::$app->get('back');
     $controllerInstance = $this;
-    if(!empty($back) && ($controller !== $back)) {
-      if(class_exists(App::$controllersNS . '\Controller' . ucfirst($back))) {
-        $controller = $back;
-        $controllerInstance = App::$controllersNS . '\Controller' . ucfirst($controller);
-        $controllerInstance = new $controllerInstance($this->main);
-        if(class_exists(App::$modelsNS . '\Model' . ucfirst($controller))) {
-          $model = App::$modelsNS . '\Model' . ucfirst($controller);
-        }
-      } else {
-        $filter['type'] = $back;
-        switch($back) {
-          case 'specials':
-            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_specials_amount) ? App::$app->KeyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT);
-            break;
-          case 'bestsellers':
-            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_bestsellers_amount) ? App::$app->KeyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT);
-            break;
-          case 'under':
-            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_under_amount) ? App::$app->KeyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT);
-            break;
-          case 'last':
-            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_last_amount) ? App::$app->KeyStorage()->shop_last_amount : SHOP_LAST_AMOUNT);
-            break;
-          case 'best':
-            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_best_amount) ? App::$app->KeyStorage()->shop_best_amount : SHOP_BEST_AMOUNT);
-            break;
-          case 'popular':
-            $max_count_items = (!is_null(App::$app->KeyStorage()->shop_popular_amount) ? App::$app->KeyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT);
-            break;
-          case 'home':
-            break;
-          default:
-            $controller = 'related';
-            $controllerInstance = App::$controllersNS . '\Controller' . ucfirst($controller);
-            $controllerInstance = new $controllerInstance($this->main);
-            if(class_exists(App::$modelsNS . '\Model' . ucfirst($controller))) {
-              $model = App::$modelsNS . '\Model' . ucfirst($controller);
-            }
-        }
-      }
-    }
-    $controllerInstance->build_search_filter($filter);
-    $idx = $controllerInstance->load_search_filter_get_idx($filter);
-    $pages = App::$app->session('pages');
-    $per_pages = App::$app->session('per_pages');
-    $sort = $controllerInstance->load_sort($filter);
-    $page = !empty($pages[$controller][$idx]) ? $pages[$controller][$idx] : 1;
-    $per_page = !empty($per_pages[$controller][$idx]) ? $per_pages[$controller][$idx] : $controllerInstance->per_page;
-    $scenario = $controllerInstance->scenario();
-    $filter['scenario'] = $scenario;
-    $total = forward_static_call([$model, 'get_total_count'], $filter);
-    if(!empty($filter['type']) && !empty($max_count_items) && (($total > $max_count_items) && ($max_count_items > 0))) $total = $max_count_items;
-    if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
-    if($page <= 0) $page = 1;
-    $start = ($page - (($page > 1) ? 2 : 1)) * $per_page;
-    $limit = (($page > 1) ? 3 : 2) * $per_page;
-    if(!empty($filter['type']) && ($total < $limit)) {
-      $limit = $total - $start;
-    }
-    $res_count_rows = 0;
-    $rows = forward_static_call_array([$model, 'get_list'], [
-      $start, $limit, &$res_count_rows, &$filter, &$sort
-    ]);
-    $prev_next = [];
-    array_walk($rows, function($item, $key)
-    use ($id, $rows, $idx, $controller, $start, $page, $back, $scenario, &$prev_next, $controllerInstance){
-      if($item['pid'] == $id) {
-        if(!empty($rows[$key - 1])) {
-          $url_prms['pid'] = $rows[$key - 1]['pid'];
-          $url_prms['back'] = $back;
-          if(!empty(App::$app->get('parent'))) $url_prms['parent'] = App::$app->get('parent');
-          if(!empty($scenario)) $url_prms['method'] = $scenario;
-          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key - 1]['pname'], ['method', 'parent']);
-          $prev_next['prev']['url'] = $href;
-          $prev_next['prev']['title'] = $rows[$key - 1]['pname'];
-        }
-        if(!empty($rows[$key + 1])) {
-          $url_prms['pid'] = $rows[$key + 1]['pid'];
-          $url_prms['back'] = $back;
-          if(!empty(App::$app->get('parent'))) $url_prms['parent'] = App::$app->get('parent');
-          if(!empty($scenario)) $url_prms['method'] = $scenario;
-          $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key + 1]['pname'], ['method', 'parent']);
-          $prev_next['next']['url'] = $href;
-          $prev_next['next']['title'] = $rows[$key + 1]['pname'];
-        }
-        if(min($page, 2) * $controllerInstance->per_page == $key) {
-          $pages[$controller][$idx] = $page + 1;
-          App::$app->setSession('pages', $pages);
-        }
-        if(($page > 1) && ($controllerInstance->per_page == $key + 1)) {
-          $pages[$controller][$idx] = $page - 1;
-          App::$app->setSession('pages', $pages);
+    if(!empty($back) && !in_array($back ,$ignored_controllers)) {
+      if(!empty($back) && ($controller !== $back)) {
+        if(class_exists(App::$controllersNS . '\Controller' . ucfirst($back))) {
+          $controller = $back;
+          $controllerInstance = App::$controllersNS . '\Controller' . ucfirst($controller);
+          $controllerInstance = new $controllerInstance($this->main);
+          if(class_exists(App::$modelsNS . '\Model' . ucfirst($controller))) {
+            $model = App::$modelsNS . '\Model' . ucfirst($controller);
+          }
+        } else {
+          $filter['type'] = $back;
+          switch($back) {
+            case 'specials':
+              $max_count_items = (!is_null(App::$app->KeyStorage()->shop_specials_amount) ? App::$app->KeyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT);
+              break;
+            case 'bestsellers':
+              $max_count_items = (!is_null(App::$app->KeyStorage()->shop_bestsellers_amount) ? App::$app->KeyStorage()->shop_bestsellers_amount : SHOP_BSELLS_AMOUNT);
+              break;
+            case 'under':
+              $max_count_items = (!is_null(App::$app->KeyStorage()->shop_under_amount) ? App::$app->KeyStorage()->shop_under_amount : SHOP_UNDER_AMOUNT);
+              break;
+            case 'last':
+              $max_count_items = (!is_null(App::$app->KeyStorage()->shop_last_amount) ? App::$app->KeyStorage()->shop_last_amount : SHOP_LAST_AMOUNT);
+              break;
+            case 'best':
+              $max_count_items = (!is_null(App::$app->KeyStorage()->shop_best_amount) ? App::$app->KeyStorage()->shop_best_amount : SHOP_BEST_AMOUNT);
+              break;
+            case 'popular':
+              $max_count_items = (!is_null(App::$app->KeyStorage()->shop_popular_amount) ? App::$app->KeyStorage()->shop_popular_amount : SHOP_POPULAR_AMOUNT);
+              break;
+            case 'home':
+              break;
+            default:
+              $controller = 'related';
+              $controllerInstance = App::$controllersNS . '\Controller' . ucfirst($controller);
+              $controllerInstance = new $controllerInstance($this->main);
+              if(class_exists(App::$modelsNS . '\Model' . ucfirst($controller))) {
+                $model = App::$modelsNS . '\Model' . ucfirst($controller);
+              }
+          }
         }
       }
-    });
-
+      $controllerInstance->build_search_filter($filter);
+      $idx = $controllerInstance->load_search_filter_get_idx($filter);
+      $pages = App::$app->session('pages');
+      $per_pages = App::$app->session('per_pages');
+      $sort = $controllerInstance->load_sort($filter);
+      $page = !empty($pages[$controller][$idx]) ? $pages[$controller][$idx] : 1;
+      $per_page = !empty($per_pages[$controller][$idx]) ? $per_pages[$controller][$idx] : $controllerInstance->per_page;
+      $scenario = $controllerInstance->scenario();
+      $filter['scenario'] = $scenario;
+      $total = forward_static_call([$model, 'get_total_count'], $filter);
+      if(!empty($filter['type']) && !empty($max_count_items) && (($total > $max_count_items) && ($max_count_items > 0))) $total = $max_count_items;
+      if($page > ceil($total / $per_page)) $page = ceil($total / $per_page);
+      if($page <= 0) $page = 1;
+      $start = ($page - (($page > 1) ? 2 : 1)) * $per_page;
+      $limit = (($page > 1) ? 3 : 2) * $per_page;
+      if(!empty($filter['type']) && ($total < $limit)) {
+        $limit = $total - $start;
+      }
+      $res_count_rows = 0;
+      $rows = forward_static_call_array([$model, 'get_list'], [
+        $start, $limit, &$res_count_rows, &$filter, &$sort
+      ]);
+      array_walk($rows, function($item, $key)
+      use ($id, $rows, $idx, $controller, $start, $page, $back, $scenario, &$prev_next, $controllerInstance){
+        if($item['pid'] == $id) {
+          if(!empty($rows[$key - 1])) {
+            $url_prms['pid'] = $rows[$key - 1]['pid'];
+            $url_prms['back'] = $back;
+            if(!empty(App::$app->get('parent'))) $url_prms['parent'] = App::$app->get('parent');
+            if(!empty($scenario)) $url_prms['method'] = $scenario;
+            $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key - 1]['pname'], [
+              'method', 'parent'
+            ]);
+            $prev_next['prev']['url'] = $href;
+            $prev_next['prev']['title'] = $rows[$key - 1]['pname'];
+          }
+          if(!empty($rows[$key + 1])) {
+            $url_prms['pid'] = $rows[$key + 1]['pid'];
+            $url_prms['back'] = $back;
+            if(!empty(App::$app->get('parent'))) $url_prms['parent'] = App::$app->get('parent');
+            if(!empty($scenario)) $url_prms['method'] = $scenario;
+            $href = App::$app->router()->UrlTo('shop/product', $url_prms, $rows[$key + 1]['pname'], [
+              'method', 'parent'
+            ]);
+            $prev_next['next']['url'] = $href;
+            $prev_next['next']['title'] = $rows[$key + 1]['pname'];
+          }
+          if(min($page, 2) * $controllerInstance->per_page == $key) {
+            $pages[$controller][$idx] = $page + 1;
+            App::$app->setSession('pages', $pages);
+          }
+          if(($page > 1) && ($controllerInstance->per_page == $key + 1)) {
+            $pages[$controller][$idx] = $page - 1;
+            App::$app->setSession('pages', $pages);
+          }
+        }
+      });
+    }
     return $prev_next;
   }
 

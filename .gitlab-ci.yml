@@ -30,6 +30,6 @@ deploy:
     - mkdir /deploy-gl/$CI_PROJECT_NAME/data/filemanager || echo "Dir already $CI_PROJECT_NAME/data/filemanager exists"
     - sudo chown -R gitlab-runner:gitlab-runner /deploy-gl/$CI_PROJECT_NAME/data
     - cp -r deploy/docker/* /deploy-gl/$CI_PROJECT_NAME
-#    - cp -rf /deploy/uploads/$CI_PROJECT_NAME/* /deploy-gl/$CI_PROJECT_NAME/data/images
+    - cp -rf /deploy/uploads/$CI_PROJECT_NAME/images/* /deploy-gl/$CI_PROJECT_NAME/data/images
     - printf "NAME=$CI_PROJECT_NAME\nIMAGE=$IMAGE_TAG" > /deploy-gl/$CI_PROJECT_NAME/.env
     - cd /deploy-gl/$CI_PROJECT_NAME && docker-compose up -d && docker exec ${CI_PROJECT_NAME}_app "/docker-entrypoint.sh"

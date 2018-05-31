@@ -14,7 +14,7 @@ class ModelMatches extends ModelBase{
   /**
    * @return null
    */
-  public static function get_fields(){
+  public static function getFields(){
     return null;
   }
 

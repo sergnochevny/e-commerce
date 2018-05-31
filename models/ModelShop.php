@@ -112,6 +112,16 @@ class ModelShop extends ModelBase{
           $condition .= $item[0];
           $prms = array_merge($prms, $item[1]);
         }
+        if(!empty($filter["a.pname"])) {
+          foreach(array_filter(explode(' ', $filter["a.pname"])) as $idx => $item) {
+            if(!empty($item)) {
+              if(!empty($condition)) $condition .= ' OR ';
+              $condition .= "a.pnumber LIKE :a_pnumber" . $idx . "";
+              $prms['a_pnumber' . $idx] = '%' . $item . '%';
+            }
+          }
+        }
+
         if(!empty($condition)) {
           $result[] = "(" . $condition . ")";
         }
@@ -124,7 +134,7 @@ class ModelShop extends ModelBase{
 
       if(isset($filter["b.cid"])) {
         if(is_array($filter["b.cid"])) {
-          $result[] = "b.cid in (" . static::build_in_sql_prm($filter["b.cid"], 'bcid') . ")";
+          $result[] = "b.cid in (" . static::BuildInSqlPrm($filter["b.cid"], 'bcid') . ")";
         } else {
           $result[] = "b.cid = :bcid";
         }
@@ -132,7 +142,7 @@ class ModelShop extends ModelBase{
       }
       if(isset($filter["c.id"])) {
         if(is_array($filter["c.id"])) {
-          $result[] = "c.id in (" . static::build_in_sql_prm($filter["c.id"], 'cid') . ")";
+          $result[] = "c.id in (" . static::BuildInSqlPrm($filter["c.id"], 'cid') . ")";
         } else {
           $result[] = "c.id = :cid";
         }
@@ -140,7 +150,7 @@ class ModelShop extends ModelBase{
       }
       if(isset($filter["d.id"])) {
         if(is_array($filter["d.id"])) {
-          $result[] = "d.id in (" . static::build_in_sql_prm($filter["d.id"], 'did') . ")";
+          $result[] = "d.id in (" . static::BuildInSqlPrm($filter["d.id"], 'did') . ")";
         } else {
           $result[] = "d.id = :did";
         }
@@ -148,7 +158,7 @@ class ModelShop extends ModelBase{
       }
       if(isset($filter["e.id"])) {
         if(is_array($filter["e.id"])) {
-          $result[] = "e.id in (" . static::build_in_sql_prm($filter["e.id"], 'eid') . ")";
+          $result[] = "e.id in (" . static::BuildInSqlPrm($filter["e.id"], 'eid') . ")";
         } else {
           $result[] = "e.id = :eid";
         }
@@ -156,7 +166,7 @@ class ModelShop extends ModelBase{
       }
       if(isset($filter["a.priceyard"])) {
         if(is_array($filter["a.priceyard"])) {
-          $result[] = static::build_from_to_sql_prm("a.priceyard", $filter["a.priceyard"], "apriceyard");
+          $result[] = static::BuildFromToSqlPrm("a.priceyard", $filter["a.priceyard"], "apriceyard");
         }
         $prms['apriceyard'] = $filter["a.priceyard"];
       }

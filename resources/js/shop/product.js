@@ -111,6 +111,10 @@
         $('#content').html(data);
       }
     });
+  }).on('click', '.pp_gallery a', function (event) {
+    debugger;
+    event.preventDefault();
+    return false;
   }).on('click', "#continue", function (event) {
     event.preventDefault();
     if (back_url) {
@@ -144,6 +148,14 @@
         }
       });
     });
+  });
+
+  $("a[data-rel^='prettyPhoto']").prettyPhoto({
+    hook: "data-rel",
+    social_tools: '',
+    theme: "pp_woocommerce",
+    deeplinking: false,
+    default_width: 840
   });
 
 })(window.jQuery || window.$);

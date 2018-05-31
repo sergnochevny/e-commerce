@@ -276,7 +276,7 @@ abstract class ControllerController extends ControllerBase{
         'string' => ['like', 'like']
       ];
       $fields_pattern = '#\b[\S]*(int|string|text|char|float|double|decimal|timestamp)[\S]*\b#';
-      $fields = forward_static_call([$this->model, 'get_fields']);
+      $fields = forward_static_call([$this->model, 'getFields']);
       if(isset($fields)) {
         $h_search = isset($search['hidden']) ? $search['hidden'] : null;
         if(isset($search)) {
@@ -376,7 +376,7 @@ abstract class ControllerController extends ControllerBase{
     if($page <= 0) $page = 1;
     $start = (($page - 1) * $per_page);
     $res_count_rows = 0;
-    $rows = forward_static_call_array([$this->model, 'get_list'], [
+    $rows = forward_static_call_array([$this->model, 'getFields'], [
       $start, $per_page, &$res_count_rows, &$filter, &$sort
     ]);
 

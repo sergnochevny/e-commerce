@@ -30,7 +30,7 @@ use app\core\App;
               <h4 class="widget-title">Contact Information</h4>
               <div class="textwidget">
                 <p><b>iluvfabrix</b> (Division of Fabric Love LLC)<br/>
-                  211 Teramar Way<br/>
+                  4584 Ripley Drive, Building 10<br>
                   El Paso, Texas, 79922<br/>
                   United States</p>
                 <p><b>Email:</b> <a
