@@ -14,7 +14,7 @@ use app\core\App;
           <form method="POST" id="authorization" action="<?= App::$app->router()->UrlTo('admin'); ?>"
                 class="login">
             <input type="hidden" name="redirect"
-                   value="<?= isset($redirect) ? $redirect : App::$app->router()->UrlTo('/'); ?>"/>
+                   value="<?= isset($redirect) ? $redirect : urlencode(base64_encode(App::$app->router()->UrlTo('/'))) ?>"/>
             <div class="form-row">
               <label for="username" class="required_field">Username</label>
               <input type="text" class="input-text" name="login" id="username" value="" autofocus/>

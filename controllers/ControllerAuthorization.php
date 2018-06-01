@@ -158,16 +158,17 @@ class ControllerAuthorization extends ControllerController{
       if(ModelAuth::is_user($login)) {
         if($this->user_authorize($login, $password)) {
           $url = App::$app->router()->UrlTo(base64_decode(urldecode(App::$app->post('redirect'))));
-          $url = (strlen($url) > 0) ? $url : App::$app->router()->UrlTo('shop');
+          $url = !empty($url) ? $url : App::$app->router()->UrlTo('shop');
           $this->Redirect($url);
         }
       }
       exit('Wrong Email/Username or Password');
     } else {
-      $redirect = App::$app->router()->UrlTo(!is_null(App::$app->get('url')) ? App::$app->get('url') : '');
+      $url = App::$app->get('url');
+      $redirect = !is_null($url) ? $url : urlencode(base64_encode(App::$app->router()->UrlTo('/')));
       $prms = null;
-      if(!is_null(App::$app->get('url'))) {
-        $prms['url'] = App::$app->router()->UrlTo(App::$app->get('url'));
+      if(!is_null($url)) {
+        $prms['url'] = App::$app->router()->UrlTo($url);
       }
       $registration_url = App::$app->router()->UrlTo('authorization/registration', $prms);
       $lostpassword_url = App::$app->router()->UrlTo('authorization/lost_password', $prms);
@@ -228,7 +229,8 @@ class ControllerAuthorization extends ControllerController{
     App::$app->get('method', 'short');
     $this->main->view->setVars('user_registration', $controller_user->registration());
 
-    $redirect = !is_null(App::$app->get('url')) ? App::$app->get('url') : '';
+    $redirect = !is_null(App::$app->get('url')) ? App::$app->get('url') :
+      urlencode(base64_encode(App::$app->router()->UrlTo('/')));
     $prms = null;
     if(!is_null(App::$app->get('url'))) {
       $prms['url'] = App::$app->get('url');

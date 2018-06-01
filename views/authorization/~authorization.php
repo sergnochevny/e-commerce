@@ -24,7 +24,7 @@ $user_registration = $controller_user->registration();
             <form method="post" id="authorization" action="<?= App::$app->router()->UrlTo('authorization'); ?>"
                   class="login">
               <input type="hidden" name="redirect"
-                     value="<?= isset($redirect) ? $redirect : App::$app->router()->UrlTo('/'); ?>"/>
+                     value="<?= isset($redirect) ? $redirect : urlencode(base64_encode(App::$app->router()->UrlTo('/'))) ?>"/>
 
               <div class="form-row">
                 <label for="username" class="required_field">Email Address/Username</label>
