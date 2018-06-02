@@ -643,7 +643,7 @@ class ControllerShop extends ControllerController{
    */
   public function specials(){
     $this->main->view->setVars('cart_enable', '_');
-    $this->page_title = "Discount Decorator and Designer Fabrics";
+    $this->page_title = "Discount Decorator and Designer Fabric Specials";
     $annotation = 'All specially priced items are at their marked down prices for a LIMITED TIME ONLY, after which they revert to their regular rates. All items available on a FIRST COME, FIRST SERVED basis only.';
     $this->main->view->setVars('annotation', $annotation);
     $list = $this->get_list_by_type('specials', (!is_null(App::$app->KeyStorage()->shop_specials_amount) ? App::$app->KeyStorage()->shop_specials_amount : SHOP_SPECIALS_AMOUNT));

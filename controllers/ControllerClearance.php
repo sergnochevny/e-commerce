@@ -22,7 +22,7 @@ class ControllerClearance extends ControllerFormSimple{
   /**
    * @var string
    */
-  protected $view_title = 'Clearance Decorator and Designer Fabrics Online';
+  protected $view_title = 'Discount Decorator and Designer Fabric Clearance';
   /**
    * @var string
    */

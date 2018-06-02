@@ -81,11 +81,11 @@ class ModelRecommends extends ModelBase{
 
     if(isset($filter["a.priceyard"]['from']) && !empty((float)$filter["a.priceyard"]['from'])) {
       $result[] = "a.priceyard > :apriceyard_from";
-      $prms['hapriceyard_from'] = $filter["a.priceyard"]['from'];
+      $prms['apriceyard_from'] = $filter["a.priceyard"]['from'];
     }
     if(isset($filter["a.priceyard"]['to']) && !empty((float)$filter["a.priceyard"]['to'])) {
       $result[] = "a.priceyard <= :apriceyard_to";
-      $prms['hapriceyard_to'] = $filter["a.priceyard"]['to'];
+      $prms['apriceyard_to'] = $filter["a.priceyard"]['to'];
     }
 
     if(!empty($result) && (count($result) > 0)) {

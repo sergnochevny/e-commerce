@@ -158,7 +158,7 @@ use app\core\App;
     <div class="row">
       <div class="col-xs-12 text-center">
         <div class="form-row">
-          <a data-search_submit class="button text-capitalize" href="<?= $action ?>">Get My Recommendations</a>
+          <a data-search_submit class="button text-capitalize" href="<?= $action ?>">Enter</a>
         </div>
       </div>
     </div>
