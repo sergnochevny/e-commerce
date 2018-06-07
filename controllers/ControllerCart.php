@@ -1365,6 +1365,13 @@ class ControllerCart extends ControllerController{
 
       if(isset($cart_items[$pid])) {
 
+        if($quantity <= 0) {
+            $quantity = 1;
+          $message = 'The quantity for ' . $product['pname'] . ' should be greater than zero. The order was adjusted.<br>';
+          $this->main->view->setVars('message', $message);
+          $response['msg'] = $this->RenderLayoutReturn('msg_change');
+        }
+
         if(($quantity > 0) && (floor($quantity) != $quantity) && ($whole == 1)) {
           if($quantity < 1) {
             $quantity = 1;

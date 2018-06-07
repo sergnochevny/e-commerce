@@ -32,7 +32,7 @@ class ControllerMatches extends ControllerFormSimple{
    * @param $data
    */
   protected function after_save($id, &$data){
-    $data['message'] = 'This Fabric has been added to your Matches.<br>Click the Matches to view your list.';
+    $data['message'] = 'This Fabric has been added to your Matches file.<br>Click the Matches to view your list.';
     if(!$id) {
       $data['message'] = empty($data[$this->id_field]) ?
         'Error with added fabric to Matches.' :
