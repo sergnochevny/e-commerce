@@ -1,7 +1,4 @@
 <?php
-/**
- * Copyright (c) 2017. AIT
- */
 
 namespace classes\controllers;
 

@@ -1,5 +1,4 @@
 FROM php:7.2.4-apache AS build
-MAINTAINER "Andriy Shendrikov" <ashendrikov@engineering.ait.com>
 ENV LC_ALL="C.UTF-8" DEBIAN_FRONTEND="noninteractive"
 
 WORKDIR /

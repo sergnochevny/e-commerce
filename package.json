@@ -1,16 +1,12 @@
 {
-  "name": "iluvfabrix",
+  "name": "e-commerce",
   "version": "1.0.0",
-  "description": "ILuvFabrix",
+  "description": "e-commerce",
   "main": "index.php",
-  "repository": {
-    "type": "git",
-    "url": "git@gitlab.ait.com:other/iluvfarix.git"
-  },
   "keywords": [
-    "iluvfabrix"
+    "e-commerce"
   ],
-  "author": "AIT Serg Nochevny",
+  "author": "Serg Nochevny",
   "license": "ISC",
   "scripts": {
     "build": "gulp build",
